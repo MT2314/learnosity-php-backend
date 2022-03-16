@@ -1,5 +1,5 @@
 {
-  "name": "app-2",
+  "name": "demo-component-library",
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --mode production",
