@@ -1,0 +1,82 @@
+.heading {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 43px;
+  font-family: "SuisseIntl";
+}
+
+.body {
+  margin-left: 53px;
+  font-family: "SuisseIntl";
+}
+
+.quotebox {
+  background: #ececec;
+  height: 200px;
+  font: 18px / 22.5px Arial, sans-serif;
+  padding: 36px 100px;
+}
+
+.quote_icon {
+  height: 43px;
+  width: 43px;
+  margin-right: 10px;
+}
+
+.quote_link {
+  height: 150px;
+  width: 300px;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  margin-top: 10px;
+  background-color: white !important;
+  border: 2px solid grey;
+}
+
+.quote_container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  min-width: 80%;
+}
+
+.quote_main {
+  min-height: 100px;
+  max-height: 200px;
+  max-width: 600px;
+  min-width: 500px;
+  background-color: white !important;
+  border: 2px solid grey;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  margin-left: 10%;
+}
+
+.citation {
+  height: 150px;
+  width: 300px;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  margin-top: 10px;
+  background-color: white !important;
+  border: 2px solid grey;
+}
+
+.type-dropdown {
+  margin-bottom: 10px;
+}
+
+.component {
+  position: relative;
+}
+
+body {
+  margin: 0;
+}
+/*# sourceMappingURL=QuoteBox.module.css.map */
