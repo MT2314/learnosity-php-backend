@@ -44,7 +44,9 @@ module.exports = {
       name: "app_2",
       filename: "remoteEntry.js",
       remotes: {},
-      exposes: {},
+      exposes: {
+        "./Image": "./src/Image.jsx",
+      },
       shared: {
         ...deps,
         react: {

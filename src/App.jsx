@@ -1,14 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Image from "./Image";
 
 import "./index.css";
 
 const App = () => (
   <div className="container">
-    <div>Name: app-2</div>
-    <div>Framework: react</div>
-    <div>Language: JavaScript</div>
-    <div>CSS: Empty CSS</div>
+    <Image />
   </div>
 );
 ReactDOM.render(<App />, document.getElementById("app"));
