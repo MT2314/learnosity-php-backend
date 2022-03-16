@@ -46,6 +46,7 @@ module.exports = {
       remotes: {},
       exposes: {
         "./Image": "./src/Image.jsx",
+        "./TextEditable": "./src/TextEditable/TextEditable.js"
       },
       shared: {
         ...deps,
