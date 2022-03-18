@@ -48,7 +48,6 @@ module.exports = (_, argv) => ({
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./Image": "./src/Image.jsx",
         "./TextEditable": "./src/TextEditable/TextEditable.js",
         "./QuoteBox":"./src/QuoteBox/QuoteBox.js",
         "./Callout":"./src/Callout/Callout.js",
