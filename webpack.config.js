@@ -2,9 +2,12 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 
 const deps = require("./package.json").dependencies;
-module.exports = {
+module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:3001/",
+    publicPath: 
+      argv.mode === "development"
+        ? "http://localhost:3001/"
+        : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-demo-component-library/"
   },
 
   resolve: {
@@ -45,7 +48,10 @@ module.exports = {
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./Image": "./src/Image.jsx",
+        "./TextEditable": "./src/TextEditable/TextEditable.js",
+        "./QuoteBox":"./src/QuoteBox/QuoteBox.js",
+        "./Callout":"./src/Callout/Callout.js",
+        "./Header":"./src/Header.jsx"
       },
       shared: {
         ...deps,
@@ -63,4 +69,4 @@ module.exports = {
       template: "./src/index.html",
     }),
   ],
-};
+});
