@@ -20,6 +20,10 @@ const Callout = (props) => {
   const Dropdown = styled(NativeSelect)`
     margin-bottom: 10px;
     background: red;
+
+    &:hover {
+      border: 5px solid rebeccapurple;
+    }
   `;
 
   const HeadingText = styled(TextEditable)`
