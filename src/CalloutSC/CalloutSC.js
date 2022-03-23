@@ -27,9 +27,7 @@ const CalloutSC = (props) => {
     font: 18px / 22.5px Arial, sans-serif;
   `
 
-  const Dropdown = styled(NativeSelect).attrs({
-    placeholderTextColor: "#000"
-  })`
+  const Dropdown = styled(NativeSelect)`
     margin-bottom: 10px;
   `;
 
@@ -70,7 +68,7 @@ const CalloutSC = (props) => {
 
   return (
     <Body aria-label="CalloutSC">  
-      <CalloutLabel htmlFor={`callout-type`}>Callout Type</CalloutLabel>&nbsp;
+      <CalloutLabel htmlFor={`callout-type`}>Callout Type (SC)</CalloutLabel>&nbsp;
       <Dropdown autoFocus id={`callout-type`} value={calloutType||""} onChange={e => setProp(props => Object.assign(props, { calloutType: e.target.value }))}>
         <option value={""}>Select Value</option>
         <option value={""}>Challenge</option>
@@ -83,7 +81,7 @@ const CalloutSC = (props) => {
         {calloutType ?
           (<CalloutImg alt={""} aria-label="Callout type icon"/>)
         : (<IconPlaceholder aria-label="Callout type icon placeholder"></IconPlaceholder>)}
-        <HeadingText placeholder="Enter Heading" onChange={e => setProp(props => Object.assign(props, { heading: e.target.value }))} value="Enter Heading" />
+        <HeadingText placeholder="Enter Heading" onChange={e => setProp(props => Object.assign(props, { heading: e.target.value }))} value="Enter Heading" placeholderTextColor="#000" />
       </Container>
         
         <CalloutBody placeholder="Enter Body"  multiline={true} onChange={e => setProp(props => Object.assign(props, { body: e.target.value }))} value="Enter Body" />
