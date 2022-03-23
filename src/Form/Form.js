@@ -1,44 +1,51 @@
 
 import React, { useState } from 'react';
+import FormOutput from './FormOutput';
 
-export const Form = () => {
-   
-   const [ userName, setUserName ] = useState("");
-   const [ userAge, setUserAge ] = useState("");
-   const [ userFavFood, setUserFavFood ]= useState("");
+
+const Form = () => {
+
+      const [ input, setInput ] = useState({
+         userName:"",
+         userAge:"",
+         userFavFood:"",
+      })
+
+
+      const onSubmit = () => {
+         console.log('submitted')
+         return (<FormOutput greeting="hi emily"/>)
+      }
 
    return(
-      <form>
-         <label for="userName">Name:</label>
+      <form onSubmit={onSubmit}>
+         <label htmlFor="userName">Name:</label>
          <input 
             type="text" 
             id="userName" 
             name="userName"
-            value={userName}
-            onChange={event => setUserName(event.target.value)}  />
+            value={input.userName}
+            onChange={target => setInput({...input, userName:target.value})}  />
 
          <label for="userAge">Age:</label>
          <input 
             type="number" 
             id="userAge" 
             name="userAge"
-            value={userAge}
-            onChange={event => parseInt(setUserAge(event.target.value))}  />
+            value={input.userAge}
+            onChange={target => parseInt(setInput({...input, userAge:target.value}))}  />
 
          <label for="userFavFood">Favourite Food:</label>
          <input 
             type="text" 
             id="userFavFood" 
             name="userFavFood"
-            value={userFavFood}
-            onChange={event => setUserFavFood(event.target.value)}
+            value={input.userFavFood}
+            onChange={target => setInput({...input, userFavFood: target.value})}
               />
+         <button type='submit'>Submit</button>
       </form>
    )
 }
 
-export const FormOutput = ({userName, userAge, userFavFood}) => {
-   return(
-      <h2>hi</h2>
-   )
-}
+export default Form;

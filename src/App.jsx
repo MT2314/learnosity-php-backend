@@ -4,9 +4,10 @@ import TextEditable from "./TextEditable/TextEditable";
 import QuoteBox from "./QuoteBox/QuoteBox";
 import Callout from "./Callout/Callout";
 import Header from "./Header"
-import { Form, FormOutput } from "./Form/Form";
+import Form from "./Form/Form";
 
 import "./index.css";
+import FormOutput from "./Form/FormOutput";
 
 const App = () => (
   <>
