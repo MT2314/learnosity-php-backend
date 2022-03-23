@@ -50,6 +50,7 @@ module.exports = (_, argv) => ({
       exposes: {
         "./TextEditable": "./src/TextEditable/TextEditable.js",
         "./QuoteBox":"./src/QuoteBox/QuoteBox.js",
+        "./Callout":"./src/CalloutSC/Callout.js",
         "./CalloutSC":"./src/CalloutSC/CalloutSC.js",
         "./Header":"./src/Header.jsx"
       },
