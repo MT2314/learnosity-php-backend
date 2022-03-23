@@ -1,15 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { WidgetContext } from '../App';
 
-const FormOutput = ({ inputs }) => {
-   
-   const { userName = "", userAge = "", userFavFood = ""} = inputs;
-
+const FormOutput = () => {
+   const context = useContext(WidgetContext);
+   console.log(context)
    return(
       <div>
-         User Info:
-         <p>Name: {userName} </p>
-         <p>Age: {userAge} </p>
-         <p>userFavFood: {userFavFood} </p>
+         form output: {context.inputs.form.userName}
       </div>
    )
 }

@@ -1,13 +1,24 @@
-import React from "react";
+import React, { createContext } from "react";
 import ReactDOM from "react-dom";
 import TextEditable from "./TextEditable/TextEditable";
 import QuoteBox from "./QuoteBox/QuoteBox";
 import Callout from "./Callout/Callout";
 import Header from "./Header"
 import Form from "./Form/Form";
+import FormOutput from "./Form/FormOutput";
 
 import "./index.css";
-import FormOutput from "./Form/FormOutput";
+
+
+export const WidgetContext = createContext();
+
+const inputs = {
+    form: {
+      userName: "Emily",
+      userAge: "34",
+      userFavFood: "avocado",
+    }
+  }
 
 const App = () => (
   <>
@@ -28,4 +39,9 @@ const App = () => (
   </div>
   </>
 );
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(
+  <WidgetContext.Provider value={{ inputs }}>
+    <App />
+  </WidgetContext.Provider>,
+  document.getElementById("app")
+);
