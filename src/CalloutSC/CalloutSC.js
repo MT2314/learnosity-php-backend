@@ -1,3 +1,4 @@
+// This version of Callout is styled with styled-components
 
 import React, { useEffect } from "react";
 import { Paper } from "@mui/material";
@@ -26,7 +27,9 @@ const CalloutSC = (props) => {
     font: 18px / 22.5px Arial, sans-serif;
   `
 
-  const Dropdown = styled(NativeSelect)`
+  const Dropdown = styled(NativeSelect).attrs({
+    placeholderTextColor: "#000"
+  })`
     margin-bottom: 10px;
   `;
 
@@ -37,7 +40,7 @@ const CalloutSC = (props) => {
     font-family: "Arial";
     min-width: 220px;
     width: 230px;
-    color: #000 !important;
+    color: #000;
   `;
 
   // What used to be "Callout_body_text"
@@ -80,7 +83,7 @@ const CalloutSC = (props) => {
         {calloutType ?
           (<CalloutImg alt={""} aria-label="Callout type icon"/>)
         : (<IconPlaceholder aria-label="Callout type icon placeholder"></IconPlaceholder>)}
-        <HeadingText value="Enter Heading" placeholder="Enter Heading" onChange={e => setProp(props => Object.assign(props, { heading: e.target.value }))} />
+        <HeadingText placeholder="Enter Heading" onChange={e => setProp(props => Object.assign(props, { heading: e.target.value }))} value="Enter Heading" />
       </Container>
         
         <CalloutBody placeholder="Enter Body"  multiline={true} onChange={e => setProp(props => Object.assign(props, { body: e.target.value }))} value="Enter Body" />
