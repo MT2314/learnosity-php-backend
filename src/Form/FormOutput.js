@@ -6,7 +6,7 @@ const FormOutput = () => {
    console.log(context)
    return(
       <div>
-         form output: {context.inputs.form.userName}
+         form output: {context.form.userName}
       </div>
    )
 }

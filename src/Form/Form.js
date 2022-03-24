@@ -1,9 +1,13 @@
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import FormOutput from './FormOutput';
+import { WidgetContext } from '../App';
 
 
 const Form = () => {
+
+   const context = useContext(WidgetContext)
+   console.log("====>",context)
 
       const [ input, setInput ] = useState({
          userName:"",
@@ -12,9 +16,10 @@ const Form = () => {
       })
 
 
-      const onSubmit = () => {
+      const onSubmit = (event) => {
+         event.preventDefault();
          console.log('submitted')
-         return (<FormOutput greeting="hi emily"/>)
+         context.updateContext("userName", "Taylor");
       }
 
    return(

@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 import ReactDOM from "react-dom";
 import TextEditable from "./TextEditable/TextEditable";
 import QuoteBox from "./QuoteBox/QuoteBox";
@@ -12,13 +12,24 @@ import "./index.css";
 
 export const WidgetContext = createContext();
 
-const inputs = {
-    form: {
-      userName: "Emily",
-      userAge: "34",
-      userFavFood: "avocado",
+const WidgetContextProvider = ({ children }) => {
+  const inputs = {
+    userName: "Emily",
+    userAge: "34",
+    userFavFood: "avocado",
+    updateContext: (property, value) => {
+      setUserInfo({ ...userInfo, [property]: value })
     }
   }
+  const [ userInfo, setUserInfo ] = useState(inputs)
+
+  return (
+        <WidgetContext.Provider value={userInfo}>
+          {children}
+        </WidgetContext.Provider>
+      )
+}
+
 
 const App = () => (
   <>
@@ -40,8 +51,8 @@ const App = () => (
   </>
 );
 ReactDOM.render(
-  <WidgetContext.Provider value={{ inputs }}>
+  <WidgetContextProvider>
     <App />
-  </WidgetContext.Provider>,
+  </WidgetContextProvider>,
   document.getElementById("app")
 );
