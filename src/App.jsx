@@ -14,9 +14,9 @@ export const WidgetContext = createContext();
 
 const WidgetContextProvider = ({ children }) => {
   const inputs = {
-    userName: "Emily",
-    userAge: "34",
-    userFavFood: "avocado",
+    userName: "",
+    userAge: "",
+    userFavFood: "",
     updateContext: (property, value) => {
       setUserInfo({ ...userInfo, [property]: value })
     }

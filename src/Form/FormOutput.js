@@ -3,10 +3,10 @@ import { WidgetContext } from '../App';
 
 const FormOutput = () => {
    const context = useContext(WidgetContext);
-   console.log(context)
+
    return(
       <div>
-         form output: {context.form.userName}
+         form output: {context.userName}
       </div>
    )
 }
