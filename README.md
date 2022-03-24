@@ -3,6 +3,8 @@
 A remote app to test with module federation spike. This spike demonstrates how components can be shared with demo-lesson-builder through module-federation. With module-federation we were able to remove craftjs depencies from the widgets.  The widgets can now be viewed within demo-component-library and are not reliant on demo-lesson-builder. 
 
 
+# How to open repo locally
+
 Yarn is our chosen package manager for this project if you do not have yarn installed run the following commands otherwise skip to step 3. 
 
 Step 1 - install yarn
@@ -28,7 +30,9 @@ yarn build
 ```
 Step 2 - upload files in dist folder to s3
 
-Step 3 - Open webpack.config.js. Replace "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-demo-component-library/" with the url to the s3 bucket where you are hosting the files. 
+Step 3 - Open webpack.config.js
+
+Step 4 - Replace instances of "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-demo-component-library/" with the url to the s3 bucket where you are hosting the files. 
 
 Example
 ```
