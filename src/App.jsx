@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import TextEditable from "./TextEditable/TextEditable";
 import QuoteBox from "./QuoteBox/QuoteBox";
@@ -6,30 +6,9 @@ import Callout from "./Callout/Callout";
 import Header from "./Header"
 import Form from "./Form/Form";
 import FormOutput from "./Form/FormOutput";
+import { WidgetContextProvider } from "./Provider";
 
 import "./index.css";
-
-
-export const WidgetContext = createContext();
-
-const WidgetContextProvider = ({ children }) => {
-  const inputs = {
-    userName: "",
-    userAge: "",
-    userFavFood: "",
-    updateContext: (property, value) => {
-      setUserInfo({ ...userInfo, [property]: value })
-    }
-  }
-  const [ userInfo, setUserInfo ] = useState(inputs)
-
-  return (
-        <WidgetContext.Provider value={userInfo}>
-          {children}
-        </WidgetContext.Provider>
-      )
-}
-
 
 const App = () => (
   <>

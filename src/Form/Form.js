@@ -1,7 +1,6 @@
 
 import React, { useState, useContext } from 'react';
-import FormOutput from './FormOutput';
-import { WidgetContext } from '../App';
+import { WidgetContext } from '../Provider';
 
 
 const Form = () => {
@@ -18,11 +17,12 @@ const Form = () => {
       const onSubmit = (event) => {
          event.preventDefault();
 
-         context.updateContext("userName", input.userName);
+         context.updateContext({ userName: input.userName, userAge: input.userAge, userFavFood: input.userFavFood });
       }
 
    return(
       <form onSubmit={onSubmit}>
+         <h3>Form in Edit Panel</h3>
          <label htmlFor="userName">Name:</label>
          <input 
             type="text" 
