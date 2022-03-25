@@ -54,8 +54,8 @@ module.exports = (_, argv) => ({
         "./Header":"./src/Header.jsx",
         "./Form":"./src/Form/Form.js",
         "./FormOutput": "./src/Form/FormOutput.js",
-        "./Provider": "./src/Provider.js"
-
+        "./Provider": "./src/Provider.js",
+        "./CalloutSC":"./src/CalloutSC/CalloutSC.js",
       },
       shared: {
         ...deps,
