@@ -1,21 +1,13 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Paper } from "@mui/material";
 import NativeSelect from '@mui/material/NativeSelect';
-// import styles from "./Callout.module.scss";
-// import { useNode } from "@craftjs/core";
-// import { ComponentControl } from "components/Control";
-// import { useConfigContext } from "context";
 import TextEditable from "../TextEditable";
 import styled from 'styled-components';
 
 const Callout = (props) => {
-  //const { config } = useConfigContext();
+
   const {heading, body, calloutType} = props;
-  //const { id, connectors: {connect, drag}, selected, dragged, actions: {setProp, setCustom} } = useNode();
-  // useEffect(() => {
-  //   setCustom(custom => Object.assign(custom, {type: "callout"}));
-  // }, []);
 
   const Dropdown = styled(NativeSelect)`
     margin-bottom: 10px;
@@ -69,7 +61,6 @@ const Callout = (props) => {
       </Container>
         
         <CalloutBody placeholder="Callout body text"  multiline={true} onChange={e => setProp(props => Object.assign(props, { body: e.target.value }))} value={body||""} />
-        {/* <ComponentControl nodeId={id} /> */}
     </Paper>
   )
 }
