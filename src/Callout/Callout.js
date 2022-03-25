@@ -1,21 +1,15 @@
 // This version of Callout is styled with CSS Modules
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Paper } from "@mui/material";
 import NativeSelect from '@mui/material/NativeSelect';
 import styles from "./Callout.module.scss";
-// import { useNode } from "@craftjs/core";
-// import { ComponentControl } from "components/Control";
-// import { useConfigContext } from "context";
 import TextEditable from "../TextEditable";
 
 const Callout = (props) => {
-  //const { config } = useConfigContext();
+
   const {heading, body, calloutType} = props;
-  //const { id, connectors: {connect, drag}, selected, dragged, actions: {setProp, setCustom} } = useNode();
-  // useEffect(() => {
-  //   setCustom(custom => Object.assign(custom, {type: "callout"}));
-  // }, []);
+ 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>  
       <label htmlFor={`callout-type`} className={styles.Callout_label}>Callout Type</label>&nbsp;
@@ -35,7 +29,6 @@ const Callout = (props) => {
       </div>
         
         <TextEditable placeholder="Callout body text"  multiline={true} onChange={e => setProp(props => Object.assign(props, { body: e.target.value }))} className={styles.Callout_body} value="Enter Body" />
-        {/* <ComponentControl nodeId={id} /> */}
     </Paper>
   )
 }

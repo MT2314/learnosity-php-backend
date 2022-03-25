@@ -1,10 +1,14 @@
-import React, {Fragment} from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import TextEditable from "./TextEditable/TextEditable";
 import QuoteBox from "./QuoteBox/QuoteBox.js";
 import Callout from "./Callout/Callout.js";
 import CalloutSC from "./CalloutSC/CalloutSC.js";
 import Header from "./Header"
+import Form from "./Form/Form";
+import FormOutput from "./Form/FormOutput";
+import Image from './Image/Image';
+import { WidgetContextProvider } from "./Provider";
 
 import "./index.css";
 
@@ -14,12 +18,24 @@ const App = () => (
     title="component-library"
     backgroundColor="salmon"
   />
-  <div className="container">
+  <div className="container" style={{display:"flex"}}>
+    <div className="canvas" style={{border: "2px solid black"}}>
       <TextEditable />
       <Callout />
       <QuoteBox />
       <CalloutSC />
+      <FormOutput />
+    </div>
+    <div className="editPanel" style={{border:"2px solid black", marginLeft: "2em" }}>
+      <Form />
+      {/* <Image /> */}
+    </div>
   </div>
   </>
 );
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(
+  <WidgetContextProvider>
+    <App />
+  </WidgetContextProvider>,
+  document.getElementById("app")
+);

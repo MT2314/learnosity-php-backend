@@ -51,8 +51,11 @@ module.exports = (_, argv) => ({
         "./TextEditable": "./src/TextEditable/TextEditable.js",
         "./QuoteBox":"./src/QuoteBox/QuoteBox.js",
         "./Callout":"./src/Callout/Callout.js",
+        "./Header":"./src/Header.jsx",
+        "./Form":"./src/Form/Form.js",
+        "./FormOutput": "./src/Form/FormOutput.js",
+        "./Provider": "./src/Provider.js",
         "./CalloutSC":"./src/CalloutSC/CalloutSC.js",
-        "./Header":"./src/Header.jsx"
       },
       shared: {
         ...deps,
