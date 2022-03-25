@@ -9,48 +9,7 @@ import TextEditable from "../TextEditable";
 const Callout = (props) => {
 
   const {heading, body, calloutType} = props;
-  //const { id, connectors: {connect, drag}, selected, dragged, actions: {setProp, setCustom} } = useNode();
-  // useEffect(() => {
-  //   setCustom(custom => Object.assign(custom, {type: "callout"}));
-  // }, []);
-
-  const Dropdown = styled(NativeSelect)`
-    margin-bottom: 10px;
-    background: red;
-
-    &:hover {
-      border: 5px solid rebeccapurple;
-    }
-  `;
-
-  const HeadingText = styled(TextEditable)`
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 43px;
-    font-family: "SuisseIntl";
-  `;
-
-  // What used to be "Callout_body_text"
-  const Container = styled.div` 
-    display: flex;
-  `;
-
-  const CalloutBody = styled(TextEditable)`
-    margin-left: 53px;
-    font-family: "SuisseIntl";
-  `;
-
-  const CallOutImg = styled.img`
-    margin-right: 10px;
-  `;
-
-  const IconPlaceholder = styled.div`
-    border: 1px dashed silver;
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-  `;
-
+ 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>  
       <label htmlFor={`callout-type`} className={styles.Callout_label}>Callout Type</label>&nbsp;
