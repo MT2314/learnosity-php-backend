@@ -1,13 +1,23 @@
+.Callout_main {
+    background: #ececec !important;
+    padding: 36px 100px;
+}
+
+.Callout_label {
+    font: 18px / 22.5px Arial, sans-serif;
+}
+
 .Callout_heading {
     font-size: 20px;
     font-weight: 700;
     line-height: 43px;
-    font-family: "SuisseIntl";
+    font-family: "Arial";
+    min-width: 220px;
 }
 
 .Callout_body {
     margin-left: 53px;
-    font-family: "SuisseIntl";
+    font-family: "Arial";
 }
 
 .Callout_type_dropdown {
@@ -24,5 +34,7 @@
 
 .Callout_icon_placeholder{
     border: 1px dashed silver;
+    width: 43px;
+    height: 43px;
     margin-right: 10px;
 }
