@@ -1,0 +1,210 @@
+
+.Image__uploader {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.Image__uploaderButton,
+.Image__replaceButton {
+  background: $primary-color !important;
+  text-align: center !important;
+  letter-spacing: 0.2px !important;
+  color: $white !important;
+  padding: 6px 80px !important;
+  margin-bottom: 10px !important;
+  opacity: 1 !important;
+  font-size: 0.875rem !important;
+  min-width: 64px !important;
+  width: 97% !important;
+  box-sizing: border-box !important;
+  font-weight: 500 !important;
+  font-family: $primary-font !important;
+  line-height: 1.75 !important;
+  border-radius: 4px !important;
+  letter-spacing: 0.02857em !important;
+  order: 0 !important;
+  &:hover,
+  &:active {
+    background: $primary-hover !important;
+  }
+  &:focus {
+    outline: 3px solid $focus-outline-color !important;
+  }
+}
+
+.Image__replaceButton {
+  padding: 6px 16% !important;
+}
+
+.Image__uploaderLabel {
+  order: 1 !important;
+  width: 96% !important;
+  font-size: 14px !important;
+  margin-top: 0 !important;
+}
+
+.Image__altTextH2 {
+  margin-bottom: 0;
+  font-family: $primary-font;
+  font-size: 20px;
+}
+
+.Image__altTextP {
+  font-size: 12px;
+  margin-bottom: 0.5em;
+}
+
+.Image__uploadHover {
+  padding: 20px 20px 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Image__container {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  position: relative;
+  color: $white;
+}
+
+.Image__paper {
+  position: relative;
+  min-height: 128px;
+}
+
+.Image__editPanelPreview {
+  display: flex;
+  flex-direction: column;
+}
+
+.Image__img {
+  border: none;
+  max-width: 80%;
+  height: auto;
+  align-self: center;
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    outline: 3px solid $focus-outline-color;
+  }
+}
+
+.Image__icon {
+  position: absolute;
+  &:focus {
+    outline: none;
+  }
+}
+
+
+.Image__label {
+  width: 80px;
+  display: inline-block;
+}
+
+.Image__input {
+  align-self: center;
+  border: 1.5px solid #E8E8E8;
+  font-family: $primary-font;
+  background: $secondary-color;
+  color: $black;
+  width: 97%;
+  font-size: 0.875em;
+  border-radius: 4px;
+  resize: none;
+  margin-top: 0.5em;
+}
+
+.Image__caption {
+  border: none;
+  font-family: $primary-font;
+  box-sizing: border-box;
+  width: calc(100% - 4px);
+  padding: 10px 10px;
+  margin: 5px;
+  background: $white;
+  align-self: center;
+  text-align: left;
+  font-size: 14px;
+  color: $black;
+  resize: none;
+  overflow: hidden;
+  &:focus,
+  &:active{
+    outline: 2px solid $focus-outline-color;
+  }
+}
+
+.Image__outline {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  background-color: $secondary-color;
+  height: 400px;
+  color: $white;
+  transition: border ease-in-out 0.3s;
+  border: 1px solid $accent-color;
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    outline: 3px solid $focus-outline-color;
+    z-index: 100;
+  }
+}
+
+.Image__holdingbox {
+  padding: 20px 20px 0 20px;
+  height: 417px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.Image__icon {
+  color: $icon-color;
+  font-size: 194px;
+}
+
+.Image__tab,
+.Image__delete_tab {
+  border-radius: 10px 10px 0px 0px;
+  background: $primary-color;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:active {
+    background: #4b13a0;
+  }
+  &:focus {
+    outline: 2px solid $focus-outline-color;
+  }
+}
+
+.Image__tab {
+  padding: 5px 10px 5px 10px;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.15px;
+  top: -34px;
+  left: -3px;
+}
+
+.Image__tab p {
+  margin: 0px;
+}
+
+.Image__delete_tab {
+  padding: 2px 0;
+  top: -32px;
+  right: -3px;
+  display: flex;
+}
