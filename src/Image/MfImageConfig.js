@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useDropzone} from 'react-dropzone'; 
+import { useDropzone } from 'react-dropzone'; 
 import styles from './MfImage.module.scss';
 
 const thumbsContainer = {
@@ -65,7 +65,9 @@ const thumbsContainer = {
      <section className="container">
        <div {...getRootProps({className: 'dropzone'})}>
          <input {...getInputProps()} />
-         <p>Drag 'n' drop some files here, or click to select files</p>
+         <button
+				className={styles.Image__uploader}
+         >Upload</button>
        </div>
        <aside style={thumbsContainer}>
          {thumbs}
