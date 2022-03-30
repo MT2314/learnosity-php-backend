@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useDropzone} from 'react-dropzone'; 
+import styles from './MfImage.module.scss';
 
 const thumbsContainer = {
    display: 'flex',
@@ -69,6 +70,19 @@ const thumbsContainer = {
        <aside style={thumbsContainer}>
          {thumbs}
        </aside>
+       <h2 className={styles.Image__altTextH2}>Alt Text</h2>
+        <p className={styles.Image__altTextP}>
+          This text will be used by screen readers, search engines, or when the
+          image can't be loaded.
+        </p>
+        <textarea
+          name={`image-alt`}
+          id={`image-alt`}
+          aria-label="Add alt text to image"
+          rows="4"
+          className={styles.Image__input}
+          placeholder="Type alt text here..."
+        ></textarea>
      </section>
    );
  }
