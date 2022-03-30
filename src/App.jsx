@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import TextEditable from "./TextEditable/TextEditable";
 import QuoteBox from "./QuoteBox/QuoteBox.js";
 import Callout from "./Callout/Callout.js";
-import CalloutSC from "./CalloutSC/CalloutSC.js";
 import Header from "./Header"
 import Form from "./Form/Form";
 import FormOutput from "./Form/FormOutput";
@@ -31,7 +30,7 @@ const App = () => (
     <div className="editPanel" style={{border:"2px solid black", marginLeft: "2em" }}>
       {/* <Form /> */}
       {/* <Image /> */}
-      <MfImageConfig />
+      <MfImageConfig /> 
     </div>
   </div>
   </>
