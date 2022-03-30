@@ -39,6 +39,17 @@ module.exports = (_, argv) => ({
           loader: "babel-loader",
         },
       },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'svg-url-loader',
+            options: {
+              limit: 10000,
+            },
+          },
+        ],
+      },
     ],
   },
 
@@ -55,7 +66,6 @@ module.exports = (_, argv) => ({
         "./Form":"./src/Form/Form.js",
         "./FormOutput": "./src/Form/FormOutput.js",
         "./Provider": "./src/Provider.js",
-        "./CalloutSC":"./src/CalloutSC/CalloutSC.js",
       },
       shared: {
         ...deps,

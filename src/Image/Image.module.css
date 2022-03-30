@@ -1,0 +1,281 @@
+* {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.Image__uploader {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-box-direction: normal !important;
+      -ms-flex-direction: column !important;
+          flex-direction: column !important;
+  -webkit-box-pack: center !important;
+      -ms-flex-pack: center !important;
+          justify-content: center !important;
+  -webkit-box-align: center !important;
+      -ms-flex-align: center !important;
+          align-items: center !important;
+}
+
+.Image__uploaderButton,
+.Image__replaceButton {
+  background: #7422D1 !important;
+  text-align: center !important;
+  letter-spacing: 0.2px !important;
+  color: #ffffff !important;
+  padding: 6px 80px !important;
+  margin-bottom: 10px !important;
+  opacity: 1 !important;
+  font-size: 0.875rem !important;
+  min-width: 64px !important;
+  width: 97% !important;
+  -webkit-box-sizing: border-box !important;
+          box-sizing: border-box !important;
+  font-weight: 500 !important;
+  line-height: 1.75 !important;
+  border-radius: 4px !important;
+  letter-spacing: 0.02857em !important;
+  -webkit-box-ordinal-group: 1 !important;
+      -ms-flex-order: 0 !important;
+          order: 0 !important;
+}
+
+.Image__uploaderButton:hover, .Image__uploaderButton:active,
+.Image__replaceButton:hover,
+.Image__replaceButton:active {
+  background: #4B13A0 !important;
+}
+
+.Image__uploaderButton:focus,
+.Image__replaceButton:focus {
+  outline: 3px solid #ffc46b !important;
+}
+
+.Image__replaceButton {
+  padding: 6px 16% !important;
+}
+
+.Image__uploaderLabel {
+  -webkit-box-ordinal-group: 2 !important;
+      -ms-flex-order: 1 !important;
+          order: 1 !important;
+  width: 96% !important;
+  font-size: 14px !important;
+  margin-top: 0 !important;
+}
+
+.Image__altTextH2 {
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+.Image__altTextP {
+  font-size: 12px;
+  margin-bottom: 0.5em;
+}
+
+.Image__uploadHover {
+  padding: 20px 20px 0 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.Image__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: none;
+  position: relative;
+  color: #ffffff;
+}
+
+.Image__paper {
+  position: relative;
+  min-height: 128px;
+}
+
+.Image__editPanelPreview {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.Image__img {
+  border: none;
+  max-width: 80%;
+  height: auto;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.Image__img:hover {
+  cursor: pointer;
+}
+
+.Image__img:focus {
+  outline: 3px solid #ffc46b;
+}
+
+.Image__icon {
+  position: absolute;
+}
+
+.Image__icon:focus {
+  outline: none;
+}
+
+.Image__label {
+  width: 80px;
+  display: inline-block;
+}
+
+.Image__input {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  border: 1.5px solid #E8E8E8;
+  background: #F6F6F6;
+  color: #000000;
+  width: 97%;
+  font-size: 0.875em;
+  border-radius: 4px;
+  resize: none;
+  margin-top: 0.5em;
+}
+
+.Image__caption {
+  border: none;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: calc(100% - 4px);
+  padding: 10px 10px;
+  margin: 5px;
+  background: #ffffff;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  text-align: left;
+  font-size: 14px;
+  color: #000000;
+  resize: none;
+  overflow: hidden;
+}
+
+.Image__caption:focus, .Image__caption:active {
+  outline: 2px solid #ffc46b;
+}
+
+.Image__outline {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #F6F6F6;
+  height: 400px;
+  color: #ffffff;
+  -webkit-transition: border ease-in-out 0.3s;
+  transition: border ease-in-out 0.3s;
+  border: 1px solid #707070;
+}
+
+.Image__outline:hover {
+  cursor: pointer;
+}
+
+.Image__outline:focus {
+  outline: 3px solid #ffc46b;
+  z-index: 100;
+}
+
+.Image__holdingbox {
+  padding: 20px 20px 0 20px;
+  height: 417px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.Image__icon {
+  color: #b2b2b2;
+  font-size: 194px;
+}
+
+.Image__tab,
+.Image__delete_tab {
+  border-radius: 10px 10px 0px 0px;
+  background: #7422D1;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Image__tab:active,
+.Image__delete_tab:active {
+  background: #4b13a0;
+}
+
+.Image__tab:focus,
+.Image__delete_tab:focus {
+  outline: 2px solid #ffc46b;
+}
+
+.Image__tab {
+  padding: 5px 10px 5px 10px;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.15px;
+  top: -34px;
+  left: -3px;
+}
+
+.Image__tab p {
+  margin: 0px;
+}
+
+.Image__delete_tab {
+  padding: 2px 0;
+  top: -32px;
+  right: -3px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=Image.module.css.map */

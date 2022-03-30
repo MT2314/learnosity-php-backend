@@ -1,0 +1,257 @@
+.Image__editPanelContainer {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+   
+.Image__componentTitleSection {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-family: Roboto, Helvetica, Arial, sans-serif;
+   font-weight: 400;
+   font-size: 1rem;
+   line-height: 1.75;
+   letter-spacing: 0.00938em;
+   border-bottom: 1px solid #000;
+}
+
+.Image__componentTitleIcon {
+   margin-right: 0.5em;
+   user-select: none;
+   width: 1em;
+   height: 1em;
+   display: inline-block;
+   fill: currentcolor;
+   flex-shrink: 0;
+   transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+   font-size: 1.5rem;
+}
+
+.Image__dropzone {
+   margin: 0;
+   padding: 0;
+   align-self: center;
+}
+
+.Image__uploader {
+   background: #7422d1;
+   text-align: center;
+   letter-spacing: 0.2px;
+   color: #fff;
+   padding: 6px 80px;
+   margin-bottom: 10px;
+   opacity: 1;
+   font-size: 0.875rem;
+   min-width: 64px;
+   width: 97%;
+   box-sizing: border-box;
+   font-weight: 500;
+   font-family: "Roboto", "Arial", sans-serif;
+   line-height: 1.75;
+   border: none;
+   border-radius: 4px;
+   letter-spacing: 0.02857em;
+   transition: all .2s ease-in
+}
+
+.Image__uploader:hover,
+.Image__uploader:active {
+   background: #4b13a0;
+}
+
+.Image__uploader:focus {
+   outline: 3px solid #ffc46b;
+}
+
+.Image__uploadSize {
+   width: 96%;
+   font-size: 14px;
+   margin-top: 0;
+}
+
+.Image__altTextH2 {
+   margin-bottom: 0;
+   font-family: "Roboto","Arial",sans-serif;
+   font-size: 20px;
+   align-self: flex-start;
+}
+
+.Image__altTextP {
+  font-size: 12px;
+  margin-bottom: 0.5em;
+}
+
+.Image__altTextInput {
+   border: 1.5px solid #e8e8e8;
+   background: #f6f6f6;
+   width: 94%;
+   border-radius: 4px;
+   margin-top: 0.5em;
+   align-self: center;
+   font-family: "Roboto","Arial",sans-serif;
+   color: #000;
+   resize: none;
+}
+
+.Image__altTextInput::placeholder {
+   font-size: 0.95rem;
+}
+
+.Image__altTextInput:focus {
+   outline: 3px solid #ffc46b;
+}
+
+.Image__uploadHover {
+  padding: 20px 20px 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Image__container {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  position: relative;
+  color: $white;
+}
+
+.Image__paper {
+  position: relative;
+  min-height: 128px;
+}
+
+.Image__editPanelPreview {
+  display: flex;
+  flex-direction: column;
+}
+
+.Image__img {
+  border: none;
+  max-width: 80%;
+  height: auto;
+  align-self: center;
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    outline: 3px solid $focus-outline-color;
+  }
+}
+
+.Image__icon {
+  position: absolute;
+  &:focus {
+    outline: none;
+  }
+}
+
+
+.Image__label {
+  width: 80px;
+  display: inline-block;
+}
+
+.Image__input {
+  align-self: center;
+  border: 1.5px solid #E8E8E8;
+  font-family: $primary-font;
+  background: $secondary-color;
+  color: $black;
+  width: 97%;
+  font-size: 0.875em;
+  border-radius: 4px;
+  resize: none;
+  margin-top: 0.5em;
+}
+
+.Image__caption {
+  border: none;
+  font-family: $primary-font;
+  box-sizing: border-box;
+  width: calc(100% - 4px);
+  padding: 10px 10px;
+  margin: 5px;
+  background: $white;
+  align-self: center;
+  text-align: left;
+  font-size: 14px;
+  color: $black;
+  resize: none;
+  overflow: hidden;
+  &:focus,
+  &:active{
+    outline: 2px solid $focus-outline-color;
+  }
+}
+
+.Image__outline {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  background-color: $secondary-color;
+  height: 400px;
+  color: $white;
+  transition: border ease-in-out 0.3s;
+  border: 1px solid $accent-color;
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    outline: 3px solid $focus-outline-color;
+    z-index: 100;
+  }
+}
+
+.Image__holdingbox {
+  padding: 20px 20px 0 20px;
+  height: 417px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.Image__icon {
+  color: $icon-color;
+  font-size: 194px;
+}
+
+.Image__tab,
+.Image__delete_tab {
+  border-radius: 10px 10px 0px 0px;
+  background: $primary-color;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:active {
+    background: #4b13a0;
+  }
+  &:focus {
+    outline: 2px solid $focus-outline-color;
+  }
+}
+
+.Image__tab {
+  padding: 5px 10px 5px 10px;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.15px;
+  top: -34px;
+  left: -3px;
+}
+
+.Image__tab p {
+  margin: 0px;
+}
+
+.Image__delete_tab {
+  padding: 2px 0;
+  top: -32px;
+  right: -3px;
+  display: flex;
+}
