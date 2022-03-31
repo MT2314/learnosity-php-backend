@@ -2,6 +2,7 @@ import React, {useState, useEffect, createContext, useContext} from 'react';
 import { useDropzone } from 'react-dropzone'; 
 import styles from './MfImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
+import { ImageProvider, ImageWidgetContext } from './ImageProvider';
  
 const thumb = {
    display: 'inline-flex',
@@ -28,29 +29,12 @@ const img = {
 };
 
 
-export const ImageWidgetContext = createContext();
 
-export function ImageCC({children}){
-  const inputs = {
-    alt: "",
-    uploadedImg: "",
-    updateContext: (contextUpdates) => {
-      setUserInfo((currentContextInfo) => ({...currentContextInfo, ...contextUpdates}))
-    }
-  }
-  const [ userInfo, setUserInfo ] = useState(inputs)
-
-  return (
-        <ImageWidgetContext.Provider value={userInfo}>
-          {children}
-        </ImageWidgetContext.Provider>
-      )
-}
 
 function MfImageConfig(props) {
 
   const context = useContext(ImageWidgetContext);
-  console.log(context)
+  
   const [files, setFiles] = useState([]);
 
  

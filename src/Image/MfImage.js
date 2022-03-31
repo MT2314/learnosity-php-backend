@@ -2,7 +2,7 @@ import React, {useContext} from "react";
 import styles from "./MfImage.module.scss";
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import background from './assets/imageIcon.svg';
-import {ImageWidgetContext} from "./MfImageConfig"
+import { ImageWidgetContext } from "./ImageProvider";
 
 const MfImage = () => {
 
