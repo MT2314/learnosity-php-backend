@@ -59,8 +59,10 @@ module.exports = (_, argv) => ({
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./Callout": "./src/Callout/Callout.js",
-        // "./Image": "./src/Image/Image.js",
+        "./TextEditable": "./src/TextEditable/TextEditable.js",
+        "./QuoteBox":"./src/QuoteBox/QuoteBox.js",
+        "./Callout":"./src/Callout/Callout.js",
+        "./Header":"./src/Header.jsx",
       },
       shared: {
         ...deps,

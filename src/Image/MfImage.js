@@ -1,9 +1,10 @@
-import React from "react";
-import { Paper } from "@mui/material";
+import React, {useContext} from "react";
 import styles from "./MfImage.module.scss";
-// import background from './assets/imageIcon.svg';
+import { ImageWidgetContext } from "./ImageProvider";
 
 const MfImage = () => {
+
+  const context = useContext(ImageWidgetContext);
 
    return(
       <Paper
@@ -13,7 +14,7 @@ const MfImage = () => {
           <div 
             className={styles.Image__outline}
             tabIndex="0"
-          ></div>
+          ><img src={context.uploadedImg} alt={context.alt}/></div>
           <textarea
             placeholder="Type caption here..."
             aria-label="Add caption text to image"
