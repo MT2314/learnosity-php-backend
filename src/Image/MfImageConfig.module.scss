@@ -1,0 +1,112 @@
+.MfImageConfig__editPanelContainer {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+   
+.MfImageConfig__componentTitleSection {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-family: Roboto, Helvetica, Arial, sans-serif;
+   font-weight: 400;
+   font-size: 1rem;
+   letter-spacing: 0.00938em;
+   width: 90%;
+   border-bottom: 1px solid #e0e0e0;
+}
+
+.MfImageConfig__componentTitleIcon {
+   margin-right: 0.5em;
+   user-select: none;
+   width: 1em;
+   height: 1em;
+   display: inline-block;
+   fill: currentcolor;
+   flex-shrink: 0;
+   transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+   font-size: 1.5rem;
+}
+
+.MfImageConfig__thumbnailContainer {
+   display: 'flex';
+   flex-direction: 'row';
+   flex-wrap: 'wrap';
+   margin-top: 16
+}
+
+.MfImageConfig__dropzone {
+   margin: 0;
+   padding: 0;
+   align-self: center;
+}
+
+.MfImageConfig__uploader {
+   background: #7422d1;
+   text-align: center;
+   letter-spacing: 0.2px;
+   color: #fff;
+   padding: 6px 80px;
+   margin-bottom: 10px;
+   opacity: 1;
+   font-size: 0.875rem;
+   min-width: 64px;
+   width: 100%;
+   box-sizing: border-box;
+   font-weight: 500;
+   font-family: "Roboto", "Arial", sans-serif;
+   line-height: 1.75;
+   border: none;
+   border-radius: 4px;
+   letter-spacing: 0.02857em;
+   transition: all .2s ease-in
+}
+
+.MfImageConfig__uploader:hover,
+.MfImageConfig__uploader:active {
+   background: #4b13a0;
+   cursor: pointer;
+}
+
+.MfImageConfig__uploader:focus {
+   outline: 3px solid #ffc46b;
+}
+
+.MfImageConfig__uploadSize {
+   width: 100%;
+   font-size: 14px;
+   margin-top: 0;
+}
+
+.MfImageConfig__altTextH2 {
+   margin-bottom: 0;
+   font-family: "Roboto","Arial",sans-serif;
+   font-size: 20px;
+   align-self: flex-start;
+}
+
+.MfImageConfig__altTextP {
+  font-size: 12px;
+  margin-bottom: 0.5em;
+}
+
+.MfImageConfig__altTextInput {
+   border: 1.5px solid #e8e8e8;
+   background: #f6f6f6;
+   width: 100%;
+   border-radius: 4px;
+   margin-top: 0.5em;
+   align-self: center;
+   font-family: "Roboto","Arial",sans-serif;
+   color: #000;
+   resize: none;
+}
+
+.MfImageConfig__altTextInput::placeholder {
+   font-size: 0.95rem;
+}
+
+.MfImageConfig__altTextInput:focus {
+   outline: 3px solid #ffc46b;
+}
