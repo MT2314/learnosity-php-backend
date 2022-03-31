@@ -2,30 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { useDropzone } from 'react-dropzone'; 
 import styles from './MfImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
- 
-const thumb = {
-   display: 'inline-flex',
-   borderRadius: 2,
-   border: '1px solid #eaeaea',
-   marginBottom: 8,
-   marginRight: 8,
-   width: 100,
-   height: 100,
-   padding: 4,
-   boxSizing: 'border-box'
-};
- 
-const thumbInner = {
-   display: 'flex',
-   minWidth: 0,
-   overflow: 'hidden'
-};
- 
-const img = {
-   display: 'block',
-   width: 'auto',
-   height: '100%'
-};
 
 function MfImageConfig(props) {
    const [files, setFiles] = useState([]);
@@ -42,11 +18,11 @@ function MfImageConfig(props) {
    });
    
    const thumbs = files.map(file => (
-     <div style={thumb} key={file.name}>
-       <div style={thumbInner}>
+     <div className={styles.Image__thumbOuter} key={file.name}>
+       <div className={styles.Image__thumbInner}>
          <img
            src={file.preview}
-           style={img}
+           className={styles.Image__thumbnailImg}
          />
        </div>
      </div>
