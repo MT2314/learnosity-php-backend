@@ -1,16 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { useDropzone } from 'react-dropzone'; 
-import styles from './MfImage.module.scss';
+import styles from './MfImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
-
-const thumbsContainer = {
-   display: 'flex',
-   flexDirection: 'row',
-   flexWrap: 'wrap',
-   marginTop: 16
- };
  
- const thumb = {
+const thumb = {
    display: 'inline-flex',
    borderRadius: 2,
    border: '1px solid #eaeaea',
@@ -20,30 +13,32 @@ const thumbsContainer = {
    height: 100,
    padding: 4,
    boxSizing: 'border-box'
- };
+};
  
- const thumbInner = {
+const thumbInner = {
    display: 'flex',
    minWidth: 0,
    overflow: 'hidden'
- };
+};
  
- const img = {
+const img = {
    display: 'block',
    width: 'auto',
    height: '100%'
- };
- 
- 
- function MfImageConfig(props) {
+};
+
+function MfImageConfig(props) {
    const [files, setFiles] = useState([]);
    const {getRootProps, getInputProps} = useDropzone({
-     accept: 'image/*',
-     onDrop: acceptedFiles => {
-       setFiles(acceptedFiles.map(file => Object.assign(file, {
-         preview: URL.createObjectURL(file)
-       })));
-     }
+      accept: 'image/*',
+      maxFiles: 1,
+      multiple: false,
+      maxSize: 5000000,
+      onDrop: acceptedFiles => {
+         setFiles(acceptedFiles.map(file => Object.assign(file, {
+            preview: URL.createObjectURL(file)
+         })));
+      }
    });
    
    const thumbs = files.map(file => (
@@ -63,24 +58,24 @@ const thumbsContainer = {
    }, [files]);
  
    return (
-      <section className={styles.Image__editPanelContainer}>
+      <section className={styles.MfImageConfig__editPanelContainer}>
          {/* Edit Panel Component Title */}
-         <div className={styles.Image__componentTitleSection}>
-            <InsertPhotoOutlinedIcon className={styles.Image__componentTitleIcon} />
-            <p className={styles.Image__componentTitle}>Image</p>
+         <div className={styles.MfImageConfig__componentTitleSection}>
+            <InsertPhotoOutlinedIcon className={styles.MfImageConfig__componentTitleIcon} />
+            <p className={styles.MfImageConfig__componentTitle}>Image</p>
          </div>
          {/* Image thumbnail */}
-         <aside style={thumbsContainer}>
+         <aside className={styles.MfImageConfig__thumbnailContainer}>
             {thumbs}
          </aside>
          {/* Image Uploader */}
-         <div {...getRootProps({className: `${styles.Image__uploader}`})}>
+         <div {...getRootProps({className: `${styles.MfImageConfig__uploader}`})}>
             <input {...getInputProps()} />
             Upload
          </div>
-         <p className={styles.Image__uploadSize}>Max file size: 5mb, accepted: .jpg, .gif, .png, .svg</p>
-         <h2 className={styles.Image__altTextH2}>Alt Text</h2>
-         <p className={styles.Image__altTextP}>
+         <p className={styles.MfImageConfig__uploadSize}>Max file size: 5mb, accepted: .jpg, .gif, .png, .svg</p>
+         <h2 className={styles.MfImageConfig__altTextH2}>Alt Text</h2>
+         <p className={styles.MfImageConfig__altTextP}>
             This text will be used by screen readers, search engines, or when the
             image can't be loaded.
          </p>
@@ -89,7 +84,7 @@ const thumbsContainer = {
             id={`image-alt`}
             aria-label="Add alt text to image"
             rows="4"
-            className={styles.Image__altTextInput}
+            className={styles.MfImageConfig__altTextInput}
             placeholder="Type alt text here..."
          ></textarea>
       </section>

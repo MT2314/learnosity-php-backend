@@ -27,7 +27,7 @@ const App = () => (
       {/* <FormOutput /> */}
       <MfImage/>
     </div>
-    <div className="editPanel" style={{border:"2px solid black", marginLeft: "2em" }}>
+    <div className="editPanel" style={{border:"2px solid black", marginLeft: "1em", padding: "10px" }}>
       {/* <Form /> */}
       {/* <Image /> */}
       <MfImageConfig /> 
