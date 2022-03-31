@@ -4,9 +4,6 @@ import styles from './MfImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { ImageProvider, ImageWidgetContext } from './ImageProvider';
 
-
-
-
 function MfImageConfig(props) {
 
   const context = useContext(ImageWidgetContext);
@@ -59,7 +56,9 @@ function MfImageConfig(props) {
             <input {...getInputProps()} />
             {files.length < 1 ? 'Upload' : 'Replace Image'}
          </div>
-         <p className={styles.MfImageConfig__uploadSize}>Max file size: 5mb, accepted: .jpg, .gif, .png, .svg</p>
+         <p className={styles.MfImageConfig__uploadSize}>
+            Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
+         </p>
          <h2 className={styles.MfImageConfig__altTextH2}>Alt Text</h2>
          <p className={styles.MfImageConfig__altTextP}>
             This text will be used by screen readers, search engines, or when the
