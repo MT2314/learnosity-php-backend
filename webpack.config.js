@@ -55,17 +55,12 @@ module.exports = (_, argv) => ({
 
   plugins: [
     new ModuleFederationPlugin({
-      name: "demo_component_library",
+      name: "mf_component_library",
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./TextEditable": "./src/TextEditable/TextEditable.js",
-        "./QuoteBox":"./src/QuoteBox/QuoteBox.js",
-        "./Callout":"./src/Callout/Callout.js",
-        "./Header":"./src/Header.jsx",
-        "./Form":"./src/Form/Form.js",
-        "./FormOutput": "./src/Form/FormOutput.js",
-        "./Provider": "./src/Provider.js",
+        "./Callout": "./src/Callout/Callout.js",
+        // "./Image": "./src/Image/Image.js",
       },
       shared: {
         ...deps,

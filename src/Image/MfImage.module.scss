@@ -11,6 +11,9 @@
    justify-content: center;
    align-items: center;
    background-color: #f6f6f6;
+   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='194px' viewBox='0 0 24 24' width='194px' fill='%23b2b2b2'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z'/%3E%3C/svg%3E");
+   background-repeat: no-repeat;
+   background-position: center;
    height: 400px;
    transition: border ease-in-out 0.3s;
    border: 1px solid #707070;
@@ -25,128 +28,27 @@
    z-index: 100;
 }
 
-.Image__uploadHover {
-  padding: 20px 20px 0 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.Image__container {
-  display: flex;
-  flex-direction: column;
-  border: none;
-  position: relative;
-  color: $white;
-}
-
-.Image__paper {
-  position: relative;
-  min-height: 128px;
-}
-
-.Image__editPanelPreview {
-  display: flex;
-  flex-direction: column;
-}
-
-.Image__img {
-  border: none;
-  max-width: 80%;
-  height: auto;
-  align-self: center;
-  &:hover {
-    cursor: pointer;
-  }
-  &:focus {
-    outline: 3px solid $focus-outline-color;
-  }
-}
-
-.Image__icon {
-  position: absolute;
-  &:focus {
-    outline: none;
-  }
-}
-
-
-.Image__label {
-  width: 80px;
-  display: inline-block;
-}
-
-.Image__input {
-  align-self: center;
-  border: 1.5px solid #E8E8E8;
-  font-family: $primary-font;
-  background: $secondary-color;
-  color: $black;
-  width: 97%;
-  font-size: 0.875em;
-  border-radius: 4px;
-  resize: none;
-  margin-top: 0.5em;
-}
-
 .Image__caption {
   border: none;
-  font-family: $primary-font;
+  font-family: "Roboto", "Arial", sans-serif;
   box-sizing: border-box;
   width: calc(100% - 4px);
   padding: 10px 10px;
   margin: 5px;
-  background: $white;
+  background: #fff;
   align-self: center;
   text-align: left;
   font-size: 14px;
-  color: $black;
+  color: #000;
   resize: none;
   overflow: hidden;
-  &:focus,
-  &:active{
-    outline: 2px solid $focus-outline-color;
-  }
 }
 
-.Image__icon {
-  color: $icon-color;
-  font-size: 194px;
+.Image__caption::placeholder {
+   font-size: 0.95rem;
 }
 
-.Image__tab,
-.Image__delete_tab {
-  border-radius: 10px 10px 0px 0px;
-  background: $primary-color;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:active {
-    background: #4b13a0;
-  }
-  &:focus {
-    outline: 2px solid $focus-outline-color;
-  }
-}
-
-.Image__tab {
-  padding: 5px 10px 5px 10px;
-  font-size: 15px;
-  text-transform: uppercase;
-  letter-spacing: 0.15px;
-  top: -34px;
-  left: -3px;
-}
-
-.Image__tab p {
-  margin: 0px;
-}
-
-.Image__delete_tab {
-  padding: 2px 0;
-  top: -32px;
-  right: -3px;
-  display: flex;
+.Image__caption:focus,
+.Image__caption:active {
+   outline: 2px solid #ffc46b;
 }

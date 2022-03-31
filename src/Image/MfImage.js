@@ -9,13 +9,13 @@ const MfImage = () => {
       <div className={styles.Image__holdingbox}>
           <div 
             className={styles.Image__outline}
-            style={{ backgroundImage: `url(${background})`, backgroundRepeat:'no-repeat', backgroundPosition:'center'}}
+            tabIndex="0"
           ></div>
           <textarea
             placeholder="Type caption here..."
             aria-label="Add caption text to image"
             rows={2}
-            className={(styles.Image__input, styles.Image__caption)}
+            className={styles.Image__caption}
           ></textarea>
         </div>
    )
