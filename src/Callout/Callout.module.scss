@@ -18,6 +18,7 @@
 .Callout_body {
     margin-left: 53px;
     font-family: "Arial";
+    resize: none;
 }
 
 .Callout_type_dropdown {
@@ -30,7 +31,9 @@
 
 .Callout_img{
     margin-right: 10px;
-    max-width: 43px;
+    width: 43px;
+    height: 43px;
+    border: 1px solid transparent;
 }
 
 .Callout_icon_placeholder{

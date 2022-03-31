@@ -33,7 +33,31 @@
    display: 'flex';
    flex-direction: 'row';
    flex-wrap: 'wrap';
-   margin-top: 16
+   margin: 16px 0;
+}
+
+.Image__thumbOuter {
+   display: inline-flex;
+   border-radius: 2;
+   border: 1px solid #eaeaea;
+   margin-bottom: 8;
+   margin-right: 8;
+   width: 100;
+   height: 100;
+   padding: 4;
+   box-sizing: border-box;
+}
+
+.Image__thumbInner {
+   display: flex;
+   min-width: 0;
+   overflow: hidden;
+}
+
+.Image__thumbnailImg {
+   display: block;
+   width: auto;
+   height: 100%;
 }
 
 .MfImageConfig__dropzone {
@@ -45,9 +69,8 @@
 .MfImageConfig__uploader {
    background: #7422d1;
    text-align: center;
-   letter-spacing: 0.2px;
    color: #fff;
-   padding: 6px 80px;
+   padding: 6px 0;
    margin-bottom: 10px;
    opacity: 1;
    font-size: 0.875rem;

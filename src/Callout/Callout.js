@@ -1,5 +1,3 @@
-// This version of Callout is styled with CSS Modules
-
 import React, { useState } from "react";
 import { Paper } from "@mui/material";
 import NativeSelect from '@mui/material/NativeSelect';
