@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createContext, useContext} from 'react';
 import { useDropzone } from 'react-dropzone'; 
 import styles from './MfImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
@@ -27,14 +27,40 @@ const img = {
    height: '100%'
 };
 
+
+export const ImageWidgetContext = createContext();
+
+export function ImageCC({children}){
+  const inputs = {
+    alt: "",
+    uploadedImg: "",
+    updateContext: (contextUpdates) => {
+      setUserInfo((currentContextInfo) => ({...currentContextInfo, ...contextUpdates}))
+    }
+  }
+  const [ userInfo, setUserInfo ] = useState(inputs)
+
+  return (
+        <ImageWidgetContext.Provider value={userInfo}>
+          {children}
+        </ImageWidgetContext.Provider>
+      )
+}
+
 function MfImageConfig(props) {
-   const [files, setFiles] = useState([]);
-   const {getRootProps, getInputProps} = useDropzone({
+
+  const context = useContext(ImageWidgetContext);
+  console.log(context)
+  const [files, setFiles] = useState([]);
+
+ 
+  const {getRootProps, getInputProps} = useDropzone({
       accept: 'image/*',
       maxFiles: 1,
       multiple: false,
       maxSize: 5000000,
       onDrop: acceptedFiles => {
+        context.updateContext({uploadedImg: URL.createObjectURL(acceptedFiles[0])})
          setFiles(acceptedFiles.map(file => Object.assign(file, {
             preview: URL.createObjectURL(file)
          })));
@@ -84,6 +110,8 @@ function MfImageConfig(props) {
             id={`image-alt`}
             aria-label="Add alt text to image"
             rows="4"
+            value={context.alt}
+            onChange={(e) => context.updateContext({alt: e.target.value })}
             className={styles.MfImageConfig__altTextInput}
             placeholder="Type alt text here..."
          ></textarea>
