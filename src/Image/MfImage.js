@@ -40,10 +40,10 @@ const MfImage = () => {
             >
                <div className={styles.Image__outline} tabIndex="0"></div>
                <textarea
-               placeholder="Type caption here..."
-               aria-label="Add caption text to image"
-               rows={2}
-               className={styles.Image__caption}
+                  placeholder="Type caption here..."
+                  aria-label="Add caption text to image"
+                  rows={2}
+                  className={styles.Image__caption}
                ></textarea>
             </div>
             )
