@@ -63,6 +63,9 @@ module.exports = (_, argv) => ({
         "./QuoteBox":"./src/QuoteBox/QuoteBox.js",
         "./Callout":"./src/Callout/Callout.js",
         "./Header":"./src/Header.jsx",
+        "./MfImage": "./src/Image/MfImage.js",
+        "./MfImageConfig": "./src/Image/MfImageConfig.js",
+        "./ImageProvider": "./src/Image/ImageProvider.js",
       },
       shared: {
         ...deps,
