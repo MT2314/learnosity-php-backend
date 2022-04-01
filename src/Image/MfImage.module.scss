@@ -1,3 +1,34 @@
+.Image__container {
+   display: flex;
+   flex-direction: column;
+   border: none;
+   position: relative;
+   color: #fff;
+}
+
+.Image__canvasImgContainer {
+   padding: 20px 20px 0 20px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+
+.Image__img {
+  border: none;
+  max-width: 80%;
+  height: auto;
+  align-self: center
+}
+
+.Image__img:hover {
+   cursor: pointer;
+}
+
+.Image__img:focus {
+   outline: 3px solid #ffc46b;
+}
+
 .Image__holdingbox {
    padding: 20px 20px 0 20px;
    height: 417px;
@@ -15,6 +46,7 @@
    background-repeat: no-repeat;
    background-position: center;
    height: 400px;
+   color: #fff;
    transition: border ease-in-out 0.3s;
    border: 1px solid #707070;
 }
@@ -29,23 +61,23 @@
 }
 
 .Image__caption {
-  border: none;
-  font-family: "Roboto", "Arial", sans-serif;
-  box-sizing: border-box;
-  width: calc(100% - 4px);
-  padding: 10px 10px;
-  margin: 5px;
-  background: #fff;
-  align-self: center;
-  text-align: left;
-  font-size: 14px;
-  color: #000;
-  resize: none;
-  overflow: hidden;
+   border: none;
+   font-family: "Roboto", "Arial", sans-serif;
+   box-sizing: border-box;
+   width: calc(100% - 4px);
+   padding: 10px 10px;
+   margin: 5px;
+   background: #fff;
+   align-self: center;
+   text-align: left;
+   font-size: 0.875rem;
+   color: #000;
+   resize: none;
+   overflow: hidden;
 }
 
 .Image__caption::placeholder {
-   font-size: 0.95rem;
+   font-size: 0.875rem;
 }
 
 .Image__caption:focus,
