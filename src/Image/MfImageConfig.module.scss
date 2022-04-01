@@ -36,7 +36,7 @@
    margin: 16px 0;
 }
 
-.Image__thumbOuter {
+.MfImageConfig__thumbOuter {
    display: inline-flex;
    border-radius: 2;
    border: 1px solid #eaeaea;
@@ -48,16 +48,18 @@
    box-sizing: border-box;
 }
 
-.Image__thumbInner {
+.MfImageConfig__thumbInner {
    display: flex;
    min-width: 0;
+   max-width: 240px;
+   height: auto;
    overflow: hidden;
 }
 
-.Image__thumbnailImg {
+.MfImageConfig__thumbnailImg {
    display: block;
-   width: auto;
-   height: 100%;
+   max-width: auto;
+   height: auto;
 }
 
 .MfImageConfig__dropzone {
