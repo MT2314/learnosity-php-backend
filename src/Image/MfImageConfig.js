@@ -12,7 +12,7 @@ function MfImageConfig(props) {
 
  
   const {getRootProps, getInputProps} = useDropzone({
-      accept: 'image/*',
+      accept: '.jpg, .jpeg, .gif, .png, .svg',
       maxFiles: 1,
       multiple: false,
       maxSize: 5000000,
