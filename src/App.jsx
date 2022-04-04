@@ -4,8 +4,8 @@ import TextEditable from "./TextEditable/TextEditable";
 import QuoteBox from "./QuoteBox/QuoteBox.js";
 import Callout from "./Callout/Callout.js";
 import Header from "./Header"
-import MfImage from './Image/MfImage';
-import MfImageConfig from "./Image/MfImageConfig";
+import Image from './Image/Image';
+import ImageConfig from "./Image/ImageConfig";
 import { ImageProvider } from "./Image/ImageProvider";
 
 import "./index.css";
@@ -20,11 +20,11 @@ const App = () => (
     <div className="canvas" style={{border: "2px solid black"}}>
       <Callout />
       {/* <QuoteBox /> */}
-      <MfImage /> 
+      <Image /> 
     </div>
     <div className="editPanel" style={{border:"2px solid black", marginLeft: "1em", padding: "10px" }}>
       {/* <Image /> */}
-      <MfImageConfig /> 
+      <ImageConfig /> 
     </div>
   </div>
   </>

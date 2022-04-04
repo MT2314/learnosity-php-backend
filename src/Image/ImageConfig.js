@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { useDropzone } from 'react-dropzone'; 
-import styles from './MfImageConfig.module.scss';
+import styles from './ImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import {ImageWidgetContext } from './ImageProvider';
 
-function MfImageConfig() {
+function ImageConfig() {
 
   const context = useContext(ImageWidgetContext);
   
@@ -68,28 +68,28 @@ const thumbsContainer = {
    }, [file]);
  
    return (
-      <section className={styles.MfImageConfig__editPanelContainer}>
+      <section className={styles.ImageConfig__editPanelContainer}>
          {/* Edit Panel Component Title */}
-         <div className={styles.MfImageConfig__componentTitleSection}>
-            <InsertPhotoOutlinedIcon className={styles.MfImageConfig__componentTitleIcon} />
-            <p className={styles.MfImageConfig__componentTitle}>Image</p>
+         <div className={styles.ImageConfig__componentTitleSection}>
+            <InsertPhotoOutlinedIcon className={styles.ImageConfig__componentTitleIcon} />
+            <p className={styles.ImageConfig__componentTitle}>Image</p>
          </div>
          {/* Image thumbnail */}
          <aside style={thumbsContainer}>
             {file.length !== 0 && thumbs }
          </aside>
          {/* Image Uploader */}
-         <div {...getRootProps({className: `${styles.MfImageConfig__uploader}`})}>
+         <div {...getRootProps({className: `${styles.ImageConfig__uploader}`})}>
             <label>
                <input {...getInputProps()} />
                {file.length < 1 ? 'Upload' : 'Replace Image'}
             </label>
          </div>
-         <p className={styles.MfImageConfig__uploadSize}>
+         <p className={styles.ImageConfig__uploadSize}>
             Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
          </p>
-         <h2 className={styles.MfImageConfig__altTextH2}>Alt Text</h2>
-         <p className={styles.MfImageConfig__altTextP}>
+         <h2 className={styles.ImageConfig__altTextH2}>Alt Text</h2>
+         <p className={styles.ImageConfig__altTextP}>
             This text will be used by screen readers, search engines, or when the
             image can't be loaded.
          </p>
@@ -100,11 +100,11 @@ const thumbsContainer = {
             rows="4"
             value={context.alt}
             onChange={(e) => context.updateContext({alt: e.target.value })}
-            className={styles.MfImageConfig__altTextInput}
+            className={styles.ImageConfig__altTextInput}
             placeholder="Type alt text here..."
          ></textarea>
       </section>
    );
  }
 
-export default MfImageConfig;
+export default ImageConfig;
