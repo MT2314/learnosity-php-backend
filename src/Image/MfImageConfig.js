@@ -76,7 +76,7 @@ const thumbsContainer = {
          </div>
          {/* Image thumbnail */}
          <aside style={thumbsContainer}>
-            {file.length !== 0 && thumbs }
+            {file.length > 0 && thumbs }
          </aside>
          {/* Image Uploader */}
          <div {...getRootProps({className: `${styles.MfImageConfig__uploader}`})}>
