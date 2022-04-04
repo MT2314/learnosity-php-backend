@@ -53,8 +53,10 @@ function MfImageConfig(props) {
          </aside>
          {/* Image Uploader */}
          <div {...getRootProps({className: `${styles.MfImageConfig__uploader}`})}>
-            <input {...getInputProps()} />
-            {files.length < 1 ? 'Upload' : 'Replace Image'}
+            <label>
+               <input {...getInputProps()} />
+               {files.length < 1 ? 'Upload' : 'Replace Image'}
+            </label>
          </div>
          <p className={styles.MfImageConfig__uploadSize}>
             Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
