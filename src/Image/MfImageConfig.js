@@ -10,6 +10,14 @@ function MfImageConfig() {
   
   const [file, setFile] = useState([]);
  
+// styles for thumbnail
+const thumbsContainer = {
+   display: "file",
+   flexDirection: 'row',
+   flexWrap: 'wrap',
+   marginTop: 16
+ };
+
  const thumb = {
    display: 'inline-flex',
    borderRadius: 2,
@@ -33,8 +41,17 @@ function MfImageConfig() {
    width: 'auto',
    height: '100%'
  };
+   // image preview
+   const thumbs =  <div style={thumb}>
+        <div style={thumbInner}>
+          <img
+            src={file.preview}
+            style={img}
+          />
+        </div>
+      </div>
 
- 
+//  drop zone image uploader configuration
   const {getRootProps, getInputProps} = useDropzone({
       accept: '.jpg, .jpeg, .gif, .png, .svg',
       maxFiles: 1,
@@ -46,15 +63,6 @@ function MfImageConfig() {
       }
    });
    
-   const thumbs =  <div style={thumb}>
-        <div style={thumbInner}>
-          <img
-            src={file.preview}
-            style={img}
-          />
-        </div>
-      </div>
- 
    useEffect(() => {
      // Make sure to revoke the data uris to avoid memory leaks
      URL.revokeObjectURL(file.preview);
@@ -68,8 +76,8 @@ function MfImageConfig() {
             <p className={styles.MfImageConfig__componentTitle}>Image</p>
          </div>
          {/* Image thumbnail */}
-         <aside className={styles.MfImageConfig__thumbnailContainer}>
-            {thumbs}
+         <aside style={thumbsContainer}>
+            {file.length !== 0 && thumbs }
          </aside>
          {/* Image Uploader */}
          <div {...getRootProps({className: `${styles.MfImageConfig__uploader}`})}>
