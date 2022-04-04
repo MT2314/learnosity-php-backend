@@ -76,13 +76,13 @@ const thumbsContainer = {
          </div>
          {/* Image thumbnail */}
          <aside style={thumbsContainer}>
-            {file.length > 0 && thumbs }
+            {file.length !== 0 && thumbs }
          </aside>
          {/* Image Uploader */}
          <div {...getRootProps({className: `${styles.MfImageConfig__uploader}`})}>
             <label>
                <input {...getInputProps()} />
-               {files.length < 1 ? 'Upload' : 'Replace Image'}
+               {file.length < 1 ? 'Upload' : 'Replace Image'}
             </label>
          </div>
          <p className={styles.MfImageConfig__uploadSize}>
