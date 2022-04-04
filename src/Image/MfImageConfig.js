@@ -12,7 +12,7 @@ function MfImageConfig() {
  
 // styles for thumbnail
 const thumbsContainer = {
-   display: "file",
+   display: "flex",
    flexDirection: 'row',
    flexWrap: 'wrap',
    marginTop: 16
@@ -20,7 +20,6 @@ const thumbsContainer = {
 
  const thumb = {
    display: 'inline-flex',
-   borderRadius: 2,
    border: '1px solid #eaeaea',
    marginBottom: 8,
    marginRight: 8,
