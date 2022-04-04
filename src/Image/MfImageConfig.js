@@ -1,14 +1,38 @@
-import React, {useState, useEffect, createContext, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { useDropzone } from 'react-dropzone'; 
 import styles from './MfImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
-import { ImageProvider, ImageWidgetContext } from './ImageProvider';
+import {ImageWidgetContext } from './ImageProvider';
 
-function MfImageConfig(props) {
+function MfImageConfig() {
 
   const context = useContext(ImageWidgetContext);
   
-  const [files, setFiles] = useState([]);
+  const [file, setFile] = useState([]);
+ 
+ const thumb = {
+   display: 'inline-flex',
+   borderRadius: 2,
+   border: '1px solid #eaeaea',
+   marginBottom: 8,
+   marginRight: 8,
+   width: 100,
+   height: 100,
+   padding: 4,
+   boxSizing: 'border-box'
+ };
+ 
+ const thumbInner = {
+   display: 'flex',
+   minWidth: 0,
+   overflow: 'hidden'
+ };
+ 
+ const img = {
+   display: 'block',
+   width: 'auto',
+   height: '100%'
+ };
 
  
   const {getRootProps, getInputProps} = useDropzone({
@@ -17,28 +41,24 @@ function MfImageConfig(props) {
       multiple: false,
       maxSize: 5000000,
       onDrop: acceptedFiles => {
-        context.updateContext({uploadedImg: URL.createObjectURL(acceptedFiles[0])})
-         setFiles(acceptedFiles.map(file => Object.assign(file, {
-            preview: URL.createObjectURL(file)
-         })));
+         context.updateContext({uploadedImg: URL.createObjectURL(acceptedFiles[0])})
+         setFile({preview: URL.createObjectURL(acceptedFiles[0])});
       }
    });
    
-   const thumbs = files.map(file => (
-     <div className={styles.Image__thumbOuter} key={file.name}>
-       <div className={styles.Image__thumbInner}>
-         <img
-           src={file.preview}
-           className={styles.Image__thumbnailImg}
-         />
-       </div>
-     </div>
-   ));
+   const thumbs =  <div style={thumb}>
+        <div style={thumbInner}>
+          <img
+            src={file.preview}
+            style={img}
+          />
+        </div>
+      </div>
  
    useEffect(() => {
      // Make sure to revoke the data uris to avoid memory leaks
-     files.forEach(file => URL.revokeObjectURL(file.preview));
-   }, [files]);
+     URL.revokeObjectURL(file.preview);
+   }, [file]);
  
    return (
       <section className={styles.MfImageConfig__editPanelContainer}>
@@ -54,7 +74,7 @@ function MfImageConfig(props) {
          {/* Image Uploader */}
          <div {...getRootProps({className: `${styles.MfImageConfig__uploader}`})}>
             <input {...getInputProps()} />
-            {files.length < 1 ? 'Upload' : 'Replace Image'}
+            {file.length < 1 ? 'Upload' : 'Replace Image'}
          </div>
          <p className={styles.MfImageConfig__uploadSize}>
             Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
