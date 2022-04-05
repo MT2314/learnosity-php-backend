@@ -1,11 +1,11 @@
-.MfImageConfig__editPanelContainer {
+.ImageConfig__editPanelContainer {
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
 }
    
-.MfImageConfig__componentTitleSection {
+.ImageConfig__componentTitleSection {
    display: flex;
    justify-content: center;
    align-items: center;
@@ -17,7 +17,7 @@
    border-bottom: 1px solid #e0e0e0;
 }
 
-.MfImageConfig__componentTitleIcon {
+.ImageConfig__componentTitleIcon {
    margin-right: 0.5em;
    user-select: none;
    width: 1em;
@@ -29,14 +29,14 @@
    font-size: 1.5rem;
 }
 
-.MfImageConfig__thumbnailContainer {
+.ImageConfig__thumbnailContainer {
    display: 'flex';
    flex-direction: 'row';
    flex-wrap: 'wrap';
    margin: 16px 0;
 }
 
-.MfImageConfig__thumbOuter {
+.ImageConfig__thumbOuter {
    display: inline-flex;
    border-radius: 2;
    border: 1px solid #eaeaea;
@@ -48,7 +48,7 @@
    box-sizing: border-box;
 }
 
-.MfImageConfig__thumbInner {
+.ImageConfig__thumbInner {
    display: flex;
    min-width: 0;
    max-width: 240px;
@@ -56,13 +56,13 @@
    overflow: hidden;
 }
 
-.MfImageConfig__thumbnailImg {
+.ImageConfig__thumbnailImg {
    display: block;
    max-width: auto;
    height: auto;
 }
 
-.MfImageConfig__uploader {
+.ImageConfig__uploader {
    background: #7422d1;
    text-align: center;
    color: #fff;
@@ -82,35 +82,35 @@
    transition: all .2s ease-in
 }
 
-.MfImageConfig__uploader:hover,
-.MfImageConfig__uploader:active {
+.ImageConfig__uploader:hover,
+.ImageConfig__uploader:active {
    background: #4b13a0;
    cursor: pointer;
 }
 
-.MfImageConfig__uploader:focus {
+.ImageConfig__uploader:focus {
    outline: 3px solid #ffc46b;
 }
 
-.MfImageConfig__uploadSize {
+.ImageConfig__uploadSize {
    width: 100%;
    font-size: 14px;
    margin-top: 0;
 }
 
-.MfImageConfig__altTextH2 {
+.ImageConfig__altTextH2 {
    margin-bottom: 0;
    font-family: "Roboto","Arial",sans-serif;
    font-size: 20px;
    align-self: flex-start;
 }
 
-.MfImageConfig__altTextP {
+.ImageConfig__altTextP {
   font-size: 12px;
   margin-bottom: 0.5em;
 }
 
-.MfImageConfig__altTextInput {
+.ImageConfig__altTextInput {
    border: 1.5px solid #e8e8e8;
    background: #f6f6f6;
    width: 100%;
@@ -122,10 +122,10 @@
    resize: none;
 }
 
-.MfImageConfig__altTextInput::placeholder {
+.ImageConfig__altTextInput::placeholder {
    font-size: 0.95rem;
 }
 
-.MfImageConfig__altTextInput:focus {
+.ImageConfig__altTextInput:focus {
    outline: 3px solid #ffc46b;
 }
