@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useDropzone } from 'react-dropzone'; 
 import styles from './ImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
-import {ImageWidgetContext } from './ImageProvider';
+import { ImageWidgetContext } from './ImageProvider';
 
 function ImageConfig() {
 
@@ -10,44 +10,46 @@ function ImageConfig() {
   
   const [file, setFile] = useState([]);
  
-// styles for thumbnail
-const thumbsContainer = {
-   display: "flex",
-   flexDirection: 'row',
-   flexWrap: 'wrap',
-   marginTop: 16
- };
+   // styles for thumbnail
+   const thumbsContainer = {
+      display: "flex",
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginTop: 16
+   };
 
- const thumb = {
-   display: 'inline-flex',
-   border: '1px solid #eaeaea',
-   marginBottom: 8,
-   marginRight: 8,
-   width: 100,
-   height: 100,
-   padding: 4,
-   boxSizing: 'border-box'
- };
+   const thumb = {
+      display: 'inline-flex',
+      border: '1px solid #eaeaea',
+      marginBottom: 8,
+      marginRight: 8,
+      width: 100,
+      height: 100,
+      padding: 4,
+      boxSizing: 'border-box'
+   };
  
- const thumbInner = {
-   display: 'flex',
-   minWidth: 0,
-   overflow: 'hidden'
- };
+   const thumbInner = {
+      display: 'flex',
+      minWidth: 0,
+      overflow: 'hidden'
+   };
  
- const img = {
-   display: 'block',
-   width: 'auto',
-   height: '100%'
- };
+   const img = {
+      display: 'block',
+      width: 'auto',
+      height: '100%'
+   };
+   
    // image preview
-   const thumbs =  <div style={thumb}>
-        <div style={thumbInner}>
-          <img
-            src={file.preview}
-            style={img}
-          />
-        </div>
+   const thumbs =  
+      <div style={thumb}>
+         <div style={thumbInner}>
+            <img
+               src={file.preview}
+               style={img}
+            />
+         </div>
       </div>
 
 //  drop zone image uploader configuration
