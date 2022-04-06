@@ -63,7 +63,7 @@ function ImageConfig() {
 
 //  drop zone image uploader configuration
   const { getRootProps, getInputProps, fileRejections } = useDropzone({
-      accept: 'image/jpg, image/jpeg, image/gif, image/png, image/svg',
+      accept: 'image/jpg, image/jpeg, image/gif, image/png, image/svg+xml',
       maxFiles: 1,
       multiple: false,
       maxSize: 5000000,
