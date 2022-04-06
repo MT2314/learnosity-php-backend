@@ -4,6 +4,12 @@ import '@testing-library/jest-dom';
 import { Image } from "../Image/Image";
 import { ImageProvider } from "../Image/ImageProvider";
 
+
+ test('use jsdom in this test file', () => {
+   const element = document.createElement('div');
+   expect(element).not.toBeNull();
+ });
+
 beforeEach(() => {
   jest.spyOn(console, "log").mockImplementation(() => {});
   jest.spyOn(console, "debug").mockImplementation(() => {});

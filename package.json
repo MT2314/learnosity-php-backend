@@ -5,7 +5,8 @@
     "verbose": true,
     "moduleNameMapper": {
       "^.+\\.(css|less|scss)$": "babel-jest"
-    }
+    },
+    "testEnvironment": "jsdom"
   },
   "scripts": {
     "build": "webpack --mode production",
