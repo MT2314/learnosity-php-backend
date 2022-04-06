@@ -23,7 +23,6 @@ const App = () => (
       <Image /> 
     </div>
     <div className="editPanel" style={{border:"2px solid black", marginLeft: "1em", padding: "10px" }}>
-      {/* <Image /> */}
       <ImageConfig /> 
     </div>
   </div>

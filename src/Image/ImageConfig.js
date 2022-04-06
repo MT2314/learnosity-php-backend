@@ -42,7 +42,7 @@ function ImageConfig() {
    };
    
    // image preview
-   const thumbs =  
+   const thumbs =  (
       <div style={thumb}>
          <div style={thumbInner}>
             <img
@@ -51,13 +51,23 @@ function ImageConfig() {
             />
          </div>
       </div>
+   );
+
+   const imageValidator = (image) => {
+      if (image.size > 5000000) {
+         alert('Image size is greater than 5MB.  Please try uploading a different image.');
+      } else if (image.type !== 'image/jpeg' && image.type !== 'image/gif' && image.type !== 'image/png' && image.type !== 'image/svg') {
+         alert('Image type not accepted.  Please try uploading a different type of image.');
+      }
+   };
 
 //  drop zone image uploader configuration
-  const {getRootProps, getInputProps} = useDropzone({
-      accept: '.jpg, .jpeg, .gif, .png, .svg',
+  const { getRootProps, getInputProps, fileRejections } = useDropzone({
+      accept: 'image/jpg, image/jpeg, image/gif, image/png, image/svg',
       maxFiles: 1,
       multiple: false,
       maxSize: 5000000,
+      validator: imageValidator,
       onDrop: acceptedFiles => {
          context.updateContext({uploadedImg: URL.createObjectURL(acceptedFiles[0])})
          setFile({preview: URL.createObjectURL(acceptedFiles[0])});
