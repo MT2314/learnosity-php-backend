@@ -3,7 +3,8 @@ import { render, screen } from "@testing-library/react";
 import Callout from '../Callout/Callout';
 
 describe("<Callout />", () => {
-   it('renders the Callout component', () => {
+
+   it('renders Callout component', () => {
       expect(render(<Callout />)).toBeDefined()
    })
 })
