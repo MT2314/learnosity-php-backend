@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useDropzone } from 'react-dropzone'; 
 import styles from './ImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
@@ -19,26 +19,23 @@ function ImageConfig() {
    };
 
    const thumb = {
-      display: 'inline-flex',
-      border: '1px solid #eaeaea',
       marginBottom: 8,
       marginRight: 8,
-      width: 100,
-      height: 100,
+      maxWidth: '200px',
+      height: 'auto',
       padding: 4,
       boxSizing: 'border-box'
    };
  
    const thumbInner = {
       display: 'flex',
-      minWidth: 0,
-      overflow: 'hidden'
+      minWidth: 0
    };
  
    const img = {
       display: 'block',
-      width: 'auto',
-      height: '100%'
+      width: '100%',
+      height: 'auto'
    };
    
    // image preview
@@ -57,7 +54,7 @@ function ImageConfig() {
    const imageValidator = (image) => {
       if (image.size > 5000000) {
          alert('Image size is greater than 5MB.  Please try uploading a different image.');
-      } else if (image.type !== 'image/jpeg' && image.type !== 'image/gif' && image.type !== 'image/png' && image.type !== 'image/svg') {
+      } else if (image.type !== 'image/jpeg' && image.type !== 'image/gif' && image.type !== 'image/png' && image.type !== 'image/svg+xml') {
          alert('Image type not accepted.  Please try uploading a different type of image.');
       }
    };
@@ -70,15 +67,17 @@ function ImageConfig() {
       maxSize: 5000000,
       validator: imageValidator,
       onDrop: acceptedFiles => {
-         context.updateContext({uploadedImg: URL.createObjectURL(acceptedFiles[0])})
+         context.updateContext({uploadedImg: URL.createObjectURL(acceptedFiles[0])});
          setFile({preview: URL.createObjectURL(acceptedFiles[0])});
+         URL.revokeObjectURL(file.preview);
       }
    });
    
-   useEffect(() => {
-     // Make sure to revoke the data uris to avoid memory leaks
-     URL.revokeObjectURL(file.preview);
-   }, [file]);
+   // Commented this out to get image preview/thumbnail rendering properly
+   // useEffect(() => {
+   //   // Make sure to revoke the data uris to avoid memory leaks
+   //   URL.revokeObjectURL(file.preview);
+   // }, [file]);
  
    return (
       <section className={styles.ImageConfig__editPanelContainer}>
@@ -89,7 +88,7 @@ function ImageConfig() {
          </div>
          {/* Image thumbnail */}
          <aside style={thumbsContainer}>
-            {file.length !== 0 && thumbs }
+            { file.length !== 0 && thumbs }
          </aside>
          {/* Image Uploader */}
          <div {...getRootProps({className: `${styles.ImageConfig__uploader}`})}>
