@@ -47,6 +47,7 @@ function ImageConfig() {
          <div style={thumbInner}>
             <img
                src={file.preview}
+               alt={context.alt}
                style={img}
             />
          </div>
