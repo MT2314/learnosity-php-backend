@@ -1,15 +1,15 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Image from '../Image/Image';
+import ImageConfig from "../Image/ImageConfig";
 import { ImageProvider } from "../Image/ImageProvider";
 
+describe("<ImageConfig />", () => {
 
-describe("<Image />", () => {
-   it('renders Image component', () => {
+   it('renders ImageConfig component', () => {
       expect(render(
          <>
-         <ImageProvider >
-            <Image/>
+         <ImageProvider>
+            <ImageConfig />
          </ImageProvider>
          </>
       )).toBeDefined()
