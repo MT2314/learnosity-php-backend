@@ -60,7 +60,7 @@ function ImageConfig() {
    };
 
 //  drop zone image uploader configuration
-  const { getRootProps, getInputProps, fileRejections } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
       accept: 'image/jpg, image/jpeg, image/gif, image/png, image/svg+xml',
       maxFiles: 1,
       multiple: false,
@@ -72,12 +72,6 @@ function ImageConfig() {
          URL.revokeObjectURL(file.preview);
       }
    });
-   
-   // Commented this out to get image preview/thumbnail rendering properly
-   // useEffect(() => {
-   //   // Make sure to revoke the data uris to avoid memory leaks
-   //   URL.revokeObjectURL(file.preview);
-   // }, [file]);
  
    return (
       <section className={styles.ImageConfig__editPanelContainer}>
