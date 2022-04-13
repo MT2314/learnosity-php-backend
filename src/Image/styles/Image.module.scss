@@ -26,9 +26,9 @@
 
 .Image__img {
   border: none;
-  max-width: 80%;
   height: auto;
-  align-self: center
+  max-width: 90%;
+  align-self: center;
 }
 
 .Image__img:hover {
@@ -37,6 +37,10 @@
 
 .Image__img:focus {
    outline: 3px solid #ffc46b;
+}
+
+.Image__imgLink {
+   align-self: center;
 }
 
 .Image__outline {
