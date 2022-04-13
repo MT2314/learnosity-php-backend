@@ -7,6 +7,7 @@ export function ImageProvider({children}){
     alt: "",
     imgLink:"",
     uploadedImg: "",
+    imgSize: "default",
     updateContext: (contextUpdates) => {
       setUserInfo((currentContextInfo) => ({...currentContextInfo, ...contextUpdates}))
     }

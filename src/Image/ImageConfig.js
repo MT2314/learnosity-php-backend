@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useDropzone } from 'react-dropzone'; 
 import styles from './ImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
+import NativeSelect from '@mui/material/NativeSelect';
 import { ImageWidgetContext } from './ImageProvider';
 
 function ImageConfig() {
@@ -61,7 +62,7 @@ function ImageConfig() {
    };
 
 //  drop zone image uploader configuration
-  const { getRootProps, getInputProps, fileRejections } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
       accept: 'image/jpg, image/jpeg, image/gif, image/png, image/svg+xml',
       maxFiles: 1,
       multiple: false,
@@ -74,16 +75,11 @@ function ImageConfig() {
       }
    });
    
-   // Commented this out to get image preview/thumbnail rendering properly
-   // useEffect(() => {
-   //   // Make sure to revoke the data uris to avoid memory leaks
-   //   URL.revokeObjectURL(file.preview);
-   // }, [file]);
-
    const handleSubmitLink = (event) => {
       event.preventDefault();
       context.updateContext({ imgLink: imgLink })
    }
+   
    return (
       <section className={styles.ImageConfig__editPanelContainer}>
          {/* Edit Panel Component Title */}
@@ -120,6 +116,19 @@ function ImageConfig() {
             className={styles.ImageConfig__altTextInput}
             placeholder="Type alt text here..."
          ></textarea>
+         <h2>Image Size</h2>
+         <p>Change the size of your uploaded image.</p>
+         <NativeSelect
+            className={styles.ImageConfig__imageSizeDropdown}
+            onChange={(e) => context.updateContext({imgSize: e.target.value})}
+            defaultValue={"select"}
+         >
+            <option value={"select"} disabled>Select Size</option>
+            <option value={"default"}>Default</option>
+            <option value={"small"}>Small</option>
+            <option value={"medium"}>Medium</option>
+            <option value={"large"}>Large</option>
+         </NativeSelect>
          <form onSubmit={handleSubmitLink}>
             <label htmlFor="url">Add link to image</label>
             <input 
@@ -136,6 +145,6 @@ function ImageConfig() {
          </form>
       </section>
    );
- }
+};
 
 export default ImageConfig;
