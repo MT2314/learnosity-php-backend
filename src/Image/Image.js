@@ -44,7 +44,6 @@ const Image = () => {
                   tabIndex="0"
                />
             </div>
-
             }
             </>
             ) : (
