@@ -8,6 +8,26 @@ const Image = () => {
    const context = useContext(ImageWidgetContext);
    const [ credit, setCredit ] = useState('')
 
+   let imgSizeStyles = {};
+	
+   if (context.imgSize === "default") {
+      imgSizeStyles = {
+         width: 'auto',
+      }
+   } else if (context.imgSize === "small") {
+      imgSizeStyles = {
+         width: '256px',
+      }
+   } else if (context.imgSize === "medium") {
+      imgSizeStyles = {
+         width: '1000px',
+      }
+   } else if (context.imgSize === "large") {
+      imgSizeStyles = {
+         width: '1800px',
+      }
+   }
+
    return(
       <Paper
          className={styles.Image__container}
@@ -28,6 +48,7 @@ const Image = () => {
                         src={context.uploadedImg}
                         alt={context.alt}
                         className={styles.Image__img}
+                        style={imgSizeStyles}
                      />
                   </div>
                </a>
@@ -42,6 +63,7 @@ const Image = () => {
                   alt={context.alt}
                   className={styles.Image__img}
                   tabIndex="0"
+                  style={imgSizeStyles}
                />
             </div>
             }
