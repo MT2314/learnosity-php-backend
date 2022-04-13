@@ -98,16 +98,17 @@
    margin-top: 0;
 }
 
-.ImageConfig__altTextH2 {
+.ImageConfig__imageH2 {
    margin-bottom: 0;
    font-family: "Roboto","Arial",sans-serif;
    font-size: 20px;
    align-self: flex-start;
 }
 
-.ImageConfig__altTextP {
+.ImageConfig__imageLabel {
   font-size: 12px;
-  margin-bottom: 0.5em;
+  align-self: flex-start;
+  margin: 0.5rem 0;
 }
 
 .ImageConfig__altTextInput {

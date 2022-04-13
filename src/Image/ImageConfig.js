@@ -116,11 +116,11 @@ function ImageConfig() {
          <p className={styles.ImageConfig__uploadSize}>
             Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
          </p>
-         <h2 className={styles.ImageConfig__altTextH2}>Alt Text</h2>
-         <p className={styles.ImageConfig__altTextP}>
+         <h2 className={styles.ImageConfig__imageH2}>Alt Text</h2>
+         <label className={styles.ImageConfig__imageLabel} htmlFor="image-alt">
             This text will be used by screen readers, search engines, or when the
             image can't be loaded.
-         </p>
+         </label>
          <textarea
             name={`image-alt`}
             id={`image-alt`}
@@ -131,9 +131,10 @@ function ImageConfig() {
             className={styles.ImageConfig__altTextInput}
             placeholder="Type alt text here..."
          ></textarea>
-         <h2>Image Size</h2>
-         <p>Change the size of your uploaded image.</p>
+         <h2 className={styles.ImageConfig__imageH2}>Image Size</h2>
+         <label htmlFor="img-size" className={styles.ImageConfig__imageLabel}>Change the size of your uploaded image.</label>
          <NativeSelect
+            id="img-size"
             className={styles.ImageConfig__imageSizeDropdown}
             onChange={(e) => context.updateContext({imgSize: e.target.value})}
             defaultValue={"select"}
