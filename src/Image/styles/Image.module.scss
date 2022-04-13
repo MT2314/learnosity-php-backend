@@ -24,6 +24,12 @@
    flex-direction: column;
 }
 
+.Image__holdingbox {
+   padding: 20px 20px 0 20px;
+   display: flex;
+   flex-direction: column;
+}
+
 .Image__img {
   border: none;
   max-width: 80%;
@@ -39,13 +45,6 @@
    outline: 3px solid #ffc46b;
 }
 
-.Image__holdingbox {
-   padding: 20px 20px 0 20px;
-   height: 417px;
-   display: flex;
-   flex-direction: column;
-}
-
 .Image__outline {
    display: flex;
    position: relative;
@@ -56,6 +55,7 @@
    background-repeat: no-repeat;
    background-position: center;
    height: 400px;
+   width: 100%;
    color: #fff;
    transition: border ease-in-out 0.3s;
    border: 1px solid #707070;
