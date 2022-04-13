@@ -115,6 +115,8 @@ function ImageConfig() {
             className={styles.ImageConfig__altTextInput}
             placeholder="Type alt text here..."
          ></textarea>
+         <label for="img-link">Add link to image</label>
+         <input type="url" id="img-link" value={context.imgLink}/>
       </section>
    );
  }
