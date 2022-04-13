@@ -7,6 +7,7 @@ import { ImageWidgetContext } from './ImageProvider';
 function ImageConfig() {
 
   const context = useContext(ImageWidgetContext);
+  const [ imgLink, setImgLink ] = useState("")
   
   const [file, setFile] = useState([]);
  
@@ -78,7 +79,11 @@ function ImageConfig() {
    //   // Make sure to revoke the data uris to avoid memory leaks
    //   URL.revokeObjectURL(file.preview);
    // }, [file]);
- 
+
+   const handleSubmitLink = (event) => {
+      event.preventDefault();
+      context.updateContext({ imgLink: imgLink })
+   }
    return (
       <section className={styles.ImageConfig__editPanelContainer}>
          {/* Edit Panel Component Title */}
@@ -115,12 +120,20 @@ function ImageConfig() {
             className={styles.ImageConfig__altTextInput}
             placeholder="Type alt text here..."
          ></textarea>
-         <label for="img-link">Add link to image</label>
+         <form onSubmit={handleSubmitLink}>
+         <label htmlFor="url">Add link to image</label>
          <input 
-            type="url" 
-            id="img-link" 
-            value={context.imgLink}
-            onChange={ (e) => context.updateContext({imgLink: e.target.value})}/>
+            type="url"
+            name="url"
+            id="url"
+            placeholder="https://example.com"
+            pattern="https://.*"
+            value={imgLink}
+            onChange={ e => setImgLink(e.target.value)}
+            required
+            />
+         <button type="submit">Add Link</button>
+         </form>
       </section>
    );
  }

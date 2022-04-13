@@ -27,7 +27,6 @@ const Image = () => {
                      src={context.uploadedImg}
                      alt={context.alt}
                      className={styles.Image__img}
-                     tabIndex="0"
                   />
                </div>
                </a>
