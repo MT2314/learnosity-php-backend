@@ -117,7 +117,7 @@ function ImageConfig() {
             Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
          </p>
          <h2 className={styles.ImageConfig__imageH2}>Alt Text</h2>
-         <label className={styles.ImageConfig__imageLabel} for="image-alt">
+         <label className={styles.ImageConfig__imageLabel} htmlFor="image-alt">
             This text will be used by screen readers, search engines, or when the
             image can't be loaded.
          </label>
@@ -132,7 +132,7 @@ function ImageConfig() {
             placeholder="Type alt text here..."
          ></textarea>
          <h2 className={styles.ImageConfig__imageH2}>Image Size</h2>
-         <label for="img-size" className={styles.ImageConfig__imageLabel}>Change the size of your uploaded image.</label>
+         <label htmlFor="img-size" className={styles.ImageConfig__imageLabel}>Change the size of your uploaded image.</label>
          <NativeSelect
             id="img-size"
             className={styles.ImageConfig__imageSizeDropdown}
