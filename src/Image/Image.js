@@ -68,7 +68,9 @@ const Image = () => {
                 id="credit"
                 value={credit}
                 placeholder="add image credit"
-                onChange={e => setCredit(e.target.value)}></input>
+                className={styles.Image__caption}
+                onChange={e => setCredit(e.target.value)}
+         />
       </Paper>
    );
 };
