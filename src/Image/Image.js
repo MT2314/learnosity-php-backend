@@ -33,13 +33,7 @@ const Image = () => {
          className={styles.Image__container}
          elevation={0}
       >
-			<div 
-            // className={
-				// 	context.uploadedImg ? `${styles.Image__canvasImgContainer} ${styles.Image__holdingbox}`
-				// 	: styles.Image__holdingbox
-				// }
-				className={styles.Image__canvasImgContainer}
-         >
+			<div className={styles.Image__canvasImgContainer}>
          {context.uploadedImg ? (
             // If image has been uploaded
             <>
