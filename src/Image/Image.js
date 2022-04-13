@@ -19,18 +19,19 @@ const Image = () => {
             {
                context.imgLink ?
                <a href={context.imgLink}>
-               <div 
-                  className={styles.Image__canvasImgContainer}
-                  tabIndex="0"
-               >
-                  <img
-                     src={context.uploadedImg}
-                     alt={context.alt}
-                     className={styles.Image__img}
-                  />
-               </div>
+                  <div 
+                     className={styles.Image__canvasImgContainer}
+                     tabIndex="0"
+                  >
+                     <img
+                        src={context.uploadedImg}
+                        alt={context.alt}
+                        className={styles.Image__img}
+                     />
+                  </div>
                </a>
                :
+               // no link added to img
                <div 
                className={styles.Image__canvasImgContainer}
                tabIndex="0"

@@ -121,18 +121,18 @@ function ImageConfig() {
             placeholder="Type alt text here..."
          ></textarea>
          <form onSubmit={handleSubmitLink}>
-         <label htmlFor="url">Add link to image</label>
-         <input 
-            type="url"
-            name="url"
-            id="url"
-            placeholder="https://example.com"
-            pattern="https://.*"
-            value={imgLink}
-            onChange={ e => setImgLink(e.target.value)}
-            required
+            <label htmlFor="url">Add link to image</label>
+            <input 
+               type="url"
+               name="url"
+               id="url"
+               placeholder="https://example.com"
+               pattern="https://.*"
+               value={imgLink}
+               onChange={ e => setImgLink(e.target.value)}
+               required
             />
-         <button type="submit">Add Link</button>
+            <button type="submit">Add Link</button>
          </form>
       </section>
    );
