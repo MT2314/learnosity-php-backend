@@ -9,7 +9,6 @@ function ImageConfig() {
 
   const context = useContext(ImageWidgetContext);
   const [ imgLink, setImgLink ] = useState("")
-  const [ creditLink, setCreditLink ] = useState("")
   
   const [file, setFile] = useState([]);
  
@@ -78,7 +77,7 @@ function ImageConfig() {
    
    const handleSubmitLink = (event) => {
       event.preventDefault();
-      context.updateContext({ imgLink: imgLink, creditLink: creditLink })
+      context.updateContext({ imgLink: imgLink })
    }
    
    return (
@@ -140,18 +139,6 @@ function ImageConfig() {
                pattern="https://.*"
                value={imgLink}
                onChange={ e => setImgLink(e.target.value)}
-            />
-            <button type="submit">Add Link</button>
-
-            <label htmlFor="urlCredit">Add link to credit</label>
-            <input 
-               type="url"
-               name="urlCredit"
-               id="urlCredit"
-               placeholder="https://example.com"
-               pattern="https://.*"
-               value={creditLink}
-               onChange={ e => setCreditLink(e.target.value)}
             />
             <button type="submit">Add Link</button>
          </form>
