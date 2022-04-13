@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Paper } from "@mui/material";
 import styles from "./Image.module.scss";
 import { ImageWidgetContext } from "./ImageProvider";
@@ -9,7 +9,6 @@ const Image = () => {
 
    let imgSizeStyles = {};
 
-   
    if (context.imgSize === "default") {
       imgSizeStyles = {
          width: 'auto',
@@ -51,6 +50,7 @@ const Image = () => {
                      <img
                         src={context.uploadedImg}
                         alt={context.alt}
+                        style={imgSizeStyles}
                         className={styles.Image__img}
                      />
                   </div>
@@ -65,6 +65,7 @@ const Image = () => {
                   src={context.uploadedImg}
                   alt={context.alt}
                   className={styles.Image__img}
+                  style={imgSizeStyles}
                   tabIndex="0"
                />
             </div>
