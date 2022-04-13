@@ -11,25 +11,21 @@ const Image = () => {
 
    if (context.imgSize === "default") {
       imgSizeStyles = {
-         width: 'auto',
-         height: 'auto'
+         width: 'auto'
       }
    } else if (context.imgSize === "small") {
       imgSizeStyles = {
-         width: '256px',
-         height: 'auto'
+         width: '256px'
       }
    } else if (context.imgSize === "medium") {
       imgSizeStyles = {
-         width: '1000px',
-         height: 'auto'
+         width: '1000px'
       }
    } else if (context.imgSize === "large") {
       imgSizeStyles = {
-         width: '1800px',
-         height: 'auto'
+         width: '1800px'
       }
-   }
+   };
 
    return(
       <Paper
