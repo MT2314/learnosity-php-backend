@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useDropzone } from 'react-dropzone'; 
-import styles from './ImageConfig.module.scss';
+import styles from './styles/ImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import NativeSelect from '@mui/material/NativeSelect';
 import { ImageWidgetContext } from './ImageProvider';
@@ -9,6 +9,7 @@ function ImageConfig() {
 
   const context = useContext(ImageWidgetContext);
   const [ imgLink, setImgLink ] = useState("")
+  const [ count, setCount ] = useState(0)
   
   const [file, setFile] = useState([]);
  
@@ -69,6 +70,7 @@ function ImageConfig() {
       maxSize: 5000000,
       validator: imageValidator,
       onDrop: acceptedFiles => {
+         handleClearImageFields()
          context.updateContext({uploadedImg: URL.createObjectURL(acceptedFiles[0])});
          setFile({preview: URL.createObjectURL(acceptedFiles[0])});
          URL.revokeObjectURL(file.preview);
@@ -78,6 +80,19 @@ function ImageConfig() {
    const handleSubmitLink = (event) => {
       event.preventDefault();
       context.updateContext({ imgLink: imgLink })
+   }
+
+   const handleClearImageFields = () => {
+      setCount(count + 1)
+
+      if(count > 0){
+         context.updateContext({ 
+            alt: "",
+            imgLink:"",
+            imgSize: "default"})
+         }else{
+            return
+         }
    }
    
    return (
@@ -130,16 +145,15 @@ function ImageConfig() {
             <option value={"large"}>Large</option>
          </NativeSelect>
          <form onSubmit={handleSubmitLink}>
-            <label htmlFor="url">Add link to image</label>
+            <label htmlFor="urlImg">Add link to image</label>
             <input 
                type="url"
-               name="url"
-               id="url"
+               name="urlImg"
+               id="urlImg"
                placeholder="https://example.com"
                pattern="https://.*"
                value={imgLink}
                onChange={ e => setImgLink(e.target.value)}
-               required
             />
             <button type="submit">Add Link</button>
          </form>
