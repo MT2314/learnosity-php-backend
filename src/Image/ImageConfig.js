@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useDropzone } from 'react-dropzone'; 
 import styles from './ImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
+import NativeSelect from '@mui/material/NativeSelect';
 import { ImageWidgetContext } from './ImageProvider';
 
 function ImageConfig() {
@@ -72,9 +73,11 @@ function ImageConfig() {
          URL.revokeObjectURL(file.preview);
       }
    });
+
+   console.log('context ====>', context);
  
    return (
-      <section className={styles.ImageConfig__editPanelContainer}>
+      <div className={styles.ImageConfig__editPanelContainer}>
          {/* Edit Panel Component Title */}
          <div className={styles.ImageConfig__componentTitleSection}>
             <InsertPhotoOutlinedIcon className={styles.ImageConfig__componentTitleIcon} />
@@ -109,7 +112,20 @@ function ImageConfig() {
             className={styles.ImageConfig__altTextInput}
             placeholder="Type alt text here..."
          ></textarea>
-      </section>
+         <h2>Image Size</h2>
+         <p>Change the size of your uploaded image.</p>
+         <NativeSelect
+            className={styles.ImageConfig__imageSizeDropdown}
+            onChange={(e) => context.updateContext({imgSize: e.target.value})}
+            defaultValue={"select"}
+         >
+            <option value={"select"} disabled>Select Size</option>
+            <option value={"default"}>Default</option>
+            <option value={"small"}>Small</option>
+            <option value={"medium"}>Medium</option>
+            <option value={"large"}>Large</option>
+         </NativeSelect>
+      </div>
    );
  }
 
