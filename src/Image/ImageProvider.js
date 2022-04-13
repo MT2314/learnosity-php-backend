@@ -5,6 +5,7 @@ export const ImageWidgetContext = createContext();
 export function ImageProvider({children}){
   const inputs = {
     alt: "",
+    imgLink:"",
     uploadedImg: "",
     updateContext: (contextUpdates) => {
       setUserInfo((currentContextInfo) => ({...currentContextInfo, ...contextUpdates}))
