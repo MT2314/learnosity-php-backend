@@ -8,6 +8,7 @@ import { ImageWidgetContext } from './ImageProvider';
 function ImageConfig() {
 
   const context = useContext(ImageWidgetContext);
+  const [ imgLink, setImgLink ] = useState("")
   
   const [file, setFile] = useState([]);
  
@@ -73,9 +74,12 @@ function ImageConfig() {
          URL.revokeObjectURL(file.preview);
       }
    });
-
-   console.log('context ====>', context);
- 
+   
+   const handleSubmitLink = (event) => {
+      event.preventDefault();
+      context.updateContext({ imgLink: imgLink })
+   }
+   
    return (
       <section className={styles.ImageConfig__editPanelContainer}>
          {/* Edit Panel Component Title */}
@@ -108,7 +112,7 @@ function ImageConfig() {
             aria-label="Add alt text to image"
             rows="4"
             value={context.alt}
-            onChange={(e) => context.updateContext({alt: e.target.value })}
+            onChange={ (e) => context.updateContext({alt: e.target.value })}
             className={styles.ImageConfig__altTextInput}
             placeholder="Type alt text here..."
          ></textarea>
@@ -125,6 +129,20 @@ function ImageConfig() {
             <option value={"medium"}>Medium</option>
             <option value={"large"}>Large</option>
          </NativeSelect>
+         <form onSubmit={handleSubmitLink}>
+            <label htmlFor="url">Add link to image</label>
+            <input 
+               type="url"
+               name="url"
+               id="url"
+               placeholder="https://example.com"
+               pattern="https://.*"
+               value={imgLink}
+               onChange={ e => setImgLink(e.target.value)}
+               required
+            />
+            <button type="submit">Add Link</button>
+         </form>
       </section>
    );
 };
