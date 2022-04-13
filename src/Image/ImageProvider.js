@@ -6,6 +6,7 @@ export function ImageProvider({children}){
   const inputs = {
     alt: "",
     imgLink:"",
+    creditLink:"",
     uploadedImg: "",
     imgSize: "default",
     updateContext: (contextUpdates) => {
