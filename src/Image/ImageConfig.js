@@ -111,12 +111,16 @@ function ImageConfig() {
             aria-label="Add alt text to image"
             rows="4"
             value={context.alt}
-            onChange={(e) => context.updateContext({alt: e.target.value })}
+            onChange={ (e) => context.updateContext({alt: e.target.value })}
             className={styles.ImageConfig__altTextInput}
             placeholder="Type alt text here..."
          ></textarea>
          <label for="img-link">Add link to image</label>
-         <input type="url" id="img-link" value={context.imgLink}/>
+         <input 
+            type="url" 
+            id="img-link" 
+            value={context.imgLink}
+            onChange={ (e) => context.updateContext({imgLink: e.target.value})}/>
       </section>
    );
  }

@@ -15,6 +15,10 @@ const Image = () => {
          { context.uploadedImg ? (
             // If image has been uploaded
             <>
+            {/* add link to image */}
+            {
+               context.imgLink ?
+               <a href={context.imgLink}>
                <div 
                   className={styles.Image__canvasImgContainer}
                   tabIndex="0"
@@ -26,6 +30,21 @@ const Image = () => {
                      tabIndex="0"
                   />
                </div>
+               </a>
+               :
+               <div 
+               className={styles.Image__canvasImgContainer}
+               tabIndex="0"
+            >
+               <img
+                  src={context.uploadedImg}
+                  alt={context.alt}
+                  className={styles.Image__img}
+                  tabIndex="0"
+               />
+            </div>
+
+            }
                <textarea
                   placeholder="Type caption here..."
                   aria-label="Add caption text to image"
