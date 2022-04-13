@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Paper } from "@mui/material";
-import styles from "./Image.module.scss";
+import styles from "./styles/Image.module.scss";
 import { ImageWidgetContext } from "./ImageProvider";
 
 const Image = () => {

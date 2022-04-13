@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useDropzone } from 'react-dropzone'; 
-import styles from './ImageConfig.module.scss';
+import styles from './styles/ImageConfig.module.scss';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import NativeSelect from '@mui/material/NativeSelect';
 import { ImageWidgetContext } from './ImageProvider';
