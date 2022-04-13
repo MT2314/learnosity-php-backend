@@ -9,6 +9,7 @@ function ImageConfig() {
 
   const context = useContext(ImageWidgetContext);
   const [ imgLink, setImgLink ] = useState("")
+  const [ creditLink, setCreditLink ] = useState("")
   
   const [file, setFile] = useState([]);
  
@@ -77,7 +78,7 @@ function ImageConfig() {
    
    const handleSubmitLink = (event) => {
       event.preventDefault();
-      context.updateContext({ imgLink: imgLink })
+      context.updateContext({ imgLink: imgLink, creditLink: creditLink })
    }
    
    return (
@@ -130,16 +131,27 @@ function ImageConfig() {
             <option value={"large"}>Large</option>
          </NativeSelect>
          <form onSubmit={handleSubmitLink}>
-            <label htmlFor="url">Add link to image</label>
+            <label htmlFor="urlImg">Add link to image</label>
             <input 
                type="url"
-               name="url"
-               id="url"
+               name="urlImg"
+               id="urlImg"
                placeholder="https://example.com"
                pattern="https://.*"
                value={imgLink}
                onChange={ e => setImgLink(e.target.value)}
-               required
+            />
+            <button type="submit">Add Link</button>
+
+            <label htmlFor="urlCredit">Add link to credit</label>
+            <input 
+               type="url"
+               name="urlCredit"
+               id="urlCredit"
+               placeholder="https://example.com"
+               pattern="https://.*"
+               value={creditLink}
+               onChange={ e => setCreditLink(e.target.value)}
             />
             <button type="submit">Add Link</button>
          </form>
