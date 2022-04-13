@@ -77,7 +77,7 @@ function ImageConfig() {
    console.log('context ====>', context);
  
    return (
-      <div className={styles.ImageConfig__editPanelContainer}>
+      <section className={styles.ImageConfig__editPanelContainer}>
          {/* Edit Panel Component Title */}
          <div className={styles.ImageConfig__componentTitleSection}>
             <InsertPhotoOutlinedIcon className={styles.ImageConfig__componentTitleIcon} />
@@ -125,8 +125,8 @@ function ImageConfig() {
             <option value={"medium"}>Medium</option>
             <option value={"large"}>Large</option>
          </NativeSelect>
-      </div>
+      </section>
    );
- }
+};
 
 export default ImageConfig;

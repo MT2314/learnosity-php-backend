@@ -6,7 +6,7 @@ export function ImageProvider({children}){
   const inputs = {
     alt: "",
     uploadedImg: "",
-    imgSize: "",
+    imgSize: "default",
     updateContext: (contextUpdates) => {
       setUserInfo((currentContextInfo) => ({...currentContextInfo, ...contextUpdates}))
     }

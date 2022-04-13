@@ -1,11 +1,36 @@
-import React, {useContext} from "react";
+import React, { useContext, useEffect } from "react";
 import { Paper } from "@mui/material";
 import styles from "./Image.module.scss";
 import { ImageWidgetContext } from "./ImageProvider";
 
 const Image = () => {
 
-  const context = useContext(ImageWidgetContext);
+   const context = useContext(ImageWidgetContext);
+
+   let imgSizeStyles = {};
+
+   
+   if (context.imgSize === "default") {
+      imgSizeStyles = {
+         width: 'auto',
+         height: 'auto'
+      }
+   } else if (context.imgSize === "small") {
+      imgSizeStyles = {
+         width: '256px',
+         height: 'auto'
+      }
+   } else if (context.imgSize === "medium") {
+      imgSizeStyles = {
+         width: '1000px',
+         height: 'auto'
+      }
+   } else if (context.imgSize === "large") {
+      imgSizeStyles = {
+         width: '1800px',
+         height: 'auto'
+      }
+   }
 
    return(
       <Paper
@@ -23,6 +48,7 @@ const Image = () => {
                      src={context.uploadedImg}
                      alt={context.alt}
                      className={styles.Image__img}
+                     style={imgSizeStyles}
                      tabIndex="0"
                   />
                </div>
