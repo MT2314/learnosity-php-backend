@@ -9,6 +9,7 @@ function ImageConfig() {
 
   const context = useContext(ImageWidgetContext);
   const [ imgLink, setImgLink ] = useState("")
+  const [ count, setCount ] = useState(0)
   
   const [file, setFile] = useState([]);
  
@@ -69,6 +70,7 @@ function ImageConfig() {
       maxSize: 5000000,
       validator: imageValidator,
       onDrop: acceptedFiles => {
+         handleClearImageFields()
          context.updateContext({uploadedImg: URL.createObjectURL(acceptedFiles[0])});
          setFile({preview: URL.createObjectURL(acceptedFiles[0])});
          URL.revokeObjectURL(file.preview);
@@ -78,6 +80,19 @@ function ImageConfig() {
    const handleSubmitLink = (event) => {
       event.preventDefault();
       context.updateContext({ imgLink: imgLink })
+   }
+
+   const handleClearImageFields = () => {
+      setCount(count + 1)
+
+      if(count > 0){
+         context.updateContext({ 
+            alt: "",
+            imgLink:"",
+            imgSize: "default"})
+         }else{
+            return
+         }
    }
    
    return (
