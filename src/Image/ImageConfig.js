@@ -107,6 +107,22 @@ function ImageConfig() {
             ></textarea>
          </div>
          <div className={styles.ImageConfig__section}>
+            <h2 className={styles.ImageConfig__imageH2}>Long Description</h2>
+            <label className={styles.ImageConfig__imageLabel} htmlFor="long-desc">
+               This text will be used by screen readers, search engines, or when the image can't be loaded.
+            </label>
+            <textarea
+               name="long-desc"
+               id="long-desc"
+               aria-label="Add a long description to the uploaded image"
+               rows="4"
+               value={context.longDesc}
+               onChange={ (e) => context.updateContext({longDesc: e.target.value })}
+               className={styles.ImageConfig__altTextInput}
+               placeholder="Type long description text here..."
+            ></textarea>
+         </div>
+         <div className={styles.ImageConfig__section}>
             <h2 className={styles.ImageConfig__imageH2}>Image Size</h2>
             <label
                htmlFor="img-size"
