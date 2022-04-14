@@ -46,21 +46,19 @@
 }
 
 .ImageConfig__thumbnailContainer {
-   display: 'flex';
-   flex-direction: 'row';
-   flex-wrap: 'wrap';
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
    margin: 16px 0;
+   justify-content: center;
 }
 
 .ImageConfig__thumbOuter {
    display: inline-flex;
-   border-radius: 2;
-   border: 1px solid #eaeaea;
-   margin-bottom: 8;
-   margin-right: 8;
-   width: 100;
-   height: 100;
-   padding: 4;
+   margin-bottom: 8px;
+   width: 200px;
+   height: 200px;
+   padding: 4px;
    box-sizing: border-box;
 }
 

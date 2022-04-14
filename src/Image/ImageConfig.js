@@ -8,47 +8,19 @@ import { ImageWidgetContext } from './ImageProvider';
 function ImageConfig() {
 
   const context = useContext(ImageWidgetContext);
-  const [ imgLink, setImgLink ] = useState("")
-  const [ count, setCount ] = useState(0)
-  
+
+  const [ imgLink, setImgLink ] = useState("");
+  const [ count, setCount ] = useState(0);
   const [file, setFile] = useState([]);
  
-   // styles for thumbnail
-   const thumbsContainer = {
-      display: "flex",
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      marginTop: 16
-   };
-
-   const thumb = {
-      marginBottom: 8,
-      marginRight: 8,
-      maxWidth: '200px',
-      height: 'auto',
-      padding: 4,
-      boxSizing: 'border-box'
-   };
- 
-   const thumbInner = {
-      display: 'flex',
-      minWidth: 0
-   };
- 
-   const img = {
-      display: 'block',
-      width: '100%',
-      height: 'auto'
-   };
-   
    // image preview
    const thumbs =  (
-      <div style={thumb}>
-         <div style={thumbInner}>
+      <div className={styles.ImageConfig__thumbOuter}>
+         <div className={styles.ImageConfig__thumbInner}>
             <img
                src={file.preview}
                alt={context.alt}
-               style={img}
+               className={styles.ImageConfig__thumbnailImg}
             />
          </div>
       </div>
@@ -104,7 +76,7 @@ function ImageConfig() {
          </div>
          <div className={styles.ImageConfig__section}>
             {/* Image thumbnail */}
-            <aside style={thumbsContainer}>
+            <aside className={styles.ImageConfig__thumbnailContainer}>
                { file.length !== 0 && thumbs }
             </aside>
             {/* Image Uploader */}
