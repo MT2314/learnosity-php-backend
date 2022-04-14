@@ -24,7 +24,7 @@ const Image = () => {
       }
    } else if (context.imgSize === "large") {
       imgSizeStyles = {
-         width: '1800px'
+         width: '1500px'
       }
    };
 
@@ -79,7 +79,7 @@ const Image = () => {
          	   name="credit"
          	   id="credit"
          	   value={credit}
-         	   placeholder="add image credit"
+         	   placeholder="Add image credit..."
          	   className={styles.Image__caption}
          	   onChange={e => setCredit(e.target.value)}
          	/>

@@ -1,11 +1,27 @@
+.srOnly:not(:focus):not(:active) {
+   clip: rect(0 0 0 0); 
+   clip-path: inset(50%);
+   height: 1px;
+   overflow: hidden;
+   position: absolute;
+   white-space: nowrap; 
+   width: 1px;
+}
+
 .ImageConfig__editPanelContainer {
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
+   width: 100%;
+}
+
+.ImageConfig__section {
+   width: 100%;
+   margin: 0.5rem 0;
 }
    
-.ImageConfig__componentTitleSection {
+.ImageConfig__componentTitleContainer {
    display: flex;
    justify-content: center;
    align-items: center;
@@ -83,19 +99,27 @@
 }
 
 .ImageConfig__uploader:hover,
-.ImageConfig__uploader:active {
+.ImageConfig__uploader:active,
+.ImageConfig__linkFormButton:hover,
+.ImageConfig__linkFormButton:active {
    background: #4b13a0;
    cursor: pointer;
 }
 
-.ImageConfig__uploader:focus {
+.ImageConfig__uploader label:hover,
+.ImageConfig__uploader label:active {
+   cursor: pointer;
+}
+
+.ImageConfig__uploader:focus,
+.ImageConfig__linkFormButton:focus {
    outline: 3px solid #ffc46b;
 }
 
 .ImageConfig__uploadSize {
    width: 100%;
    font-size: 14px;
-   margin-top: 0;
+   margin: 0;
 }
 
 .ImageConfig__imageH2 {
@@ -134,4 +158,30 @@
 .ImageConfig__imageSizeDropdown {
    width: 100%;
    margin-bottom: 1rem;
+}
+
+.ImageConfig__linkForm {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+}
+
+.ImageConfig__linkFormInput {
+   width: 100%;
+   margin: 0.5rem 0;
+   border: 1.5px solid #e8e8e8;
+   background: #f6f6f6;
+   border-radius: 4px;
+   font-family: "Roboto","Arial",sans-serif;
+   color: #000;
+}
+
+.ImageConfig__linkFormButton {
+   background: #7422d1;
+   text-align: center;
+   color: #fff;
+   padding: 6px 0;
+   border: none;
+   border-radius: 4px;
+   font-family: "Roboto", "Arial", sans-serif;
 }

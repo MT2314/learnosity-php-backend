@@ -96,69 +96,83 @@ function ImageConfig() {
    }
    
    return (
-      <section className={styles.ImageConfig__editPanelContainer}>
+      <div className={styles.ImageConfig__editPanelContainer}>
          {/* Edit Panel Component Title */}
-         <div className={styles.ImageConfig__componentTitleSection}>
+         <div className={styles.ImageConfig__componentTitleContainer}>
             <InsertPhotoOutlinedIcon className={styles.ImageConfig__componentTitleIcon} />
             <p className={styles.ImageConfig__componentTitle}>Image</p>
          </div>
-         {/* Image thumbnail */}
-         <aside style={thumbsContainer}>
-            { file.length !== 0 && thumbs }
-         </aside>
-         {/* Image Uploader */}
-         <div {...getRootProps({className: `${styles.ImageConfig__uploader}`})}>
-            <label>
-               <input {...getInputProps()} />
-               {file.length < 1 ? 'Upload' : 'Replace Image'}
-            </label>
+         <div className={styles.ImageConfig__section}>
+            {/* Image thumbnail */}
+            <aside style={thumbsContainer}>
+               { file.length !== 0 && thumbs }
+            </aside>
+            {/* Image Uploader */}
+            <div {...getRootProps({className: `${styles.ImageConfig__uploader}`})}>
+               <label>
+                  <input {...getInputProps()} />
+                  {file.length < 1 ? 'Upload' : 'Replace Image'}
+               </label>
+            </div>
+            <p className={styles.ImageConfig__uploadSize}>
+               Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
+            </p>
          </div>
-         <p className={styles.ImageConfig__uploadSize}>
-            Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
-         </p>
-         <h2 className={styles.ImageConfig__imageH2}>Alt Text</h2>
-         <label className={styles.ImageConfig__imageLabel} htmlFor="image-alt">
-            This text will be used by screen readers, search engines, or when the
-            image can't be loaded.
-         </label>
-         <textarea
-            name={`image-alt`}
-            id={`image-alt`}
-            aria-label="Add alt text to image"
-            rows="4"
-            value={context.alt}
-            onChange={ (e) => context.updateContext({alt: e.target.value })}
-            className={styles.ImageConfig__altTextInput}
-            placeholder="Type alt text here..."
-         ></textarea>
-         <h2 className={styles.ImageConfig__imageH2}>Image Size</h2>
-         <label htmlFor="img-size" className={styles.ImageConfig__imageLabel}>Change the size of your uploaded image.</label>
-         <NativeSelect
-            id="img-size"
-            className={styles.ImageConfig__imageSizeDropdown}
-            onChange={(e) => context.updateContext({imgSize: e.target.value})}
-            defaultValue={"select"}
-         >
-            <option value={"select"} disabled>Select Size</option>
-            <option value={"default"}>Default</option>
-            <option value={"small"}>Small</option>
-            <option value={"medium"}>Medium</option>
-            <option value={"large"}>Large</option>
-         </NativeSelect>
-         <form onSubmit={handleSubmitLink}>
-            <label htmlFor="urlImg">Add link to image</label>
-            <input 
-               type="url"
-               name="urlImg"
-               id="urlImg"
-               placeholder="https://example.com"
-               pattern="https://.*"
-               value={imgLink}
-               onChange={ e => setImgLink(e.target.value)}
-            />
-            <button type="submit">Add Link</button>
-         </form>
-      </section>
+         <div className={styles.ImageConfig__section}>
+            <h2 className={styles.ImageConfig__imageH2}>Alt Text</h2>
+            <label className={styles.ImageConfig__imageLabel} htmlFor="image-alt">
+               This text will be used by screen readers, search engines, or when the image can't be loaded.
+            </label>
+            <textarea
+               name={`image-alt`}
+               id={`image-alt`}
+               aria-label="Add alt text to image"
+               rows="4"
+               value={context.alt}
+               onChange={ (e) => context.updateContext({alt: e.target.value })}
+               className={styles.ImageConfig__altTextInput}
+               placeholder="Type alt text here..."
+            ></textarea>
+         </div>
+         <div className={styles.ImageConfig__section}>
+            <h2 className={styles.ImageConfig__imageH2}>Image Size</h2>
+            <label
+               htmlFor="img-size"
+               className={styles.ImageConfig__imageLabel}
+            >
+               Change the size of your uploaded image.
+            </label>
+            <NativeSelect
+               id="img-size"
+               className={styles.ImageConfig__imageSizeDropdown}
+               onChange={(e) => context.updateContext({imgSize: e.target.value})}
+               defaultValue={"select"}
+            >
+               <option value={"select"} disabled>Select Size</option>
+               <option value={"default"}>Default</option>
+               <option value={"small"}>Small</option>
+               <option value={"medium"}>Medium</option>
+               <option value={"large"}>Large</option>
+            </NativeSelect>
+         </div>
+         <div className={styles.ImageConfig__section}>
+            <h2 className={styles.ImageConfig__imageH2}>Add Link To Image</h2>
+            <form onSubmit={handleSubmitLink} className={styles.ImageConfig__linkForm}>
+               <label htmlFor="urlImg" className={styles.srOnly}>Add link to image</label>
+               <input
+                  type="url"
+                  name="urlImg"
+                  id="urlImg"
+                  placeholder="https://example.com"
+                  pattern="https://.*"
+                  value={imgLink}
+                  className={styles.ImageConfig__linkFormInput}
+                  onChange={ e => setImgLink(e.target.value)}
+               />
+               <button type="submit" className={styles.ImageConfig__linkFormButton}>Add Link</button>
+            </form>
+         </div>
+      </div>
    );
 };
 
