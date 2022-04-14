@@ -147,7 +147,7 @@ function ImageConfig() {
          </NativeSelect>
 
          <form onSubmit={handleSubmitLink}>
-            <label htmlfor="urlImg">Add link to image</label>
+            <label for="urlImg">Add link to image</label>
             <input 
                type="url"
                name="urlImg"

@@ -1,6 +1,5 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import  userEvent  from "@testing-library/user-event"
 import ImageConfig from "../Image/ImageConfig";
 import { ImageProvider } from "../Image/ImageProvider";
 
@@ -20,7 +19,7 @@ describe("<ImageConfig />", () => {
    it('Image link renders label, input and submit btn', () => {
       render(testComponent);
 
-      expect(screen.getByText("Add link to image")).toBeDefined();
+      expect(screen.getByLabelText('Add link to image')).toBeDefined();
       expect(screen.getByPlaceholderText("https://example.com")).toBeDefined();
       expect(screen.getByText("Add Link")).toBeDefined();
    })
@@ -34,7 +33,7 @@ describe("<ImageConfig />", () => {
       expect(screen.getByText("Large")).toBeDefined();
    })
 
-   it('Up load button runs onClick event', () => {
+   it('Upload button renders', () => {
       render(testComponent);
 
       expect(screen.getByText("Upload")).toBeDefined();

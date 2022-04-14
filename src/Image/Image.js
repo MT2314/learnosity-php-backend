@@ -69,7 +69,7 @@ const Image = () => {
             </>
             )
          }
-            <label hmtlFor='caption' className={styles.srOnly}>Enter caption for image</label>
+            <label htmlFor='caption' className={styles.srOnly}>Enter caption for image</label>
 				<textarea
                name="caption"
                id="caption"
