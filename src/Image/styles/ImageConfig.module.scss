@@ -121,7 +121,7 @@
 }
 
 .ImageConfig__imageH2 {
-   margin-bottom: 0;
+   margin: 0 0 0.5rem 0;
    font-family: "Roboto","Arial",sans-serif;
    font-size: 20px;
    align-self: flex-start;
@@ -130,16 +130,14 @@
 .ImageConfig__imageLabel {
   font-size: 12px;
   align-self: flex-start;
-  margin: 0.5rem 0;
 }
 
 .ImageConfig__altTextInput {
    border: 1.5px solid #e8e8e8;
    background: #f6f6f6;
-   width: 100%;
+   width: 98%;
    border-radius: 4px;
-   margin-top: 0.5em;
-   align-self: center;
+   margin: 0.5em 0 0 0;
    font-family: "Roboto","Arial",sans-serif;
    color: #000;
    resize: none;
@@ -149,13 +147,13 @@
    font-size: 0.95rem;
 }
 
-.ImageConfig__altTextInput:focus {
+.ImageConfig__altTextInput:focus,
+.ImageConfig__linkFormInput:focus {
    outline: 3px solid #ffc46b;
 }
 
 .ImageConfig__imageSizeDropdown {
    width: 100%;
-   margin-bottom: 1rem;
 }
 
 .ImageConfig__linkForm {
@@ -165,7 +163,7 @@
 }
 
 .ImageConfig__linkFormInput {
-   width: 100%;
+   width: 98%;
    margin: 0.5rem 0;
    border: 1.5px solid #e8e8e8;
    background: #f6f6f6;

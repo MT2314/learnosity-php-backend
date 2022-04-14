@@ -68,7 +68,7 @@ function ImageConfig() {
    }
    
    return (
-      <div className={styles.ImageConfig__editPanelContainer}>
+      <section className={styles.ImageConfig__editPanelContainer}>
          {/* Edit Panel Component Title */}
          <div className={styles.ImageConfig__componentTitleContainer}>
             <InsertPhotoOutlinedIcon className={styles.ImageConfig__componentTitleIcon} />
@@ -130,7 +130,7 @@ function ImageConfig() {
          <div className={styles.ImageConfig__section}>
             <h2 className={styles.ImageConfig__imageH2}>Add Link To Image</h2>
             <form onSubmit={handleSubmitLink} className={styles.ImageConfig__linkForm}>
-               <label htmlFor="urlImg" className={styles.srOnly}>Add link to image</label>
+               <label htmlFor="urlImg" className={styles.ImageConfig__imageLabel}>Turn image into link to external webpage.</label>
                <input
                   type="url"
                   name="urlImg"
@@ -144,7 +144,7 @@ function ImageConfig() {
                <button type="submit" className={styles.ImageConfig__linkFormButton}>Add Link</button>
             </form>
          </div>
-      </div>
+      </section>
    );
 };
 
