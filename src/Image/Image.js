@@ -67,18 +67,23 @@ const Image = () => {
             </>
             )
          }
+            <label hmtlFor='caption' className={styles.srOnly}>Enter caption for image</label>
 				<textarea
+               name="caption"
+               id="caption"
          	   placeholder="Type caption here..."
          	   aria-label="Add caption text to image"
          	   rows={2}
          	   className={styles.Image__caption}
          	></textarea>
+
          	<label hmtlFor='credit' className={styles.srOnly}>Enter credit for image</label>
          	<input
 					type="text"
          	   name="credit"
          	   id="credit"
          	   value={credit}
+               aria-label="Add credit text to image"
          	   placeholder="add image credit"
          	   className={styles.Image__caption}
          	   onChange={e => setCredit(e.target.value)}
