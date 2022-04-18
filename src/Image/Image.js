@@ -7,7 +7,6 @@ import FormattedText from "../FormattedText";
 const Image = () => {
 
    const context = useContext(ImageWidgetContext);
-   const [ credit, setCredit ] = useState('')
 
    let imgSizeStyles = {};
 	
@@ -74,7 +73,9 @@ const Image = () => {
             context.longDesc &&
             <p className={styles.Image__longDesc}>{context.longDesc}</p>
          }
-            <FormattedText placeHolderText="Enter Data" />
+            <FormattedText placeHolderText="Enter Caption" />
+            <hr />
+            <FormattedText placeHolderText="Enter Credit" />
 			</div>
       </Paper>
    );
