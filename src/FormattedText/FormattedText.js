@@ -4,7 +4,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./FormattedText.style.css"
 
-const FormattedText = (placeHolderText) => {
+const FormattedText = ({placeHolderText}) => {
 
    const [editorState, setEditorState] = useState(() => EditorState.createEmpty()
    );
@@ -14,7 +14,7 @@ const FormattedText = (placeHolderText) => {
    };
 
    const toolBarObject = {
-      options: ["inline", "textAlign", "list"],
+      options: ["inline", "textAlign", "list", "link"],
       inline: {
          options: [
             "bold",
@@ -30,6 +30,12 @@ const FormattedText = (placeHolderText) => {
          strikethrough: { className: "bordered-option-classname" },
          code: { className: "bordered-option-classname" },
       },
+      textAlign: {
+         options: ["left", 'center', 'right', "justify"],
+       },
+       link: {
+         options: ['link', "unlink"],
+       }
    };
    return (
       <div className="App">
@@ -41,8 +47,7 @@ const FormattedText = (placeHolderText) => {
             editorClassName="editor-class"
             toolbarClassName="toolbar-class"
             toolbar={toolBarObject}
-            toolbarOnFocus 
-            placeholder={placeHolderText ? placeHolderText : null}
+            placeholder={placeHolderText}
             />
       </div>
    );

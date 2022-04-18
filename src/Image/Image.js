@@ -74,8 +74,7 @@ const Image = () => {
             context.longDesc &&
             <p className={styles.Image__longDesc}>{context.longDesc}</p>
          }
-            <FormattedText
-               placeHolderText='Enter Caption...'/>
+            <FormattedText placeHolderText="Enter Data" />
 			</div>
       </Paper>
    );
