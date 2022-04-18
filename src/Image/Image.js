@@ -24,7 +24,7 @@ const Image = () => {
       }
    } else if (context.imgSize === "large") {
       imgSizeStyles = {
-         width: '1800px'
+         width: '1500px'
       }
    };
 
@@ -67,6 +67,10 @@ const Image = () => {
             </>
             )
          }
+         {
+            context.longDesc &&
+            <p className={styles.Image__longDesc}>{context.longDesc}</p>
+         }
 				<textarea
          	   placeholder="Type caption here..."
          	   aria-label="Add caption text to image"
@@ -79,7 +83,7 @@ const Image = () => {
          	   name="credit"
          	   id="credit"
          	   value={credit}
-         	   placeholder="add image credit"
+         	   placeholder="Add image credit..."
          	   className={styles.Image__caption}
          	   onChange={e => setCredit(e.target.value)}
          	/>
