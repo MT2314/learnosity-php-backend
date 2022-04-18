@@ -55,6 +55,13 @@ function ImageConfig() {
       setImgLink('');
    }
 
+   const validateImage = (e) => {
+      e.preventDefault();
+      if (context.alt === "") {
+         alert('You must provide alt text for the uploaded image.');
+      }
+   }
+
    const handleClearImageFields = () => {
       setCount(count + 1)
 
@@ -93,76 +100,85 @@ function ImageConfig() {
                Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
             </p>
          </div>
-         <div className={styles.ImageConfig__section}>
-            <h2 className={styles.ImageConfig__imageH2}>Alt Text</h2>
-            <label className={styles.ImageConfig__imageLabel} htmlFor="image-alt">
-               This text will be used by screen readers, search engines, or when the image can't be loaded.
-            </label>
-            <textarea
-               name={`image-alt`}
-               id={`image-alt`}
-               aria-label="Add alt text to image"
-               rows="4"
-               value={context.alt}
-               onChange={ (e) => context.updateContext({alt: e.target.value })}
-               className={styles.ImageConfig__altTextInput}
-               placeholder="Type alt text here..."
-            ></textarea>
-         </div>
-         <div className={styles.ImageConfig__section}>
-            <h2 className={styles.ImageConfig__imageH2}>Long Description</h2>
-            <label className={styles.ImageConfig__imageLabel} htmlFor="long-desc">
-               This text will be used by screen readers, search engines, or when the image can't be loaded.
-            </label>
-            <textarea
-               name="long-desc"
-               id="long-desc"
-               aria-label="Add a long description to the uploaded image"
-               rows="4"
-               value={context.longDesc}
-               onChange={ (e) => context.updateContext({longDesc: e.target.value })}
-               className={styles.ImageConfig__altTextInput}
-               placeholder="Type long description here..."
-            ></textarea>
-         </div>
-         <div className={styles.ImageConfig__section}>
-            <h2 className={styles.ImageConfig__imageH2}>Image Size</h2>
-            <label
-               htmlFor="img-size"
-               className={styles.ImageConfig__imageLabel}
-            >
-               Change the size of your uploaded image.
-            </label>
-            <NativeSelect
-               id="img-size"
-               className={styles.ImageConfig__imageSizeDropdown}
-               onChange={(e) => context.updateContext({imgSize: e.target.value})}
-               defaultValue={"select"}
-            >
-               <option value={"select"} disabled>Select Size</option>
-               <option value={"default"}>Default</option>
-               <option value={"small"}>Small</option>
-               <option value={"medium"}>Medium</option>
-               <option value={"large"}>Large</option>
-            </NativeSelect>
-         </div>
-         <div className={styles.ImageConfig__section}>
-            <h2 className={styles.ImageConfig__imageH2}>Add Link To Image</h2>
-            <form onSubmit={handleSubmitLink} className={styles.ImageConfig__linkForm}>
-               <label htmlFor="urlImg" className={styles.ImageConfig__imageLabel}>Turn image into link to external webpage.</label>
-               <input
-                  type="url"
-                  name="urlImg"
-                  id="urlImg"
-                  placeholder="https://example.com"
-                  pattern="https://.*"
-                  value={imgLink}
-                  className={styles.ImageConfig__linkFormInput}
-                  onChange={ e => setImgLink(e.target.value)}
-               />
-               <button type="submit" className={styles.ImageConfig__linkFormButton}>Add Link</button>
-            </form>
-         </div>
+         <form onSubmit={validateImage} className={styles.ImageConfig__validationForm}>
+            <div className={styles.ImageConfig__section}>
+               <h2 className={styles.ImageConfig__imageH2}>Alt Text</h2>
+               <label className={styles.ImageConfig__imageLabel} htmlFor="image-alt">
+                  This text will be used by screen readers, search engines, or when the image can't be   loaded.
+               </label>
+               <textarea
+                  name={`image-alt`}
+                  id={`image-alt`}
+                  required
+                  aria-label="Add alt text to image"
+                  rows="4"
+                  value={context.alt}
+                  onChange={ (e) => context.updateContext({alt: e.target.value })}
+                  className={styles.ImageConfig__altTextInput}
+                  placeholder="Type alt text here..."
+               ></textarea>
+            </div>
+            <div className={styles.ImageConfig__section}>
+               <h2 className={styles.ImageConfig__imageH2}>Long Description</h2>
+               <label className={styles.ImageConfig__imageLabel} htmlFor="long-desc">
+                  This text will be used by screen readers, search engines, or when the image can't be   loaded.
+               </label>
+               <textarea
+                  name="long-desc"
+                  id="long-desc"
+                  aria-label="Add a long description to the uploaded image"
+                  rows="4"
+                  value={context.longDesc}
+                  onChange={ (e) => context.updateContext({longDesc: e.target.value })}
+                  className={styles.ImageConfig__altTextInput}
+                  placeholder="Type long description here..."
+               ></textarea>
+            </div>
+            <div className={styles.ImageConfig__section}>
+               <h2 className={styles.ImageConfig__imageH2}>Image Size</h2>
+               <label
+                  htmlFor="img-size"
+                  className={styles.ImageConfig__imageLabel}
+               >
+                  Change the size of your uploaded image.
+               </label>
+               <NativeSelect
+                  id="img-size"
+                  className={styles.ImageConfig__imageSizeDropdown}
+                  onChange={(e) => context.updateContext({imgSize: e.target.value})}
+                  defaultValue={"select"}
+               >
+                  <option value={"select"} disabled>Select Size</option>
+                  <option value={"default"}>Default</option>
+                  <option value={"small"}>Small</option>
+                  <option value={"medium"}>Medium</option>
+                  <option value={"large"}>Large</option>
+               </NativeSelect>
+            </div>
+            <div className={styles.ImageConfig__section}>
+               <h2 className={styles.ImageConfig__imageH2}>Add Link To Image</h2>
+               <form onSubmit={handleSubmitLink} className={styles.ImageConfig__linkForm}>
+                  <label htmlFor="urlImg" className={styles.ImageConfig__imageLabel}>Turn image into  link to external webpage.</label>
+                  <input
+                     type="url"
+                     name="urlImg"
+                     id="urlImg"
+                     placeholder="https://example.com"
+                     pattern="https://.*"
+                     value={imgLink}
+                     className={styles.ImageConfig__linkFormInput}
+                     onChange={ e => setImgLink(e.target.value)}
+                  />
+                  <button
+                     type="submit"
+                     className={styles.ImageConfig__linkFormButton}
+                  >
+                     Add Link
+                  </button>
+               </form>
+            </div>
+            <button className={styles.ImageConfig__validationButton} type="submit">Validate Image</button>
+         </form>
       </section>
    );
 };

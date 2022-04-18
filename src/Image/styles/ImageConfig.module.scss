@@ -99,7 +99,9 @@
 .ImageConfig__uploader:hover,
 .ImageConfig__uploader:active,
 .ImageConfig__linkFormButton:hover,
-.ImageConfig__linkFormButton:active {
+.ImageConfig__linkFormButton:active,
+.ImageConfig__validationButton:hover,
+.ImageConfig__validationButton:active {
    background: #4b13a0;
    cursor: pointer;
 }
@@ -110,7 +112,8 @@
 }
 
 .ImageConfig__uploader:focus,
-.ImageConfig__linkFormButton:focus {
+.ImageConfig__linkFormButton:focus,
+.ImageConfig__validationButton:focus {
    outline: 3px solid #ffc46b;
 }
 
@@ -118,6 +121,10 @@
    width: 100%;
    font-size: 14px;
    margin: 0;
+}
+
+.ImageConfig__validationForm {
+   width: 100%;
 }
 
 .ImageConfig__imageH2 {
@@ -172,12 +179,18 @@
    color: #000;
 }
 
-.ImageConfig__linkFormButton {
+.ImageConfig__linkFormButton,
+.ImageConfig__validationButton {
    background: #7422d1;
    text-align: center;
    color: #fff;
+   width: 100%;
    padding: 6px 0;
    border: none;
    border-radius: 4px;
    font-family: "Roboto", "Arial", sans-serif;
+}
+
+.ImageConfig__validationButton {
+   margin-top: 2rem;
 }
