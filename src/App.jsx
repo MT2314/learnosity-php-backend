@@ -1,11 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import TextEditable from "./TextEditable/TextEditable";
-import QuoteBox from "./QuoteBox/QuoteBox.js";
 import Callout from "./Callout/Callout.js";
 import Header from "./Header"
 import Image from './Image/Image';
 import ImageConfig from "./Image/ImageConfig";
+import FormattedText from "./FormattedText";
 import { ImageProvider } from "./Image/ImageProvider";
 
 import "./index.css";
@@ -19,9 +18,8 @@ const App = () => (
   <div className="container" style={{display:"flex"}}>
     <div className="canvas" style={{border: "2px solid black"}}>
       <Callout />
-      {/* <QuoteBox /> */}
       <Image /> 
-      <TextEditable />
+      <FormattedText />
     </div>
     <div className="editPanel" style={{border:"2px solid black", marginLeft: "1em", padding: "10px" }}>
       <ImageConfig /> 
