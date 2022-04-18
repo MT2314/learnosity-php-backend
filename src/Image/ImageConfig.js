@@ -57,15 +57,17 @@ function ImageConfig() {
    const handleClearImageFields = () => {
       setCount(count + 1)
 
-      if(count > 0){
+      if (count > 0) {
          context.updateContext({ 
             alt: "",
-            imgLink:"",
-            imgSize: "default"})
-         }else{
-            return
-         }
-   }
+            longDesc: "",
+            imgLink: "",
+            imgSize: "default"
+         });
+      } else {
+         return
+      };
+   };
    
    return (
       <section className={styles.ImageConfig__editPanelContainer}>
@@ -119,7 +121,7 @@ function ImageConfig() {
                value={context.longDesc}
                onChange={ (e) => context.updateContext({longDesc: e.target.value })}
                className={styles.ImageConfig__altTextInput}
-               placeholder="Type long description text here..."
+               placeholder="Type long description here..."
             ></textarea>
          </div>
          <div className={styles.ImageConfig__section}>

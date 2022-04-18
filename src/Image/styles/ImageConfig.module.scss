@@ -65,15 +65,14 @@
 .ImageConfig__thumbInner {
    display: flex;
    min-width: 0;
-   max-width: 240px;
+   max-width: 200px;
    height: auto;
    overflow: hidden;
 }
 
 .ImageConfig__thumbnailImg {
    display: block;
-   max-width: auto;
-   height: auto;
+   margin: 0 auto;
 }
 
 .ImageConfig__uploader {

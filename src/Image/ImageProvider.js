@@ -1,23 +1,26 @@
-import React, {useState, useEffect, createContext, useContext} from 'react';
+import React, { useState, createContext } from 'react';
 
 export const ImageWidgetContext = createContext();
 
-export function ImageProvider({children}){
-  const inputs = {
-    alt: "",
-    imgLink:"",
-    creditLink:"",
-    uploadedImg: "",
-    imgSize: "default",
-    updateContext: (contextUpdates) => {
-      setUserInfo((currentContextInfo) => ({...currentContextInfo, ...contextUpdates}))
-    }
-  }
-  const [ userInfo, setUserInfo ] = useState(inputs)
+export function ImageProvider({ children }){
+   
+   const inputs = {
+      alt: "",
+      longDesc: "",
+      imgLink: "",
+      creditLink: "",
+      uploadedImg: "",
+      imgSize: "default",
+      updateContext: (contextUpdates) => {
+         setUserInfo((currentContextInfo) => ({...currentContextInfo, ...contextUpdates}))
+      }
+   };
 
-  return (
-        <ImageWidgetContext.Provider value={userInfo}>
-          {children}
-        </ImageWidgetContext.Provider>
-      )
-}
+   const [ userInfo, setUserInfo ] = useState(inputs);
+
+   return (
+      <ImageWidgetContext.Provider value={userInfo}>
+         {children}
+      </ImageWidgetContext.Provider>
+   );
+};

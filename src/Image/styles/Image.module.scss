@@ -27,7 +27,6 @@
 .Image__img {
   border: none;
   height: auto;
-  max-width: 90%;
   align-self: center;
 }
 
@@ -41,6 +40,10 @@
 
 .Image__imgLink {
    align-self: center;
+   margin: 0;
+   text-decoration: none;
+   border: none;
+   height: auto;
 }
 
 .Image__outline {
