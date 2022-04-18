@@ -72,6 +72,11 @@
    z-index: 100;
 }
 
+.Image__longDesc {
+   align-self: flex-start;
+   font-size: 0.75rem;
+}
+
 .Image__caption {
    border: none;
    font-family: "Roboto", "Arial", sans-serif;

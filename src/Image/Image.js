@@ -67,6 +67,10 @@ const Image = () => {
             </>
             )
          }
+         {
+            context.longDesc &&
+            <p className={styles.Image__longDesc}>{context.longDesc}</p>
+         }
 				<textarea
          	   placeholder="Type caption here..."
          	   aria-label="Add caption text to image"
