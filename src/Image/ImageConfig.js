@@ -51,7 +51,8 @@ function ImageConfig() {
    
    const handleSubmitLink = (event) => {
       event.preventDefault();
-      context.updateContext({ imgLink: imgLink })
+      context.updateContext({ imgLink: imgLink });
+      setImgLink('');
    }
 
    const handleClearImageFields = () => {

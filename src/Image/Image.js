@@ -39,7 +39,9 @@ const Image = () => {
             <>
             {/* add link to image */}
             {context.imgLink ?
-               <a href={context.imgLink} className={styles.Image__imgLink}>
+               <a 
+                  href={context.imgLink} 
+                  className={styles.Image__imgLink}>
                   <img
                      src={context.uploadedImg}
                      alt={context.alt}
@@ -71,12 +73,16 @@ const Image = () => {
             context.longDesc &&
             <p className={styles.Image__longDesc}>{context.longDesc}</p>
          }
+            <label htmlFor='caption' className={styles.srOnly}>Enter caption for image</label>
 				<textarea
+               name="caption"
+               id="caption"
          	   placeholder="Type caption here..."
          	   aria-label="Add caption text to image"
          	   rows={2}
          	   className={styles.Image__caption}
          	></textarea>
+
          	<label hmtlFor='credit' className={styles.srOnly}>Enter credit for image</label>
          	<input
 					type="text"
@@ -84,6 +90,7 @@ const Image = () => {
          	   id="credit"
          	   value={credit}
          	   placeholder="Add image credit..."
+               aria-label="Add credit text to image"
          	   className={styles.Image__caption}
          	   onChange={e => setCredit(e.target.value)}
          	/>
