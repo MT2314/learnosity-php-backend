@@ -20,11 +20,11 @@ const Image = () => {
       }
    } else if (context.imgSize === "medium") {
       imgSizeStyles = {
-         width: '1000px'
+         width: '512px'
       }
    } else if (context.imgSize === "large") {
       imgSizeStyles = {
-         width: '1500px'
+         width: '1024px'
       }
    };
 
