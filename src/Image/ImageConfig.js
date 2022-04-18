@@ -49,22 +49,14 @@ function ImageConfig() {
       }
    });
    
-   const handleSubmitLink = (event) => {
-      event.preventDefault();
-      context.updateContext({ imgLink: imgLink });
-      setImgLink('');
-   }
-
-   const validateImage = (e) => {
+   const handleSubmit = (e) => {
       e.preventDefault();
-      if (context.alt === "") {
-         alert('You must provide alt text for the uploaded image.');
-      }
+      context.updateContext({ imgLink: imgLink });
    }
 
    const handleClearImageFields = () => {
-      setCount(count + 1)
-
+      setCount(count + 1);
+      setImgLink('');
       if (count > 0) {
          context.updateContext({ 
             alt: "",
@@ -76,7 +68,7 @@ function ImageConfig() {
          return
       };
    };
-   
+
    return (
       <section className={styles.ImageConfig__editPanelContainer}>
          {/* Edit Panel Component Title */}
@@ -93,18 +85,18 @@ function ImageConfig() {
             <div {...getRootProps({className: `${styles.ImageConfig__uploader}`})}>
                <label>
                   <input {...getInputProps()} />
-                  {file.length < 1 ? 'Upload' : 'Replace Image'}
+                  {file.length < 1 ? 'Upload Image' : 'Replace Image'}
                </label>
             </div>
             <p className={styles.ImageConfig__uploadSize}>
                Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
             </p>
          </div>
-         <form onSubmit={validateImage} className={styles.ImageConfig__validationForm}>
+         <form onSubmit={handleSubmit} className={styles.ImageConfig__validationForm}>
             <div className={styles.ImageConfig__section}>
                <h2 className={styles.ImageConfig__imageH2}>Alt Text</h2>
                <label className={styles.ImageConfig__imageLabel} htmlFor="image-alt">
-                  This text will be used by screen readers, search engines, or when the image can't be   loaded.
+                  This text will be used by screen readers, search engines, or when the image can't be loaded.
                </label>
                <textarea
                   name={`image-alt`}
@@ -116,6 +108,8 @@ function ImageConfig() {
                   onChange={ (e) => context.updateContext({alt: e.target.value })}
                   className={styles.ImageConfig__altTextInput}
                   placeholder="Type alt text here..."
+                  onInvalid={e => e.target.setCustomValidity("Alt text is required for all uploaded images.")}
+                  onInput={e => e.target.setCustomValidity('')}
                ></textarea>
             </div>
             <div className={styles.ImageConfig__section}>
@@ -144,6 +138,7 @@ function ImageConfig() {
                </label>
                <NativeSelect
                   id="img-size"
+                  name="img-size"
                   className={styles.ImageConfig__imageSizeDropdown}
                   onChange={(e) => context.updateContext({imgSize: e.target.value})}
                   defaultValue={"select"}
@@ -157,27 +152,30 @@ function ImageConfig() {
             </div>
             <div className={styles.ImageConfig__section}>
                <h2 className={styles.ImageConfig__imageH2}>Add Link To Image</h2>
-               <form onSubmit={handleSubmitLink} className={styles.ImageConfig__linkForm}>
-                  <label htmlFor="urlImg" className={styles.ImageConfig__imageLabel}>Turn image into  link to external webpage.</label>
+               {/* <form className={styles.ImageConfig__linkForm}> */}
+                  <label htmlFor="urlImg" className={styles.ImageConfig__imageLabel}>Turn image into link to external webpage.</label>
                   <input
                      type="url"
                      name="urlImg"
                      id="urlImg"
                      placeholder="https://example.com"
-                     pattern="https://.*"
+                     pattern="https?://.+"
                      value={imgLink}
                      className={styles.ImageConfig__linkFormInput}
                      onChange={ e => setImgLink(e.target.value)}
+                     onInvalid={e => e.target.setCustomValidity("Invalid URL.  Please make sure URL begins with 'http://' or 'https://")}
+                     onInput={e => e.target.setCustomValidity("")}
                   />
-                  <button
+                  {/* <button
                      type="submit"
                      className={styles.ImageConfig__linkFormButton}
                   >
                      Add Link
-                  </button>
-               </form>
+                  </button> */}
+               {/* </form> */}
             </div>
-            <button className={styles.ImageConfig__validationButton} type="submit">Validate Image</button>
+            <button className={styles.ImageConfig__validationButton} type="submit">Apply to Image</button>
+            {/* <button className={styles.ImageConfig__clearButton}>Clear All Fields</button> */}
          </form>
       </section>
    );
