@@ -66,6 +66,7 @@ module.exports = (_, argv) => ({
         "./Image": "./src/Image/Image.js",
         "./ImageConfig": "./src/Image/ImageConfig.js",
         "./ImageProvider": "./src/Image/ImageProvider.js",
+        "./FormattedText": "./src/FormattedText/FormattedText.js",
       },
       shared: {
         ...deps,
