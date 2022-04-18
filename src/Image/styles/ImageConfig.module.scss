@@ -47,17 +47,17 @@
 
 .ImageConfig__thumbnailContainer {
    display: flex;
-   flex-direction: row;
-   flex-wrap: wrap;
+   flex-direction: column;
    margin: 16px 0;
    justify-content: center;
+   align-items: center;
 }
 
 .ImageConfig__thumbOuter {
    display: inline-flex;
+   align-self: center;
    margin-bottom: 8px;
-   width: 200px;
-   height: 200px;
+   height: auto;
    padding: 4px;
    box-sizing: border-box;
 }
@@ -67,12 +67,13 @@
    min-width: 0;
    max-width: 200px;
    height: auto;
-   overflow: hidden;
 }
 
 .ImageConfig__thumbnailImg {
    display: block;
-   margin: 0 auto;
+   max-width: auto;
+   height: auto;
+   max-width: 100%;
 }
 
 .ImageConfig__uploader {
