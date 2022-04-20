@@ -82,11 +82,14 @@ function ImageConfig() {
                { file.length !== 0 && thumbs }
             </aside>
             {/* Image Uploader */}
-            <div {...getRootProps({className: `${styles.ImageConfig__uploader}`})}>
-               <label>
+            <div {...getRootProps()}>
+               <div style={{border:"3px dotted black", display:"flex", flexDirection:"column", alignItems:"center"}}>
+                  <p>Drag and Drop</p>
+               <label className={styles.ImageConfig__uploader}>
                   <input {...getInputProps()} />
                   {file.length < 1 ? 'Upload Image' : 'Replace Image'}
                </label>
+               </div>
             </div>
             <p className={styles.ImageConfig__uploadSize}>
                Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
