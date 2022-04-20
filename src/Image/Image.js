@@ -41,7 +41,8 @@ const Image = () => {
             {context.imgLink ?
                <a 
                   href={context.imgLink} 
-                  className={styles.Image__imgLink}>
+                  className={styles.Image__imgLink}
+                  target="__blank">
                   <img
                      src={context.uploadedImg}
                      alt={context.alt}
