@@ -12,6 +12,19 @@ function ImageConfig() {
   const [ imgLink, setImgLink ] = useState("");
   const [ count, setCount ] = useState(0);
   const [file, setFile] = useState([]);
+
+  const dropzone = {
+     flex: 1,
+     display: "flex",
+     flexDirection: "column",
+     alignItems: "center",
+     justifyContent: "center",
+     padding: "20px",
+     borderWidth: "2px",
+     borderRadius: "2px",
+     borderStyle: "dashed",
+     backgroundColor: "#fafafa",
+  }
  
    // image preview
    const thumbs =  (
@@ -82,18 +95,10 @@ function ImageConfig() {
                { file.length !== 0 && thumbs }
             </aside>
             {/* Image Uploader */}
-            <div {...getRootProps()}>
-               <div style={{border:"3px dotted black", display:"flex", flexDirection:"column", alignItems:"center"}}>
-                  <p>Drag and Drop</p>
-               <label className={styles.ImageConfig__uploader}>
-                  <input {...getInputProps()} />
-                  {file.length < 1 ? 'Upload Image' : 'Replace Image'}
-               </label>
-               </div>
+            <div style={dropzone} {...getRootProps()}>
+            <p>Drag 'n' drop some files here, or click to open the file dialog</p>
+            <input {...getInputProps()} />
             </div>
-            <p className={styles.ImageConfig__uploadSize}>
-               Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
-            </p>
          </div>
          <form onSubmit={handleSubmit} className={styles.ImageConfig__validationForm}>
             <div className={styles.ImageConfig__section}>
@@ -118,7 +123,7 @@ function ImageConfig() {
             <div className={styles.ImageConfig__section}>
                <h2 className={styles.ImageConfig__imageH2}>Long Description</h2>
                <label className={styles.ImageConfig__imageLabel} htmlFor="long-desc">
-                  This text will be used by screen readers, search engines, or when the image can't be   loaded.
+                  This text will be used by screen readers, search engines, or when the image can't be loaded.
                </label>
                <textarea
                   name="long-desc"
