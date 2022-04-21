@@ -12,20 +12,7 @@ function ImageConfig() {
   const [ imgLink, setImgLink ] = useState("");
   const [ count, setCount ] = useState(0);
   const [file, setFile] = useState([]);
-
-  const dropzone = {
-     flex: 1,
-     display: "flex",
-     flexDirection: "column",
-     alignItems: "center",
-     justifyContent: "center",
-     padding: "20px",
-     borderWidth: "2px",
-     borderRadius: "2px",
-     borderStyle: "dashed",
-     backgroundColor: "#fafafa",
-  }
- 
+  
    // image preview
    const thumbs =  (
       <div className={styles.ImageConfig__thumbOuter}>
@@ -95,7 +82,7 @@ function ImageConfig() {
                { file.length !== 0 && thumbs }
             </aside>
             {/* Image Uploader */}
-            <div style={dropzone} {...getRootProps()}>
+            <div {...getRootProps()} className={styles.ImageConfig__uploader}>
             <p>Drag 'n' drop some files here, or click to open the file dialog</p>
             <input {...getInputProps()} />
             </div>

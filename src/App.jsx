@@ -10,7 +10,7 @@ import { ImageProvider } from "./Image/ImageProvider";
 import "./index.css";
 
 const App = () => {
-  console.log("testing drop zone")
+  console.log("3.0.1")
   return (
     <>
       <Header title="component-library" backgroundColor="salmon" />
