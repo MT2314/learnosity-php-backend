@@ -12,7 +12,7 @@ function ImageConfig() {
   const [ imgLink, setImgLink ] = useState("");
   const [ count, setCount ] = useState(0);
   const [file, setFile] = useState([]);
-  
+
    // image preview
    const thumbs =  (
       <div className={styles.ImageConfig__thumbOuter}>
@@ -83,8 +83,11 @@ function ImageConfig() {
             </aside>
             {/* Image Uploader */}
             <div {...getRootProps()} className={styles.ImageConfig__uploader}>
-            <p>Drag 'n' drop some files here, or click to open the file dialog</p>
-            <input {...getInputProps()} />
+               <p>Drag 'n' drop some files here, or click to open the file dialog</p>
+               <input {...getInputProps()} />
+               <p className={styles.ImageConfig__uploadSize}>
+                  Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
+               </p>
             </div>
          </div>
          <form onSubmit={handleSubmit} className={styles.ImageConfig__validationForm}>
