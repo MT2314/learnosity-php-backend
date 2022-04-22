@@ -1,7 +1,6 @@
 import React from 'react';
-import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
-const EditPanelIcon = ({title}) => {
+const EditPanelIcon = ({title, icon}) => {
    const styles = {     
       container: {
          display: "flex",
@@ -28,7 +27,7 @@ const EditPanelIcon = ({title}) => {
    }
    return(
       <div style={styles.container}>
-      <InsertPhotoOutlinedIcon style={styles.icon}/>
+      <p style={styles.icon}>{icon}</p>
       <p className={styles.ImageConfig__componentTitle}>{title}</p>
    </div>
    )

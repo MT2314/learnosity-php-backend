@@ -6,6 +6,8 @@ import styles from './styles/ImageConfig.module.scss';
 import { ImageWidgetContext } from './ImageProvider';
 
 import NativeSelect from '@mui/material/NativeSelect';
+import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
+
 
 function ImageConfig() {
 
@@ -23,7 +25,10 @@ function ImageConfig() {
    return (
       <section className={styles.ImageConfig__editPanelContainer}>
          <EditPanelIcon
-            title="image" />
+            title="image"
+            icon={<InsertPhotoOutlinedIcon/>}
+             />
+
          <ImageUploader />
 
          <form onSubmit={handleSubmit} className={styles.ImageConfig__validationForm}>
