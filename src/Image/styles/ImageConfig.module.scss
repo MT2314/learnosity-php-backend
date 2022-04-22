@@ -17,6 +17,8 @@
 }
 
 .ImageConfig__section {
+   display: flex;
+   flex-direction: column;
    width: 100%;
    margin: 0.5rem 0;
 }
@@ -157,6 +159,13 @@
 .ImageConfig__altTextInput:focus,
 .ImageConfig__linkFormInput:focus {
    outline: 3px solid #ffc46b;
+}
+
+.ImageConfig__altCount {
+   align-self: flex-end;
+   font-size: 0.75rem;
+   font-family: "Roboto","Arial",sans-serif;
+   margin-top: 0.25rem;
 }
 
 .ImageConfig__imageSizeDropdown {

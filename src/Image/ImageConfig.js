@@ -48,6 +48,8 @@ function ImageConfig() {
          URL.revokeObjectURL(file.preview);
       }
    });
+
+   const altTextCounter = context.alt.length + "/200";
    
    const handleSubmit = (e) => {
       e.preventDefault();
@@ -94,12 +96,13 @@ function ImageConfig() {
             <div className={styles.ImageConfig__section}>
                <h2 className={styles.ImageConfig__imageH2}>Alt Text</h2>
                <label className={styles.ImageConfig__imageLabel} htmlFor="image-alt">
-                  This text will be used by screen readers, search engines, or when the image can't be loaded.
+                  This text will be used by screen readers, search engines, or when the image can't be loaded (Maximum 200 characters).
                </label>
                <textarea
                   name={`image-alt`}
                   id={`image-alt`}
                   required
+                  maxLength="200"
                   aria-label="Add alt text to image"
                   rows="4"
                   value={context.alt}
@@ -109,6 +112,7 @@ function ImageConfig() {
                   onInvalid={e => e.target.setCustomValidity("Alt text is required for all uploaded images.")}
                   onInput={e => e.target.setCustomValidity('')}
                ></textarea>
+               <span className={styles.ImageConfig__altCount}>{altTextCounter}</span>
             </div>
             <div className={styles.ImageConfig__section}>
                <h2 className={styles.ImageConfig__imageH2}>Long Description</h2>
