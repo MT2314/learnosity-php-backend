@@ -83,12 +83,12 @@ function ImageConfig() {
             </aside>
             {/* Image Uploader */}
             <div {...getRootProps()} className={styles.ImageConfig__uploader}>
-               <p>Drag 'n' drop some files here, or click to open the file dialog</p>
-               <input {...getInputProps()} />
-               <p className={styles.ImageConfig__uploadSize}>
-                  Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
-               </p>
+               <label for="image-uploader">Drag 'n' drop some files here, or click to open the file dialog</label>
+               <input name="image-uploader" {...getInputProps()} />
             </div>
+            <p className={styles.ImageConfig__uploadSize}>
+               Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
+            </p>
          </div>
          <form onSubmit={handleSubmit} className={styles.ImageConfig__validationForm}>
             <div className={styles.ImageConfig__section}>
