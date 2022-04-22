@@ -48,6 +48,8 @@ function ImageConfig() {
          URL.revokeObjectURL(file.preview);
       }
    });
+
+   const altTextCounter = context.alt.length + "/200";
    
    const handleSubmit = (e) => {
       e.preventDefault();
@@ -112,6 +114,7 @@ function ImageConfig() {
                   onInvalid={e => e.target.setCustomValidity("Alt text is required for all uploaded images.")}
                   onInput={e => e.target.setCustomValidity('')}
                ></textarea>
+               <span className={styles.ImageConfig__altCount}>{altTextCounter}</span>
             </div>
             <div className={styles.ImageConfig__section}>
                <h2 className={styles.ImageConfig__imageH2}>Long Description</h2>
