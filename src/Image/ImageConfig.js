@@ -1,9 +1,11 @@
 import React, { useState, useContext } from 'react';
-import styles from './styles/ImageConfig.module.scss';
-import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
-import NativeSelect from '@mui/material/NativeSelect';
-import { ImageWidgetContext } from './ImageProvider';
+
 import ImageUploader from './ImageUploader';
+import EditPanelIcon from '../EditPanelIcon';
+import styles from './styles/ImageConfig.module.scss';
+import { ImageWidgetContext } from './ImageProvider';
+
+import NativeSelect from '@mui/material/NativeSelect';
 
 function ImageConfig() {
 
@@ -20,12 +22,8 @@ function ImageConfig() {
 
    return (
       <section className={styles.ImageConfig__editPanelContainer}>
-         {/* Edit Panel Component Title */}
-         <div className={styles.ImageConfig__componentTitleContainer}>
-            <InsertPhotoOutlinedIcon className={styles.ImageConfig__componentTitleIcon} />
-            <p className={styles.ImageConfig__componentTitle}>Image</p>
-         </div>
-
+         <EditPanelIcon
+            title="image" />
          <ImageUploader />
 
          <form onSubmit={handleSubmit} className={styles.ImageConfig__validationForm}>
