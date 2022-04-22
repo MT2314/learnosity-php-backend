@@ -92,7 +92,7 @@
    font-weight: 500;
    font-family: "Roboto", "Arial", sans-serif;
    line-height: 1.75;
-   border: none;
+   border: 3px solid transparent;
    border-radius: 4px;
    letter-spacing: 0.02857em;
    transition: all .2s ease-in
@@ -116,7 +116,8 @@
 .ImageConfig__uploader:focus,
 .ImageConfig__linkFormButton:focus,
 .ImageConfig__validationButton:focus {
-   outline: 3px solid #ffc46b;
+   border: 3px solid #ffc46b;
+   outline: none;
 }
 
 .ImageConfig__uploadSize {
@@ -189,7 +190,7 @@
    color: #fff;
    width: 100%;
    padding: 6px 0;
-   border: none;
+   border: 3px solid transparent;
    border-radius: 4px;
    font-family: "Roboto", "Arial", sans-serif;
 }
