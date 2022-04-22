@@ -114,7 +114,7 @@
 .ImageConfig__uploader:focus,
 .ImageConfig__linkFormButton:focus,
 .ImageConfig__validationButton:focus {
-   outline: 3px solid #ffc46b;
+   box-shadow: 3px solid #ffc46b;
 }
 
 .ImageConfig__uploadSize {
