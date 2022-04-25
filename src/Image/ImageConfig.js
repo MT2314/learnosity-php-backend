@@ -27,7 +27,7 @@ function ImageConfig() {
          <EditPanelIcon
             title="image"
             icon={<InsertPhotoOutlinedIcon/>}
-             />
+         />
 
          <ImageUploader />
 
@@ -107,16 +107,8 @@ function ImageConfig() {
                      onInvalid={e => e.target.setCustomValidity("Invalid URL.  Please make sure URL begins with 'http://' or 'https://")}
                      onInput={e => e.target.setCustomValidity("")}
                   />
-                  {/* <button
-                     type="submit"
-                     className={styles.ImageConfig__linkFormButton}
-                  >
-                     Add Link
-                  </button> */}
-               {/* </form> */}
             </div>
             <button className={styles.ImageConfig__validationButton} type="submit">Apply to Image</button>
-            {/* <button className={styles.ImageConfig__clearButton}>Clear All Fields</button> */}
          </form>
       </section>
    );
