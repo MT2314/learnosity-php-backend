@@ -25,10 +25,10 @@ function ImageConfig() {
    return (
       <section className={styles.ImageConfig__editPanelContainer}>
          <EditPanelIcon
-            title="image"
+            title="Image"
             icon={<InsertPhotoOutlinedIcon/>}
          />
-
+         
          <ImageUploader />
 
          <form onSubmit={handleSubmit} className={styles.ImageConfig__validationForm}>
