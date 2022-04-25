@@ -4,7 +4,7 @@ const Header = ({title, backgroundColor = "salmon"}) => {
    const styles = {
       backgroundColor: `${backgroundColor}`,
       color:"white",
-      width: "100%",
+      width: "auto",
       padding: "3rem",
       marginTop: 0,
    }

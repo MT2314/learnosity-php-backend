@@ -7,7 +7,7 @@ module.exports = (_, argv) => ({
     publicPath: 
       argv.mode === "development"
         ? "http://localhost:3001/"
-        : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-demo-component-library/"
+        : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-mf-component-library/"
   },
 
   resolve: {
@@ -39,12 +39,23 @@ module.exports = (_, argv) => ({
           loader: "babel-loader",
         },
       },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'svg-url-loader',
+            options: {
+              limit: 10000,
+            },
+          },
+        ],
+      },
     ],
   },
 
   plugins: [
     new ModuleFederationPlugin({
-      name: "demo_component_library",
+      name: "mf_component_library",
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
@@ -52,10 +63,10 @@ module.exports = (_, argv) => ({
         "./QuoteBox":"./src/QuoteBox/QuoteBox.js",
         "./Callout":"./src/Callout/Callout.js",
         "./Header":"./src/Header.jsx",
-        "./Form":"./src/Form/Form.js",
-        "./FormOutput": "./src/Form/FormOutput.js",
-        "./Provider": "./src/Provider.js",
-        "./CalloutSC":"./src/CalloutSC/CalloutSC.js",
+        "./Image": "./src/Image/Image.js",
+        "./ImageConfig": "./src/Image/ImageConfig.js",
+        "./ImageProvider": "./src/Image/ImageProvider.js",
+        "./FormattedText": "./src/FormattedText/FormattedText.js",
       },
       shared: {
         ...deps,

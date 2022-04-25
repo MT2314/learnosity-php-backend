@@ -1,41 +1,42 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import TextEditable from "./TextEditable/TextEditable";
-import QuoteBox from "./QuoteBox/QuoteBox.js";
 import Callout from "./Callout/Callout.js";
-import CalloutSC from "./CalloutSC/CalloutSC.js";
-import Header from "./Header"
-import Form from "./Form/Form";
-import FormOutput from "./Form/FormOutput";
-import Image from './Image/Image';
-import { WidgetContextProvider } from "./Provider";
+import Header from "./Header";
+import Image from "./Image/Image";
+import ImageConfig from "./Image/ImageConfig";
+import FormattedText from "./FormattedText";
+import { ImageProvider } from "./Image/ImageProvider";
 
 import "./index.css";
 
-const App = () => (
-  <>
-  <Header 
-    title="component-library"
-    backgroundColor="salmon"
-  />
-  <div className="container" style={{display:"flex"}}>
-    <div className="canvas" style={{border: "2px solid black"}}>
-      <TextEditable />
-      <Callout />
-      <QuoteBox />
-      <CalloutSC />
-      <FormOutput />
-    </div>
-    <div className="editPanel" style={{border:"2px solid black", marginLeft: "2em" }}>
-      <Form />
-      {/* <Image /> */}
-    </div>
-  </div>
-  </>
-);
+const App = () => {
+  console.log("3.0.1")
+  return (
+    <>
+      <Header title="component-library" backgroundColor="salmon" />
+      <div className="container" style={{ display: "flex" }}>
+        <div className="canvas" style={{ border: "2px solid black" }}>
+          <Callout />
+          <Image />
+          <FormattedText />
+        </div>
+        <div
+          className="editPanel"
+          style={{
+            border: "2px solid black",
+            marginLeft: "1em",
+            padding: "10px",
+          }}
+        >
+          <ImageConfig />
+        </div>
+      </div>
+    </>
+  );
+};
 ReactDOM.render(
-  <WidgetContextProvider>
+  <ImageProvider>
     <App />
-  </WidgetContextProvider>,
+  </ImageProvider>,
   document.getElementById("app")
 );
