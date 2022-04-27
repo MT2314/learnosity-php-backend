@@ -25,7 +25,6 @@ const Callout = (props) => {
           onChange={(e) => setCalloutTypeSvg(e.target.value)}
           className={styles.Callout_type_dropdown}
         >
-          <option value={""}>Select Value</option>
           <option
             value={
               "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/challenge_icon.svg"
@@ -91,28 +90,6 @@ const Callout = (props) => {
         className={styles.Callout_body}
         value="Enter Body"
       />
-      <>
-        {callout.map(({ title, iconUrl }) => (
-          <NativeSelect
-            autoFocus
-            id={`callout-type`}
-            value={calloutType || ""}
-            onChange={(e) => setCalloutTypeSvg(e.target.value)}
-            className={styles.Callout_type_dropdown}
-          >
-            {/* <option value={""}>Select Value</option> */}
-            <option value={iconUrl} title>
-              {title}
-            </option>
-            {/* {callout.map((callouts) => (
-              <option key={callout.title} value={callout.iconUrl}>
-                {callout.title}
-              </option>
-            ))}
-            ; */}
-          </NativeSelect>
-        ))}
-      </>
     </Paper>
   );
 };
