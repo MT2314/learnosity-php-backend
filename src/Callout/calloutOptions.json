@@ -1,0 +1,22 @@
+{
+    "listType": "CalloutTypes",
+    "calloutType": [
+        {
+            "title": "Try It",
+            "iconUrl": ""
+        },
+       {
+            "title": "Try It",
+            "iconUrl": ""
+        },
+         {
+            "title": "Try It",
+            "iconUrl": ""
+        },
+         {
+            "title": "Try It",
+            "iconUrl": ""
+        }
+    ]
+   
+}
