@@ -9,17 +9,21 @@ import NativeSelect from '@mui/material/NativeSelect';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
 
-function ImageConfig() {
+function ImageConfig({selectedUUID = "1"}) {
 
   const context = useContext(ImageWidgetContext);
+  console.log("Context loaded", context)
 
   const [ imgLink, setImgLink ] = useState("");
 
-   const altTextCounter = context.alt.length + "/200";
+  const { alt = "", longDesc = "" } = context[selectedUUID] || {}
+  console.log("ImageConfig -> Selected UUID", selectedUUID, context[selectedUUID])
+
+   const altTextCounter = alt.length + "/200";
    
    const handleSubmit = (e) => {
       e.preventDefault();
-      context.updateContext({ imgLink: imgLink });
+      context.updateReferencedContext(selectedUUID, { imgLink });
    }
 
    return (
@@ -29,7 +33,7 @@ function ImageConfig() {
             icon={<InsertPhotoOutlinedIcon/>}
          />
          
-         <ImageUploader />
+         <ImageUploader selectedUUID={selectedUUID} />
 
          <form onSubmit={handleSubmit} className={styles.ImageConfig__validationForm}>
             <div className={styles.ImageConfig__section}>
@@ -44,14 +48,15 @@ function ImageConfig() {
                   maxLength="200"
                   aria-label="Add alt text to image"
                   rows="4"
-                  value={context.alt}
-                  onChange={ (e) => context.updateContext({alt: e.target.value })}
+                  value={alt}
+                  // The panel will need a way to set what the "selected" uuid is
+                  onChange={ (e) => context.updateReferencedContext(selectedUUID, {alt: e.target.value })}
                   className={styles.ImageConfig__altTextInput}
                   placeholder="Type alt text here..."
                   onInvalid={e => e.target.setCustomValidity("Alt text is required for all uploaded images.")}
                   onInput={e => e.target.setCustomValidity('')}
                ></textarea>
-               <span className={styles.ImageConfig__altCount}>{altTextCounter}</span>
+               <span className={styles.ImageConfig__altCount}>{altTextCounter || 200}</span>
             </div>
             <div className={styles.ImageConfig__section}>
                <h2 className={styles.ImageConfig__imageH2}>Long Description</h2>
@@ -63,8 +68,8 @@ function ImageConfig() {
                   id="long-desc"
                   aria-label="Add a long description to the uploaded image"
                   rows="4"
-                  value={context.longDesc}
-                  onChange={ (e) => context.updateContext({longDesc: e.target.value })}
+                  value={longDesc}
+                  onChange={ (e) => context.updateReferencedContext(selectedUUID, {longDesc: e.target.value })}
                   className={styles.ImageConfig__altTextInput}
                   placeholder="Type long description here..."
                ></textarea>
@@ -81,7 +86,7 @@ function ImageConfig() {
                   id="img-size"
                   name="img-size"
                   className={styles.ImageConfig__imageSizeDropdown}
-                  onChange={(e) => context.updateContext({imgSize: e.target.value})}
+                  onChange={(e) => context.updateReferencedContext(selectedUUID, {imgSize: e.target.value})}
                   defaultValue={"select"}
                >
                   <option value={"select"} disabled>Select Size</option>

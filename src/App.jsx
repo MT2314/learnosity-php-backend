@@ -16,8 +16,9 @@ const App = () => {
       <Header title="component-library" backgroundColor="salmon" />
       <div className="container" style={{ display: "flex" }}>
         <div className="canvas" style={{ border: "2px solid black" }}>
+          <Image uuid="1" />
           <Callout />
-          <Image />
+          <Image uuid="2" />
           <FormattedText />
         </div>
         <div

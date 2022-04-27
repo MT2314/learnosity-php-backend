@@ -13,6 +13,9 @@ export function ImageProvider({ children }){
       imgSize: "default",
       updateContext: (contextUpdates) => {
          setUserInfo((currentContextInfo) => ({...currentContextInfo, ...contextUpdates}))
+      },
+      updateReferencedContext: (uuid, contextUpdates) => {
+         setUserInfo((currentContextInfo) => ({...currentContextInfo, [uuid]: {...currentContextInfo[uuid] || {}, ...contextUpdates}}))
       }
    };
 
