@@ -1,13 +1,14 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const { expose } = require("./Expose/index")
 
 const deps = require("./package.json").dependencies;
 module.exports = (_, argv) => ({
   output: {
-    publicPath: 
+    publicPath:
       argv.mode === "development"
         ? "http://localhost:3001/"
-        : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-mf-component-library/"
+        : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-mf-component-library/",
   },
 
   resolve: {
@@ -43,7 +44,7 @@ module.exports = (_, argv) => ({
         test: /\.svg$/,
         use: [
           {
-            loader: 'svg-url-loader',
+            loader: "svg-url-loader",
             options: {
               limit: 10000,
             },
@@ -58,16 +59,7 @@ module.exports = (_, argv) => ({
       name: "mf_component_library",
       filename: "remoteEntry.js",
       remotes: {},
-      exposes: {
-        "./TextEditable": "./src/TextEditable/TextEditable.js",
-        "./QuoteBox":"./src/QuoteBox/QuoteBox.js",
-        "./Callout":"./src/Callout/Callout.js",
-        "./Header":"./src/Header.jsx",
-        "./Image": "./src/Image/Image.js",
-        "./ImageConfig": "./src/Image/ImageConfig.js",
-        "./ImageProvider": "./src/Image/ImageProvider.js",
-        "./FormattedText": "./src/FormattedText/FormattedText.js",
-      },
+      exposes: expose,
       shared: {
         ...deps,
         react: {
