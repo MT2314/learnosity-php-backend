@@ -17,43 +17,45 @@ const Callout = (props) => {
         Callout Type
       </label>
       &nbsp;
-      <NativeSelect
-        autoFocus
-        id={`callout-type`}
-        value={calloutType || ""}
-        onChange={(e) => setCalloutTypeSvg(e.target.value)}
-        className={styles.Callout_type_dropdown}
-      >
-        <option value={""}>Select Value</option>
-        <option
-          value={
-            "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/challenge_icon.svg"
-          }
+      {callout.map(({ title, iconUrl }) => (
+        <NativeSelect
+          autoFocus
+          id={`callout-type`}
+          value={calloutType || ""}
+          onChange={(e) => setCalloutTypeSvg(e.target.value)}
+          className={styles.Callout_type_dropdown}
         >
-          Challenge
-        </option>
-        <option
-          value={
-            "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/notebook_icon.svg"
-          }
-        >
-          Notebook
-        </option>
-        <option
-          value={
-            "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/tryit_icon.svg"
-          }
-        >
-          Try It
-        </option>
-        <option
-          value={
-            "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/definition_icon.svg"
-          }
-        >
-          Definition
-        </option>
-      </NativeSelect>
+          <option value={""}>Select Value</option>
+          <option
+            value={
+              "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/challenge_icon.svg"
+            }
+          >
+            {callout[0].title}
+          </option>
+          <option
+            value={
+              "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/notebook_icon.svg"
+            }
+          >
+            {callout[1].title}
+          </option>
+          <option
+            value={
+              "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/tryit_icon.svg"
+            }
+          >
+            {callout[2].title}
+          </option>
+          <option
+            value={
+              "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/definition_icon.svg"
+            }
+          >
+            {callout[3].title}
+          </option>
+        </NativeSelect>
+      ))}
       <div className={styles.Callout_body_text} role="presentation">
         {/* decorative icon */}
         {calloutTypeSvg ? (
@@ -90,11 +92,25 @@ const Callout = (props) => {
         value="Enter Body"
       />
       <>
-        const myObjects ={" "}
         {callout.map(({ title, iconUrl }) => (
-          <p key={title}>
-            Coffee type {title} in a {iconUrl} size.
-          </p>
+          <NativeSelect
+            autoFocus
+            id={`callout-type`}
+            value={calloutType || ""}
+            onChange={(e) => setCalloutTypeSvg(e.target.value)}
+            className={styles.Callout_type_dropdown}
+          >
+            {/* <option value={""}>Select Value</option> */}
+            <option value={iconUrl} title>
+              {title}
+            </option>
+            {/* {callout.map((callouts) => (
+              <option key={callout.title} value={callout.iconUrl}>
+                {callout.title}
+              </option>
+            ))}
+            ; */}
+          </NativeSelect>
         ))}
       </>
     </Paper>
