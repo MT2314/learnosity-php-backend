@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Paper } from "@mui/material";
 import NativeSelect from '@mui/material/NativeSelect';
 import styles from "./Callout.module.scss";
 import TextEditable from "../TextEditable";
+import callout from "./calloutOptions";
 
 const Callout = (props) => {
+  console.log(callout);
+
 
   const [ calloutTypeSvg, setCalloutTypeSvg ] = useState('');
   const {heading, body, calloutType} = props;

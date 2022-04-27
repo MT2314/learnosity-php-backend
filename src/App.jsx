@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect} from "react";
 import ReactDOM from "react-dom";
 import Callout from "./Callout/Callout.js";
 import Header from "./Header";
@@ -9,8 +9,14 @@ import { ImageProvider } from "./Image/ImageProvider";
 
 import "./index.css";
 
+ 
+
 const App = () => {
   console.log("15.0.1")
+
+  
+
+
   return (
     <>
       <Header title="component-library" backgroundColor="salmon" />
