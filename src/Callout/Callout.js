@@ -25,34 +25,10 @@ const Callout = (props) => {
           onChange={(e) => setCalloutTypeSvg(e.target.value)}
           className={styles.Callout_type_dropdown}
         >
-          <option
-            value={
-              "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/challenge_icon.svg"
-            }
-          >
-            {callout[0].title}
-          </option>
-          <option
-            value={
-              "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/notebook_icon.svg"
-            }
-          >
-            {callout[1].title}
-          </option>
-          <option
-            value={
-              "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/tryit_icon.svg"
-            }
-          >
-            {callout[2].title}
-          </option>
-          <option
-            value={
-              "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/definition_icon.svg"
-            }
-          >
-            {callout[3].title}
-          </option>
+          <option value={callout[0].iconUrl}>{callout[0].title}</option>
+          <option value={callout[1].iconUrl}>{callout[1].title}</option>
+          <option value={callout[2].iconUrl}>{callout[2].title}</option>
+          <option value={callout[3].iconUrl}>{callout[3].title}</option>
         </NativeSelect>
       ))}
       <div className={styles.Callout_body_text} role="presentation">
