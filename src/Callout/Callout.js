@@ -17,20 +17,19 @@ const Callout = (props) => {
         Callout Type
       </label>
       &nbsp;
-      {callout.map(({ title, iconUrl }) => (
-        <NativeSelect
-          autoFocus
-          id={`callout-type`}
-          value={calloutType || ""}
-          onChange={(e) => setCalloutTypeSvg(e.target.value)}
-          className={styles.Callout_type_dropdown}
-        >
-          <option value={callout[0].iconUrl}>{callout[0].title}</option>
-          <option value={callout[1].iconUrl}>{callout[1].title}</option>
-          <option value={callout[2].iconUrl}>{callout[2].title}</option>
-          <option value={callout[3].iconUrl}>{callout[3].title}</option>
-        </NativeSelect>
-      ))}
+      <NativeSelect
+        autoFocus
+        id={`callout-type`}
+        value={calloutType || ""}
+        onChange={(e) => setCalloutTypeSvg(e.target.value)}
+        className={styles.Callout_type_dropdown}
+      >
+        {callout.map(({ id, title, iconUrl }) => (
+          <option key={id} value={iconUrl}>
+            {title}
+          </option>
+        ))}
+      </NativeSelect>
       <div className={styles.Callout_body_text} role="presentation">
         {/* decorative icon */}
         {calloutTypeSvg ? (
