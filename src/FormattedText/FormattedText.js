@@ -6,7 +6,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import toolbarOptions from "./Utility/toolbarOptions.js";
 import "./FormattedText.style.css";
 
-const FormattedText = ({ placeHolderText, toolbar=toolbarOptions }) => {
+const FormattedText = ({ placeHolderText, toolbar = toolbarOptions }) => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );

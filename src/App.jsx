@@ -8,6 +8,7 @@ import FormattedText from "./FormattedText";
 import { ImageProvider } from "./Image/ImageProvider";
 
 import "./index.css";
+import QuoteBox from "./QuoteBox/QuoteBox.js";
 
  
 
@@ -20,9 +21,10 @@ const App = () => {
   return (
     <>
       <Header title="component-library" backgroundColor="salmon" />
-      <div className="container" style={{ display: "flex" }}>
-        <div className="canvas" style={{ border: "2px solid black" }}>
+      <div className="container" style={{ display: "flex", minWidth: "1100px"}}>
+        <div className="canvas" style={{ border: "2px solid black", minWidth: "650px" }}>
           <Callout />
+          <QuoteBox />
           <Image />
           <FormattedText />
         </div>

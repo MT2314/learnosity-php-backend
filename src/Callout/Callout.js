@@ -1,16 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useReducer } from "react";
 import { Paper } from "@mui/material";
 import NativeSelect from "@mui/material/NativeSelect";
 import styles from "./Callout.module.scss";
 import TextEditable from "../TextEditable";
-import FormattedText from "../FormattedText";
+import FormattedText from "../FormattedText/FormattedText";
+import { inlineWithLinkConfig, linkConfig } from "./utility/inlineConfig";
 import callout from "./calloutOptions";
 
-const Callout = (props) => {
-  console.log(callout);
-
+const Callout = ({ body, citation, url, calloutType }) => {
   const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
-  const { heading, body, calloutType } = props;
+  // const { heading, calloutType } = props;
+
+  const quoteReducer = (state, { type, payload }) => {
+    switch (type) {
+      case "body":
+        return { ...state, body: payload };
+      case "citation":
+        return { ...state, citation: payload };
+      case "url":
+        return { ...state, url: payload };
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(quoteReducer, {
+    body: "",
+    citation: "",
+    url: "",
+  });
 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
@@ -48,16 +66,22 @@ const Callout = (props) => {
         )}
         <TextEditable
           placeholder="Callout heading text"
-          onChange={(e) =>
-            setProp((props) =>
-              Object.assign(props, { heading: e.target.value })
-            )
-          }
+          toolbar={inlineWithLinkConfig}
+          value={state.body}
+          // onChange={(e) =>
+          //   setProp((props) =>
+          //     Object.assign(props, { heading: e.target.value })
+          //   )
+          // }
           className={styles.Callout_heading}
-          value="Enter Heading"
         />
       </div>
-      <FormattedText />
+      <FormattedText
+        placeHolderText="Enter callout body text here..."
+        toolbar={inlineWithLinkConfig}
+        value={state.body}
+        onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
+      />
       {/* <TextEditable
         placeholder="Callout body text"
         multiline={true}
