@@ -14,12 +14,11 @@ function ImageConfig() {
   const context = useContext(ImageWidgetContext);
   console.log("Context loaded", context)
 
-  const [ imgLink, setImgLink ] = useState("");
+//   const [ imgLink, setImgLink ] = useState("");
 
   const selectedUUID = context.selectedUUID || "imageDefault"
 
-
-  const { alt = "", longDesc = "" } = context[selectedUUID]
+  const { alt = "", longDesc = "", imgLink } = context[selectedUUID]
   console.log("ImageConfig -> Selected UUID", selectedUUID, context[selectedUUID])
 
    const altTextCounter = alt.length + "/200";
@@ -111,7 +110,7 @@ function ImageConfig() {
                      pattern="https?://.+"
                      value={imgLink}
                      className={styles.ImageConfig__linkFormInput}
-                     onChange={ e => setImgLink(e.target.value)}
+                     onChange={ e => context.updateReferencedContext(selectedUUID, {imgLink: e.target.value})}
                      onInvalid={e => e.target.setCustomValidity("Invalid URL.  Please make sure URL begins with 'http://' or 'https://")}
                      onInput={e => e.target.setCustomValidity("")}
                   />

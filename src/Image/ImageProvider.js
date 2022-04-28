@@ -12,12 +12,12 @@ export function ImageProvider({ children, testing = false }) {
       uploadedImg: "",
       imgSize: "default",
     },
-    alt: "",
-    longDesc: "",
-    imgLink: "",
-    creditLink: "",
-    uploadedImg: "",
-    imgSize: "default",
+    // alt: "",
+    // longDesc: "",
+    // imgLink: "",
+    // creditLink: "",
+    // uploadedImg: "",
+    // imgSize: "default",
     updateContext: (contextUpdates) => {
       setUserInfo((currentContextInfo) => ({ ...currentContextInfo, ...contextUpdates }));
     },

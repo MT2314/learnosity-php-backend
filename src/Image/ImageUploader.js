@@ -58,7 +58,7 @@ const ImageUploader = () => {
          <div className={styles.ImageConfig__thumbOuter}>
             <div className={styles.ImageConfig__thumbInner}>
                <img
-                  src={file.preview}
+                  src={context[selectedUUID].uploadedImg || ""}
                   alt={alt}
                   className={styles.ImageConfig__thumbnailImg}
                />

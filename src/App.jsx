@@ -14,13 +14,13 @@ const TestingEnvUUIDSetting = () => {
 
   const handleChange = (e) => {
     const uuid = e.target.value
+    // If the component has never been opened in the panel, populate the data with the default for this UUID
     if (!componentContext[uuid]){
       // TODO: needs a way to know which component default to add when multiples use context, but this is a problem specific to testing environment
       componentContext.updateContext({selectedUUID: uuid, [uuid]: {...componentContext.imageDefault}})
     } else {
       componentContext.updateContext({selectedUUID: uuid})
     }
-
   }
 
   return (
