@@ -1,29 +1,8 @@
 import React, { useEffect, useRef, forwardRef } from "react";
-import styles from "./styles/TextEditable.module.scss";
+import styles from "./TextEditable.module.scss";
 
 // This is the plain text only version of ContentEditable, which is an external library for
 // editting HTML content
-
-// const TextInput = input;
-// // `
-// //   background: transparent;
-// //   border: 1px solid transparent;
-// //   padding: 0;
-// //   &:hover,
-// //   &:focus {
-// //     border: 1px solid black;
-// //   }
-// // `;
-
-// const TextInputMultiline = styled.textarea`
-//   background: transparent;
-//   border: 1px solid transparent;
-//   padding: 0;
-//   &:hover,
-//   &:focus {
-//     border: 1px solid black;
-//   }
-// `;
 
 const TextEditable = forwardRef(
   ({ value, placeholder = "text input", multiline = false, ...props }, ref) => {
