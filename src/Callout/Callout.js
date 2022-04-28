@@ -7,10 +7,15 @@ import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/calloutConfig";
 import callout from "./calloutOptions";
 
-const Callout = ({ body, heading, url, calloutType }) => {
+const Callout = ({ body, heading, calloutType }) => {
   const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
   // const { heading, calloutType } = props;
 
+  const [state, dispatch] = useReducer(calloutReducer, {
+    body: "",
+    heading: "",
+    url: "",
+  });
   const calloutReducer = (state, { type, payload }) => {
     switch (type) {
       case "body":
@@ -23,12 +28,6 @@ const Callout = ({ body, heading, url, calloutType }) => {
         return state;
     }
   };
-
-  const [state, dispatch] = useReducer(calloutReducer, {
-    body: "",
-    heading: "",
-    url: "",
-  });
 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
