@@ -32,6 +32,7 @@ const App = () => {
             border: "2px solid black",
             marginLeft: "1em",
             padding: "10px",
+            maxWidth: "350px"
           }}
         >
           <ImageConfig />
