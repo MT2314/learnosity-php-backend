@@ -4,7 +4,7 @@ import NativeSelect from "@mui/material/NativeSelect";
 import styles from "./Callout.module.scss";
 import TextEditable from "../TextEditable";
 import FormattedText from "../FormattedText/FormattedText";
-import { inlineWithLinkConfig, linkConfig } from "./utility/inlineConfig";
+import { calloutConfig } from "./utility/calloutConfig";
 import callout from "./calloutOptions";
 
 const Callout = ({ body, citation, url, calloutType }) => {
@@ -66,7 +66,6 @@ const Callout = ({ body, citation, url, calloutType }) => {
         )}
         <TextEditable
           placeholder="Callout heading text"
-          toolbar={inlineWithLinkConfig}
           value={state.body}
           // onChange={(e) =>
           //   setProp((props) =>
@@ -78,7 +77,7 @@ const Callout = ({ body, citation, url, calloutType }) => {
       </div>
       <FormattedText
         placeHolderText="Enter callout body text here..."
-        toolbar={inlineWithLinkConfig}
+        toolbar={calloutConfig}
         value={state.body}
         onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
       />

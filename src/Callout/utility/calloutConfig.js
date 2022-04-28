@@ -1,4 +1,4 @@
-export const inlineWithLinkConfig = {
+export const calloutConfig = {
   options: ["inline", "link"],
   inline: {
     options: [
@@ -10,15 +10,6 @@ export const inlineWithLinkConfig = {
       "subscript",
     ],
   },
-  link: {
-    options: ["link", "unlink"],
-    link: { className: "bordered-option-classname" },
-    unlink: { className: "bordered-option-classname" },
-  },
-};
-
-export const linkConfig = {
-  options: ["link"],
   link: {
     options: ["link", "unlink"],
     link: { className: "bordered-option-classname" },
