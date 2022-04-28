@@ -14,7 +14,7 @@ const Callout = (props) => {
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
       <label htmlFor={`callout-type`} className={styles.Callout_label}>
-        Callout Type
+        Callout Type:
       </label>
       &nbsp;
       <NativeSelect
