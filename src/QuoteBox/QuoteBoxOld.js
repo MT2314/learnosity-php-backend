@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Paper } from "@mui/material";
 import TextEditable from "../TextEditable";
@@ -9,11 +8,11 @@ const QuoteBox = ({ body, citation, url }) => {
   return (
     <Paper aria-label="Quote Box" className={styles.quotebox}>
       <div className={styles.quote_container}>
-      <div className={styles.quote_box_body} role="presentation">
+        <div className={styles.quote_box_body} role="presentation">
 
-        <img alt={""} className={styles.quote_icon} aria-label="Quotebox quotation marks" src="https://dcc.ilc.org/jw-rnd-days/cs-amp-templates/images/quote.svg" />
+          <img alt={""} className={styles.quote_icon} aria-label="Quotebox quotation marks" src="https://dcc.ilc.org/jw-rnd-days/cs-amp-templates/images/quote.svg" />
         
-      </div>
+        </div>
           
         <TextEditable style={{minWidth: '80%'}} placeholder="quote text"  multiline={true} onChange={e => setProp(props => Object.assign(props, { body: e.target.value }))} className={styles.quote_main} value={body||""} />
 
