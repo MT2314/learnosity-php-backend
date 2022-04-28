@@ -1,5 +1,4 @@
 .Callout_main {
-  background: #ececec !important;
   padding: 36px 100px;
   margin: 10px;
 }
@@ -9,7 +8,7 @@
 }
 
 .Callout_heading {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   line-height: 43px;
   font-family: "Arial";
@@ -42,4 +41,12 @@
   width: 55px;
   height: 55px;
   margin-right: 10px;
+}
+
+.callout_editor_class {
+  color: #000000;
+}
+
+.rdw-editor-toolbar {
+  border: 1px solid purple;
 }

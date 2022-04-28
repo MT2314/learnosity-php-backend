@@ -7,16 +7,16 @@ import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/calloutConfig";
 import callout from "./calloutOptions";
 
-const Callout = ({ body, citation, url, calloutType }) => {
+const Callout = ({ body, heading, url, calloutType }) => {
   const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
   // const { heading, calloutType } = props;
 
-  const quoteReducer = (state, { type, payload }) => {
+  const calloutReducer = (state, { type, payload }) => {
     switch (type) {
       case "body":
         return { ...state, body: payload };
-      case "citation":
-        return { ...state, citation: payload };
+      case "heading":
+        return { ...state, heading: payload };
       case "url":
         return { ...state, url: payload };
       default:
@@ -24,15 +24,19 @@ const Callout = ({ body, citation, url, calloutType }) => {
     }
   };
 
-  const [state, dispatch] = useReducer(quoteReducer, {
+  const [state, dispatch] = useReducer(calloutReducer, {
     body: "",
-    citation: "",
+    heading: "",
     url: "",
   });
 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
-      <label htmlFor={`callout-type`} className={styles.Callout_label}>
+      <label
+        htmlFor={`callout-type`}
+        aria-label="Callout Type"
+        className={styles.Callout_label}
+      >
         Callout Type:
       </label>
       &nbsp;
@@ -66,12 +70,10 @@ const Callout = ({ body, citation, url, calloutType }) => {
         )}
         <TextEditable
           placeholder="Callout heading text"
-          value={state.body}
-          // onChange={(e) =>
-          //   setProp((props) =>
-          //     Object.assign(props, { heading: e.target.value })
-          //   )
-          // }
+          value={state.heading}
+          onChange={(e) =>
+            dispatch({ type: "heading", payload: e.target.value })
+          }
           className={styles.Callout_heading}
         />
       </div>
@@ -79,17 +81,10 @@ const Callout = ({ body, citation, url, calloutType }) => {
         placeHolderText="Enter callout body text here..."
         toolbar={calloutConfig}
         value={state.body}
+        className={styles.Callout_body}
+        editorClassName="callout_editor_class"
         onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
       />
-      {/* <TextEditable
-        placeholder="Callout body text"
-        multiline={true}
-        onChange={(e) =>
-          setProp((props) => Object.assign(props, { body: e.target.value }))
-        }
-        className={styles.Callout_body}
-        value="Enter Body"
-      /> */}
     </Paper>
   );
 };

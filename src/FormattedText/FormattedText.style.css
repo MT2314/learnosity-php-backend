@@ -6,3 +6,11 @@
 .rdw-option-active{
    background-color: #FFFFA7;
 }
+
+.callout_editor_class {
+   color: #000000;
+}
+
+.rdw-editor-toolbar {
+  border: 1px solid purple;
+}
