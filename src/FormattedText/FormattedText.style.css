@@ -11,6 +11,14 @@
    color: #000000;
 }
 
-.rdw-editor-toolbar {
-  border: 1px solid purple;
+/* .rdw-editor-wrapper:focus {
+  border: 3px solid blue;
+} */
+
+.rdw-option-wrapper:hover {
+  border: 1px solid blue;
+}
+.rdw-editor-wrapper {
+   border: 0px solid blue;
+   
 }

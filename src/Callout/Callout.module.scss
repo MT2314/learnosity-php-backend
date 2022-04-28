@@ -18,6 +18,9 @@
 .Callout_body {
   font-family: "Arial";
   resize: none;
+  .rdw-editor-toolbar {
+    border: 1px solid purple;
+  }
 }
 
 .Callout_type_dropdown {
@@ -45,8 +48,4 @@
 
 .callout_editor_class {
   color: #000000;
-}
-
-.rdw-editor-toolbar {
-  border: 1px solid purple;
 }
