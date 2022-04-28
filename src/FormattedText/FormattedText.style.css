@@ -23,7 +23,23 @@
 
 }
 
-.public-DraftStyleDefault-block .public-DraftStyleDefault-ltr {
+.public-DraftEditorPlaceholder-root {
    color: #000000;
-   font-weight: 500;
+}
+.public-DraftEditorPlaceholder-hasFocus {
+    color: #000000;
+   /* font-weight: 600; */
+}
+.public-DraftStyleDefault-block {
+   color: #000000;
+}
+
+.public-DraftStyleDefault-ltr {
+   color: #000000;
+}
+
+.rdw-editor-main pre {
+  background: #ffffff;
+  border-radius: 3px;
+  padding: 1px 10px;
 }
