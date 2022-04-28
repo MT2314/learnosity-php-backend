@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import Image from "./components/Image/Image";
 import ImageConfig from "./components/Image/ImageConfig";
 import FormattedText from "./components/FormattedText";
-import { ImageProvider } from "./components/Image/ImageProvider";
+import ImageProvider from "./components/Image/ImageProvider";
 
 import "./index.css";
 
