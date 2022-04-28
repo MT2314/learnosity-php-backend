@@ -3,6 +3,7 @@ import { Paper } from "@mui/material";
 import NativeSelect from "@mui/material/NativeSelect";
 import styles from "./Callout.module.scss";
 import TextEditable from "../TextEditable";
+import FormattedText from "../FormattedText";
 import callout from "./calloutOptions";
 
 const Callout = (props) => {
@@ -56,7 +57,8 @@ const Callout = (props) => {
           value="Enter Heading"
         />
       </div>
-      <TextEditable
+      <FormattedText />
+      {/* <TextEditable
         placeholder="Callout body text"
         multiline={true}
         onChange={(e) =>
@@ -64,7 +66,7 @@ const Callout = (props) => {
         }
         className={styles.Callout_body}
         value="Enter Body"
-      />
+      /> */}
     </Paper>
   );
 };

@@ -34,12 +34,12 @@ const TextEditable = forwardRef(
       }
     };
 
-    // const combineFunc = (funcA, funcB) => {
-    //   return (...p) => {
-    //     if (funcA) funcA(...p);
-    //     if (funcB) return funcB(...p);
-    //   };
-    // };
+    const combineFunc = (funcA, funcB) => {
+      return (...p) => {
+        if (funcA) funcA(...p);
+        if (funcB) return funcB(...p);
+      };
+    };
 
     if (multiline) {
       return (
