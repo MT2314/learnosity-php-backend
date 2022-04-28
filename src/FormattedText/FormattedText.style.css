@@ -20,5 +20,10 @@
 }
 .rdw-editor-wrapper {
    border: 0px solid blue;
-   
+
+}
+
+.public-DraftStyleDefault-block .public-DraftStyleDefault-ltr {
+   color: #000000;
+   font-weight: 500;
 }
