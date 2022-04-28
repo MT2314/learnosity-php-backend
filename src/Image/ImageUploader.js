@@ -3,10 +3,15 @@ import { useDropzone } from 'react-dropzone';
 import { ImageWidgetContext } from './ImageProvider';
 import styles from './styles/ImageConfig.module.scss';
 
-const ImageUploader = ({selectedUUID = "1"}) => {
+const ImageUploader = () => {
 
    const context = useContext(ImageWidgetContext);
-   const { alt = "",  } = context[selectedUUID] || {}
+
+   // As is this will allow the unpopulated panel to change the default values (which it shouldn't)
+   // but the panel won't populate on the Authoring side without having a selected UUID
+   const selectedUUID = context.selectedUUID || "imageDefault"
+
+   const { alt = ""  } = context[selectedUUID]
 
    const [ count, setCount ] = useState(0);
    const [file, setFile] = useState([]);

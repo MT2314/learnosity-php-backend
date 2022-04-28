@@ -1,29 +1,47 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext } from "react";
 
 export const ImageWidgetContext = createContext();
 
-export function ImageProvider({ children }){
-   
-   const inputs = {
+export function ImageProvider({ children, testing = false }) {
+  const inputs = {
+    imageDefault: {
       alt: "",
       longDesc: "",
       imgLink: "",
       creditLink: "",
       uploadedImg: "",
       imgSize: "default",
-      updateContext: (contextUpdates) => {
-         setUserInfo((currentContextInfo) => ({...currentContextInfo, ...contextUpdates}))
-      },
-      updateReferencedContext: (uuid, contextUpdates) => {
-         setUserInfo((currentContextInfo) => ({...currentContextInfo, [uuid]: {...currentContextInfo[uuid] || {}, ...contextUpdates}}))
-      }
-   };
+    },
+    alt: "",
+    longDesc: "",
+    imgLink: "",
+    creditLink: "",
+    uploadedImg: "",
+    imgSize: "default",
+    updateContext: (contextUpdates) => {
+      setUserInfo((currentContextInfo) => ({ ...currentContextInfo, ...contextUpdates }));
+    },
+    updateReferencedContext: (uuid, contextUpdates) => {
+      setUserInfo((currentContextInfo) => ({
+        ...currentContextInfo,
+        [uuid]: { ...(currentContextInfo[uuid] || {}), ...contextUpdates },
+      }));
+    },
+  };
 
-   const [ userInfo, setUserInfo ] = useState(inputs);
+  if (testing) {
+    inputs.selectedUUID = "1";
+    inputs["1"] = {
+      alt: "",
+      longDesc: "",
+      imgLink: "",
+      creditLink: "",
+      uploadedImg: "",
+      imgSize: "default",
+    };
+  }
 
-   return (
-      <ImageWidgetContext.Provider value={userInfo}>
-         {children}
-      </ImageWidgetContext.Provider>
-   );
-};
+  const [userInfo, setUserInfo] = useState(inputs);
+
+  return <ImageWidgetContext.Provider value={userInfo}>{children}</ImageWidgetContext.Provider>;
+}

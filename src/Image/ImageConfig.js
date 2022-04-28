@@ -9,14 +9,17 @@ import NativeSelect from '@mui/material/NativeSelect';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 
 
-function ImageConfig({selectedUUID = "1"}) {
+function ImageConfig() {
 
   const context = useContext(ImageWidgetContext);
   console.log("Context loaded", context)
 
   const [ imgLink, setImgLink ] = useState("");
 
-  const { alt = "", longDesc = "" } = context[selectedUUID] || {}
+  const selectedUUID = context.selectedUUID || "imageDefault"
+
+
+  const { alt = "", longDesc = "" } = context[selectedUUID]
   console.log("ImageConfig -> Selected UUID", selectedUUID, context[selectedUUID])
 
    const altTextCounter = alt.length + "/200";

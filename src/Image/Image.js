@@ -7,7 +7,8 @@ import FormattedText from "../FormattedText";
 const Image = ({ uuid = "1" }) => {
   const context = useContext(ImageWidgetContext);
 
-  const { imgSize = "default", uploadedImg = "", imgLink = "", alt = "", longDesc = "" } = context[uuid] || {};
+//   Sets the image to either the state of the UUID in the store or the default values.
+  const { imgSize = "default", uploadedImg = "", imgLink = "", alt = "", longDesc = "" } = context[uuid] || context.imageDefault;
    console.log(uuid, imgSize, alt)
   let imgSizeStyles = {};
 
