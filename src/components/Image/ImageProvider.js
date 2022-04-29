@@ -2,7 +2,7 @@ import React, { useState, createContext } from 'react';
 
 export const ImageWidgetContext = createContext();
 
-export function ImageProvider({ children }){
+function ImageProvider({ children }){
    
    const inputs = {
       alt: "",
@@ -24,3 +24,5 @@ export function ImageProvider({ children }){
       </ImageWidgetContext.Provider>
    );
 };
+
+export default ImageProvider

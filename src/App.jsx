@@ -1,11 +1,11 @@
 import React, { useEffect} from "react";
 import ReactDOM from "react-dom";
-import Callout from "./Callout/Callout.js";
-import Header from "./Header";
-import Image from "./Image/Image";
-import ImageConfig from "./Image/ImageConfig";
-import FormattedText from "./FormattedText";
-import { ImageProvider } from "./Image/ImageProvider";
+import Callout from "./components/Callout/Callout.js";
+import Header from "./components/Header";
+import Image from "./components/Image/Image";
+import ImageConfig from "./components/Image/ImageConfig";
+import FormattedText from "./components/FormattedText";
+import ImageProvider from "./components/Image/ImageProvider";
 
 import "./index.css";
 import QuoteBox from "./QuoteBox/QuoteBox.js";
