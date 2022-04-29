@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import { Paper } from "@mui/material";
 import NativeSelect from "@mui/material/NativeSelect";
 import styles from "./Callout.module.scss";
@@ -6,15 +6,21 @@ import TextEditable from "../TextEditable";
 import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/calloutConfig";
 import callout from "./calloutOptions";
+import sampleData from "./sampleDataConfig";
 
 const Callout = ({ body, heading, calloutType }) => {
   const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
+  const [calloutBody, setCalloutBody] = useState("");
+
+  // useEffect((sampleData) => {
+  //   setCalloutBody(body);
+  // }, []);
+
   // const { heading, calloutType } = props;
 
   const [state, dispatch] = useReducer(calloutReducer, {
     body: "",
     heading: "",
-    url: "",
   });
   const calloutReducer = (state, { type, payload }) => {
     switch (type) {
@@ -67,23 +73,28 @@ const Callout = ({ body, heading, calloutType }) => {
             aria-label="Callout type icon placeholder"
           ></div>
         )}
+        {console.log("here is svgtype ", calloutTypeSvg)}
         <TextEditable
           placeholder="Callout heading text"
-          value={state.heading}
+          value={sampleData[0].heading}
           onChange={(e) =>
             dispatch({ type: "heading", payload: e.target.value })
           }
           className={styles.Callout_heading}
         />
       </div>
+      {console.log("here is heading ", sampleData[0].heading)}
       <FormattedText
-        placeHolderText="Enter callout body text here..."
+        // placeHolderText="Enter callout body text here..."
+        placeHolderText={sampleData[1].body}
         toolbar={calloutConfig}
-        value={state.body}
+        value={sampleData[0].body}
         className={styles.Callout_body}
         editorClassName="callout_editor_class"
-        onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
+        // onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
+        onChange={(e) => setCalloutBody(e.target.value)}
       />
+      {console.log("here is body ", sampleData[0].body)}
     </Paper>
   );
 };
