@@ -1,29 +1,52 @@
-
-import React from "react";
+import React, { useReducer } from "react";
 import { Paper } from "@mui/material";
-import TextEditable from "../TextEditable";
-import styles from './QuoteBox.module.scss';
 
-const QuoteBox = (props) => {
-  const {body, citation, url} = props;
+// import TextEditable from "../TextEditable/TextEditable";
+import FormattedText from "../FormattedText/FormattedText";
+import { inlineWithLinkConfig, linkConfig } from "./utility/inlineConfig";
+
+import styles from "./styles/QuoteBox.module.scss";
+
+const QuoteBox = ({ body, citation, url }) => {
+  const quoteReducer = (state, { type, payload }) => {
+    switch (type) {
+      case "body":
+        return { ...state, body: payload };
+      case "citation":
+        return { ...state, citation: payload };
+      case "url":
+        return { ...state, url: payload };
+      default:
+        return state;
+    }
+  };
+
+  const [state, dispatch] = useReducer(quoteReducer, {
+    body: "",
+    citation: "",
+    url: "",
+  });
 
   return (
-    <Paper aria-label="Quote Box" className={`${styles.component} ${styles.quotebox}`}>  
-      <div className={styles.quote_container}>
-      <div className={styles.quote_box_body} role="presentation">
-
-        <img alt={""} className={styles.quote_icon} aria-label="Quotebox quotation marks" src="https://dcc.ilc.org/jw-rnd-days/cs-amp-templates/images/quote.svg" />
-        
+    <Paper aria-label="Quote Box" className={styles.quoteBoxContainer}>
+      <div className={styles.quoteBodyContainer}>
+        <div className={styles.quoteIcon}></div>
+        <FormattedText
+          placeHolderText="Type quote body here..."
+          required
+          toolbar={inlineWithLinkConfig}
+          value={state.body}
+          onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
+        />
       </div>
-          
-        <TextEditable style={{minWidth: '80%'}} placeholder="quote text"  multiline={true} onChange={e => setProp(props => Object.assign(props, { body: e.target.value }))} className={styles.quote_main} value={body||""} />
-
-        <TextEditable style={{minWidth: '220px'}} placeholder="citation text"  multiline={true} onChange={e => setProp(props => Object.assign(props, { citation: e.target.value }))} className={`${styles.body} ${styles.citation}`} value={citation||""} />
-
-        <TextEditable style={{minWidth: '220px'}} placeholder="citation url goes here"  multiline={true} onChange={e => setProp(props => Object.assign(props, { url: e.target.value }))} className={`${styles.body} ${styles.quote_link}`} value={url||""} />
-      </div>
+      <FormattedText
+        className={styles.quoteCitation}
+        placeHolderText="Type citation here..."
+        value={citation}
+        toolbar={linkConfig}
+      />
     </Paper>
-  )
-}
+  );
+};
 
 export default QuoteBox;

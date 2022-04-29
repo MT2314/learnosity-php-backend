@@ -6,7 +6,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import toolbarOptions from "./Utility/toolbarOptions.js";
 import "./FormattedText.style.css";
 
-const FormattedText = ({ placeHolderText }) => {
+const FormattedText = ({ placeHolderText, toolbar = toolbarOptions }) => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
@@ -21,7 +21,7 @@ const FormattedText = ({ placeHolderText }) => {
         wrapperClassName="wrapper-class"
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
-        toolbar={toolbarOptions}
+        toolbar={toolbar}
         placeholder={placeHolderText}
       />
     </div>
