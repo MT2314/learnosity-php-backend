@@ -1,16 +1,14 @@
 import React, { useEffect} from "react";
 import ReactDOM from "react-dom";
 import Callout from "./components/Callout/Callout.js";
+import QuoteBox from "./components/QuoteBox/QuoteBox.js";
 import Header from "./components/Header";
 import Image from "./components/Image/Image";
 import ImageConfig from "./components/Image/ImageConfig";
 import FormattedText from "./components/FormattedText";
 import ImageProvider from "./components/Image/ImageProvider";
 
-import "./index.css";
-import QuoteBox from "./QuoteBox/QuoteBox.js";
-
- 
+import "./index.css"; 
 
 const App = () => {
   console.log("15.0.1")
