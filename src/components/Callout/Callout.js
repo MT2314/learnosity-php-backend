@@ -7,10 +7,10 @@ import { calloutConfig } from "./utility/calloutConfig";
 import calloutOptions from "./calloutOptions";
 import sampleData from "./sampleDataConfig";
 
-const Callout = ({ calloutBody, calloutType }) => {
+const Callout = ({ calloutType }) => {
   const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
   const [calloutTitle, setCalloutTitle] = useState("");
-  // const [calloutBody, setCalloutBody] = useState("");
+  const [calloutBody, setCalloutBody] = useState("");
 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
@@ -70,8 +70,9 @@ const Callout = ({ calloutBody, calloutType }) => {
         className={styles.Callout_body}
         editorClassName="callout_editor_class"
         // onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
-        // onChange={(e) => setCalloutBody(e.target.value)}
+        onChange={(e) => setCalloutBody(e.target.value)}
       />
+      {console.log("callout body now is ", calloutBody)}
     </Paper>
   );
 };
