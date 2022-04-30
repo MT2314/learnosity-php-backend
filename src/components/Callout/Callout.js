@@ -61,7 +61,6 @@ const Callout = ({ calloutType }) => {
             aria-label="Callout type icon placeholder"
           ></div>
         )}
-        <p className={styles.Callout_heading}></p>
       </div>
       <FormattedText
         placeHolderText="Enter callout body text here..."

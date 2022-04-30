@@ -12,15 +12,12 @@
   font-weight: 700;
   line-height: 43px;
   font-family: "Arial";
-  margin-bottom: 5px;
+  margin-left: 10px;
 }
 
 .Callout_body {
   font-family: "Arial";
   resize: none;
-  .rdw-editor-toolbar {
-    border: 1px solid purple;
-  }
 }
 
 .Callout_type_dropdown {
@@ -30,6 +27,12 @@
 
 .Callout_body_text {
   display: flex;
+  align-items: center;
+}
+
+p {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .Callout_img {
