@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Paper } from "@mui/material";
 import NativeSelect from "@mui/material/NativeSelect";
-import styles from "./Callout.module.scss";
+import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
-import { calloutConfig } from "./utility/calloutConfig";
-import calloutOptions from "./calloutOptions";
-import sampleData from "./sampleDataConfig";
+import { calloutConfig } from "./utility/CalloutConfig";
+import calloutOptions from "./utility/CalloutOptions";
+import sampleData from "./utility/SampleDataConfig";
 
 const Callout = ({ calloutType }) => {
   const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
