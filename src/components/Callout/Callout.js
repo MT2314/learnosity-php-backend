@@ -65,13 +65,11 @@ const Callout = ({ calloutType }) => {
       <FormattedText
         placeHolderText="Enter callout body text here..."
         toolbar={calloutConfig}
-        value={sampleData[0].body}
+        value={calloutBody}
         className={styles.Callout_body}
         editorClassName="callout_editor_class"
-        // onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
         onChange={(e) => setCalloutBody(e.target.value)}
       />
-      {console.log("callout body now is ", calloutBody)}
     </Paper>
   );
 };
