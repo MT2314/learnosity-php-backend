@@ -15,8 +15,6 @@ function ImageConfig({
 
   const { alt = "", longDesc = "", imgLink } = componentState;
 
-  console.log("ImageConfig -> ", componentState);
-
   const altTextCounter = alt.length + "/200";
 
   const handleSubmit = (e) => {
@@ -45,7 +43,6 @@ function ImageConfig({
             aria-label="Add alt text to image"
             rows="4"
             value={alt}
-            // The panel will need a way to set what the "selected" uuid is
             onChange={(e) => setState({ alt: e.target.value })}
             className={styles.ImageConfig__altTextInput}
             placeholder="Type alt text here..."
