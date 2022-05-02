@@ -2,6 +2,7 @@ import React, { useState, useContext, createContext, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Header from "./components/Header";
 import FormattedText from "./components/FormattedText";
+import QuoteBox from "./components/QuoteBox";
 
 import componentIndex from "./components/componentIndex";
 
@@ -186,7 +187,7 @@ const App = () => {
       <WidgetContextProvider>
         <Header title="component-library" backgroundColor="salmon" />
         <div className="container" style={{ display: "flex",minWidth: "1100px" }}>
-          <Canvas unwrappedComponents={[<FormattedText />]} />
+          <Canvas unwrappedComponents={[<FormattedText />, <QuoteBox />]} />
 
           <div
             className="editPanel"
