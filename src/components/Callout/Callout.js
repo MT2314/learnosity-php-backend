@@ -7,7 +7,6 @@ import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/calloutConfig";
 //import callout from "./calloutOptions";
 import sampleData from "./sampleDataConfig";
-import ErrorHandler from "../ErrorHandler";
 
 const Callout = ({ body, heading, calloutType }) => {
   const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
@@ -35,8 +34,6 @@ const Callout = ({ body, heading, calloutType }) => {
         return state;
     }
   };
-try{
-
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
       <label
@@ -99,9 +96,6 @@ try{
       {console.log("here is body ", sampleData[0].body)}
     </Paper>
   );
-}catch(error){
-  return <ErrorHandler error={error} />
-}
 };
 
 export default Callout;
