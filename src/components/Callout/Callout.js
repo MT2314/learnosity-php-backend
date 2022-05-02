@@ -5,12 +5,17 @@ import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/CalloutConfig";
 import calloutOptions from "./utility/CalloutOptions";
-import sampleData from "./utility/SampleDataConfig";
+// import sampleData from "./utility/SampleDataConfig";
 
-const Callout = ({ calloutType }) => {
-  const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
-  const [calloutTitle, setCalloutTitle] = useState("");
-  const [calloutBody, setCalloutBody] = useState("");
+
+export const defaultProps = { heading: "", body: "", calloutType: "" };
+
+// const Callout = ({ heading = "", body = "", calloutType = "", setProp = () => {} }) => {
+
+const Callout = ({ calloutType, calloutTypeSvg, calloutTitle, calloutBody, setProp = () => {} }) => {
+  // const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
+  // const [calloutTitle, setCalloutTitle] = useState("");
+  // const [calloutBody, setCalloutBody] = useState("");
 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
@@ -23,8 +28,8 @@ const Callout = ({ calloutType }) => {
         id={`callout-type`}
         value={calloutType || ""}
         onChange={(e) => {
-          setCalloutTypeSvg(calloutOptions[e.target.value].iconUrl);
-          setCalloutTitle(calloutOptions[e.target.value].title);
+          setProp({calloutTypeSvg: calloutOptions[e.target.value].iconUrl});
+          setProp({calloutTitle: calloutOptions[e.target.value].title});
         }}
         className={styles.Callout_type_dropdown}
       >
@@ -53,7 +58,8 @@ const Callout = ({ calloutType }) => {
         value={calloutBody}
         className={styles.Callout_body}
         editorClassName="callout_editor_class"
-        onChange={(e) => setCalloutBody(e.target.value)}
+        // onChange={(e) => setCalloutBody(e.target.value)}
+        setProp={(stateUpdate) => setProp({calloutBody: stateUpdate.body})}
       />
     </Paper>
   );
