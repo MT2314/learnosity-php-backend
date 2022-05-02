@@ -1,105 +1,182 @@
 import React, { useState, useContext, createContext, useEffect } from "react";
 import ReactDOM from "react-dom";
-import Callout, { defaultProps as calloutDefaultProps } from "./components/Callout/Callout.js";
 import Header from "./components/Header";
-import Image from "./components/Image/Image";
-import ImageConfig from "./components/Image/ImageConfig";
 import FormattedText from "./components/FormattedText";
-import ImageProvider, { ImageWidgetContext } from "./components/Image/ImageProvider";
+
+import componentIndex from "./components/componentIndex";
 
 import "./index.css";
-
-// Simulating for testing environment how it'll behave when saved/loaded in CraftJS
-// In CraftJS it'll pass in the setter, and store the state associated with a UUID in a single object
-// Edit the initial state to test how a component will respond to being loaded with a value from the DB
-const MockCanvasContainer = ({ Component }) => {
-  const componentTypeProps = {
-    Callout: calloutDefaultProps,
-  };
-
-  if (!Component) throw new Error(`MockCanvasContainer called in testing environment without component property`);
-
-  // component.name is the name of the function https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/name
-  const defaultComponentProps = componentTypeProps[Component.name];
-  if (!defaultComponentProps)
-    throw new Error(`Testing environment function doesn't have default props set for ${Component.name} component`);
-
-  const [state, setState] = useState({ ...defaultComponentProps });
-
-  return (
-    <Component
-      {...state}
-      setProp={(stateUpdate) => {
-        console.log(`State update for ${Component.name}`, stateUpdate);
-        setState({ ...state, ...stateUpdate });
-      }}
-      uuid={`${Math.floor(Math.random() * 10000)}`}
-    />
-  );
-};
 
 // Mocking a shared context living within CraftJS
 const WidgetContext = createContext();
 
-// For testing, mocking a canvas added from CraftJS
+// For testing, mocking an initial canvas state from the DB (add all props for a component even if empty)
 const mockedSavedCanvas = [
+  { name: "FormattedText", body: null },
   {
-    Component: Callout,
+    name: "FormattedText",
+    body: {
+      blocks: [
+        {
+          key: "da26v",
+          text: "Testing data loaded from DB.  About Juno, because that's the theme of this page now?  No one should leave me alone with their repo.",
+          type: "unstyled",
+          depth: 0,
+          inlineStyleRanges: [
+            { offset: 8, length: 4, style: "BOLD" },
+            { offset: 13, length: 6, style: "ITALIC" },
+          ],
+          entityRanges: [],
+          data: {},
+        },
+      ],
+      entityMap: {},
+    },
+  },
+  {
+    name: "Callout",
     heading: "Juno is best dog",
     body: "In this essay, we explore why Golden Retrievers and in particular Juno are superb.  Please see https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg",
     calloutType: "",
   },
-  { Component: Callout, heading: "saved heading", body: "", calloutType: "" },
-  { Component: Callout, heading: "", body: "", calloutType: "" },
-  { Component: Callout, heading: "", body: "saved body", calloutType: "" },
-  { Component: Callout, heading: "", body: "", calloutType: "" },
+  { name: "Callout", heading: "saved heading", body: "", calloutType: "" },
+  {
+    name: "Image",
+    alt: "",
+    longDesc: "Saved long description",
+    imgLink: "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg",
+    creditLink: "",
+    uploadedImg: "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg",
+    imgSize: "default",
+  },
+  { name: "Callout", heading: "", body: "", calloutType: "" },
+  { name: "Callout", heading: "", body: "saved body", calloutType: "" },
+  { name: "Callout", heading: "", body: "", calloutType: "" },
 ];
 
 const WidgetContextProvider = ({ children }) => {
-  const [widgetState, setWidgetState] = useState({ selectedUUID: null });
-
-  const handleChange = (newState) => {
-    console.log(`Updating state`, widgetState, newState);
-    setWidgetState({ ...widgetState, ...newState });
+  // Mocking what the AuthApp's canvas will do to create the initial state
+  const initialState = {
+    // Setting selection to null, will be ID of element, just a mock of what AuthApp does
+    selectedComponentId: null,
   };
+  mockedSavedCanvas.forEach((component, index) => {
+    // Creating entry in state with initial component props
+    Object.assign(initialState, { [`id-${index}`]: { ...component } });
+    if (!initialState.ROOT) initialState.ROOT = [];
+    // Setting order of components in ROOT
+    initialState.ROOT.push(`id-${index}`);
+  });
 
-  return <WidgetContext.Provider value={[widgetState, handleChange]}>{children}</WidgetContext.Provider>;
+  // TODO: Alter setter, add selectedUUID for testing on this page, or add to config panel wrapper?
+  const [canvasState, setCanvasState] = useState(initialState);
+
+  return <WidgetContext.Provider value={[canvasState, setCanvasState]}>{children}</WidgetContext.Provider>;
 };
 
-const StateConsumingComponentWrapper = ({ Component, uuid, ...componentProps }) => {
+const ComponentStateWrapper = ({ id, name, ...componentState }) => {
+  /*
+  Wrapper mocking the wrapper in Authoring Application that passes in a setter and state from context,
+  primary difference is context in AuthApp is created by CraftJS.
+  */
   const [state, setState] = useContext(WidgetContext);
 
-  const handleChange = (stateUpdate) => {
-    setState({ [uuid]: { ...(state[uuid] || {}), ...stateUpdate } });
+  const handleChange = (newState) => {
+    console.log(`Updating state for ${id} ->`, state, newState);
+    setState((prevState) => ({ ...prevState, [id]: { ...prevState[id], ...newState } }));
   };
 
-  if (!Component)
-    throw new Error(`StateConsumingComponentWrapper called in testing environment without component property`);
+  const Component = componentIndex[name]?.Component;
+  if (!Component) {
+    console.warn(`Component name "${name}" not present in componentIndex`);
+    return null;
+  }
 
-  useEffect(() => {
-    handleChange({ ...componentProps });
-  }, []);
-
-  const componentState = state[uuid] || componentProps;
-
-  return <Component uuid={uuid} setProp={handleChange} {...componentState} />;
+  return <Component setProp={handleChange} {...componentState} />;
 };
 
-const TestingEnvUUIDSetting = () => {
-  const componentContext = useContext(ImageWidgetContext);
+const ConfigStateWrapper = () => {
+  /*
+  Wrapper mocking the wrapper in Authoring Application that passes in a setter and state from context,
+  the wrapper handles which component is "selected" and passes in a setter that only affects one component
+  TODO: If Components have to be able to "select" themselves for configuration, a second setter that sets the selected component could be passed in.  Current understanding is that "selected" state would be managed by parent application
+  */
+  const [state, setState] = useContext(WidgetContext);
 
-  const handleChange = (e) => {
-    const uuid = e.target.value;
-    // If the component has never been opened in the panel, populate the data with the default for this UUID
-    if (!componentContext[uuid]) {
-      // TODO: needs a way to know which component default to add when multiples use context, but this is a problem specific to testing environment
-      componentContext.updateContext({ selectedUUID: uuid, [uuid]: { ...componentContext.imageDefault } });
-    } else {
-      componentContext.updateContext({ selectedUUID: uuid });
-    }
+  if (!state.selectedComponentId) return null;
+  console.log("Selected component", state.selectedComponentId);
+
+  const selectedComponentState = state[state.selectedComponentId];
+
+  const ComponentConfigPanel = componentIndex[selectedComponentState.name].ConfigPanel;
+  if (!ComponentConfigPanel) {
+    console.log(`Selected component "${selectedComponentState.name}" has no config panel`);
+    return null;
+  }
+
+  const setComponentState = (stateUpdate) => {
+    console.log("Updating state", stateUpdate);
+    setState((prevState) => ({
+      ...prevState,
+      [prevState.selectedComponentId]: { ...prevState[prevState.selectedComponentId], ...stateUpdate },
+    }));
   };
 
-  return <input value={componentContext.selectedUUID || ""} onChange={handleChange} />;
+  return <ComponentConfigPanel componentState={selectedComponentState} setState={setComponentState} />;
+};
+
+const ComponentSelector = () => {
+  /*
+  Mock for testing to allow selected state of component changing, populating the config panel with that component
+  */
+  const [state, setState] = useContext(WidgetContext);
+
+  return (
+    <div>
+      <label htmlFor="component-selector">Select a component:</label>
+      <select
+        name="component selector"
+        id="component-selector"
+        onChange={(e) => setState((state) => ({ ...state, selectedComponentId: e.target.value }))}
+      >
+        {state.ROOT.map((componentId) => (
+          <option value={componentId}>{state[componentId].name}</option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+const Canvas = ({ unwrappedComponents = null }) => {
+  // Pass any components to this that you'd like rendered for now but without state management through "unwrappedComponents"
+
+  const [state, setState] = useContext(WidgetContext);
+
+  if (!state.ROOT || !state.ROOT.length > 0) throw new Error(`Canvas created with no components present in ROOT`);
+
+  const addComponent = (componentName) => () => {
+    console.log(`Adding component to mock canvas: ${componentName}`);
+    setState((state) => {
+      const newComponentId = `id-${state.ROOT.length}`;
+      const ROOT = [...state.ROOT];
+      ROOT.push(newComponentId);
+      state[newComponentId] = { name: componentName, ...componentIndex[componentName].defaultProps };
+      return { ...state, ROOT };
+    });
+  };
+
+  return (
+    <div className="canvas" style={{ border: "2px solid black" }}>
+      {state.ROOT.map((componentId) => {
+        const { name, ...props } = state[componentId];
+        return <ComponentStateWrapper id={componentId} name={name} {...props} />;
+      })}
+      {unwrappedComponents}
+      {Object.keys(componentIndex).map((componentName) => {
+        return <button onClick={addComponent(componentName)}>Add {componentIndex[componentName].readableName}</button>;
+      })}
+    </div>
+  );
 };
 
 const App = () => {
@@ -108,16 +185,9 @@ const App = () => {
     <>
       <WidgetContextProvider>
         <Header title="component-library" backgroundColor="salmon" />
-        <TestingEnvUUIDSetting />
         <div className="container" style={{ display: "flex" }}>
-          <div className="canvas" style={{ border: "2px solid black" }}>
-            <MockCanvasContainer Component={Callout} />
-            <Image />
-            <FormattedText />
-            {mockedSavedCanvas.map(({ Component, ...rest }, index) => (
-              <StateConsumingComponentWrapper uuid={index} Component={Component} {...rest} />
-            ))}
-          </div>
+          <Canvas unwrappedComponents={[<FormattedText />]} />
+
           <div
             className="editPanel"
             style={{
@@ -126,16 +196,13 @@ const App = () => {
               padding: "10px",
             }}
           >
-            <ImageConfig />
+            <ConfigStateWrapper />
           </div>
         </div>
+        <ComponentSelector />
       </WidgetContextProvider>
     </>
   );
 };
-ReactDOM.render(
-  <ImageProvider testing>
-    <App />
-  </ImageProvider>,
-  document.getElementById("app")
-);
+
+ReactDOM.render(<App />, document.getElementById("app"));

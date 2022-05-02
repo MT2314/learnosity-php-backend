@@ -1,15 +1,12 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Paper } from "@mui/material";
 import styles from "./styles/Image.module.scss";
 import { ImageWidgetContext } from "./ImageProvider";
 import FormattedText from "../FormattedText";
 
-const Image = ({ uuid = "1" }) => {
-  const context = useContext(ImageWidgetContext);
+export const defaultProps = { imgSize: "default", uploadedImg: "", imgLink: "", alt: "", longDesc: "", caption: null, credit: null, };
 
-//   Sets the image to either the state of the UUID in the store or the default values.
-  const { imgSize = "default", uploadedImg = "", imgLink = "", alt = "", longDesc = "" } = context[uuid] || context.imageDefault;
-   console.log(uuid, imgSize, alt)
+const Image = ({ setProp, imgSize = "default", uploadedImg = "", imgLink = "", alt = "", longDesc = "", caption = null, credit = null }) => {
   let imgSizeStyles = {};
 
   if (imgSize === "default") {
@@ -55,9 +52,9 @@ const Image = ({ uuid = "1" }) => {
           </>
         )}
         {longDesc && <p className={styles.Image__longDesc}>{longDesc}</p>}
-        <FormattedText placeHolderText="Enter Caption" />
+        <FormattedText placeHolderText="Enter Caption" body={caption} setProp={(stateUpdate) => setProp({caption: stateUpdate.body})} />
         <hr />
-        <FormattedText placeHolderText="Enter Credit" />
+        <FormattedText placeHolderText="Enter Credit" body={credit} setProp={(stateUpdate) => setProp({credit: stateUpdate.body})} />
       </div>
     </Paper>
   );
