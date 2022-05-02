@@ -14,11 +14,7 @@ const Callout = ({ calloutType }) => {
 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
-      <label
-        htmlFor={`callout-type`}
-        aria-label="Callout Type"
-        className={styles.Callout_label}
-      >
+      <label htmlFor={`callout-type`} aria-label="Callout Type" className={styles.Callout_label}>
         Callout Type:
       </label>
       &nbsp;
@@ -38,28 +34,17 @@ const Callout = ({ calloutType }) => {
           </option>
         ))}
       </NativeSelect>
-      <div className={styles.Callout_body_text} role="presentation">
+      <div className={styles.Callout_body_text}>
         {/* decorative icon */}
         {calloutTypeSvg ? (
           <>
-            <img
-              className={styles.Callout_img}
-              src={calloutTypeSvg}
-              alt={""}
-              aria-label="Callout type icon"
-            />
-            <p
-              placeholder="Callout heading text will appear here"
-              className={styles.Callout_heading}
-            >
+            <img className={styles.Callout_img} src={calloutTypeSvg} alt={""} aria-label="Callout type icon" />
+            <p placeholder="Callout heading text will appear here" className={styles.Callout_heading}>
               {calloutTitle}
             </p>
           </>
         ) : (
-          <div
-            className={styles.Callout_icon_placeholder}
-            aria-label="Callout type icon placeholder"
-          ></div>
+          <div className={styles.Callout_icon_placeholder} aria-label="Callout type icon placeholder"></div>
         )}
       </div>
       <FormattedText

@@ -1,14 +1,13 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const { expose } = require("./Expose/index")
 
 const deps = require("./package.json").dependencies;
 module.exports = (_, argv) => ({
   output: {
     publicPath:
-      argv.mode === "development"
-        ? "http://localhost:3001/"
-        : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-mf-component-library/",
+      // argv.mode === "development"
+      "http://localhost:3001/",
+    // : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-mf-component-library/",
   },
 
   resolve: {
@@ -59,7 +58,17 @@ module.exports = (_, argv) => ({
       name: "mf_component_library",
       filename: "remoteEntry.js",
       remotes: {},
-      exposes: expose,
+      exposes: {
+        "./TextEditable": "./src/components/TextEditable/TextEditable.js",
+        "./QuoteBox": "./src/components/QuoteBox/QuoteBox.js",
+        "./Callout": "./src/components/Callout/Callout.js",
+        "./Header": "./src/components/Header.jsx",
+        "./Image": "./src/components/Image/Image.js",
+        "./ImageConfig": "./src/components/Image/ImageConfig.js",
+        "./ImageProvider": "./src/components/Image/ImageProvider.js",
+        "./FormattedText": "./src/components/FormattedText/FormattedText.js",
+        "./componentIndex": "./src/components/componentIndex.js",
+      },
       shared: {
         ...deps,
         react: {
