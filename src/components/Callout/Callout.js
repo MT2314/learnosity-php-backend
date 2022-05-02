@@ -5,8 +5,9 @@ import styles from "./Callout.module.scss";
 import TextEditable from "../TextEditable";
 import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/calloutConfig";
-import callout from "./calloutOptions";
+//import callout from "./calloutOptions";
 import sampleData from "./sampleDataConfig";
+import ErrorHandler from "../ErrorHandler";
 
 const Callout = ({ body, heading, calloutType }) => {
   const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
@@ -34,6 +35,7 @@ const Callout = ({ body, heading, calloutType }) => {
         return state;
     }
   };
+try{
 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
@@ -41,7 +43,7 @@ const Callout = ({ body, heading, calloutType }) => {
         htmlFor={`callout-type`}
         aria-label="Callout Type"
         className={styles.Callout_label}
-      >
+        >
         Callout Type:
       </label>
       &nbsp;
@@ -51,7 +53,7 @@ const Callout = ({ body, heading, calloutType }) => {
         value={calloutType || ""}
         onChange={(e) => setCalloutTypeSvg(e.target.value)}
         className={styles.Callout_type_dropdown}
-      >
+        >
         {callout.map(({ id, title, iconUrl }) => (
           <option key={id} value={iconUrl}>
             {title}
@@ -62,17 +64,17 @@ const Callout = ({ body, heading, calloutType }) => {
         {/* decorative icon */}
         {calloutTypeSvg ? (
           <img
-            className={styles.Callout_img}
-            src={calloutTypeSvg}
-            alt={""}
-            aria-label="Callout type icon"
+          className={styles.Callout_img}
+          src={calloutTypeSvg}
+          alt={""}
+          aria-label="Callout type icon"
           />
-        ) : (
-          <div
+          ) : (
+            <div
             className={styles.Callout_icon_placeholder}
             aria-label="Callout type icon placeholder"
-          ></div>
-        )}
+            ></div>
+            )}
         {console.log("here is svgtype ", calloutTypeSvg)}
         <TextEditable
           placeholder="Callout heading text"
@@ -81,7 +83,7 @@ const Callout = ({ body, heading, calloutType }) => {
             dispatch({ type: "heading", payload: e.target.value })
           }
           className={styles.Callout_heading}
-        />
+          />
       </div>
       {console.log("here is heading ", sampleData[0].heading)}
       <FormattedText
@@ -93,10 +95,13 @@ const Callout = ({ body, heading, calloutType }) => {
         editorClassName="callout_editor_class"
         // onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
         onChange={(e) => setCalloutBody(e.target.value)}
-      />
+        />
       {console.log("here is body ", sampleData[0].body)}
     </Paper>
   );
+}catch(error){
+  return <ErrorHandler error={error} />
+}
 };
 
 export default Callout;
