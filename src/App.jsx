@@ -193,7 +193,8 @@ const App = () => {
   return (
     <>
       <WidgetContextProvider>
-        <Header title="component-library" backgroundColor="salmon" />
+        <ErrorBoundary
+          FallbackComponent={OurFallbackComponent}><Header title="component-library" backgroundColor="salmon" /></ErrorBoundary>
         <div className="container" style={{ display: "flex" }}>
           <Canvas unwrappedComponents={[<FormattedText />]} />
 
