@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { WidgetContextProvider, ComponentStateWrapper, ConfigStateWrapper, ComponentSelector, Canvas } from "./Utility/MockTestingEnv/mockWrapper"
+import { WidgetContextProvider, ConfigStateWrapper, ComponentSelector, Canvas } from "./Utility/mockWrapper"
 import Header from "./components/Header";
 import FormattedText from "./components/FormattedText";
 

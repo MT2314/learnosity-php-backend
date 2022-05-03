@@ -1,7 +1,8 @@
 import React, { useState, useContext, createContext } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import componentIndex from "../components/componentIndex"
 
-import componentIndex from "../../components/componentIndex"
+// mockWrapper.js is code to mock the Lesson-builder environment.  
 
 
 // Mocking a shared context living within CraftJS
