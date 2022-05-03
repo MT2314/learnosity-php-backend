@@ -2,12 +2,14 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 
 const deps = require("./package.json").dependencies;
+const path = require('path');
+
 module.exports = (_, argv) => ({
   output: {
     publicPath:
-      // argv.mode === "development"
-      "http://localhost:3001/",
-    // : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-mf-component-library/",
+      argv.mode === "development"?
+      "http://localhost:3001/"
+    : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-mf-component-library/",
   },
 
   resolve: {
@@ -15,8 +17,11 @@ module.exports = (_, argv) => ({
   },
 
   devServer: {
+    static:{
+      directory: path.join(__dirname, 'public')
+    },
+    compress:true,
     port: 3001,
-    historyApiFallback: true,
   },
 
   module: {
