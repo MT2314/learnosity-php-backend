@@ -2,10 +2,11 @@ import React, { useState, useContext, createContext, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Header from "./components/Header";
 import FormattedText from "./components/FormattedText";
+import { ErrorBoundary } from "react-error-boundary";
 
 import componentIndex from "./components/componentIndex";
 
-import "./index.css"; 
+import "./index.css";
 
 // Mocking a shared context living within CraftJS
 const WidgetContext = createContext();
@@ -76,6 +77,15 @@ const WidgetContextProvider = ({ children }) => {
 };
 
 const ComponentStateWrapper = ({ id, name, ...componentState }) => {
+
+  const OurFallbackComponent = ({ error, componentStack, resetErrorBoundary }) => {
+    return (
+      <div>
+        <h1>An error occurred: {error.message}</h1>
+        <button onClick={resetErrorBoundary}>Try again</button>
+      </div>
+    );
+  }
   /*
   Wrapper mocking the wrapper in Authoring Application that passes in a setter and state from context,
   primary difference is context in AuthApp is created by CraftJS.
@@ -93,7 +103,7 @@ const ComponentStateWrapper = ({ id, name, ...componentState }) => {
     return null;
   }
 
-  return <Component setProp={handleChange} {...componentState} />;
+  return <ErrorBoundary FallbackComponent={OurFallbackComponent}><Component setProp={handleChange} {...componentState} /></ErrorBoundary>;
 };
 
 const ConfigStateWrapper = () => {
