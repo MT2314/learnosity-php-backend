@@ -18,10 +18,11 @@ module.exports = (_, argv) => ({
 
   devServer: {
     static:{
-      directory: path.join(__dirname, 'public')
+      directory: path.join(__dirname, 'src')
     },
     compress:true,
     port: 3001,
+    allowedHosts: ['host.com','host2.com'],
   },
 
   module: {
