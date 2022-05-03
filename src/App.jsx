@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext, useEffect } from "react";
+import React, { useState, useContext, createContext } from "react";
 import ReactDOM from "react-dom";
 import Header from "./components/Header";
 import FormattedText from "./components/FormattedText";
