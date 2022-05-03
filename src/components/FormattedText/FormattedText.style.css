@@ -3,6 +3,14 @@
   border: 1px solid black;
   margin-top: 10px;
 }
+
+.editor-class {
+  border: 1px solid red;
+  width: 100%;
+  height: 100px;
+  overflow-y: auto;
+}
+
 .rdw-option-active {
   background-color: #ffffa7;
 }

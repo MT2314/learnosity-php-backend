@@ -19,19 +19,23 @@ const QuoteBox = ({
     <Paper aria-label="Quote Box" className={styles.quoteBoxContainer}>
       <div className={styles.quoteBodyContainer}>
         <div className={styles.quoteIcon}></div>
+        <div className={styles.formattedTextBodyContainer}>
+          <FormattedText
+            placeHolderText="Type quote body here..."
+            toolbar={inlineWithLinkConfig}
+            body={quoteBoxBody}
+            setProp={(stateUpdate) => setProp({quoteBoxBody: stateUpdate.body})}
+          />
+        </div>
+      </div>
+      <div className={styles.formattedTextCitationContainer}>
         <FormattedText
-          placeHolderText="Type quote body here..."
-          toolbar={inlineWithLinkConfig}
-          body={quoteBoxBody}
-          setProp={(stateUpdate) => setProp({quoteBoxBody: stateUpdate.body})}
+          body={quoteBoxCitation}
+          placeHolderText="Type citation here..."
+          toolbar={linkConfig}
+          setProp={(stateUpdate) => setProp({quoteBoxCitation: stateUpdate.body})}
         />
       </div>
-      <FormattedText
-        body={quoteBoxCitation}
-        placeHolderText="Type citation here..."
-        toolbar={linkConfig}
-        setProp={(stateUpdate) => setProp({quoteBoxCitation: stateUpdate.body})}
-      />
     </Paper>
   );
 };
