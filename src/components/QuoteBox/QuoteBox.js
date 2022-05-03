@@ -1,31 +1,19 @@
-import React, { useReducer } from "react";
+import React from "react";
 import { Paper } from "@mui/material";
 
-// import TextEditable from "../TextEditable/TextEditable";
 import FormattedText from "../FormattedText/FormattedText";
 import { inlineWithLinkConfig, linkConfig } from "./utility/inlineConfig";
 
 import styles from "./styles/QuoteBox.module.scss";
 
-const QuoteBox = ({ body, citation, url }) => {
-  const quoteReducer = (state, { type, payload }) => {
-    switch (type) {
-      case "body":
-        return { ...state, body: payload };
-      case "citation":
-        return { ...state, citation: payload };
-      case "url":
-        return { ...state, url: payload };
-      default:
-        return state;
-    }
-  };
+export const defaultProps = { quoteBoxBody: null, quoteBoxCitation: null, quoteBoxUrl: null };
 
-  const [state, dispatch] = useReducer(quoteReducer, {
-    body: "",
-    citation: "",
-    url: "",
-  });
+const QuoteBox = ({
+  quoteBoxBody,
+  quoteBoxCitation,
+  quoteBoxUrl,
+  setProp = () => {}
+}) => {
 
   return (
     <Paper aria-label="Quote Box" className={styles.quoteBoxContainer}>
@@ -33,17 +21,16 @@ const QuoteBox = ({ body, citation, url }) => {
         <div className={styles.quoteIcon}></div>
         <FormattedText
           placeHolderText="Type quote body here..."
-          required
           toolbar={inlineWithLinkConfig}
-          value={state.body}
-          onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
+          body={quoteBoxBody}
+          setProp={(stateUpdate) => setProp({quoteBoxBody: stateUpdate.body})}
         />
       </div>
       <FormattedText
-        className={styles.quoteCitation}
+        body={quoteBoxCitation}
         placeHolderText="Type citation here..."
-        value={citation}
         toolbar={linkConfig}
+        setProp={(stateUpdate) => setProp({quoteBoxCitation: stateUpdate.body})}
       />
     </Paper>
   );

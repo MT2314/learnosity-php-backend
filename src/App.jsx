@@ -2,6 +2,7 @@ import React, { useState, useContext, createContext, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Header from "./components/Header";
 import FormattedText from "./components/FormattedText";
+import QuoteBox from "./components/QuoteBox";
 
 import componentIndex from "./components/componentIndex";
 
@@ -52,6 +53,7 @@ const mockedSavedCanvas = [
   { name: "Callout", heading: "", body: "", calloutType: "" },
   { name: "Callout", heading: "", body: "saved body", calloutType: "" },
   { name: "Callout", heading: "", body: "", calloutType: "" },
+  {name : "QuoteBox", quoteBoxBody : {"blocks":[{"key":"d3ktl","text":"Sam","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}, quoteBoxCitation : {"blocks":[{"key":"8abs2","text":"James","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}}
 ];
 
 const WidgetContextProvider = ({ children }) => {
@@ -186,7 +188,7 @@ const App = () => {
       <WidgetContextProvider>
         <Header title="component-library" backgroundColor="salmon" />
         <div className="container" style={{ display: "flex",minWidth: "1100px" }}>
-          <Canvas unwrappedComponents={[<FormattedText />]} />
+          <Canvas unwrappedComponents={[<FormattedText />, <QuoteBox />]} />
 
           <div
             className="editPanel"
