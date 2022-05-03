@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = ({title, backgroundColor = "salmon"}) => {
+const Header = ({title, backgroundColor = "darkslategray"}) => {
    const styles = {
       backgroundColor: `${backgroundColor}`,
       color:"white",

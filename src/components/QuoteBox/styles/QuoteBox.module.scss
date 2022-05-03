@@ -1,0 +1,24 @@
+.quoteBoxContainer {
+    background: rgb(236, 236, 236);
+    height: 400px;
+    font: 18px / 22.5px "Roboto", "Arial", sans-serif;
+    padding: 36px 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.quoteBodyContainer {
+    display: flex;
+}
+
+.quoteIcon {
+    background-image: url(https://dcc.ilc.org/jw-rnd-days/cs-amp-templates/images/quote.svg);
+    background-repeat: no-repeat;
+    height: 43px;
+    width: 43px;
+}
+
+.quoteCitation {
+    align-self: flex-end;
+    min-width: 200px;
+}

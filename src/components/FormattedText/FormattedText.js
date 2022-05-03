@@ -37,7 +37,7 @@ const FormattedText = ({
         wrapperClassName="wrapper-class"
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
-        toolbar={toolbarOptions}
+        toolbar={toolbar}
         placeholder={placeHolderText}
       />
     </div>

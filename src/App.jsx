@@ -2,6 +2,7 @@ import React, { useState, useContext, createContext } from "react";
 import ReactDOM from "react-dom";
 import Header from "./components/Header";
 import FormattedText from "./components/FormattedText";
+import { ErrorBoundary } from "react-error-boundary";
 
 import componentIndex from "./components/componentIndex";
 
@@ -181,6 +182,14 @@ const Canvas = ({ unwrappedComponents = null }) => {
 
 const App = () => {
   console.log("15.0.1");
+  const OurFallbackComponent = ({ error, componentStack, resetErrorBoundary }) => {
+    return (
+      <div>
+        <h1>An error occurred: {error.message}</h1>
+        <button onClick={resetErrorBoundary}>Try again</button>
+      </div>
+    );
+  }
   return (
     <>
       <WidgetContextProvider>

@@ -3,6 +3,10 @@ import { Paper } from "@mui/material";
 import NativeSelect from "@mui/material/NativeSelect";
 import styles from "./Callout.module.scss";
 import TextEditable from "../TextEditable";
+import FormattedText from "../FormattedText/FormattedText";
+import { calloutConfig } from "./utility/calloutConfig";
+//import callout from "./calloutOptions";
+import sampleData from "./sampleDataConfig";
 
 export const defaultProps = { heading: "", body: "", calloutType: "" };
 
