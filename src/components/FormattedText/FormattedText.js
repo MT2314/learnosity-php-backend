@@ -11,6 +11,7 @@ export const defaultProps = { placeHolderText: "", body: null };
 const FormattedText = ({
   placeHolderText,
   body = null,
+  toolbar = toolbarOptions,
   setProp = () => console.warn("No state change function provided"),
 }) => {
   /*

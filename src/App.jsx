@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useState, useContext, createContext, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Header from "./components/Header";
 import FormattedText from "./components/FormattedText";
@@ -53,6 +53,7 @@ const mockedSavedCanvas = [
   { name: "Callout", heading: "", body: "", calloutType: "" },
   { name: "Callout", heading: "", body: "saved body", calloutType: "" },
   { name: "Callout", heading: "", body: "", calloutType: "" },
+  {name : "QuoteBox", quoteBoxBody : {"blocks":[{"key":"d3ktl","text":"Sam","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}, quoteBoxCitation : {"blocks":[{"key":"8abs2","text":"James","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}}
 ];
 
 const WidgetContextProvider = ({ children }) => {
@@ -176,7 +177,7 @@ const Canvas = ({ unwrappedComponents = null }) => {
   };
 
   return (
-    <div className="canvas" style={{ border: "2px solid black" }}>
+    <div className="canvas" style={{ border: "2px solid black", minWidth: "650px" }}>
       {state.ROOT.map((componentId) => {
         const { name, ...props } = state[componentId];
         return <ComponentStateWrapper id={componentId} name={name} {...props} />;
@@ -191,12 +192,11 @@ const Canvas = ({ unwrappedComponents = null }) => {
 
 const App = () => {
   console.log("15.0.1");
-
   return (
     <>
       <WidgetContextProvider>
-        <Header title="component-library" backgroundColor="salmon" />
-        <div className="container" style={{ display: "flex" }}>
+        <Header title="component-library" backgroundColor="DarkSlateGray" />
+        <div className="container" style={{ display: "flex",minWidth: "1100px" }}>
           <Canvas unwrappedComponents={[<FormattedText />]} />
 
           <div
@@ -205,6 +205,7 @@ const App = () => {
               border: "2px solid black",
               marginLeft: "1em",
               padding: "10px",
+              maxWidth: "350px"
             }}
           >
             <ConfigStateWrapper />
