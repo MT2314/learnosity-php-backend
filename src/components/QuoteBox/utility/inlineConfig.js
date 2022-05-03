@@ -6,8 +6,6 @@ export const inlineWithLinkConfig = {
       "italic",
       "underline",
       "strikethrough",
-      "superscript",
-      "subscript",
     ],
   },
   link: {

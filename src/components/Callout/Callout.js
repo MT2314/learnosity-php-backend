@@ -1,39 +1,26 @@
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useState } from "react";
 import { Paper } from "@mui/material";
 import NativeSelect from "@mui/material/NativeSelect";
-import styles from "./Callout.module.scss";
-import TextEditable from "../TextEditable";
+import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
-import { calloutConfig } from "./utility/calloutConfig";
-import callout from "./calloutOptions";
-import sampleData from "./sampleDataConfig";
+import { calloutConfig } from "./utility/CalloutConfig";
+import calloutOptions from "./utility/CalloutOptions";
+// import sampleData from "./utility/SampleDataConfig";
 
-const Callout = ({ body, heading, calloutType }) => {
-  const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
-  const [calloutBody, setCalloutBody] = useState("");
+export const defaultProps = { heading: "", body: "", calloutType: "" };
 
-  // useEffect((sampleData) => {
-  //   setCalloutBody(body);
-  // }, []);
+// const Callout = ({ heading = "", body = "", calloutType = "", setProp = () => {} }) => {
 
-  // const { heading, calloutType } = props;
-
-  const [state, dispatch] = useReducer(calloutReducer, {
-    body: "",
-    heading: "",
-  });
-  const calloutReducer = (state, { type, payload }) => {
-    switch (type) {
-      case "body":
-        return { ...state, body: payload };
-      case "heading":
-        return { ...state, heading: payload };
-      case "url":
-        return { ...state, url: payload };
-      default:
-        return state;
-    }
-  };
+const Callout = ({
+  calloutType,
+  calloutTypeSvg,
+  calloutTitle,
+  calloutBody,
+  setProp = () => {},
+}) => {
+  // const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
+  // const [calloutTitle, setCalloutTitle] = useState("");
+  // const [calloutBody, setCalloutBody] = useState("");
 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
@@ -49,52 +36,51 @@ const Callout = ({ body, heading, calloutType }) => {
         autoFocus
         id={`callout-type`}
         value={calloutType || ""}
-        onChange={(e) => setCalloutTypeSvg(e.target.value)}
+        onChange={(e) => {
+          setProp({ calloutTypeSvg: calloutOptions[e.target.value].iconUrl });
+          setProp({ calloutTitle: calloutOptions[e.target.value].title });
+        }}
         className={styles.Callout_type_dropdown}
       >
-        {callout.map(({ id, title, iconUrl }) => (
-          <option key={id} value={iconUrl}>
+        {calloutOptions.map(({ id, title }) => (
+          <option key={id} value={calloutOptions[id].id}>
             {title}
           </option>
         ))}
       </NativeSelect>
-      <div className={styles.Callout_body_text} role="presentation">
+      <div className={styles.Callout_body_text}>
         {/* decorative icon */}
         {calloutTypeSvg ? (
-          <img
-            className={styles.Callout_img}
-            src={calloutTypeSvg}
-            alt={""}
-            aria-label="Callout type icon"
-          />
+          <>
+            <img
+              className={styles.Callout_img}
+              src={calloutTypeSvg}
+              alt={""}
+              aria-label="Callout type icon"
+            />
+            <p
+              placeholder="Callout heading text will appear here"
+              className={styles.Callout_heading}
+            >
+              {calloutTitle}
+            </p>
+          </>
         ) : (
           <div
             className={styles.Callout_icon_placeholder}
             aria-label="Callout type icon placeholder"
           ></div>
         )}
-        {console.log("here is svgtype ", calloutTypeSvg)}
-        <TextEditable
-          placeholder="Callout heading text"
-          value={sampleData[0].heading}
-          onChange={(e) =>
-            dispatch({ type: "heading", payload: e.target.value })
-          }
-          className={styles.Callout_heading}
-        />
       </div>
-      {console.log("here is heading ", sampleData[0].heading)}
       <FormattedText
-        // placeHolderText="Enter callout body text here..."
-        placeHolderText={sampleData[1].body}
+        placeHolderText="Enter callout body text here..."
         toolbar={calloutConfig}
-        value={sampleData[0].body}
+        body={calloutBody}
         className={styles.Callout_body}
         editorClassName="callout_editor_class"
-        // onChange={(e) => dispatch({ type: "body", payload: e.target.value })}
-        onChange={(e) => setCalloutBody(e.target.value)}
+        // onChange={(e) => setCalloutBody(e.target.value)}
+        setProp={(stateUpdate) => setProp({ calloutBody: stateUpdate.body })}
       />
-      {console.log("here is body ", sampleData[0].body)}
     </Paper>
   );
 };

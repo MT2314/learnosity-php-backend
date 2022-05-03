@@ -1,14 +1,14 @@
 .wrapper-class {
-   padding: 1rem;
-   border: 1px solid black;
-   margin-top: 10px;
+  padding: 1rem;
+  border: 1px solid black;
+  margin-top: 10px;
 }
-.rdw-option-active{
-   background-color: #FFFFA7;
+.rdw-option-active {
+  background-color: #ffffa7;
 }
 
 .callout_editor_class {
-   color: #000000;
+  color: #000000;
 }
 
 /* .rdw-editor-wrapper:focus {
@@ -19,24 +19,23 @@
   border: 1px solid blue;
 }
 .rdw-editor-wrapper {
-   border: 0px solid blue;
-
+  border: 0px solid blue;
 }
 
 .public-DraftEditorPlaceholder-root {
-   color: #000000;
+  color: #515867;
 }
 .public-DraftEditorPlaceholder-hasFocus {
-    color: #000000;
-    /* border: 1px solid blue; */
-   /* font-weight: 600; */
+  color: #000000;
+  /* border: 1px solid blue; */
+  /* font-weight: 600; */
 }
 .public-DraftStyleDefault-block {
-   color: #000000;
+  color: #000000;
 }
 
 .public-DraftStyleDefault-ltr {
-   color: #000000;
+  color: #000000;
 }
 
 .rdw-editor-main pre {
@@ -46,5 +45,5 @@
 }
 
 .rdw-editor-main-hasFocus {
-   border: 1px solid blue;
+  border: 1px solid blue;
 }

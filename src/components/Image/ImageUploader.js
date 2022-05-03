@@ -1,11 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone'; 
-import { ImageWidgetContext } from './ImageProvider';
 import styles from './styles/ImageConfig.module.scss';
 
-const ImageUploader = () => {
+const ImageUploader = ({state, setState}) => {
 
-   const context = useContext(ImageWidgetContext);
+
+   // As is this will allow the unpopulated panel to change the default values (which it shouldn't)
+   // but the panel won't populate on the Authoring side without having a selected UUID
+
+   const { alt = "", uploadedImg = ""  } = state
 
    const [ count, setCount ] = useState(0);
    const [file, setFile] = useState([]);
@@ -13,7 +16,7 @@ const ImageUploader = () => {
    const handleClearImageFields = () => {
       setCount(count + 1);
       if (count > 0) {
-         context.updateContext({ 
+         setState({ 
             alt: "",
             longDesc: "",
             imgLink: "",
@@ -41,7 +44,7 @@ const ImageUploader = () => {
       validator: imageValidator,
       onDrop: acceptedFiles => {
          handleClearImageFields()
-         context.updateContext({uploadedImg: URL.createObjectURL(acceptedFiles[0])});
+         setState({uploadedImg: URL.createObjectURL(acceptedFiles[0])});
          setFile({preview: URL.createObjectURL(acceptedFiles[0])});
          URL.revokeObjectURL(file.preview);
       }
@@ -52,8 +55,8 @@ const ImageUploader = () => {
          <div className={styles.ImageConfig__thumbOuter}>
             <div className={styles.ImageConfig__thumbInner}>
                <img
-                  src={file.preview}
-                  alt={context.alt}
+                  src={uploadedImg}
+                  alt={alt}
                   className={styles.ImageConfig__thumbnailImg}
                />
             </div>

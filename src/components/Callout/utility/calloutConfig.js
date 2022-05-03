@@ -1,5 +1,5 @@
 export const calloutConfig = {
-  options: ["inline", "link"],
+  options: ["inline", "link", "list"],
   inline: {
     options: [
       "bold",

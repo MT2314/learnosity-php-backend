@@ -1,6 +1,19 @@
 .Callout_main {
-  padding: 36px 100px;
+  padding: 10% 20%;
   margin: 10px;
+  max-width: 100%;
+}
+
+@media (max-width: 650px) {
+  .Callout_main {
+    padding: 15px 15px;
+  }
+}
+
+@media (max-width: 850px) {
+  .Callout_main {
+    padding: 20px 20px;
+  }
 }
 
 .Callout_label {
@@ -12,15 +25,12 @@
   font-weight: 700;
   line-height: 43px;
   font-family: "Arial";
-  margin-bottom: 5px;
+  margin-left: 10px;
 }
 
 .Callout_body {
   font-family: "Arial";
   resize: none;
-  .rdw-editor-toolbar {
-    border: 1px solid purple;
-  }
 }
 
 .Callout_type_dropdown {
@@ -30,6 +40,12 @@
 
 .Callout_body_text {
   display: flex;
+  align-items: center;
+}
+
+p {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .Callout_img {
