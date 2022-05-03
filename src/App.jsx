@@ -76,6 +76,15 @@ const WidgetContextProvider = ({ children }) => {
 };
 
 const ComponentStateWrapper = ({ id, name, ...componentState }) => {
+
+  const OurFallbackComponent = ({ error, componentStack, resetErrorBoundary }) => {
+    return (
+      <div>
+        <h1>An error occurred: {error.message}</h1>
+        <button onClick={resetErrorBoundary}>Try again</button>
+      </div>
+    );
+  }
   /*
   Wrapper mocking the wrapper in Authoring Application that passes in a setter and state from context,
   primary difference is context in AuthApp is created by CraftJS.
@@ -93,7 +102,7 @@ const ComponentStateWrapper = ({ id, name, ...componentState }) => {
     return null;
   }
 
-  return <Component setProp={handleChange} {...componentState} />;
+  return <ErrorBoundary FallbackComponent={OurFallbackComponent}><Component setProp={handleChange} {...componentState} /></ErrorBoundary>;
 };
 
 const ConfigStateWrapper = () => {
@@ -182,19 +191,11 @@ const Canvas = ({ unwrappedComponents = null }) => {
 
 const App = () => {
   console.log("15.0.1");
-  const OurFallbackComponent = ({ error, componentStack, resetErrorBoundary }) => {
-    return (
-      <div>
-        <h1>An error occurred: {error.message}</h1>
-        <button onClick={resetErrorBoundary}>Try again</button>
-      </div>
-    );
-  }
+
   return (
     <>
       <WidgetContextProvider>
-        <ErrorBoundary
-          FallbackComponent={OurFallbackComponent}><Header title="component-library" backgroundColor="salmon" /></ErrorBoundary>
+        <Header title="component-library" backgroundColor="salmon" />
         <div className="container" style={{ display: "flex" }}>
           <Canvas unwrappedComponents={[<FormattedText />]} />
 

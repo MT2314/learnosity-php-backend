@@ -11,6 +11,7 @@ import sampleData from "./sampleDataConfig";
 export const defaultProps = { heading: "", body: "", calloutType: "" };
 
 const Callout = ({ heading = "", body = "", calloutType = "", setProp = () => {} }) => {
+  
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
       <label htmlFor="callout-type" className={styles.Callout_label}>
