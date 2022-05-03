@@ -7,19 +7,28 @@ import { calloutConfig } from "./utility/CalloutConfig";
 import calloutOptions from "./utility/CalloutOptions";
 // import sampleData from "./utility/SampleDataConfig";
 
-
 export const defaultProps = { heading: "", body: "", calloutType: "" };
 
 // const Callout = ({ heading = "", body = "", calloutType = "", setProp = () => {} }) => {
 
-const Callout = ({ calloutType, calloutTypeSvg, calloutTitle, calloutBody, setProp = () => {} }) => {
+const Callout = ({
+  calloutType,
+  calloutTypeSvg,
+  calloutTitle,
+  calloutBody,
+  setProp = () => {},
+}) => {
   // const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
   // const [calloutTitle, setCalloutTitle] = useState("");
   // const [calloutBody, setCalloutBody] = useState("");
 
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
-      <label htmlFor={`callout-type`} aria-label="Callout Type" className={styles.Callout_label}>
+      <label
+        htmlFor={`callout-type`}
+        aria-label="Callout Type"
+        className={styles.Callout_label}
+      >
         Callout Type:
       </label>
       &nbsp;
@@ -28,8 +37,8 @@ const Callout = ({ calloutType, calloutTypeSvg, calloutTitle, calloutBody, setPr
         id={`callout-type`}
         value={calloutType || ""}
         onChange={(e) => {
-          setProp({calloutTypeSvg: calloutOptions[e.target.value].iconUrl});
-          setProp({calloutTitle: calloutOptions[e.target.value].title});
+          setProp({ calloutTypeSvg: calloutOptions[e.target.value].iconUrl });
+          setProp({ calloutTitle: calloutOptions[e.target.value].title });
         }}
         className={styles.Callout_type_dropdown}
       >
@@ -43,23 +52,34 @@ const Callout = ({ calloutType, calloutTypeSvg, calloutTitle, calloutBody, setPr
         {/* decorative icon */}
         {calloutTypeSvg ? (
           <>
-            <img className={styles.Callout_img} src={calloutTypeSvg} alt={""} aria-label="Callout type icon" />
-            <p placeholder="Callout heading text will appear here" className={styles.Callout_heading}>
+            <img
+              className={styles.Callout_img}
+              src={calloutTypeSvg}
+              alt={""}
+              aria-label="Callout type icon"
+            />
+            <p
+              placeholder="Callout heading text will appear here"
+              className={styles.Callout_heading}
+            >
               {calloutTitle}
             </p>
           </>
         ) : (
-          <div className={styles.Callout_icon_placeholder} aria-label="Callout type icon placeholder"></div>
+          <div
+            className={styles.Callout_icon_placeholder}
+            aria-label="Callout type icon placeholder"
+          ></div>
         )}
       </div>
       <FormattedText
         placeHolderText="Enter callout body text here..."
         toolbar={calloutConfig}
-        value={calloutBody}
+        body={calloutBody}
         className={styles.Callout_body}
         editorClassName="callout_editor_class"
         // onChange={(e) => setCalloutBody(e.target.value)}
-        setProp={(stateUpdate) => setProp({calloutBody: stateUpdate.body})}
+        setProp={(stateUpdate) => setProp({ calloutBody: stateUpdate.body })}
       />
     </Paper>
   );
