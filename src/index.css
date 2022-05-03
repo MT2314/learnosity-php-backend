@@ -3,7 +3,5 @@ body {
 }
 
 .container {
-  margin: auto;
-  max-width: 800px;
-  margin-top: 20px;
+  margin: 0 auto;
 }
