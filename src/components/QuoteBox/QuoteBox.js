@@ -6,7 +6,7 @@ import { inlineWithLinkConfig, linkConfig } from "./utility/inlineConfig";
 
 import styles from "./styles/QuoteBox.module.scss";
 
-export const defaultProps = { quoteBoxBody: "", quoteBoxCitation: "", quoteBoxUrl: "" };
+export const defaultProps = { quoteBoxBody: null, quoteBoxCitation: null, quoteBoxUrl: null };
 
 const QuoteBox = ({
   quoteBoxBody,
@@ -22,11 +22,12 @@ const QuoteBox = ({
         <FormattedText
           placeHolderText="Type quote body here..."
           toolbar={inlineWithLinkConfig}
+          body={quoteBoxBody}
           setProp={(stateUpdate) => setProp({quoteBoxBody: stateUpdate.body})}
         />
       </div>
       <FormattedText
-        className={styles.quoteCitation}
+        body={quoteBoxCitation}
         placeHolderText="Type citation here..."
         toolbar={linkConfig}
         setProp={(stateUpdate) => setProp({quoteBoxCitation: stateUpdate.body})}

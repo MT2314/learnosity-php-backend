@@ -1,6 +1,7 @@
 import Callout, { defaultProps as calloutDefaultProps } from "./Callout/Callout";
 import Image, { defaultProps as imageDefaultProps } from "./Image/Image";
 import FormattedText, { defaultProps as formattedTextDefaultProps } from "./FormattedText/FormattedText";
+import QuoteBox, { defaultProps as quoteBoxDefaultProps } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfigNew";
 const componentIndex = {
   Callout: {
@@ -21,6 +22,12 @@ const componentIndex = {
     defaultProps: imageDefaultProps,
     version: "0.0.1",
     ConfigPanel: ImageConfig
+  },
+  QuoteBox: {
+    Component: QuoteBox,
+    readableName: "Quote Box",
+    defaultProps: quoteBoxDefaultProps,
+    version: "0.0.1",
   },
 };
 
