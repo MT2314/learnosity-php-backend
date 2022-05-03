@@ -186,7 +186,7 @@ const App = () => {
   return (
     <>
       <WidgetContextProvider>
-        <Header title="component-library" backgroundColor="salmon" />
+        <Header title="component-library" backgroundColor="DarkSlateGray" />
         <div className="container" style={{ display: "flex",minWidth: "1100px" }}>
           <Canvas unwrappedComponents={[<FormattedText />, <QuoteBox />]} />
 
