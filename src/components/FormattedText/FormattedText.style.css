@@ -5,9 +5,8 @@
 }
 
 .editor-class {
-  border: 1px solid red;
   width: 100%;
-  height: 100px;
+  height: 85px;
   overflow-y: auto;
 }
 
