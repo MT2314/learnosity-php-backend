@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Paper } from "@mui/material";
 import NativeSelect from "@mui/material/NativeSelect";
 import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/CalloutConfig";
 import calloutOptions from "./utility/CalloutOptions";
-// import sampleData from "./utility/SampleDataConfig";
 
 export const defaultProps = { heading: "", body: "", calloutType: "" };
-
-// const Callout = ({ heading = "", body = "", calloutType = "", setProp = () => {} }) => {
 
 const Callout = ({
   calloutType,
@@ -18,10 +15,6 @@ const Callout = ({
   calloutBody,
   setProp = () => {},
 }) => {
-  // const [calloutTypeSvg, setCalloutTypeSvg] = useState("");
-  // const [calloutTitle, setCalloutTitle] = useState("");
-  // const [calloutBody, setCalloutBody] = useState("");
-
   return (
     <Paper aria-label="Callout" className={styles.Callout_main}>
       <label
@@ -78,7 +71,6 @@ const Callout = ({
         body={calloutBody}
         className={styles.Callout_body}
         editorClassName="callout_editor_class"
-        // onChange={(e) => setCalloutBody(e.target.value)}
         setProp={(stateUpdate) => setProp({ calloutBody: stateUpdate.body })}
       />
     </Paper>
