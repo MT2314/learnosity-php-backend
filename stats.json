@@ -1,0 +1,52 @@
+{
+  COMPONENT_LIBRARY_LOCAL: "http://localhost:3001/",
+  COMPONENT_LIBRARY_QA: "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-mf-component-library/"
+}
+assets by chunk 5.39 MiB (id hint: vendors)
+  asset vendors-node_modules_mui_material_index_js.js 2.54 MiB [emitted] (id hint: vendors)
+  asset vendors-node_modules_react-dom_index_js.js 931 KiB [emitted] (id hint: vendors)
+  + 11 assets
+asset remoteEntry.js 205 KiB [emitted] (name: mf_component_library)
+asset main.js 204 KiB [emitted] (name: main)
+asset src_components_componentIndex_js.js 124 KiB [emitted]
+asset runtime.js 68.5 KiB [emitted] (name: runtime)
+asset src_App_jsx.js 38 KiB [emitted]
+asset node_modules_react-error-boundary_dist_react-error-boundary_umd_js-_e8950.js 7.23 KiB [emitted]
+asset node_modules_react-error-boundary_dist_react-error-boundary_umd_js-_e8951.js 7.23 KiB [emitted]
+asset node_modules_object-assign_index_js.js 3.29 KiB [emitted]
+asset node_modules_babel_runtime_helpers_esm_extends_js-node_modules_emotion_memoize_dist_emotion-m-b8dd380.js 2.8 KiB [emitted]
+asset node_modules_babel_runtime_helpers_esm_extends_js-node_modules_emotion_memoize_dist_emotion-m-b8dd381.js 2.8 KiB [emitted]
+asset index.html 417 bytes [emitted]
+Entrypoint main 272 KiB = runtime.js 68.5 KiB main.js 204 KiB
+Entrypoint mf_component_library 274 KiB = runtime.js 68.5 KiB remoteEntry.js 205 KiB
+orphan modules 207 KiB [orphan] 148 modules
+runtime modules 50 KiB 18 modules
+modules by path ./node_modules/ 3.88 MiB 909 modules
+modules by path ./src/ 67 KiB 30 modules
+provide-module modules 378 bytes
+  modules by path provide shared module (default) @emotion/ 84 bytes 2 modules
+  + 7 modules
+consume-shared-module modules 378 bytes
+  modules by path consume shared module (default) @emotion/ 84 bytes 2 modules
+  + 7 modules
+container entry 42 bytes [built] [code generated]
+data:image/svg+xml,%3Csvg xmlns=%27.. 435 bytes [built] [code generated]
+webpack 5.70.0 compiled successfully in 4712 ms
+assets by status 5.93 MiB [cached] 21 assets
+assets by path . 112 KiB
+  assets by path *.js 111 KiB
+    assets by chunk 69.3 KiB (name: runtime)
+      asset runtime.js 68.5 KiB [emitted] (name: runtime)
+      asset runtime.d0e8429473b741f0275f.hot-update.js 868 bytes [emitted] [immutable] [hmr] (name: runtime)
+    asset src_App_jsx.js 37.9 KiB [emitted]
+    asset src_App_jsx.d0e8429473b741f0275f.hot-update.js 3.93 KiB [emitted] [immutable] [hmr]
+  asset index.html 417 bytes [emitted]
+  asset runtime.d0e8429473b741f0275f.hot-update.json 45 bytes [emitted] [immutable] [hmr]
+Entrypoint main 273 KiB = runtime.js 68.5 KiB runtime.d0e8429473b741f0275f.hot-update.js 868 bytes main.js 204 KiB
+Entrypoint mf_component_library 274 KiB = runtime.js 68.5 KiB runtime.d0e8429473b741f0275f.hot-update.js 868 bytes remoteEntry.js 205 KiB
+cached modules 4.15 MiB (javascript) 378 bytes (share-init) 378 bytes (consume-shared) [cached] 1105 modules
+runtime modules 50 KiB 18 modules
+javascript modules 1.59 KiB
+  ./src/App.jsx 1.25 KiB [built] [code generated]
+  ./src/components/Callout/utility/CalloutConfig.js 353 bytes [built]
+webpack 5.70.0 compiled successfully in 484 ms
