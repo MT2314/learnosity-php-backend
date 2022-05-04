@@ -8,6 +8,7 @@ import "./index.css";
 
 const App = () => {
   console.log("15.0.1");
+  console.log(process.env.COMPONENT_LIBRARY_QA)
   return (
     <>
       <WidgetContextProvider>
