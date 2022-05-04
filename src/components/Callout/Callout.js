@@ -16,7 +16,11 @@ const Callout = ({
   setProp = () => {},
 }) => {
   return (
-    <Paper aria-label="Callout" className={styles.Callout_main}>
+    <Paper
+      aria-label="Callout"
+      data-id="callout"
+      className={styles.Callout_main}
+    >
       <label
         htmlFor={`callout-type`}
         aria-label="Callout Type"
