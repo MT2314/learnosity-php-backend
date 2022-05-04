@@ -26,15 +26,7 @@ const Callout = ({
         aria-label="Callout Type"
         className={styles.Callout_label}
       >
-        Callout Type:
-        {/* <InputLabel
-        htmlFor={`callout-type`}
-        aria-label="Callout Type"
-        className={styles.Callout_label}
-      >
-        Callout Type:{" "}
-      </InputLabel> */}
-        &nbsp;
+        Callout Type: &nbsp;
         <NativeSelect
           role="listbox"
           autoFocus
