@@ -17,5 +17,16 @@ describe("<Callout />", () => {
     expect(screen.getByText("Notebook")).toBeDefined();
     expect(screen.getByText("Try It")).toBeDefined();
     expect(screen.getByText("Definition")).toBeDefined();
+
+    expect(screen.getByRole("listbox")).toBeDefined();
+    expect(screen.getByText("Callout Type:")).toBeDefined();
+    expect(screen.getByText("Enter callout body text here...")).toBeDefined();
+  });
+
+  it("renders text entry box", () => {
+    render(<Callout />);
+    //  expect(
+    //    screen.getByPlaceholderText("Enter callout body text here...")
+    //  ).toBeInTheDocument();
   });
 });

@@ -5,7 +5,7 @@ import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/CalloutConfig";
 import calloutOptions from "./utility/CalloutOptions";
-
+import uniq from "lodash/uniq";
 export const defaultProps = { heading: "", body: "", calloutType: "" };
 
 const Callout = ({
@@ -22,23 +22,30 @@ const Callout = ({
       className={styles.Callout_main}
     >
       <label
-        htmlFor={`callout-type`}
-        aria-label="Callout Type"
+        for="callout-selection-dropdown-list"
+        id="callout-selection-dropdown-list"
+        aria-label="dropdown list of callout title options"
         className={styles.Callout_label}
       >
         Callout Type: &nbsp;
         <NativeSelect
           role="listbox"
           autoFocus
-          value={calloutType || ""}
+          id="callout-selection-dropdown-list"
+          name="callout-selection-dropdown-list"
+          ariaLabelledBy="callout-selection-dropdown-list"
           onChange={(e) => {
             setProp({ calloutTypeSvg: calloutOptions[e.target.value].iconUrl });
             setProp({ calloutTitle: calloutOptions[e.target.value].title });
           }}
           className={styles.Callout_type_dropdown}
         >
-          {calloutOptions.map(({ id, title }) => (
-            <option key={id} value={calloutOptions[id].id}>
+          {calloutOptions.map(({ type_id, title }) => (
+            <option
+              key={type_id}
+              id={uniq}
+              value={calloutOptions[type_id].type_id}
+            >
               {title}
             </option>
           ))}
