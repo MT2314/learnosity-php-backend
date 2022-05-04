@@ -27,24 +27,31 @@ const Callout = ({
         className={styles.Callout_label}
       >
         Callout Type:
-      </label>
-      &nbsp;
-      <NativeSelect
-        autoFocus
-        id={`callout-type`}
-        value={calloutType || ""}
-        onChange={(e) => {
-          setProp({ calloutTypeSvg: calloutOptions[e.target.value].iconUrl });
-          setProp({ calloutTitle: calloutOptions[e.target.value].title });
-        }}
-        className={styles.Callout_type_dropdown}
+        {/* <InputLabel
+        htmlFor={`callout-type`}
+        aria-label="Callout Type"
+        className={styles.Callout_label}
       >
-        {calloutOptions.map(({ id, title }) => (
-          <option key={id} value={calloutOptions[id].id}>
-            {title}
-          </option>
-        ))}
-      </NativeSelect>
+        Callout Type:{" "}
+      </InputLabel> */}
+        &nbsp;
+        <NativeSelect
+          role="listbox"
+          autoFocus
+          value={calloutType || ""}
+          onChange={(e) => {
+            setProp({ calloutTypeSvg: calloutOptions[e.target.value].iconUrl });
+            setProp({ calloutTitle: calloutOptions[e.target.value].title });
+          }}
+          className={styles.Callout_type_dropdown}
+        >
+          {calloutOptions.map(({ id, title }) => (
+            <option key={id} value={calloutOptions[id].id}>
+              {title}
+            </option>
+          ))}
+        </NativeSelect>
+      </label>
       <div className={styles.Callout_body_text}>
         {/* decorative icon */}
         {calloutTypeSvg ? (
