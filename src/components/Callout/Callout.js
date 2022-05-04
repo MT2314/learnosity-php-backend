@@ -22,10 +22,9 @@ const Callout = ({
       className={styles.Callout_main}
     >
       <label
-        // for="callout-selection-dropdown-list"
-        id="L1"
-        for="S1"
-        aria-label="dropdown list of callout title options"
+        for="callout-selector"
+        // htmlFor={`callout-type`}
+        // aria-label="Callout Type"
         className={styles.Callout_label}
       >
         Callout Type: &nbsp;
@@ -52,6 +51,25 @@ const Callout = ({
           ))}
         </NativeSelect>
       </label>
+      &nbsp;
+      <NativeSelect
+        autoFocus
+        name="callout-selector"
+        id="callout-selector"
+        // id={`callout-type`}
+        // value={calloutType || ""}
+        onChange={(e) => {
+          setProp({ calloutTypeSvg: calloutOptions[e.target.value].iconUrl });
+          setProp({ calloutTitle: calloutOptions[e.target.value].title });
+        }}
+        className={styles.Callout_type_dropdown}
+      >
+        {calloutOptions.map(({ id, title }) => (
+          <option key={id} value={calloutOptions[id].id}>
+            {title}
+          </option>
+        ))}
+      </NativeSelect>
       <div className={styles.Callout_body_text}>
         {/* decorative icon */}
         {calloutTypeSvg ? (
