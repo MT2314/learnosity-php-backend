@@ -20,6 +20,7 @@ const Callout = ({
     <Paper
       aria-label="Callout"
       data-id="callout"
+      data-testid="callout"
       className={styles.Callout_container}
     >
       <div className={styles.dropdownContainer}>
@@ -39,7 +40,11 @@ const Callout = ({
             className={styles.Callout_type_dropdown}
           >
             {calloutOptions.map(({ type_id, title }) => (
-              <option key={type_id} value={calloutOptions[type_id].type_id}>
+              <option
+                key={type_id}
+                value={calloutOptions[type_id].type_id}
+                data-testid="calloutTitle"
+              >
                 {title}
               </option>
             ))}
@@ -56,11 +61,9 @@ const Callout = ({
               src={calloutTypeSvg}
               alt={""}
               aria-label="Callout type icon"
+              data-testid="calloutIconUrl"
             />
-            <p
-              placeholder="Callout heading text will appear here"
-              className={styles.Callout_heading}
-            >
+            <p data-testid="calloutTitle" className={styles.Callout_heading}>
               {calloutTitle}
             </p>
           </>
@@ -71,7 +74,7 @@ const Callout = ({
           ></div>
         )}
       </div>
-      <div className={styles.Callout_text_area}>
+      <div className={styles.Callout_text_area} data-testid="calloutBody">
         <FormattedText
           placeHolderText="Enter callout body text here..."
           toolbar={calloutConfig}
