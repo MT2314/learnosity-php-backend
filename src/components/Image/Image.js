@@ -29,7 +29,6 @@ const Image = ({ setProp, imgSize = "default", uploadedImg = "", imgLink = "", a
 
   return (
     <Paper className={styles.Image__container} elevation={0}>
-      <div className={styles.Image__canvasImgContainer}>
         {uploadedImg ? (
           // If image has been uploaded
           <>
@@ -55,7 +54,6 @@ const Image = ({ setProp, imgSize = "default", uploadedImg = "", imgLink = "", a
         <FormattedText placeHolderText="Enter Caption" body={caption} setProp={(stateUpdate) => setProp({caption: stateUpdate.body})} />
         <hr />
         <FormattedText placeHolderText="Enter Credit" body={credit} setProp={(stateUpdate) => setProp({credit: stateUpdate.body})} />
-      </div>
     </Paper>
   );
 };
