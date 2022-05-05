@@ -16,7 +16,7 @@ const QuoteBox = ({
 }) => {
 
   return (
-    <Paper aria-label="Quote Box" className={styles.quoteBoxContainer}>
+    <Paper data-id="quoteBox" aria-label="Quote Box" className={styles.quoteBoxContainer}>
       <div className={styles.quoteBodyContainer}>
         <div className={styles.quoteIcon}></div>
         <div className={styles.formattedTextBodyContainer}>
