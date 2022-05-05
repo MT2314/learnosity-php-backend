@@ -31,7 +31,7 @@ const QuoteBox = ({
       <div className={styles.formattedTextCitationContainer}>
         <FormattedText
           body={quoteBoxCitation}
-          placeHolderText="Type citation here..."
+          placeHolderText="Type citation here (optional) ..."
           toolbar={linkConfig}
           setProp={(stateUpdate) => setProp({quoteBoxCitation: stateUpdate.body})}
         />
