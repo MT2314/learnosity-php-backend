@@ -5,9 +5,9 @@ const deps = require("./package.json").dependencies;
 module.exports = (_, argv) => ({
   output: {
     publicPath:
-      // argv.mode === "development"
-      "http://localhost:3001/",
-    // : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-mf-component-library/",
+      argv.mode === "development"
+    ? "http://localhost:3001/"
+    : "https://platypus-cl-dev.s3.ca-central-1.amazonaws.com/index.html",
   },
 
   resolve: {

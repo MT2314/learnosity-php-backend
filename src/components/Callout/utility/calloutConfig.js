@@ -1,14 +1,7 @@
 export const calloutConfig = {
   options: ["inline", "link", "list"],
   inline: {
-    options: [
-      "bold",
-      "italic",
-      "underline",
-      "strikethrough",
-      "superscript",
-      "subscript",
-    ],
+    options: ["bold", "italic", "underline", "strikethrough"],
   },
   link: {
     options: ["link", "unlink"],
