@@ -43,6 +43,9 @@
   line-height: 43px;
   font-family: "Arial";
   margin-left: 10px;
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-top: 8px;
 }
 
 .Callout_body {
@@ -59,11 +62,14 @@
   display: flex;
   align-self: left;
   width: 500px;
+<<<<<<< Updated upstream
 }
 
 p {
   margin-top: 0px;
   margin-bottom: 0px;
+=======
+>>>>>>> Stashed changes
 }
 
 .Callout_img {
