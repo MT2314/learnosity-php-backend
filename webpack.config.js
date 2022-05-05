@@ -7,7 +7,7 @@ module.exports = (_, argv) => ({
     publicPath:
       argv.mode === "development"
     ? "http://localhost:3001/"
-    : "https://platypus-cl-dev.s3.ca-central-1.amazonaws.com/index.html",
+    : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-mf-component-library/",
   },
 
   resolve: {
