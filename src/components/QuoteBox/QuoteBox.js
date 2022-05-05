@@ -16,10 +16,18 @@ const QuoteBox = ({
 }) => {
 
   return (
-    <Paper data-id="quoteBox" aria-label="Quote Box" className={styles.quoteBoxContainer}>
+    <Paper
+      data-id="quoteBox"
+      data-testid="quoteBox"
+      aria-label="Quote Box"
+      className={styles.quoteBoxContainer}
+    >
       <div className={styles.quoteBodyContainer}>
-        <div className={styles.quoteIcon}></div>
-        <div className={styles.formattedTextBodyContainer}>
+        <div data-testid="quotes" className={styles.quoteIcon}></div>
+        <div
+          className={styles.formattedTextBodyContainer}
+          data-testid="quoteBoxBody"
+        >
           <FormattedText
             placeHolderText="Type quote body here..."
             toolbar={inlineWithLinkConfig}
@@ -28,7 +36,10 @@ const QuoteBox = ({
           />
         </div>
       </div>
-      <div className={styles.formattedTextCitationContainer}>
+      <div
+        className={styles.formattedTextCitationContainer}
+        data-testid="quoteBoxCitation"
+      >
         <FormattedText
           body={quoteBoxCitation}
           placeHolderText="Type citation here (optional) ..."
