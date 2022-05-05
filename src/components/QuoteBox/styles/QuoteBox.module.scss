@@ -37,7 +37,11 @@
   }
 }
 
-.quoteCitation {
+.formattedTextBodyContainer {
+  width: 800px;
+}
+
+.formattedTextCitationContainer {
+  width: 500px;
   align-self: flex-end;
-  min-width: 200px;
 }

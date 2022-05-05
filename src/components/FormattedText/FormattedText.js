@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { EditorState, convertFromRaw, convertToRaw, convertFromHTML } from "draft-js";
+import {
+  EditorState,
+  convertFromRaw,
+  convertToRaw,
+  convertFromHTML,
+} from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -19,18 +24,20 @@ const FormattedText = ({
   Once the component is rendered, it'll maintain its state using _bodyState, while keeping body up to date for saving
   */
 
-  const [ _editorState, setEditorState ] = useState(() => {
+  const [_editorState, setEditorState] = useState(() => {
     return body
-    ? EditorState.createWithContent(convertFromRaw(body))
-    : EditorState.createEmpty()
+      ? EditorState.createWithContent(convertFromRaw(body))
+      : EditorState.createEmpty();
   });
-  
+
   return (
     <div className="App">
       <Editor
         editorState={_editorState}
         spellCheck="true"
-        handlePastedText={(text, html, editorState) => console.log(text, html, editorState)}
+        handlePastedText={(text, html, editorState) =>
+          console.log(text, html, editorState)
+        }
         onEditorStateChange={(newState) => {
           setProp({ body: convertToRaw(newState.getCurrentContent()) });
           setEditorState(newState);
@@ -40,6 +47,7 @@ const FormattedText = ({
         toolbarClassName="toolbar-class"
         toolbar={toolbar}
         placeholder={placeHolderText}
+        data-id="formatted text"
       />
     </div>
   );
