@@ -3,8 +3,9 @@ import {
   EditorState,
   convertFromRaw,
   convertToRaw,
-  convertFromHTML,
+  // convertFromHTML,
 } from "draft-js";
+import { Link } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -32,6 +33,11 @@ const FormattedText = ({
 
   return (
     <div className="App">
+      <ul>
+        <li>
+          <Link to="/accessibility-keys">Accessibility Keys Page</Link>
+        </li>
+      </ul>
       <Editor
         editorState={_editorState}
         spellCheck="true"

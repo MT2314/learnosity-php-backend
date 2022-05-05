@@ -4,7 +4,7 @@ import React from "react";
 export const AccessibilityKeysPage = () => {
   return (
     <>
-      <p>Hello World!</p>
+      <p style={{ color: "black", fontSize: "22pt" }}>Hello World!</p>
     </>
   );
 };

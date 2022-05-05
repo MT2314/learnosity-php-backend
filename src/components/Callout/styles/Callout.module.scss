@@ -1,7 +1,11 @@
-.Callout_main {
-  padding: 10% 20%;
+.Callout_container {
+  background: rgb(236, 236, 236);
+  height: 400px;
+  font: 18px / 22.5px "Roboto", "Arial", sans-serif;
+  padding: 36px 100px;
   margin: 10px;
-  max-width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 650px) {
@@ -14,6 +18,19 @@
   .Callout_main {
     padding: 20px 20px;
   }
+}
+
+.calloutBodyContainer {
+  display: flex;
+}
+
+.dropdownContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.Callout_text_area {
+  width: 800px;
 }
 
 .Callout_label {
@@ -38,9 +55,10 @@
   margin-left: 10px;
 }
 
-.Callout_body_text {
+.Callout_icon_title {
   display: flex;
-  align-items: center;
+  align-self: left;
+  width: 500px;
 }
 
 p {

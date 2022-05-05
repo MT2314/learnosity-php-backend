@@ -20,30 +20,34 @@ const Callout = ({
     <Paper
       aria-label="Callout"
       data-id="callout"
-      className={styles.Callout_main}
+      className={styles.Callout_container}
     >
-      <label id={`callout-${labelId}`} className={styles.Callout_label}>
-        Callout Type: &nbsp;
-        <NativeSelect
-          role="listbox"
-          autoFocus
-          name="callout-selector"
-          aria-labelledby={`callout-${labelId}`}
-          onChange={(e) => {
-            setProp({ calloutTypeSvg: calloutOptions[e.target.value].iconUrl });
-            setProp({ calloutTitle: calloutOptions[e.target.value].title });
-          }}
-          className={styles.Callout_type_dropdown}
-        >
-          {calloutOptions.map(({ type_id, title }) => (
-            <option key={type_id} value={calloutOptions[type_id].type_id}>
-              {title}
-            </option>
-          ))}
-        </NativeSelect>
-      </label>
+      <div className={styles.dropdownContainer}>
+        <label id={`callout-${labelId}`} className={styles.Callout_label}>
+          Callout Type: &nbsp;
+          <NativeSelect
+            role="listbox"
+            autoFocus
+            name="callout-selector"
+            aria-labelledby={`callout-${labelId}`}
+            onChange={(e) => {
+              setProp({
+                calloutTypeSvg: calloutOptions[e.target.value].iconUrl,
+              });
+              setProp({ calloutTitle: calloutOptions[e.target.value].title });
+            }}
+            className={styles.Callout_type_dropdown}
+          >
+            {calloutOptions.map(({ type_id, title }) => (
+              <option key={type_id} value={calloutOptions[type_id].type_id}>
+                {title}
+              </option>
+            ))}
+          </NativeSelect>
+        </label>
+      </div>
       &nbsp;
-      <div className={styles.Callout_body_text}>
+      <div className={styles.Callout_icon_title}>
         {/* decorative icon */}
         {calloutTypeSvg ? (
           <>
@@ -67,14 +71,16 @@ const Callout = ({
           ></div>
         )}
       </div>
-      <FormattedText
-        placeHolderText="Enter callout body text here..."
-        toolbar={calloutConfig}
-        body={calloutBody}
-        className={styles.Callout_body}
-        editorClassName="callout_editor_class"
-        setProp={(stateUpdate) => setProp({ calloutBody: stateUpdate.body })}
-      />
+      <div className={styles.Callout_text_area}>
+        <FormattedText
+          placeHolderText="Enter callout body text here..."
+          toolbar={calloutConfig}
+          body={calloutBody}
+          className={styles.Callout_body}
+          editorClassName="callout_editor_class"
+          setProp={(stateUpdate) => setProp({ calloutBody: stateUpdate.body })}
+        />
+      </div>
     </Paper>
   );
 };

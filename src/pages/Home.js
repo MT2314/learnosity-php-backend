@@ -16,11 +16,11 @@ export const Home = () => {
         className="container"
         style={{ display: "flex", minWidth: "1100px" }}
       >
-        <ul>
+        {/* <ul>
           <li>
             <Link to="/accessibility-keys">Accessibility Keys Page</Link>
           </li>
-        </ul>
+        </ul> */}
         <Canvas unwrappedComponents={[<FormattedText />]} />
 
         <div
