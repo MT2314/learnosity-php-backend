@@ -16,7 +16,7 @@ const QuoteBox = ({
 }) => {
 
   return (
-    <Paper aria-label="Quote Box" className={styles.quoteBoxContainer}>
+    <Paper data-id="quoteBox" aria-label="Quote Box" className={styles.quoteBoxContainer}>
       <div className={styles.quoteBodyContainer}>
         <div className={styles.quoteIcon}></div>
         <div className={styles.formattedTextBodyContainer}>
@@ -31,7 +31,7 @@ const QuoteBox = ({
       <div className={styles.formattedTextCitationContainer}>
         <FormattedText
           body={quoteBoxCitation}
-          placeHolderText="Type citation here..."
+          placeHolderText="Type citation here (optional) ..."
           toolbar={linkConfig}
           setProp={(stateUpdate) => setProp({quoteBoxCitation: stateUpdate.body})}
         />
