@@ -5,7 +5,6 @@ import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/CalloutConfig";
 import calloutOptions from "./utility/CalloutOptions";
-import uniq from "lodash/uniq";
 export const defaultProps = { heading: "", body: "", calloutType: "" };
 
 const Callout = ({
