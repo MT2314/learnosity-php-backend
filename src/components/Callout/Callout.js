@@ -15,25 +15,21 @@ const Callout = ({
   calloutBody,
   setProp = () => {},
 }) => {
+  let labelId = Math.floor(Math.random() * 100000);
+
   return (
     <Paper
       aria-label="Callout"
       data-id="callout"
       className={styles.Callout_main}
     >
-      <label
-        for="callout-selector"
-        // htmlFor={`callout-type`}
-        // aria-label="Callout Type"
-        className={styles.Callout_label}
-      >
+      <label id={`callout-${labelId}`} className={styles.Callout_label}>
         Callout Type: &nbsp;
         <NativeSelect
           role="listbox"
           autoFocus
-          id="S1"
-          // name="callout-selection-dropdown-list"
-          ariaLabelledBy="L1 S3"
+          name="callout-selector"
+          aria-labelledby={`callout-${labelId}`}
           onChange={(e) => {
             setProp({ calloutTypeSvg: calloutOptions[e.target.value].iconUrl });
             setProp({ calloutTitle: calloutOptions[e.target.value].title });
@@ -41,11 +37,7 @@ const Callout = ({
           className={styles.Callout_type_dropdown}
         >
           {calloutOptions.map(({ type_id, title }) => (
-            <option
-              key={type_id}
-              id={uniq}
-              value={calloutOptions[type_id].type_id}
-            >
+            <option key={type_id} value={calloutOptions[type_id].type_id}>
               {title}
             </option>
           ))}
