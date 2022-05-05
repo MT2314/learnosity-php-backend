@@ -7,7 +7,7 @@ import FormattedText from "./components/FormattedText";
 import "./index.css";
 
 const App = () => {
-  console.log("15.0.1");
+  console.log("15.0.3");
   return (
     <>
       <WidgetContextProvider>
