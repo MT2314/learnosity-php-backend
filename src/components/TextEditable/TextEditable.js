@@ -49,6 +49,7 @@ const TextEditable = forwardRef(
           placeholder={placeholder}
           draggable
           className={styles.TextEditable__Multiline}
+          data-id="text editable multiline"
           onDragStart={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -68,6 +69,7 @@ const TextEditable = forwardRef(
           placeholder={placeholder}
           draggable
           className={styles.TextEditable__Singleline}
+          data-id="text editable singleline"
           onDragStart={(e) => {
             e.preventDefault();
             e.stopPropagation();

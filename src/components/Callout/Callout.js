@@ -5,7 +5,6 @@ import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/CalloutConfig";
 import calloutOptions from "./utility/CalloutOptions";
-
 export const defaultProps = { heading: "", body: "", calloutType: "" };
 
 const Callout = ({
@@ -15,32 +14,35 @@ const Callout = ({
   calloutBody,
   setProp = () => {},
 }) => {
+  let labelId = Math.floor(Math.random() * 100000);
+
   return (
-    <Paper aria-label="Callout" className={styles.Callout_main}>
-      <label
-        htmlFor={`callout-type`}
-        aria-label="Callout Type"
-        className={styles.Callout_label}
-      >
-        Callout Type:
+    <Paper
+      aria-label="Callout"
+      data-id="callout"
+      className={styles.Callout_main}
+    >
+      <label id={`callout-${labelId}`} className={styles.Callout_label}>
+        Callout Type: &nbsp;
+        <NativeSelect
+          role="listbox"
+          autoFocus
+          name="callout-selector"
+          aria-labelledby={`callout-${labelId}`}
+          onChange={(e) => {
+            setProp({ calloutTypeSvg: calloutOptions[e.target.value].iconUrl });
+            setProp({ calloutTitle: calloutOptions[e.target.value].title });
+          }}
+          className={styles.Callout_type_dropdown}
+        >
+          {calloutOptions.map(({ type_id, title }) => (
+            <option key={type_id} value={calloutOptions[type_id].type_id}>
+              {title}
+            </option>
+          ))}
+        </NativeSelect>
       </label>
       &nbsp;
-      <NativeSelect
-        autoFocus
-        id={`callout-type`}
-        value={calloutType || ""}
-        onChange={(e) => {
-          setProp({ calloutTypeSvg: calloutOptions[e.target.value].iconUrl });
-          setProp({ calloutTitle: calloutOptions[e.target.value].title });
-        }}
-        className={styles.Callout_type_dropdown}
-      >
-        {calloutOptions.map(({ id, title }) => (
-          <option key={id} value={calloutOptions[id].id}>
-            {title}
-          </option>
-        ))}
-      </NativeSelect>
       <div className={styles.Callout_body_text}>
         {/* decorative icon */}
         {calloutTypeSvg ? (
