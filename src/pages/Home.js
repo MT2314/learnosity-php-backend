@@ -16,14 +16,6 @@ export const Home = () => {
         className="container"
         style={{ display: "flex", minWidth: "1100px" }}
       >
-        <ul>
-          <li>
-            <Link to="/accessibility-keys">Accessibility Keys Page</Link>
-          </li>
-          <li>
-            <Link to="/CalloutPage">Callout Page</Link>
-          </li>
-        </ul>
         <Canvas unwrappedComponents={[<FormattedText />]} />
 
         <div

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export const KeysLink = () => {
   return (
     <>
-      <div>
+      <div className="keys-link-container">
         <Link to="/AccessibilityKeysPage" className="shortcuts-link">
           keyboard shortcuts
         </Link>

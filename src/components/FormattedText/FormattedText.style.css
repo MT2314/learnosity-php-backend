@@ -10,10 +10,16 @@
   overflow-y: auto;
 }
 
+.keys-link-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .shortcuts-link {
+  display: flex;
   color: black;
   font-size: smaller;
-  max-width: 85px;
 }
 
 .rdw-option-active {
