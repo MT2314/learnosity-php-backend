@@ -31,7 +31,7 @@ function ImageConfig({
       <form onSubmit={handleSubmit} className={styles.validationForm}>
         <div className={styles.imageConfigSection}>
           <h2 className={styles.imageH2}>Alt Text</h2>
-          <label className={styles.imageLabel} htmlFor="image-alt">
+          <label className={styles.imageConfigLabel} htmlFor="image-alt">
             This text will be used by screen readers, search engines, or when the image can't be loaded (Maximum 200
             characters).
           </label>
@@ -53,7 +53,7 @@ function ImageConfig({
         </div>
         <div className={styles.imageConfigSection}>
           <h2 className={styles.imageH2}>Long Description</h2>
-          <label className={styles.imageLabel} htmlFor="long-desc">
+          <label className={styles.imageConfigLabel} htmlFor="long-desc">
             This text will be used by screen readers, search engines, or when the image can't be loaded.
           </label>
           <textarea
@@ -69,7 +69,7 @@ function ImageConfig({
         </div>
         <div className={styles.imageConfigSection}>
           <h2 className={styles.imageH2}>Image Size</h2>
-          <label htmlFor="img-size" className={styles.imageLabel}>
+          <label htmlFor="img-size" className={styles.imageConfigLabel}>
             Change the size of your uploaded image.
           </label>
           <NativeSelect
@@ -90,7 +90,7 @@ function ImageConfig({
         </div>
         <div className={styles.imageConfigSection}>
           <h2 className={styles.imageH2}>Add Link To Image</h2>
-          <label htmlFor="urlImg" className={styles.imageLabel}>
+          <label htmlFor="urlImg" className={styles.imageConfigLabel}>
             Turn image into link to external webpage.
           </label>
           <input
