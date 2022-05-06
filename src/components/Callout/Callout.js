@@ -4,10 +4,9 @@ import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
 import { calloutConfig } from "./utility/calloutConfig";
 import calloutOptions from "./utility/CalloutOptions";
-export const defaultProps = { heading: "", body: "", calloutType: "" };
+export const defaultProps = { heading: "", body: "" };
 
 const Callout = ({
-  calloutType,
   calloutTypeSvg,
   calloutTitle,
   calloutBody,

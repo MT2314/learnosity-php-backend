@@ -17,7 +17,6 @@ export const CalloutPage = () => {
   return (
     <>
       <div>
-        {/* <Callout /> */}
         <MockStateWrapper Component={Callout} />
       </div>
     </>

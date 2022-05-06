@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 import AccessibilityKeysPage from './components/FormattedText/AccessibilityKeysPage';
 import CalloutPage from "./pages/CalloutPage";
+import QuoteBoxPage from "./pages/QuoteBoxPage";
 
 import "./index.css";
 
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/AccessibilityKeysPage" element={<AccessibilityKeysPage />} />
             <Route path="/CalloutPage" element={<CalloutPage />} />
+            {/* <Route path="/QuoteBoxPage" element={<QuoteBoxPage />} /> */}
             
           </Routes>
         </BrowserRouter>
