@@ -10,7 +10,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import toolbarOptions from "./Utility/toolbarOptions.js";
-import KeysLink from "../TextEditable/KeysLink.js";
+import KeysLink from "./KeysLink.js";
 import "./FormattedText.style.css";
 
 export const defaultProps = { placeHolderText: "", body: null };
@@ -34,11 +34,6 @@ const FormattedText = ({
 
   return (
     <div className="App">
-      <ul>
-        <li>
-          <Link to="/AccessibilityKeysPage">Accessibility Keys Page</Link>
-        </li>
-      </ul>
       <Editor
         editorState={_editorState}
         spellCheck="true"

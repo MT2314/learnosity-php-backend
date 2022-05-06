@@ -1,4 +1,5 @@
 import React from "react";
+import "./FormattedText.style.css";
 
 import { Link } from "react-router-dom";
 
@@ -6,7 +7,9 @@ export const KeysLink = () => {
   return (
     <>
       <div>
-        <Link to="/accessibility-keys">Keyboard Shortcuts</Link>
+        <Link to="/AccessibilityKeysPage" className="shortcuts-link">
+          keyboard shortcuts
+        </Link>
       </div>
     </>
   );

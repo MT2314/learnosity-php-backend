@@ -10,6 +10,12 @@
   overflow-y: auto;
 }
 
+.shortcuts-link {
+  color: black;
+  font-size: smaller;
+  max-width: 85px;
+}
+
 .rdw-option-active {
   background-color: #ffffa7;
 }
