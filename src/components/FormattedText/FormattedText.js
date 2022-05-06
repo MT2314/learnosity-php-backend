@@ -31,7 +31,7 @@ const FormattedText = ({
   });
 
   return (
-    <div className="App">
+    <>
       <Editor
         editorState={_editorState}
         spellCheck="true"
@@ -49,7 +49,7 @@ const FormattedText = ({
         placeholder={placeHolderText}
         data-id="formatted text"
       />
-    </div>
+    </>
   );
 };
 
