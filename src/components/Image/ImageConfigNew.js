@@ -4,8 +4,8 @@ import ImageUploader from "./ImageUploader";
 import EditPanelIcon from "../EditPanelIcon";
 import styles from "./styles/ImageConfig.module.scss";
 
-import NativeSelect from "@mui/material/NativeSelect";
-import InsertPhotoOutlinedIcon from "@mui/icons-material/InsertPhotoOutlined";
+import { NativeSelect } from "@mui/material/";
+import { ImageOutlined } from "@mui/icons-material/";
 
 // Component will be wrapped with something that handles which component is selected
 function ImageConfig({
@@ -24,7 +24,7 @@ function ImageConfig({
 
   return (
     <section className={styles.ImageConfig__editPanelContainer}>
-      <EditPanelIcon title="Image" icon={<InsertPhotoOutlinedIcon />} />
+      <EditPanelIcon title="Image" icon={<ImageOutlined />} />
 
       <ImageUploader state={componentState} setState={setState} />
 

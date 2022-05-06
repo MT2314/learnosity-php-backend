@@ -5,8 +5,8 @@ import EditPanelIcon from "../EditPanelIcon";
 import styles from "./styles/ImageConfig.module.scss";
 import { ImageWidgetContext } from "./ImageProvider";
 
-import NativeSelect from "@mui/material/NativeSelect";
-import InsertPhotoOutlinedIcon from "@mui/icons-material/InsertPhotoOutlined";
+import {NativeSelect} from "@mui/material";
+import {InsertPhotoOutlinedIcon} from "@mui/icons-material";
 
 function ImageConfig() {
   const context = useContext(ImageWidgetContext);

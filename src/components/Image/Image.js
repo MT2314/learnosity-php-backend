@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from 'react';
 import { Paper } from "@mui/material";
 import styles from "./styles/Image.module.scss";
-import { ImageWidgetContext } from "./ImageProvider";
 import FormattedText from "../FormattedText";
 
 export const defaultProps = { imgSize: "default", uploadedImg: "", imgLink: "", alt: "", longDesc: "", caption: null, credit: null, };
