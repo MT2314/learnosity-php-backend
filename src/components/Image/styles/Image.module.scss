@@ -1,4 +1,4 @@
-.Image__container {
+.imageContainer {
    display: flex;
    flex-direction: column;
    border: none;
@@ -10,7 +10,7 @@
    align-items: center;
    flex-direction: column;
 
-   .Image__img {
+   .uploadedImg {
      border: none;
      max-width: 100%;
      height: auto;
@@ -25,17 +25,9 @@
      }
    }
 
-   .Image__imgLink {
-      align-self: center;
-      margin: 0;
-      text-decoration: none;
-      border: none;
-      height: auto;
-   }
-
-   .Image__outline {
+   .placeholderImg {
       background-color: #f6f6f6;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000svg' height='194px' viewBox='0 0 24 24' width='194px' fill='%23b2b2b2'%3E%3Cpathd='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M19 5v14H5V5h14m0-2H5c-1.1 0-2 9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L913.14 6 17h12l-3.86-5.14z'/%3E%3C/svg%3E");
+      background-image: url("../assets/imageIcon.svg");
       background-repeat: no-repeat;
       background-position: center;
       height: 400px;
@@ -53,33 +45,16 @@
       }
    }
 
-   .Image__longDesc {
+   .imageLink {
+      align-self: center;
+      margin: 0;
+      text-decoration: none;
+      border: none;
+      height: auto;
+   }
+
+   .longDescription {
       align-self: flex-start;
       font-size: 0.75rem;
    }
-
-   .Image__caption {
-      border: none;
-      font-family: "Roboto", "Arial", sans-serif;
-      box-sizing: border-box;
-      width: calc(100% - 4px);
-      padding: 10px;
-      margin: 5px;
-      background: #fff;
-      align-self: center;
-      text-align: left;
-      font-size: 0.875rem;
-      color: #000;
-      resize: none;
-      overflow: hidden;
-   }
-
-      .Image__caption::placeholder {
-         font-size: 0.875rem;
-      }
-
-      .Image__caption:focus,
-      .Image__caption:active {
-         outline: 2px solid #ffc46b;
-      }
 }
