@@ -9,7 +9,6 @@ const EditPanelIcon = ({title, icon}) => {
          fontFamily: "Roboto, Helvetica, Arial, sans-serif",
          fontWeight: "400",
          fontSize: "1rem",
-         padding: "0.5rem",
          letterSpacing: "0.00938em",
          width: "90%",
          borderBottom: "1px solid #e0e0e0",
