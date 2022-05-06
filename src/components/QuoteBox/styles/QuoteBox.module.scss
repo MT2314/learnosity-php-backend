@@ -7,15 +7,11 @@
   flex-direction: column;
 
   @media (max-width: 650px) {
-    .quoteBoxContainer {
       padding: 15px 15px;
-    }
   }
 
   @media (max-width: 850px) {
-    .quoteBoxContainer {
       padding: 25px 25px;
-    }
   }
 
   .quoteBodyContainer {
@@ -27,20 +23,18 @@
     background-repeat: no-repeat;
     height: 43px;
     width: 43px;
-  }
 
-  @media (max-width: 600px) {
-    .quoteIcon {
+    @media (max-width: 600px) {
       height: 30px;
       width: 30px;
     }
   }
 
-  .formattedTextBodyContainer {
+  .quoteBody {
     width: 800px;
   }
 
-  .formattedTextCitationContainer {
+  .quoteCitation {
     width: 500px;
     align-self: flex-end;
   }
