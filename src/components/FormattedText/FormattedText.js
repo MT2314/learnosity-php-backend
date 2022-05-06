@@ -35,7 +35,7 @@ const FormattedText = ({
     <div className="App">
       <ul>
         <li>
-          <Link to="/accessibility-keys">Accessibility Keys Page</Link>
+          <Link to="/AccessibilityKeysPage">Accessibility Keys Page</Link>
         </li>
       </ul>
       <Editor

@@ -17,7 +17,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/keys" element={<AccessibilityKeysPage />} />
+            <Route path="/AccessibilityKeysPage" element={<AccessibilityKeysPage />} />
           </Routes>
         </BrowserRouter>
       </WidgetContextProvider>
