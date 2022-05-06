@@ -10,6 +10,18 @@
   overflow-y: auto;
 }
 
+.keys-link-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.shortcuts-link {
+  display: flex;
+  color: black;
+  font-size: smaller;
+}
+
 .rdw-option-active {
   background-color: #ffffa7;
 }

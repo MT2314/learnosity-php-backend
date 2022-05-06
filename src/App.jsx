@@ -1,8 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { WidgetContextProvider, ConfigStateWrapper, ComponentSelector, Canvas } from "./Utility/mockWrapper"
-import Header from "./components/Header";
-import FormattedText from "./components/FormattedText";
+import { WidgetContextProvider } from "./Utility/mockWrapper"
+// import Header from "./components/Header";
+// import FormattedText from "./components/FormattedText";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from "./pages/Home";
+import AccessibilityKeysPage from './components/FormattedText/AccessibilityKeysPage';
+import CalloutPage from "./pages/CalloutPage";
 
 import "./index.css";
 
@@ -11,23 +15,14 @@ const App = () => {
   return (
     <>
       <WidgetContextProvider>
-        <Header title="component-library" backgroundColor="DarkSlateGray" />
-        <div className="container" style={{ display: "flex",minWidth: "1100px" }}>
-          <Canvas unwrappedComponents={[<FormattedText />]} />
-
-          <div
-            className="editPanel"
-            style={{
-              border: "2px solid black",
-              marginLeft: "1em",
-              padding: "10px",
-              maxWidth: "350px"
-            }}
-          >
-            <ConfigStateWrapper />
-          </div>
-        </div>
-        <ComponentSelector />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/AccessibilityKeysPage" element={<AccessibilityKeysPage />} />
+            <Route path="/CalloutPage" element={<CalloutPage />} />
+            
+          </Routes>
+        </BrowserRouter>
       </WidgetContextProvider>
     </>
   );
