@@ -1,11 +1,11 @@
-.editPanelContainer {
+.imageConfigContainer {
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
    width: 100%;
 
-   .section {
+   .imageConfigSection {
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -16,19 +16,19 @@
       width: 100%;
    }
 
-   .imageH2 {
+   .imageConfigH2 {
       margin: 0 0 0.5rem 0;
       font-family: "Roboto","Arial",sans-serif;
       font-size: 20px;
       align-self: flex-start;
    }
 
-   .imageLabel {
+   .imageConfigLabel {
      font-size: 12px;
      align-self: flex-start;
    }
 
-   .textArea {
+   .imageConfigTextArea {
       border: 1.5px solid #e8e8e8;
       background: #f6f6f6;
       width: 98%;

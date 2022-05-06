@@ -23,13 +23,13 @@ function ImageConfig({
   };
 
   return (
-    <section className={styles.editPanelContainer}>
+    <section className={styles.imageConfigContainer}>
       <EditPanelIcon title="Image" icon={<InsertPhotoOutlinedIcon />} />
 
       <ImageUploader state={componentState} setState={setState} />
 
       <form onSubmit={handleSubmit} className={styles.validationForm}>
-        <div className={styles.section}>
+        <div className={styles.imageConfigSection}>
           <h2 className={styles.imageH2}>Alt Text</h2>
           <label className={styles.imageLabel} htmlFor="image-alt">
             This text will be used by screen readers, search engines, or when the image can't be loaded (Maximum 200
@@ -44,14 +44,14 @@ function ImageConfig({
             rows="4"
             value={alt}
             onChange={(e) => setState({ alt: e.target.value })}
-            className={styles.textArea}
+            className={styles.imageConfigTextArea}
             placeholder="Type alt text here..."
             onInvalid={(e) => e.target.setCustomValidity("Alt text is required for all uploaded images.")}
             onInput={(e) => e.target.setCustomValidity("")}
           ></textarea>
           <span className={styles.altCount}>{altTextCounter || 200}</span>
         </div>
-        <div className={styles.section}>
+        <div className={styles.imageConfigSection}>
           <h2 className={styles.imageH2}>Long Description</h2>
           <label className={styles.imageLabel} htmlFor="long-desc">
             This text will be used by screen readers, search engines, or when the image can't be loaded.
@@ -63,11 +63,11 @@ function ImageConfig({
             rows="4"
             value={longDesc}
             onChange={(e) => setState({ longDesc: e.target.value })}
-            className={styles.textArea}
+            className={styles.imageConfigTextArea}
             placeholder="Type long description here..."
           ></textarea>
         </div>
-        <div className={styles.section}>
+        <div className={styles.imageConfigSection}>
           <h2 className={styles.imageH2}>Image Size</h2>
           <label htmlFor="img-size" className={styles.imageLabel}>
             Change the size of your uploaded image.
@@ -88,7 +88,7 @@ function ImageConfig({
             <option value={"large"}>Large</option>
           </NativeSelect>
         </div>
-        <div className={styles.section}>
+        <div className={styles.imageConfigSection}>
           <h2 className={styles.imageH2}>Add Link To Image</h2>
           <label htmlFor="urlImg" className={styles.imageLabel}>
             Turn image into link to external webpage.
