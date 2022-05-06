@@ -1,19 +1,19 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-
 import { unmountComponentAtNode } from "react-dom";
-import userEvent from "@testing-library/user-event";
+import { render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+
+// import userEvent from "@testing-library/user-event";
+
 import Callout from "../components/Callout/Callout";
 
 let container = null;
 beforeEach(() => {
-  // setup a DOM element as a render target
   container = document.createElement("div");
   document.body.appendChild(container);
 });
 
 afterEach(() => {
-  // cleanup on exiting
   unmountComponentAtNode(container);
   container.remove();
   container = null;
@@ -24,7 +24,7 @@ const testProps = {
   calloutTypeSvg: {
     blocks: [
       {
-        key: "d3ktl",
+        key: "testSvg",
         text: "www.tvo.org",
         type: "unstyled",
         depth: 0,
@@ -65,39 +65,45 @@ const testProps = {
   },
 };
 
-describe("<Callout />", () => {
-  it("renders Callout component", () => {
-    expect(render(<Callout />)).toBeDefined();
-  });
-
-  it("renders QuoteBox without any given data", () => {
+describe("Callout", () => {
+  it("renders callout without any given data", () => {
     render(<Callout />);
 
     expect(screen.getByTestId("callout")).toBeInTheDocument();
-    expect(screen.getByTestId("calloutIconUrl")).toBeInTheDocument();
+    expect(screen.getByTestId("calloutTypeSvg")).toBeInTheDocument();
     expect(screen.getByTestId("calloutBody")).toBeInTheDocument();
     expect(screen.getByTestId("calloutTitle")).toBeInTheDocument();
   });
 
-  it("renders QuoteBox with given data", () => {
+  it("renders callout with given data", () => {
     render(
       <Callout
-        quoteBoxBody={testProps.quoteBoxBody}
-        quoteBoxCitation={testProps.quoteBoxCitation}
+        calloutBody={testProps.calloutBody}
+        calloutTitle={testProps.calloutTitle}
+        calloutIconUrl={testProps.calloutIconUrl}
       />
     );
 
-    expect(screen.getByTestId("callout")).toHaveTextContent("Polkaroo");
-    expect(screen.getByTestId("calloutBody")).not.toHaveTextContent("Humpty");
-    expect(screen.getByTestId("calloutIconUrl")).toHaveTextContent("Bibble");
-    expect(screen.getByTestId("calloutTitle")).not.toHaveTextContent("Dumpty");
+    expect(screen.getByTestId("callout")).toHaveTextContent(
+      "Hi this is my callout body!"
+    );
+    expect(screen.getByTestId("calloutBody")).not.toHaveTextContent(
+      "Thanks for this scaffold Sam!"
+    );
+    // expect(screen.getByTestId("calloutTypeSvg")).toHaveTextContent(
+    //   "www.tvo.org"
+    // );
+    expect(screen.getByTestId("calloutTitle")).not.toHaveTextContent("123");
+    expect(screen.getByTestId("calloutTitle")).toHaveTextContent("Definition");
   });
 
   it("renders options in dropdown", () => {
     render(<Callout />);
 
-    userEvent.click(screen.getByLabelText(`Callout Type`));
+    // userEvent.click(screen.getByLabelText(`Callout Type`));
+    // userEvent.click(screen.getAllByRole("listbox")).toBeDefined();
 
+    expect(screen.getByText("Callout Type:")).toBeDefined();
     expect(screen.getByText("Challenge")).toBeDefined();
     expect(screen.getByText("Notebook")).toBeDefined();
     expect(screen.getByText("Try It")).toBeDefined();

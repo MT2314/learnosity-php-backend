@@ -31,6 +31,7 @@ const Callout = ({
             autoFocus
             name="callout-selector"
             aria-labelledby={`callout-${labelId}`}
+            data-testid="calloutTitle"
             onChange={(e) => {
               setProp({
                 calloutTypeSvg: calloutOptions[e.target.value].iconUrl,
@@ -40,11 +41,7 @@ const Callout = ({
             className={styles.Callout_type_dropdown}
           >
             {calloutOptions.map(({ type_id, title }) => (
-              <option
-                key={type_id}
-                value={calloutOptions[type_id].type_id}
-                data-testid="calloutTitle"
-              >
+              <option key={type_id} value={calloutOptions[type_id].type_id}>
                 {title}
               </option>
             ))}
@@ -52,7 +49,7 @@ const Callout = ({
         </label>
       </div>
       &nbsp;
-      <div className={styles.Callout_icon_title}>
+      <div className={styles.Callout_icon_title} data-testid="calloutTypeSvg">
         {/* decorative icon */}
         {calloutTypeSvg ? (
           <>
@@ -61,7 +58,6 @@ const Callout = ({
               src={calloutTypeSvg}
               alt={""}
               aria-label="Callout type icon"
-              data-testid="calloutIconUrl"
             />
             <p data-testid="calloutTitle" className={styles.Callout_heading}>
               {calloutTitle}
