@@ -39,9 +39,9 @@ module.exports = (_, argv) => {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
     },
     // Do not deploy with this. Comment out before deploying
-    optimization: {
-      runtimeChunk: "single",
-    },
+    // optimization: {
+    //   runtimeChunk: "single",
+    // },
     // devtool: argv.mode !== 'development' ? false : 'eval-source-map',
 
     devServer: {
