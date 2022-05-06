@@ -28,6 +28,11 @@ const AccessibilityKeyPage = () => {
           <td>Cmd + U</td>
         </tr>
         <tr>
+          <td>Strikethrough</td>
+          <td>Alt + H + 4</td>
+          <td>Cmd + Shift + X</td>
+        </tr>
+        <tr>
           <td>Make selected text superscript</td>
           <td>Ctrl + Shift + =</td>
           <td>Cmd + Shift + =</td>
@@ -61,6 +66,21 @@ const AccessibilityKeyPage = () => {
           <td>Insert Link</td>
           <td>Shift + K</td>
           <td>Cmd + K</td>
+        </tr>
+        <tr>
+          <td>Right Align</td>
+          <td>Ctrl + R</td>
+          <td>Cmd + R</td>
+        </tr>
+        <tr>
+          <td>Left Align</td>
+          <td>Ctrl + J</td>
+          <td>Cmd + J</td>
+        </tr>
+        <tr>
+          <td>Center Align</td>
+          <td>Ctrl + E</td>
+          <td>Cmd + E</td>
         </tr>
       </table>
     </>
