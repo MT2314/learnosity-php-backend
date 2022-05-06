@@ -48,6 +48,21 @@ const AccessibilityKeyPage = () => {
           <td>Shift + Tab</td>
           <td>Shift + Tab</td>
         </tr>
+        <tr>
+          <td>Bulleted List</td>
+          <td>Shift + H</td>
+          <td>Cmd + H</td>
+        </tr>
+        <tr>
+          <td>Numbered List</td>
+          <td>Shift + O</td>
+          <td>Cmd + O</td>
+        </tr>
+        <tr>
+          <td>Insert Link</td>
+          <td>Shift + K</td>
+          <td>Cmd + K</td>
+        </tr>
       </table>
     </>
   );
