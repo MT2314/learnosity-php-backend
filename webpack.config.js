@@ -26,7 +26,6 @@ module.exports = (_, argv) => {
   }, {});
 
   return {
-    mode:'development',
     output: {
       publicPath:
         argv.mode === "development"
