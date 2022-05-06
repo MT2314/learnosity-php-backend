@@ -64,7 +64,7 @@ const ImageUploader = ({state, setState}) => {
       );
 
    return(
-      <div className={styles.container}>
+      <div className={styles.imageUploaderContainer}>
          {/* Image thumbnail */}
          <aside className={styles.thumbnailContainer}>
             { file.length !== 0 && thumbs }
