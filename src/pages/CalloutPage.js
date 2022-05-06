@@ -1,12 +1,25 @@
-import React from "react";
-import Callout from "../components/Callout/Callout";
-import "../components/componentIndex";
+import React, { useState } from "react";
+import Callout, { defaultProps } from "../components/Callout/Callout";
+// import "../components/componentIndex";
+
+const MockStateWrapper = ({ Component }) => {
+  const [state, setState] = useState({ ...defaultProps });
+  return (
+    <Component
+      setProp={(stateUpdate) =>
+        setState((state) => ({ ...state, ...stateUpdate }))
+      }
+      {...state}
+    />
+  );
+};
 
 export const CalloutPage = () => {
   return (
     <>
       <div>
-        <Callout />
+        {/* <Callout /> */}
+        <MockStateWrapper Component={Callout} />
       </div>
     </>
   );

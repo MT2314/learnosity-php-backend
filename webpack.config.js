@@ -1,6 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const webpack = require('webpack');
+const webpack = require("webpack");
 
 const deps = require("./package.json").dependencies;
 const path = require("path");
@@ -8,17 +8,15 @@ const fs = require("fs");
 const dotenv = require("dotenv");
 
 module.exports = (_, argv) => {
-
-  const envFolderPath = path.join(__dirname, 'environments');
+  const envFolderPath = path.join(__dirname, "environments");
 
   let envPath = path.join(envFolderPath, `.env`);
 
-  if (!fs.existsSync(envPath))
-    throw new Error(`.env file for not found`);
+  if (!fs.existsSync(envPath)) throw new Error(`.env file for not found`);
 
   const fileEnv = dotenv.config({ path: envPath }).parsed;
 
-  console.log(fileEnv)
+  console.log(fileEnv);
 
   const envKeys = Object.keys(fileEnv).reduce((envObject, next) => {
     envObject[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
@@ -37,14 +35,14 @@ module.exports = (_, argv) => {
       extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
     },
     // Do not deploy with this. Comment out before deploying
-    optimization: {
-      runtimeChunk: "single",
-    },
-    // devtool: argv.mode !== 'development' ? false : 'eval-source-map',
+    // optimization: {
+    //   runtimeChunk: "single",
+    // },
+    devtool: argv.mode !== "development" ? false : "eval-source-map",
 
     devServer: {
       historyApiFallback: true,
-      compress: true,
+      // compress: true,
       port: 3001,
       client: {
         overlay: true,
@@ -62,7 +60,7 @@ module.exports = (_, argv) => {
         },
         {
           test: /\.(css|s[ac]ss)$/i,
-          use: ["style-loader", "css-loader", "postcss-loader","sass-loader"],
+          use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"],
         },
         {
           test: /\.(ts|tsx|js|jsx)$/,
