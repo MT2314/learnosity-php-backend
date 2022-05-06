@@ -1,0 +1,80 @@
+.imageUploaderContainer {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   margin: 0.5rem 0;
+
+   .thumbnailContainer {
+      display: flex;
+      flex-direction: column;
+      margin: 16px 0;
+      justify-content: center;
+      align-items: center;
+   }
+
+   .thumbOuter {
+      display: inline-flex;
+      align-self: center;
+      margin-bottom: 8px;
+      height: auto;
+      padding: 4px;
+      box-sizing: border-box;
+   }
+
+   .thumbInner {
+      display: flex;
+      min-width: 0;
+      max-width: 200px;
+      height: auto;
+   }
+
+   .thumbnailImg {
+      display: block;
+      max-width: auto;
+      height: auto;
+      max-width: 100%;
+   }
+
+   .imageUploader {
+      background: #7422d1;
+      text-align: center;
+      color: #fff;
+      padding: 6px 0;
+      margin-bottom: 10px;
+      opacity: 1;
+      font-size: 0.875rem;
+      min-width: 64px;
+      width: 100%;
+      box-sizing: border-box;
+      font-weight: 500;
+      font-family: "Roboto", "Arial", sans-serif;
+      line-height: 1.75;
+      border: 3px solid transparent;
+      border-radius: 4px;
+      letter-spacing: 0.02857em;
+      transition: all .2s ease-in;
+
+      &:focus {
+         width: 100%;
+         font-size: 14px;
+         margin: 0;
+      }
+
+      &:hover,
+      &:active {
+         background: #4b13a0;
+         cursor: pointer;
+      }
+
+      label:hover,
+      label:active {
+         cursor: pointer;
+      }
+   }
+
+   .uploadSize {
+      width: 100%;
+      font-size: 14px;
+      margin: 0;
+   }
+}

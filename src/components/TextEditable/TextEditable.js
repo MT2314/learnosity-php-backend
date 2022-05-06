@@ -48,7 +48,7 @@ const TextEditable = forwardRef(
           aria-label={placeholder}
           placeholder={placeholder}
           draggable
-          className={styles.TextEditable__Multiline}
+          className={styles.multiLineTextEditable}
           data-id="text editable multiline"
           onDragStart={(e) => {
             e.preventDefault();
@@ -68,7 +68,7 @@ const TextEditable = forwardRef(
           aria-label={placeholder}
           placeholder={placeholder}
           draggable
-          className={styles.TextEditable__Singleline}
+          className={styles.singleLineTextEditable}
           data-id="text editable singleline"
           onDragStart={(e) => {
             e.preventDefault();

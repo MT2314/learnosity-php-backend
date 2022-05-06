@@ -2,7 +2,7 @@ import Callout, { defaultProps as calloutDefaultProps } from "./Callout/Callout"
 import Image, { defaultProps as imageDefaultProps } from "./Image/Image";
 import FormattedText, { defaultProps as formattedTextDefaultProps } from "./FormattedText/FormattedText";
 import QuoteBox, { defaultProps as quoteBoxDefaultProps } from "./QuoteBox/QuoteBox";
-import ImageConfig from "./Image/ImageConfigNew";
+import ImageConfig from "./Image/ImageConfig";
 const componentIndex = {
   Callout: {
     Component: Callout,
