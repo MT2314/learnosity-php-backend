@@ -6,8 +6,7 @@
     "build:dev": "webpack --mode development",
     "build:start": "cd dist && PORT=3001 npx serve",
     "start": "webpack serve --open --mode development",
-    "start:live": "webpack serve --open --mode development --live-reload --hot",
-    "test": "react-scripts test"
+    "start:live": "webpack serve --open --mode development --live-reload --hot"
   },
   "license": "MIT",
   "author": {
@@ -27,6 +26,7 @@
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.2.2",
     "css-loader": "^6.3.0",
+    "dotenv": "^16.0.0",
     "html-webpack-plugin": "^5.3.2",
     "jest": "^27.5.1",
     "postcss": "^8.2.1",
