@@ -2,7 +2,7 @@
   "name": "demo-component-library",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack --json > stats.json --mode production",
+    "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
     "build:start": "cd dist && PORT=3001 npx serve",
     "start": "webpack serve --open --mode development",
