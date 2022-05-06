@@ -1,9 +1,8 @@
 import React from "react";
-import { Paper } from "@mui/material";
-import NativeSelect from "@mui/material/NativeSelect";
+import { Paper, NativeSelect } from "@mui/material";
 import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
-import { calloutConfig } from "./utility/CalloutConfig";
+import { calloutConfig } from "./utility/calloutConfig";
 import calloutOptions from "./utility/CalloutOptions";
 export const defaultProps = { heading: "", body: "", calloutType: "" };
 

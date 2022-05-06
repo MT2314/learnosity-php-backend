@@ -5,12 +5,11 @@ import {
   convertToRaw,
   // convertFromHTML,
 } from "draft-js";
-import { Link } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import toolbarOptions from "./Utility/toolbarOptions.js";
-import KeysLink from "./KeysLink.js";
+// import KeysLink from "./KeysLink.js";
 import "./FormattedText.style.css";
 
 export const defaultProps = { placeHolderText: "", body: null };
