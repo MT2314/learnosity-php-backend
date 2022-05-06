@@ -29,6 +29,7 @@ module.exports = (_, argv) => {
         argv.mode === "development"
           ? `${fileEnv.COMPONENT_LIBRARY_LOCAL}`
           : `${fileEnv.COMPONENT_LIBRARY_QA}`,
+    clean:true,
     },
 
     resolve: {
@@ -105,7 +106,9 @@ module.exports = (_, argv) => {
         },
       }),
       new HtmlWebPackPlugin({
+        hash: true, 
         template: "./src/index.html",
+        inject:'body'
       }),
     ],
   };

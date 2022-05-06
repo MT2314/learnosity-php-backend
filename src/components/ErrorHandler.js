@@ -4,7 +4,7 @@ function ErrorHandler({error}) {
   return (
     <div role="alert">
       <p>An error occurred:</p>
-      <pre>{error.message}</pre>
+      <pre style={{color:"red"}}>{error.message}</pre>
     </div>
   )
 }
