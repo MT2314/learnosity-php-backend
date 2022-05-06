@@ -1,3 +1,4 @@
+// babel-plugin-import optimizes build
 {
   "presets": ["@babel/preset-react", "@babel/preset-env"],
   "plugins": [
