@@ -2,25 +2,26 @@
 {
   "presets": ["@babel/preset-react", "@babel/preset-env"],
   "plugins": [
-    ["@babel/transform-runtime"],
-    [
-      "babel-plugin-import",
-      {
-        "libraryName": "@mui/material",
-        "libraryDirectory": "",
-        "camel2DashComponentName": false
-      },
-      "core"
-    ],
-    [
-      "babel-plugin-import",
-      {
-        "libraryName": "@mui/icons-material",
-        "libraryDirectory": "",
-        "camel2DashComponentName": false
-      },
-      "icons"
-    ]
+    ["@babel/transform-runtime"]
+    // ,
+    // [
+    //   "babel-plugin-import",
+    //   {
+    //     "libraryName": "@mui/material",
+    //     "libraryDirectory": "",
+    //     "camel2DashComponentName": false
+    //   },
+    //   "core"
+    // ],
+    // [
+    //   "babel-plugin-import",
+    //   {
+    //     "libraryName": "@mui/icons-material",
+    //     "libraryDirectory": "",
+    //     "camel2DashComponentName": false
+    //   },
+    //   "icons"
+    // ]
   ]
   
 }

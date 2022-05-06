@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Callout, { defaultProps } from "../components/Callout/Callout";
-// import "../components/componentIndex";
 
 const MockStateWrapper = ({ Component }) => {
   const [state, setState] = useState({ ...defaultProps });
