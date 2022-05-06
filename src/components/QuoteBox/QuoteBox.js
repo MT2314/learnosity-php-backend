@@ -25,7 +25,7 @@ const QuoteBox = ({
       <div className={styles.quoteBodyContainer}>
         <div data-testid="quotes" className={styles.quoteIcon}></div>
         <div
-          className={styles.formattedTextBodyContainer}
+          className={styles.quoteBody}
           data-testid="quoteBoxBody"
         >
           <FormattedText
@@ -37,7 +37,7 @@ const QuoteBox = ({
         </div>
       </div>
       <div
-        className={styles.formattedTextCitationContainer}
+        className={styles.quoteCitation}
         data-testid="quoteBoxCitation"
       >
         <FormattedText
