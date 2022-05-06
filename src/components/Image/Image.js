@@ -27,14 +27,14 @@ const Image = ({ setProp, imgSize = "default", uploadedImg = "", imgLink = "", a
   }
 
   return (
-    <Paper className={styles.imageContainer} elevation={0}>
+    <Paper data-testid="image-container" className={styles.imageContainer} elevation={0}>
         {uploadedImg ? (
           // If image has been uploaded
           <>
             {/* add link to image */}
             {imgLink ? (
               <a href={imgLink} className={styles.imageLink} target="__blank">
-                <img src={uploadedImg} alt={alt} className={styles.uploadedImg} style={imgSizeStyles} />
+                <img data-testid="image" src={uploadedImg} alt={alt} className={styles.uploadedImg} style={imgSizeStyles} />
               </a>
             ) : (
               // no link added to img
@@ -52,13 +52,17 @@ const Image = ({ setProp, imgSize = "default", uploadedImg = "", imgLink = "", a
         ) : (
           // If no image has been uploaded
           <>
-            <div className={styles.placeholderImg} tabIndex="0"></div>
+            <div data-testid="image-placeholder" className={styles.placeholderImg} tabIndex="0"></div>
           </>
         )}
         {longDesc && <p className={styles.longDescription}>{longDesc}</p>}
-        <FormattedText placeHolderText="Enter Caption" body={caption} setProp={(stateUpdate) => setProp({caption: stateUpdate.body})} />
+        <div data-testid="image-caption" className={styles.imgCaption}>
+          <FormattedText placeHolderText="Enter Caption" body={caption} setProp={(stateUpdate) => setProp({caption: stateUpdate.body})} />
+        </div>
         <hr />
-        <FormattedText placeHolderText="Enter Credit" body={credit} setProp={(stateUpdate) => setProp({credit: stateUpdate.body})} />
+        <div data-testid="image-credit" className={styles.imgCredit} >
+          <FormattedText placeHolderText="Enter Credit" body={credit} setProp={(stateUpdate) => setProp({credit: stateUpdate.body})} />
+        </div>
     </Paper>
   );
 };
