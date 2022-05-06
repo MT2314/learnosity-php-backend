@@ -5,7 +5,7 @@ import EditPanelIcon from "../EditPanelIcon";
 import styles from "./styles/ImageConfig.module.scss";
 
 import {NativeSelect} from "@mui/material";
-import {ImageOutlined} from "@mui/icons-material";
+import { ImageOutlined } from "@mui/icons-material/";
 
 // Component will be wrapped with something that handles which component is selected
 function ImageConfig({
