@@ -1,200 +1,97 @@
-.srOnly:not(:focus):not(:active) {
-   clip: rect(0 0 0 0); 
-   clip-path: inset(50%);
-   height: 1px;
-   overflow: hidden;
-   position: absolute;
-   white-space: nowrap; 
-   width: 1px;
-}
-
-.ImageConfig__editPanelContainer {
+.imageConfigContainer {
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
    width: 100%;
-}
 
-.ImageConfig__section {
-   display: flex;
-   flex-direction: column;
-   width: 100%;
-   margin: 0.5rem 0;
-}
-   
-.ImageConfig__componentTitleContainer {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-family: Roboto, Helvetica, Arial, sans-serif;
-   font-weight: 400;
-   font-size: 1rem;
-   letter-spacing: 0.00938em;
-   width: 90%;
-   border-bottom: 1px solid #e0e0e0;
-}
+   .imageConfigSection {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 0.5rem 0;
+   }
 
-.ImageConfig__componentTitleIcon {
-   margin-right: 0.5em;
-   user-select: none;
-   width: 1em;
-   height: 1em;
-   display: inline-block;
-   fill: currentcolor;
-   flex-shrink: 0;
-   transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-   font-size: 1.5rem;
-}
+   .validationForm {
+      width: 100%;
+   }
 
-.ImageConfig__thumbnailContainer {
-   display: flex;
-   flex-direction: column;
-   margin: 16px 0;
-   justify-content: center;
-   align-items: center;
-}
+   .imageConfigH2 {
+      margin: 0 0 0.5rem 0;
+      font-family: "Roboto","Arial",sans-serif;
+      font-size: 20px;
+      align-self: flex-start;
+   }
 
-.ImageConfig__thumbOuter {
-   display: inline-flex;
-   align-self: center;
-   margin-bottom: 8px;
-   height: auto;
-   padding: 4px;
-   box-sizing: border-box;
-}
+   .imageConfigLabel {
+     font-size: 12px;
+     align-self: flex-start;
+   }
 
-.ImageConfig__thumbInner {
-   display: flex;
-   min-width: 0;
-   max-width: 200px;
-   height: auto;
-}
+   .imageConfigTextArea {
+      border: 1.5px solid #e8e8e8;
+      background: #f6f6f6;
+      width: 98%;
+      border-radius: 4px;
+      margin: 0.5em 0 0 0;
+      font-family: "Roboto","Arial",sans-serif;
+      color: #000;
+      resize: none;
 
-.ImageConfig__thumbnailImg {
-   display: block;
-   max-width: auto;
-   height: auto;
-   max-width: 100%;
-}
+      &::placeholder {
+         font-size: 0.95rem;
+      }
 
-.ImageConfig__uploader {
-   background: #7422d1;
-   text-align: center;
-   color: #fff;
-   padding: 6px 0;
-   margin-bottom: 10px;
-   opacity: 1;
-   font-size: 0.875rem;
-   min-width: 64px;
-   width: 100%;
-   box-sizing: border-box;
-   font-weight: 500;
-   font-family: "Roboto", "Arial", sans-serif;
-   line-height: 1.75;
-   border: 3px solid transparent;
-   border-radius: 4px;
-   letter-spacing: 0.02857em;
-   transition: all .2s ease-in
-}
+      &:focus {
+         outline: 3px solid #ffc46b;
+      }
+   }
 
-.ImageConfig__uploader:hover,
-.ImageConfig__uploader:active,
-.ImageConfig__linkFormButton:hover,
-.ImageConfig__linkFormButton:active,
-.ImageConfig__validationButton:hover,
-.ImageConfig__validationButton:active {
-   background: #4b13a0;
-   cursor: pointer;
-}
+   .altCount {
+      align-self: flex-end;
+      font-size: 0.75rem;
+      font-family: "Roboto","Arial",sans-serif;
+      margin-top: 0.25rem;
+   }
 
-.ImageConfig__uploader label:hover,
-.ImageConfig__uploader label:active {
-   cursor: pointer;
-}
+   .imageSizeDropdown {
+      width: 100%;
+   }
 
-.ImageConfig__uploader:focus,
-.ImageConfig__linkFormButton:focus,
-.ImageConfig__validationButton:focus {
-   border: 3px solid #ffc46b;
-   outline: none;
-}
+   .urlInput {
+      width: 98%;
+      margin: 0.5rem 0;
+      border: 1.5px solid #e8e8e8;
+      background: #f6f6f6;
+      border-radius: 4px;
+      font-family: "Roboto","Arial",sans-serif;
+      color: #000;
 
-.ImageConfig__uploadSize {
-   width: 100%;
-   font-size: 14px;
-   margin: 0;
-}
+      &:focus {
+         outline: 3px solid #ffc46b;
+      }
+   }
 
-.ImageConfig__validationForm {
-   width: 100%;
-}
+   .validationButton {
+      background: #7422d1;
+      text-align: center;
+      color: #fff;
+      width: 100%;
+      padding: 6px 0;
+      margin-top: 2rem;
+      border: 3px solid transparent;
+      border-radius: 4px;
+      font-family: "Roboto", "Arial", sans-serif;
 
-.ImageConfig__imageH2 {
-   margin: 0 0 0.5rem 0;
-   font-family: "Roboto","Arial",sans-serif;
-   font-size: 20px;
-   align-self: flex-start;
-}
+      &:focus {
+         border: 3px solid #ffc46b;
+         outline: none;
+      }
 
-.ImageConfig__imageLabel {
-  font-size: 12px;
-  align-self: flex-start;
-}
-
-.ImageConfig__altTextInput {
-   border: 1.5px solid #e8e8e8;
-   background: #f6f6f6;
-   width: 98%;
-   border-radius: 4px;
-   margin: 0.5em 0 0 0;
-   font-family: "Roboto","Arial",sans-serif;
-   color: #000;
-   resize: none;
-}
-
-.ImageConfig__altTextInput::placeholder {
-   font-size: 0.95rem;
-}
-
-.ImageConfig__altTextInput:focus,
-.ImageConfig__linkFormInput:focus {
-   outline: 3px solid #ffc46b;
-}
-
-.ImageConfig__altCount {
-   align-self: flex-end;
-   font-size: 0.75rem;
-   font-family: "Roboto","Arial",sans-serif;
-   margin-top: 0.25rem;
-}
-
-.ImageConfig__imageSizeDropdown {
-   width: 100%;
-}
-
-.ImageConfig__linkFormInput {
-   width: 98%;
-   margin: 0.5rem 0;
-   border: 1.5px solid #e8e8e8;
-   background: #f6f6f6;
-   border-radius: 4px;
-   font-family: "Roboto","Arial",sans-serif;
-   color: #000;
-}
-
-.ImageConfig__linkFormButton,
-.ImageConfig__validationButton {
-   background: #7422d1;
-   text-align: center;
-   color: #fff;
-   width: 100%;
-   padding: 6px 0;
-   border: 3px solid transparent;
-   border-radius: 4px;
-   font-family: "Roboto", "Arial", sans-serif;
-}
-
-.ImageConfig__validationButton {
-   margin-top: 2rem;
+      &:hover,
+      &:active {
+         background: #4b13a0;
+         cursor: pointer;
+      }
+   }
 }

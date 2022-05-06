@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Paper } from "@mui/material";
 import styles from "./styles/Image.module.scss";
 import FormattedText from "../FormattedText";
@@ -27,34 +27,38 @@ const Image = ({ setProp, imgSize = "default", uploadedImg = "", imgLink = "", a
   }
 
   return (
-    <Paper className={styles.Image__container} elevation={0}>
-      <div className={styles.Image__canvasImgContainer}>
+    <Paper className={styles.imageContainer} elevation={0}>
         {uploadedImg ? (
           // If image has been uploaded
           <>
             {/* add link to image */}
             {imgLink ? (
-              <a href={imgLink} className={styles.Image__imgLink} target="__blank">
-                <img src={uploadedImg} alt={alt} className={styles.Image__img} style={imgSizeStyles} />
+              <a href={imgLink} className={styles.imageLink} target="__blank">
+                <img src={uploadedImg} alt={alt} className={styles.uploadedImg} style={imgSizeStyles} />
               </a>
             ) : (
               // no link added to img
               <>
-                <img src={uploadedImg} alt={alt} className={styles.Image__img} tabIndex="0" style={imgSizeStyles} />
+                <img
+                  src={uploadedImg}
+                  alt={alt}
+                  className={styles.uploadedImg}
+                  tabIndex="0"
+                  style={imgSizeStyles}
+                />
               </>
             )}
           </>
         ) : (
           // If no image has been uploaded
           <>
-            <div className={styles.Image__outline} tabIndex="0"></div>
+            <div className={styles.placeholderImg} tabIndex="0"></div>
           </>
         )}
-        {longDesc && <p className={styles.Image__longDesc}>{longDesc}</p>}
+        {longDesc && <p className={styles.longDescription}>{longDesc}</p>}
         <FormattedText placeHolderText="Enter Caption" body={caption} setProp={(stateUpdate) => setProp({caption: stateUpdate.body})} />
         <hr />
         <FormattedText placeHolderText="Enter Credit" body={credit} setProp={(stateUpdate) => setProp({credit: stateUpdate.body})} />
-      </div>
     </Paper>
   );
 };

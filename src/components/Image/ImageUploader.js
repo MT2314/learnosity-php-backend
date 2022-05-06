@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone'; 
-import styles from './styles/ImageConfig.module.scss';
+import styles from './styles/ImageUploader.module.scss';
 
 const ImageUploader = ({state, setState}) => {
 
@@ -52,29 +52,29 @@ const ImageUploader = ({state, setState}) => {
 
       // image preview
       const thumbs =  (
-         <div className={styles.ImageConfig__thumbOuter}>
-            <div className={styles.ImageConfig__thumbInner}>
+         <div className={styles.thumbOuter}>
+            <div className={styles.thumbInner}>
                <img
                   src={uploadedImg}
                   alt={alt}
-                  className={styles.ImageConfig__thumbnailImg}
+                  className={styles.thumbnailImg}
                />
             </div>
          </div>
       );
 
    return(
-      <div className={styles.ImageConfig__section}>
+      <div className={styles.imageUploaderContainer}>
          {/* Image thumbnail */}
-         <aside className={styles.ImageConfig__thumbnailContainer}>
+         <aside className={styles.thumbnailContainer}>
             { file.length !== 0 && thumbs }
          </aside>
          {/* Image Uploader */}
-         <div {...getRootProps()} className={styles.ImageConfig__uploader}>
+         <div {...getRootProps()} className={styles.imageUploader}>
             <label for="image-uploader">Drag 'n' drop some files here, or  click to open the file dialog</label>
             <input name="image-uploader" {...getInputProps()} />
          </div>
-         <p className={styles.ImageConfig__uploadSize}>
+         <p className={styles.uploadSize}>
             Max file size: 5mb, accepted: .jpg, .gif, .png, .svg
          </p>
       </div>

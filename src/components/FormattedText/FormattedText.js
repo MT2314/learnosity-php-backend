@@ -3,12 +3,14 @@ import {
   EditorState,
   convertFromRaw,
   convertToRaw,
-  convertFromHTML,
+  // convertFromHTML,
 } from "draft-js";
+import { Link } from "react-router-dom";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import toolbarOptions from "./Utility/toolbarOptions.js";
+import KeysLink from "./KeysLink.js";
 import "./FormattedText.style.css";
 
 export const defaultProps = { placeHolderText: "", body: null };
@@ -31,7 +33,7 @@ const FormattedText = ({
   });
 
   return (
-    <div className="App">
+    <>
       <Editor
         editorState={_editorState}
         spellCheck="true"
@@ -46,10 +48,11 @@ const FormattedText = ({
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
         toolbar={toolbar}
+        // toolbarCustomButtons={[<KeysLink />]}
         placeholder={placeHolderText}
         data-id="formatted text"
       />
-    </div>
+    </>
   );
 };
 
