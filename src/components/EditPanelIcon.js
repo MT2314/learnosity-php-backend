@@ -27,9 +27,9 @@ const EditPanelIcon = ({title, icon}) => {
    }
    return(
       <div style={styles.container}>
-      <p style={styles.icon}>{icon}</p>
-      <p className={styles.ImageConfig__componentTitle}>{title}</p>
-   </div>
+         <p style={styles.icon}>{icon}</p>
+         <p>{title}</p>
+      </div>
    )
 }
 
