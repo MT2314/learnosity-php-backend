@@ -20,6 +20,7 @@ const Callout = ({
     <Paper
       aria-label="Callout"
       data-id="callout"
+      data-testid="callout"
       className={styles.Callout_container}
     >
       <div className={styles.dropdownContainer}>
@@ -30,6 +31,7 @@ const Callout = ({
             autoFocus
             name="callout-selector"
             aria-labelledby={`callout-${labelId}`}
+            data-testid="calloutTitle"
             onChange={(e) => {
               setProp({
                 calloutTypeSvg: calloutOptions[e.target.value].iconUrl,
@@ -47,7 +49,7 @@ const Callout = ({
         </label>
       </div>
       &nbsp;
-      <div className={styles.Callout_icon_title}>
+      <div className={styles.Callout_icon_title} data-testid="calloutTypeSvg">
         {/* decorative icon */}
         {calloutTypeSvg ? (
           <>
@@ -57,10 +59,7 @@ const Callout = ({
               alt={""}
               aria-label="Callout type icon"
             />
-            <p
-              placeholder="Callout heading text will appear here"
-              className={styles.Callout_heading}
-            >
+            <p data-testid="calloutTitle" className={styles.Callout_heading}>
               {calloutTitle}
             </p>
           </>
@@ -71,7 +70,7 @@ const Callout = ({
           ></div>
         )}
       </div>
-      <div className={styles.Callout_text_area}>
+      <div className={styles.Callout_text_area} data-testid="calloutBody">
         <FormattedText
           placeHolderText="Enter callout body text here..."
           toolbar={calloutConfig}
