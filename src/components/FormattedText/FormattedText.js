@@ -48,7 +48,7 @@ const FormattedText = ({
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
         toolbar={toolbar}
-        toolbarCustomButtons={[<KeysLink />]}
+        // toolbarCustomButtons={[<KeysLink />]}
         placeholder={placeHolderText}
         data-id="formatted text"
       />
