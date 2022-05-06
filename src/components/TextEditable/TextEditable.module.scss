@@ -1,4 +1,4 @@
-.TextEditable__Singleline {
+.singleLineTextEditable {
   background: transparent;
   border: 1px solid transparent;
   color: #000000;
@@ -7,13 +7,14 @@
   font-size: large;
   min-width: 70%;
   padding: 0;
+  
   &:hover,
   &:focus {
     border: 1px solid black;
   }
 }
 
-.TextEditable__Multiline {
+.multiLineTextEditable {
   background: transparent;
   border: 1px solid transparent;
   font-family: Arial, Helvetica, sans-serif;
@@ -23,6 +24,7 @@
   min-height: 60px;
   min-width: 80%;
   margin-left: 68px;
+  
   &:hover,
   &:focus {
     border: 1px solid black;
