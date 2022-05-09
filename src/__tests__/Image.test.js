@@ -22,7 +22,8 @@ afterEach(() => {
 
 const mockProps = {
   imgSize : "small", 
-  uploadedImg : "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg", imgLink : "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg", 
+  uploadedImg : "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg", 
+  imgLink : "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg", 
   alt : "dog", 
   longDesc : "dog dog dog"
 }
@@ -49,7 +50,10 @@ describe("<Image />", () => {
             />
       )
 
-      expect(screen.getByTestId("image")).toHaveAttribute('alt', 'dog')
+      expect(screen.getByTestId("image")).toHaveAttribute('alt', 'dog');
+      expect(screen.getByTestId("image")).toHaveAttribute('src', 'https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg');
+      expect(screen.getByTestId("image-link")).toHaveAttribute('href', 'https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg');
+      
    })
 
 

@@ -33,7 +33,7 @@ const Image = ({ setProp, imgSize = "default", uploadedImg = "", imgLink = "", a
           <>
             {/* add link to image */}
             {imgLink ? (
-              <a href={imgLink} className={styles.imageLink} target="__blank">
+              <a data-testid="image-link" href={imgLink} className={styles.imageLink} target="__blank">
                 <img data-testid="image" src={uploadedImg} alt={alt} className={styles.uploadedImg} style={imgSizeStyles} />
               </a>
             ) : (
