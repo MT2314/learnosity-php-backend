@@ -6,15 +6,18 @@ import { inlineWithLinkConfig, linkConfig } from "./utility/inlineConfig";
 
 import styles from "./styles/QuoteBox.module.scss";
 
-export const defaultProps = { quoteBoxBody: null, quoteBoxCitation: null, quoteBoxUrl: null };
+export const defaultProps = {
+  quoteBoxBody: null,
+  quoteBoxCitation: null,
+  quoteBoxUrl: null,
+};
 
 const QuoteBox = ({
   quoteBoxBody,
   quoteBoxCitation,
   quoteBoxUrl,
-  setProp = () => {}
+  setProp = () => {},
 }) => {
-
   return (
     <Paper
       data-id="quoteBox"
@@ -24,27 +27,25 @@ const QuoteBox = ({
     >
       <div className={styles.quoteBodyContainer}>
         <div data-testid="quotes" className={styles.quoteIcon}></div>
-        <div
-          className={styles.quoteBody}
-          data-testid="quoteBoxBody"
-        >
+        <div className={styles.quoteBody} data-testid="quoteBoxBody">
           <FormattedText
             placeHolderText="Type quote body here..."
             toolbar={inlineWithLinkConfig}
             body={quoteBoxBody}
-            setProp={(stateUpdate) => setProp({quoteBoxBody: stateUpdate.body})}
+            setProp={(stateUpdate) =>
+              setProp({ quoteBoxBody: stateUpdate.body })
+            }
           />
         </div>
       </div>
-      <div
-        className={styles.quoteCitation}
-        data-testid="quoteBoxCitation"
-      >
+      <div className={styles.quoteCitation} data-testid="quoteBoxCitation">
         <FormattedText
           body={quoteBoxCitation}
           placeHolderText="Type citation here (optional) ..."
           toolbar={linkConfig}
-          setProp={(stateUpdate) => setProp({quoteBoxCitation: stateUpdate.body})}
+          setProp={(stateUpdate) =>
+            setProp({ quoteBoxCitation: stateUpdate.body })
+          }
         />
       </div>
     </Paper>
