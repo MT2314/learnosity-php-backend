@@ -9,7 +9,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 import toolbarOptions from "./Utility/toolbarOptions.js";
-// import KeysLink from "./KeysLink.js";
+import KeysLink from "./KeysLink.js";
 import "./FormattedText.style.css";
 
 export const defaultProps = { placeHolderText: "", body: null };
@@ -47,7 +47,7 @@ const FormattedText = ({
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
         toolbar={toolbar}
-        // toolbarCustomButtons={[<KeysLink />]}
+        toolbarCustomButtons={[<KeysLink />]}
         placeholder={placeHolderText}
         data-id="formatted text"
       />
