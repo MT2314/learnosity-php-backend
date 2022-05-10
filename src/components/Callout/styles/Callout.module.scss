@@ -6,80 +6,80 @@
   margin: 10px;
   display: flex;
   flex-direction: column;
-}
 
-@media (max-width: 650px) {
-  .Callout_main {
-    padding: 15px 15px;
+  @media (max-width: 650px) {
+    .Callout_main {
+      padding: 15px 15px;
+    }
   }
-}
 
-@media (max-width: 850px) {
-  .Callout_main {
-    padding: 20px 20px;
+  @media (max-width: 850px) {
+    .Callout_main {
+      padding: 20px 20px;
+    }
   }
-}
 
-.calloutBodyContainer {
-  display: flex;
-}
+  .calloutBodyContainer {
+    display: flex;
+  }
 
-.dropdownContainer {
-  display: flex;
-  flex-direction: row;
-}
+  .dropdownContainer {
+    display: flex;
+    flex-direction: row;
+  }
 
-.Callout_text_area {
-  width: 800px;
-}
+  .Callout_text_area {
+    width: 800px;
+  }
 
-.Callout_label {
-  font: 18px / 22.5px Arial, sans-serif;
-}
+  .Callout_label {
+    font: 18px / 22.5px Arial, sans-serif;
+  }
 
-.Callout_heading {
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 43px;
-  font-family: "Arial";
-  margin-left: 10px;
-  margin-bottom: 0;
-  margin-top: 0;
-  padding-top: 8px;
-}
+  .Callout_heading {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 43px;
+    font-family: "Arial";
+    margin-left: 10px;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 8px;
+  }
 
-.Callout_body {
-  font-family: "Arial";
-  resize: none;
-}
+  .Callout_body {
+    font-family: "Arial";
+    resize: none;
+  }
 
-.Callout_type_dropdown {
-  margin-bottom: 10px;
-  margin-left: 10px;
-}
+  .Callout_type_dropdown {
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
 
-.Callout_icon_title {
-  display: flex;
-  align-self: left;
-  width: 500px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
+  .Callout_icon_title {
+    display: flex;
+    align-self: left;
+    width: 500px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
 
-.Callout_img {
-  margin-right: 10px;
-  width: 55px;
-  height: 55px;
-  border: 1px solid transparent;
-}
+  .Callout_img {
+    margin-right: 10px;
+    width: 55px;
+    height: 55px;
+    border: 1px solid transparent;
+  }
 
-.Callout_icon_placeholder {
-  border: 1px dashed silver;
-  width: 55px;
-  height: 55px;
-  margin-right: 10px;
-}
+  .Callout_icon_placeholder {
+    border: 1px dashed silver;
+    width: 55px;
+    height: 55px;
+    margin-right: 10px;
+  }
 
-.callout_editor_class {
-  color: #000000;
+  .callout_editor_class {
+    color: #000000;
+  }
 }
