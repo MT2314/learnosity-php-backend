@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Callout, { defaultProps } from "../components/Callout/Callout";
+import QuoteBox, { defaultProps } from "../components/QuoteBox/QuoteBox";
 
 const MockStateWrapper = ({ Component }) => {
   const [state, setState] = useState({ ...defaultProps });
@@ -13,14 +13,14 @@ const MockStateWrapper = ({ Component }) => {
   );
 };
 
-export const CalloutPage = () => {
+export const QuoteBoxPage = () => {
   return (
     <>
       <div>
-        <MockStateWrapper Component={Callout} />
+        <MockStateWrapper Component={QuoteBox} />
       </div>
     </>
   );
 };
 
-export default CalloutPage;
+export default QuoteBoxPage;
