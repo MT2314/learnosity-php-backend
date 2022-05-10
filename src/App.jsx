@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import AccessibilityKeysPage from './components/FormattedText/AccessibilityKeysPage';
 import CalloutPage from "./pages/CalloutPage";
 import QuoteBoxPage from "./pages/QuoteBoxPage";
+import ImagePage from "./pages/ImagePage";
 
 import "./index.css";
 
@@ -22,6 +23,7 @@ const App = () => {
             <Route path="/AccessibilityKeysPage" element={<AccessibilityKeysPage />} />
             <Route path="/CalloutPage" element={<CalloutPage />} />
             <Route path="/QuoteBoxPage" element={<QuoteBoxPage />} />
+            <Route path="/ImagePage" element={<ImagePage />} />
             
           </Routes>
         </BrowserRouter>
