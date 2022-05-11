@@ -7,13 +7,13 @@ export const defaultProps = {
   tabs: [],
 };
 
-const TabContainer = ({ children }) => {
+const TabContainer = ({ children, tabsIntroduction }) => {
   return <div>{children}</div>;
 };
 
 const TabTitle = ({ children, title }) => {
-   return <h3>{title}</h3>
-}
+  return <h3> TAB TabTitle </h3>;
+};
 
 const Tabs = ({
   type = "tabs",
@@ -21,42 +21,33 @@ const Tabs = ({
   tabs,
   setProp = () => {},
 }) => {
-
-   tabs = [
-   {
+  tabs = [
+    {
       tabLabel: "Geography",
-      components: [<FormattedText/>]
-   },
-   {
+      components: [<FormattedText />],
+    },
+    {
       tabLabel: "Science",
-      components: [<FormattedText/>,<FormattedText/>]
-   },
-   {
+      components: [<FormattedText />, <FormattedText />],
+    },
+    {
       tabLabel: "Math",
-      components: [<FormattedText/>,<FormattedText/>]
-   }]
-   console.log(tabs, type)
+      components: [<FormattedText />, <FormattedText />],
+    },
+  ];
+  console.log(tabs, type);
   return (
-    <TabContainer>
-      <p> I am the tab container</p>
-      {
-         tabs.map((tab) => {
-            return (
-              <TabTitle title={tab.tabLabel}>
-               <div>
-                  {
-                     tab.components.map((component) => {
-                        return(
-                           <div>{component}</div>
-                        )
-                     })
-                  }
-               </div>
-
-              </TabTitle>
-            )
-         })
-      }
+    <TabContainer tabsIntroduction={tabsIntroduction}>
+      {tabs.map((tab) => {
+        return (
+          <>
+            <p>{tab.tabLabel}</p>
+            {tab.components.map((component) => {
+              return <div>{component}</div>;
+            })}
+          </>
+        );
+      })}
     </TabContainer>
   );
 };
