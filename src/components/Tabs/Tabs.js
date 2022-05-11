@@ -11,8 +11,8 @@ const TabContainer = ({ children }) => {
   return <div>{children}</div>;
 };
 
-const TabTitle = () => {
-   return <h3> TAB TabTitle </h3>
+const TabTitle = ({ children, title }) => {
+   return <h3>{title}</h3>
 }
 
 const Tabs = ({
@@ -42,8 +42,7 @@ const Tabs = ({
       {
          tabs.map((tab) => {
             return (
-               <>
-               <p>{tab.tabLabel}</p>
+              <TabTitle title={tab.tabLabel}>
                <div>
                   {
                      tab.components.map((component) => {
@@ -53,7 +52,8 @@ const Tabs = ({
                      })
                   }
                </div>
-               </>
+
+              </TabTitle>
             )
          })
       }
