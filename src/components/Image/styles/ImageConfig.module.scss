@@ -1,0 +1,97 @@
+.imageConfigContainer {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+
+   .imageConfigSection {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 0.5rem 0;
+   }
+
+   .validationForm {
+      width: 100%;
+   }
+
+   .imageConfigH2 {
+      margin: 0 0 0.5rem 0;
+      font-family: "Roboto","Arial",sans-serif;
+      font-size: 20px;
+      align-self: flex-start;
+   }
+
+   .imageConfigLabel {
+     font-size: 12px;
+     align-self: flex-start;
+   }
+
+   .imageConfigTextArea {
+      border: 1.5px solid #e8e8e8;
+      background: #f6f6f6;
+      width: 98%;
+      border-radius: 4px;
+      margin: 0.5em 0 0 0;
+      font-family: "Roboto","Arial",sans-serif;
+      color: #000;
+      resize: none;
+
+      &::placeholder {
+         font-size: 0.95rem;
+      }
+
+      &:focus {
+         outline: 3px solid #ffc46b;
+      }
+   }
+
+   .altCount {
+      align-self: flex-end;
+      font-size: 0.75rem;
+      font-family: "Roboto","Arial",sans-serif;
+      margin-top: 0.25rem;
+   }
+
+   .imageSizeDropdown {
+      width: 100%;
+   }
+
+   .urlInput {
+      width: 98%;
+      margin: 0.5rem 0;
+      border: 1.5px solid #e8e8e8;
+      background: #f6f6f6;
+      border-radius: 4px;
+      font-family: "Roboto","Arial",sans-serif;
+      color: #000;
+
+      &:focus {
+         outline: 3px solid #ffc46b;
+      }
+   }
+
+   .validationButton {
+      background: #7422d1;
+      text-align: center;
+      color: #fff;
+      width: 100%;
+      padding: 6px 0;
+      margin-top: 2rem;
+      border: 3px solid transparent;
+      border-radius: 4px;
+      font-family: "Roboto", "Arial", sans-serif;
+
+      &:focus {
+         border: 3px solid #ffc46b;
+         outline: none;
+      }
+
+      &:hover,
+      &:active {
+         background: #4b13a0;
+         cursor: pointer;
+      }
+   }
+}

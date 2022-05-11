@@ -1,0 +1,41 @@
+.quoteBoxContainer {
+  background: rgb(236, 236, 236);
+  height: 400px;
+  font: 18px / 22.5px "Roboto", "Arial", sans-serif;
+  padding: 36px 100px;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 650px) {
+      padding: 15px 15px;
+  }
+
+  @media (max-width: 850px) {
+      padding: 25px 25px;
+  }
+
+  .quoteBodyContainer {
+    display: flex;
+  }
+
+  .quoteIcon {
+    background-image: url(https://dcc.ilc.org/jw-rnd-days/cs-amp-templates/images/quote.svg)  ;
+    background-repeat: no-repeat;
+    height: 43px;
+    width: 43px;
+
+    @media (max-width: 600px) {
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  .quoteBody {
+    width: 800px;
+  }
+
+  .quoteCitation {
+    width: 500px;
+    align-self: flex-end;
+  }
+}

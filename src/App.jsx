@@ -1,42 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Callout from "./Callout/Callout.js";
-import Header from "./Header";
-import Image from "./Image/Image";
-import ImageConfig from "./Image/ImageConfig";
-import FormattedText from "./FormattedText";
-import { ImageProvider } from "./Image/ImageProvider";
+import { WidgetContextProvider } from "./Utility/mockWrapper"
+// import Header from "./components/Header";
+// import FormattedText from "./components/FormattedText";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from "./pages/Home";
+import AccessibilityKeysPage from './components/FormattedText/AccessibilityKeysPage';
+import CalloutPage from "./pages/CalloutPage";
+import QuoteBoxPage from "./pages/QuoteBoxPage";
+import ImagePage from "./pages/ImagePage";
 
 import "./index.css";
 
 const App = () => {
-  console.log("3.0.1")
+  console.log("15.0.3");
   return (
     <>
-      <Header title="component-library" backgroundColor="salmon" />
-      <div className="container" style={{ display: "flex" }}>
-        <div className="canvas" style={{ border: "2px solid black" }}>
-          <Callout />
-          <Image />
-          <FormattedText />
-        </div>
-        <div
-          className="editPanel"
-          style={{
-            border: "2px solid black",
-            marginLeft: "1em",
-            padding: "10px",
-          }}
-        >
-          <ImageConfig />
-        </div>
-      </div>
+      <WidgetContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/AccessibilityKeysPage" element={<AccessibilityKeysPage />} />
+            <Route path="/CalloutPage" element={<CalloutPage />} />
+            <Route path="/QuoteBoxPage" element={<QuoteBoxPage />} />
+            <Route path="/ImagePage" element={<ImagePage />} />
+            
+          </Routes>
+        </BrowserRouter>
+      </WidgetContextProvider>
     </>
   );
 };
-ReactDOM.render(
-  <ImageProvider>
-    <App />
-  </ImageProvider>,
-  document.getElementById("app")
-);
+
+ReactDOM.render(<App />, document.getElementById("app"));
