@@ -4,6 +4,7 @@ import FormattedText, { defaultProps as formattedTextDefaultProps } from "./Form
 import QuoteBox, { defaultProps as quoteBoxDefaultProps } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
 import Tabs, { defaultProps as tabsDefaultProps } from "./Tabs/Tabs";
+
 const componentIndex = {
   Callout: {
     Component: Callout,

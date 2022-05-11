@@ -9,7 +9,13 @@ export const defaultProps = {
  };
 
 
-const Tabs = ({ uuid, uuidClean, type, introduction, tabs }) => {
+const Tabs = (
+   { uuid, 
+      uuidClean, 
+      type, 
+      introduction, 
+      tabs, 
+      setProp = () => {}}) => {
 
    const mockData = {
       uuid: "",
@@ -32,3 +38,5 @@ const Tabs = ({ uuid, uuidClean, type, introduction, tabs }) => {
       <h1>Hello, World I am a Tabs!</h1>
    )
 }
+
+export default Tabs;
