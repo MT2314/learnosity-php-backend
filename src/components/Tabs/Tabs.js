@@ -1,5 +1,6 @@
 import React from "react";
 
+import inlineConfig from "./utility/inlineConfig";
 import FormattedText from "../FormattedText";
 
 export const defaultProps = {
@@ -7,15 +8,15 @@ export const defaultProps = {
   tabs: [
     {
       tabLabel: "Geography",
-      components: [<FormattedText />],
+      components: [<FormattedText toolbar={inlineConfig} placeholderText="Type stuff here..."/>],
     },
     {
       tabLabel: "Science",
-      components: [<FormattedText />, <FormattedText />],
+      components: [<FormattedText toolbar={inlineConfig}/>, <FormattedText toolbar={inlineConfig}/>],
     },
     {
       tabLabel: "Math",
-      components: [<FormattedText />, <FormattedText />],
+      components: [<FormattedText toolbar={inlineConfig}/>, <FormattedText toolbar={inlineConfig}/>],
     },
   ],
 };
@@ -44,16 +45,17 @@ const Tabs = ({
 
   console.log(tabs, type);
   return (
-    <TabContainer tabsIntroduction={tabsIntroduction}>
+    <TabContainer>
       {/* Tab Introduction */}
       <FormattedText
         placeHolderText="Type introduction here..."
         body={tabsIntroduction}
+        toolbar={inlineConfig}
         setProp={(stateUpdate) =>
           setProp({ tabIntroduction: stateUpdate.body })
         }
       />
-
+      {/* <button onClick={handleAddTab}>Add a Tab</button> */}
       {tabs.map((tab) => {
         return (
           <TabSection tab={tab} />
