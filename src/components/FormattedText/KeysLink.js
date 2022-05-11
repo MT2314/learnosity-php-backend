@@ -7,7 +7,11 @@ export const KeysLink = () => {
   return (
     <>
       <div className="keys-link-container">
-        <Link to="/AccessibilityKeysPage" className="shortcuts-link">
+        <Link
+          to="/AccessibilityKeysPage"
+          target="_blank"
+          className="shortcuts-link"
+        >
           keyboard shortcuts
         </Link>
       </div>

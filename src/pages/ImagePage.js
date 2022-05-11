@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import Callout, { defaultProps } from "../components/Callout/Callout";
+import Image, {
+  defaultProps as imageDefaultProps,
+} from "../components/Image/Image";
 
 const MockStateWrapper = ({ Component }) => {
-  const [state, setState] = useState({ ...defaultProps });
+  const [state, setState] = useState({ ...imageDefaultProps });
   return (
     <Component
       setProp={(stateUpdate) =>
@@ -13,14 +15,14 @@ const MockStateWrapper = ({ Component }) => {
   );
 };
 
-export const CalloutPage = () => {
+export const ImagePage = () => {
   return (
     <>
       <div>
-        <MockStateWrapper Component={Callout} />
+        <MockStateWrapper Component={Image} />
       </div>
     </>
   );
 };
 
-export default CalloutPage;
+export default ImagePage;
