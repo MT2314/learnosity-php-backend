@@ -4,24 +4,7 @@ import FormattedText from "../FormattedText";
 
 export const defaultProps = {
   tabsIntroduction: null,
-  tabs: [],
-};
-
-const TabContainer = ({ children, tabsIntroduction }) => {
-  return <div>{children}</div>;
-};
-
-const TabTitle = ({ children, title }) => {
-  return <h3> TAB TabTitle </h3>;
-};
-
-const Tabs = ({
-  type = "tabs",
-  tabsIntroduction = null,
-  tabs,
-  setProp = () => {},
-}) => {
-  tabs = [
+  tabs: [
     {
       tabLabel: "Geography",
       components: [<FormattedText />],
@@ -34,18 +17,46 @@ const Tabs = ({
       tabLabel: "Math",
       components: [<FormattedText />, <FormattedText />],
     },
-  ];
+  ],
+};
+
+const TabContainer = ({ children }) => {
+  return <div>{children}</div>;
+};
+
+const TabSection = ({ tab }) => {
+  return (
+    <>
+      <p>{tab.tabLabel}</p>
+      {tab.components.map((component) => {
+        return <div>{component}</div>;
+      })}
+    </>
+  );
+};
+
+const Tabs = ({
+  type = "tabs",
+  tabsIntroduction = null,
+  tabs,
+  setProp = () => {},
+}) => {
+
   console.log(tabs, type);
   return (
     <TabContainer tabsIntroduction={tabsIntroduction}>
+      {/* Tab Introduction */}
+      <FormattedText
+        placeHolderText="Type introduction here..."
+        body={tabsIntroduction}
+        setProp={(stateUpdate) =>
+          setProp({ tabIntroduction: stateUpdate.body })
+        }
+      />
+
       {tabs.map((tab) => {
         return (
-          <>
-            <p>{tab.tabLabel}</p>
-            {tab.components.map((component) => {
-              return <div>{component}</div>;
-            })}
-          </>
+          <TabSection tab={tab} />
         );
       })}
     </TabContainer>
