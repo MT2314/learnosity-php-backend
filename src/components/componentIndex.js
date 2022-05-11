@@ -3,7 +3,7 @@ import Image, { defaultProps as imageDefaultProps } from "./Image/Image";
 import FormattedText, { defaultProps as formattedTextDefaultProps } from "./FormattedText/FormattedText";
 import QuoteBox, { defaultProps as quoteBoxDefaultProps } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
-import TabWidget, { defaultProps as tabsDefaultProps } from "./Tabs/Tabs";
+import Tabs, { defaultProps as tabsDefaultProps } from "./Tabs/Tabs";
 
 const componentIndex = {
   Callout: {
@@ -32,7 +32,7 @@ const componentIndex = {
     version: "0.0.1",
   },
   Tabs:{
-    Component: TabWidget,
+    Component: Tabs,
     readableName:"Tabs",
     defaultProps:tabsDefaultProps,
     version:"0.0.1",
