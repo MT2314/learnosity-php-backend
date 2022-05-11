@@ -3,6 +3,7 @@ import Image, { defaultProps as imageDefaultProps } from "./Image/Image";
 import FormattedText, { defaultProps as formattedTextDefaultProps } from "./FormattedText/FormattedText";
 import QuoteBox, { defaultProps as quoteBoxDefaultProps } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
+import Tabs, { defaultProps as tabsDefaultProps } from "./Tabs/Tabs";
 const componentIndex = {
   Callout: {
     Component: Callout,
@@ -29,6 +30,12 @@ const componentIndex = {
     defaultProps: quoteBoxDefaultProps,
     version: "0.0.1",
   },
+  Tabs:{
+    Component: Tabs,
+    readableName:"Tabs",
+    defaultProps:tabsDefaultProps,
+    version:"0.0.1",
+  }
 };
 
 export default componentIndex;

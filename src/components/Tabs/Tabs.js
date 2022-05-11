@@ -1,5 +1,13 @@
 import React from 'react';
 
+import FormattedText from '../FormattedText';
+
+
+export const defaultProps = {
+   tabsIntroduction: null,
+   tabs: null,
+ };
+
 
 const Tabs = ({ uuid, uuidClean, type, introduction, tabs }) => {
 
