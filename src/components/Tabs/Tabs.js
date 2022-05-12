@@ -22,32 +22,16 @@ export const defaultProps = {
 };
 
 
-const Section = ({ tab, id }) => {
-   
-   const [ activeIndex, setActiveIndex ]= useState(0)
-   
-   console.log(activeIndex)
-
-   const handleOnClick = () => {
-      setActiveIndex(id)
-   }
+const Section = ({ tab, id, handleOnClick, children }) => {
+   console.log("====>", id)
   return (
-    <>
-      <p id={id} onClick={() => handleOnClick()}>{tab.tabLabel}</p>
-      {tab.components.map((component) => {
-         if(id === activeIndex){
-            return <Content component={component} section={id} activeIndex={activeIndex}/>;
-         }else{
-            return null
-         }
-      })}
-    </>
+   <>
+     <p key={id} onClick={() => handleOnClick(id)}>{tab.tabLabel}</p>
+     {children}
+   </>
   );
 };
 
-const Content = ({component, section, activeIndex }) => {
-   return(<div id={section} style={!activeIndex ? { display: "none" } : { display:"block" }}>{component}</div>)
-}
 
 const Tabs = ({
   type = "tabs",
@@ -55,15 +39,31 @@ const Tabs = ({
   tabs,
   setProp = () => {},
 }) => {
+
+   const [ activeIndex, setActiveIndex ]= useState(0)
+
+
+   const handleOnClick = (id) => {
+      setActiveIndex(id)
+   }
+
+   const _tabContent = tabs[activeIndex].components.map((component) => {
+      return <p>dog</p>
+   })
   
   return (
      <div>
         {/* <button onClick={handleAddTab}>Add a Tab</button> */}
         {tabs.map((tab, index) => {
           return (
-            <Section tab={tab} id={index}/>
+            <Section tab={tab} id={index} handleOnClick={handleOnClick}>
+               {
+                  index === activeIndex ?
+                  _tabContent : null
+               }       
+            </Section>
           );
-        })}
+        })} 
      </div>
 
   );
