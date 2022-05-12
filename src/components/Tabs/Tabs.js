@@ -48,7 +48,7 @@ const Tabs = ({
    }
 
    const _tabContent = tabs[activeIndex].components.map((component) => {
-      return <p>dog</p>
+      return component
    })
   
   return (
