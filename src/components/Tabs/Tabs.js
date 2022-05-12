@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import inlineConfig from "./utility/inlineConfig";
 import FormattedText from "../FormattedText";
@@ -21,20 +21,33 @@ export const defaultProps = {
   ],
 };
 
-const TabContainer = ({ children }) => {
-  return <div>{children}</div>;
-};
 
-const TabSection = ({ tab }) => {
+const Section = ({ tab, id }) => {
+   
+   const [ activeIndex, setActiveIndex ]= useState(0)
+   
+   console.log(activeIndex)
+
+   const handleOnClick = () => {
+      setActiveIndex(id)
+   }
   return (
     <>
-      <p>{tab.tabLabel}</p>
+      <p id={id} onClick={() => handleOnClick()}>{tab.tabLabel}</p>
       {tab.components.map((component) => {
-        return <div>{component}</div>;
+         if(id === activeIndex){
+            return <Content component={component} section={id} activeIndex={activeIndex}/>;
+         }else{
+            return null
+         }
       })}
     </>
   );
 };
+
+const Content = ({component, section, activeIndex }) => {
+   return(<div id={section} style={!activeIndex ? { display: "none" } : { display:"block" }}>{component}</div>)
+}
 
 const Tabs = ({
   type = "tabs",
@@ -42,26 +55,17 @@ const Tabs = ({
   tabs,
   setProp = () => {},
 }) => {
-
-  console.log(tabs, type);
+  
   return (
-    <TabContainer>
-      {/* Tab Introduction */}
-      <FormattedText
-        placeHolderText="Type introduction here..."
-        body={tabsIntroduction}
-        toolbar={inlineConfig}
-        setProp={(stateUpdate) =>
-          setProp({ tabIntroduction: stateUpdate.body })
-        }
-      />
-      {/* <button onClick={handleAddTab}>Add a Tab</button> */}
-      {tabs.map((tab) => {
-        return (
-          <TabSection tab={tab} />
-        );
-      })}
-    </TabContainer>
+     <div>
+        {/* <button onClick={handleAddTab}>Add a Tab</button> */}
+        {tabs.map((tab, index) => {
+          return (
+            <Section tab={tab} id={index}/>
+          );
+        })}
+     </div>
+
   );
 };
 
