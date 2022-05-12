@@ -14,23 +14,32 @@ export const defaultProps = {
       tabLabel: "Science",
       components: [<FormattedText toolbar={inlineConfig}/>, <FormattedText toolbar={inlineConfig}/>],
     },
-    {
-      tabLabel: "Math",
-      components: [<FormattedText toolbar={inlineConfig}/>, <FormattedText toolbar={inlineConfig}/>],
-    },
   ],
 };
 
 
 const Section = ({ tab, id, handleOnClick, children }) => {
-   console.log("====>", id)
   return (
-   <>
+   <div data-tab-section>
      <p key={id} onClick={() => handleOnClick(id)}>{tab.tabLabel}</p>
      {children}
-   </>
+   </div>
   );
 };
+
+const AddTab = ({data}) => {
+   //create form 
+   //1. input to add title
+   //2. select to add component
+   const handleAddTab = () => {
+      data.push({tabLabel: "Banana"})
+      console.log(data)
+   }
+   return(
+      <button onClick={() => handleAddTab()}>Add a Tab</button>
+
+   )
+}
 
 
 const Tabs = ({
@@ -47,12 +56,15 @@ const Tabs = ({
       setActiveIndex(id)
    }
 
-   const _tabContent = tabs[activeIndex].components.map((component) => {
+
+
+   const _tabContent = tabs[activeIndex].components.map(( component ) => {
       return component
    })
   
   return (
-     <div>
+     <div data-tab-container>
+        <AddTab data={tabs}/>
         {/* <button onClick={handleAddTab}>Add a Tab</button> */}
         {tabs.map((tab, index) => {
           return (
@@ -60,7 +72,7 @@ const Tabs = ({
                { index === activeIndex && _tabContent }       
             </Section>
           );
-        })} 
+        })}       
      </div>
 
   );
