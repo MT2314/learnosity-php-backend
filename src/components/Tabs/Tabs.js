@@ -57,10 +57,7 @@ const Tabs = ({
         {tabs.map((tab, index) => {
           return (
             <Section tab={tab} id={index} handleOnClick={handleOnClick}>
-               {
-                  index === activeIndex ?
-                  _tabContent : null
-               }       
+               { index === activeIndex && _tabContent }       
             </Section>
           );
         })} 
