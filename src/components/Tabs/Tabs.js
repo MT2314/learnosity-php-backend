@@ -30,12 +30,19 @@ const Section = ({ tabTitle, id, handleOnClick, children }) => {
   );
 };
 
-const TabConfig = ({data, setProp}) => {
+const TabConfig = () => {
 
   const [ title, setTitle ] = useState("++");
   const [ content, setContent ] = useState(null);
 
-   console.log( data , setProp)
+  //update the default props with new tab
+
+  const handleSubmit = (e) => {
+
+    e.preventDefault();
+    defaultProps.tabs.push({tabLabel:title, components:[content]})
+    console.log(defaultProps)
+  }
 
    //create form 
    //1. input to add title
@@ -44,24 +51,25 @@ const TabConfig = ({data, setProp}) => {
 
    return (
      <>
-     <form>
-       <input type="text" value={title} onChange={(e) => setProp() }/>
-       <label for="cars">Add Component:</label>
-       <select 
-        name="components" 
-        id="components" 
-        form="components"
-        onChange={(e) => setContent(e.target.value)}>
-         <option value="">Select Content</option>
-         <option value="formattedText">Text Box</option>
-         <option value="image">Image</option>
-         <option value="video">Video</option>
-       </select>
-     </form>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <input type="text" value={title} onChange={(e) => setTitle(e.target.value) }/>
+        <label for="cars">Add Component:</label>
+        <select 
+          name="components" 
+          id="components" 
+          form="components"
+          onChange={(e) => setContent(e.target.value)}>
+          <option value="">Select Content</option>
+          <option value="formattedText">Text Box</option>
+          <option value="image">Image</option>
+          <option value="video">Video</option>
+        </select>
+        <button type="submit">Submit</button>
+      </form>
 
-     {
-       content === "formattedText" && <FormattedText/>
-     }
+      {
+        content === "formattedText" && <FormattedText/>
+      }
 
      </>
 
@@ -76,6 +84,8 @@ const Tabs = ({
   tabs,
   setProp = () => {},
 }) => {
+
+  console.log(tabs)
 
    const [ activeIndex, setActiveIndex ]= useState(0)
 
