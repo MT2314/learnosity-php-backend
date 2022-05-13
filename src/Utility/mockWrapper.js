@@ -4,14 +4,14 @@ import componentIndex from "../components/componentIndex";
 import FormattedText from "../components/FormattedText";
 import inlineConfig from "../components/Tabs/utility/inlineConfig";
 
-// mockWrapper.js is code to mock the Lesson-builder environment.  
-
+// mockWrapper.js is code to mock the Lesson-builder environment.
 
 // Mocking a shared context living within CraftJS
 const WidgetContext = createContext();
 
 // For testing, mocking an initial canvas state from the DB (add all props for a component even if empty)
 const mockedSavedCanvas = [
+  { name: "sahilTab" },
   { name: "FormattedText", body: null },
   {
     name: "FormattedText",
@@ -44,29 +44,69 @@ const mockedSavedCanvas = [
     name: "Image",
     alt: "",
     longDesc: "Saved long description",
-    imgLink: "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg",
+    imgLink:
+      "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg",
     creditLink: "",
-    uploadedImg: "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg",
+    uploadedImg:
+      "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg",
     imgSize: "default",
   },
   { name: "Callout", heading: "", body: "", calloutType: "" },
   { name: "Callout", heading: "", body: "saved body", calloutType: "" },
   { name: "Callout", heading: "", body: "", calloutType: "" },
-  { name: "QuoteBox", quoteBoxBody : {"blocks":[{"key":"d3ktl","text":"Sam","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}, quoteBoxCitation : {"blocks":[{"key":"8abs2","text":"James","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}},
+  {
+    name: "QuoteBox",
+    quoteBoxBody: {
+      blocks: [
+        {
+          key: "d3ktl",
+          text: "Sam",
+          type: "unstyled",
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [],
+          data: {},
+        },
+      ],
+      entityMap: {},
+    },
+    quoteBoxCitation: {
+      blocks: [
+        {
+          key: "8abs2",
+          text: "James",
+          type: "unstyled",
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [],
+          data: {},
+        },
+      ],
+      entityMap: {},
+    },
+  },
   {
     name: "Tabs",
-  tabsIntroduction: null,
-  tabs: [
-    {
-      tabLabel: "Geography",
-      components: [<FormattedText toolbar={inlineConfig} placeholderText="Type stuff here..."/>],
-    },
-    {
-      tabLabel: "Science",
-      components: [<FormattedText toolbar={inlineConfig}/>, <FormattedText toolbar={inlineConfig}/>],
-    },
-  ],
-}
+    tabsIntroduction: null,
+    tabs: [
+      {
+        tabLabel: "Geography",
+        components: [
+          <FormattedText
+            toolbar={inlineConfig}
+            placeholderText="Type stuff here..."
+          />,
+        ],
+      },
+      {
+        tabLabel: "Science",
+        components: [
+          <FormattedText toolbar={inlineConfig} />,
+          <FormattedText toolbar={inlineConfig} />,
+        ],
+      },
+    ],
+  },
 ];
 
 export const WidgetContextProvider = ({ children }) => {
@@ -86,19 +126,26 @@ export const WidgetContextProvider = ({ children }) => {
   // TODO: Alter setter, add selectedUUID for testing on this page, or add to config panel wrapper?
   const [canvasState, setCanvasState] = useState(initialState);
 
-  return <WidgetContext.Provider value={[canvasState, setCanvasState]}>{children}</WidgetContext.Provider>;
+  return (
+    <WidgetContext.Provider value={[canvasState, setCanvasState]}>
+      {children}
+    </WidgetContext.Provider>
+  );
 };
 
 export const ComponentStateWrapper = ({ id, name, ...componentState }) => {
-
-  const OurFallbackComponent = ({ error, componentStack, resetErrorBoundary }) => {
+  const OurFallbackComponent = ({
+    error,
+    componentStack,
+    resetErrorBoundary,
+  }) => {
     return (
       <div>
         <h1>An error occurred: {error.message}</h1>
         <button onClick={resetErrorBoundary}>Try again</button>
       </div>
     );
-  }
+  };
   /*
   Wrapper mocking the wrapper in Authoring Application that passes in a setter and state from context,
   primary difference is context in AuthApp is created by CraftJS.
@@ -107,7 +154,10 @@ export const ComponentStateWrapper = ({ id, name, ...componentState }) => {
 
   const handleChange = (newState) => {
     console.log(`Updating state for ${id} ->`, state, newState);
-    setState((prevState) => ({ ...prevState, [id]: { ...prevState[id], ...newState } }));
+    setState((prevState) => ({
+      ...prevState,
+      [id]: { ...prevState[id], ...newState },
+    }));
   };
 
   const Component = componentIndex[name]?.Component;
@@ -116,7 +166,11 @@ export const ComponentStateWrapper = ({ id, name, ...componentState }) => {
     return null;
   }
 
-  return <ErrorBoundary FallbackComponent={OurFallbackComponent}><Component setProp={handleChange} {...componentState} /></ErrorBoundary>;
+  return (
+    <ErrorBoundary FallbackComponent={OurFallbackComponent}>
+      <Component setProp={handleChange} {...componentState} />
+    </ErrorBoundary>
+  );
 };
 
 export const ConfigStateWrapper = () => {
@@ -132,9 +186,12 @@ export const ConfigStateWrapper = () => {
 
   const selectedComponentState = state[state.selectedComponentId];
 
-  const ComponentConfigPanel = componentIndex[selectedComponentState.name].ConfigPanel;
+  const ComponentConfigPanel =
+    componentIndex[selectedComponentState.name].ConfigPanel;
   if (!ComponentConfigPanel) {
-    console.log(`Selected component "${selectedComponentState.name}" has no config panel`);
+    console.log(
+      `Selected component "${selectedComponentState.name}" has no config panel`
+    );
     return null;
   }
 
@@ -142,11 +199,19 @@ export const ConfigStateWrapper = () => {
     console.log("Updating state", stateUpdate);
     setState((prevState) => ({
       ...prevState,
-      [prevState.selectedComponentId]: { ...prevState[prevState.selectedComponentId], ...stateUpdate },
+      [prevState.selectedComponentId]: {
+        ...prevState[prevState.selectedComponentId],
+        ...stateUpdate,
+      },
     }));
   };
 
-  return <ComponentConfigPanel componentState={selectedComponentState} setState={setComponentState} />;
+  return (
+    <ComponentConfigPanel
+      componentState={selectedComponentState}
+      setState={setComponentState}
+    />
+  );
 };
 
 export const ComponentSelector = () => {
@@ -161,7 +226,12 @@ export const ComponentSelector = () => {
       <select
         name="component selector"
         id="component-selector"
-        onChange={(e) => setState((state) => ({ ...state, selectedComponentId: e.target.value }))}
+        onChange={(e) =>
+          setState((state) => ({
+            ...state,
+            selectedComponentId: e.target.value,
+          }))
+        }
       >
         {state.ROOT.map((componentId) => (
           <option value={componentId}>{state[componentId].name}</option>
@@ -176,7 +246,8 @@ export const Canvas = ({ unwrappedComponents = null }) => {
 
   const [state, setState] = useContext(WidgetContext);
 
-  if (!state.ROOT || !state.ROOT.length > 0) throw new Error(`Canvas created with no components present in ROOT`);
+  if (!state.ROOT || !state.ROOT.length > 0)
+    throw new Error(`Canvas created with no components present in ROOT`);
 
   const addComponent = (componentName) => () => {
     console.log(`Adding component to mock canvas: ${componentName}`);
@@ -184,20 +255,32 @@ export const Canvas = ({ unwrappedComponents = null }) => {
       const newComponentId = `id-${state.ROOT.length}`;
       const ROOT = [...state.ROOT];
       ROOT.push(newComponentId);
-      state[newComponentId] = { name: componentName, ...componentIndex[componentName].defaultProps };
+      state[newComponentId] = {
+        name: componentName,
+        ...componentIndex[componentName].defaultProps,
+      };
       return { ...state, ROOT };
     });
   };
 
   return (
-    <div className="canvas" style={{ border: "2px solid black", minWidth: "650px" }}>
+    <div
+      className="canvas"
+      style={{ border: "2px solid black", minWidth: "650px" }}
+    >
       {state.ROOT.map((componentId) => {
         const { name, ...props } = state[componentId];
-        return <ComponentStateWrapper id={componentId} name={name} {...props} />;
+        return (
+          <ComponentStateWrapper id={componentId} name={name} {...props} />
+        );
       })}
       {unwrappedComponents}
       {Object.keys(componentIndex).map((componentName) => {
-        return <button onClick={addComponent(componentName)}>Add {componentIndex[componentName].readableName}</button>;
+        return (
+          <button onClick={addComponent(componentName)}>
+            Add {componentIndex[componentName].readableName}
+          </button>
+        );
       })}
     </div>
   );

@@ -79,8 +79,6 @@ const TabConfig = () => {
 
 
 const Tabs = ({
-  type = "tabs",
-  tabsIntroduction = null,
   tabs,
   setProp = () => {},
 }) => {
