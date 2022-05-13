@@ -65,10 +65,6 @@ const mockedSavedCanvas = [
       tabLabel: "Science",
       components: [<FormattedText toolbar={inlineConfig}/>, <FormattedText toolbar={inlineConfig}/>],
     },
-    {
-      tabLabel: "Math",
-      components: [<FormattedText toolbar={inlineConfig}/>, <FormattedText toolbar={inlineConfig}/>],
-    },
   ],
 }
 ];

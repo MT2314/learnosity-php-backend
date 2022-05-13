@@ -18,27 +18,55 @@ export const defaultProps = {
 };
 
 
-const Section = ({ tab, id, handleOnClick, children }) => {
+const Section = ({ tabTitle, id, handleOnClick, children }) => {
   return (
-   <div data-tab-section>
-     <p key={id} onClick={() => handleOnClick(id)}>{tab.tabLabel}</p>
+   <div id="tab-section" onClick={() => handleOnClick(id)}>
+     <input 
+      type="text"
+      value={tabTitle}
+     />
      {children}
    </div>
   );
 };
 
-const AddTab = ({data}) => {
+const TabConfig = ({data, setProp}) => {
+
+  const [ title, setTitle ] = useState("++");
+  const [ content, setContent ] = useState(null);
+
+   console.log( data , setProp)
+
    //create form 
    //1. input to add title
    //2. select to add component
-   const handleAddTab = () => {
-      data.push({tabLabel: "Banana"})
-      console.log(data)
-   }
-   return(
-      <button onClick={() => handleAddTab()}>Add a Tab</button>
+   //3. update data
 
-   )
+   return (
+     <>
+     <form>
+       <input type="text" value={title} onChange={(e) => setProp() }/>
+       <label for="cars">Add Component:</label>
+       <select 
+        name="components" 
+        id="components" 
+        form="components"
+        onChange={(e) => setContent(e.target.value)}>
+         <option value="">Select Content</option>
+         <option value="formattedText">Text Box</option>
+         <option value="image">Image</option>
+         <option value="video">Video</option>
+       </select>
+     </form>
+
+     {
+       content === "formattedText" && <FormattedText/>
+     }
+
+     </>
+
+
+   );
 }
 
 
@@ -51,28 +79,24 @@ const Tabs = ({
 
    const [ activeIndex, setActiveIndex ]= useState(0)
 
-
    const handleOnClick = (id) => {
       setActiveIndex(id)
    }
-
-
 
    const _tabContent = tabs[activeIndex].components.map(( component ) => {
       return component
    })
   
   return (
-     <div data-tab-container>
-        <AddTab data={tabs}/>
-        {/* <button onClick={handleAddTab}>Add a Tab</button> */}
+     <div style={{display:"flex"}}>
         {tabs.map((tab, index) => {
           return (
-            <Section tab={tab} id={index} handleOnClick={handleOnClick}>
+            <Section tabTitle={tab.tabLabel} id={index} handleOnClick={handleOnClick}>
                { index === activeIndex && _tabContent }       
             </Section>
           );
-        })}       
+        })} 
+       <TabConfig data={tabs} setProp={setProp}/>   
      </div>
 
   );
