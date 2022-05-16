@@ -33,6 +33,7 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
           {tabs.map((tab, index) => (
             <Tab label={tab.tabLabel} {...a11yProps({ index })} />
           ))}
+          <Tab label="New Tab" {...a11yProps(0)} />
         </Tabs>
       )}
 
