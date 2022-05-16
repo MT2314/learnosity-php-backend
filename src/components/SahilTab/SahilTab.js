@@ -22,7 +22,7 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
     };
   }
 
-  let newTabIndex
+  let newTabIndex;
 
   return (
     <>
@@ -34,11 +34,10 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
       ) : (
         <Tabs value={value} onChange={handleTabChange}>
           {tabs.map((tab, index) => {
-            newTabIndex = tabs.length
-            return <Tab label={tab.tabLabel} {...a11yProps({ index })} />
-          }
-          )}
-          <Tab label="New Tab" {...a11yProps({newTabIndex})}/>
+            newTabIndex = tabs.length;
+            return <Tab label={tab.tabLabel} {...a11yProps({ index })} />;
+          })}
+          <Tab label="New Tab" {...a11yProps({ newTabIndex })} />
         </Tabs>
       )}
 
@@ -54,17 +53,17 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
       ) : (
         tabs.map((tab, index) => (
           <>
-          <TabPanel value={value} index={index}>
-            {tab.components.map((component) => {
-              return component;
-            })}
-          </TabPanel>
-          <TabPanel value={value} index={newTabIndex}>
-            <AddComponentTabs data={tabs} setProp={setProp} />
-          </TabPanel>
+            <TabPanel value={value} index={index}>
+              {tab.components.map((component) => {
+                return component;
+              })}
+            </TabPanel>
           </>
         ))
       )}
+      <TabPanel value={value} index={newTabIndex}>
+        <AddComponentTabs data={tabs} setProp={setProp} />
+      </TabPanel>
     </>
   );
 };
