@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tabs, Tab } from "@mui/material";
+import { Tabs, Tab, Button, TextField } from "@mui/material";
 import TabPanel from "./TabPanel";
 import AddComponentTabs from "./AddComponentTabs";
 
@@ -10,6 +10,10 @@ export const defaultProps = {
 
 const SahilTab = ({ tabs, setProp = () => {} }) => {
   const [value, setValue] = useState(0);
+  const [addComponent, setAddComponent] = useState([]);
+  const [tabTitle, setTabTitle] = useState("");
+  const [tabTitle1, setTabTitle1] = useState("");
+  const [newTab, setNewTab] = useState(false);
 
   const handleTabChange = (e, newTabIndex) => {
     setValue(newTabIndex);
@@ -21,6 +25,10 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
       "aria-controls": `tabpanel-${index}`,
     };
   }
+
+  const handleAddMoreComponent = () => {
+    setAddComponent(addComponent.concat(<AddComponentTabs />));
+  };
 
   let newTabIndex;
 
@@ -44,10 +52,34 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
       {tabs.length === 0 ? (
         <>
           <TabPanel value={value} index={0}>
-            <AddComponentTabs data={tabs} setProp={setProp} />
+            <TextField
+              style={{ width: "200px", margin: "5px" }}
+              type="text"
+              label="Tab Title"
+              variant="outlined"
+              value={tabTitle}
+              onChange={(e) => setTabTitle(e.target.value)}
+            />
+            <AddComponentTabs
+              data={tabs}
+              setProp={setProp}
+              tabTitle={tabTitle}
+            />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <AddComponentTabs data={tabs} setProp={setProp} />
+            <TextField
+              style={{ width: "200px", margin: "5px" }}
+              type="text"
+              label="Tab Title"
+              variant="outlined"
+              value={tabTitle}
+              onChange={(e) => setTabTitle(e.target.value)}
+            />
+            <AddComponentTabs
+              data={tabs}
+              setProp={setProp}
+              tabTitle={tabTitle}
+            />
           </TabPanel>
         </>
       ) : (
@@ -62,8 +94,23 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
         ))
       )}
       <TabPanel value={value} index={newTabIndex}>
-        <AddComponentTabs data={tabs} setProp={setProp} />
+        <TextField
+          style={{ width: "200px", margin: "5px" }}
+          type="text"
+          label="Tab Title"
+          variant="outlined"
+          value={tabTitle1}
+          onChange={(e) => setTabTitle1(e.target.value)}
+        />
+        <AddComponentTabs
+          data={tabs}
+          setProp={setProp}
+          tabTitleNew={tabTitle1}
+          newTab
+        />
       </TabPanel>
+      {addComponent}
+      <Button onClick={handleAddMoreComponent}>add more Component</Button>
     </>
   );
 };
