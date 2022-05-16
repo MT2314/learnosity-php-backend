@@ -85,28 +85,6 @@ const mockedSavedCanvas = [
       entityMap: {},
     },
   },
-  {
-    name: "Tabs",
-    tabsIntroduction: null,
-    tabs: [
-      {
-        tabLabel: "Geography",
-        components: [
-          <FormattedText
-            toolbar={inlineConfig}
-            placeholderText="Type stuff here..."
-          />,
-        ],
-      },
-      {
-        tabLabel: "Science",
-        components: [
-          <FormattedText toolbar={inlineConfig} />,
-          <FormattedText toolbar={inlineConfig} />,
-        ],
-      },
-    ],
-  },
 ];
 
 export const WidgetContextProvider = ({ children }) => {

@@ -5,16 +5,17 @@ import FormattedText from "../FormattedText";
 import AddComponentTabs from "./AddComponentTabs";
 
 export const defaultProps = {
-  tabsIntroduction: "test",
+  tabsIntroduction: null,
   tabs: [
     {
-      tabLabel: "Geography",
-      components: [<FormattedText placeholderText="Type stuff here..." />],
+      tabLabel:"",
+      components:[]
     },
     {
-      tabLabel: "Science",
-      components: [<FormattedText />, <FormattedText />],
-    },
+      tabLabel:"",
+      components:[]
+    }
+
   ],
 };
 

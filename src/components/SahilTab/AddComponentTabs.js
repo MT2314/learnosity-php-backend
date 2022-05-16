@@ -9,7 +9,7 @@ import FormattedText from "../FormattedText";
 import { TextField } from "@material-ui/core";
 
 const AddComponentTabs = ({ data, setProp }) => {
-  console.log("data:", data);
+
   const [dropDownValue, setDropDownValue] = useState("");
   const [title, setTitle] = useState("");
 
@@ -18,12 +18,20 @@ const AddComponentTabs = ({ data, setProp }) => {
   };
 
   const addTab = (content = "formattedText", tabLabel) => {
-    setProp({ tabs: [...data, { tabLabel, components: [<FormattedText/>] }] });
+    if(content === "formattedText"){
+      setProp({ tabs: [...data, { tabLabel, components: [<FormattedText/>] }] });
+    }else{
+      //TO DO: add options for other components
+      setProp({tabs: [...data, { tabLabel, components: ["The component you chose is not yet an option"]}]})
+    }
   };
 
   const handleSubmit = () => {
     addTab(dropDownValue, title);
+    setTitle("")
+    setDropDownValue("")
   };
+  
   return (
     <>
       <form noValidate autoComplete="off">
