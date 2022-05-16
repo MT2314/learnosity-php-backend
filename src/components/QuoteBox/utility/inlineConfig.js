@@ -1,3 +1,4 @@
+
 export const inlineWithLinkConfig = {
   options: ["inline", "link"],
   inline: {

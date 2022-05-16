@@ -1,5 +1,6 @@
 import React from "react";
 import { Paper } from "@mui/material";
+import { useToolBarOptions } from "../FormattedText/Utility/toolbarOptions";
 
 import FormattedText from "../FormattedText/FormattedText";
 import { inlineWithLinkConfig, linkConfig } from "./utility/inlineConfig";
@@ -18,6 +19,15 @@ const QuoteBox = ({
   quoteBoxUrl,
   setProp = () => {},
 }) => {
+
+  const quoteBoxToolBar = useToolBarOptions(
+    ["inline"],
+    ["bold", "italic", "underline", "strikethrough", "superscript", "subscript"],
+    ["left", "center", "right", "justify"]
+  );
+
+  const linkToolBar = useToolBarOptions(["link"],[],[],["link","unlink"])
+
   return (
     <Paper
       data-id="quoteBox"
@@ -30,7 +40,7 @@ const QuoteBox = ({
         <div className={styles.quoteBody} data-testid="quoteBoxBody">
           <FormattedText
             placeHolderText="Type quote body here..."
-            toolbar={inlineWithLinkConfig}
+            toolbar={quoteBoxToolBar}
             body={quoteBoxBody}
             setProp={(stateUpdate) =>
               setProp({ quoteBoxBody: stateUpdate.body })
@@ -42,7 +52,7 @@ const QuoteBox = ({
         <FormattedText
           body={quoteBoxCitation}
           placeHolderText="Type citation here (optional) ..."
-          toolbar={linkConfig}
+          toolbar={linkToolBar}
           setProp={(stateUpdate) =>
             setProp({ quoteBoxCitation: stateUpdate.body })
           }

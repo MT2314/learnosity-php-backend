@@ -1,3 +1,22 @@
+export const useToolBarOptions = (options, inlineOptions, textAlignOptions, linkOptions) => {
+  return {
+  options: options,
+  inline: {
+    options: inlineOptions,
+  },
+  textAlign: {
+    options: textAlignOptions,
+  },
+  link: {
+    options: linkOptions,
+    link: { className: "bordered-option-classname" },
+    unlink: { className: "bordered-option-classname" },
+  },
+};
+  
+  
+}
+
 const toolbarOptions = {
   options: ["inline", "textAlign", "list", "link"],
   inline: {
