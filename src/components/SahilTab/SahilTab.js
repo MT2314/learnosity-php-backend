@@ -6,17 +6,17 @@ import AddComponentTabs from "./AddComponentTabs";
 
 export const defaultProps = {
   tabsIntroduction: null,
-  tabs:[],
+  tabs: [],
 };
 
 const SahilTab = ({ tabs, setProp = () => {} }) => {
- 
+  
   const [value, setValue] = useState(0);
 
   const handleTabChange = (e, newTabIndex) => {
     setValue(newTabIndex);
   };
-  
+
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
@@ -25,31 +25,33 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
   }
   return (
     <>
-      <Tabs value={value} onChange={handleTabChange}>
-        {
-          tabs.length === 0
-          ? 
-          <>
+        {tabs.length === 0 ? (
+          <Tabs value={value} onChange={handleTabChange}>
             <Tab label="New Tab" {...a11yProps(0)} />
             <Tab label="New Tab" {...a11yProps(1)} />
-          </>
-          : tabs.map((tab, index) => (
-            <Tab label={tab.tabLabel} {...a11yProps({index})} />
-          ))
+          </Tabs>
+        ) : (
+          <Tabs value={value} onChange={handleTabChange}>
+          {tabs.map((tab, index) => (
+            <Tab label={tab.tabLabel} {...a11yProps({ index })} />
+          ))}
+          </Tabs>
+        )}
 
-        }
-        {/* {tabs.map((tab, index) => (
-          <Tab label={tab.tabLabel} {...a11yProps({index})} />
-        ))} */}
-      </Tabs>
-
-      {tabs.map((tab, index) => (
-        <TabPanel value={value} index={index}>
-          {tab.components.map((component) => {
-            return component;
-          })}
-        </TabPanel>
-      ))}
+      {tabs.length === 0 ? (
+        <>
+          <TabPanel value={value} index={0}><AddComponentTabs data={tabs} setProp={setProp}/></TabPanel>
+          <TabPanel value={value} index={1}><AddComponentTabs data={tabs} setProp={setProp}/></TabPanel>
+        </>
+      ) : (
+        tabs.map((tab, index) => (
+          <TabPanel value={value} index={index}>
+            {tab.components.map((component) => {
+              return component;
+            })}
+          </TabPanel>
+        ))
+      )}
     </>
   );
 };
