@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Tabs, Tab } from "@mui/material";
 import TabPanel from "./TabPanel";
-import FormattedText from "../FormattedText";
 import AddComponentTabs from "./AddComponentTabs";
 
 export const defaultProps = {
@@ -10,7 +9,6 @@ export const defaultProps = {
 };
 
 const SahilTab = ({ tabs, setProp = () => {} }) => {
-  
   const [value, setValue] = useState(0);
 
   const handleTabChange = (e, newTabIndex) => {
@@ -19,29 +17,33 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
 
   function a11yProps(index) {
     return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
+      id: `tab-${index}`,
+      "aria-controls": `tabpanel-${index}`,
     };
   }
   return (
     <>
-        {tabs.length === 0 ? (
-          <Tabs value={value} onChange={handleTabChange}>
-            <Tab label="New Tab" {...a11yProps(0)} />
-            <Tab label="New Tab" {...a11yProps(1)} />
-          </Tabs>
-        ) : (
-          <Tabs value={value} onChange={handleTabChange}>
+      {tabs.length === 0 ? (
+        <Tabs value={value} onChange={handleTabChange}>
+          <Tab label="New Tab" {...a11yProps(0)} />
+          <Tab label="New Tab" {...a11yProps(1)} />
+        </Tabs>
+      ) : (
+        <Tabs value={value} onChange={handleTabChange}>
           {tabs.map((tab, index) => (
             <Tab label={tab.tabLabel} {...a11yProps({ index })} />
           ))}
-          </Tabs>
-        )}
+        </Tabs>
+      )}
 
       {tabs.length === 0 ? (
         <>
-          <TabPanel value={value} index={0}><AddComponentTabs data={tabs} setProp={setProp}/></TabPanel>
-          <TabPanel value={value} index={1}><AddComponentTabs data={tabs} setProp={setProp}/></TabPanel>
+          <TabPanel value={value} index={0}>
+            <AddComponentTabs data={tabs} setProp={setProp} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <AddComponentTabs data={tabs} setProp={setProp} />
+          </TabPanel>
         </>
       ) : (
         tabs.map((tab, index) => (
