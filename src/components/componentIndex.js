@@ -48,6 +48,7 @@ const componentIndex = {
   },
   sahilTab: {
     Component: SahilTab,
+    defaultProps: sahilTabDefaultProps, 
     readableName: "Sahil Tab",
     version: "0.0.1",
   },

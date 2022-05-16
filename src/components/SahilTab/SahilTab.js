@@ -4,7 +4,22 @@ import TabPanel from "./TabPanel";
 import FormattedText from "../FormattedText";
 import AddComponentTabs from "./AddComponentTabs";
 
-const SahilTab = () => {
+export const defaultProps = {
+  tabsIntroduction: "test",
+  tabs: [
+    {
+      tabLabel: "Geography",
+      components: [<FormattedText placeholderText="Type stuff here..."/>],
+    },
+    {
+      tabLabel: "Science",
+      components: [<FormattedText/>, <FormattedText/>],
+    },
+  ],
+};
+
+const SahilTab = ({ tabsIntroduction, tabs}) => {
+  console.log(tabs)
   const [value, setValue] = useState(0);
   const handleTabChange = (e, newTabIndex) => {
     setValue(newTabIndex);
