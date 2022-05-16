@@ -18,8 +18,8 @@ export const defaultProps = {
   ],
 };
 
-const SahilTab = ({ tabs }) => {
-  console.log(tabs);
+const SahilTab = ({ tabs, setProp = () => {} }) => {
+ 
   const [value, setValue] = useState(0);
   const handleTabChange = (e, newTabIndex) => {
     setValue(newTabIndex);
@@ -44,6 +44,7 @@ const SahilTab = ({ tabs }) => {
           })}
         </TabPanel>
       ))}
+      <AddComponentTabs data={tabs} setProp={setProp}/>
     </>
   );
 };
