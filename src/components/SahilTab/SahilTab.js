@@ -9,17 +9,17 @@ export const defaultProps = {
   tabs: [
     {
       tabLabel: "Geography",
-      components: [<FormattedText placeholderText="Type stuff here..."/>],
+      components: [<FormattedText placeholderText="Type stuff here..." />],
     },
     {
       tabLabel: "Science",
-      components: [<FormattedText/>, <FormattedText/>],
+      components: [<FormattedText />, <FormattedText />],
     },
   ],
 };
 
-const SahilTab = ({ tabsIntroduction, tabs}) => {
-  console.log(tabs)
+const SahilTab = ({ tabs }) => {
+  console.log(tabs);
   const [value, setValue] = useState(0);
   const handleTabChange = (e, newTabIndex) => {
     setValue(newTabIndex);
@@ -33,20 +33,17 @@ const SahilTab = ({ tabsIntroduction, tabs}) => {
   return (
     <>
       <Tabs value={value} onChange={handleTabChange}>
-        <Tab label="Formatted Text" {...a11yProps(0)} />
-        <Tab label="item2" {...a11yProps(1)} />
-        <Tab label="Add Component" {...a11yProps(2)} />
+        {tabs.map((tab, index) => (
+          <Tab label={tab.tabLabel} {...a11yProps({ index })} />
+        ))}
       </Tabs>
-      <TabPanel value={value} index={0}>
-        <FormattedText />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <AddComponentTabs />
-      </TabPanel>
-      <hr />
+      {tabs.map((tab, index) => (
+        <TabPanel value={value} index={index}>
+          {tab.components.map((component) => {
+            return component;
+          })}
+        </TabPanel>
+      ))}
     </>
   );
 };
