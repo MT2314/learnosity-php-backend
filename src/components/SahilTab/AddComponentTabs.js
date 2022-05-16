@@ -1,12 +1,22 @@
 import React, { useState } from "react";
-import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import {
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Button,
+} from "@mui/material";
 import FormattedText from "../FormattedText";
+import Image from "../Image/Image";
+import QuoteBox from "../QuoteBox/QuoteBox";
+import Callout from "../Callout/Callout";
 
-const AddComponentTabs = () => {
+const AddComponentTabs = ({ submitComponent }) => {
   const [dropDownValue, setDropDownValue] = useState("");
   const handleChange = (event) => {
     setDropDownValue(event.target.value);
   };
+
   return (
     <>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -25,11 +35,19 @@ const AddComponentTabs = () => {
           </MenuItem>
           <MenuItem value="formattedText">FormattedText</MenuItem>
           <MenuItem value="image">Image</MenuItem>
-          <MenuItem value="video">Video</MenuItem>
+          <MenuItem value="quotebox">Quotebox</MenuItem>
+          <MenuItem value="callout">Callout</MenuItem>
         </Select>
       </FormControl>
 
       {dropDownValue === "formattedText" && <FormattedText />}
+      {dropDownValue === "image" && <Image />}
+      {dropDownValue === "callout" && <Callout />}
+      {dropDownValue === "quotebox" && <QuoteBox />}
+      <br />
+
+      <Button onClick={submitComponent}>Submit</Button>
+      <br />
     </>
   );
 };

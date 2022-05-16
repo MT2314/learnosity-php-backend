@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tabs, Tab } from "@mui/material";
+import { Tabs, Tab, TextField, Button } from "@mui/material";
 import TabPanel from "./TabPanel";
 import FormattedText from "../FormattedText";
 import AddComponentTabs from "./AddComponentTabs";
@@ -9,18 +9,20 @@ export const defaultProps = {
   tabs: [
     {
       tabLabel: "Geography",
-      components: [<FormattedText placeholderText="Type stuff here..."/>],
+      components: [<FormattedText placeholderText="Type stuff here..." />],
     },
     {
       tabLabel: "Science",
-      components: [<FormattedText/>, <FormattedText/>],
+      components: [<FormattedText />, <FormattedText />],
     },
   ],
 };
 
-const SahilTab = ({ tabsIntroduction, tabs}) => {
-  console.log(tabs)
+const SahilTab = ({ tabs }) => {
+  console.log(tabs);
   const [value, setValue] = useState(0);
+  const [tabTitle, setTabTitle] = useState("Add Component");
+  const [addComponent, setAddComponent] = useState([]);
   const handleTabChange = (e, newTabIndex) => {
     setValue(newTabIndex);
   };
@@ -30,13 +32,37 @@ const SahilTab = ({ tabsIntroduction, tabs}) => {
       "aria-controls": `simple-tabpanel-${index}`,
     };
   }
+
+  const handleSubmit = () => {
+    defaultProps.tabs.push({ title: tabTitle });
+    console.log(defaultProps);
+  };
+
+  const handleAddMoreComponent = () => {
+    setAddComponent(
+      addComponent.concat(
+        <AddComponentTabs
+          submitComponent={handleSubmit}
+          addMoreComponent={handleAddMoreComponent}
+        />
+      )
+    );
+  };
+  console.log(addComponent);
+
   return (
     <>
       <Tabs value={value} onChange={handleTabChange}>
         <Tab label="Formatted Text" {...a11yProps(0)} />
         <Tab label="item2" {...a11yProps(1)} />
-        <Tab label="Add Component" {...a11yProps(2)} />
+        <Tab label={tabTitle} {...a11yProps(2)} />
       </Tabs>
+      <TextField
+        value={tabTitle}
+        onChange={(e) => {
+          setTabTitle(e.target.value);
+        }}
+      />
       <TabPanel value={value} index={0}>
         <FormattedText />
       </TabPanel>
@@ -44,8 +70,10 @@ const SahilTab = ({ tabsIntroduction, tabs}) => {
         Item Two
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <AddComponentTabs />
+        <AddComponentTabs submitComponent={handleSubmit} />
       </TabPanel>
+      {addComponent}
+      <Button onClick={handleAddMoreComponent}>add more Component</Button>
       <hr />
     </>
   );
