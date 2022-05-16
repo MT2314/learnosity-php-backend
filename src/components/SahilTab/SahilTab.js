@@ -8,11 +8,11 @@ export const defaultProps = {
   tabsIntroduction: null,
   tabs: [
     {
-      tabLabel:"",
+      tabLabel:"Geography",
       components:[]
     },
     {
-      tabLabel:"",
+      tabLabel:"Science",
       components:[]
     }
 
