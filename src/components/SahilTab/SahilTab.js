@@ -21,6 +21,9 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
       "aria-controls": `tabpanel-${index}`,
     };
   }
+
+  let newTabIndex
+
   return (
     <>
       {tabs.length === 0 ? (
@@ -30,10 +33,12 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
         </Tabs>
       ) : (
         <Tabs value={value} onChange={handleTabChange}>
-          {tabs.map((tab, index) => (
-            <Tab label={tab.tabLabel} {...a11yProps({ index })} />
-          ))}
-          <Tab label="New Tab" {...a11yProps(0)} />
+          {tabs.map((tab, index) => {
+            newTabIndex = tabs.length
+            return <Tab label={tab.tabLabel} {...a11yProps({ index })} />
+          }
+          )}
+          <Tab label="New Tab" {...a11yProps({newTabIndex})}/>
         </Tabs>
       )}
 
@@ -48,11 +53,16 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
         </>
       ) : (
         tabs.map((tab, index) => (
+          <>
           <TabPanel value={value} index={index}>
             {tab.components.map((component) => {
               return component;
             })}
           </TabPanel>
+          <TabPanel value={value} index={newTabIndex}>
+            <AddComponentTabs data={tabs} setProp={setProp} />
+          </TabPanel>
+          </>
         ))
       )}
     </>
