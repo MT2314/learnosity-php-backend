@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-import {
-  InputLabel,
-  MenuItem,
-  Select,
-  Button,
-} from "@mui/material";
+import { InputLabel, MenuItem, Select, Button } from "@mui/material";
 import FormattedText from "../FormattedText";
 import { TextField } from "@material-ui/core";
 
 const AddComponentTabs = ({ data, setProp }) => {
-
   const [dropDownValue, setDropDownValue] = useState("");
   const [title, setTitle] = useState("");
 
@@ -18,20 +12,33 @@ const AddComponentTabs = ({ data, setProp }) => {
   };
 
   const addTab = (content = "formattedText", tabLabel) => {
-    if(content === "formattedText"){
-      setProp({ tabs: [...data, { tabLabel, components: [<FormattedText/>] }] });
-    }else{
+    if (content === "formattedText") {
+      setProp({
+        tabs: [
+          ...data,
+          { tabLabel, components: [{ type: "formattedText", body: null }] },
+        ],
+      });
+    } else {
       //TO DO: add options for other components
-      setProp({tabs: [...data, { tabLabel, components: ["The component you chose is not yet an option"]}]})
+      setProp({
+        tabs: [
+          ...data,
+          {
+            tabLabel,
+            components: ["The component you chose is not yet an option"],
+          },
+        ],
+      });
     }
   };
 
   const handleSubmit = () => {
     addTab(dropDownValue, title);
-    setTitle("")
-    setDropDownValue("")
+    setTitle("");
+    setDropDownValue("");
   };
-  
+
   return (
     <>
       <form noValidate autoComplete="off">
