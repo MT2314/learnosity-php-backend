@@ -6,25 +6,17 @@ import AddComponentTabs from "./AddComponentTabs";
 
 export const defaultProps = {
   tabsIntroduction: null,
-  tabs: [
-    {
-      tabLabel:"Geography",
-      components:[]
-    },
-    {
-      tabLabel:"Science",
-      components:[]
-    }
-
-  ],
+  tabs:[],
 };
 
 const SahilTab = ({ tabs, setProp = () => {} }) => {
  
   const [value, setValue] = useState(0);
+
   const handleTabChange = (e, newTabIndex) => {
     setValue(newTabIndex);
   };
+  
   function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
@@ -34,10 +26,23 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
   return (
     <>
       <Tabs value={value} onChange={handleTabChange}>
-        {tabs.map((tab, index) => (
-          <Tab label={tab.tabLabel} {...a11yProps({ index })} />
-        ))}
+        {
+          tabs.length === 0
+          ? 
+          <>
+            <Tab label="New Tab" {...a11yProps(0)} />
+            <Tab label="New Tab" {...a11yProps(1)} />
+          </>
+          : tabs.map((tab, index) => (
+            <Tab label={tab.tabLabel} {...a11yProps({index})} />
+          ))
+
+        }
+        {/* {tabs.map((tab, index) => (
+          <Tab label={tab.tabLabel} {...a11yProps({index})} />
+        ))} */}
       </Tabs>
+
       {tabs.map((tab, index) => (
         <TabPanel value={value} index={index}>
           {tab.components.map((component) => {
@@ -45,7 +50,6 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
           })}
         </TabPanel>
       ))}
-      <AddComponentTabs data={tabs} setProp={setProp}/>
     </>
   );
 };
