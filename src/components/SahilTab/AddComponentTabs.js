@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { InputLabel, MenuItem, Select, Button } from "@mui/material";
 import FormattedText from "../FormattedText";
-import { TextField } from "@material-ui/core";
 
-const AddComponentTabs = ({ data, setProp }) => {
+const AddComponentTabs = ({ data, setProp, tabTitle, tabTitleNew, newTab }) => {
   const [dropDownValue, setDropDownValue] = useState("");
-  const [title, setTitle] = useState("");
-
   const handleChange = (event) => {
     setDropDownValue(event.target.value);
   };
@@ -34,24 +31,16 @@ const AddComponentTabs = ({ data, setProp }) => {
   };
 
   const handleSubmit = () => {
-    addTab(dropDownValue, title);
-    setTitle("");
+    if(newTab) {
+        tabTitle = tabTitleNew
+    }
+    addTab(dropDownValue, tabTitle);
     setDropDownValue("");
   };
 
   return (
     <>
       <form noValidate autoComplete="off">
-        <TextField
-          style={{ width: "200px", margin: "5px" }}
-          type="text"
-          label="Tab Title"
-          variant="outlined"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <hr />
-
         <InputLabel id="select-component">Select Component</InputLabel>
         <Select
           labelId="select-component"
@@ -60,7 +49,8 @@ const AddComponentTabs = ({ data, setProp }) => {
           onChange={handleChange}
           label="Age"
         >
-          <MenuItem value="">
+          <br />
+          <MenuItem value="" selected>
             <em>None</em>
           </MenuItem>
           <MenuItem value="formattedText">FormattedText</MenuItem>
@@ -68,11 +58,13 @@ const AddComponentTabs = ({ data, setProp }) => {
           <MenuItem value="video">Video</MenuItem>
         </Select>
 
+        <br />
         <Button onClick={handleSubmit} variant="outlined">
-          Add Tab
+          Submit
         </Button>
       </form>
-      {dropDownValue === "formattedText" && <FormattedText />}
+      {/* {dropDownValue === "formattedText" && <FormattedText />} */}
+      <hr />
     </>
   );
 };
