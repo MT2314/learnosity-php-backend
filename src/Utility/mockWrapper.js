@@ -1,8 +1,6 @@
 import React, { useState, useContext, createContext } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import componentIndex from "../components/componentIndex";
-import FormattedText from "../components/FormattedText";
-import inlineConfig from "../components/Tabs/utility/inlineConfig";
 
 // mockWrapper.js is code to mock the Lesson-builder environment.
 
