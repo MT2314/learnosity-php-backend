@@ -16,8 +16,22 @@ describe("<FormattedText />", () => {
     );
   };
 
-  test("renders Callout component", () => {
+  test("It renders FormattedText component", () => {
     render(<TestComponent />);
-    //   expect(screen.getByText("")).toBeInTheDocument();
+  });
+
+  it("FormattedText is defined", () => {
+    render(<TestComponent />);
+    expect(render(<TestComponent />)).toBeDefined();
+  });
+
+  test("Textbox displays", () => {
+    render(<TestComponent />);
+    expect(screen.getByRole("textbox")).toBeInTheDocument();
+  });
+
+  test("Strikethrough button displays", () => {
+    render(<TestComponent />);
+    expect(screen.getByTitle("Strikethrough")).toBeInTheDocument();
   });
 });
