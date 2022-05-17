@@ -11,7 +11,10 @@ const AddComponentTabs = ({ data, setProp, tabTitle, tabTitleNew, newTab }) => {
   const addTab = (content = "formattedText", tabLabel) => {
     if (content === "formattedText") {
       setProp({
-        tabs: [...data, { tabLabel, components: [<FormattedText />] }],
+        tabs: [
+          ...data,
+          { tabLabel, components: [{ type: "formattedText", body: null }] },
+        ],
       });
     } else {
       //TO DO: add options for other components

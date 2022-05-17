@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Tabs, Tab, Button, TextField } from "@mui/material";
 import TabPanel from "./TabPanel";
 import AddComponentTabs from "./AddComponentTabs";
+import FormattedText from "../FormattedText/FormattedText";
 
 export const defaultProps = {
   tabsIntroduction: null,
@@ -87,7 +88,9 @@ const SahilTab = ({ tabs, setProp = () => {} }) => {
           <>
             <TabPanel value={value} index={index}>
               {tab.components.map((component) => {
-                return component;
+                if (component.type === "formattedText") {
+                  return <FormattedText body={component.body} />;
+                }
               })}
             </TabPanel>
           </>
