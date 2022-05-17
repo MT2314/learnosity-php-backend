@@ -1,9 +1,8 @@
 import React from "react";
 import { Paper } from "@mui/material";
-import { useToolBarOptions } from "../FormattedText/Utility/toolbarOptions";
+import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 
 import FormattedText from "../FormattedText/FormattedText";
-import { inlineWithLinkConfig, linkConfig } from "./utility/inlineConfig";
 
 import styles from "./styles/QuoteBox.module.scss";
 
@@ -23,10 +22,9 @@ const QuoteBox = ({
   const quoteBoxToolBar = useToolBarOptions(
     ["inline"],
     ["bold", "italic", "underline", "strikethrough", "superscript", "subscript"],
-    ["left", "center", "right", "justify"]
   );
 
-  const linkToolBar = useToolBarOptions(["link"],[],[],["link","unlink"])
+  const linkToolBar = useToolBarOptions(["link"])
 
   return (
     <Paper
