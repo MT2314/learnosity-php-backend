@@ -49,6 +49,7 @@ describe("<FormattedText />", () => {
 
   test("Placeholder text is in the document", () => {
     render(<TestComponent placeholder={props.placeholder} body={props.body} />);
+    // expect(screen.getByTestId("formatted-text")).toHaveTextContent("test body");
   });
 });
 
@@ -101,7 +102,7 @@ const mockProps = {
     blocks: [
       {
         key: "key1",
-        text: "test placeholder",
+        text: "placeholder",
       },
     ],
     entityMap: {},
@@ -131,12 +132,23 @@ describe("Formatted text", () => {
         placeHolderText={mockProps.placeHolderText}
       />
     );
+    // expect(screen.getByPlaceholderText("test placeholder")).toBeInTheDocument();
 
     expect(screen.getByTestId("formatted-text")).toHaveTextContent(
       "Karen's body text"
     );
-    // expect(screen.getByTestId("formatted-text")).toHaveTextContent(
-    //   "Karen's placeholder text"
-    // );
+
+    const aboutAnchorNode = screen.getByText("placeholder");
+    // expect(screen.getByLabelText("placeholder")).toBeInTheDocument();
+    // const inputNode = screen.getByPlaceholderText("placeholder");
+    // expect(inputNode).toBeInTheDocument();
+    // const pHText = screen.getByPlaceholderText("placeholder");
+    // expect(pHText).toBeInTheDocument();
   });
+
+  // const placeholder_text = mockProps.placeHolderText;
+  // const wrapper = shallow(
+  //   <FormattedText placeholder={mockProps.placeHolderText} />
+  // );
+  // expect(wrapper.prop("placeholder")).toEqual(placeholder_text);
 });
