@@ -57,23 +57,30 @@ describe("<FormattedText />", () => {
   });
 });
 
-const TestEditor = () => {
-  render(
-    <Editor
-      spellCheck="true"
-      ariaDescribedBy="core text wysiwyg"
-      ariaLabel="aria label"
-      placeholder="textbox placeHolderText"
-      data-testid="formatted-text-body"
-      rawContentState={{
-        entityMap: {},
-        blocks: [
-          {
-            key: "aaa",
-            text: "abc",
-          },
-        ],
-      }}
-    />
-  );
-};
+describe("Editor", () => {
+  const TestEditor = () => {
+    return (
+      <Editor
+        spellCheck="true"
+        ariaDescribedBy="core text wysiwyg"
+        ariaLabel="aria label"
+        placeholder="textbox placeHolderText"
+        data-testid="formatted-text-body"
+        rawContentState={{
+          entityMap: {},
+          blocks: [
+            {
+              key: "aaa",
+              text: "abc",
+            },
+          ],
+        }}
+      />
+    );
+  };
+
+  test("TestEditor displays", () => {
+    render(<TestEditor />);
+    expect(screen.getByRole("textbox")).toBeInTheDocument();
+  });
+});
