@@ -1,5 +1,5 @@
 import React from "react";
-// import { unmountComponentAtNode } from "react-dom";
+import { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 // import { act } from "react-dom/test-utils";
@@ -12,6 +12,7 @@ import FormattedText from "../components/FormattedText";
 describe("<FormattedText />", () => {
   const props = {
     placeholder: "enter your text here",
+    body: "test body",
   };
 
   const TestComponent = () => {
@@ -47,13 +48,7 @@ describe("<FormattedText />", () => {
   });
 
   test("Placeholder text is in the document", () => {
-    render(<TestComponent placeholder={props.placeholder} />);
-    // expect(
-    //   screen.getByDisplayValue("enter your text here")
-    // ).toBeInTheDocument();
-
-    // expect(screen.getByDisplayValue(props.placeholder)).toBeInTheDocument();
-    // expect(screen.getByDisplayValue(props.placeholder)).toBeInTheDocument();
+    render(<TestComponent placeholder={props.placeholder} body={props.body} />);
   });
 });
 
@@ -79,8 +74,69 @@ describe("Editor", () => {
     );
   };
 
-  test("TestEditor displays", () => {
+  test("TestEditor renders", () => {
     render(<TestEditor />);
     expect(screen.getByRole("textbox")).toBeInTheDocument();
+    expect(screen.getByLabelText("rdw-link-control")).toBeInTheDocument();
+  });
+});
+
+let container = null;
+beforeEach(() => {
+  // setup a DOM element as a render target
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+  // cleanup on exiting
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+});
+
+const mockProps = {
+  name: "FormattedText",
+  placeHolderText: {
+    blocks: [
+      {
+        key: "key1",
+        text: "test placeholder",
+      },
+    ],
+    entityMap: {},
+  },
+  body: {
+    blocks: [
+      {
+        key: "key2",
+        text: "Karen's body text",
+      },
+    ],
+    entityMap: {},
+  },
+};
+
+describe("Formatted text", () => {
+  it("renders FormattedText without any given data", () => {
+    render(<FormattedText />);
+
+    expect(screen.getByTestId("formatted-text")).toBeInTheDocument();
+  });
+
+  it("renders FormattedText with given data", () => {
+    render(
+      <FormattedText
+        body={mockProps.body}
+        placeHolderText={mockProps.placeHolderText}
+      />
+    );
+
+    expect(screen.getByTestId("formatted-text")).toHaveTextContent(
+      "Karen's body text"
+    );
+    // expect(screen.getByTestId("formatted-text")).toHaveTextContent(
+    //   "Karen's placeholder text"
+    // );
   });
 });
