@@ -74,6 +74,7 @@ const Tab = (defaultProps) => {
   const handleSelectTab = (tab) => {
     console.log(tab);
     setState({
+      ...state,
       currentTab: tab,
       editTabNameMode: false,
     });
@@ -81,6 +82,7 @@ const Tab = (defaultProps) => {
 
   const handleDoubleClick = () => {
     setState({
+      ...state,
       editTabNameMode: true,
     });
   };
@@ -145,14 +147,12 @@ const Tab = (defaultProps) => {
         <div className="tab-content">
           <div>
             <p>{currentTab.content}</p>
-            {currentTab.id ? (
+            {currentTab.id && (
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <button onClick={() => handleDeleteTab(currentTab)}>
                   Delete
                 </button>
               </div>
-            ) : (
-              ""
             )}
           </div>
         </div>
