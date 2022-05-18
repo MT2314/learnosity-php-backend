@@ -9,7 +9,7 @@ import QuoteBox, {
   defaultProps as quoteBoxDefaultProps,
 } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
-import Tabs, { defaultProps as tabsDefaultProps } from "./Tabs/Tabs";
+import Tab, { defaultProps as tabsDefaultProps } from "./Tab/Tab";
 import SahilTab, {
   defaultProps as sahilTabDefaultProps,
 } from "./SahilTab/SahilTab";
@@ -40,9 +40,9 @@ const componentIndex = {
     defaultProps: quoteBoxDefaultProps,
     version: "0.0.1",
   },
-  Tabs: {
-    Component: Tabs,
-    readableName: "Tabs",
+  Tab: {
+    Component: Tab,
+    readableName: "Tab",
     defaultProps: tabsDefaultProps,
     version: "0.0.1",
   },
