@@ -141,23 +141,9 @@ describe("Formatted text", () => {
     expect(screen.getByTestId("formatted-text")).not.toHaveTextContent(
       "Not Karen's body text"
     );
-    // below is failing but suggested by froggie extension
-    // expect(screen.getByText(/placeholder/i)).toBeInTheDocument();
-
-    const placeholderText = screen.getByText(/Karen's body text/i);
-    expect(placeholderText).toBeInTheDocument();
-
-    // const aboutAnchorNode = screen.getByText("placeholder");
-    // expect(screen.getByLabelText("placeholder")).toBeInTheDocument();
-    // const inputNode = screen.getByPlaceholderText("placeholder");
-    // expect(inputNode).toBeInTheDocument();
-    // const pHText = screen.getByPlaceholderText("placeholder");
-    // expect(pHText).toBeInTheDocument();
+    // testing playground suggested the following query!!!
+    // querySelector(
+    //   "#rdw-wrapper-4941 > div:nth-child(2) > div > div:nth-child(2) > div > div > div > div"
+    // );
   });
-
-  // const placeholder_text = mockProps.placeHolderText;
-  // const wrapper = shallow(
-  //   <FormattedText placeholder={mockProps.placeHolderText} />
-  // );
-  // expect(wrapper.prop("placeholder")).toEqual(placeholder_text);
 });
