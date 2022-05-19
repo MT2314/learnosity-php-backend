@@ -53,7 +53,6 @@ const FormattedText = ({
         toolbar={toolbar}
         // toolbarCustomButtons={[<KeysLink />]}
         placeholder={placeHolderText}
-        data-testid="formatted-text-body"
       />
     </div>
   );

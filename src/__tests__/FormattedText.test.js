@@ -9,6 +9,13 @@ import { Editor } from "react-draft-wysiwyg";
 
 import FormattedText from "../components/FormattedText";
 
+/**
+Note: testing for placeholder text has proven a challenge.
+Recommended query selector for that deeply nested div is querySelector("#rdw-wrapper-4941 > div:nth-child(2) > div > div:nth-child(2) > div > div > div > div"
+Further RTL research also revealed placeholder text is a poor user experienece
+https://www.nngroup.com/articles/form-design-placeholders/
+*/
+
 describe("<FormattedText />", () => {
   const props = {
     placeholder: "enter your text here",
