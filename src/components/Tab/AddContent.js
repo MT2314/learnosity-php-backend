@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select
-} from "@mui/material";
+import { InputLabel, MenuItem, FormControl, Select } from "@mui/material";
 import FormattedText from "../FormattedText";
 import Image from "../Image/Image";
 import QuoteBox from "../QuoteBox/QuoteBox";
@@ -18,18 +13,17 @@ const AddContent = () => {
 
   return (
     <>
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">
-          Select Component
-        </InputLabel>
+      <form noValidate autoComplete="off">
+        <InputLabel id="select-component">Select Component</InputLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
+          labelId="select-component"
+          id="select-component"
           value={dropDownValue}
           onChange={handleChange}
           label="Age"
         >
-          <MenuItem value="">
+          <br />
+          <MenuItem value="" selected>
             <em>None</em>
           </MenuItem>
           <MenuItem value="formattedText">FormattedText</MenuItem>
@@ -37,13 +31,13 @@ const AddContent = () => {
           <MenuItem value="quotebox">Quotebox</MenuItem>
           <MenuItem value="callout">Callout</MenuItem>
         </Select>
-      </FormControl>
 
-      {dropDownValue === "formattedText" && <FormattedText />}
-      {dropDownValue === "image" && <Image />}
-      {dropDownValue === "callout" && <Callout />}
-      {dropDownValue === "quotebox" && <QuoteBox />}
-      <br />
+        {dropDownValue === "formattedText" && <FormattedText />}
+        {dropDownValue === "image" && <Image />}
+        {dropDownValue === "callout" && <Callout />}
+        {dropDownValue === "quotebox" && <QuoteBox />}
+        <br />
+      </form>
     </>
   );
 };

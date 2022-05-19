@@ -13,7 +13,7 @@ import ImagePage from "./pages/ImagePage";
 import "./index.css";
 
 const App = () => {
-  console.log("16.0.0");
+  console.log("16.0.1");
   return (
     <>
       <WidgetContextProvider>
@@ -27,6 +27,7 @@ const App = () => {
             <Route path="/CalloutPage" element={<CalloutPage />} />
             <Route path="/QuoteBoxPage" element={<QuoteBoxPage />} />
             <Route path="/ImagePage" element={<ImagePage />} />
+            <Route path="*" element={<Home />} />
           </Routes>
         </BrowserRouter>
       </WidgetContextProvider>

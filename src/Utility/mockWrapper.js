@@ -1,8 +1,6 @@
 import React, { useState, useContext, createContext } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import componentIndex from "../components/componentIndex";
-import FormattedText from "../components/FormattedText";
-import inlineConfig from "../components/Tabs/utility/inlineConfig";
 
 // mockWrapper.js is code to mock the Lesson-builder environment.
 
@@ -11,7 +9,6 @@ const WidgetContext = createContext();
 
 // For testing, mocking an initial canvas state from the DB (add all props for a component even if empty)
 const mockedSavedCanvas = [
-  { name: "sahilTab" },
   { name: "FormattedText", body: null },
   {
     name: "FormattedText",
@@ -84,28 +81,6 @@ const mockedSavedCanvas = [
       ],
       entityMap: {},
     },
-  },
-  {
-    name: "Tabs",
-    tabsIntroduction: null,
-    tabs: [
-      {
-        tabLabel: "Geography",
-        components: [
-          <FormattedText
-            toolbar={inlineConfig}
-            placeholderText="Type stuff here..."
-          />,
-        ],
-      },
-      {
-        tabLabel: "Science",
-        components: [
-          <FormattedText toolbar={inlineConfig} />,
-          <FormattedText toolbar={inlineConfig} />,
-        ],
-      },
-    ],
   },
 ];
 
