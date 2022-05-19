@@ -10,9 +10,9 @@ import QuoteBox, {
 } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
 import Tab, { defaultProps as tabsDefaultProps } from "./Tab/Tab";
-import SahilTab, {
-  defaultProps as sahilTabDefaultProps,
-} from "./SahilTab/SahilTab";
+// import SahilTab, {
+//   defaultProps as sahilTabDefaultProps,
+// } from "./SahilTab/SahilTab";
 
 const componentIndex = {
   Callout: {
@@ -45,13 +45,7 @@ const componentIndex = {
     readableName: "Tab",
     defaultProps: tabsDefaultProps,
     version: "0.0.1",
-  },
-  sahilTab: {
-    Component: SahilTab,
-    defaultProps: sahilTabDefaultProps, 
-    readableName: "Sahil Tab",
-    version: "0.0.1",
-  },
+  }
 };
 
 export default componentIndex;
