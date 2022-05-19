@@ -6,10 +6,10 @@ import AddContent from "./AddContent";
 
 export const defaultProps = {
   tabs: [
-    { id: 1, names: "Tab 1", content: <AddContent /> },
+    { id: 1, names: "Maths", content: <AddContent /> },
     {
       id: 2,
-      names: "Tab 2",
+      names: "Geography",
       content: (
         <>
           <FormattedText />
@@ -44,6 +44,7 @@ const Tab = (defaultProps) => {
 
   const handleOnBlur = () => {
     setState({
+      ...state,
       editTabNameMode: false,
     });
   };
