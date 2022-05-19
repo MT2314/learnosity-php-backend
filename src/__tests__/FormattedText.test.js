@@ -138,10 +138,13 @@ describe("Formatted text", () => {
       "Karen's body text"
     );
 
+    expect(screen.getByTestId("formatted-text")).not.toHaveTextContent(
+      "Not Karen's body text"
+    );
     // below is failing but suggested by froggie extension
     // expect(screen.getByText(/placeholder/i)).toBeInTheDocument();
 
-    const placeholderText = screen.getByText(/placeholder/i);
+    const placeholderText = screen.getByText(/Karen's body text/i);
     expect(placeholderText).toBeInTheDocument();
 
     // const aboutAnchorNode = screen.getByText("placeholder");
