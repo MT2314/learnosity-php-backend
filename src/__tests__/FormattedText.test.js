@@ -138,7 +138,13 @@ describe("Formatted text", () => {
       "Karen's body text"
     );
 
-    const aboutAnchorNode = screen.getByText("placeholder");
+    // below is failing but suggested by froggie extension
+    // expect(screen.getByText(/placeholder/i)).toBeInTheDocument();
+
+    const placeholderText = screen.getByText(/placeholder/i);
+    expect(placeholderText).toBeInTheDocument();
+
+    // const aboutAnchorNode = screen.getByText("placeholder");
     // expect(screen.getByLabelText("placeholder")).toBeInTheDocument();
     // const inputNode = screen.getByPlaceholderText("placeholder");
     // expect(inputNode).toBeInTheDocument();
