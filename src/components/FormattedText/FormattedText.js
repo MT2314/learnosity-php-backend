@@ -32,7 +32,11 @@ const FormattedText = ({
   });
 
   return (
-    <div className="formattedTextContainer">
+    <div
+      className="formattedTextContainer"
+      data-id="formatted text"
+      data-testid="formatted-text"
+    >
       <Editor
         editorState={_editorState}
         spellCheck="true"
@@ -49,7 +53,7 @@ const FormattedText = ({
         toolbar={toolbar}
         // toolbarCustomButtons={[<KeysLink />]}
         placeholder={placeHolderText}
-        data-id="formatted text"
+        data-testid="formatted-text-body"
       />
     </div>
   );
