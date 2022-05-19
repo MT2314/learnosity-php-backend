@@ -27,6 +27,7 @@ const App = () => {
             <Route path="/CalloutPage" element={<CalloutPage />} />
             <Route path="/QuoteBoxPage" element={<QuoteBoxPage />} />
             <Route path="/ImagePage" element={<ImagePage />} />
+            <Route path="*" element={<Home />} />
           </Routes>
         </BrowserRouter>
       </WidgetContextProvider>

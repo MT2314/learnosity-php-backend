@@ -9,7 +9,6 @@ const WidgetContext = createContext();
 
 // For testing, mocking an initial canvas state from the DB (add all props for a component even if empty)
 const mockedSavedCanvas = [
-  { name: "sahilTab" },
   { name: "FormattedText", body: null },
   {
     name: "FormattedText",
