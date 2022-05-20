@@ -21,7 +21,7 @@ const FormattedText = ({
   setProp = () => console.warn("No state change function provided"),
 }) => {
   /*
-  Body contains what will be saved to the database, the format would ideally be HTML.  For now it's a DraftJS raw state
+  Body contains what will be saved to the database.  For now it's a DraftJS raw state
   Once the component is rendered, it'll maintain its state using _bodyState, while keeping body up to date for saving
   */
 
