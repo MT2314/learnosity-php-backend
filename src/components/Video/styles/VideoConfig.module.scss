@@ -1,0 +1,10 @@
+.videoConfigContainer {
+  .playerSelectContainer {
+    display: flex;
+    flex-direction: column;
+
+    .playerSelectInfo {
+      font-size: 1rem;
+    }
+  }
+}

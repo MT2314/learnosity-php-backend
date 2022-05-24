@@ -10,9 +10,8 @@ import QuoteBox, {
 } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
 import Tab, { defaultProps as tabsDefaultProps } from "./Tab/Tab";
-// import SahilTab, {
-//   defaultProps as sahilTabDefaultProps,
-// } from "./SahilTab/SahilTab";
+import Video, { defaultProps as videoDefaultProps } from "./Video/Video";
+import VideoConfig from "./Video/VideoConfig";
 
 const componentIndex = {
   Callout: {
@@ -45,7 +44,14 @@ const componentIndex = {
     readableName: "Tab",
     defaultProps: tabsDefaultProps,
     version: "0.0.1",
-  }
+  },
+  Video: {
+    Component: Video,
+    readableName: "Video",
+    defaultProps: videoDefaultProps,
+    version: "0.0.1",
+    ConfigPanel: VideoConfig,
+  },
 };
 
 export default componentIndex;
