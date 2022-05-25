@@ -3,14 +3,9 @@ import React, { useState, useEffect } from "react";
 import EditPanelIcon from "../EditPanelIcon";
 import styles from "./styles/VideoConfig.module.scss";
 
-import {
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
-} from "@mui/material";
-import VideocamIcon from "@mui/icons-material/Videocam";
+import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
+
+import getVideoId from "get-video-id";
 
 const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
@@ -23,11 +18,20 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     brightcoveDataPlayerId = "",
   } = componentState;
 
+  // State/event handler for setting "type"
   const [videoPlayer, setVideoPlayer] = useState("");
   const handleVideoSelect = (e) => {
     setVideoPlayer(e.target.value);
     setState({ type: e.target.value });
   };
+
+  // State/event handler for setting "videoUrl" for YouTube
+  const handleVideoUrl = (e) => {
+    setState({ videoUrl: e.target.value });
+    console.log(videoUrl);
+  };
+
+  // Verify YouTube URL/data ID
 
   useEffect(() => {
     console.log(componentState);
@@ -35,7 +39,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   return (
     <div className={styles.videoConfigContainer}>
-      <EditPanelIcon title="Video" icon={<VideocamIcon />} />
+      <EditPanelIcon title="Video" icon={<OndemandVideoIcon />} />
       <div className={styles.playerSelectContainer}>
         <p className={styles.playerSelectInfo}>Please select a video player:</p>
         <form onChange={handleVideoSelect}>
@@ -64,8 +68,14 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               name="youTubeUrl"
               placeholder="YouTube video URL..."
               pattern=""
+              onChange={handleVideoUrl}
               required
             />
+            <button
+            //  onClick={verifyYouTubeUrl}
+            >
+              Verify URL
+            </button>
           </>
         ) : videoPlayer === "brightcove" ? (
           <>
