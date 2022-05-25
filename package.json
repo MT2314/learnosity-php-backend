@@ -56,6 +56,7 @@
     "react-error-boundary": "^3.1.4",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
+    "react-youtube": "^9.0.2",
     "sass": "^1.51.0",
     "svg-url-loader": "^7.1.1",
     "uuid": "^3.3.2"

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import styles from "./styles/Video.module.scss";
+
 export let defaultProps = {
   type: "",
 };
@@ -31,8 +33,18 @@ const Video = ({
   setProp = () => console.warn("No state change function provided"),
 }) => {
   return (
-    <div className="videoContainer">
-      <h1>Sam</h1>
+    <div className={styles.videoContainer}>
+      {type === "" ? (
+        <div
+          data-testid="image-placeholder"
+          className={styles.placeholderImg}
+          tabIndex="0"
+        ></div>
+      ) : type === "youTube" ? (
+        <p>YouTube Video</p>
+      ) : type === "brightcove" ? (
+        <p>Brightcove video</p>
+      ) : null}
     </div>
   );
 };
