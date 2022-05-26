@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import YouTubePlayer from "./YouTubePlayer";
 
 import styles from "./styles/Video.module.scss";
 
@@ -32,6 +34,10 @@ const Video = ({
   brightcoveDataPlayerId,
   setProp = () => console.warn("No state change function provided"),
 }) => {
+  useEffect(() => {
+    console.log(videoUrl);
+  }, [videoUrl]);
+
   return (
     <div className={styles.videoContainer}>
       {type === "" ? (
@@ -41,7 +47,7 @@ const Video = ({
           tabIndex="0"
         ></div>
       ) : type === "youTube" ? (
-        <p>YouTube Video</p>
+        <YouTubePlayer videoUrl={videoUrl} />
       ) : type === "brightcove" ? (
         <p>Brightcove video</p>
       ) : null}

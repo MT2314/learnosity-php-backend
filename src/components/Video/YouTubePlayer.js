@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const YouTubePlayer = ({}) => {
+import YouTube from "react-youtube";
+
+const YouTubePlayer = ({ componentState = {} }) => {
+  const {
+    type = "",
+    videoUrl = "",
+    thumbnailUrl = "",
+    thumbnailWidth = 0,
+    thumbnailHeight = 0,
+    brightcoveDataPlayer = "",
+    brightcoveDataPlayerId = "",
+  } = componentState;
+
+  useEffect(() => {
+    console.log(videoUrl);
+  }, [videoUrl]);
+
   return (
     <div>
-      <h1>YouTube Player</h1>
+      <YouTube videoId={videoUrl} />
     </div>
   );
 };

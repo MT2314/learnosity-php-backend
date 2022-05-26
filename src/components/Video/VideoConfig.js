@@ -27,11 +27,20 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // State/event handler for setting "videoUrl" for YouTube
   const handleVideoUrl = (e) => {
-    setState({ videoUrl: e.target.value });
-    console.log(videoUrl);
+    const youTubeId = getVideoId(e.target.value);
+    setState({ videoUrl: youTubeId.id });
   };
 
   // Verify YouTube URL/data ID
+  const verifyYouTubeUrl = () => {
+    if (videoUrl) {
+      return;
+    } else {
+      alert(
+        "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
+      );
+    }
+  };
 
   useEffect(() => {
     console.log(componentState);
@@ -71,11 +80,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               onChange={handleVideoUrl}
               required
             />
-            <button
-            //  onClick={verifyYouTubeUrl}
-            >
-              Verify URL
-            </button>
+            <button onClick={() => verifyYouTubeUrl()}>Verify URL</button>
           </>
         ) : videoPlayer === "brightcove" ? (
           <>
