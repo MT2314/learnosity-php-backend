@@ -33,6 +33,9 @@ const Video = ({
   thumbnailHeight,
   brightcoveAccountId,
   brightcoveVideoId,
+  transcript,
+  caption,
+  credit,
   setProp = () => console.warn("No state change function provided"),
 }) => {
   useEffect(() => {
@@ -42,13 +45,14 @@ const Video = ({
   return (
     <div className={styles.videoContainer}>
       {type === "" ||
-      (type === "brightcove" && !brightcoveAccountId && !brightcoveVideoId) ? (
+      (type === "brightcove" && !brightcoveAccountId && !brightcoveVideoId) ||
+      (type === "youTube" && !videoUrl) ? (
         <div
           data-testid="image-placeholder"
           className={styles.placeholderImg}
           tabIndex="0"
         ></div>
-      ) : type === "youTube" ? (
+      ) : type === "youTube" && videoUrl ? (
         <YouTube videoId={videoUrl} className={styles.youTubePlayer} />
       ) : type === "brightcove" && brightcoveAccountId && brightcoveVideoId ? (
         <ReactPlayerLoader
