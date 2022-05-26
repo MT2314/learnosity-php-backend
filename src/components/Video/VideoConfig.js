@@ -61,6 +61,19 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     console.log(brightcoveVideoId);
   };
 
+  // Event handler for clearing all fields/"deleting" video
+  const handleClearAllFields = () => {
+    setState({
+      type: "",
+      videoUrl: "",
+      thumbnailUrl: "",
+      thumbnailWidth: 0,
+      thumbnailHeight: 0,
+      brightcoveAccountId: "",
+      brightcoveVideoId: "",
+    });
+  };
+
   useEffect(() => {
     console.log(componentState);
   }, [componentState]);
@@ -95,6 +108,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               type="url"
               name="youTubeUrl"
               placeholder="YouTube video URL..."
+              value={videoUrl}
               onChange={handleVideoUrl}
               required
             />
@@ -109,6 +123,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               type="text"
               name="brightcoveAccountId"
               placeholder="Brightcove Account ID..."
+              value={brightcoveAccountId}
               onChange={handleBrightcoveAccountId}
               required
             />
@@ -119,12 +134,19 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               type="text"
               name="brightcoveVideoId"
               placeholder="Brightcove Video ID..."
+              value={brightcoveVideoId}
               onChange={handleBrightcoveVideoId}
               required
             />
             <button>Verify Brightcove Settings</button>
           </>
         ) : null}
+        <input
+          type="text"
+          name="transcript"
+          placeholder="Enter transcript here..."
+        />
+        <button onClick={handleClearAllFields}>Clear All Fields</button>
       </div>
     </div>
   );
