@@ -17,9 +17,9 @@ export const defaultProps = {
   editMode: false,
 };
 
-const Tab = ({ tabs, setProp = () => {} }) => {
+const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
   const [state, setState] = useState(defaultProps);
-  const { currentTab, editMode } = state;
+  const { editMode } = state;
 
   const handleAddTab = () => {
     const newTabObject = {
@@ -32,31 +32,34 @@ const Tab = ({ tabs, setProp = () => {} }) => {
       tabs: [...tabs, newTabObject],
       currentTab: newTabObject,
       editTabNameMode: false,
+      editMode:false
     });
   };
 
-  const handleOnBlur = () => {
-    setState({
-      ...state,
-      editTabNameMode: false,
-    });
-  };
+  // const handleOnBlur = () => {
+  //   setState({
+  //     ...state,
+  //     editTabNameMode: false,
+  //   });
+  // };
 
   const setEditMode = () => {
-    setState({
-      ...state,
+    setProp({
+      tabs,
       editMode: !state.editMode,
+      editTabNameMode: false,
+      currentTab:currentTab,
     });
   };
 
   const handleContentChange = (e) => {
-    const { currentTab } = state;
 
     const updatedTabs = tabs.map((tab) => {
       if (tab.name === currentTab.name) {
         return {
-          ...tab,
-          ...state,
+          tab,
+          id,
+          names,
           content: e.target.value,
         };
       } else {
@@ -64,7 +67,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
       }
     });
 
-    setState({
+    setProp({
       ...state,
       tabs: updatedTabs,
       currentTab: {
@@ -98,8 +101,9 @@ const Tab = ({ tabs, setProp = () => {} }) => {
   };
 
   const handleSelectTab = (tab) => {
-    setState({
-      ...state,
+    setProp({
+      // 
+      tabs:tabs,
       currentTab: tab,
       editTabNameMode: false,
       editMode: false,
@@ -114,7 +118,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
   };
 
   const createTabs = () => {
-    const { currentTab, editTabNameMode } = state;
+    const { editTabNameMode } = state;
 
     const allTabs = tabs.map((tab) => {
       return (
@@ -122,7 +126,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
           {editTabNameMode && currentTab.id === tab.id ? (
             <input
               value={tab.names}
-              onBlur={handleOnBlur}
+              //onBlur={handleOnBlur}
               onChange={handleEditTabName}
             />
           ) : (
@@ -170,14 +174,15 @@ const Tab = ({ tabs, setProp = () => {} }) => {
         </button>
         {createTabs()}
         <div className="tab-content">
+          {/* edit mode and it has to match the current tab id */}
           {editMode ? (
             <div>
               <FormattedText
                 onChange={handleContentChange}
-                value={state.currentTab.content}
-                body={state.currentTab.content}
+                value={currentTab.content}
+                body={currentTab.content}
                 setProp={(stateUpdate) =>
-                  setProp({ tabBody: stateUpdate.body })
+                  setProp({ tabs:[...tabs, {id:currentTab.id,names:currentTab.names, content:stateUpdate}] })
                 }
               />
               <button className="save-button" onClick={setEditMode}>

@@ -20,6 +20,7 @@ const mockedSavedCanvas = [
         content: "",
       },
     ],
+    currentTab: { id: 1, names: "Tab 1", content: "" }
   },
   {
     name: "FormattedText",
