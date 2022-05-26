@@ -10,10 +10,6 @@
     "test": "react-scripts test"
   },
   "license": "MIT",
-  "author": {
-    "name": "Jack Herrington",
-    "email": "jherr@pobox.com"
-  },
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@babel/plugin-transform-runtime": "^7.15.8",
