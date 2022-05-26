@@ -28,7 +28,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
       content: "",
     };
 
-    setState({
+    setProp({
       tabs: [...tabs, newTabObject],
       currentTab: newTabObject,
       editTabNameMode: false,
@@ -155,7 +155,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
     const previousTab =
       tabs[tabToDeleteIndex - 1] || tabs[tabToDeleteIndex + 1] || {};
 
-    setState({
+    setProp({
       tabs: updatedTabs,
       editTabNameMode: false,
       currentTab: previousTab,
