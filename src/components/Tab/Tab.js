@@ -2,37 +2,30 @@ import React, { useState } from "react";
 import FormattedText from "../FormattedText";
 import uuid from "uuid";
 import "./Tab.css";
-import AddContent from "./AddContent";
 
 export const defaultProps = {
   tabs: [
-    { id: 1, names: "Maths", content: <AddContent /> },
+    { id: 1, names: "Maths", content: "" },
     {
       id: 2,
       names: "Geography",
-      content: (
-        <>
-          <FormattedText />
-          <FormattedText />
-        </>
-      ),
+      content: "",
     },
   ],
-  currentTab: { id: 1, names: "Tab 1", content: <AddContent /> },
+  currentTab: { id: 1, names: "Tab 1", content: "" },
   editTabNameMode: false,
+  editMode: false,
 };
 
-const Tab = (defaultProps) => {
+const Tab = ({ tabs, setProp = () => {} }) => {
   const [state, setState] = useState(defaultProps);
-  const { currentTab } = state;
+  const { currentTab, editMode } = state;
 
   const handleAddTab = () => {
-    const { tabs } = state;
-
     const newTabObject = {
       id: uuid(),
       names: `Tab ${tabs.length + 1}`,
-      content: <AddContent />,
+      content: "",
     };
 
     setState({
@@ -49,8 +42,40 @@ const Tab = (defaultProps) => {
     });
   };
 
+  const setEditMode = () => {
+    setState({
+      ...state,
+      editMode: !state.editMode,
+    });
+  };
+
+  const handleContentChange = (e) => {
+    const { currentTab } = state;
+
+    const updatedTabs = tabs.map((tab) => {
+      if (tab.name === currentTab.name) {
+        return {
+          ...tab,
+          ...state,
+          content: e.target.value,
+        };
+      } else {
+        return tab;
+      }
+    });
+
+    setState({
+      ...state,
+      tabs: updatedTabs,
+      currentTab: {
+        ...currentTab,
+        content: e.target.value,
+      },
+    });
+  };
+
   const handleEditTabName = (e) => {
-    const { currentTab, tabs } = state;
+    const { currentTab } = state;
 
     const updatedTabs = tabs.map((tab) => {
       if (tab.id === currentTab.id) {
@@ -73,11 +98,11 @@ const Tab = (defaultProps) => {
   };
 
   const handleSelectTab = (tab) => {
-    console.log(tab);
     setState({
       ...state,
       currentTab: tab,
       editTabNameMode: false,
+      editMode: false,
     });
   };
 
@@ -89,7 +114,7 @@ const Tab = (defaultProps) => {
   };
 
   const createTabs = () => {
-    const { tabs, currentTab, editTabNameMode } = state;
+    const { currentTab, editTabNameMode } = state;
 
     const allTabs = tabs.map((tab) => {
       return (
@@ -121,7 +146,6 @@ const Tab = (defaultProps) => {
   };
 
   const handleDeleteTab = (tabToDelete) => {
-    const { tabs } = state;
     const tabToDeleteIndex = tabs.findIndex((tab) => tab.id === tabToDelete.id);
 
     const updatedTabs = tabs.filter((tab, index) => {
@@ -146,16 +170,37 @@ const Tab = (defaultProps) => {
         </button>
         {createTabs()}
         <div className="tab-content">
-          <div>
-            <p>{currentTab.content}</p>
-            {currentTab.id && (
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <button onClick={() => handleDeleteTab(currentTab)}>
-                  Delete
-                </button>
-              </div>
-            )}
-          </div>
+          {editMode ? (
+            <div>
+              <FormattedText
+                onChange={handleContentChange}
+                value={state.currentTab.content}
+                body={state.currentTab.content}
+                setProp={(stateUpdate) =>
+                  setProp({ tabBody: stateUpdate.body })
+                }
+              />
+              <button className="save-button" onClick={setEditMode}>
+                Done
+              </button>
+            </div>
+          ) : (
+            <div>
+              <p>{currentTab.content}</p>
+              {currentTab.id && (
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <button className="edit-mode-button" onClick={setEditMode}>
+                    Edit
+                  </button>
+                  <button onClick={() => handleDeleteTab(currentTab)}>
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

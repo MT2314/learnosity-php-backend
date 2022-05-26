@@ -11,6 +11,17 @@ const WidgetContext = createContext();
 const mockedSavedCanvas = [
   { name: "FormattedText", body: null },
   {
+    name: "Tab",
+    tabs: [
+      { id: 1, names: "Maths", content: "" },
+      {
+        id: 2,
+        names: "Geography",
+        content: "",
+      },
+    ],
+  },
+  {
     name: "FormattedText",
     body: {
       blocks: [
