@@ -22,7 +22,12 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const [videoPlayer, setVideoPlayer] = useState("");
   const handleVideoSelect = (e) => {
     setVideoPlayer(e.target.value);
-    setState({ type: e.target.value });
+    setState({
+      type: e.target.value,
+      brightcoveAccountId: "",
+      brightcoveVideoId: "",
+      videoUrl: "",
+    });
   };
 
   // YOUTUBE
