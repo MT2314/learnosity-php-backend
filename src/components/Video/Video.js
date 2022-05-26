@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import YouTubePlayer from "./YouTubePlayer";
+import YouTube from "react-youtube";
 
 import styles from "./styles/Video.module.scss";
 
@@ -47,7 +47,7 @@ const Video = ({
           tabIndex="0"
         ></div>
       ) : type === "youTube" ? (
-        <YouTubePlayer videoUrl={videoUrl} />
+        <YouTube videoId={videoUrl} className={styles.youTubePlayer} />
       ) : type === "brightcove" ? (
         <p>Brightcove video</p>
       ) : null}

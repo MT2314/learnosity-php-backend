@@ -14,8 +14,8 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     thumbnailUrl = "",
     thumbnailWidth = 0,
     thumbnailHeight = 0,
-    brightcoveDataPlayer = "",
-    brightcoveDataPlayerId = "",
+    brightcoveAccountId = "",
+    brightcoveVideoId = "",
   } = componentState;
 
   // State/event handler for setting "type"
@@ -25,6 +25,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     setState({ type: e.target.value });
   };
 
+  // YOUTUBE
   // State/event handler for setting "videoUrl" for YouTube
   const handleVideoUrl = (e) => {
     const youTubeId = getVideoId(e.target.value);
@@ -40,6 +41,17 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
         "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
       );
     }
+  };
+
+  // BRIGHTCOVE
+  // State/event handler for setting "brightcoveAccountId"
+  const handleAccountId = (e) => {
+    setState({ brightcoveAccountId: e.target.value });
+  };
+
+  // State/event handler for setting "brightcoveVideoId"
+  const handleVideoId = (e) => {
+    setState({ brightcoveVideoId: e.target.value });
   };
 
   useEffect(() => {
@@ -76,7 +88,6 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               type="url"
               name="youTubeUrl"
               placeholder="YouTube video URL..."
-              pattern=""
               onChange={handleVideoUrl}
               required
             />
@@ -84,16 +95,27 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
           </>
         ) : videoPlayer === "brightcove" ? (
           <>
-            <label htmlFor="brightcoveDataVideoId">
-              Enter Brightcove Data ID:
+            <label htmlFor="brightcoveAccountId">
+              Enter Brightcove Account ID:
             </label>
             <input
-              type="url"
-              name="brightcoveDataVideoId"
-              placeholder="Brightcove Data ID..."
-              pattern=""
+              type="text"
+              name="brightcoveAccountId"
+              placeholder="Brightcove Account ID..."
+              onChange={handleAccountId}
               required
             />
+            <label htmlFor="brightcoveVideoId">
+              Enter Brightcove Video ID:
+            </label>
+            <input
+              type="text"
+              name="brightcoveVideoId"
+              placeholder="Brightcove Video ID..."
+              onChange={handleVideoId}
+              required
+            />
+            <button>Verify Brightcove Settings</button>
           </>
         ) : null}
       </div>
