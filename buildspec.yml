@@ -10,7 +10,6 @@ phases:
       - echo Installing dependencies...
       - npm ci # --legacy-peer-deps
       - echo Running tests
-      - npm run test
 
   build:
     commands:
