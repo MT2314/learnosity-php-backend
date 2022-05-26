@@ -45,13 +45,15 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // BRIGHTCOVE
   // State/event handler for setting "brightcoveAccountId"
-  const handleAccountId = (e) => {
+  const handleBrightcoveAccountId = (e) => {
     setState({ brightcoveAccountId: e.target.value });
+    console.log(brightcoveAccountId);
   };
 
   // State/event handler for setting "brightcoveVideoId"
-  const handleVideoId = (e) => {
+  const handleBrightcoveVideoId = (e) => {
     setState({ brightcoveVideoId: e.target.value });
+    console.log(brightcoveVideoId);
   };
 
   useEffect(() => {
@@ -102,7 +104,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               type="text"
               name="brightcoveAccountId"
               placeholder="Brightcove Account ID..."
-              onChange={handleAccountId}
+              onChange={handleBrightcoveAccountId}
               required
             />
             <label htmlFor="brightcoveVideoId">
@@ -112,7 +114,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               type="text"
               name="brightcoveVideoId"
               placeholder="Brightcove Video ID..."
-              onChange={handleVideoId}
+              onChange={handleBrightcoveVideoId}
               required
             />
             <button>Verify Brightcove Settings</button>

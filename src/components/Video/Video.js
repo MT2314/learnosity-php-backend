@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import YouTube from "react-youtube";
+import ReactPlayerLoader from "@brightcove/react-player-loader";
 
 import styles from "./styles/Video.module.scss";
 
@@ -30,8 +31,8 @@ const Video = ({
   thumbnailUrl,
   thumbnailWidth,
   thumbnailHeight,
-  brightcoveDataPlayer,
-  brightcoveDataPlayerId,
+  brightcoveAccountId,
+  brightcoveVideoId,
   setProp = () => console.warn("No state change function provided"),
 }) => {
   useEffect(() => {
@@ -40,7 +41,8 @@ const Video = ({
 
   return (
     <div className={styles.videoContainer}>
-      {type === "" ? (
+      {type === "" ||
+      (type === "brightcove" && !brightcoveAccountId && !brightcoveVideoId) ? (
         <div
           data-testid="image-placeholder"
           className={styles.placeholderImg}
@@ -48,8 +50,11 @@ const Video = ({
         ></div>
       ) : type === "youTube" ? (
         <YouTube videoId={videoUrl} className={styles.youTubePlayer} />
-      ) : type === "brightcove" ? (
-        <p>Brightcove video</p>
+      ) : type === "brightcove" && brightcoveAccountId && brightcoveVideoId ? (
+        <ReactPlayerLoader
+          accountId={brightcoveAccountId}
+          videoId={brightcoveVideoId}
+        />
       ) : null}
     </div>
   );
