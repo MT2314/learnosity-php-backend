@@ -30,6 +30,16 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     });
   };
 
+  // Functions to clear inputs when toggling between types
+  const handleYouTubeSelect = () => {
+    document.getElementById("brightcoveAccountId").value = "";
+    document.getElementById("brightcoveVideoId").value = "";
+  };
+
+  const handleBrightcoveSelect = () => {
+    document.getElementById("youTubeUrl").value = "";
+  };
+
   // YOUTUBE
   // State/event handler for setting "videoUrl" for YouTube
   const handleVideoUrl = (e) => {
@@ -96,6 +106,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
             type="radio"
             id="youTube"
             value="youTube"
+            onClick={handleYouTubeSelect}
           />
           <label htmlFor="youTube">YouTube</label>
           <input
@@ -104,6 +115,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
             type="radio"
             id="brightcove"
             value="brightcove"
+            onClick={handleBrightcoveSelect}
           />
           <label htmlFor="brightcove">Brightcove</label>
         </form>
