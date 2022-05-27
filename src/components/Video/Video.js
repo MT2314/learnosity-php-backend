@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+import FormattedText from "../FormattedText/FormattedText";
+import { useToolBarOptions } from "../../hooks/useToolBarOptions";
+
 import YouTube from "react-youtube";
 import ReactPlayerLoader from "@brightcove/react-player-loader";
 
@@ -28,9 +31,6 @@ if (defaultProps.type === "youTube") {
 const Video = ({
   type,
   videoUrl,
-  thumbnailUrl,
-  thumbnailWidth,
-  thumbnailHeight,
   brightcoveAccountId,
   brightcoveVideoId,
   transcript,
@@ -41,6 +41,12 @@ const Video = ({
   useEffect(() => {
     console.log(videoUrl);
   }, [videoUrl]);
+
+  // Setting the toolbar for FormattedTexts with custom hook
+  // const creditToolbar = useToolBarOptions(
+  //   ["inline", "textAlign", "list", "link"],
+  //   ["bold", "italic", "underline", "strikethrough", "superscript", "subscript"]
+  // );
 
   return (
     <div className={styles.videoContainer}>
@@ -59,6 +65,34 @@ const Video = ({
           accountId={brightcoveAccountId}
           videoId={brightcoveVideoId}
         />
+      ) : null}
+      {(type === "youTube" && videoUrl) ||
+      (type === "brightcove" && brightcoveAccountId && brightcoveVideoId) ? (
+        <>
+          <div className={styles.transcriptContainer}>
+            <FormattedText
+              placeHolderText="Type transcript here..."
+              body={transcript}
+              setProp={(stateUpdate) =>
+                setProp({ transcript: stateUpdate.body })
+              }
+            />
+          </div>
+          <div className={styles.captionContainer}>
+            <FormattedText
+              placeHolderText="Type caption here..."
+              body={caption}
+              setProp={(stateUpdate) => setProp({ caption: stateUpdate.body })}
+            />
+          </div>
+          <div className={styles.creditContainer}>
+            <FormattedText
+              placeHolderText="Type credit here..."
+              body={credit}
+              setProp={(stateUpdate) => setProp({ credit: stateUpdate.body })}
+            />
+          </div>
+        </>
       ) : null}
     </div>
   );
