@@ -8,7 +8,7 @@
     "start": "webpack serve --open --mode development",
     "start:live": "webpack serve --open --mode development --live-reload --hot",
     "test": "react-scripts test --watchAll",
-    "test:build": "react-scripts test --ci --watchAll"
+    "test:build": "react-scripts test --watchAll:false"
   },
   "license": "MIT",
   "author": {
