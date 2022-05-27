@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FormattedText from "../FormattedText";
+import Image from "../Image/Image";
 import uuid from "uuid";
 import "./Tab.css";
 
@@ -56,34 +57,13 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
     setProp({
       tabs: tabs.map((tab, tabIndex) => {
         if (tab.id !== currentTab.id) return tab;
+
         return {
           ...tabs[tabIndex],
           content: stateUpdate.body,
         };
       }),
     });
-
-    console.log("======>",stateUpdate)
-    // const updatedTabs = tabs.map((tab) => {
-    //   if (tab.name === currentTab.name) {
-    //     return {
-    //       ...tab,
-    //       ...state,
-    //       content: e.target.value,
-    //     };
-    //   } else {
-    //     return tab;
-    //   }
-    // });
-
-    // setProp({
-    //   ...state,
-    //   tabs: updatedTabs,
-    //   currentTab: {
-    //     ...currentTab,
-    //     content: e.target.value,
-    //   },
-    // });
   };
 
   const handleEditTabName = (e) => {
