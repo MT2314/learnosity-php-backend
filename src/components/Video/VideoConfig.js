@@ -85,6 +85,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
         <p className={styles.playerSelectInfo}>Please select a video player:</p>
         <form onChange={handleVideoSelect}>
           <input
+            className={styles.videoConfigRadio}
             name="playerSelect"
             type="radio"
             id="youTube"
@@ -92,6 +93,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
           />
           <label htmlFor="youTube">YouTube</label>
           <input
+            className={styles.videoConfigRadio}
             name="playerSelect"
             type="radio"
             id="brightcove"
@@ -105,10 +107,11 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
           <>
             <label htmlFor="youTubeUrl">Enter YouTube video URL:</label>
             <input
+              className={styles.videoConfigInput}
               type="url"
               name="youTubeUrl"
               placeholder="YouTube video URL..."
-              value={videoUrl}
+              // value={videoUrl}
               onChange={handleVideoUrl}
               required
             />
@@ -120,6 +123,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               Enter Brightcove Account ID:
             </label>
             <input
+              className={styles.videoConfigInput}
               type="text"
               name="brightcoveAccountId"
               placeholder="Brightcove Account ID..."
@@ -131,6 +135,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               Enter Brightcove Video ID:
             </label>
             <input
+              className={styles.videoConfigInput}
               type="text"
               name="brightcoveVideoId"
               placeholder="Brightcove Video ID..."
@@ -141,11 +146,12 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
             <button>Verify Brightcove Settings</button>
           </>
         ) : null}
-        <input
+        {/* <input
+          className={styles.videoConfigInput}
           type="text"
           name="transcript"
           placeholder="Enter transcript here..."
-        />
+        /> */}
         <button onClick={handleClearAllFields}>Clear All Fields</button>
       </div>
     </div>
