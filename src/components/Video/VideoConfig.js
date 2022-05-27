@@ -40,7 +40,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   // Verify YouTube URL/data ID
   const verifyYouTubeUrl = () => {
     if (videoUrl) {
-      return;
+      alert("YouTube URL successful.");
     } else {
       alert(
         "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
@@ -63,12 +63,18 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // Event handler for clearing all fields/"deleting" video
   const handleClearAllFields = () => {
+    document.querySelector(
+      'input[name="playerSelect"]:checked'
+    ).checked = false;
+    if (type === "youTube") {
+      document.getElementById("youTubeUrl").value = "";
+    } else if (type === "brightcove") {
+      document.getElementById("brightcoveAccountId").value = "";
+      document.getElementById("brightcoveVideoId").value = "";
+    }
     setState({
       type: "",
       videoUrl: "",
-      thumbnailUrl: "",
-      thumbnailWidth: 0,
-      thumbnailHeight: 0,
       brightcoveAccountId: "",
       brightcoveVideoId: "",
     });
@@ -110,8 +116,8 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               className={styles.videoConfigInput}
               type="url"
               name="youTubeUrl"
+              id="youTubeUrl"
               placeholder="YouTube video URL..."
-              // value={videoUrl}
               onChange={handleVideoUrl}
               required
             />
@@ -126,6 +132,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               className={styles.videoConfigInput}
               type="text"
               name="brightcoveAccountId"
+              id="brightcoveAccountId"
               placeholder="Brightcove Account ID..."
               value={brightcoveAccountId}
               onChange={handleBrightcoveAccountId}
@@ -138,6 +145,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               className={styles.videoConfigInput}
               type="text"
               name="brightcoveVideoId"
+              id="brightcoveVideoId"
               placeholder="Brightcove Video ID..."
               value={brightcoveVideoId}
               onChange={handleBrightcoveVideoId}
@@ -146,12 +154,6 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
             <button>Verify Brightcove Settings</button>
           </>
         ) : null}
-        {/* <input
-          className={styles.videoConfigInput}
-          type="text"
-          name="transcript"
-          placeholder="Enter transcript here..."
-        /> */}
         <button onClick={handleClearAllFields}>Clear All Fields</button>
       </div>
     </div>
