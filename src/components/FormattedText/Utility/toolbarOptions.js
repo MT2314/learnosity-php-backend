@@ -1,3 +1,4 @@
+
 const toolbarOptions = {
   options: ["inline", "textAlign", "list", "link"],
   inline: {
