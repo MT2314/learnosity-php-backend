@@ -44,37 +44,36 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
   // };
 
   const setEditMode = () => {
-    setProp({
-      tabs,
+    setState({
       editMode: !state.editMode,
       editTabNameMode: false,
       currentTab:currentTab,
     });
   };
 
-  const handleContentChange = (e) => {
+  const handleContentChange = (stateUpdate) => {
 
-    const updatedTabs = tabs.map((tab) => {
-      if (tab.name === currentTab.name) {
-        return {
-          tab,
-          id,
-          names,
-          content: e.target.value,
-        };
-      } else {
-        return tab;
-      }
-    });
+    console.log("======>",stateUpdate)
+    // const updatedTabs = tabs.map((tab) => {
+    //   if (tab.name === currentTab.name) {
+    //     return {
+    //       ...tab,
+    //       ...state,
+    //       content: e.target.value,
+    //     };
+    //   } else {
+    //     return tab;
+    //   }
+    // });
 
-    setProp({
-      ...state,
-      tabs: updatedTabs,
-      currentTab: {
-        ...currentTab,
-        content: e.target.value,
-      },
-    });
+    // setProp({
+    //   ...state,
+    //   tabs: updatedTabs,
+    //   currentTab: {
+    //     ...currentTab,
+    //     content: e.target.value,
+    //   },
+    // });
   };
 
   const handleEditTabName = (e) => {
@@ -166,6 +165,19 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
     });
   };
 
+  const emilyTest = (stateUpdate,currentTab) => {
+    //return the tabs that matches the currentTab
+  const currentTabMatch = tabs.filter( (tab, index) => {
+    if(tab.id === currentTab.id){
+      return index
+    }})
+
+  //get the updated state
+    console.log("stateUpdate:", stateUpdate)
+    //update the content of the tabs content with the updated state
+    
+  }
+
   return (
     <div className="container">
       <div className="well">
@@ -174,16 +186,13 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
         </button>
         {createTabs()}
         <div className="tab-content">
-          {/* edit mode and it has to match the current tab id */}
+          {/* edit mode and tabs.id has to match the current tab id */}
           {editMode ? (
             <div>
               <FormattedText
-                onChange={handleContentChange}
                 value={currentTab.content}
                 body={currentTab.content}
-                setProp={(stateUpdate) =>
-                  setProp({ tabs:[...tabs, {id:currentTab.id,names:currentTab.names, content:stateUpdate}] })
-                }
+                setProp={(stateUpdate) => emilyTest(stateUpdate,currentTab)}
               />
               <button className="save-button" onClick={setEditMode}>
                 Done
