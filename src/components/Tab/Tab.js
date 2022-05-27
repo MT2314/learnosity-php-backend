@@ -53,6 +53,16 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
 
   const handleContentChange = (stateUpdate) => {
 
+    setProp({
+      tabs: tabs.map((tab, tabIndex) => {
+        if (tab.id !== currentTab.id) return tab;
+        return {
+          ...tabs[tabIndex],
+          content: stateUpdate.body,
+        };
+      }),
+    });
+
     console.log("======>",stateUpdate)
     // const updatedTabs = tabs.map((tab) => {
     //   if (tab.name === currentTab.name) {
@@ -165,19 +175,6 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
     });
   };
 
-  const emilyTest = (stateUpdate,currentTab) => {
-    //return the tabs that matches the currentTab
-  const currentTabMatch = tabs.filter( (tab, index) => {
-    if(tab.id === currentTab.id){
-      return index
-    }})
-
-  //get the updated state
-    console.log("stateUpdate:", stateUpdate)
-    //update the content of the tabs content with the updated state
-    
-  }
-
   return (
     <div className="container">
       <div className="well">
@@ -186,13 +183,12 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
         </button>
         {createTabs()}
         <div className="tab-content">
-          {/* edit mode and tabs.id has to match the current tab id */}
           {editMode ? (
             <div>
               <FormattedText
                 value={currentTab.content}
                 body={currentTab.content}
-                setProp={(stateUpdate) => emilyTest(stateUpdate,currentTab)}
+                setProp={(stateUpdate) => handleContentChange(stateUpdate)}
               />
               <button className="save-button" onClick={setEditMode}>
                 Done
