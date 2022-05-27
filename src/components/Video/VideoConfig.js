@@ -71,6 +71,19 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     console.log(brightcoveVideoId);
   };
 
+  // Function to verify Brightcove data
+  const verifyBrightcoveData = () => {
+    if (brightcoveAccountId && brightcoveVideoId) {
+      alert(
+        "The Brightcove data you've entered was successful.  Please see video in Canvas area."
+      );
+    } else {
+      alert(
+        "Sorry, the information provided didn't work.  Please provide a valid Brightcove Account ID and Brightcove Video ID."
+      );
+    }
+  };
+
   // Event handler for clearing all fields/"deleting" video
   const handleClearAllFields = () => {
     document.querySelector(
@@ -163,7 +176,9 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               onChange={handleBrightcoveVideoId}
               required
             />
-            <button>Verify Brightcove Settings</button>
+            <button onClick={verifyBrightcoveData}>
+              Verify Brightcove Settings
+            </button>
           </>
         ) : null}
         <button onClick={handleClearAllFields}>Clear All Fields</button>
