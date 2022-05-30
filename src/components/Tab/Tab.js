@@ -21,7 +21,7 @@ export const defaultProps = {
 
 const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
   const [state, setState] = useState(defaultProps);
-  const [tabComponent, setTabComponent] = useState([])
+  const [tabComponent, setTabComponent] = useState(null)
   const { editMode } = state;
 
   const handleAddTab = () => {
@@ -63,14 +63,6 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
       ...componentIndex[tabType].defaultProps,
     };
 
-    if (tabType === "FormattedText") {
-      setTabComponent([...tabComponent, <FormattedText/>]);
-
-    } else if (tabType === "Image") {
-      setTabComponent([...tabComponent, <Image />]);
-    }
-
-    
     setProp({
       tabs: tabs.map((tab, tabIndex) => {
         if (tab.id !== currentTab.id) return tab;
@@ -80,9 +72,21 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
         };
       }),
     });
-
-
     //setTab(tabs.length);
+
+    const currentTabComponents = tabs[currentTab.id - 1].content;
+
+    const _widgets = currentTabComponents.map((widget) => {
+      if(widget.tabType === "FormattedText"){
+        return <FormattedText/>
+      }else if(widget.tabType === "Image"){
+        return <Image />
+      }
+    })
+
+    setTabComponent(_widgets)
+
+
   };;
 
 //   const handleContentChange = (stateUpdate) => {
@@ -210,6 +214,7 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
                     Add {componentIndex[componentKey].readableName}
                   </button>
                 ))}
+
                 {tabComponent}
 
               <button className="save-button" onClick={setEditMode}>
