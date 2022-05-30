@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import FormattedText from "../FormattedText";
-import Image from "../Image/Image";
 import uuid from "uuid";
 import "./Tab.css";
 
@@ -57,7 +56,7 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
     setProp({
       tabs: tabs.map((tab, tabIndex) => {
         if (tab.id !== currentTab.id) return tab;
-
+//todo get the type of component added and place the default props into content array
         return {
           ...tabs[tabIndex],
           content: stateUpdate.body,
