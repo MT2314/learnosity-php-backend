@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+import componentIndex from "../componentIndex";
 import FormattedText from "../FormattedText";
+import Image from "../Image/Image";
 import uuid from "uuid";
 import "./Tab.css";
 
 export const defaultProps = {
   tabs: [
-    { id: 1, names: "Maths", content: "" },
+    { id: 1, names: "Maths", content: null },
     {
       id: 2,
       names: "Geography",
-      content: "",
+      content: null,
     },
   ],
   currentTab: { id: 1, names: "Tab 1", content: "" },
@@ -19,13 +21,14 @@ export const defaultProps = {
 
 const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
   const [state, setState] = useState(defaultProps);
+  const [tabComponent, setTabComponent] = useState([])
   const { editMode } = state;
 
   const handleAddTab = () => {
     const newTabObject = {
       id: uuid(),
       names: `Tab ${tabs.length + 1}`,
-      content: "",
+      content: [],
     };
 
     setProp({
@@ -50,6 +53,31 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
       currentTab:currentTab,
     });
   };
+
+
+  //add a component to the tab
+  const addTabContent = (tabType) => () => {
+    if (tabType === "FormattedText") {
+      setTabComponent(<FormattedText/>);
+    } else if (tabType === "Image") {
+      setTabComponent(<Image />);
+    }
+    const newContent = {
+      tabType,
+      id: Math.floor(Math.random() * 100000),
+      ...componentIndex[tabType].defaultProps,
+    };
+    setProp({
+      tabs: tabs.map((tab, tabIndex) => {
+        if (tab.id !== currentTab.id) return tab;
+        return {
+          ...tabs[tabIndex],
+          content: [newContent],
+        };
+      }),
+    });
+    //setTab(tabs.length);
+  };;
 
   const handleContentChange = (stateUpdate) => {
 
@@ -164,11 +192,20 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
         <div className="tab-content">
           {editMode ? (
             <div>
-              <FormattedText
-                value={currentTab.content}
-                body={currentTab.content}
-                setProp={(stateUpdate) => handleContentChange(stateUpdate)}
-              />
+              {Object.keys(componentIndex)
+                .filter((key) => {
+                  const regex = /formatted|image/i
+                return key.match(regex)
+                }
+                )
+                .map((componentKey) => (
+                  <button
+                    onClick={addTabContent(componentKey)}>
+                    Add {componentIndex[componentKey].readableName}
+                  </button>
+                ))}
+                {tabComponent}
+
               <button className="save-button" onClick={setEditMode}>
                 Done
               </button>
