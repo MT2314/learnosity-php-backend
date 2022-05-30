@@ -10,6 +10,7 @@ import QuoteBox, {
 } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
 import Tab, { defaultProps as tabsDefaultProps } from "./Tab/Tab";
+import NestedTest, { defaultProps as nestedTabsDefaultProps } from "./NestedNestedTest/NestedTest"
 // import SahilTab, {
 //   defaultProps as sahilTabDefaultProps,
 // } from "./SahilTab/SahilTab";
@@ -19,6 +20,12 @@ const componentIndex = {
     Component: Callout,
     readableName: "Callout",
     defaultProps: calloutDefaultProps,
+    version: "0.0.1",
+  },
+  NestedTest:{
+    Component: NestedTest,
+    readableName: "NestedTest",
+    defaultProps: nestedTabsDefaultProps,
     version: "0.0.1",
   },
   FormattedText: {
