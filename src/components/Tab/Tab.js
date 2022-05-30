@@ -76,12 +76,11 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
         if (tab.id !== currentTab.id) return tab;
         return {
           ...tabs[tabIndex],
-          content: [...tabs[currentTab.id - 1].content,newContent],
+          content: [...tabs[currentTab.id - 1].content, newContent],
         };
       }),
     });
 
-    console.log("====>",tabs[currentTab.id - 1].content)
 
     //setTab(tabs.length);
   };;
