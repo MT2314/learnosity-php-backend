@@ -21,7 +21,7 @@ export const defaultProps = {
 
 const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
   const [state, setState] = useState(defaultProps);
-  const [tabComponent, setTabComponent] = useState(null)
+  const [tabComponent, setTabComponent] = useState([])
   const { editMode } = state;
 
   const handleAddTab = () => {
@@ -63,12 +63,12 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
       ...componentIndex[tabType].defaultProps,
     };
 
-    // if (tabType === "FormattedText") {
-    //   setTabComponent([...tabComponent, <FormattedText/>]);
+    if (tabType === "FormattedText") {
+      setTabComponent([...tabComponent, <FormattedText/>]);
 
-    // } else if (tabType === "Image") {
-    //   setTabComponent([...tabComponent, <Image />]);
-    // }
+    } else if (tabType === "Image") {
+      setTabComponent([...tabComponent, <Image />]);
+    }
 
     
     setProp({
