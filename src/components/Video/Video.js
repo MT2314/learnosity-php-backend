@@ -54,22 +54,30 @@ const Video = ({
       (type === "brightcove" && !brightcoveAccountId && !brightcoveVideoId) ||
       (type === "youTube" && !videoUrl) ? (
         <div
-          data-testid="image-placeholder"
+          data-testid="videoPlaceholder"
           className={styles.placeholderImg}
           tabIndex="0"
         ></div>
       ) : type === "youTube" && videoUrl ? (
-        <YouTube videoId={videoUrl} className={styles.youTubePlayer} />
+        <YouTube
+          videoId={videoUrl}
+          className={styles.youTubePlayer}
+          data-testid="youTubePlayer"
+        />
       ) : type === "brightcove" && brightcoveAccountId && brightcoveVideoId ? (
         <ReactPlayerLoader
           accountId={brightcoveAccountId}
           videoId={brightcoveVideoId}
+          data-testid="brightcovePlayer"
         />
       ) : null}
       {(type === "youTube" && videoUrl) ||
       (type === "brightcove" && brightcoveAccountId && brightcoveVideoId) ? (
         <>
-          <div className={styles.transcriptContainer}>
+          <div
+            className={styles.transcriptContainer}
+            data-testid="videoTranscript"
+          >
             <FormattedText
               placeHolderText="Type transcript here..."
               body={transcript}
@@ -78,14 +86,14 @@ const Video = ({
               }
             />
           </div>
-          <div className={styles.captionContainer}>
+          <div className={styles.captionContainer} data-testid="videoCaption">
             <FormattedText
               placeHolderText="Type caption here..."
               body={caption}
               setProp={(stateUpdate) => setProp({ caption: stateUpdate.body })}
             />
           </div>
-          <div className={styles.creditContainer}>
+          <div className={styles.creditContainer} data-testid="videoCredit">
             <FormattedText
               placeHolderText="Type credit here..."
               body={credit}
