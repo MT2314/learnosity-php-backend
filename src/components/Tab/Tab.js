@@ -7,11 +7,11 @@ import "./Tab.css";
 
 export const defaultProps = {
   tabs: [
-    { id: 1, names: "Maths", content: null },
+    { id: 1, names: "Maths", content: [] },
     {
       id: 2,
       names: "Geography",
-      content: null,
+      content: [],
     },
   ],
   currentTab: { id: 1, names: "Tab 1", content: "" },
@@ -21,7 +21,7 @@ export const defaultProps = {
 
 const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
   const [state, setState] = useState(defaultProps);
-  const [tabComponent, setTabComponent] = useState([])
+  const [tabComponent, setTabComponent] = useState(null)
   const { editMode } = state;
 
   const handleAddTab = () => {
@@ -54,44 +54,51 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
     });
   };
 
-
   //add a component to the tab
   const addTabContent = (tabType) => () => {
-    if (tabType === "FormattedText") {
-      setTabComponent(<FormattedText/>);
-    } else if (tabType === "Image") {
-      setTabComponent(<Image />);
-    }
+
     const newContent = {
       tabType,
       id: Math.floor(Math.random() * 100000),
       ...componentIndex[tabType].defaultProps,
     };
+
+    // if (tabType === "FormattedText") {
+    //   setTabComponent([...tabComponent, <FormattedText/>]);
+
+    // } else if (tabType === "Image") {
+    //   setTabComponent([...tabComponent, <Image />]);
+    // }
+
+    
     setProp({
       tabs: tabs.map((tab, tabIndex) => {
         if (tab.id !== currentTab.id) return tab;
         return {
           ...tabs[tabIndex],
-          content: [newContent],
+          content: [...tabs[currentTab.id - 1].content,newContent],
         };
       }),
     });
+
+    console.log("====>",tabs[currentTab.id - 1].content)
+
     //setTab(tabs.length);
   };;
 
-  const handleContentChange = (stateUpdate) => {
+//   const handleContentChange = (stateUpdate) => {
 
-    setProp({
-      tabs: tabs.map((tab, tabIndex) => {
-        if (tab.id !== currentTab.id) return tab;
-//todo get the type of component added and place the default props into content array
-        return {
-          ...tabs[tabIndex],
-          content: stateUpdate.body,
-        };
-      }),
-    });
-  };
+//     setProp({
+//       tabs: tabs.map((tab, tabIndex) => {
+//         if (tab.id !== currentTab.id) return tab;
+// //todo get the type of component added and place the default props into content array
+//         return {
+//           ...tabs[tabIndex],
+//           content: stateUpdate.body,
+//         };
+//       }),
+//     });
+//   };
 
   const handleEditTabName = (e) => {
     const { currentTab } = state;
