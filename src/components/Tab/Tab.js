@@ -21,6 +21,7 @@ export const defaultProps = {
 const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
   const [state, setState] = useState(defaultProps);
   const [ currTabIndex, setCurrTabIndex ] = useState(0)
+  const [ currTab, setCurrTab ] = useState({ id: 1, name: "Math", content: [] })
   // const { editMode } = state;
 
   const handleAddTab = () => {
@@ -64,7 +65,7 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
 
     setProp({
       tabs: tabs.map((tab, tabIndex) => {
-        if (tab.id !== currentTab.id) return tab;
+        if (tab.id - 1 !== currTabIndex) return tab;
         return {
           ...tabs[tabIndex],
           content: [...tabs[tabIndex].content, newContent],
@@ -112,15 +113,16 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
     });
   };
 
-  const handleSelectTab = (tab) => {
-    setProp({
-      // 
-      tabs:tabs,
-      currentTab: tab,
-      editTabNameMode: false,
-      editMode: false,
-    });
-  };
+  // const handleSelectTab = (tab) => {
+  //   setCurrTab(tab)
+  //   // setProp({
+  //   //   // 
+  //   //   tabs:tabs,
+  //   //   currentTab: tab,
+  //   //   editTabNameMode: false,
+  //   //   editMode: false,
+  //   // });
+  // };
 
   const handleDoubleClick = () => {
     setState({
@@ -135,26 +137,15 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
     const allTabs = tabs.map((tab, index) => {
       return (
         <li>
-          {/* {editTabNameMode && currentTab.id === tab.id ? ( */}
-            {/* <input
-              value={tab.names}
-              //onBlur={handleOnBlur}
-              onChange={handleEditTabName}
-            /> */}
-          {/* ) : ( */}
             <button
-              className={currentTab.id === tab.id ? "tab active" : "tab"}
-              onClick={() => {
-                setCurrTabIndex(index)
-                handleSelectTab(tab);
-              }}
+              //className={currentTab.id === tab.id ? "tab active" : "tab"}
+              onClick={() => {setCurrTabIndex(index)}}
               onDoubleClick={() => {
                 handleDoubleClick(tab);
               }}
             >
               {tab.name}
             </button>
-          {/* )} */}
         </li>
       );
     });
@@ -179,6 +170,8 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
     });
   };
 
+  console.log(tabs[currTabIndex])
+
   return (
     <div className="container">
       <div className="well">
@@ -186,8 +179,8 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
           <i className="text-primary fas fa-plus-square" /> Add Tab
         </button>
         {createTabs()}
-        <div className="tab-content">
-          {/* {editMode ? ( */}
+        {currTabIndex === tabs[currTabIndex].id - 1 && (
+          <div className="tab-content">
             <div>
               {Object.keys(componentIndex)
                 .filter((key) => {
@@ -200,36 +193,20 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
                   </button>
                 ))}
 
-              {tabs[currTabIndex].content.map((widget) => {
+              {tabs[currTabIndex].content.map((widget, widgetIndex) => {
                 if (widget.tabType === "FormattedText") {
-                  return <FormattedText setProp={((stateUpdate) => console.log(stateUpdate))}/>;
+                  return (
+                    <FormattedText
+                      setProp={(stateUpdate) => console.log(stateUpdate)}
+                    />
+                  );
                 } else if (widget.tabType === "Image") {
                   return <Image />;
                 }
               })}
-{/* 
-              <button className="save-button" onClick={setEditMode}>
-                Done
-              </button> */}
             </div>
-          {/* ) : ( */}
-            {/* <div>
-              <p>{currentTab.content}</p>
-              {currentTab.id && (
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <button className="edit-mode-button" onClick={setEditMode}>
-                    Edit
-                  </button>
-                  <button onClick={() => handleDeleteTab(currentTab)}>
-                    Delete
-                  </button>
-                </div>
-              )}
-            </div> */}
-          {/* )} */}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
