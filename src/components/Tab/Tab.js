@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import componentIndex from "../componentIndex";
 import FormattedText from "../FormattedText";
 import Image from "../Image/Image";
-import uuid from "uuid";
 import "./Tab.css";
 
 export const defaultProps = {
   tabs: [
-    { id: 1, names: "Math", content: [] },
+    { id: 1, name: "Math", content: [] },
     {
       id: 2,
-      names: "Geography",
+      name: "Geography",
       content: [],
     },
   ],
@@ -21,12 +20,13 @@ export const defaultProps = {
 
 const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
   const [state, setState] = useState(defaultProps);
-  const { editMode } = state;
+  const [ currTabIndex, setCurrTabIndex ] = useState(0)
+  // const { editMode } = state;
 
   const handleAddTab = () => {
     const newTabObject = {
-      id: uuid(),
-      names: `Tab ${tabs.length + 1}`,
+      id: tabs.length + 1,
+      name: `Tab ${tabs.length + 1}`,
       content: [],
     };
 
@@ -96,7 +96,7 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
       if (tab.id === currentTab.id) {
         return {
           ...tab,
-          names: e.target.value,
+          name: e.target.value,
         };
       } else {
         return tab;
@@ -107,7 +107,7 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
       tabs: updatedTabs,
       currentTab: {
         ...currentTab,
-        names: e.target.value,
+        name: e.target.value,
       },
     });
   };
@@ -132,28 +132,29 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
   const createTabs = () => {
     const { editTabNameMode } = state;
 
-    const allTabs = tabs.map((tab) => {
+    const allTabs = tabs.map((tab, index) => {
       return (
         <li>
-          {editTabNameMode && currentTab.id === tab.id ? (
-            <input
+          {/* {editTabNameMode && currentTab.id === tab.id ? ( */}
+            {/* <input
               value={tab.names}
               //onBlur={handleOnBlur}
               onChange={handleEditTabName}
-            />
-          ) : (
+            /> */}
+          {/* ) : ( */}
             <button
               className={currentTab.id === tab.id ? "tab active" : "tab"}
               onClick={() => {
+                setCurrTabIndex(index)
                 handleSelectTab(tab);
               }}
               onDoubleClick={() => {
                 handleDoubleClick(tab);
               }}
             >
-              {tab.names}
+              {tab.name}
             </button>
-          )}
+          {/* )} */}
         </li>
       );
     });
@@ -186,7 +187,7 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
         </button>
         {createTabs()}
         <div className="tab-content">
-          {editMode ? (
+          {/* {editMode ? ( */}
             <div>
               {Object.keys(componentIndex)
                 .filter((key) => {
@@ -199,20 +200,20 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
                   </button>
                 ))}
 
-              {tabs[currentTab.id - 1].content.map((widget) => {
+              {tabs[currTabIndex].content.map((widget) => {
                 if (widget.tabType === "FormattedText") {
                   return <FormattedText setProp={((stateUpdate) => console.log(stateUpdate))}/>;
                 } else if (widget.tabType === "Image") {
                   return <Image />;
                 }
               })}
-
+{/* 
               <button className="save-button" onClick={setEditMode}>
                 Done
-              </button>
+              </button> */}
             </div>
-          ) : (
-            <div>
+          {/* ) : ( */}
+            {/* <div>
               <p>{currentTab.content}</p>
               {currentTab.id && (
                 <div
@@ -226,8 +227,8 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
                   </button>
                 </div>
               )}
-            </div>
-          )}
+            </div> */}
+          {/* )} */}
         </div>
       </div>
     </div>
