@@ -7,7 +7,7 @@ import "./Tab.css";
 
 export const defaultProps = {
   tabs: [
-    { id: 1, names: "Maths", content: [] },
+    { id: 1, names: "Math", content: [] },
     {
       id: 2,
       names: "Geography",
@@ -67,7 +67,7 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
         if (tab.id !== currentTab.id) return tab;
         return {
           ...tabs[tabIndex],
-          content: [...tabs[currentTab.id - 1].content, newContent],
+          content: [...tabs[tabIndex].content, newContent],
         };
       }),
     });
@@ -75,19 +75,19 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
 
   };;
 
-//   const handleContentChange = (stateUpdate) => {
+  const handleContentChange = (stateUpdate) => {
 
-//     setProp({
-//       tabs: tabs.map((tab, tabIndex) => {
-//         if (tab.id !== currentTab.id) return tab;
-// //todo get the type of component added and place the default props into content array
-//         return {
-//           ...tabs[tabIndex],
-//           content: stateUpdate.body,
-//         };
-//       }),
-//     });
-//   };
+    setProp({
+      tabs: tabs.map((tab, tabIndex) => {
+        if (tab.id !== currentTab.id) return tab;
+
+        return {
+          ...tabs[tabIndex],
+          content: stateUpdate.body,
+        };
+      }),
+    });
+  };
 
   const handleEditTabName = (e) => {
     const { currentTab } = state;
@@ -201,7 +201,7 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
 
               {tabs[currentTab.id - 1].content.map((widget) => {
                 if (widget.tabType === "FormattedText") {
-                  return <FormattedText />;
+                  return <FormattedText setProp={((stateUpdate) => console.log(stateUpdate))}/>;
                 } else if (widget.tabType === "Image") {
                   return <Image />;
                 }

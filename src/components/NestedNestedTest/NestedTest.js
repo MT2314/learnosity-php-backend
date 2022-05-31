@@ -105,6 +105,7 @@ const NestedNestedTest = ({ body, setProp, setNestedProp, tabs = [], ...rest }) 
   const setTabProps = (tabIndex) => (stateUpdate) => {
     console.log({ tabIndex, stateUpdate });
     const newTabsState = JSON.parse(JSON.stringify(tabs));
+    console.log("newTabState:",newTabsState)
     newTabsState.splice(tabIndex, 1, { ...tabs[tabIndex], ...stateUpdate });
     setProp({ tabs: newTabsState });
   };
