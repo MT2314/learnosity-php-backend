@@ -13,16 +13,11 @@ export const defaultProps = {
       content: [],
     },
   ],
-  currentTab: { id: 1, names: "Tab 1", content: "" },
-  editTabNameMode: false,
-  editMode: false,
 };
 
 const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
   const [state, setState] = useState(defaultProps);
   const [ currTabIndex, setCurrTabIndex ] = useState(0)
-  const [ currTab, setCurrTab ] = useState({ id: 1, name: "Math", content: [] })
-  // const { editMode } = state;
 
   const handleAddTab = () => {
     const newTabObject = {
@@ -33,24 +28,6 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
 
     setProp({
       tabs: [...tabs, newTabObject],
-      currentTab: newTabObject,
-      editTabNameMode: false,
-      editMode:false
-    });
-  };
-
-  // const handleOnBlur = () => {
-  //   setState({
-  //     ...state,
-  //     editTabNameMode: false,
-  //   });
-  // };
-
-  const setEditMode = () => {
-    setState({
-      editMode: !state.editMode,
-      editTabNameMode: false,
-      currentTab:currentTab,
     });
   };
 
@@ -76,19 +53,6 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
 
   };;
 
-  const handleContentChange = (stateUpdate) => {
-
-    setProp({
-      tabs: tabs.map((tab, tabIndex) => {
-        if (tab.id !== currentTab.id) return tab;
-
-        return {
-          ...tabs[tabIndex],
-          content: stateUpdate.body,
-        };
-      }),
-    });
-  };
 
   const handleEditTabName = (e) => {
     const { currentTab } = state;
@@ -112,27 +76,15 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
       },
     });
   };
-
-  // const handleSelectTab = (tab) => {
-  //   setCurrTab(tab)
-  //   // setProp({
-  //   //   // 
-  //   //   tabs:tabs,
-  //   //   currentTab: tab,
-  //   //   editTabNameMode: false,
-  //   //   editMode: false,
-  //   // });
+  
+  // const handleDoubleClick = () => {
+  //   setState({
+  //     ...state,
+  //     editTabNameMode: true,
+  //   });
   // };
 
-  const handleDoubleClick = () => {
-    setState({
-      ...state,
-      editTabNameMode: true,
-    });
-  };
-
   const createTabs = () => {
-    const { editTabNameMode } = state;
 
     const allTabs = tabs.map((tab, index) => {
       return (
@@ -140,9 +92,9 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
             <button
               //className={currentTab.id === tab.id ? "tab active" : "tab"}
               onClick={() => {setCurrTabIndex(index)}}
-              onDoubleClick={() => {
-                handleDoubleClick(tab);
-              }}
+              // onDoubleClick={() => {
+              //   handleDoubleClick(tab);
+              // }}
             >
               {tab.name}
             </button>
