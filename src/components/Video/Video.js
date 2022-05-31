@@ -12,22 +12,6 @@ export let defaultProps = {
   type: "",
 };
 
-if (defaultProps.type === "youTube") {
-  defaultProps = {
-    ...defaultProps,
-    videoUrl: "",
-    thumbnailUrl: "",
-    thumbnailWidth: 0,
-    thumbnailHeight: 0,
-  };
-} else if (defaultProps.type === "brightcove") {
-  defaultProps = {
-    ...defaultProps,
-    brightcoveDataPlayer: "",
-    brightcoveDataPlayerId: "",
-  };
-}
-
 const Video = ({
   type,
   videoUrl,
@@ -36,11 +20,13 @@ const Video = ({
   transcript,
   caption,
   credit,
+  youTubeError,
   setProp = () => console.warn("No state change function provided"),
+  setState = () => {},
 }) => {
   useEffect(() => {
-    console.log(videoUrl);
-  }, [videoUrl]);
+    console.log(youTubeError);
+  }, [youTubeError]);
 
   // Setting the toolbar for FormattedTexts with custom hook
   // const creditToolbar = useToolBarOptions(
@@ -49,27 +35,26 @@ const Video = ({
   // );
 
   return (
-    <div className={styles.videoContainer}>
+    <div className={styles.videoContainer} data-testid="video">
       {type === "" ||
       (type === "brightcove" && !brightcoveAccountId && !brightcoveVideoId) ||
       (type === "youTube" && !videoUrl) ? (
-        <div
-          data-testid="videoPlaceholder"
-          className={styles.placeholderImg}
-          tabIndex="0"
-        ></div>
+        <div className={styles.placeholderImg} tabIndex="0"></div>
       ) : type === "youTube" && videoUrl ? (
-        <YouTube
-          videoId={videoUrl}
-          className={styles.youTubePlayer}
-          data-testid="youTubePlayer"
-        />
+        <div className={styles.youTubePlayer} data-testid="youTubePlayer">
+          <YouTube
+            videoId={videoUrl}
+            onReady={setState({ youTubeError: false })}
+            onError={setState({ youTubeError: true })}
+          />
+        </div>
       ) : type === "brightcove" && brightcoveAccountId && brightcoveVideoId ? (
-        <ReactPlayerLoader
-          accountId={brightcoveAccountId}
-          videoId={brightcoveVideoId}
-          data-testid="brightcovePlayer"
-        />
+        <div className={styles.brightcovePlayer} data-testid="brightcovePlayer">
+          <ReactPlayerLoader
+            accountId={brightcoveAccountId}
+            videoId={brightcoveVideoId}
+          />
+        </div>
       ) : null}
       {(type === "youTube" && videoUrl) ||
       (type === "brightcove" && brightcoveAccountId && brightcoveVideoId) ? (

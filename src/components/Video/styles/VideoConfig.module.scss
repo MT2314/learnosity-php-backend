@@ -1,10 +1,30 @@
 .videoConfigContainer {
+  display: flex;
+  flex-direction: column;
+
   .playerSelectContainer {
     display: flex;
     flex-direction: column;
 
     .playerSelectInfo {
       font-size: 1rem;
+    }
+  }
+
+  .configOptions {
+    display: flex;
+    flex-direction: column;
+
+    .videoConfigInput {
+      width: 100%;
+    }
+
+    .inputError {
+      border: 2px solid red;
+    }
+
+    .inputSuccess {
+      border: 2px solid green;
     }
   }
 }
