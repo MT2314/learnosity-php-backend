@@ -15,8 +15,8 @@ export const defaultProps = {
   ],
 };
 
-const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
-  const [state, setState] = useState(defaultProps);
+const Tab = ({ tabs, setProp = () => {} }) => {
+  //const [state, setState] = useState(defaultProps);
   const [ currTabIndex, setCurrTabIndex ] = useState(0)
 
   const handleAddTab = () => {
@@ -76,7 +76,7 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
       },
     });
   };
-  
+
   // const handleDoubleClick = () => {
   //   setState({
   //     ...state,
