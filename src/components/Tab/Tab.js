@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button, TabPanel } from "@mui/material";
 import componentIndex from "../componentIndex";
 import FormattedText from "../FormattedText";
 import Image from "../Image/Image";
@@ -16,7 +17,7 @@ export const defaultProps = {
 };
 
 const Tab = ({ tabs, setProp = () => {} }) => {
-  //const [state, setState] = useState(defaultProps);
+
   const [ currTabIndex, setCurrTabIndex ] = useState(0)
 
   const handleAddTab = () => {
@@ -122,7 +123,32 @@ const Tab = ({ tabs, setProp = () => {} }) => {
     });
   };
 
-  console.log(tabs[currTabIndex])
+  const setTabProps = (widgetIndex) => (stateUpdate) => {
+    //console.log({ tabIndex, stateUpdate });
+    console.log(widgetIndex)
+
+    //  setProp({
+    //   tabs: tabs.map((tab, tabIndex) => {
+    //     if (tab.id - 1 !== currTabIndex) return tab;
+    //     return {
+    //       ...tabs[tabIndex],
+    //       content: [...tabs[tabIndex].content, newContent],
+    //     };
+    //   }),
+    // });
+    const newTabsState = JSON.parse(JSON.stringify(tabs));
+     newTabsState.map((x, index) => {
+       if(x.id - 1 !== currTabIndex) return x;
+       x.content.map((y, index) => {
+        if(index === widgetIndex ){
+          console.log(y.id)
+        }
+       })
+       
+     })
+    //newTabsState.splice(currTabIndex, 1, { ...tabs[widgetIndex], ...stateUpdate });
+    //setProp({ tabs: newTabsState });
+  };
 
   return (
     <div className="container">
@@ -146,10 +172,11 @@ const Tab = ({ tabs, setProp = () => {} }) => {
                 ))}
 
               {tabs[currTabIndex].content.map((widget, widgetIndex) => {
+                
                 if (widget.tabType === "FormattedText") {
                   return (
                     <FormattedText
-                      setProp={(stateUpdate) => console.log(stateUpdate)}
+                      setProp={setTabProps(widgetIndex)}
                     />
                   );
                 } else if (widget.tabType === "Image") {
