@@ -71,16 +71,7 @@ const Tab = ({ tabs, currentTab, setProp = () => {} }) => {
         };
       }),
     });
-    //setTab(tabs.length);
-    const currentTabComponents = tabs[currentTab.id - 1].content;
 
-    const _widgets = currentTabComponents.map((widget) => {
-      if(widget.tabType === "FormattedText"){
-        return <FormattedText/>
-      }else if(widget.tabType === "Image"){
-        return <Image />
-      }
-    })
 
   };;
 
