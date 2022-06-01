@@ -19,6 +19,7 @@ export const defaultProps = {
 const Tab = ({ tabs, setProp = () => {} }) => {
 
   const [ currTabIndex, setCurrTabIndex ] = useState(0)
+  const [ currContentIndex, setCurrContentIndex ] = useState(0)
 
   const handleAddTab = () => {
     const newTabObject = {
@@ -123,32 +124,63 @@ const Tab = ({ tabs, setProp = () => {} }) => {
     });
   };
 
-  const setTabProps = (widgetIndex) => (stateUpdate) => {
-    //console.log({ tabIndex, stateUpdate });
-    console.log(widgetIndex)
-
-    //  setProp({
-    //   tabs: tabs.map((tab, tabIndex) => {
-    //     if (tab.id - 1 !== currTabIndex) return tab;
-    //     return {
-    //       ...tabs[tabIndex],
-    //       content: [...tabs[tabIndex].content, newContent],
-    //     };
-    //   }),
-    // });
-    const newTabsState = JSON.parse(JSON.stringify(tabs));
-     newTabsState.map((x, index) => {
-       if(x.id - 1 !== currTabIndex) return x;
-       x.content.map((y, index) => {
-        if(index === widgetIndex ){
-          console.log(y.id)
-        }
-       })
-       
-     })
-    //newTabsState.splice(currTabIndex, 1, { ...tabs[widgetIndex], ...stateUpdate });
-    //setProp({ tabs: newTabsState });
+  const setTabProps = (selectedTabIndex, selectedContentIndex) => (stateUpdate) => {
+    console.log("currTabIndex:", selectedTabIndex, "selectedContentIndex:",selectedContentIndex)
+    console.log("stateUpdate:", stateUpdate)
+    // Downside, probably not performant, also ack.
+    setProp({
+      tabs: tabs.map((tab, tabIndex) => {
+        if (tabIndex !== selectedTabIndex) return tab;
+        return {
+          ...tab,
+          content: tab.content.map((contentItem, contentIndex) => {
+            if (contentIndex !== selectedContentIndex) return contentItem;
+            return {
+              ...contentItem,
+              ...stateUpdate,
+            };
+          }),
+        };
+      }),
+    });
+    // More performant alternative, all the ack still?
+    const newTabState = JSON.parse(JSON.stringify(tabs)); // Makes a deep unlinked copy of the object
+    const previousContentState = newTabState[selectedTabIndex].content[selectedContentIndex];
+    newTabState[selectedTabIndex].content.splice(selectedContentIndex, 1, {
+      ...previousContentState,
+      ...stateUpdate,
+    });
+    setProp({
+      tabs: newTabState,
+    });
   };
+
+  // const setTabProps = (widgetIndex) => (stateUpdate) => {
+  //   //console.log({ tabIndex, stateUpdate });
+  //   console.log(widgetIndex)
+
+  //   //  setProp({
+  //   //   tabs: tabs.map((tab, tabIndex) => {
+  //   //     if (tab.id - 1 !== currTabIndex) return tab;
+  //   //     return {
+  //   //       ...tabs[tabIndex],
+  //   //       content: [...tabs[tabIndex].content, newContent],
+  //   //     };
+  //   //   }),
+  //   // });
+  //   const newTabsState = JSON.parse(JSON.stringify(tabs));
+  //    newTabsState.map((x, index) => {
+  //      if(x.id - 1 !== currTabIndex) return x;
+  //      x.content.map((y, index) => {
+  //       if(index === widgetIndex ){
+  //         console.log(y.id)
+  //       }
+  //      })
+       
+  //    })
+  //   //newTabsState.splice(currTabIndex, 1, { ...tabs[widgetIndex], ...stateUpdate });
+  //   //setProp({ tabs: newTabsState });
+  // };
 
   return (
     <div className="container">
@@ -172,16 +204,17 @@ const Tab = ({ tabs, setProp = () => {} }) => {
                 ))}
 
               {tabs[currTabIndex].content.map((widget, widgetIndex) => {
-                
-                if (widget.tabType === "FormattedText") {
-                  return (
-                    <FormattedText
-                      setProp={setTabProps(widgetIndex)}
-                    />
-                  );
-                } else if (widget.tabType === "Image") {
-                  return <Image />;
-                }
+                return(
+                  <div onClick = {() => {setCurrContentIndex(widgetIndex)}} >
+                    {
+                      widget.tabType === "FormattedText" ?  
+                      <FormattedText
+                        setProp={setTabProps(currTabIndex, currContentIndex)}/>
+                        :
+                        <Image/>
+                    }
+                  </div>
+                )
               })}
             </div>
           </div>
