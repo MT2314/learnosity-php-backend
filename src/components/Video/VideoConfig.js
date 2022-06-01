@@ -10,11 +10,11 @@ import getVideoId from "get-video-id";
 const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
     type,
-    videoUrl,
+    videoId,
     thumbnailUrl,
     thumbnailWidth,
     thumbnailHeight,
-    brightcoveAccountId,
+    brightcoveAccountId = "23648095001",
     brightcoveVideoId,
     youTubeError,
   } = componentState;
@@ -23,9 +23,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const handleVideoSelect = (e) => {
     setState({
       type: e.target.value,
-      brightcoveAccountId: "",
-      brightcoveVideoId: "",
-      videoUrl: "",
+      videoId: "",
     });
   };
 
@@ -34,7 +32,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     if (type === "youTube") {
       document.getElementById("youTubeUrl").value = "";
     } else if (type === "brightcove") {
-      document.getElementById("brightcoveAccountId").value = "";
+      // document.getElementById("brightcoveAccountId").value = "";
       document.getElementById("brightcoveVideoId").value = "";
     }
   };
@@ -43,12 +41,12 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   // State/event handler for setting "videoUrl" for YouTube
   const handleVideoUrl = (e) => {
     const youTubeId = getVideoId(e.target.value);
-    setState({ videoUrl: youTubeId.id });
-    if (videoUrl) {
+    setState({ videoId: youTubeId.id });
+    if (videoId) {
       setState({
         youTubeError: false,
       });
-    } else if (!videoUrl) {
+    } else if (!videoId) {
       setState({
         youTubeError: true,
       });
@@ -57,7 +55,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // Verify YouTube URL/data ID
   const verifyYouTubeUrl = () => {
-    if (videoUrl) {
+    if (videoId) {
       setState({
         youTubeError: false,
       });
@@ -74,26 +72,26 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // BRIGHTCOVE
   // State/event handler for setting "brightcoveAccountId"
-  const handleBrightcoveAccountId = (e) => {
-    setState({ brightcoveAccountId: e.target.value });
-    console.log(brightcoveAccountId);
-  };
+  // const handleBrightcoveAccountId = (e) => {
+  //   setState({ brightcoveAccountId: e.target.value });
+  //   console.log(brightcoveAccountId);
+  // };
 
   // State/event handler for setting "brightcoveVideoId"
   const handleBrightcoveVideoId = (e) => {
-    setState({ brightcoveVideoId: e.target.value });
-    console.log(brightcoveVideoId);
+    setState({ videoId: e.target.value });
+    console.log(videoId);
   };
 
   // Function to verify Brightcove data
   const verifyBrightcoveData = () => {
-    if (brightcoveAccountId && brightcoveVideoId) {
+    if (videoId) {
       alert(
         "The Brightcove data you've entered was successful.  Please see video in Canvas area."
       );
     } else {
       alert(
-        "Sorry, the information provided didn't work.  Please provide a valid Brightcove Account ID and Brightcove Video ID."
+        "Sorry, the URL provided was unsuccessful.  Please provide a valid Brightcove Video ID."
       );
     }
   };
@@ -106,14 +104,11 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     if (type === "youTube") {
       document.getElementById("youTubeUrl").value = "";
     } else if (type === "brightcove") {
-      document.getElementById("brightcoveAccountId").value = "";
       document.getElementById("brightcoveVideoId").value = "";
     }
     setState({
       type: "",
-      videoUrl: "",
-      brightcoveAccountId: "",
-      brightcoveVideoId: "",
+      videoId: "",
     });
   };
 
@@ -157,7 +152,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
                 ${
                   youTubeError
                     ? styles.inputError
-                    : videoUrl && youTubeError === false
+                    : videoId && youTubeError === false
                     ? styles.inputSuccess
                     : ""
                 }
@@ -173,16 +168,6 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
           </>
         ) : type === "brightcove" ? (
           <>
-            <label htmlFor="brightcoveAccountId">Brightcove Account ID:</label>
-            <input
-              className={styles.videoConfigInput}
-              type="text"
-              name="brightcoveAccountId"
-              id="brightcoveAccountId"
-              placeholder="Brightcove Account ID..."
-              value={brightcoveAccountId}
-              onChange={handleBrightcoveAccountId}
-            />
             <label htmlFor="brightcoveVideoId">Brightcove Video ID:</label>
             <input
               className={styles.videoConfigInput}
@@ -190,7 +175,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               name="brightcoveVideoId"
               id="brightcoveVideoId"
               placeholder="Brightcove Video ID..."
-              value={brightcoveVideoId}
+              value={videoId}
               onChange={handleBrightcoveVideoId}
             />
             <button onClick={verifyBrightcoveData}>

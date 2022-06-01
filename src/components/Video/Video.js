@@ -14,9 +14,8 @@ export let defaultProps = {
 
 const Video = ({
   type,
-  videoUrl,
+  videoId,
   brightcoveAccountId,
-  brightcoveVideoId,
   transcript,
   caption,
   credit,
@@ -37,27 +36,23 @@ const Video = ({
   return (
     <div className={styles.videoContainer} data-testid="video">
       {type === "" ||
-      (type === "brightcove" && !brightcoveAccountId && !brightcoveVideoId) ||
-      (type === "youTube" && !videoUrl) ? (
+      (type === "brightcove" && !videoId) ||
+      (type === "youTube" && !videoId) ? (
         <div className={styles.placeholderImg} tabIndex="0"></div>
-      ) : type === "youTube" && videoUrl ? (
+      ) : type === "youTube" && videoId ? (
         <div className={styles.youTubePlayer} data-testid="youTubePlayer">
           <YouTube
-            videoId={videoUrl}
+            videoId={videoId}
             onReady={setState({ youTubeError: false })}
             onError={setState({ youTubeError: true })}
           />
         </div>
-      ) : type === "brightcove" && brightcoveAccountId && brightcoveVideoId ? (
+      ) : type === "brightcove" && videoId ? (
         <div className={styles.brightcovePlayer} data-testid="brightcovePlayer">
-          <ReactPlayerLoader
-            accountId={brightcoveAccountId}
-            videoId={brightcoveVideoId}
-          />
+          <ReactPlayerLoader accountId="23648095001" videoId={videoId} />
         </div>
       ) : null}
-      {(type === "youTube" && videoUrl) ||
-      (type === "brightcove" && brightcoveAccountId && brightcoveVideoId) ? (
+      {(type === "youTube" && videoId) || (type === "brightcove" && videoId) ? (
         <>
           <div
             className={styles.transcriptContainer}
