@@ -20,12 +20,6 @@ const componentIndex = {
     defaultProps: calloutDefaultProps,
     version: "0.0.1",
   },
-  NestedTest:{
-    Component: NestedTest,
-    readableName: "NestedTest",
-    defaultProps: nestedTabsDefaultProps,
-    version: "0.0.1",
-  },
   FormattedText: {
     Component: FormattedText,
     readableName: "Formatted Text",
