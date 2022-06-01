@@ -17,6 +17,10 @@
 
     .videoConfigInput {
       width: 100%;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     .inputError {

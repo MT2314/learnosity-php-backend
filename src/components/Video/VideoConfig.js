@@ -30,13 +30,13 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   };
 
   // Functions to clear inputs when toggling between types
-  const handleYouTubeSelect = () => {
-    document.getElementById("brightcoveAccountId").value = "";
-    document.getElementById("brightcoveVideoId").value = "";
-  };
-
-  const handleBrightcoveSelect = () => {
-    document.getElementById("youTubeUrl").value = "";
+  const handleRadioSelect = () => {
+    if (type === "youTube") {
+      document.getElementById("youTubeUrl").value = "";
+    } else if (type === "brightcove") {
+      document.getElementById("brightcoveAccountId").value = "";
+      document.getElementById("brightcoveVideoId").value = "";
+    }
   };
 
   // YOUTUBE
@@ -133,7 +133,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
             type="radio"
             id="youTube"
             value="youTube"
-            onClick={handleYouTubeSelect}
+            onClick={handleRadioSelect}
           />
           <label htmlFor="youTube">YouTube</label>
           <input
@@ -142,7 +142,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
             type="radio"
             id="brightcove"
             value="brightcove"
-            onClick={handleBrightcoveSelect}
+            onClick={handleRadioSelect}
           />
           <label htmlFor="brightcove">Brightcove</label>
         </form>
@@ -167,6 +167,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               id="youTubeUrl"
               placeholder="YouTube video URL..."
               onChange={handleVideoUrl}
+              onBlur={handleVideoUrl}
             />
             <button onClick={() => verifyYouTubeUrl()}>Verify URL</button>
           </>
