@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, TabPanel } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
 import componentIndex from "../componentIndex";
 import FormattedText from "../FormattedText";
 import Image from "../Image/Image";
@@ -90,7 +91,8 @@ const Tab = ({ tabs, setProp = () => {} }) => {
     const allTabs = tabs.map((tab, index) => {
       return (
         <li>
-            <button
+            <Button
+              variant="contained"
               //className={currentTab.id === tab.id ? "tab active" : "tab"}
               onClick={() => {setCurrTabIndex(index)}}
               // onDoubleClick={() => {
@@ -98,7 +100,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
               // }}
             >
               {tab.name}
-            </button>
+            </Button>
         </li>
       );
     });
@@ -141,11 +143,14 @@ const Tab = ({ tabs, setProp = () => {} }) => {
   return (
     <div className="container">
       <div className="well">
-        <button className="add-tab-button" onClick={handleAddTab}>
-          <i className="text-primary fas fa-plus-square" /> Add Tab
-        </button>
+        <Button 
+        variant="outlined"
+        //className="add-tab-button"
+        startIcon={<AddIcon/>} 
+        onClick={handleAddTab}>
+         Add Tab
+        </Button>
         {createTabs()}
-        {currTabIndex === tabs[currTabIndex].id - 1 && (
           <div className="tab-content">
             <div>
               {Object.keys(componentIndex)
@@ -154,9 +159,11 @@ const Tab = ({ tabs, setProp = () => {} }) => {
                   return key.match(regex);
                 })
                 .map((componentKey) => (
-                  <button onClick={addTabContent(componentKey)}>
+                  <Button 
+                    onClick={addTabContent(componentKey)}
+                    variant="outlined">
                     Add {componentIndex[componentKey].readableName}
-                  </button>
+                  </Button>
                 ))}
 
               {tabs[currTabIndex].content.map((widget, widgetIndex) => {
@@ -177,7 +184,6 @@ const Tab = ({ tabs, setProp = () => {} }) => {
               })}
             </div>
           </div>
-        )}
       </div>
     </div>
   );
