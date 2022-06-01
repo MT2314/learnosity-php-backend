@@ -207,11 +207,12 @@ const Tab = ({ tabs, setProp = () => {} }) => {
 
               {tabs[currTabIndex].content.map((widget, widgetIndex) => {
                 return(
-                  <div onClick = {() => {setCurrContentIndex(widgetIndex)}} >
+                  <div key={`${widget}-${widgetIndex}`}>
                     {
                       widget.tabType === "FormattedText" ?  
                       <FormattedText
-                        setProp={setTabProps(currTabIndex, currContentIndex)}/>
+                      {...widget}
+                        setProp={setTabProps(currTabIndex, widgetIndex)}/>
                         :
                         <Image/>
                     }
