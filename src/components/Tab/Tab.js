@@ -1,162 +1,171 @@
 import React, { useState } from "react";
+import { Button, TabPanel } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import componentIndex from "../componentIndex";
 import FormattedText from "../FormattedText";
-import uuid from "uuid";
+import Image from "../Image/Image";
 import "./Tab.css";
-import AddContent from "./AddContent";
 
 export const defaultProps = {
   tabs: [
-    { id: 1, names: "Maths", content: <AddContent /> },
+    { id: 1, name: "Math", content: [] },
     {
       id: 2,
-      names: "Geography",
-      content: (
-        <>
-          <FormattedText />
-          <FormattedText />
-        </>
-      ),
+      name: "Geography",
+      content: [],
     },
   ],
-  currentTab: { id: 1, names: "Tab 1", content: <AddContent /> },
-  editTabNameMode: false,
 };
 
-const Tab = (defaultProps) => {
-  const [state, setState] = useState(defaultProps);
-  const { currentTab } = state;
+const Tab = ({ tabs, setProp = () => {} }) => {
+  const [currTabIndex, setCurrTabIndex] = useState(0);
+  const [currContentIndex, setCurrContentIndex] = useState(0);
+  const [editMode, setEditoMode] = useState(false);
+  const[tabName, setTabName] = useState("")
 
   const handleAddTab = () => {
-    const { tabs } = state;
-
     const newTabObject = {
-      id: uuid(),
-      names: `Tab ${tabs.length + 1}`,
-      content: <AddContent />,
+      id: tabs.length + 1,
+      name: `Tab ${tabs.length + 1}`,
+      content: [],
     };
 
-    setState({
+    setProp({
       tabs: [...tabs, newTabObject],
-      currentTab: newTabObject,
-      editTabNameMode: false,
     });
   };
 
-  const handleOnBlur = () => {
-    setState({
-      ...state,
-      editTabNameMode: false,
-    });
-  };
+  //add a component to the tab
+  const addTabContent = (tabType) => () => {
+    const newContent = {
+      tabType,
+      id: tabs[currTabIndex].content.length,
+      ...componentIndex[tabType].defaultProps,
+    };
 
-  const handleEditTabName = (e) => {
-    const { currentTab, tabs } = state;
-
-    const updatedTabs = tabs.map((tab) => {
-      if (tab.id === currentTab.id) {
+    setProp({
+      tabs: tabs.map((tab, tabIndex) => {
+        if (tab.id - 1 !== currTabIndex) return tab;
         return {
-          ...tab,
-          names: e.target.value,
+          ...tabs[tabIndex],
+          content: [...tabs[tabIndex].content, newContent],
         };
-      } else {
-        return tab;
-      }
-    });
-
-    setState({
-      tabs: updatedTabs,
-      currentTab: {
-        ...currentTab,
-        names: e.target.value,
-      },
-    });
-  };
-
-  const handleSelectTab = (tab) => {
-    console.log(tab);
-    setState({
-      ...state,
-      currentTab: tab,
-      editTabNameMode: false,
-    });
-  };
-
-  const handleDoubleClick = () => {
-    setState({
-      ...state,
-      editTabNameMode: true,
+      }),
     });
   };
 
   const createTabs = () => {
-    const { tabs, currentTab, editTabNameMode } = state;
-
-    const allTabs = tabs.map((tab) => {
+    const allTabs = tabs.map((tab, index) => {
       return (
         <li>
-          {editTabNameMode && currentTab.id === tab.id ? (
-            <input
-              value={tab.names}
-              onBlur={handleOnBlur}
-              onChange={handleEditTabName}
-            />
-          ) : (
-            <button
-              className={currentTab.id === tab.id ? "tab active" : "tab"}
-              onClick={() => {
-                handleSelectTab(tab);
-              }}
-              onDoubleClick={() => {
-                handleDoubleClick(tab);
-              }}
-            >
-              {tab.names}
-            </button>
-          )}
+          <button
+            onClick={() => {
+              setCurrTabIndex(index);
+            }}
+          >
+            {tab.name}
+          </button>
         </li>
       );
     });
 
-    return <ul className="nav nav-tabs">{allTabs}</ul>;
+    const handleEditTab = () => {
+      setEditoMode(true)
+    };
+    
+    const handleRename = (tabi, updatedName) => {
+      setProp({
+        tabs: tabs.map((tab, tabIndex) => {
+          if (tab.id !== tabi) return tab;
+          return {
+            ...tabs[tabIndex],
+            name: updatedName
+          };
+        }),
+      });
+      setEditoMode(false)
+      setTabName("")
+    }
+
+    return (
+      <>
+        <ul className="nav nav-tabs">{allTabs}</ul>
+        {editMode === false && (
+          <button
+            onClick={handleEditTab}
+          >
+            Edit Current Tab Name
+          </button>
+        )}
+        {editMode && (
+          <>
+          <input type="text" value={tabName} onChange={(e)=> {setTabName(e.target.value)}} placeholder="enter tab rename"/>
+          <button onClick={()=>{handleRename(tabs[currTabIndex].id,tabName)}}>Done</button>
+          </>
+        )}
+      </>
+    );
   };
 
-  const handleDeleteTab = (tabToDelete) => {
-    const { tabs } = state;
-    const tabToDeleteIndex = tabs.findIndex((tab) => tab.id === tabToDelete.id);
-
-    const updatedTabs = tabs.filter((tab, index) => {
-      return index !== tabToDeleteIndex;
+  const setTabProps = (selectedTabIndex, selectedContentIndex) => (stateUpdate) => {
+    // More performant alternative, all the ack still?
+    console.log(tabs)
+    const newTabState = JSON.parse(JSON.stringify(tabs)); // Makes a deep unlinked copy of the object
+    const previousContentState = newTabState[selectedTabIndex].content[selectedContentIndex];
+    console.log("previousContentState:", previousContentState)
+    newTabState[selectedTabIndex].content.splice(selectedContentIndex, 1, {
+      ...previousContentState,
+      ...stateUpdate,
     });
-
-    const previousTab =
-      tabs[tabToDeleteIndex - 1] || tabs[tabToDeleteIndex + 1] || {};
-
-    setState({
-      tabs: updatedTabs,
-      editTabNameMode: false,
-      currentTab: previousTab,
+    setProp({
+      tabs: newTabState
     });
   };
 
   return (
     <div className="container">
       <div className="well">
-        <button className="add-tab-button" onClick={handleAddTab}>
-          <i className="text-primary fas fa-plus-square" /> Add Tab
-        </button>
+        <Button 
+        variant="outlined"
+        //className="add-tab-button"
+        startIcon={<AddIcon/>} 
+        onClick={handleAddTab}>
+         Add Tab
+        </Button>
         {createTabs()}
-        <div className="tab-content">
-          <div>
-            <p>{currentTab.content}</p>
-            {currentTab.id && (
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <button onClick={() => handleDeleteTab(currentTab)}>
-                  Delete
-                </button>
-              </div>
-            )}
+          <div className="tab-content">
+            <div>
+              {Object.keys(componentIndex)
+                .filter((key) => {
+                  const regex = /formatted|image/i;
+                  return key.match(regex);
+                })
+                .map((componentKey) => (
+                  <Button 
+                    onClick={addTabContent(componentKey)}
+                    variant="outlined">
+                    Add {componentIndex[componentKey].readableName}
+                  </Button>
+                ))}
+
+              {tabs[currTabIndex].content.map((widget, widgetIndex) => {
+                return(
+                  <div key={`${widget}-${widgetIndex}`}>
+                    {
+                      widget.tabType === "FormattedText" ?  
+                      <FormattedText
+                      {...widget}
+                        setProp={setTabProps(currTabIndex, widgetIndex)}/>
+                        :
+                        <Image
+                        {...widget}
+                        setProp={setTabProps(currTabIndex, widgetIndex)}/>
+                    }
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
       </div>
     </div>
   );

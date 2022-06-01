@@ -1077,7 +1077,7 @@
 
 "@brightcove/react-player-loader@^1.4.1":
   version "1.4.1"
-  resolved "https://registry.npmjs.org/@brightcove/react-player-loader/-/react-player-loader-1.4.1.tgz"
+  resolved "https://registry.yarnpkg.com/@brightcove/react-player-loader/-/react-player-loader-1.4.1.tgz#5fdd67dea0a907a0547103a1b6d2b00367f8d3b1"
   integrity sha512-vIwf6zgjB/lQ5BkcvfWZLLjE/SlKGJPzDvbStgJI6iVvpj2A5PfxQgCtqd+xySi2xRyiNEQ1cjvPoTH20V70PQ==
   dependencies:
     "@brightcove/player-loader" "^1.8.0"
