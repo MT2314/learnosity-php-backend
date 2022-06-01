@@ -38,7 +38,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
 
     const newContent = {
       tabType,
-      id: Math.floor(Math.random() * 100000),
+      id: tabs[currTabIndex].content.length,
       ...componentIndex[tabType].defaultProps,
     };
 
@@ -125,33 +125,35 @@ const Tab = ({ tabs, setProp = () => {} }) => {
   };
 
   const setTabProps = (selectedTabIndex, selectedContentIndex) => (stateUpdate) => {
-    console.log("currTabIndex:", selectedTabIndex, "selectedContentIndex:",selectedContentIndex)
-    console.log("stateUpdate:", stateUpdate)
+    //console.log("currTabIndex:", selectedTabIndex, "selectedContentIndex:",selectedContentIndex)
+    //console.log("stateUpdate:", stateUpdate)
     // Downside, probably not performant, also ack.
-    setProp({
-      tabs: tabs.map((tab, tabIndex) => {
-        if (tabIndex !== selectedTabIndex) return tab;
-        return {
-          ...tab,
-          content: tab.content.map((contentItem, contentIndex) => {
-            if (contentIndex !== selectedContentIndex) return contentItem;
-            return {
-              ...contentItem,
-              ...stateUpdate,
-            };
-          }),
-        };
-      }),
-    });
+    // setProp({
+    //   tabs: tabs.map((tab, tabIndex) => {
+    //     if (tabIndex !== selectedTabIndex) return tab;
+    //     return {
+    //       ...tab,
+    //       content: tab.content.map((contentItem, contentIndex) => {
+    //         if (contentIndex !== selectedContentIndex) return contentItem;
+    //         return {
+    //           ...contentItem,
+    //           ...stateUpdate,
+    //         };
+    //       }),
+    //     };
+    //   }),
+    // });
     // More performant alternative, all the ack still?
+    console.log(tabs)
     const newTabState = JSON.parse(JSON.stringify(tabs)); // Makes a deep unlinked copy of the object
     const previousContentState = newTabState[selectedTabIndex].content[selectedContentIndex];
+    console.log("previousContentState:", previousContentState)
     newTabState[selectedTabIndex].content.splice(selectedContentIndex, 1, {
       ...previousContentState,
       ...stateUpdate,
     });
     setProp({
-      tabs: newTabState,
+      tabs: newTabState
     });
   };
 
