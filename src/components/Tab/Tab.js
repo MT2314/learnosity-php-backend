@@ -33,26 +33,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
       tabs: [...tabs, newTabObject],
     });
   };
-
-  //add a component to the tab
-  const addTabContent = (tabType) => () => {
-    const newContent = {
-      tabType,
-      id: tabs[currTabIndex].content.length,
-      ...componentIndex[tabType].defaultProps,
-    };
-
-    setProp({
-      tabs: tabs.map((tab, tabIndex) => {
-        if (tab.id - 1 !== currTabIndex) return tab;
-        return {
-          ...tabs[tabIndex],
-          content: [...tabs[tabIndex].content, newContent],
-        };
-      }),
-    });
-  };
-
+  //maps the tabs default props and creates a tab for each.
   const createTabs = () => {
     const allTabs = tabs.map((tab, index) => {
       return (
@@ -115,6 +96,25 @@ const Tab = ({ tabs, setProp = () => {} }) => {
     );
   };
 
+    //add a component inside of each tab
+    const addTabContent = (tabType) => () => {
+      const newContent = {
+        tabType,
+        id: tabs[currTabIndex].content.length,
+        ...componentIndex[tabType].defaultProps,
+      };
+  
+      setProp({
+        tabs: tabs.map((tab, tabIndex) => {
+          if (tab.id - 1 !== currTabIndex) return tab;
+          return {
+            ...tabs[tabIndex],
+            content: [...tabs[tabIndex].content, newContent],
+          };
+        }),
+      });
+    };
+    //serialize the data set in each component added to tab
   const setTabProps =
     (selectedTabIndex, selectedContentIndex) => (stateUpdate) => {
       // More performant alternative, all the ack still?
@@ -131,12 +131,13 @@ const Tab = ({ tabs, setProp = () => {} }) => {
         tabs: newTabState,
       });
     };
-
+    //delete a component from tab
   const handleDeleteContent = (selectedTabIndex, selectedContentIndex) => {
     const newTabState = JSON.parse(JSON.stringify(tabs)); // Makes a deep unlinked copy of the object
-    newTabState[selectedTabIndex].content.splice(selectedContentIndex, 1);
+    newTabState[selectedTabIndex].content.splice(selectedContentIndex, 1);//removes the selected component
+
     setProp({
-      tabs: newTabState
+      tabs: newTabState //resets the tabs data
     })
     
   }
@@ -147,12 +148,13 @@ const Tab = ({ tabs, setProp = () => {} }) => {
         <Button variant="outlined" startIcon={<Add />} onClick={handleAddTab}>
           Add Tab
         </Button>
+        {/* list of tabs */}
         {createTabs()}
         <div className="tab-content">
-          <div>
+          {/* maps through the component index and provides a button for each component that can be added inside a tab */}
             {Object.keys(componentIndex)
               .filter((key) => {
-                const regex = /formatted|image/i;
+                const regex = /formatted|image/i; //you can add more component options here
                 return key.match(regex);
               })
               .map((componentKey) => (
@@ -163,19 +165,19 @@ const Tab = ({ tabs, setProp = () => {} }) => {
                   Add {componentIndex[componentKey].readableName}
                 </Button>
               ))}
-
+            {/* maps each tab and provides components added to that specific tab */}
             {tabs[currTabIndex].content.map((widget, widgetIndex) => {
               return (
-                <div key={`${widget}-${widgetIndex}`}>
+                <div key={`${widget}-${widgetIndex}`}> 
                   {widget.tabType === "FormattedText" ? (
                     <FormattedText
                       {...widget}
-                      setProp={setTabProps(currTabIndex, widgetIndex)}
+                      setProp={setTabProps(currTabIndex, widgetIndex)} //function sets the data in formattedText component
                     />
                   ) : (
                     <Image
                       {...widget}
-                      setProp={setTabProps(currTabIndex, widgetIndex)}
+                      setProp={setTabProps(currTabIndex, widgetIndex)}//function sets the data in Image component
                     />
                   )}
                   <Button 
@@ -187,7 +189,6 @@ const Tab = ({ tabs, setProp = () => {} }) => {
                 </div>
               );
             })}
-          </div>
         </div>
       </div>
     </div>
