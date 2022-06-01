@@ -18,8 +18,10 @@ export const defaultProps = {
 };
 
 const Tab = ({ tabs, setProp = () => {} }) => {
-
-  const [ currTabIndex, setCurrTabIndex ] = useState(0)
+  const [currTabIndex, setCurrTabIndex] = useState(0);
+  const [currContentIndex, setCurrContentIndex] = useState(0);
+  const [editMode, setEditoMode] = useState(false);
+  const[tabName, setTabName] = useState("")
 
   const handleAddTab = () => {
     const newTabObject = {
@@ -35,7 +37,6 @@ const Tab = ({ tabs, setProp = () => {} }) => {
 
   //add a component to the tab
   const addTabContent = (tabType) => () => {
-
     const newContent = {
       tabType,
       id: tabs[currTabIndex].content.length,
@@ -51,78 +52,59 @@ const Tab = ({ tabs, setProp = () => {} }) => {
         };
       }),
     });
-
-
-  };;
-
-
-  const handleEditTabName = (e) => {
-    const { currentTab } = state;
-
-    const updatedTabs = tabs.map((tab) => {
-      if (tab.id === currentTab.id) {
-        return {
-          ...tab,
-          name: e.target.value,
-        };
-      } else {
-        return tab;
-      }
-    });
-
-    setState({
-      tabs: updatedTabs,
-      currentTab: {
-        ...currentTab,
-        name: e.target.value,
-      },
-    });
   };
 
-  // const handleDoubleClick = () => {
-  //   setState({
-  //     ...state,
-  //     editTabNameMode: true,
-  //   });
-  // };
-
   const createTabs = () => {
-
     const allTabs = tabs.map((tab, index) => {
       return (
         <li>
-            <Button
-              variant="contained"
-              //className={currentTab.id === tab.id ? "tab active" : "tab"}
-              onClick={() => {setCurrTabIndex(index)}}
-              // onDoubleClick={() => {
-              //   handleDoubleClick(tab);
-              // }}
-            >
-              {tab.name}
-            </Button>
+          <button
+            onClick={() => {
+              setCurrTabIndex(index);
+            }}
+          >
+            {tab.name}
+          </button>
         </li>
       );
     });
 
-    return <ul className="nav nav-tabs">{allTabs}</ul>;
-  };
+    const handleEditTab = () => {
+      setEditoMode(true)
+    };
+    
+    const handleRename = (tabi, updatedName) => {
+      setProp({
+        tabs: tabs.map((tab, tabIndex) => {
+          if (tab.id !== tabi) return tab;
+          return {
+            ...tabs[tabIndex],
+            name: updatedName
+          };
+        }),
+      });
+      setEditoMode(false)
+      setTabName("")
+    }
 
-  const handleDeleteTab = (tabToDelete) => {
-    const tabToDeleteIndex = tabs.findIndex((tab) => tab.id === tabToDelete.id);
-
-    const updatedTabs = tabs.filter((tab, index) => {
-      return index !== tabToDeleteIndex;
-    });
-
-    const previousTab =
-      tabs[tabToDeleteIndex - 1] || tabs[tabToDeleteIndex + 1] || {};
-
-    setProp({
-      tabs: updatedTabs,
-      editTabNameMode: false,
-      currentTab: previousTab,
-    });
+    return (
+      <>
+        <ul className="nav nav-tabs">{allTabs}</ul>
+        {editMode === false && (
+          <button
+            onClick={handleEditTab}
+          >
+            Edit Current Tab Name
+          </button>
+        )}
+        {editMode && (
+          <>
+          <input type="text" value={tabName} onChange={(e)=> {setTabName(e.target.value)}} placeholder="enter tab rename"/>
+          <button onClick={()=>{handleRename(tabs[currTabIndex].id,tabName)}}>Done</button>
+          </>
+        )}
+      </>
+    );
   };
 
   const setTabProps = (selectedTabIndex, selectedContentIndex) => (stateUpdate) => {
@@ -180,7 +162,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
                         setProp={setTabProps(currTabIndex, widgetIndex)}/>
                     }
                   </div>
-                )
+                );
               })}
             </div>
           </div>

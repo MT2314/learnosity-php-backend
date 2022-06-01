@@ -2,7 +2,7 @@ import React from "react";
 import { Paper, NativeSelect } from "@mui/material";
 import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
-import { calloutConfig } from "./utility/calloutConfig";
+import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 import calloutOptions from "./utility/CalloutOptions";
 export const defaultProps = { heading: "", body: "" };
 
@@ -12,7 +12,13 @@ const Callout = ({
   calloutBody,
   setProp = () => {},
 }) => {
+
   let labelId = Math.floor(Math.random() * 100000);
+
+  const calloutToolBar = useToolBarOptions(
+    ["inline", "link", "list"],
+    ["bold", "italic", "underline", "strikethrough"]
+  );
 
   return (
     <Paper
@@ -71,7 +77,7 @@ const Callout = ({
       <div className={styles.Callout_text_area} data-testid="calloutBody">
         <FormattedText
           placeHolderText="Enter callout body text here..."
-          toolbar={calloutConfig}
+          toolbar={calloutToolBar}
           body={calloutBody}
           className={styles.Callout_body}
           editorClassName="callout_editor_class"

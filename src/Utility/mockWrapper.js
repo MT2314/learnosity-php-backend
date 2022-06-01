@@ -63,7 +63,6 @@ const mockedSavedCanvas = [
   },
   { name: "Callout", heading: "", body: "", calloutType: "" },
   { name: "Callout", heading: "", body: "saved body", calloutType: "" },
-  { name: "Callout", heading: "", body: "", calloutType: "" },
   {
     name: "QuoteBox",
     quoteBoxBody: {
