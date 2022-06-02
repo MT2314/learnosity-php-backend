@@ -57,7 +57,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
   const createTabs = () => {
     const allTabs = tabs.map((tab, index) => {
       return (
-        <li>
+        <li key={`tab-${index}`}>
           <button
             onClick={() => {
               setCurrTabIndex(index);
@@ -123,7 +123,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container" data-testid="tab">
       <div className="well">
         <Button 
         variant="outlined"
@@ -134,7 +134,6 @@ const Tab = ({ tabs, setProp = () => {} }) => {
         </Button>
         {createTabs()}
           <div className="tab-content">
-            <div>
               {Object.keys(componentIndex)
                 .filter((key) => {
                   const regex = /formatted|image/i;
@@ -164,7 +163,6 @@ const Tab = ({ tabs, setProp = () => {} }) => {
                   </div>
                 );
               })}
-            </div>
           </div>
       </div>
     </div>
