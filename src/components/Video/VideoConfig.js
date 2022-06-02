@@ -14,9 +14,8 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     thumbnailUrl,
     thumbnailWidth,
     thumbnailHeight,
-    brightcoveAccountId = "23648095001",
     brightcoveVideoId,
-    youTubeError,
+    videoPlayerError,
   } = componentState;
 
   // State/event handler for setting "type"
@@ -32,23 +31,22 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     if (type === "youTube") {
       document.getElementById("youTubeUrl").value = "";
     } else if (type === "brightcove") {
-      // document.getElementById("brightcoveAccountId").value = "";
       document.getElementById("brightcoveVideoId").value = "";
     }
   };
 
   // YOUTUBE
-  // State/event handler for setting "videoUrl" for YouTube
-  const handleVideoUrl = (e) => {
+  // State/event handler for setting videoId for YouTube
+  const handleYouTubeUrl = (e) => {
     const youTubeId = getVideoId(e.target.value);
     setState({ videoId: youTubeId.id });
     if (videoId) {
       setState({
-        youTubeError: false,
+        videoPlayerError: false,
       });
     } else if (!videoId) {
       setState({
-        youTubeError: true,
+        videoPlayerError: true,
       });
     }
   };
@@ -57,12 +55,12 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const verifyYouTubeUrl = () => {
     if (videoId) {
       setState({
-        youTubeError: false,
+        videoPlayerError: false,
       });
       alert("YouTube URL successful.");
     } else {
       setState({
-        youTubeError: true,
+        videoPlayerError: true,
       });
       alert(
         "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
@@ -85,11 +83,9 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // Function to verify Brightcove data
   const verifyBrightcoveData = () => {
-    if (videoId) {
-      alert(
-        "The Brightcove data you've entered was successful.  Please see video in Canvas area."
-      );
-    } else {
+    if (videoId && !videoPlayerError) {
+      alert("The Brightcove data you've entered was successful.");
+    } else if (videoPlayerError) {
       alert(
         "Sorry, the URL provided was unsuccessful.  Please provide a valid Brightcove Video ID."
       );
@@ -150,9 +146,9 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               className={`
                 ${styles.videoConfigInput}
                 ${
-                  youTubeError
+                  videoPlayerError
                     ? styles.inputError
-                    : videoId && youTubeError === false
+                    : videoId && videoPlayerError === false
                     ? styles.inputSuccess
                     : ""
                 }
@@ -161,8 +157,8 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               name="youTubeUrl"
               id="youTubeUrl"
               placeholder="YouTube video URL..."
-              onChange={handleVideoUrl}
-              onBlur={handleVideoUrl}
+              onChange={handleYouTubeUrl}
+              onBlur={handleYouTubeUrl}
             />
             <button onClick={() => verifyYouTubeUrl()}>Verify URL</button>
           </>
@@ -175,11 +171,11 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               name="brightcoveVideoId"
               id="brightcoveVideoId"
               placeholder="Brightcove Video ID..."
-              value={videoId}
+              // value={videoId}
               onChange={handleBrightcoveVideoId}
             />
             <button onClick={verifyBrightcoveData}>
-              Verify Brightcove Settings
+              Verify Brightcove Video ID
             </button>
           </>
         ) : null}

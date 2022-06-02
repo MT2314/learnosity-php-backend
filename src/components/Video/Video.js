@@ -19,13 +19,23 @@ const Video = ({
   transcript,
   caption,
   credit,
-  youTubeError,
+  videoPlayerError,
   setProp = () => console.warn("No state change function provided"),
   setState = () => {},
 }) => {
   useEffect(() => {
-    console.log(youTubeError);
-  }, [youTubeError]);
+    console.log(videoPlayerError);
+  }, [videoPlayerError]);
+
+  const onSuccessBC = (success) => {
+    videoPlayerError = false;
+    console.log(success);
+  };
+
+  // const onFailureBC = (error) => {
+  //   videoPlayerError = true;
+  //   alert(error);
+  // };
 
   // Setting the toolbar for FormattedTexts with custom hook
   // const creditToolbar = useToolBarOptions(
@@ -43,13 +53,18 @@ const Video = ({
         <div className={styles.youTubePlayer} data-testid="youTubePlayer">
           <YouTube
             videoId={videoId}
-            onReady={setState({ youTubeError: false })}
-            onError={setState({ youTubeError: true })}
+            onReady={setState({ videoPlayerError: false })}
+            onError={setState({ videoPlayerError: true })}
           />
         </div>
       ) : type === "brightcove" && videoId ? (
         <div className={styles.brightcovePlayer} data-testid="brightcovePlayer">
-          <ReactPlayerLoader accountId="23648095001" videoId={videoId} />
+          <ReactPlayerLoader
+            accountId="23648095001"
+            videoId={videoId}
+            onSuccess={onSuccessBC}
+            // onFailure={onFailureBC}
+          />
         </div>
       ) : null}
       {(type === "youTube" && videoId) || (type === "brightcove" && videoId) ? (
