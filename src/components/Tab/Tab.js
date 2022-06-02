@@ -145,7 +145,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
   return (
     <div className="container" data-testid="tab">
       <div className="well">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleAddTab}>
+        <Button data-testid="add-tab-btn"  variant="outlined" startIcon={<Add />} onClick={handleAddTab}>
           Add Tab
         </Button>
         {/* list of tabs */}
@@ -159,6 +159,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
               })
               .map((componentKey) => (
                 <Button
+                  data-testid={`add-${componentIndex[componentKey].readableName.slice(0,3)}`}
                   onClick={addTabContent(componentKey)}
                   variant="outlined"
                 >
