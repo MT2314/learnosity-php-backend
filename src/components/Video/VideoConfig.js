@@ -94,6 +94,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // State/event handler for setting "brightcoveVideoId"
   const handleBrightcoveVideoId = (e) => {
+    e.preventDefault();
     setState({ videoId: e.target.value });
     console.log(videoId);
   };
@@ -101,12 +102,24 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   // Function to verify Brightcove data
   const verifyBrightcoveData = (e) => {
     e.preventDefault();
-    if (videoId && !videoPlayerError) {
-      alert("The Brightcove data you've entered was successful.");
-    } else if (videoPlayerError) {
+    // if (videoId && !videoPlayerError) {
+    //   alert("The Brightcove data you've entered was successful.");
+    // }
+    if (videoId.length !== 13) {
+      setState({
+        videoId: "",
+        videoPlayerError: true,
+      });
       alert(
-        "Sorry, the URL provided was unsuccessful.  Please provide a valid Brightcove Video ID."
+        "Sorry, the Brightcove Video ID provided was unsuccessful.  Please provide a valid Brightcove Video ID."
       );
+    }
+    if (videoPlayerError) {
+      alert(
+        "Sorry, the Brightcove Video ID provided was unsuccessful.  Please provide a valid Brightcove Video ID."
+      );
+    } else if (videoId && !videoPlayerError) {
+      alert("The Brightcove data you've entered was successful.");
     }
   };
 
