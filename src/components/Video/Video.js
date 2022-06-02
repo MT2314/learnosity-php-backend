@@ -53,8 +53,7 @@ const Video = ({
         <div className={styles.youTubePlayer} data-testid="youTubePlayer">
           <YouTube
             videoId={videoId}
-            onReady={setState({ videoPlayerError: false })}
-            onError={setState({ videoPlayerError: true })}
+            onError={(error) => console.log(error.data)}
           />
         </div>
       ) : type === "brightcove" && videoId ? (

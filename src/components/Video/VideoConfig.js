@@ -5,8 +5,6 @@ import styles from "./styles/VideoConfig.module.scss";
 
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 
-import getVideoId from "get-video-id";
-
 const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
     type,
@@ -37,29 +35,39 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // YOUTUBE
   // State/event handler for setting videoId for YouTube
+  const [youTubeUrl, setYouTubeUrl] = useState("");
+  let youTubeId;
   const handleYouTubeUrl = (e) => {
-    const youTubeId = getVideoId(e.target.value);
-    setState({ videoId: youTubeId.id });
-    if (videoId) {
-      setState({
-        videoPlayerError: false,
-      });
-    } else if (!videoId) {
-      setState({
-        videoPlayerError: true,
-      });
-    }
+    setYouTubeUrl(e.target.value);
+    console.log(youTubeUrl);
   };
 
-  // Verify YouTube URL/data ID
-  const verifyYouTubeUrl = () => {
-    if (videoId) {
+  // Verify YouTube URL/videoId
+  const verifyYouTubeUrl = (e) => {
+    e.preventDefault();
+    let youTubeRegEx =
+      /(https?:\/\/)?((www\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i;
+    if (youTubeUrl) {
+      youTubeId = youTubeUrl.match(youTubeRegEx)[7];
+    }
+    const youTubeUrlInput = document.getElementById("youTubeUrl");
+    if (youTubeId && youTubeId.length === 11) {
       setState({
+        videoId: youTubeId,
         videoPlayerError: false,
       });
       alert("YouTube URL successful.");
+    } else if (youTubeUrlInput.length === 0) {
+      setState({
+        videoId: "",
+        videoPlayerError: true,
+      });
+      alert(
+        "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
+      );
     } else {
       setState({
+        videoId: "",
         videoPlayerError: true,
       });
       alert(
@@ -102,6 +110,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     } else if (type === "brightcove") {
       document.getElementById("brightcoveVideoId").value = "";
     }
+    setYouTubeUrl("");
     setState({
       type: "",
       videoId: "",
@@ -109,7 +118,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   };
 
   useEffect(() => {
-    console.log(componentState);
+    console.log("componentState:", componentState);
   }, [componentState]);
 
   return (
@@ -140,7 +149,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       </div>
       <div className={styles.configOptions}>
         {type === "youTube" ? (
-          <>
+          <form onSubmit={verifyYouTubeUrl}>
             <label htmlFor="youTubeUrl">Enter YouTube video URL:</label>
             <input
               className={`
@@ -156,14 +165,14 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               type="url"
               name="youTubeUrl"
               id="youTubeUrl"
+              value={youTubeUrl}
               placeholder="YouTube video URL..."
               onChange={handleYouTubeUrl}
-              onBlur={handleYouTubeUrl}
             />
-            <button onClick={() => verifyYouTubeUrl()}>Verify URL</button>
-          </>
+            <button type="submit">Verify URL</button>
+          </form>
         ) : type === "brightcove" ? (
-          <>
+          <form>
             <label htmlFor="brightcoveVideoId">Brightcove Video ID:</label>
             <input
               className={styles.videoConfigInput}
@@ -174,10 +183,10 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               // value={videoId}
               onChange={handleBrightcoveVideoId}
             />
-            <button onClick={verifyBrightcoveData}>
+            <button type="submit" onSubmit={verifyBrightcoveData}>
               Verify Brightcove Video ID
             </button>
-          </>
+          </form>
         ) : null}
         {type ? (
           <button onClick={handleClearAllFields}>Clear All Fields</button>
