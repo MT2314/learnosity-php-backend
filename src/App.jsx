@@ -13,7 +13,7 @@ import ImagePage from "./pages/ImagePage";
 import "./index.css";
 
 const App = () => {
-  console.log("17.0.6");
+  console.log("17.0.7");
   return (
     <>
       <WidgetContextProvider>
