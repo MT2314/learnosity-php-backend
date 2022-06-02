@@ -42,14 +42,16 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     console.log(youTubeUrl);
   };
 
+  let youTubeRegEx =
+    /(https?:\/\/)?((www\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i;
+
   // Verify YouTube URL/videoId
   const verifyYouTubeUrl = (e) => {
     e.preventDefault();
-    let youTubeRegEx =
-      /(https?:\/\/)?((www\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i;
     if (youTubeUrl) {
       youTubeId = youTubeUrl.match(youTubeRegEx)[7];
     }
+
     const youTubeUrlInput = document.getElementById("youTubeUrl");
     if (youTubeId && youTubeId.length === 11) {
       setState({
@@ -65,7 +67,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       alert(
         "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
       );
-    } else {
+    } else if (!youTubeId) {
       setState({
         videoId: "",
         videoPlayerError: true,
@@ -165,6 +167,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               type="url"
               name="youTubeUrl"
               id="youTubeUrl"
+              // pattern={}
               value={youTubeUrl}
               placeholder="YouTube video URL..."
               onChange={handleYouTubeUrl}
