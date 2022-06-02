@@ -20,7 +20,7 @@ export const defaultProps = {
 const Tab = ({ tabs, setProp = () => {} }) => {
   const [currTabIndex, setCurrTabIndex] = useState(0);
   const [editMode, setEditoMode] = useState(false);
-  const [tabName, setTabName] = useState("");
+  const[tabName, setTabName] = useState(tabs[currTabIndex].name)
 
   const handleAddTab = () => {
     const newTabObject = {
@@ -41,6 +41,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
           <button
             onClick={() => {
               setCurrTabIndex(index);
+              setTabName(tabs[index].name)
             }}
           >
             {tab.name}
@@ -63,9 +64,8 @@ const Tab = ({ tabs, setProp = () => {} }) => {
           };
         }),
       });
-      setEditoMode(false);
-      setTabName("");
-    };
+      setEditoMode(false)
+    }
 
     return (
       <>
