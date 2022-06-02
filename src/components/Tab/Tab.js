@@ -21,7 +21,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
   const [currTabIndex, setCurrTabIndex] = useState(0);
   const [editMode, setEditoMode] = useState(false);
   const[tabName, setTabName] = useState(tabs[currTabIndex].name)
-
+console.log(tabs[currTabIndex])
   const handleAddTab = () => {
     const newTabObject = {
       id: tabs.length + 1,
@@ -35,6 +35,19 @@ const Tab = ({ tabs, setProp = () => {} }) => {
   };
   //maps the tabs default props and creates a tab for each.
   const createTabs = () => {
+
+    const handleDeleteTab = (tabIndex) => {
+      const newTabState = JSON.parse(JSON.stringify(tabs)); // Makes a deep unlinked copy of the object
+      newTabState.splice(tabIndex, 1);//removes the selected tab
+  
+      setProp({
+        tabs: newTabState //resets the tabs data
+      })
+
+      setCurrTabIndex(tabIndex - 1)
+      
+    }
+
     const allTabs = tabs.map((tab, index) => {
       return (
         <li key={`tab-${index}`}>
@@ -46,6 +59,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
           >
             {tab.name}
           </button>
+          <Button onClick={() => handleDeleteTab(index)} startIcon={<Delete/>}></Button>
         </li>
       );
     });
