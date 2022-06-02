@@ -115,6 +115,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       alert(
         "Sorry, the Brightcove Video ID provided was unsuccessful.  Please provide a valid Brightcove Video ID."
       );
+      return;
     }
     if (videoPlayerError) {
       setState({
