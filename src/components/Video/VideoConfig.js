@@ -113,9 +113,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
         videoPlayerError
       );
       alert(
-        "Sorry, the Brightcove Video ID provided was unsuccessful.  Please provide a valid Brightcove Video ID. videoID & error are ",
-        videoId,
-        videoPlayerError
+        "Sorry, the Brightcove Video ID provided was unsuccessful.  Please provide a valid Brightcove Video ID."
       );
     }
     if (videoPlayerError) {
@@ -133,11 +131,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
         videoId,
         videoPlayerError
       );
-      alert(
-        "The Brightcove data you've entered was successful.videoID & error are ",
-        videoId,
-        videoPlayerError
-      );
+      alert("The Brightcove data you've entered was successful. ");
     }
   };
 
