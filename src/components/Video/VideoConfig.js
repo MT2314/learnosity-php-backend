@@ -132,6 +132,9 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
         videoId,
         videoPlayerError
       );
+      setState({
+        videoPlayerError: false,
+      });
       alert("The Brightcove data you've entered was successful. ");
     }
   };
