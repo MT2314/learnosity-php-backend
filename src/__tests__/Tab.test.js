@@ -35,7 +35,7 @@ describe("Tab", () => {
 
     expect(screen.getByTestId("tab")).toBeInTheDocument();
     expect(screen.getByTestId("add-For")).toBeInTheDocument(); 
-    expect(screen.getAllByTestId("add-Ima")).toBeInTheDocument();
+    expect(screen.getByTestId("add-Ima")).toBeInTheDocument();
   })
   
   it("has a minimum of 2 tabs on render", () => {
