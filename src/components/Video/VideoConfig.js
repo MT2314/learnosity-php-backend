@@ -37,20 +37,27 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   // State/event handler for setting videoId for YouTube
   const [youTubeUrl, setYouTubeUrl] = useState("");
   let youTubeId;
-  const handleYouTubeUrl = (e) => {
-    setYouTubeUrl(e.target.value);
-    console.log(youTubeUrl);
-  };
-
   let youTubeRegEx =
     /(https?:\/\/)?((www\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i;
+
+  const handleYouTubeUrl = (e) => {
+    setYouTubeUrl(e.target.value);
+  };
+
+  const findYouTubeVideoId = (url) => {
+    youTubeId = url.match(youTubeRegEx)[7];
+    if (youTubeId) {
+      return youTubeId;
+    } else {
+      alert(
+        "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
+      );
+    }
+  };
 
   // Verify YouTube URL/videoId
   const verifyYouTubeUrl = (e) => {
     e.preventDefault();
-    if (youTubeUrl) {
-      youTubeId = youTubeUrl.match(youTubeRegEx)[7];
-    }
 
     const youTubeUrlInput = document.getElementById("youTubeUrl");
     if (youTubeId && youTubeId.length === 11) {
@@ -92,7 +99,8 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   };
 
   // Function to verify Brightcove data
-  const verifyBrightcoveData = () => {
+  const verifyBrightcoveData = (e) => {
+    e.preventDefault();
     if (videoId && !videoPlayerError) {
       alert("The Brightcove data you've entered was successful.");
     } else if (videoPlayerError) {
@@ -186,7 +194,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               // value={videoId}
               onChange={handleBrightcoveVideoId}
             />
-            <button type="submit" onSubmit={verifyBrightcoveData}>
+            <button onClick={verifyBrightcoveData}>
               Verify Brightcove Video ID
             </button>
           </form>
