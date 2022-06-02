@@ -51,6 +51,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       alert("YouTube URL successful.");
     } else {
       alert("Please provide a valid YouTube URL.");
+      setState({ videoId: "" });
     }
   };
 
