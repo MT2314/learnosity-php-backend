@@ -127,8 +127,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
         videoId,
         videoPlayerError
       );
-    }
-    if (videoId && !videoPlayerError) {
+    } else if (videoId && !videoPlayerError) {
       console.log(
         "The Brightcove data you've entered was successful.videoID & error are ",
         videoId,
