@@ -44,7 +44,7 @@ console.log(tabs[currTabIndex])
         tabs: newTabState //resets the tabs data
       })
 
-      setCurrTabIndex(tabIndex - 1)
+      setCurrTabIndex(tabIndex - 1)//set the current tab to the previous tab in list
       
     }
 
