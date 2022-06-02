@@ -1,161 +1,195 @@
 import React, { useState } from "react";
+import { Button } from "@mui/material";
+import { Add, Delete } from "@mui/icons-material/";
+import componentIndex from "../componentIndex";
 import FormattedText from "../FormattedText";
-import uuid from "uuid";
+import Image from "../Image/Image";
 import "./Tab.css";
-import AddContent from "./AddContent";
 
 export const defaultProps = {
   tabs: [
-    { id: 1, names: "Maths", content: <AddContent /> },
+    { id: 1, name: "Math", content: [] },
     {
       id: 2,
-      names: "Geography",
-      content: (
-        <>
-          <FormattedText />
-          <FormattedText />
-        </>
-      ),
+      name: "Geography",
+      content: [],
     },
   ],
-  currentTab: { id: 1, names: "Tab 1", content: <AddContent /> },
-  editTabNameMode: false,
 };
 
-const Tab = (defaultProps) => {
-  const [state, setState] = useState(defaultProps);
-  const { currentTab } = state;
+const Tab = ({ tabs, setProp = () => {} }) => {
+  const [currTabIndex, setCurrTabIndex] = useState(0);
+  const [editMode, setEditoMode] = useState(false);
+  const[tabName, setTabName] = useState(tabs[currTabIndex].name)
 
   const handleAddTab = () => {
-    const { tabs } = state;
-
     const newTabObject = {
-      id: uuid(),
-      names: `Tab ${tabs.length + 1}`,
-      content: <AddContent />,
+      id: tabs.length + 1,
+      name: `Tab ${tabs.length + 1}`,
+      content: [],
     };
 
-    setState({
+    setProp({
       tabs: [...tabs, newTabObject],
-      currentTab: newTabObject,
-      editTabNameMode: false,
     });
   };
-
-  const handleOnBlur = () => {
-    setState({
-      ...state,
-      editTabNameMode: false,
-    });
-  };
-
-  const handleEditTabName = (e) => {
-    const { currentTab, tabs } = state;
-
-    const updatedTabs = tabs.map((tab) => {
-      if (tab.id === currentTab.id) {
-        return {
-          ...tab,
-          names: e.target.value,
-        };
-      } else {
-        return tab;
-      }
-    });
-
-    setState({
-      tabs: updatedTabs,
-      currentTab: {
-        ...currentTab,
-        names: e.target.value,
-      },
-    });
-  };
-
-  const handleSelectTab = (tab) => {
-    console.log(tab);
-    setState({
-      ...state,
-      currentTab: tab,
-      editTabNameMode: false,
-    });
-  };
-
-  const handleDoubleClick = () => {
-    setState({
-      ...state,
-      editTabNameMode: true,
-    });
-  };
-
+  //maps the tabs default props and creates a tab for each.
   const createTabs = () => {
-    const { tabs, currentTab, editTabNameMode } = state;
-
-    const allTabs = tabs.map((tab) => {
+    const allTabs = tabs.map((tab, index) => {
       return (
-        <li>
-          {editTabNameMode && currentTab.id === tab.id ? (
-            <input
-              value={tab.names}
-              onBlur={handleOnBlur}
-              onChange={handleEditTabName}
-            />
-          ) : (
-            <button
-              className={currentTab.id === tab.id ? "tab active" : "tab"}
-              onClick={() => {
-                handleSelectTab(tab);
-              }}
-              onDoubleClick={() => {
-                handleDoubleClick(tab);
-              }}
-            >
-              {tab.names}
-            </button>
-          )}
+        <li key={`tab-${index}`}>
+          <button
+            onClick={() => {
+              setCurrTabIndex(index);
+              setTabName(tabs[index].name)
+            }}
+          >
+            {tab.name}
+          </button>
         </li>
       );
     });
 
-    return <ul className="nav nav-tabs">{allTabs}</ul>;
+    const handleEditTab = () => {
+      setEditoMode(true);
+    };
+
+    const handleRename = (tabi, updatedName) => {
+      setProp({
+        tabs: tabs.map((tab, tabIndex) => {
+          if (tab.id !== tabi) return tab;
+          return {
+            ...tabs[tabIndex],
+            name: updatedName,
+          };
+        }),
+      });
+      setEditoMode(false)
+    }
+
+    return (
+      <>
+        <ul className="nav nav-tabs">{allTabs}</ul>
+        {editMode === false && (
+          <button onClick={handleEditTab}>Edit Current Tab Name</button>
+        )}
+        {editMode && (
+          <>
+            <input
+              type="text"
+              value={tabName}
+              onChange={(e) => {
+                setTabName(e.target.value);
+              }}
+              placeholder="enter tab rename"
+            />
+            <button
+              onClick={() => {
+                handleRename(tabs[currTabIndex].id, tabName);
+              }}
+            >
+              Done
+            </button>
+          </>
+        )}
+      </>
+    );
   };
 
-  const handleDeleteTab = (tabToDelete) => {
-    const { tabs } = state;
-    const tabToDeleteIndex = tabs.findIndex((tab) => tab.id === tabToDelete.id);
+    //add a component inside of each tab
+    const addTabContent = (tabType) => () => {
+      const newContent = {
+        tabType,
+        id: tabs[currTabIndex].content.length,
+        ...componentIndex[tabType].defaultProps,
+      };
+  
+      setProp({
+        tabs: tabs.map((tab, tabIndex) => {
+          if (tab.id - 1 !== currTabIndex) return tab;
+          return {
+            ...tabs[tabIndex],
+            content: [...tabs[tabIndex].content, newContent],
+          };
+        }),
+      });
+    };
+    //serialize the data set in each component added to tab
+  const setTabProps =
+    (selectedTabIndex, selectedContentIndex) => (stateUpdate) => {
+      // More performant alternative, all the ack still?
+      console.log(tabs);
+      const newTabState = JSON.parse(JSON.stringify(tabs)); // Makes a deep unlinked copy of the object
+      const previousContentState =
+        newTabState[selectedTabIndex].content[selectedContentIndex];
+      
+      newTabState[selectedTabIndex].content.splice(selectedContentIndex, 1, {
+        ...previousContentState,
+        ...stateUpdate,
+      });
+      setProp({
+        tabs: newTabState,
+      });
+    };
+    //delete a component from tab
+  const handleDeleteContent = (selectedTabIndex, selectedContentIndex) => {
+    const newTabState = JSON.parse(JSON.stringify(tabs)); // Makes a deep unlinked copy of the object
+    newTabState[selectedTabIndex].content.splice(selectedContentIndex, 1);//removes the selected component
 
-    const updatedTabs = tabs.filter((tab, index) => {
-      return index !== tabToDeleteIndex;
-    });
-
-    const previousTab =
-      tabs[tabToDeleteIndex - 1] || tabs[tabToDeleteIndex + 1] || {};
-
-    setState({
-      tabs: updatedTabs,
-      editTabNameMode: false,
-      currentTab: previousTab,
-    });
-  };
+    setProp({
+      tabs: newTabState //resets the tabs data
+    })
+    
+  }
 
   return (
-    <div className="container">
+    <div className="container" data-testid="tab">
       <div className="well">
-        <button className="add-tab-button" onClick={handleAddTab}>
-          <i className="text-primary fas fa-plus-square" /> Add Tab
-        </button>
+        <Button data-testid="add-tab-btn"  variant="outlined" startIcon={<Add />} onClick={handleAddTab}>
+          Add Tab
+        </Button>
+        {/* list of tabs */}
         {createTabs()}
         <div className="tab-content">
-          <div>
-            <p>{currentTab.content}</p>
-            {currentTab.id && (
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <button onClick={() => handleDeleteTab(currentTab)}>
-                  Delete
-                </button>
-              </div>
-            )}
-          </div>
+          {/* maps through the component index and provides a button for each component that can be added inside a tab */}
+            {Object.keys(componentIndex)
+              .filter((key) => {
+                const regex = /formatted|image/i; //you can add more component options here
+                return key.match(regex);
+              })
+              .map((componentKey) => (
+                <Button
+                  data-testid={`add-${componentIndex[componentKey].readableName.slice(0,3)}`}
+                  onClick={addTabContent(componentKey)}
+                  variant="outlined"
+                >
+                  Add {componentIndex[componentKey].readableName}
+                </Button>
+              ))}
+            {/* maps each tab and provides components added to that specific tab */}
+            {tabs[currTabIndex].content.map((widget, widgetIndex) => {
+              return (
+                <div key={`${widget}-${widgetIndex}`}> 
+                  {widget.tabType === "FormattedText" ? (
+                    <FormattedText
+                      {...widget}
+                      setProp={setTabProps(currTabIndex, widgetIndex)} //function sets the data in formattedText component
+                    />
+                  ) : (
+                    <Image
+                      {...widget}
+                      setProp={setTabProps(currTabIndex, widgetIndex)}//function sets the data in Image component
+                    />
+                  )}
+                  <Button 
+                    variant="contained" 
+                    startIcon={<Delete />}
+                    onClick={() => handleDeleteContent(currTabIndex, widgetIndex)}>
+                    {`Delete ${widget.tabType}`}
+                  </Button>
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>
