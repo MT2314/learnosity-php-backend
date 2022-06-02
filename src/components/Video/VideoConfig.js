@@ -8,11 +8,10 @@ import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
     type,
-    videoId,
+    videoId = "",
     thumbnailUrl,
     thumbnailWidth,
     thumbnailHeight,
-    brightcoveVideoId,
     videoPlayerError,
   } = componentState;
 
@@ -27,6 +26,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   // Functions to clear inputs when toggling between types
   const handleRadioSelect = () => {
     if (type === "youTube") {
+      setYouTubeUrl("");
       document.getElementById("youTubeUrl").value = "";
     } else if (type === "brightcove") {
       document.getElementById("brightcoveVideoId").value = "";
@@ -36,52 +36,21 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   // YOUTUBE
   // State/event handler for setting videoId for YouTube
   const [youTubeUrl, setYouTubeUrl] = useState("");
-  let youTubeId;
-  let youTubeRegEx =
-    /(https?:\/\/)?((www\.)?(youtube(-nocookie)?|youtube.googleapis)\.com.*(v\/|v=|vi=|vi\/|e\/|embed\/|user\/.*\/u\/\d+\/)|youtu\.be\/)([_0-9a-z-]+)/i;
 
   const handleYouTubeUrl = (e) => {
     setYouTubeUrl(e.target.value);
   };
 
-  const findYouTubeVideoId = (url) => {
-    youTubeId = url.match(youTubeRegEx)[7];
-    if (youTubeId) {
-      return youTubeId;
-    } else {
-      alert(
-        "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
-      );
-    }
-  };
-
-  // Verify YouTube URL/videoId
   const verifyYouTubeUrl = (e) => {
     e.preventDefault();
-
-    const youTubeUrlInput = document.getElementById("youTubeUrl");
-    if (youTubeId && youTubeId.length === 11) {
-      setState({
-        videoId: youTubeId,
-        videoPlayerError: false,
-      });
+    const regExp =
+      /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+    let match = youTubeUrl.match(regExp);
+    if (match && match[1].length === 11) {
+      setState({ videoId: match[1] });
       alert("YouTube URL successful.");
-    } else if (youTubeUrlInput.length === 0) {
-      setState({
-        videoId: "",
-        videoPlayerError: true,
-      });
-      alert(
-        "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
-      );
-    } else if (!youTubeId) {
-      setState({
-        videoId: "",
-        videoPlayerError: true,
-      });
-      alert(
-        "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
-      );
+    } else {
+      alert("Please provide a valid YouTube URL.");
     }
   };
 
@@ -175,7 +144,6 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               type="url"
               name="youTubeUrl"
               id="youTubeUrl"
-              // pattern={}
               value={youTubeUrl}
               placeholder="YouTube video URL..."
               onChange={handleYouTubeUrl}
@@ -183,7 +151,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
             <button type="submit">Verify URL</button>
           </form>
         ) : type === "brightcove" ? (
-          <form>
+          <form onSubmit={verifyBrightcoveData}>
             <label htmlFor="brightcoveVideoId">Brightcove Video ID:</label>
             <input
               className={styles.videoConfigInput}
@@ -194,9 +162,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               // value={videoId}
               onChange={handleBrightcoveVideoId}
             />
-            <button onClick={verifyBrightcoveData}>
-              Verify Brightcove Video ID
-            </button>
+            <button type="submit">Verify Brightcove Video ID</button>
           </form>
         ) : null}
         {type ? (
