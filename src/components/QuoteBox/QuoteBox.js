@@ -20,7 +20,7 @@ const QuoteBox = ({
 }) => {
 
   const quoteBoxToolBar = useToolBarOptions(
-    ["inline"],
+    ["inline", "link"],
     ["bold", "italic", "underline", "strikethrough"]
   );
 
