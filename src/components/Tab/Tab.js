@@ -37,6 +37,9 @@ console.log(tabs[currTabIndex])
   const createTabs = () => {
 
     const handleDeleteTab = (tabIndex) => {
+
+      if(tabs.length <= 2 ){return}
+
       const newTabState = JSON.parse(JSON.stringify(tabs)); // Makes a deep unlinked copy of the object
       newTabState.splice(tabIndex, 1);//removes the selected tab
   
@@ -44,7 +47,7 @@ console.log(tabs[currTabIndex])
         tabs: newTabState //resets the tabs data
       })
 
-      setCurrTabIndex(tabIndex - 1)//set the current tab to the previous tab in list
+      setCurrTabIndex(0)//set the current tab to the previous tab in list
       
     }
 
