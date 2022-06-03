@@ -33,23 +33,11 @@ const Tab = ({ tabs, setProp = () => {} }) => {
       tabs: [...tabs, newTabObject],
     });
   };
+
+  
   //maps the tabs default props and creates a tab for each.
   const createTabs = () => {
 
-    const handleDeleteTab = (tabIndex) => {
-
-      if(tabs.length <= 2 ){return}
-
-      const newTabState = JSON.parse(JSON.stringify(tabs)); // Makes a deep unlinked copy of the object
-      newTabState.splice(tabIndex, 1);//removes the selected tab
-  
-      setProp({
-        tabs: newTabState //resets the tabs data
-      })
-
-      setCurrTabIndex(0)//set the current tab to the previous tab in list
-      
-    }
 
     const allTabs = tabs.map((tab, index) => {
       return (
@@ -62,7 +50,6 @@ const Tab = ({ tabs, setProp = () => {} }) => {
           >
             {tab.name}
           </button>
-          <Button onClick={() => handleDeleteTab(index)} startIcon={<Delete/>}></Button>
         </li>
       );
     });
@@ -185,7 +172,6 @@ const Tab = ({ tabs, setProp = () => {} }) => {
         </Button>
         {/* list of tabs */}
         {createTabs()}
-        
         {tabs.length > 2 && (
           <button
             onClick={() => {
@@ -217,7 +203,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
           {/* maps each tab and provides components added to that specific tab */}
           {tabs[currTabIndex].content.map((widget, widgetIndex) => {
             return (
-              <div key={`${widget}-${widgetIndex}`}>
+              <div key={`${currTabIndex}-${widgetIndex}`}>
                 {widget.tabType === "FormattedText" ? (
                   <FormattedText
                     {...widget}
