@@ -117,16 +117,17 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       );
       return;
     }
-    if (videoPlayerError) {
-      setState({
-        videoId: "",
-      });
-      console.log(
-        "The Brightcove data you've entered was successful.videoID & error are ",
-        videoId,
-        videoPlayerError
-      );
-    } else if (videoId && !videoPlayerError) {
+    // if (videoPlayerError) {
+    //   setState({
+    //     videoId: "",
+    //   });
+    //   console.log(
+    //     "The Brightcove data you've entered was successful.videoID & error are ",
+    //     videoId,
+    //     videoPlayerError
+    //   );
+    // }
+    else if (videoId && !videoPlayerError) {
       console.log(
         "The Brightcove data you've entered was successful.videoID & error are ",
         videoId,

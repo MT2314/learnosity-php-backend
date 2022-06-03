@@ -27,10 +27,10 @@ const Video = ({
     console.log(videoPlayerError);
   }, [videoPlayerError]);
 
-  const onSuccessBC = (success) => {
-    videoPlayerError = false;
-    console.log(success);
-  };
+  // const onSuccessBC = (success) => {
+  //   videoPlayerError = false;
+  //   console.log(success);
+  // };
 
   // const onFailureBC = (error) => {
   //   videoPlayerError = true;
@@ -61,7 +61,7 @@ const Video = ({
           <ReactPlayerLoader
             accountId="23648095001"
             videoId={videoId}
-            onSuccess={onSuccessBC}
+            // onSuccess={onSuccessBC}
             // onFailure={onFailureBC}
           />
         </div>
