@@ -22,20 +22,6 @@ const Video = ({
   videoPlayerError,
   setProp = () => console.warn("No state change function provided"),
 }) => {
-  useEffect(() => {
-    console.log(videoPlayerError);
-  }, [videoPlayerError]);
-
-  // const onSuccessBC = (success) => {
-  //   videoPlayerError = false;
-  //   console.log(success);
-  // };
-
-  // const onFailureBC = (error) => {
-  //   videoPlayerError = true;
-  //   alert(error);
-  // };
-
   // Setting the toolbar for FormattedTexts with custom hook
   // const creditToolbar = useToolBarOptions(
   //   ["inline", "textAlign", "list", "link"],
