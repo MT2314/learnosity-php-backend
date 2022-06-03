@@ -5,81 +5,77 @@ import styles from "./styles/VideoConfig.module.scss";
 
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 
-import getVideoId from "get-video-id";
-
 const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
-    type = "",
-    videoUrl = "",
-    thumbnailUrl = "",
-    thumbnailWidth = 0,
-    thumbnailHeight = 0,
-    brightcoveAccountId = "",
-    brightcoveVideoId = "",
+    type,
+    videoId = "",
+    thumbnailUrl,
+    thumbnailWidth,
+    thumbnailHeight,
+    videoPlayerError,
   } = componentState;
 
   // State/event handler for setting "type"
-  const [videoPlayer, setVideoPlayer] = useState("");
   const handleVideoSelect = (e) => {
-    setVideoPlayer(e.target.value);
     setState({
       type: e.target.value,
-      brightcoveAccountId: "",
-      brightcoveVideoId: "",
-      videoUrl: "",
+      videoId: "",
     });
   };
 
   // Functions to clear inputs when toggling between types
-  const handleYouTubeSelect = () => {
-    document.getElementById("brightcoveAccountId").value = "";
-    document.getElementById("brightcoveVideoId").value = "";
-  };
-
-  const handleBrightcoveSelect = () => {
-    document.getElementById("youTubeUrl").value = "";
+  const handleRadioSelect = () => {
+    if (type === "youTube") {
+      setYouTubeUrl("");
+      document.getElementById("youTubeUrl").value = "";
+    } else if (type === "brightcove") {
+      document.getElementById("brightcoveVideoId").value = "";
+    }
   };
 
   // YOUTUBE
-  // State/event handler for setting "videoUrl" for YouTube
-  const handleVideoUrl = (e) => {
-    const youTubeId = getVideoId(e.target.value);
-    setState({ videoUrl: youTubeId.id });
+  // State/event handler for setting videoId for YouTube
+  const [youTubeUrl, setYouTubeUrl] = useState("");
+
+  const handleYouTubeUrl = (e) => {
+    setYouTubeUrl(e.target.value);
   };
 
-  // Verify YouTube URL/data ID
-  const verifyYouTubeUrl = () => {
-    if (videoUrl) {
+  const verifyYouTubeUrl = (e) => {
+    e.preventDefault();
+    const regExp =
+      /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+    let match = youTubeUrl.match(regExp);
+    if (match && match[1].length === 11) {
+      setState({ videoId: match[1] });
       alert("YouTube URL successful.");
     } else {
-      alert(
-        "Sorry, the URL provided didn't work.  Please provide a valid YouTube URL."
-      );
+      alert("Please provide a valid YouTube URL.");
+      setState({ videoId: "" });
     }
   };
 
   // BRIGHTCOVE
   // State/event handler for setting "brightcoveAccountId"
-  const handleBrightcoveAccountId = (e) => {
-    setState({ brightcoveAccountId: e.target.value });
-    console.log(brightcoveAccountId);
-  };
+  // const handleBrightcoveAccountId = (e) => {
+  //   setState({ brightcoveAccountId: e.target.value });
+  //   console.log(brightcoveAccountId);
+  // };
 
   // State/event handler for setting "brightcoveVideoId"
   const handleBrightcoveVideoId = (e) => {
-    setState({ brightcoveVideoId: e.target.value });
-    console.log(brightcoveVideoId);
+    setState({ videoId: e.target.value });
+    console.log(videoId);
   };
 
   // Function to verify Brightcove data
-  const verifyBrightcoveData = () => {
-    if (brightcoveAccountId && brightcoveVideoId) {
+  const verifyBrightcoveData = (e) => {
+    e.preventDefault();
+    if (videoId && !videoPlayerError) {
+      alert("The Brightcove data you've entered was successful.");
+    } else if (videoPlayerError) {
       alert(
-        "The Brightcove data you've entered was successful.  Please see video in Canvas area."
-      );
-    } else {
-      alert(
-        "Sorry, the information provided didn't work.  Please provide a valid Brightcove Account ID and Brightcove Video ID."
+        "Sorry, the URL provided was unsuccessful.  Please provide a valid Brightcove Video ID."
       );
     }
   };
@@ -92,19 +88,17 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     if (type === "youTube") {
       document.getElementById("youTubeUrl").value = "";
     } else if (type === "brightcove") {
-      document.getElementById("brightcoveAccountId").value = "";
       document.getElementById("brightcoveVideoId").value = "";
     }
+    setYouTubeUrl("");
     setState({
       type: "",
-      videoUrl: "",
-      brightcoveAccountId: "",
-      brightcoveVideoId: "",
+      videoId: "",
     });
   };
 
   useEffect(() => {
-    console.log(componentState);
+    console.log("componentState:", componentState);
   }, [componentState]);
 
   return (
@@ -119,7 +113,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
             type="radio"
             id="youTube"
             value="youTube"
-            onClick={handleYouTubeSelect}
+            onClick={handleRadioSelect}
           />
           <label htmlFor="youTube">YouTube</label>
           <input
@@ -128,60 +122,53 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
             type="radio"
             id="brightcove"
             value="brightcove"
-            onClick={handleBrightcoveSelect}
+            onClick={handleRadioSelect}
           />
           <label htmlFor="brightcove">Brightcove</label>
         </form>
       </div>
       <div className={styles.configOptions}>
-        {videoPlayer === "youTube" ? (
-          <>
+        {type === "youTube" ? (
+          <form onSubmit={verifyYouTubeUrl}>
             <label htmlFor="youTubeUrl">Enter YouTube video URL:</label>
             <input
-              className={styles.videoConfigInput}
+              className={`
+                ${styles.videoConfigInput}
+                ${
+                  videoPlayerError
+                    ? styles.inputError
+                    : videoId && videoPlayerError === false
+                    ? styles.inputSuccess
+                    : ""
+                }
+              `}
               type="url"
               name="youTubeUrl"
               id="youTubeUrl"
+              value={youTubeUrl}
               placeholder="YouTube video URL..."
-              onChange={handleVideoUrl}
-              required
+              onChange={handleYouTubeUrl}
             />
-            <button onClick={() => verifyYouTubeUrl()}>Verify URL</button>
-          </>
-        ) : videoPlayer === "brightcove" ? (
-          <>
-            <label htmlFor="brightcoveAccountId">
-              Enter Brightcove Account ID:
-            </label>
-            <input
-              className={styles.videoConfigInput}
-              type="text"
-              name="brightcoveAccountId"
-              id="brightcoveAccountId"
-              placeholder="Brightcove Account ID..."
-              value={brightcoveAccountId}
-              onChange={handleBrightcoveAccountId}
-              required
-            />
-            <label htmlFor="brightcoveVideoId">
-              Enter Brightcove Video ID:
-            </label>
+            <button type="submit">Verify URL</button>
+          </form>
+        ) : type === "brightcove" ? (
+          <form onSubmit={verifyBrightcoveData}>
+            <label htmlFor="brightcoveVideoId">Brightcove Video ID:</label>
             <input
               className={styles.videoConfigInput}
               type="text"
               name="brightcoveVideoId"
               id="brightcoveVideoId"
               placeholder="Brightcove Video ID..."
-              value={brightcoveVideoId}
+              // value={videoId}
               onChange={handleBrightcoveVideoId}
-              required
             />
-            <button onClick={verifyBrightcoveData}>
-              Verify Brightcove Settings
-            </button>
-          </>
+            <button type="submit">Verify Brightcove Video ID</button>
+          </form>
         ) : null}
-        <button onClick={handleClearAllFields}>Clear All Fields</button>
+        {type ? (
+          <button onClick={handleClearAllFields}>Clear All Fields</button>
+        ) : null}
       </div>
     </div>
   );
