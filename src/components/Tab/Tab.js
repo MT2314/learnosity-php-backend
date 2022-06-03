@@ -147,7 +147,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
 
   const handleDelete = (tabId) => {
     const updatedTabs = tabs.filter((item) => {
-      return item.id != tabId;
+      return item.id !== tabId;
     });
 
     currTabIndex === 0
