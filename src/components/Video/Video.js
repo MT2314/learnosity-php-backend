@@ -57,12 +57,7 @@ const Video = ({
         </div>
       ) : type === "brightcove" && videoId ? (
         <div className={styles.brightcovePlayer} data-testid="brightcovePlayer">
-          <ReactPlayerLoader
-            accountId="23648095001"
-            videoId={videoId}
-            // onSuccess={onSuccessBC}
-            // onFailure={onFailureBC}
-          />
+          <ReactPlayerLoader accountId="23648095001" videoId={videoId} />
         </div>
       ) : null}
       {(type === "youTube" && videoId) || (type === "brightcove" && videoId) ? (

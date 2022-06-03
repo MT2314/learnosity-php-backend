@@ -56,35 +56,42 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   };
 
   // BRIGHTCOVE
-  // State/event handler for setting "brightcoveAccountId"
-  // const handleBrightcoveAccountId = (e) => {
-  //   setState({ brightcoveAccountId: e.target.value });
-  //   console.log(brightcoveAccountId);
-  // };
-
   // State/event handler for setting "brightcoveVideoId"
+  const [brightcoveId, setBrightcoveId] = useState("");
   const handleBrightcoveVideoId = (e) => {
-    e.preventDefault();
-    setState({ videoId: e.target.value });
-    console.log(videoId);
+    setBrightcoveId(e.target.value);
+    console.log(brightcoveId);
   };
 
   // Function to verify Brightcove data
   const verifyBrightcoveData = (e) => {
     e.preventDefault();
-    if (videoId.length === 13) {
+    const brightcoveKey =
+      "BCpkADawqM1XplIzTT5iB8WK5oNDPzQsM2CDxSACIVrgtdNB-PRZjMuDeSgYSpdK1dkvswBpDnEoxoAtwa1u9AYhNqX8LemUJQGTksH9e5M5QlElWJy6ygFINKA";
+    const headers = { "BCOV-Policy": brightcoveKey };
+    fetch(
+      `https://edge.api.brightcove.com/playback/v1/accounts/23648095001/videos/${brightcoveId}`,
+      { headers }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        setState({ videoId: result.id });
+      });
+    console.log("VideoId from fetch:", videoId);
+    if (brightcoveId.length === 13) {
       setState({
+        videoId: brightcoveId,
         videoPlayerError: false,
       });
       console.log(
-        "The Brightcove data you've entered was successful.videoID & error are ",
+        "The Brightcove data you've entered was successful. videoID & error are: ",
         videoId,
         videoPlayerError
       );
       alert("The Brightcove Video ID provided was successful.");
       return;
     }
-    if (videoId.length < 13) {
+    if (brightcoveId.length < 13) {
       setState({
         videoId: "",
         videoPlayerError: true,
@@ -97,12 +104,8 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       alert(
         "Sorry, the Brightcove Video ID provided was unsuccessful.  Please provide a valid Brightcove Video ID."
       );
-      setState({
-        videoId: "",
-        videoPlayerError: false,
-      });
       return;
-    } else if (videoId && !videoPlayerError) {
+    } else if (brightcoveId && !videoPlayerError) {
       console.log(
         "The Brightcove data you've entered was successful.videoID & error are ",
         videoId,
@@ -195,7 +198,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               name="brightcoveVideoId"
               id="brightcoveVideoId"
               placeholder="Brightcove Video ID..."
-              // value={videoId}
+              value={brightcoveId}
               onChange={handleBrightcoveVideoId}
             />
             <button type="submit">Verify Brightcove Video ID</button>
