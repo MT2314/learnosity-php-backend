@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import EditPanelIcon from "../EditPanelIcon";
 import styles from "./styles/VideoConfig.module.scss";
@@ -29,6 +29,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       setYouTubeUrl("");
       document.getElementById("youTubeUrl").value = "";
     } else if (type === "brightcove") {
+      setBrightcoveId("");
       document.getElementById("brightcoveVideoId").value = "";
     }
   };
@@ -56,28 +57,34 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   };
 
   // BRIGHTCOVE
-  // State/event handler for setting "brightcoveAccountId"
-  // const handleBrightcoveAccountId = (e) => {
-  //   setState({ brightcoveAccountId: e.target.value });
-  //   console.log(brightcoveAccountId);
-  // };
-
   // State/event handler for setting "brightcoveVideoId"
+  const [brightcoveId, setBrightcoveId] = useState("");
   const handleBrightcoveVideoId = (e) => {
-    setState({ videoId: e.target.value });
-    console.log(videoId);
+    setBrightcoveId(e.target.value);
   };
 
   // Function to verify Brightcove data
-  const verifyBrightcoveData = (e) => {
+  const verifyBrightcoveData = async (e) => {
     e.preventDefault();
-    if (videoId && !videoPlayerError) {
-      alert("The Brightcove data you've entered was successful.");
-    } else if (videoPlayerError) {
-      alert(
-        "Sorry, the URL provided was unsuccessful.  Please provide a valid Brightcove Video ID."
-      );
-    }
+    const brightcoveKey =
+      "BCpkADawqM1XplIzTT5iB8WK5oNDPzQsM2CDxSACIVrgtdNB-PRZjMuDeSgYSpdK1dkvswBpDnEoxoAtwa1u9AYhNqX8LemUJQGTksH9e5M5QlElWJy6ygFINKA";
+    const headers = { "BCOV-Policy": brightcoveKey };
+    await fetch(
+      `https://edge.api.brightcove.com/playback/v1/accounts/23648095001/videos/${brightcoveId}`,
+      { headers }
+    )
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.id) {
+          setState({ videoId: result.id });
+          alert("The Brightcove Video ID provided was successful.");
+        } else {
+          setState({ videoId: "" });
+          alert(
+            "Sorry, the Brightcove Video ID provided was unsuccessful.  Please provide a valid Brightcove Video ID."
+          );
+        }
+      });
   };
 
   // Event handler for clearing all fields/"deleting" video
@@ -94,12 +101,9 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     setState({
       type: "",
       videoId: "",
+      videoPlayerError: false,
     });
   };
-
-  useEffect(() => {
-    console.log("componentState:", componentState);
-  }, [componentState]);
 
   return (
     <div className={styles.videoConfigContainer}>
@@ -160,7 +164,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               name="brightcoveVideoId"
               id="brightcoveVideoId"
               placeholder="Brightcove Video ID..."
-              // value={videoId}
+              value={brightcoveId}
               onChange={handleBrightcoveVideoId}
             />
             <button type="submit">Verify Brightcove Video ID</button>
