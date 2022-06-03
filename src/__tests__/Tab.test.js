@@ -18,8 +18,14 @@ afterEach(() => {
   container = null;
 });
 
+//added from Sam's nav unit test
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
 
-describe("Tab", () => {
+  useLocation: () => ({
+    pathname: "localhost:3001",
+  }),
+}));
 
   const testTabs = [
       { id: 1, name: "Math", content: [] },
@@ -31,6 +37,9 @@ describe("Tab", () => {
     ]
   
   const numOfTabs = testTabs.filter(tab => tab.id).length
+
+
+describe("Tab", () => {
 
   it("renders tabs with given data", () => {
     render(<Tab tabs={testTabs}/>)
