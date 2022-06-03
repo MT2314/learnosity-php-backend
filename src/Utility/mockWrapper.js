@@ -9,78 +9,7 @@ const WidgetContext = createContext();
 
 // For testing, mocking an initial canvas state from the DB (add all props for a component even if empty)
 const mockedSavedCanvas = [
-  { name: "FormattedText", body: null },
-  {
-    name: "FormattedText",
-    body: {
-      blocks: [
-        {
-          key: "da26v",
-          text: "Testing data loaded from DB.  About Juno, because that's the theme of this page now?  No one should leave me alone with their repo.",
-          type: "unstyled",
-          depth: 0,
-          inlineStyleRanges: [
-            { offset: 8, length: 4, style: "BOLD" },
-            { offset: 13, length: 6, style: "ITALIC" },
-          ],
-          entityRanges: [],
-          data: {},
-        },
-      ],
-      entityMap: {},
-    },
-  },
-  {
-    name: "Callout",
-    heading: "Juno is best dog",
-    body: "In this essay, we explore why Golden Retrievers and in particular Juno are superb.  Please see https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg",
-    calloutType: "",
-  },
   { name: "Callout", heading: "saved heading", body: "", calloutType: "" },
-  {
-    name: "Image",
-    alt: "",
-    longDesc: "Saved long description",
-    imgLink:
-      "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg",
-    creditLink: "",
-    uploadedImg:
-      "https://www.tvo.org/files/s3fs-public/styles/hero_image/public/media-library/2_3_juno_1.jpg",
-    imgSize: "default",
-  },
-  { name: "Callout", heading: "", body: "", calloutType: "" },
-  { name: "Callout", heading: "", body: "saved body", calloutType: "" },
-  {
-    name: "QuoteBox",
-    quoteBoxBody: {
-      blocks: [
-        {
-          key: "d3ktl",
-          text: "Sam",
-          type: "unstyled",
-          depth: 0,
-          inlineStyleRanges: [],
-          entityRanges: [],
-          data: {},
-        },
-      ],
-      entityMap: {},
-    },
-    quoteBoxCitation: {
-      blocks: [
-        {
-          key: "8abs2",
-          text: "James",
-          type: "unstyled",
-          depth: 0,
-          inlineStyleRanges: [],
-          entityRanges: [],
-          data: {},
-        },
-      ],
-      entityMap: {},
-    },
-  },
 ];
 
 export const WidgetContextProvider = ({ children }) => {

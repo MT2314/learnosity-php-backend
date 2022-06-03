@@ -25,34 +25,93 @@ afterEach(() => {
 const mockDataYouTube = {
   type: "youTube",
   videoUrl: "3m6d99GDARE",
-  transcript: "",
-  caption: "",
-  credit: "",
+  transcript: {
+    blocks: [
+      {
+        key: "d3ktl",
+        text: "Polkaroo",
+        type: "unstyled",
+        depth: 0,
+        inlineStyleRanges: [],
+        entityRanges: [],
+        data: {},
+      },
+    ],
+    entityMap: {},
+  },
+  caption: {
+    blocks: [
+      {
+        key: "d3ktl",
+        text: "Polkaroo YouTube video",
+        type: "unstyled",
+        depth: 0,
+        inlineStyleRanges: [],
+        entityRanges: [],
+        data: {},
+      },
+    ],
+    entityMap: {},
+  },
+  credit: {
+    blocks: [
+      {
+        key: "d3ktl",
+        text: "Polkadot Door",
+        type: "unstyled",
+        depth: 0,
+        inlineStyleRanges: [],
+        entityRanges: [],
+        data: {},
+      },
+    ],
+    entityMap: {},
+  },
 };
 
-xdescribe("Video", () => {
+const mockDataBrightcove = {
+  type: "brightcove",
+  brightcoveAccountId: "",
+  brightcoveVideoId: "",
+  transcript: "",
+  credit: "",
+  caption: "",
+};
+
+describe("Video", () => {
+  // Test that placeholder video icon renders when no video uploaded
   it("renders Video without any given data", () => {
     render(<Video />);
 
-    expect(screen.getByTestId("")).toBeInTheDocument();
-    expect(screen.getByTestId("quotes")).toBeInTheDocument();
-    expect(screen.getByTestId("quoteBoxBody")).toBeInTheDocument();
-    expect(screen.getByTestId("quoteBoxCitation")).toBeInTheDocument();
+    expect(screen.getByTestId("video")).toBeInTheDocument();
   });
 
-  //   it("renders QuoteBox with given data", () => {
-  //     render(
-  //       <QuoteBox
-  //         quoteBoxBody={mockProps.quoteBoxBody}
-  //         quoteBoxCitation={mockProps.quoteBoxCitation}
-  //       />
-  //     );
+  // Test that YouTube video renders when YouTube data provided
+  it("renders Video with given data (YouTube)", () => {
+    render(
+      <Video
+        type={mockDataYouTube.type}
+        videoUrl={mockDataYouTube.videoUrl}
+        transcript={mockDataYouTube.transcript}
+        credit={mockDataYouTube.credit}
+        caption={mockDataYouTube.caption}
+      />
+    );
 
-  //     expect(screen.getByTestId("quoteBoxBody")).toHaveTextContent("Polkaroo");
-  //     expect(screen.getByTestId("quoteBoxBody")).not.toHaveTextContent("Humpty");
-  //     expect(screen.getByTestId("quoteBoxCitation")).toHaveTextContent("Bibble");
-  //     expect(screen.getByTestId("quoteBoxCitation")).not.toHaveTextContent(
-  //       "Dumpty"
-  //     );
-  //   });
+    expect(screen.getByTestId("youTubePlayer")).toBeInTheDocument();
+    expect(screen.getByTestId("videoTranscript")).not.toHaveTextContent(
+      "Humpty"
+    );
+    expect(screen.getByTestId("videoTranscript")).toHaveTextContent("Polkaroo");
+    expect(screen.getByTestId("videoCaption")).not.toHaveTextContent("Dumpty");
+    expect(screen.getByTestId("videoCaption")).toHaveTextContent(
+      "Polkaroo YouTube video"
+    );
+    expect(screen.getByTestId("videoCredit")).not.toHaveTextContent("Bibble");
+    expect(screen.getByTestId("videoCredit")).toHaveTextContent(
+      "Polkadot Door"
+    );
+  });
+
+  // Test that Brightcove video renders when account ID/video ID provided
 });

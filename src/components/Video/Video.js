@@ -12,35 +12,29 @@ export let defaultProps = {
   type: "",
 };
 
-if (defaultProps.type === "youTube") {
-  defaultProps = {
-    ...defaultProps,
-    videoUrl: "",
-    thumbnailUrl: "",
-    thumbnailWidth: 0,
-    thumbnailHeight: 0,
-  };
-} else if (defaultProps.type === "brightcove") {
-  defaultProps = {
-    ...defaultProps,
-    brightcoveDataPlayer: "",
-    brightcoveDataPlayerId: "",
-  };
-}
-
 const Video = ({
   type,
-  videoUrl,
+  videoId,
   brightcoveAccountId,
-  brightcoveVideoId,
   transcript,
   caption,
   credit,
+  videoPlayerError,
   setProp = () => console.warn("No state change function provided"),
 }) => {
   useEffect(() => {
-    console.log(videoUrl);
-  }, [videoUrl]);
+    console.log(videoPlayerError);
+  }, [videoPlayerError]);
+
+  const onSuccessBC = (success) => {
+    videoPlayerError = false;
+    console.log(success);
+  };
+
+  // const onFailureBC = (error) => {
+  //   videoPlayerError = true;
+  //   alert(error);
+  // };
 
   // Setting the toolbar for FormattedTexts with custom hook
   // const creditToolbar = useToolBarOptions(
@@ -49,30 +43,29 @@ const Video = ({
   // );
 
   return (
-    <div className={styles.videoContainer}>
+    <div className={styles.videoContainer} data-testid="video">
       {type === "" ||
-      (type === "brightcove" && !brightcoveAccountId && !brightcoveVideoId) ||
-      (type === "youTube" && !videoUrl) ? (
-        <div
-          data-testid="videoPlaceholder"
-          className={styles.placeholderImg}
-          tabIndex="0"
-        ></div>
-      ) : type === "youTube" && videoUrl ? (
-        <YouTube
-          videoId={videoUrl}
-          className={styles.youTubePlayer}
-          data-testid="youTubePlayer"
-        />
-      ) : type === "brightcove" && brightcoveAccountId && brightcoveVideoId ? (
-        <ReactPlayerLoader
-          accountId={brightcoveAccountId}
-          videoId={brightcoveVideoId}
-          data-testid="brightcovePlayer"
-        />
+      (type === "brightcove" && !videoId) ||
+      (type === "youTube" && !videoId) ? (
+        <div className={styles.placeholderImg} tabIndex="0"></div>
+      ) : type === "youTube" && videoId ? (
+        <div className={styles.youTubePlayer} data-testid="youTubePlayer">
+          <YouTube
+            videoId={videoId}
+            onError={(error) => console.log(error.data)}
+          />
+        </div>
+      ) : type === "brightcove" && videoId ? (
+        <div className={styles.brightcovePlayer} data-testid="brightcovePlayer">
+          <ReactPlayerLoader
+            accountId="23648095001"
+            videoId={videoId}
+            onSuccess={onSuccessBC}
+            // onFailure={onFailureBC}
+          />
+        </div>
       ) : null}
-      {(type === "youTube" && videoUrl) ||
-      (type === "brightcove" && brightcoveAccountId && brightcoveVideoId) ? (
+      {(type === "youTube" && videoId) || (type === "brightcove" && videoId) ? (
         <>
           <div
             className={styles.transcriptContainer}
