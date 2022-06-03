@@ -110,7 +110,6 @@ const Tab = ({ tabs, setProp = () => {} }) => {
 
     setProp({
       tabs: tabs.map((tab, tabIndex) => {
-        console.log(tab)
         if (tabIndex !== currTabIndex) return tab;
         return {
           ...tabs[tabIndex],
