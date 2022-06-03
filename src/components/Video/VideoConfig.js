@@ -102,32 +102,37 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   // Function to verify Brightcove data
   const verifyBrightcoveData = (e) => {
     e.preventDefault();
-    if (videoId.length !== 13) {
+    if (videoId.length === 13) {
       setState({
-        videoId: "",
-        videoPlayerError: true,
+        videoPlayerError: false,
       });
       console.log(
         "The Brightcove data you've entered was successful.videoID & error are ",
         videoId,
         videoPlayerError
       );
+      alert("The Brightcove Video ID provided was successful.");
+      return;
+    }
+    if (videoId.length < 13) {
+      setState({
+        videoId: "",
+        videoPlayerError: true,
+      });
+      console.log(
+        "The Brightcove data you've entered was unsuccessful. videoID & error are ",
+        videoId,
+        videoPlayerError
+      );
       alert(
         "Sorry, the Brightcove Video ID provided was unsuccessful.  Please provide a valid Brightcove Video ID."
       );
+      setState({
+        videoId: "",
+        videoPlayerError: false,
+      });
       return;
-    }
-    // if (videoPlayerError) {
-    //   setState({
-    //     videoId: "",
-    //   });
-    //   console.log(
-    //     "The Brightcove data you've entered was successful.videoID & error are ",
-    //     videoId,
-    //     videoPlayerError
-    //   );
-    // }
-    else if (videoId && !videoPlayerError) {
+    } else if (videoId && !videoPlayerError) {
       console.log(
         "The Brightcove data you've entered was successful.videoID & error are ",
         videoId,
