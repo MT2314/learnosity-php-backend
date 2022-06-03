@@ -21,7 +21,6 @@ const Video = ({
   credit,
   videoPlayerError,
   setProp = () => console.warn("No state change function provided"),
-  setState = () => {},
 }) => {
   useEffect(() => {
     console.log(videoPlayerError);
