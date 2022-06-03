@@ -110,7 +110,8 @@ const Tab = ({ tabs, setProp = () => {} }) => {
 
     setProp({
       tabs: tabs.map((tab, tabIndex) => {
-        if (tab.id - 1 !== currTabIndex) return tab;
+        console.log(tab)
+        if (tabIndex !== currTabIndex) return tab;
         return {
           ...tabs[tabIndex],
           content: [...tabs[tabIndex].content, newContent],
