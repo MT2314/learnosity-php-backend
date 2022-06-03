@@ -18,18 +18,20 @@ afterEach(() => {
   container = null;
 });
 
-const testTabs = [
-    { id: 1, name: "Math", content: [] },
-    {
-      id: 2,
-      name: "Geography",
-      content: [],
-    },
-  ]
-
-const numOfTabs = testTabs.filter(tab => tab.id).length
 
 describe("Tab", () => {
+
+  const testTabs = [
+      { id: 1, name: "Math", content: [] },
+      {
+        id: 2,
+        name: "Geography",
+        content: [],
+      },
+    ]
+  
+  const numOfTabs = testTabs.filter(tab => tab.id).length
+
   it("renders tabs with given data", () => {
     render(<Tab tabs={testTabs}/>)
 
@@ -42,6 +44,7 @@ describe("Tab", () => {
     render(<Tab tabs={testTabs}/>)
 
     expect(testTabs).not.toHaveLength(3)
+    expect(testTabs).not.toHaveLength(1)
     expect(testTabs).toHaveLength(numOfTabs)
   })
 
@@ -51,11 +54,11 @@ describe("Tab", () => {
     expect(screen.getByTestId("add-tab-btn")).toBeInTheDocument()
   })
   
-  it("renders a new tab when add tab btn is pressed", async () => {
-    const user = userEvent.setup()
+  test("renders a new tab when add tab btn is pressed",() => {
     
     render(<Tab tabs={testTabs}/>)
-    await user.click(screen.getByTestId("add-tab-btn"))
+
+    userEvent.click(screen.getByTestId("add-tab-btn"))
     //To do: assert that when btn is clicked there are 3 tabs
   })
 
