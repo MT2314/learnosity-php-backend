@@ -7,13 +7,10 @@
     "build:start": "cd dist && PORT=3001 npx serve",
     "start": "webpack serve --open --mode development",
     "start:live": "webpack serve --open --mode development --live-reload --hot",
-    "test": "react-scripts test"
+    "test": "react-scripts test --watchAll",
+    "test:build": "CI=true react-scripts test --ci --watchAll=false"
   },
   "license": "MIT",
-  "author": {
-    "name": "Jack Herrington",
-    "email": "jherr@pobox.com"
-  },
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@babel/plugin-transform-runtime": "^7.15.8",
@@ -41,12 +38,15 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
+    "@brightcove/react-player-loader": "^1.4.1",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@material-ui/core": "^4.12.3",
     "@mui/icons-material": "^5.5.1",
+    "@mui/lab": "^5.0.0-alpha.81",
     "@mui/material": "^5.5.1",
     "draft-js": "^0.11.7",
+    "get-video-id": "^3.6.4",
     "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -55,8 +55,10 @@
     "react-error-boundary": "^3.1.4",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
+    "react-youtube": "^9.0.2",
     "sass": "^1.51.0",
-    "svg-url-loader": "^7.1.1"
+    "svg-url-loader": "^7.1.1",
+    "uuid": "^3.3.2"
   },
   "eslintConfig": {
     "extends": [
