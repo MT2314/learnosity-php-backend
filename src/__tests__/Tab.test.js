@@ -27,16 +27,18 @@ jest.mock("react-router-dom", () => ({
   }),
 }));
 
-  const testTabs = [
+  const testTabs = {
+    tabs: [
       { id: 1, name: "Math", content: [] },
       {
         id: 2,
         name: "Geography",
         content: [],
       },
-    ]
+    ],
+  };
   
-  const numOfTabs = testTabs.filter(tab => tab.id).length
+  const numOfTabs = testTabs.tabs.filter(tab => tab.id).length
 
 
 describe("Tab", () => {
@@ -69,7 +71,10 @@ describe("Tab", () => {
 
     userEvent.click(screen.getByTestId("add-tab-btn"))
     //To do: assert that when btn is clicked there are 3 tabs
+    expect(testTabs).not.toHaveLength(2)
+    expect(testTabs).toHaveLength(numOfTabs)
   })
 
 })
+
 
