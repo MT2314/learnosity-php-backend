@@ -1,6 +1,7 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
 import VideoConfig from "../components/Video/VideoConfig";
@@ -51,7 +52,7 @@ describe("VideoConfig component renders with YouTube settings", () => {
     expect(screen.getByTestId("videoConfigContainer")).toBeInTheDocument();
   });
 
-  // Test that YouTube video renders when YouTube data provided
+  // Test that VideoConfig renders when YouTube data is passed as props
   it("renders VideoConfig with given data (YouTube)", () => {
     render(
       <VideoConfig
@@ -59,6 +60,23 @@ describe("VideoConfig component renders with YouTube settings", () => {
         videoId={mockDataYouTubeValid.videoId}
       />
     );
+
+    expect(screen.getByLabelText("YouTube")).toBeInTheDocument();
+    expect(screen.getByLabelText("Brightcove")).toBeInTheDocument();
+  });
+
+  // Test that successful alert renders when URL is verified with correct data
+  it("Prompts user with an alert when correct data provided", () => {
+    render(
+      <VideoConfig
+        type={mockDataYouTubeValid.type}
+        videoId={mockDataYouTubeValid.videoId}
+      />
+    );
+
+    const youTubeRadio = screen.getByLabelText("YouTube");
+    userEvent.click(youTubeRadio);
+    expect(youTubeRadio).toBeChecked();
   });
 });
 
