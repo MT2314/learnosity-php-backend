@@ -16,7 +16,6 @@ const Video = ({
   type,
   videoId,
   brightcoveAccountId,
-  transcript,
   caption,
   credit,
   videoPlayerError,
