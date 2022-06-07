@@ -15,7 +15,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
     thumbnailHeight,
   } = componentState;
 
-  // Functions to clear inputs when toggling between types
+  // Function to clear inputs when toggling between types, and set state for "type"
   const handleRadioSelect = (e) => {
     setState({ type: e.target.value, videoId: "", youTubeUrl: "" });
     setBrightcoveId("");
