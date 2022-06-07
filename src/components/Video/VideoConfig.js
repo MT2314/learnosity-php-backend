@@ -26,11 +26,8 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   // Functions to clear inputs when toggling between types
   const handleRadioSelect = (e) => {
     setState({ type: e.target.value, videoId: "" });
-    if (type === "youTube") {
-      setYouTubeUrl("");
-    } else if (type === "brightcove") {
-      setBrightcoveId("");
-    }
+    setBrightcoveId("");
+    setYouTubeUrl("");
   };
 
   // YOUTUBE
@@ -88,15 +85,8 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // Event handler for clearing all fields/"deleting" video
   const handleClearAllFields = () => {
-    // document.querySelector(
-    //   'input[name="playerSelect"]:checked'
-    // ).checked = false;
-    // if (type === "youTube") {
-    //   document.getElementById("youTubeUrl").value = "";
-    // } else if (type === "brightcove") {
-    //   document.getElementById("brightcoveVideoId").value = "";
-    // }
     setYouTubeUrl("");
+    setBrightcoveId("");
     setState({
       type: "",
       videoId: "",
@@ -110,24 +100,24 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       <div className={styles.playerSelectContainer}>
         <p className={styles.playerSelectInfo}>Please select a video player:</p>
         <form>
+          <label htmlFor="youTube">YouTube</label>
           <input
             className={styles.videoConfigRadio}
-            name="playerSelect"
+            name={type}
             type="radio"
             id="youTube"
             value="youTube"
             onClick={handleRadioSelect}
           />
-          <label htmlFor="youTube">YouTube</label>
+          <label htmlFor="brightcove">Brightcove</label>
           <input
             className={styles.videoConfigRadio}
-            name="playerSelect"
+            name={type}
             type="radio"
             id="brightcove"
             value="brightcove"
             onClick={handleRadioSelect}
           />
-          <label htmlFor="brightcove">Brightcove</label>
           <div className={styles.configOptions}>
             {type === "youTube" ? (
               <>
@@ -164,7 +154,9 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
                   value={brightcoveId}
                   onChange={handleBrightcoveVideoId}
                 />
-                <button type="submit">Verify Brightcove Video ID</button>
+                <button onClick={verifyBrightcoveData}>
+                  Verify Brightcove Video ID
+                </button>
               </>
             ) : null}
             {type ? (
