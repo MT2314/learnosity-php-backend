@@ -99,31 +99,33 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       <EditPanelIcon title="Video" icon={<OndemandVideoIcon />} />
       <div className={styles.playerSelectContainer}>
         <p className={styles.playerSelectInfo}>Please select a video player:</p>
-        <form>
-          <label htmlFor="youTube">YouTube</label>
-          <input
-            className={styles.videoConfigRadio}
-            name={type}
-            type="radio"
-            id="youTube"
-            value="youTube"
-            onClick={handleRadioSelect}
-          />
-          <label htmlFor="brightcove">Brightcove</label>
-          <input
-            className={styles.videoConfigRadio}
-            name={type}
-            type="radio"
-            id="brightcove"
-            value="brightcove"
-            onClick={handleRadioSelect}
-          />
-          <div className={styles.configOptions}>
-            {type === "youTube" ? (
-              <>
-                <label htmlFor="youTubeUrl">Enter YouTube video URL:</label>
-                <input
-                  className={`
+        <label htmlFor="youTube">YouTube</label>
+        <input
+          checked={type === "youTube" ? true : false}
+          className={styles.videoConfigRadio}
+          name="playerSelect"
+          type="radio"
+          id="youTube"
+          value="youTube"
+          onClick={handleRadioSelect}
+        />
+        <label htmlFor="brightcove">Brightcove</label>
+        <input
+          checked={type === "brightcove" ? true : false}
+          className={styles.videoConfigRadio}
+          name="playerSelect"
+          type="radio"
+          id="brightcove"
+          value="brightcove"
+          onClick={handleRadioSelect}
+        />
+      </div>
+      <div className={styles.configOptions}>
+        {type === "youTube" ? (
+          <>
+            <label htmlFor="youTubeUrl">Enter YouTube video URL:</label>
+            <input
+              className={`
                     ${styles.videoConfigInput}
                     ${
                       videoPlayerError
@@ -133,37 +135,35 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
                         : ""
                     }
                   `}
-                  type="url"
-                  name="youTubeUrl"
-                  id="youTubeUrl"
-                  value={youTubeUrl}
-                  placeholder="YouTube video URL..."
-                  onChange={handleYouTubeUrl}
-                />
-                <button onClick={verifyYouTubeUrl}>Verify URL</button>
-              </>
-            ) : type === "brightcove" ? (
-              <>
-                <label htmlFor="brightcoveVideoId">Brightcove Video ID:</label>
-                <input
-                  className={styles.videoConfigInput}
-                  type="text"
-                  name="brightcoveVideoId"
-                  id="brightcoveVideoId"
-                  placeholder="Brightcove Video ID..."
-                  value={brightcoveId}
-                  onChange={handleBrightcoveVideoId}
-                />
-                <button onClick={verifyBrightcoveData}>
-                  Verify Brightcove Video ID
-                </button>
-              </>
-            ) : null}
-            {type ? (
-              <button onClick={handleClearAllFields}>Clear All Fields</button>
-            ) : null}
-          </div>
-        </form>
+              type="url"
+              name="youTubeUrl"
+              id="youTubeUrl"
+              value={youTubeUrl}
+              placeholder="YouTube video URL..."
+              onChange={handleYouTubeUrl}
+            />
+            <button onClick={verifyYouTubeUrl}>Verify URL</button>
+          </>
+        ) : type === "brightcove" ? (
+          <>
+            <label htmlFor="brightcoveVideoId">Brightcove Video ID:</label>
+            <input
+              className={styles.videoConfigInput}
+              type="text"
+              name="brightcoveVideoId"
+              id="brightcoveVideoId"
+              placeholder="Brightcove Video ID..."
+              value={brightcoveId}
+              onChange={handleBrightcoveVideoId}
+            />
+            <button onClick={verifyBrightcoveData}>
+              Verify Brightcove Video ID
+            </button>
+          </>
+        ) : null}
+        {type ? (
+          <button onClick={handleClearAllFields}>Clear All Fields</button>
+        ) : null}
       </div>
     </div>
   );
