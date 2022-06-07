@@ -24,13 +24,12 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   };
 
   // Functions to clear inputs when toggling between types
-  const handleRadioSelect = () => {
+  const handleRadioSelect = (e) => {
+    setState({ type: e.target.value, videoId: "" });
     if (type === "youTube") {
       setYouTubeUrl("");
-      document.getElementById("youTubeUrl").value = "";
     } else if (type === "brightcove") {
       setBrightcoveId("");
-      document.getElementById("brightcoveVideoId").value = "";
     }
   };
 
@@ -89,14 +88,14 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // Event handler for clearing all fields/"deleting" video
   const handleClearAllFields = () => {
-    document.querySelector(
-      'input[name="playerSelect"]:checked'
-    ).checked = false;
-    if (type === "youTube") {
-      document.getElementById("youTubeUrl").value = "";
-    } else if (type === "brightcove") {
-      document.getElementById("brightcoveVideoId").value = "";
-    }
+    // document.querySelector(
+    //   'input[name="playerSelect"]:checked'
+    // ).checked = false;
+    // if (type === "youTube") {
+    //   document.getElementById("youTubeUrl").value = "";
+    // } else if (type === "brightcove") {
+    //   document.getElementById("brightcoveVideoId").value = "";
+    // }
     setYouTubeUrl("");
     setState({
       type: "",
@@ -110,7 +109,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       <EditPanelIcon title="Video" icon={<OndemandVideoIcon />} />
       <div className={styles.playerSelectContainer}>
         <p className={styles.playerSelectInfo}>Please select a video player:</p>
-        <form onChange={handleVideoSelect}>
+        <form>
           <input
             className={styles.videoConfigRadio}
             name="playerSelect"
@@ -129,50 +128,50 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
             onClick={handleRadioSelect}
           />
           <label htmlFor="brightcove">Brightcove</label>
+          <div className={styles.configOptions}>
+            {type === "youTube" ? (
+              <>
+                <label htmlFor="youTubeUrl">Enter YouTube video URL:</label>
+                <input
+                  className={`
+                    ${styles.videoConfigInput}
+                    ${
+                      videoPlayerError
+                        ? styles.inputError
+                        : videoId && videoPlayerError === false
+                        ? styles.inputSuccess
+                        : ""
+                    }
+                  `}
+                  type="url"
+                  name="youTubeUrl"
+                  id="youTubeUrl"
+                  value={youTubeUrl}
+                  placeholder="YouTube video URL..."
+                  onChange={handleYouTubeUrl}
+                />
+                <button onClick={verifyYouTubeUrl}>Verify URL</button>
+              </>
+            ) : type === "brightcove" ? (
+              <>
+                <label htmlFor="brightcoveVideoId">Brightcove Video ID:</label>
+                <input
+                  className={styles.videoConfigInput}
+                  type="text"
+                  name="brightcoveVideoId"
+                  id="brightcoveVideoId"
+                  placeholder="Brightcove Video ID..."
+                  value={brightcoveId}
+                  onChange={handleBrightcoveVideoId}
+                />
+                <button type="submit">Verify Brightcove Video ID</button>
+              </>
+            ) : null}
+            {type ? (
+              <button onClick={handleClearAllFields}>Clear All Fields</button>
+            ) : null}
+          </div>
         </form>
-      </div>
-      <div className={styles.configOptions}>
-        {type === "youTube" ? (
-          <form onSubmit={verifyYouTubeUrl}>
-            <label htmlFor="youTubeUrl">Enter YouTube video URL:</label>
-            <input
-              className={`
-                ${styles.videoConfigInput}
-                ${
-                  videoPlayerError
-                    ? styles.inputError
-                    : videoId && videoPlayerError === false
-                    ? styles.inputSuccess
-                    : ""
-                }
-              `}
-              type="url"
-              name="youTubeUrl"
-              id="youTubeUrl"
-              value={youTubeUrl}
-              placeholder="YouTube video URL..."
-              onChange={handleYouTubeUrl}
-            />
-            <button type="submit">Verify URL</button>
-          </form>
-        ) : type === "brightcove" ? (
-          <form onSubmit={verifyBrightcoveData}>
-            <label htmlFor="brightcoveVideoId">Brightcove Video ID:</label>
-            <input
-              className={styles.videoConfigInput}
-              type="text"
-              name="brightcoveVideoId"
-              id="brightcoveVideoId"
-              placeholder="Brightcove Video ID..."
-              value={brightcoveId}
-              onChange={handleBrightcoveVideoId}
-            />
-            <button type="submit">Verify Brightcove Video ID</button>
-          </form>
-        ) : null}
-        {type ? (
-          <button onClick={handleClearAllFields}>Clear All Fields</button>
-        ) : null}
       </div>
     </div>
   );
