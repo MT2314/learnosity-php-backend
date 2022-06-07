@@ -9,37 +9,22 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
     type,
     videoId = "",
+    youTubeUrl,
     thumbnailUrl,
     thumbnailWidth,
     thumbnailHeight,
-    videoPlayerError,
   } = componentState;
 
-  // State/event handler for setting "type"
-  const handleVideoSelect = (e) => {
-    setState({
-      type: e.target.value,
-      videoId: "",
-    });
-  };
-
-  // Functions to clear inputs when toggling between types
-  const handleRadioSelect = () => {
-    if (type === "youTube") {
-      setYouTubeUrl("");
-      document.getElementById("youTubeUrl").value = "";
-    } else if (type === "brightcove") {
-      setBrightcoveId("");
-      document.getElementById("brightcoveVideoId").value = "";
-    }
+  // Function to clear inputs when toggling between types, and set state for "type"
+  const handleRadioSelect = (e) => {
+    setState({ type: e.target.value, videoId: "", youTubeUrl: "" });
+    setBrightcoveId("");
   };
 
   // YOUTUBE
   // State/event handler for setting videoId for YouTube
-  const [youTubeUrl, setYouTubeUrl] = useState("");
-
   const handleYouTubeUrl = (e) => {
-    setYouTubeUrl(e.target.value);
+    setState({ youTubeUrl: e.target.value });
   };
 
   const verifyYouTubeUrl = (e) => {
@@ -89,19 +74,11 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // Event handler for clearing all fields/"deleting" video
   const handleClearAllFields = () => {
-    document.querySelector(
-      'input[name="playerSelect"]:checked'
-    ).checked = false;
-    if (type === "youTube") {
-      document.getElementById("youTubeUrl").value = "";
-    } else if (type === "brightcove") {
-      document.getElementById("brightcoveVideoId").value = "";
-    }
-    setYouTubeUrl("");
+    setState({ youTubeUrl: "" });
+    setBrightcoveId("");
     setState({
       type: "",
       videoId: "",
-      videoPlayerError: false,
     });
   };
 
@@ -113,42 +90,33 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
       <EditPanelIcon title="Video" icon={<OndemandVideoIcon />} />
       <div className={styles.playerSelectContainer}>
         <p className={styles.playerSelectInfo}>Please select a video player:</p>
-        <form onChange={handleVideoSelect}>
-          <input
-            className={styles.videoConfigRadio}
-            name="playerSelect"
-            type="radio"
-            id="youTube"
-            value="youTube"
-            onClick={handleRadioSelect}
-          />
-          <label htmlFor="youTube">YouTube</label>
-          <input
-            className={styles.videoConfigRadio}
-            name="playerSelect"
-            type="radio"
-            id="brightcove"
-            value="brightcove"
-            onClick={handleRadioSelect}
-          />
-          <label htmlFor="brightcove">Brightcove</label>
-        </form>
+        <label htmlFor="youTube">YouTube</label>
+        <input
+          checked={type === "youTube" ? true : false}
+          className={styles.videoConfigRadio}
+          name="playerSelect"
+          type="radio"
+          id="youTube"
+          value="youTube"
+          onClick={handleRadioSelect}
+        />
+        <label htmlFor="brightcove">Brightcove</label>
+        <input
+          checked={type === "brightcove" ? true : false}
+          className={styles.videoConfigRadio}
+          name="playerSelect"
+          type="radio"
+          id="brightcove"
+          value="brightcove"
+          onClick={handleRadioSelect}
+        />
       </div>
       <div className={styles.configOptions}>
         {type === "youTube" ? (
-          <form onSubmit={verifyYouTubeUrl}>
+          <>
             <label htmlFor="youTubeUrl">Enter YouTube video URL:</label>
             <input
-              className={`
-                ${styles.videoConfigInput}
-                ${
-                  videoPlayerError
-                    ? styles.inputError
-                    : videoId && videoPlayerError === false
-                    ? styles.inputSuccess
-                    : ""
-                }
-              `}
+              className={styles.videoConfigInput}
               type="url"
               name="youTubeUrl"
               id="youTubeUrl"
@@ -156,10 +124,10 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               placeholder="YouTube video URL..."
               onChange={handleYouTubeUrl}
             />
-            <button type="submit">Verify URL</button>
-          </form>
+            <button onClick={verifyYouTubeUrl}>Verify URL</button>
+          </>
         ) : type === "brightcove" ? (
-          <form onSubmit={verifyBrightcoveData}>
+          <>
             <label htmlFor="brightcoveVideoId">Brightcove Video ID:</label>
             <input
               className={styles.videoConfigInput}
@@ -170,8 +138,10 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
               value={brightcoveId}
               onChange={handleBrightcoveVideoId}
             />
-            <button type="submit">Verify Brightcove Video ID</button>
-          </form>
+            <button onClick={verifyBrightcoveData}>
+              Verify Brightcove Video ID
+            </button>
+          </>
         ) : null}
         {type ? (
           <button onClick={handleClearAllFields}>Clear All Fields</button>

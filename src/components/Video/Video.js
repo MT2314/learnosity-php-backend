@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import FormattedText from "../FormattedText/FormattedText";
 import { useToolBarOptions } from "../../hooks/useToolBarOptions";
@@ -16,10 +16,9 @@ const Video = ({
   type,
   videoId,
   brightcoveAccountId,
-  transcript,
   caption,
   credit,
-  videoPlayerError,
+  transcript,
   setProp = () => console.warn("No state change function provided"),
 }) => {
   // Setting the toolbar for FormattedTexts with custom hook
