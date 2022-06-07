@@ -9,33 +9,22 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
     type,
     videoId = "",
+    youTubeUrl,
     thumbnailUrl,
     thumbnailWidth,
     thumbnailHeight,
-    videoPlayerError,
   } = componentState;
-
-  // State/event handler for setting "type"
-  const handleVideoSelect = (e) => {
-    setState({
-      type: e.target.value,
-      videoId: "",
-    });
-  };
 
   // Functions to clear inputs when toggling between types
   const handleRadioSelect = (e) => {
-    setState({ type: e.target.value, videoId: "" });
+    setState({ type: e.target.value, videoId: "", youTubeUrl: "" });
     setBrightcoveId("");
-    setYouTubeUrl("");
   };
 
   // YOUTUBE
   // State/event handler for setting videoId for YouTube
-  const [youTubeUrl, setYouTubeUrl] = useState("");
-
   const handleYouTubeUrl = (e) => {
-    setYouTubeUrl(e.target.value);
+    setState({ youTubeUrl: e.target.value });
   };
 
   const verifyYouTubeUrl = (e) => {
@@ -85,12 +74,11 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
 
   // Event handler for clearing all fields/"deleting" video
   const handleClearAllFields = () => {
-    setYouTubeUrl("");
+    setState({ youTubeUrl: "" });
     setBrightcoveId("");
     setState({
       type: "",
       videoId: "",
-      videoPlayerError: false,
     });
   };
 
@@ -125,16 +113,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
           <>
             <label htmlFor="youTubeUrl">Enter YouTube video URL:</label>
             <input
-              className={`
-                    ${styles.videoConfigInput}
-                    ${
-                      videoPlayerError
-                        ? styles.inputError
-                        : videoId && videoPlayerError === false
-                        ? styles.inputSuccess
-                        : ""
-                    }
-                  `}
+              className={styles.videoConfigInput}
               type="url"
               name="youTubeUrl"
               id="youTubeUrl"
