@@ -78,7 +78,7 @@ const mockDataBrightcove = {
   caption: "",
 };
 
-xdescribe("Video", () => {
+describe("Video", () => {
   // Test that placeholder video icon renders when no video uploaded
   it("renders Video without any given data", () => {
     render(<Video />);
@@ -102,7 +102,9 @@ xdescribe("Video", () => {
     expect(screen.getByTestId("videoTranscript")).not.toHaveTextContent(
       "Humpty"
     );
-    expect(screen.getByTestId("videoTranscript")).toHaveTextContent("Polkaroo");
+    expect(screen.getByTestId("videoTranscript")).toHaveTextContent(
+      "Polkaroo56766454"
+    );
     expect(screen.getByTestId("videoCaption")).not.toHaveTextContent("Dumpty");
     expect(screen.getByTestId("videoCaption")).toHaveTextContent(
       "Polkaroo YouTube video"
