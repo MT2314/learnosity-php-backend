@@ -18,6 +18,7 @@ const Video = ({
   brightcoveAccountId,
   caption,
   credit,
+  transcript,
   setProp = () => console.warn("No state change function provided"),
 }) => {
   // Setting the toolbar for FormattedTexts with custom hook
