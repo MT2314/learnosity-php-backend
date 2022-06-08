@@ -12,6 +12,8 @@ import ImageConfig from "./Image/ImageConfig";
 import Tab, { defaultProps as tabsDefaultProps } from "./Tab/Tab";
 import Video, { defaultProps as videoDefaultProps } from "./Video/Video";
 import VideoConfig from "./Video/VideoConfig";
+import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
+import IFrameConfig from "./IFrame/IFrameConfig";
 
 const componentIndex = {
   Callout: {
@@ -51,6 +53,13 @@ const componentIndex = {
     defaultProps: videoDefaultProps,
     version: "0.0.1",
     ConfigPanel: VideoConfig,
+  },
+  IFrame: {
+    Component: IFrame,
+    readableName: "iFrame",
+    defaultProps: iFrameDefaultProps,
+    version: "0.0.1",
+    ConfigPanel: IFrameConfig,
   },
 };
 
