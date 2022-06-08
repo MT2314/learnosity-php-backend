@@ -8,9 +8,11 @@ const fs = require("fs");
 const dotenv = require("dotenv");
 
 module.exports = (_, argv) => {
+  console.log(argv)
+
   const envFolderPath = path.join(__dirname, "environments");
 
-  let envPath = path.join(envFolderPath, `.env`);
+  let envPath = path.join(envFolderPath, `.env.${argv.env.ENVIRONMENT || 'prod'}`);
 
   if (!fs.existsSync(envPath)) throw new Error(`.env file for not found`);
 
@@ -28,7 +30,7 @@ module.exports = (_, argv) => {
       publicPath:
         argv.mode === "development"
           ? `${fileEnv.COMPONENT_LIBRARY_LOCAL}`
-          : `${fileEnv.COMPONENT_LIBRARY_QA}`,
+          : `${fileEnv.WEBPACK_PUBLIC_PATH}`,
     clean:true,
     },
 
