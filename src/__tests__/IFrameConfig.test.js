@@ -49,10 +49,10 @@ describe("IFrameConfig", () => {
   it("renders IFrameConfig with given data", () => {
     render(
       <IFrameConfig
-        title="Weighted Response Quiz"
-        src="https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html"
-        height="500"
-        width="500"
+        title={mockData.title}
+        src={mockData.src}
+        height={mockData.height}
+        width={mockData.width}
         heightType={mockData.heightType}
         widthType={mockData.widthType}
       />
