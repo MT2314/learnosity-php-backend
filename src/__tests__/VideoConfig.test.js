@@ -73,10 +73,8 @@ describe("VideoConfig component renders with YouTube settings", () => {
         videoId={mockDataYouTubeValid.videoId}
       />
     );
-
+    console.log(mockDataYouTubeValid.type);
     const youTubeRadio = screen.getByLabelText("YouTube");
-    userEvent.click(youTubeRadio);
-    // expect(youTubeRadio).toBeChecked();
   });
 });
 
