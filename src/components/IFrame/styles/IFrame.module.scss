@@ -1,0 +1,32 @@
+.iFrameContainer {
+  .iFrameTitle {
+    font-size: 1.5rem;
+  }
+
+  .iFrameWrapper {
+    width: 100%;
+
+    .iFramePlaceholder {
+      background-color: #f6f6f6;
+      background-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" height="194px" viewBox="0 0 24 24" width="194px" fill="%23b2b2b2"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 400px;
+      width: 100%;
+      transition: border ease-in-out 0.3s;
+      border: 1px solid #707070;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      &:focus {
+        outline: 3px solid #ffc46b;
+        z-index: 100;
+      }
+    }
+
+    .iFrame {
+    }
+  }
+}
