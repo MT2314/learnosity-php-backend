@@ -18,7 +18,6 @@ export const defaultProps = {
 };
 
 const Tab = ({ tabs, setProp = () => {} }) => {
-  console.log("tabs:", tabs)
 
   const [currTabIndex, setCurrTabIndex] = useState(0);
   const [editMode, setEditoMode] = useState(false);
