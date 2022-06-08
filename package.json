@@ -2,13 +2,16 @@
   "name": "demo-component-library",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack --mode production",
-    "build:dev": "webpack --mode development",
+    "build:qa": "webpack --mode production --env ENVIRONMENT=qa",
+    "build:dev": "webpack --mode production --env ENVIRONMENT=dev",
+    "build:prod": "webpack --mode production --env ENVIRONMENT=prod",
     "build:start": "cd dist && PORT=3001 npx serve",
     "start": "webpack serve --open --mode development",
     "start:live": "webpack serve --open --mode development --live-reload --hot",
     "test": "react-scripts test --watchAll",
-    "test:build": "CI=true react-scripts test --ci --watchAll=false"
+    "test:prod": "CI=true react-scripts test --ci --watchAll=false",
+    "test:local": "CI=true react-scripts test --ci --watchAll=false",
+    "test:qa": "CI=true react-scripts test --ci --watchAll=false"
   },
   "license": "MIT",
   "devDependencies": {
