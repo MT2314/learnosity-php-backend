@@ -37,7 +37,7 @@ describe("IFrame", () => {
     render(<IFrame />);
 
     expect(screen.getByTestId("iFrameContainer")).toBeInTheDocument();
-    expect(screen.getByText("iFrame Title")).toBeInTheDocument();
+    expect(screen.getByText("iFrame Title (optional)")).toBeInTheDocument();
     expect(screen.getByTestId("iFramePlaceholder")).toBeInTheDocument();
   });
 

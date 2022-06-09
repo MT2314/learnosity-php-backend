@@ -14,7 +14,9 @@ export const defaultProps = {
 const IFrame = ({ title, src, height, width, heightType, widthType }) => {
   return (
     <div className={styles.iFrameContainer} data-testid="iFrameContainer">
-      <p className={styles.iFrameTitle}>{title ? title : "iFrame Title"}</p>
+      <p className={styles.iFrameTitle}>
+        {title ? title : "iFrame Title (optional)"}
+      </p>
       <div className={styles.iFrameWrapper}>
         {src ? (
           <iframe

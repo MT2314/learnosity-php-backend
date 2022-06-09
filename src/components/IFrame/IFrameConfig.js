@@ -8,12 +8,12 @@ import styles from "./styles/IFrameConfig.module.scss";
 
 const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
-    title = "",
-    src = "",
-    height = "",
-    width = "",
+    title = "Weighted Response Quiz",
+    src = "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html",
+    height = "800",
+    width = "100",
     heightType = "px",
-    widthType = "px",
+    widthType = "%",
   } = componentState;
 
   const handleTitleInput = (e) => {

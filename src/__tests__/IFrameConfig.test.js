@@ -21,19 +21,9 @@ afterEach(() => {
   container = null;
 });
 
-// Mock data
-const mockData = {
-  title: "Weighted Response Quiz",
-  src: "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html",
-  height: "500",
-  width: "500",
-  heightType: "px",
-  widthType: "%",
-};
-
 describe("IFrameConfig", () => {
-  // Test that IFrame component renders when no data saved
-  it("renders IFrame without any given data", () => {
+  // Test that IFrameConfig component renders when no data saved
+  it("renders IFrameConfig without any given data", () => {
     render(<IFrameConfig />);
 
     expect(screen.getByTestId("iFrameConfigContainer")).toBeInTheDocument();
@@ -47,36 +37,28 @@ describe("IFrameConfig", () => {
 
   // Test that iFrame component renders when data provided
   it("renders IFrameConfig with given data", () => {
-    render(
-      <IFrameConfig
-        title={mockData.title}
-        src={mockData.src}
-        height={mockData.height}
-        width={mockData.width}
-        heightType={mockData.heightType}
-        widthType={mockData.widthType}
-      />
-    );
+    // Data is located in "componentState" in IFrameConfig.js
+    render(<IFrameConfig />);
 
-    expect(screen.getByLabelText("iFrame Title:")).not.toHaveDisplayValue(
-      "Sorting Table"
-    );
-    expect(screen.getByLabelText("iFrame Title:")).toHaveDisplayValue(
-      "Weighted Response Quiz"
-    );
-    expect(screen.getByTestId("iFrameConfigSrc")).not.toHaveValue(
-      "https://www.tvo.org"
-    );
-    expect(screen.getByTestId("iFrameConfigSrc")).toHaveValue(
+    const titleInput = screen.getByRole("textbox", {
+      name: "iFrame Title:",
+    });
+    expect(titleInput).toHaveDisplayValue("Weighted Response Quiz");
+    expect(titleInput).not.toHaveDisplayValue("Sorting Table");
+
+    const urlInput = screen.getByRole("textbox", {
+      name: "Content to be displayed in iFrame (URL):",
+    });
+    expect(urlInput).not.toHaveValue("https://www.tvo.org");
+    expect(urlInput).toHaveValue(
       "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html"
     );
-    expect(screen.getByLabelText("iFrame Height:")).not.toHaveDisplayValue(
-      "1000"
-    );
-    expect(screen.getByLabelText("iFrame Height:")).toHaveDisplayValue("500");
-    expect(screen.getByLabelText("iFrame Width:")).not.toHaveDisplayValue(
-      "1000"
-    );
-    expect(screen.getByLabelText("iFrame Width:")).toHaveDisplayValue("500");
+
+    const heightInput = screen.getByLabelText("iFrame Height:");
+    expect(heightInput).not.toHaveDisplayValue("1000");
+    expect(heightInput).toHaveDisplayValue("800");
+
+    const widthInput = screen.getByLabelText("iFrame Width:");
+    expect(widthInput).toHaveDisplayValue("100");
   });
 });
