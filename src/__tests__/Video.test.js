@@ -24,7 +24,7 @@ afterEach(() => {
 // Mock data
 const mockDataYouTube = {
   type: "youTube",
-  videoUrl: "3m6d99GDARE",
+  videoId: "3m6d99GDARE",
   transcript: {
     blocks: [
       {
@@ -71,14 +71,53 @@ const mockDataYouTube = {
 
 const mockDataBrightcove = {
   type: "brightcove",
-  brightcoveAccountId: "",
-  brightcoveVideoId: "",
-  transcript: "",
-  credit: "",
-  caption: "",
+  videoId: "5967111782001",
+  transcript: {
+    blocks: [
+      {
+        key: "d3ktl",
+        text: "Polkaroo",
+        type: "unstyled",
+        depth: 0,
+        inlineStyleRanges: [],
+        entityRanges: [],
+        data: {},
+      },
+    ],
+    entityMap: {},
+  },
+  caption: {
+    blocks: [
+      {
+        key: "d3ktl",
+        text: "Polkaroo YouTube video",
+        type: "unstyled",
+        depth: 0,
+        inlineStyleRanges: [],
+        entityRanges: [],
+        data: {},
+      },
+    ],
+    entityMap: {},
+  },
+  credit: {
+    blocks: [
+      {
+        key: "d3ktl",
+        text: "Polkadot Door",
+        type: "unstyled",
+        depth: 0,
+        inlineStyleRanges: [],
+        entityRanges: [],
+        data: {},
+      },
+    ],
+    entityMap: {},
+  },
 };
 
-xdescribe("Video", () => {
+// YOUTUBE
+describe("Video component renders with YouTube settings", () => {
   // Test that placeholder video icon renders when no video uploaded
   it("renders Video without any given data", () => {
     render(<Video />);
@@ -91,7 +130,7 @@ xdescribe("Video", () => {
     render(
       <Video
         type={mockDataYouTube.type}
-        videoUrl={mockDataYouTube.videoUrl}
+        videoId={mockDataYouTube.videoId}
         transcript={mockDataYouTube.transcript}
         credit={mockDataYouTube.credit}
         caption={mockDataYouTube.caption}
@@ -102,9 +141,7 @@ xdescribe("Video", () => {
     expect(screen.getByTestId("videoTranscript")).not.toHaveTextContent(
       "Humpty"
     );
-    expect(screen.getByTestId("videoTranscript")).toHaveTextContent(
-      "Polkaroo56766454"
-    );
+    expect(screen.getByTestId("videoTranscript")).toHaveTextContent("Polkaroo");
     expect(screen.getByTestId("videoCaption")).not.toHaveTextContent("Dumpty");
     expect(screen.getByTestId("videoCaption")).toHaveTextContent(
       "Polkaroo YouTube video"
@@ -114,6 +151,34 @@ xdescribe("Video", () => {
       "Polkadot Door"
     );
   });
+});
 
-  // Test that Brightcove video renders when account ID/video ID provided
+// BRIGHTCOVE
+describe("Video component renders with Brightcove settings", () => {
+  // Test that video renders when Brightcove data provided
+  it("renders Video with given data (Brightcove)", () => {
+    render(
+      <Video
+        type={mockDataBrightcove.type}
+        videoId={mockDataBrightcove.videoId}
+        transcript={mockDataBrightcove.transcript}
+        credit={mockDataBrightcove.credit}
+        caption={mockDataBrightcove.caption}
+      />
+    );
+
+    expect(screen.getByTestId("brightcovePlayer")).toBeInTheDocument();
+    expect(screen.getByTestId("videoTranscript")).not.toHaveTextContent(
+      "Humpty"
+    );
+    expect(screen.getByTestId("videoTranscript")).toHaveTextContent("Polkaroo");
+    expect(screen.getByTestId("videoCaption")).not.toHaveTextContent("Dumpty");
+    expect(screen.getByTestId("videoCaption")).toHaveTextContent(
+      "Polkaroo YouTube video"
+    );
+    expect(screen.getByTestId("videoCredit")).not.toHaveTextContent("Bibble");
+    expect(screen.getByTestId("videoCredit")).toHaveTextContent(
+      "Polkadot Door"
+    );
+  });
 });
