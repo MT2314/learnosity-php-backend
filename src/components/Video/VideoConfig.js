@@ -7,8 +7,8 @@ import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 
 const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
-    type,
-    videoId = "",
+    type = "youTube",
+    videoId,
     youTubeUrl,
     thumbnailUrl,
     thumbnailWidth,
@@ -92,7 +92,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
         <p className={styles.playerSelectInfo}>Please select a video player:</p>
         <label htmlFor="youTube">YouTube</label>
         <input
-          checked={type === "youTube" ? true : false}
+          defaultChecked={type === "youTube" ? true : false}
           className={styles.videoConfigRadio}
           name="playerSelect"
           type="radio"
@@ -102,7 +102,7 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
         />
         <label htmlFor="brightcove">Brightcove</label>
         <input
-          checked={type === "brightcove" ? true : false}
+          defaultChecked={type === "brightcove" ? true : false}
           className={styles.videoConfigRadio}
           name="playerSelect"
           type="radio"
