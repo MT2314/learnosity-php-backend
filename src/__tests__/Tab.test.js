@@ -1,10 +1,8 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import userEvent from "@testing-library/user-event";
 import Tab from "../components/Tab/Tab";
-
 
 let container = null;
 beforeEach(() => {
@@ -18,22 +16,22 @@ afterEach(() => {
   container = null;
 });
 
-
 describe("Tab", () => {
-
-  const testTabs = [
+  const testTabs = {
+    tabs: [
       { id: 1, name: "Math", content: [] },
       {
         id: 2,
         name: "Geography",
         content: [],
       },
-    ]
+    ],
+  };
   
-  const numOfTabs = testTabs.filter(tab => tab.id).length
+  const numOfTabs = testTabs.tabs.filter(tab => tab.id).length
 
   it("renders tabs with given data", () => {
-    render(<Tab tabs={testTabs}/>)
+    render(<Tab tabs={testTabs.tabs}/>)
 
     expect(screen.getByTestId("tab")).toBeInTheDocument();
     expect(screen.getByTestId("add-For")).toBeInTheDocument(); 
@@ -41,26 +39,70 @@ describe("Tab", () => {
   })
   
   it("has a minimum of 2 tabs on render", () => {
-    render(<Tab tabs={testTabs}/>)
+    render(<Tab tabs={testTabs.tabs}/>)
 
-    expect(testTabs).not.toHaveLength(3)
-    expect(testTabs).not.toHaveLength(1)
-    expect(testTabs).toHaveLength(numOfTabs)
+    expect(testTabs.tabs).not.toHaveLength(3)
+    expect(testTabs.tabs).not.toHaveLength(1)
+    expect(testTabs.tabs).toHaveLength(numOfTabs)
   })
 
   it("renders add tab button", () => {
-    render(<Tab tabs={testTabs}/>)
+    render(<Tab tabs={testTabs.tabs}/>)
     
     expect(screen.getByTestId("add-tab-btn")).toBeInTheDocument()
   })
   
-  test("renders a new tab when add tab btn is pressed",() => {
-    
-    render(<Tab tabs={testTabs}/>)
+  it("renders a new tab when add tab btn is pressed", () => { 
+    let addingTabArr = {
+      tabs: [
+        { id: 1, name: "Math", content: [] },
+        {
+          id: 2,
+          name: "Geography",
+          content: [],
+        },
+      ]
+    }
+    render(<Tab tabs={addingTabArr.tabs} setProp={(stateUpdate) => addingTabArr = {...addingTabArr, ...stateUpdate}}/>)
 
-    userEvent.click(screen.getByTestId("add-tab-btn"))
-    //To do: assert that when btn is clicked there are 3 tabs
+    const addTabBtn = screen.getByRole("button", {name: /add tab/i});
+
+    expect(addTabBtn).toBeInTheDocument()
+
+    fireEvent.click(addTabBtn)
+    expect(addingTabArr.tabs).toHaveLength(3)    
   })
 
+  it("formatted text and image btns are in the document and fire add component function", () => { 
+
+    const mockFn = jest.fn()
+
+    let addingTabArr = {
+      tabs: [
+        { id: 1, name: "Math", content: [] },
+        {
+          id: 2,
+          name: "Geography",
+          content: [],
+        },
+      ]
+    }
+
+    render(<Tab tabs={addingTabArr.tabs} setProp={mockFn}/>)
+
+    const formattedTextBtn = screen.getByRole("button", {name: /add formatted text/i})
+    const imageBtn = screen.getByRole("button", {name: /add image/i})
+
+    expect(formattedTextBtn).toBeInTheDocument()
+    expect(imageBtn).toBeInTheDocument()
+    
+    fireEvent.click(formattedTextBtn)
+    expect(mockFn).toHaveBeenCalled()
+
+    fireEvent.click(imageBtn)
+    expect(mockFn).toHaveBeenCalled()
+
+  })
 })
+
 

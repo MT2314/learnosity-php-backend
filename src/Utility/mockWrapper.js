@@ -37,9 +37,10 @@ export const WidgetContextProvider = ({ children }) => {
 };
 
 export const ComponentStateWrapper = ({ id, name, ...componentState }) => {
+  
+  //error boundary is added to each component
   const OurFallbackComponent = ({
     error,
-    componentStack,
     resetErrorBoundary,
   }) => {
     return (
