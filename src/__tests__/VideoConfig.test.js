@@ -2,6 +2,7 @@ import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
 
 import VideoConfig from "../components/Video/VideoConfig";
 
@@ -49,31 +50,39 @@ describe("VideoConfig component renders with YouTube settings", () => {
     render(<VideoConfig />);
 
     expect(screen.getByTestId("videoConfigContainer")).toBeInTheDocument();
-  });
-
-  // Test that VideoConfig renders when YouTube data is passed as props
-  it("renders VideoConfig with given data (YouTube)", () => {
-    render(
-      <VideoConfig
-        type={mockDataYouTubeValid.type}
-        videoId={mockDataYouTubeValid.videoId}
-      />
-    );
-
     expect(screen.getByLabelText("YouTube")).toBeInTheDocument();
     expect(screen.getByLabelText("Brightcove")).toBeInTheDocument();
   });
 
   // Test that successful alert renders when URL is verified with correct data
-  it("Prompts user with an alert when correct data provided", () => {
+  it("Prompts user with an alert when correct data provided", async () => {
+    const user = userEvent.setup();
+
     render(
       <VideoConfig
-        type={mockDataYouTubeValid.type}
-        videoId={mockDataYouTubeValid.videoId}
+        type="youTube"
+        videoId="3m6d99GDARE"
+        youTubeUrl="https://www.youtube.com/watch?v=3m6d99GDARE"
       />
     );
-    console.log(mockDataYouTubeValid.type);
     const youTubeRadio = screen.getByLabelText("YouTube");
+    // User selects YouTube, radio should be checked
+    await user.click(youTubeRadio);
+    expect(youTubeRadio).toBeChecked();
+
+    // User enters valid URL into url input
+    const urlInput = screen.getByLabelText("Enter YouTube video URL:");
+    await user.type(urlInput, "https://www.youtube.com/watch?v=3m6d99GDARE");
+    expect(urlInput).toHaveDisplayValue(
+      "https://www.youtube.com/watch?v=3m6d99GDARE"
+    );
+
+    // User clicks "Verify URL" button
+    const verifyYouTubeButton = screen.getByRole("button", {
+      name: "Verify URL",
+    });
+    // await user.click(verifyYouTubeButton);
+    // expect(screen.getByText("YouTube URL successful.")).toBeInTheDocument();
   });
 });
 

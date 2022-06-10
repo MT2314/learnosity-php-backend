@@ -47,7 +47,7 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
       <EditPanelIcon title="iFrame" icon={<CropDin />} />
       <div className={styles.iFrameConfigWrapper}>
         <label htmlFor="iFrameConfigTitle">
-          iFrame Title:
+          iFrame Title (optional):
           <input
             data-testid="iFrameConfigTitle"
             id="iFrameConfigTitle"
