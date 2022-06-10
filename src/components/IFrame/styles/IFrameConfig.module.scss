@@ -1,0 +1,12 @@
+.iFrameConfigContainer {
+  .iFrameConfigWrapper {
+    display: flex;
+    flex-direction: column;
+
+    .heightRadioContainer,
+    .widthRadioContainer {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}

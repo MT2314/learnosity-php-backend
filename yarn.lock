@@ -1077,7 +1077,7 @@
 
 "@brightcove/react-player-loader@^1.4.1":
   version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@brightcove/react-player-loader/-/react-player-loader-1.4.1.tgz#5fdd67dea0a907a0547103a1b6d2b00367f8d3b1"
+  resolved "https://registry.npmjs.org/@brightcove/react-player-loader/-/react-player-loader-1.4.1.tgz"
   integrity sha512-vIwf6zgjB/lQ5BkcvfWZLLjE/SlKGJPzDvbStgJI6iVvpj2A5PfxQgCtqd+xySi2xRyiNEQ1cjvPoTH20V70PQ==
   dependencies:
     "@brightcove/player-loader" "^1.8.0"
@@ -5226,11 +5226,6 @@ get-symbol-description@^1.0.0:
   dependencies:
     call-bind "^1.0.2"
     get-intrinsic "^1.1.1"
-
-get-video-id@^3.6.4:
-  version "3.6.4"
-  resolved "https://registry.npmjs.org/get-video-id/-/get-video-id-3.6.4.tgz"
-  integrity sha512-BKaS+0wu4FW3nodJt/VcvOmPpOx7/F/qV7MPi4F3NgqVYehKJRwX+/oUA5alPEfEX9h3i/1tAGEbSpsNNbXA1Q==
 
 getpass@^0.1.1:
   version "0.1.7"

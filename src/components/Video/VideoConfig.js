@@ -83,7 +83,10 @@ const VideoConfig = ({ componentState = {}, setState = () => {} }) => {
   };
 
   return (
-    <div className={styles.videoConfigContainer}>
+    <div
+      className={styles.videoConfigContainer}
+      data-testid="videoConfigContainer"
+    >
       <EditPanelIcon title="Video" icon={<OndemandVideoIcon />} />
       <div className={styles.playerSelectContainer}>
         <p className={styles.playerSelectInfo}>Please select a video player:</p>

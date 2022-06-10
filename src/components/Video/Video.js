@@ -35,10 +35,7 @@ const Video = ({
         <div className={styles.placeholderImg} tabIndex="0"></div>
       ) : type === "youTube" && videoId ? (
         <div className={styles.youTubePlayer} data-testid="youTubePlayer">
-          <YouTube
-            videoId={videoId}
-            onError={(error) => console.log(error.data)}
-          />
+          <YouTube videoId={videoId} />
         </div>
       ) : type === "brightcove" && videoId ? (
         <div className={styles.brightcovePlayer} data-testid="brightcovePlayer">
