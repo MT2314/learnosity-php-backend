@@ -73,8 +73,9 @@ describe("Tab", () => {
     expect(addingTabArr.tabs).toHaveLength(3)    
   })
 
-  it("add formatted text button runs a function", () => { 
-    const addComponentToTab = jest.fn()
+  it("formatted text and image btns are in the document and fire add component function", () => { 
+
+    const mockFn = jest.fn()
 
     let addingTabArr = {
       tabs: [
@@ -86,12 +87,21 @@ describe("Tab", () => {
         },
       ]
     }
-    render(<Tab tabs={addingTabArr.tabs} setProp={addComponentToTab}/>)
+
+    render(<Tab tabs={addingTabArr.tabs} setProp={mockFn}/>)
 
     const formattedTextBtn = screen.getByRole("button", {name: /add formatted text/i})
+    const imageBtn = screen.getByRole("button", {name: /add image/i})
 
     expect(formattedTextBtn).toBeInTheDocument()
-    expect(addComponentToTab).toHaveBeenCalledTimes(1) 
+    expect(imageBtn).toBeInTheDocument()
+    
+    fireEvent.click(formattedTextBtn)
+    expect(mockFn).toHaveBeenCalled()
+
+    fireEvent.click(imageBtn)
+    expect(mockFn).toHaveBeenCalled()
+
   })
 })
 
