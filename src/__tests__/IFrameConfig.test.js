@@ -27,7 +27,9 @@ describe("IFrameConfig", () => {
     render(<IFrameConfig />);
 
     expect(screen.getByTestId("iFrameConfigContainer")).toBeInTheDocument();
-    expect(screen.getByLabelText("iFrame Title:")).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("iFrame Title (optional):")
+    ).toBeInTheDocument();
     expect(
       screen.getByLabelText("Content to be displayed in iFrame (URL):")
     ).toBeInTheDocument();
@@ -41,7 +43,7 @@ describe("IFrameConfig", () => {
     render(<IFrameConfig />);
 
     const titleInput = screen.getByRole("textbox", {
-      name: "iFrame Title:",
+      name: "iFrame Title (optional):",
     });
     expect(titleInput).toHaveDisplayValue("Weighted Response Quiz");
     expect(titleInput).not.toHaveDisplayValue("Sorting Table");

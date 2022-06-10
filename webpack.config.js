@@ -27,7 +27,7 @@ module.exports = (_, argv) => {
     output: {
       publicPath:
         argv.mode === "development"
-          ? `${fileEnv.COMPONENT_LIBRARY_LOCAL}`
+          ? `http://localhost:3001/`
           : `${fileEnv.WEBPACK_PUBLIC_PATH}`,
     clean:true,
     },
