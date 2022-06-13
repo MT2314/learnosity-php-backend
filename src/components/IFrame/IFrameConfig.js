@@ -66,6 +66,12 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
             placeholder="https://www.example.com"
             value={src}
             onChange={handleSrcInput}
+            onInvalid={(e) =>
+              e.target.setCustomValidity(
+                "Invalid URL.  Please ensure URL begins with 'https://'"
+              )
+            }
+            onInput={(e) => e.target.setCustomValidity("")}
           />
         </label>
         <div className={styles.heightRadioContainer}>
