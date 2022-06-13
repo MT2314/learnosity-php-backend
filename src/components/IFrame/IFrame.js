@@ -6,8 +6,8 @@ export const defaultProps = {
   title: "",
   titleDisplay: false,
   src: "",
-  height: "100",
-  width: "100",
+  height: "500",
+  width: "900",
   heightType: "px",
   widthType: "px",
 };

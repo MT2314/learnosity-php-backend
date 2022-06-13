@@ -29,8 +29,6 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
     }
   };
 
-  console.log(titleDisplay);
-
   const [url, setUrl] = useState("");
   const handleSrcInput = (e) => {
     setUrl(e.target.value);
@@ -53,7 +51,11 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
 
   const verifyIFrameSettings = (e) => {
     e.preventDefault();
-    setState({ src: url });
+    try {
+      setState({ src: url });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return (
@@ -103,9 +105,9 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
               type="url"
               pattern="https://.+"
               placeholder="https://www.example.com"
-              value={src}
+              value={url}
               required
-              // onChange={handleSrcInput}
+              onChange={handleSrcInput}
               onInvalid={(e) =>
                 e.target.setCustomValidity(
                   "Invalid URL.  Please ensure URL begins with 'https://'"

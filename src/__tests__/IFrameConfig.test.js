@@ -2,6 +2,7 @@ import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
 
 import IFrameConfig from "../components/IFrame/IFrameConfig";
 
@@ -38,7 +39,7 @@ describe("IFrameConfig", () => {
   });
 
   // Test that iFrame component renders when data provided
-  it("renders IFrameConfig with given data", () => {
+  it("renders IFrameConfig with given data", async () => {
     // Data is located in "componentState" in IFrameConfig.js
     render(<IFrameConfig />);
 
@@ -51,8 +52,14 @@ describe("IFrameConfig", () => {
     const urlInput = screen.getByRole("textbox", {
       name: "Content to be displayed in iFrame (URL):",
     });
+    expect(urlInput).toBeInTheDocument();
     expect(urlInput).not.toHaveValue("https://www.tvo.org");
-    expect(urlInput).toHaveValue(
+    const user = userEvent.setup();
+    await user.type(
+      urlInput,
+      "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html"
+    );
+    expect(urlInput).toHaveDisplayValue(
       "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html"
     );
 
