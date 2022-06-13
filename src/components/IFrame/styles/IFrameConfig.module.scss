@@ -3,6 +3,19 @@
     display: flex;
     flex-direction: column;
 
+    .iFrameConfigForm {
+      display: flex;
+      flex-direction: column;
+
+      .iFrameConfigSrc {
+        width: 100%;
+      }
+
+      .sizeInput {
+        width: 55px;
+      }
+    }
+
     .heightRadioContainer,
     .widthRadioContainer {
       display: flex;

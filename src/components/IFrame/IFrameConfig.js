@@ -51,6 +51,10 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
     setState({ width: e.target.value });
   };
 
+  const verifyIFrameSettings = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div
       className={styles.iFrameConfigContainer}
@@ -58,107 +62,118 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
     >
       <EditPanelIcon title="iFrame" icon={<CropDin />} />
       <div className={styles.iFrameConfigWrapper}>
-        <label htmlFor="iFrameConfigTitle">
-          iFrame Title (required):
-          <input
-            data-testid="iFrameConfigTitle"
-            id="iFrameConfigTitle"
-            type="text"
-            value={title}
-            onChange={handleTitleInput}
-          />
-        </label>
-        <label htmlFor="iFrameConfigTitleDisplay">
-          Display title (optional)
-          <input
-            type="checkbox"
-            defaultChecked={titleDisplay}
-            data-testid="iFrameConfigTitleDisplay"
-            onClick={handleDisplayTitle}
-          />
-        </label>
-        <label htmlFor="iFrameConfigSrc">
-          Content to be displayed in iFrame (URL):
-          <input
-            data-testid="iFrameConfigSrc"
-            id="iFrameConfigSrc"
-            type="url"
-            pattern="https://.+"
-            placeholder="https://www.example.com"
-            value={src}
-            onChange={handleSrcInput}
-            onInvalid={(e) =>
-              e.target.setCustomValidity(
-                "Invalid URL.  Please ensure URL begins with 'https://'"
-              )
-            }
-            onInput={(e) => e.target.setCustomValidity("")}
-          />
-        </label>
-        <div className={styles.heightRadioContainer}>
-          <label htmlFor="heightPixels">Pixels</label>
-          <input
-            defaultChecked={heightType === "px" ? true : false}
-            type="radio"
-            name="heightType"
-            id="heightPixels"
-            value="px"
-            onChange={handleHeightType}
-          />
-          <label htmlFor="heightPercent">Percentage</label>
-          <input
-            defaultChecked={heightType === "%" ? true : false}
-            type="radio"
-            name="heightType"
-            id="heightPercent"
-            value="%"
-            onChange={handleHeightType}
-          />
-        </div>
-        <label htmlFor="iFrameConfigHeight">
-          iFrame Height:
-          <input
-            data-testid="iFrameConfigHeight"
-            id="iFrameConfigHeight"
-            type="number"
-            value={height}
-            onChange={handleHeightInput}
-            min="0"
-            max={heightType === "%" ? 100 : null}
-          />
-        </label>
-        <div className={styles.widthRadioContainer}>
-          <label htmlFor="widthPixels">Pixels</label>
-          <input
-            defaultChecked={widthType === "px" ? true : false}
-            type="radio"
-            name="widthType"
-            id="widthPixels"
-            value="px"
-            onClick={handleWidthType}
-          />
-          <label htmlFor="widthPercent">Percentage</label>
-          <input
-            defaultChecked={widthType === "%" ? true : false}
-            type="radio"
-            name="widthType"
-            id="widthPercent"
-            value="%"
-            onClick={handleWidthType}
-          />
-        </div>
-        <label htmlFor="iFrameConfigWidth">
-          iFrame Width:
-          <input
-            data-testid="iFrameConfigWidth"
-            id="iFrameConfigWidth"
-            type="number"
-            value={width}
-            onChange={handleWidthInput}
-            min="0"
-            max={widthType === "%" ? 100 : null}
-          />
-        </label>
+        <form
+          className={styles.iFrameConfigForm}
+          onSubmit={verifyIFrameSettings}
+        >
+          <label htmlFor="iFrameConfigTitle">
+            iFrame Title (required):
+            <input
+              data-testid="iFrameConfigTitle"
+              id="iFrameConfigTitle"
+              type="text"
+              value={title}
+              required
+              onChange={handleTitleInput}
+            />
+          </label>
+          <label htmlFor="iFrameConfigTitleDisplay">
+            Display title (optional)
+            <input
+              type="checkbox"
+              defaultChecked={titleDisplay}
+              data-testid="iFrameConfigTitleDisplay"
+              onClick={handleDisplayTitle}
+            />
+          </label>
+          <label htmlFor="iFrameConfigSrc">
+            Content to be displayed in iFrame (URL):
+            <input
+              data-testid="iFrameConfigSrc"
+              className={styles.iFrameConfigSrc}
+              id="iFrameConfigSrc"
+              type="url"
+              pattern="https://.+"
+              placeholder="https://www.example.com"
+              value={src}
+              required
+              onChange={handleSrcInput}
+              onInvalid={(e) =>
+                e.target.setCustomValidity(
+                  "Invalid URL.  Please ensure URL begins with 'https://'"
+                )
+              }
+              onInput={(e) => e.target.setCustomValidity("")}
+            />
+          </label>
+          <div className={styles.heightRadioContainer}>
+            <label htmlFor="heightPixels">Pixels</label>
+            <input
+              defaultChecked={heightType === "px" ? true : false}
+              type="radio"
+              name="heightType"
+              id="heightPixels"
+              value="px"
+              onChange={handleHeightType}
+            />
+            <label htmlFor="heightPercent">Percentage</label>
+            <input
+              defaultChecked={heightType === "%" ? true : false}
+              type="radio"
+              name="heightType"
+              id="heightPercent"
+              value="%"
+              onChange={handleHeightType}
+            />
+          </div>
+          <label htmlFor="iFrameConfigHeight">
+            iFrame Height:
+            <input
+              data-testid="iFrameConfigHeight"
+              id="iFrameConfigHeight"
+              className={styles.sizeInput}
+              type="number"
+              value={height}
+              onChange={handleHeightInput}
+              min="0"
+              max={heightType === "%" ? 100 : null}
+            />
+          </label>
+          <div className={styles.widthRadioContainer}>
+            <label htmlFor="widthPixels">Pixels</label>
+            <input
+              defaultChecked={widthType === "px" ? true : false}
+              type="radio"
+              name="widthType"
+              id="widthPixels"
+              value="px"
+              onClick={handleWidthType}
+            />
+            <label htmlFor="widthPercent">Percentage</label>
+            <input
+              defaultChecked={widthType === "%" ? true : false}
+              type="radio"
+              name="widthType"
+              id="widthPercent"
+              value="%"
+              onClick={handleWidthType}
+            />
+          </div>
+          <label htmlFor="iFrameConfigWidth">
+            iFrame Width:
+            <input
+              data-testid="iFrameConfigWidth"
+              id="iFrameConfigWidth"
+              className={styles.sizeInput}
+              type="number"
+              value={width}
+              onChange={handleWidthInput}
+              min="0"
+              max={widthType === "%" ? 100 : null}
+            />
+          </label>
+          <button type="submit">Verify iFrame Settings</button>
+        </form>
       </div>
     </div>
   );
