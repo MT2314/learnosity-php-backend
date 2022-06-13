@@ -6,8 +6,13 @@
     .iFrameConfigForm {
       display: flex;
       flex-direction: column;
+      margin: 1rem 0;
 
-      .iFrameConfigSrc {
+      .iFrameConfigLabel {
+        font-size: 0.9rem;
+      }
+
+      .iFrameConfigTextInput {
         width: 100%;
       }
 

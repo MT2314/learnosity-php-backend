@@ -28,7 +28,7 @@ describe("IFrameConfig", () => {
 
     expect(screen.getByTestId("iFrameConfigContainer")).toBeInTheDocument();
     expect(
-      screen.getByLabelText("iFrame Title (optional):")
+      screen.getByLabelText("iFrame Title (required):")
     ).toBeInTheDocument();
     expect(
       screen.getByLabelText("Content to be displayed in iFrame (URL):")
@@ -58,9 +58,10 @@ describe("IFrameConfig", () => {
 
     const heightInput = screen.getByLabelText("iFrame Height:");
     expect(heightInput).not.toHaveDisplayValue("1000");
-    expect(heightInput).toHaveDisplayValue("800");
+    expect(heightInput).toHaveDisplayValue("500");
 
     const widthInput = screen.getByLabelText("iFrame Width:");
-    expect(widthInput).toHaveDisplayValue("100");
+    expect(widthInput).not.toHaveDisplayValue("550");
+    expect(widthInput).toHaveDisplayValue("900");
   });
 });
