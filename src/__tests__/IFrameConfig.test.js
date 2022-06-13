@@ -43,7 +43,7 @@ describe("IFrameConfig", () => {
     render(<IFrameConfig />);
 
     const titleInput = screen.getByRole("textbox", {
-      name: "iFrame Title (optional):",
+      name: "iFrame Title (required):",
     });
     expect(titleInput).toHaveDisplayValue("Weighted Response Quiz");
     expect(titleInput).not.toHaveDisplayValue("Sorting Table");

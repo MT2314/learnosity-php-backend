@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import EditPanelIcon from "../EditPanelIcon";
 
@@ -9,6 +9,7 @@ import styles from "./styles/IFrameConfig.module.scss";
 const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
     title = "Weighted Response Quiz",
+    titleDisplay = false,
     src = "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html",
     height = "800",
     width = "100",
@@ -19,6 +20,17 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
   const handleTitleInput = (e) => {
     setState({ title: e.target.value });
   };
+
+  // const [showTitle, setShowTitle] = useState(true);
+  const handleDisplayTitle = (e) => {
+    if (e.target.checked) {
+      setState({ titleDisplay: true });
+    } else if (e.target.checked === false) {
+      setState({ titleDisplay: false });
+    }
+  };
+
+  console.log(titleDisplay);
 
   const handleSrcInput = (e) => {
     setState({ src: e.target.value });
@@ -47,13 +59,22 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
       <EditPanelIcon title="iFrame" icon={<CropDin />} />
       <div className={styles.iFrameConfigWrapper}>
         <label htmlFor="iFrameConfigTitle">
-          iFrame Title (optional):
+          iFrame Title (required):
           <input
             data-testid="iFrameConfigTitle"
             id="iFrameConfigTitle"
             type="text"
             value={title}
             onChange={handleTitleInput}
+          />
+        </label>
+        <label htmlFor="iFrameConfigTitleDisplay">
+          Display title (optional)
+          <input
+            type="checkbox"
+            defaultChecked={titleDisplay}
+            data-testid="iFrameConfigTitleDisplay"
+            onClick={handleDisplayTitle}
           />
         </label>
         <label htmlFor="iFrameConfigSrc">

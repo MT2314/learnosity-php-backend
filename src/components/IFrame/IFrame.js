@@ -4,6 +4,7 @@ import styles from "./styles/IFrame.module.scss";
 
 export const defaultProps = {
   title: "",
+  titleDisplay: false,
   src: "",
   height: "100",
   width: "100",
@@ -11,11 +12,19 @@ export const defaultProps = {
   widthType: "px",
 };
 
-const IFrame = ({ title, src, height, width, heightType, widthType }) => {
+const IFrame = ({
+  title,
+  titleDisplay = false,
+  src,
+  height,
+  width,
+  heightType,
+  widthType,
+}) => {
   return (
     <div className={styles.iFrameContainer} data-testid="iFrameContainer">
       <p className={styles.iFrameTitle}>
-        {title ? title : "iFrame Title (optional)"}
+        {title && titleDisplay === true ? title : null}
       </p>
       <div className={styles.iFrameWrapper}>
         {src ? (
