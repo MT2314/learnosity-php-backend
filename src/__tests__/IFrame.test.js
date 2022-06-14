@@ -24,9 +24,10 @@ afterEach(() => {
 // Mock data
 const mockData = {
   title: "Content Cabinet",
+  titleDisplay: true,
   src: "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/content-cabinet.html",
   height: "500",
-  width: "500",
+  width: "900",
   heightType: "px",
   widthType: "px",
 };
@@ -37,7 +38,6 @@ describe("IFrame", () => {
     render(<IFrame />);
 
     expect(screen.getByTestId("iFrameContainer")).toBeInTheDocument();
-    expect(screen.getByText("iFrame Title (optional)")).toBeInTheDocument();
     expect(screen.getByTestId("iFramePlaceholder")).toBeInTheDocument();
   });
 
@@ -46,6 +46,7 @@ describe("IFrame", () => {
     render(
       <IFrame
         title={mockData.title}
+        titleDisplay={mockData.titleDisplay}
         src={mockData.src}
         height={mockData.height}
         width={mockData.width}
@@ -57,9 +58,9 @@ describe("IFrame", () => {
     expect(screen.getByText("Content Cabinet")).toBeInTheDocument();
     expect(screen.queryByText("Sorting Table")).not.toBeInTheDocument();
     expect(screen.getByTestId("iFrame")).toBeInTheDocument();
-    expect(screen.getByTestId("iFrame")).not.toHaveStyle(" height: 100px ");
-    expect(screen.getByTestId("iFrame")).toHaveStyle(" height: 500px ");
-    expect(screen.getByTestId("iFrame")).not.toHaveStyle(" width: 100px ");
-    expect(screen.getByTestId("iFrame")).toHaveStyle(" width: 500px ");
+    expect(screen.getByTestId("iFrame")).not.toHaveStyle("height: 100px");
+    expect(screen.getByTestId("iFrame")).toHaveStyle("height: 500px");
+    expect(screen.getByTestId("iFrame")).not.toHaveStyle("width: 100px");
+    expect(screen.getByTestId("iFrame")).toHaveStyle("width: 900px");
   });
 });
