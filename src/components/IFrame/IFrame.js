@@ -4,18 +4,27 @@ import styles from "./styles/IFrame.module.scss";
 
 export const defaultProps = {
   title: "",
+  titleDisplay: false,
   src: "",
-  height: "100",
-  width: "100",
+  height: "500",
+  width: "900",
   heightType: "px",
   widthType: "px",
 };
 
-const IFrame = ({ title, src, height, width, heightType, widthType }) => {
+const IFrame = ({
+  title,
+  titleDisplay = false,
+  src,
+  height,
+  width,
+  heightType,
+  widthType,
+}) => {
   return (
     <div className={styles.iFrameContainer} data-testid="iFrameContainer">
       <p className={styles.iFrameTitle}>
-        {title ? title : "iFrame Title (optional)"}
+        {title && titleDisplay === true ? title : null}
       </p>
       <div className={styles.iFrameWrapper}>
         {src ? (
@@ -24,6 +33,7 @@ const IFrame = ({ title, src, height, width, heightType, widthType }) => {
             title={title}
             src={src}
             frameBorder="0"
+            sandbox="allow-scripts allow-same-origin"
             className={styles.iFrame}
             style={{
               height: `${height}${heightType}`,

@@ -3,6 +3,31 @@
     display: flex;
     flex-direction: column;
 
+    .iFrameConfigForm {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem 0;
+
+      .iFrameConfigLabel {
+        font-size: 0.9rem;
+      }
+
+      .iFrameConfigTextInput {
+        width: 100%;
+      }
+
+      .iFrameConfigSizeSettings {
+      }
+
+      .sizeInput {
+        width: 55px;
+      }
+    }
+  }
+
+  .iFrameConfigSizeContainer {
+    font-size: 0.9rem;
+
     .heightRadioContainer,
     .widthRadioContainer {
       display: flex;
