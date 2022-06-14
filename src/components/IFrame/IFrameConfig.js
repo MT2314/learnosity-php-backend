@@ -131,83 +131,91 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
           </label>
           <button type="submit">Verify iFrame URL</button>
         </form>
-        <div className={styles.heightRadioContainer}>
-          <label htmlFor="heightPixels" className={styles.iFrameConfigLabel}>
-            Pixels
+        <div className={styles.iFrameConfigSizeContainer}>
+          <p className={styles.iFrameConfigSizeSettings}>
+            iFrame Size Options:
+          </p>
+          <div className={styles.heightRadioContainer}>
+            <label htmlFor="heightPixels" className={styles.iFrameConfigLabel}>
+              Pixels
+            </label>
+            <input
+              defaultChecked={heightType === "px" ? true : false}
+              type="radio"
+              name="heightType"
+              id="heightPixels"
+              value="px"
+              onChange={handleHeightType}
+            />
+            <label htmlFor="heightPercent" className={styles.iFrameConfigLabel}>
+              Percentage
+            </label>
+            <input
+              defaultChecked={heightType === "%" ? true : false}
+              type="radio"
+              name="heightType"
+              id="heightPercent"
+              value="%"
+              onChange={handleHeightType}
+            />
+          </div>
+          <label
+            htmlFor="iFrameConfigHeight"
+            className={styles.iFrameConfigLabel}
+          >
+            iFrame Height:
+            <input
+              data-testid="iFrameConfigHeight"
+              id="iFrameConfigHeight"
+              className={styles.sizeInput}
+              type="number"
+              value={height}
+              onChange={handleHeightInput}
+              min="0"
+              max={heightType === "%" ? 100 : null}
+            />
           </label>
-          <input
-            defaultChecked={heightType === "px" ? true : false}
-            type="radio"
-            name="heightType"
-            id="heightPixels"
-            value="px"
-            onChange={handleHeightType}
-          />
-          <label htmlFor="heightPercent" className={styles.iFrameConfigLabel}>
-            Percentage
+          <div className={styles.widthRadioContainer}>
+            <label htmlFor="widthPixels" className={styles.iFrameConfigLabel}>
+              Pixels
+            </label>
+            <input
+              defaultChecked={widthType === "px" ? true : false}
+              type="radio"
+              name="widthType"
+              id="widthPixels"
+              value="px"
+              onClick={handleWidthType}
+            />
+            <label htmlFor="widthPercent" className={styles.iFrameConfigLabel}>
+              Percentage
+            </label>
+            <input
+              defaultChecked={widthType === "%" ? true : false}
+              type="radio"
+              name="widthType"
+              id="widthPercent"
+              value="%"
+              onClick={handleWidthType}
+            />
+          </div>
+          <label
+            htmlFor="iFrameConfigWidth"
+            className={styles.iFrameConfigLabel}
+          >
+            iFrame Width:
+            <input
+              data-testid="iFrameConfigWidth"
+              id="iFrameConfigWidth"
+              className={styles.sizeInput}
+              type="number"
+              value={width}
+              onChange={handleWidthInput}
+              min="0"
+              max={widthType === "%" ? 100 : null}
+            />
           </label>
-          <input
-            defaultChecked={heightType === "%" ? true : false}
-            type="radio"
-            name="heightType"
-            id="heightPercent"
-            value="%"
-            onChange={handleHeightType}
-          />
         </div>
-        <label
-          htmlFor="iFrameConfigHeight"
-          className={styles.iFrameConfigLabel}
-        >
-          iFrame Height:
-          <input
-            data-testid="iFrameConfigHeight"
-            id="iFrameConfigHeight"
-            className={styles.sizeInput}
-            type="number"
-            value={height}
-            onChange={handleHeightInput}
-            min="0"
-            max={heightType === "%" ? 100 : null}
-          />
-        </label>
-        <div className={styles.widthRadioContainer}>
-          <label htmlFor="widthPixels" className={styles.iFrameConfigLabel}>
-            Pixels
-          </label>
-          <input
-            defaultChecked={widthType === "px" ? true : false}
-            type="radio"
-            name="widthType"
-            id="widthPixels"
-            value="px"
-            onClick={handleWidthType}
-          />
-          <label htmlFor="widthPercent" className={styles.iFrameConfigLabel}>
-            Percentage
-          </label>
-          <input
-            defaultChecked={widthType === "%" ? true : false}
-            type="radio"
-            name="widthType"
-            id="widthPercent"
-            value="%"
-            onClick={handleWidthType}
-          />
-        </div>
-        <label htmlFor="iFrameConfigWidth" className={styles.iFrameConfigLabel}>
-          iFrame Width:
-          <input
-            data-testid="iFrameConfigWidth"
-            id="iFrameConfigWidth"
-            className={styles.sizeInput}
-            type="number"
-            value={width}
-            onChange={handleWidthInput}
-            min="0"
-            max={widthType === "%" ? 100 : null}
-          />
-        </label>
       </div>
     </div>
   );

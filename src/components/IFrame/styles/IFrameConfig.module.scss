@@ -16,10 +16,17 @@
         width: 100%;
       }
 
+      .iFrameConfigSizeSettings {
+      }
+
       .sizeInput {
         width: 55px;
       }
     }
+  }
+
+  .iFrameConfigSizeContainer {
+    font-size: 0.9rem;
 
     .heightRadioContainer,
     .widthRadioContainer {
