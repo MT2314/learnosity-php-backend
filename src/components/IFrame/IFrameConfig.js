@@ -56,11 +56,6 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
       if (response.status === 200) {
         setState({ src: url });
         alert("URL successful.");
-      } else if (response.status >= 400) {
-        setState({ src: "" });
-        alert(
-          "Sorry, this URL is not able to be added to iFrame.  Please try a different URL."
-        );
       }
     } catch (error) {
       setState({ src: "" });
