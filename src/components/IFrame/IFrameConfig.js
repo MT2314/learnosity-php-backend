@@ -51,11 +51,18 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
 
   const verifyIFrameSettings = async (e) => {
     e.preventDefault();
-    const response = await fetch(url);
-    if (response.status === 200) {
-      setState({ src: url });
-      alert("URL successful.");
-    } else {
+    try {
+      const response = await fetch(url);
+      if (response.status === 200) {
+        setState({ src: url });
+        alert("URL successful.");
+      } else {
+        setState({ src: "" });
+        alert(
+          "Sorry, this URL is not able to be added to iFrame.  Please try a different URL."
+        );
+      }
+    } catch (error) {
       setState({ src: "" });
       alert(
         "Sorry, this URL is not able to be added to iFrame.  Please try a different URL."
