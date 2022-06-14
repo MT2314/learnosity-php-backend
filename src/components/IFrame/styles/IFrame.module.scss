@@ -5,6 +5,7 @@
 
   .iFrameWrapper {
     width: 100%;
+    height: 100%;
 
     .iFramePlaceholder {
       background-color: #f6f6f6;
@@ -27,7 +28,7 @@
     }
 
     .iFrame {
-      min-height: 100px;
+      height: inherit;
     }
   }
 }

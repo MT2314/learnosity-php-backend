@@ -35,6 +35,8 @@ const IFrame = ({
             frameBorder="0"
             sandbox="allow-scripts allow-same-origin"
             className={styles.iFrame}
+            // height={ heightType === "px" ? height : null }
+            // width={ widthType === "px" ? width : null }
             style={{
               height: `${height}${heightType}`,
               width: `${width}${widthType}`,
