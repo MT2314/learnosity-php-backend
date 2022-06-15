@@ -103,6 +103,7 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
             Display title (optional)
             <input
               type="checkbox"
+              id="iFrameConfigTitleDisplay"
               checked={titleDisplay ? true : false}
               data-testid="iFrameConfigTitleDisplay"
               onChange={handleDisplayTitle}
