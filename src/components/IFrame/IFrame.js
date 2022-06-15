@@ -46,7 +46,6 @@ const IFrame = ({
           <div
             className={styles.iFramePlaceholder}
             data-testid="iFramePlaceholder"
-            tab-index="0"
           ></div>
         )}
       </div>
