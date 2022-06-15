@@ -173,7 +173,6 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
               value={height}
               onChange={handleHeightInput}
               min="0"
-              max={heightType === "%" ? 100 : null}
             />
           </label>
           <div className={styles.widthRadioContainer}>
@@ -213,7 +212,6 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
               value={width}
               onChange={handleWidthInput}
               min="0"
-              max={widthType === "%" ? 100 : null}
             />
           </label>
         </div>
