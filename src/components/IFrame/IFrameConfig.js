@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import EditPanelIcon from "../EditPanelIcon";
 
@@ -10,6 +10,7 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
     title = "Weighted Response Quiz",
     titleDisplay = false,
+    url = "",
     src = "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html",
     height = "500",
     width = "900",
@@ -29,9 +30,8 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
     }
   };
 
-  const [url, setUrl] = useState("");
   const handleSrcInput = (e) => {
-    setUrl(e.target.value);
+    setState({ url: e.target.value });
   };
 
   const handleHeightType = (e) => {
@@ -103,9 +103,10 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
             Display title (optional)
             <input
               type="checkbox"
-              defaultChecked={titleDisplay}
+              id="iFrameConfigTitleDisplay"
+              checked={titleDisplay ? true : false}
               data-testid="iFrameConfigTitleDisplay"
-              onClick={handleDisplayTitle}
+              onChange={handleDisplayTitle}
               title="Display Title Checkbox"
             />
           </label>
@@ -140,7 +141,7 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
               Pixels
             </label>
             <input
-              defaultChecked={heightType === "px" ? true : false}
+              checked={heightType === "px" ? true : false}
               type="radio"
               name="heightType"
               id="heightPixels"
@@ -151,7 +152,7 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
               Percentage
             </label>
             <input
-              defaultChecked={heightType === "%" ? true : false}
+              checked={heightType === "%" ? true : false}
               type="radio"
               name="heightType"
               id="heightPercent"
@@ -180,23 +181,23 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
               Pixels
             </label>
             <input
-              defaultChecked={widthType === "px" ? true : false}
+              checked={widthType === "px" ? true : false}
               type="radio"
               name="widthType"
               id="widthPixels"
               value="px"
-              onClick={handleWidthType}
+              onChange={handleWidthType}
             />
             <label htmlFor="widthPercent" className={styles.iFrameConfigLabel}>
               Percentage
             </label>
             <input
-              defaultChecked={widthType === "%" ? true : false}
+              checked={widthType === "%" ? true : false}
               type="radio"
               name="widthType"
               id="widthPercent"
               value="%"
-              onClick={handleWidthType}
+              onChange={handleWidthType}
             />
           </div>
           <label

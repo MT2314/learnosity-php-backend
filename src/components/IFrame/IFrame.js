@@ -15,6 +15,7 @@ export const defaultProps = {
 const IFrame = ({
   title,
   titleDisplay = false,
+  url,
   src,
   height,
   width,
@@ -46,7 +47,6 @@ const IFrame = ({
           <div
             className={styles.iFramePlaceholder}
             data-testid="iFramePlaceholder"
-            tab-index="0"
           ></div>
         )}
       </div>
