@@ -15,6 +15,7 @@ export const defaultProps = {
 const IFrame = ({
   title,
   titleDisplay = false,
+  url,
   src,
   height,
   width,
