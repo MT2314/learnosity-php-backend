@@ -40,8 +40,13 @@ describe("IFrameConfig", () => {
 
   // Test that iFrame component renders when data provided
   it("renders IFrameConfig with given data", async () => {
-    // Data is located in "componentState" in IFrameConfig.js
-    render(<IFrameConfig />);
+    render(
+      <IFrameConfig
+        componentState={{
+          url: "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html",
+        }}
+      />
+    );
 
     const titleInput = screen.getByRole("textbox", {
       name: "iFrame Title (required):",
