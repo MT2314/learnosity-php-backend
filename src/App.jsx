@@ -9,11 +9,12 @@ import AccessibilityKeysPage from "./components/FormattedText/AccessibilityKeysP
 import CalloutPage from "./pages/CalloutPage";
 import QuoteBoxPage from "./pages/QuoteBoxPage";
 import ImagePage from "./pages/ImagePage";
+import exposedVersion from "../exposedStage";
 
 import "./index.css";
 
 const App = () => {
-  console.log("18.0.1");
+  console.log(`Stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`)
   return (
     <>
       <WidgetContextProvider>
