@@ -10,8 +10,8 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
   const {
     title = "Weighted Response Quiz",
     titleDisplay = false,
-    url = "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html",
-    src = "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html",
+    url = "",
+    src = "",
     height = "500",
     width = "900",
     heightType = "px",
