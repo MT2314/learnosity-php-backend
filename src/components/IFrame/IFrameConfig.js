@@ -164,9 +164,6 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
               />
             </label>
             <div className={styles.widthTypeDropdown}>
-              {/* <label htmlFor="widthType" className={styles.widthTypeLabel}>
-                Unit
-              </label> */}
               <select
                 name="widthType"
                 id="widthType"
