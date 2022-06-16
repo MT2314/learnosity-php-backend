@@ -14,7 +14,6 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
     src = "",
     height = "500",
     width = "900",
-    heightType = "px",
     widthType = "%",
   } = componentState;
 
@@ -34,9 +33,6 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
     setState({ url: e.target.value });
   };
 
-  const handleHeightType = (e) => {
-    setState({ heightType: e.target.value });
-  };
   const handleHeightInput = (e) => {
     setState({ height: e.target.value });
   };
@@ -136,35 +132,11 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
           <p className={styles.iFrameConfigSizeSettings}>
             iFrame Size Options:
           </p>
-          <div className={styles.heightRadioContainer}>
-            <label htmlFor="heightPixels" className={styles.iFrameConfigLabel}>
-              Pixels
-            </label>
-            <input
-              checked={heightType === "px" ? true : false}
-              type="radio"
-              name="heightType"
-              id="heightPixels"
-              value="px"
-              onChange={handleHeightType}
-            />
-            <label htmlFor="heightPercent" className={styles.iFrameConfigLabel}>
-              Percentage
-            </label>
-            <input
-              checked={heightType === "%" ? true : false}
-              type="radio"
-              name="heightType"
-              id="heightPercent"
-              value="%"
-              onChange={handleHeightType}
-            />
-          </div>
           <label
             htmlFor="iFrameConfigHeight"
             className={styles.iFrameConfigLabel}
           >
-            iFrame Height:
+            Height (px):
             <input
               data-testid="iFrameConfigHeight"
               id="iFrameConfigHeight"
@@ -175,45 +147,37 @@ const IFrameConfig = ({ componentState = {}, setState = () => {} }) => {
               min="0"
             />
           </label>
-          <div className={styles.widthRadioContainer}>
-            <label htmlFor="widthPixels" className={styles.iFrameConfigLabel}>
-              Pixels
+          <div className={styles.widthContainer}>
+            <label
+              htmlFor="iFrameConfigWidth"
+              className={styles.iFrameConfigLabel}
+            >
+              Width:
+              <input
+                data-testid="iFrameConfigWidth"
+                id="iFrameConfigWidth"
+                className={styles.sizeInput}
+                type="number"
+                value={width}
+                onChange={handleWidthInput}
+                min="0"
+              />
             </label>
-            <input
-              checked={widthType === "px" ? true : false}
-              type="radio"
-              name="widthType"
-              id="widthPixels"
-              value="px"
-              onChange={handleWidthType}
-            />
-            <label htmlFor="widthPercent" className={styles.iFrameConfigLabel}>
-              Percentage
-            </label>
-            <input
-              checked={widthType === "%" ? true : false}
-              type="radio"
-              name="widthType"
-              id="widthPercent"
-              value="%"
-              onChange={handleWidthType}
-            />
+            <div className={styles.widthTypeDropdown}>
+              {/* <label htmlFor="widthType" className={styles.widthTypeLabel}>
+                Unit
+              </label> */}
+              <select
+                name="widthType"
+                id="widthType"
+                onChange={handleWidthType}
+                aria-label="units"
+              >
+                <option value="px">px</option>
+                <option value="%">%</option>
+              </select>
+            </div>
           </div>
-          <label
-            htmlFor="iFrameConfigWidth"
-            className={styles.iFrameConfigLabel}
-          >
-            iFrame Width:
-            <input
-              data-testid="iFrameConfigWidth"
-              id="iFrameConfigWidth"
-              className={styles.sizeInput}
-              type="number"
-              value={width}
-              onChange={handleWidthInput}
-              min="0"
-            />
-          </label>
         </div>
       </div>
     </div>

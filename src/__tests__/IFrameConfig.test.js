@@ -34,8 +34,8 @@ describe("IFrameConfig", () => {
     expect(
       screen.getByLabelText("Content to be displayed in iFrame (URL):")
     ).toBeInTheDocument();
-    expect(screen.getByLabelText("iFrame Height:")).toBeInTheDocument();
-    expect(screen.getByLabelText("iFrame Width:")).toBeInTheDocument();
+    expect(screen.getByLabelText("Height (pixels):")).toBeInTheDocument();
+    expect(screen.getByLabelText("Width:")).toBeInTheDocument();
   });
 
   // Test that iFrame component renders when data provided
@@ -68,11 +68,11 @@ describe("IFrameConfig", () => {
       "https://digital-learning-ilos.s3.ca-central-1.amazonaws.com/showcase/lessons/quiz.html"
     );
 
-    const heightInput = screen.getByLabelText("iFrame Height:");
+    const heightInput = screen.getByLabelText("Height (pixels):");
     expect(heightInput).not.toHaveDisplayValue("1000");
     expect(heightInput).toHaveDisplayValue("500");
 
-    const widthInput = screen.getByLabelText("iFrame Width:");
+    const widthInput = screen.getByLabelText("Width:");
     expect(widthInput).not.toHaveDisplayValue("550");
     expect(widthInput).toHaveDisplayValue("900");
   });
