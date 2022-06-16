@@ -64,10 +64,10 @@ const ImageUploader = ({ state, setState }) => {
       .then((result) => {
         console.log("Success:", result.data.location);
         setState({
-          uploadedImg: `https://platypus-media.s3.ca-central-1.amazonaws.com/dev/${fileName}`,
+          uploadedImg: result.data.location,
         });
         setFile({
-          preview: `https://platypus-media.s3.ca-central-1.amazonaws.com/dev/${fileName}`,
+          preview: result.data.location,
         });
       })
       .catch((error) => {

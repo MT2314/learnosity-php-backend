@@ -9,7 +9,8 @@ const dotenv = require("dotenv");
 
 module.exports = (_, argv) => {
   const envFolderPath = path.join(__dirname, "environments");
-
+  process.env.NODE_ENV = argv.mode; 
+  
   let envPath = path.join(envFolderPath, `.env.${argv.env.ENVIRONMENT || 'prod'}`);
 
   if (!fs.existsSync(envPath)) throw new Error(`.env file for not found`);
@@ -18,11 +19,16 @@ module.exports = (_, argv) => {
 
   console.log(fileEnv);
 
+  fileEnv.APP_STAGE = _.ENVIRONMENT
+
+  console.log(fileEnv.APP_STAGE)
+
   const envKeys = Object.keys(fileEnv).reduce((envObject, next) => {
     envObject[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
     return envObject;
   }, {});
 
+  console.log(envKeys)
   return {
     output: {
       publicPath:
@@ -92,6 +98,7 @@ module.exports = (_, argv) => {
         remotes: {},
         exposes: {
           "./componentIndex": "./src/components/componentIndex.js",
+          "./exposedStage": "./exposedStage.js"
         },
         shared: {
           ...deps,
