@@ -19,7 +19,6 @@ const IFrame = ({
   src,
   height,
   width,
-  heightType,
   widthType,
 }) => {
   return (
@@ -34,12 +33,10 @@ const IFrame = ({
             title={title}
             src={src}
             frameBorder="0"
-            sandbox="allow-scripts allow-same-origin"
+            sandbox
             className={styles.iFrame}
-            // height={ heightType === "px" ? height : null }
-            // width={ widthType === "px" ? width : null }
             style={{
-              height: `${height}${heightType}`,
+              height: `${height}px`,
               width: `${width}${widthType}`,
             }}
           ></iframe>
