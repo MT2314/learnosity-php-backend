@@ -33,7 +33,7 @@ const IFrame = ({
             title={title}
             src={src}
             frameBorder="0"
-            sandbox="allow-scripts allow-same-origin"
+            sandbox
             className={styles.iFrame}
             style={{
               height: `${height}px`,
