@@ -1,5 +1,4 @@
 import React from "react";
-import "reactjs-popup/dist/index.css";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 
