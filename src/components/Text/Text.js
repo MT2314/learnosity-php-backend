@@ -38,7 +38,7 @@ export const modules = {
 };
 export const defaultProps = { body: null };
 
-const Quill = () => {
+const Text = () => {
   const switchFunction = (state, action) => {
     switch (action.type) {
       case "SHOW_EDITOR":
@@ -163,4 +163,4 @@ const Quill = () => {
   );
 };
 
-export default Quill;
+export default Text;
