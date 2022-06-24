@@ -13,7 +13,8 @@
     "test:prod": "CI=true react-scripts test --ci --watchAll=false",
     "test:local": "CI=true react-scripts test --ci --watchAll=false",
     "test:qa": "CI=true react-scripts test --ci --watchAll=false",
-    "test:stage": "CI=true react-scripts test --ci --watchAll=false"
+    "test:stage": "CI=true react-scripts test --ci --watchAll=false",
+    "test:dev": "CI=true react-scripts test --ci --watchAll=false"
   },
   "license": "MIT",
   "devDependencies": {
