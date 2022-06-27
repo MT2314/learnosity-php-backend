@@ -132,7 +132,6 @@ const Text = () => {
                   setAlignVisibility(!alignVisibility);
                 }}
                 className="ql-align"
-                value="center"
               ></button>
               <AlignDropdownButton
                 show={alignVisibility}
