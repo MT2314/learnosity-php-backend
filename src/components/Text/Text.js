@@ -47,14 +47,17 @@ const Text = () => {
           editor: true,
           focus: true,
         };
-      case "BLURR_EDITOR":
+      case "BLUR_EDITOR":
         return {
           defaultBox: false,
           editor: true,
           focus: false,
         };
+      default:
+        return;
     }
   };
+
   const [defaultState, dispatch] = useReducer(switchFunction, {
     editor: false,
     defaultBox: true,
@@ -77,7 +80,7 @@ const Text = () => {
     <>
       <Grid container>
         <Grid item sm={12}>
-          {defaultState.defaultBox && (
+          {defaultState.focus === false ? (
             <div
               className={styles.mainContainer}
               onClick={() => {
@@ -89,76 +92,75 @@ const Text = () => {
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
             </div>
-          )}
-        </Grid>
-      </Grid>
-      {defaultState.editor && (
-        <>
-          <div
-            className={
-              defaultState.focus ? styles.showToolBar : styles.hideToolBar
-            }
-          >
-            <div id="toolbar" style={{ paddingBottom: "10px" }}>
-              <span className="ql-formats" style={{}}>
-                <button className="ql-link" />
-              </span>
+          ) : defaultState.focus === true ? (
+            <>
+              <div
+                className={
+                  defaultState.focus ? styles.showToolBar : styles.hideToolBar
+                }
+              >
+                <div id="toolbar" style={{ paddingBottom: "10px" }}>
+                  <span className="ql-formats" style={{}}>
+                    <button className="ql-link" />
+                  </span>
 
-              <button
-                onClick={() => {
-                  setBoldVisibility(!boldVisibility);
-                }}
-                className="ql-bold"
-                style={{ position: "relative" }}
-              ></button>
-              <BoldDropdownButton
-                show={boldVisibility}
-                className="dropdown-content"
-              ></BoldDropdownButton>
-              <button className="ql-formula"></button>
-              <button
-                onClick={() => {
-                  setListVisibility(!listVisibility);
-                }}
-                className="ql-list"
-                value="bullet"
-              ></button>
-              <ListDropdownButton
-                show={listVisibility}
-                className="dropdown-content"
-              ></ListDropdownButton>
-              <button
-                onClick={() => {
-                  setAlignVisibility(!alignVisibility);
-                }}
-                className="ql-align"
-                value="center"
-              ></button>
-              <AlignDropdownButton
-                show={alignVisibility}
-                className="dropdown-content"
-              ></AlignDropdownButton>
-            </div>
-          </div>
+                  <button
+                    onClick={() => {
+                      setBoldVisibility(!boldVisibility);
+                    }}
+                    className="ql-bold"
+                    style={{ position: "relative" }}
+                  ></button>
+                  <BoldDropdownButton
+                    show={boldVisibility}
+                    className="dropdown-content"
+                  ></BoldDropdownButton>
+                  <button className="ql-formula"></button>
+                  <button
+                    onClick={() => {
+                      setListVisibility(!listVisibility);
+                    }}
+                    className="ql-list"
+                    value="bullet"
+                  ></button>
+                  <ListDropdownButton
+                    show={listVisibility}
+                    className="dropdown-content"
+                  ></ListDropdownButton>
+                  <button
+                    onClick={() => {
+                      setAlignVisibility(!alignVisibility);
+                    }}
+                    className="ql-align"
+                    value="center"
+                  ></button>
+                  <AlignDropdownButton
+                    show={alignVisibility}
+                    className="dropdown-content"
+                  ></AlignDropdownButton>
+                </div>
+              </div>
 
-          <ReactQuill
-            placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              <ReactQuill
+                placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
         enim ad minim veniam, quis nostrud exercitation ullamco laboris
         nisi ut aliquip ex ea commodo consequat."
-            formats={formats}
-            modules={modules}
-            ref={editorRef}
-            className={styles.hi}
-            onBlur={() => {
-              dispatch({ type: "BLURR_EDITOR" });
-            }}
-            onFocus={() => {
-              dispatch({ type: "SHOW_EDITOR" });
-            }}
-          />
-        </>
-      )}
+                formats={formats}
+                modules={modules}
+                ref={editorRef}
+                className={styles.hi}
+                onBlur={() => {
+                  dispatch({ type: "BLUR_EDITOR" });
+                }}
+                onFocus={() => {
+                  dispatch({ type: "SHOW_EDITOR" });
+                }}
+              />
+            </>
+          ) : null}
+        </Grid>
+      </Grid>
     </>
   );
 };
