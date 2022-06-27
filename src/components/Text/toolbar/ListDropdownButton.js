@@ -11,9 +11,11 @@ const ListDropdownButton = (props) => {
           maxWidth: "150px",
           position: "absolute",
           zIndex: "25",
+          left: "76px"
         }}
         className="dropdown-content"
       >
+        <button className="ql-list" value="bullet"/>
         <button className="ql-list" value="ordered" />
       </Card>
     </>

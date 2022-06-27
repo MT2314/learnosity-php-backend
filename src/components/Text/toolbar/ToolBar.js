@@ -12,7 +12,7 @@ const ToolBar = () => {
 
   return (
     <div id="toolbar" style={{ paddingBottom: "10px" }}>
-    <span className="ql-formats" style={{}}>
+    <span className="ql-formats">
       <button className="ql-link" />
     </span>
 
