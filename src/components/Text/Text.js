@@ -4,9 +4,7 @@ import ReactQuill from "react-quill";
 import styles from "./styles/Quill.module.scss";
 import "react-quill/dist/quill.snow.css";
 
-import BoldDropdownButton from "./BoldDropdownButton";
-import ListDropdownButton from "./ListDropdownButton";
-import AlignDropdownButton from "./AlignDropdownButton";
+import ToolBar from "./toolbar/ToolBar";
 
 export const formats = [
   "bold",
@@ -53,6 +51,7 @@ const Text = () => {
           editor: true,
           focus: false,
         };
+      default: return state
     }
   };
   const [defaultState, dispatch] = useReducer(switchFunction, {
@@ -68,10 +67,6 @@ const Text = () => {
       editorRef.current.focus();
     }
   }, [defaultState.editor]);
-
-  const [boldVisibility, setBoldVisibility] = useState(false);
-  const [listVisibility, setListVisibility] = useState(false);
-  const [alignVisibility, setAlignVisibility] = useState(false);
 
   return (
     <>
@@ -99,52 +94,7 @@ const Text = () => {
               defaultState.focus ? styles.showToolBar : styles.hideToolBar
             }
           >
-            <div id="toolbar" style={{ paddingBottom: "10px" }}>
-              <span className="ql-formats" style={{}}>
-                <button className="ql-link" />
-              </span>
-
-              {/* bold dropdown starts */}
-              <button
-                onClick={() => {
-                  setBoldVisibility(!boldVisibility);
-                }}
-                className="ql-bold"
-                style={{ position: "relative" }}
-              ></button>
-              <BoldDropdownButton
-                show={boldVisibility}
-                className="dropdown-content"
-              ></BoldDropdownButton>
-
-              {/* formula btn */}
-              <button className="ql-formula"></button>
-
-              {/* bullets drowdown starts */}
-              <button
-                onClick={() => {
-                  setListVisibility(!listVisibility);
-                }}
-                className="ql-list"
-                value="bullet"
-              ></button>
-              <ListDropdownButton
-                show={listVisibility}
-                className="dropdown-content"
-              ></ListDropdownButton>
-
-              {/* alignment dropdown */}
-              <button
-                onClick={() => {
-                  setAlignVisibility(!alignVisibility);
-                }}
-                className="ql-align"
-              ></button>
-              <AlignDropdownButton
-                show={alignVisibility}
-                className="dropdown-content"
-              ></AlignDropdownButton>
-            </div>
+            <ToolBar/>
           </div>
 
           <ReactQuill

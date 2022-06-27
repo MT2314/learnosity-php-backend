@@ -1,7 +1,6 @@
 import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
-import styles from './styles/Quill.module.scss'
 
 const AlignDropdownButton = (props) => {
   return (
