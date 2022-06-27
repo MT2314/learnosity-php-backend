@@ -104,6 +104,7 @@ const Text = () => {
                 <button className="ql-link" />
               </span>
 
+              {/* bold dropdown starts */}
               <button
                 onClick={() => {
                   setBoldVisibility(!boldVisibility);
@@ -115,7 +116,11 @@ const Text = () => {
                 show={boldVisibility}
                 className="dropdown-content"
               ></BoldDropdownButton>
+
+              {/* formula btn */}
               <button className="ql-formula"></button>
+
+              {/* bullets drowdown starts */}
               <button
                 onClick={() => {
                   setListVisibility(!listVisibility);
@@ -127,6 +132,8 @@ const Text = () => {
                 show={listVisibility}
                 className="dropdown-content"
               ></ListDropdownButton>
+
+              {/* alignment dropdown */}
               <button
                 onClick={() => {
                   setAlignVisibility(!alignVisibility);
