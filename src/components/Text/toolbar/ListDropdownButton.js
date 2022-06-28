@@ -2,7 +2,7 @@ import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 
-const AlignDropdownButton = (props) => {
+const ListDropdownButton = (props) => {
   return (
     <>
       <Card
@@ -11,17 +11,24 @@ const AlignDropdownButton = (props) => {
           maxWidth: "150px",
           position: "absolute",
           zIndex: "25",
+          left: "76px",
         }}
         className="dropdown-content"
       >
-        <span className="ql-formats" style={{}}>
-          <button className="ql-align" value="right" />
-          <button className="ql-align" value="justify" />
-          <button className="ql-align" value="left" />
-        </span>
+        <button
+          aria-label="bullet list"
+          className="ql-list"
+          value="bullet"
+        ></button>
+
+        <button
+          aria-label="numbered list"
+          className="ql-list"
+          value="ordered"
+        ></button>
       </Card>
     </>
   );
 };
 
-export default AlignDropdownButton;
+export default ListDropdownButton;

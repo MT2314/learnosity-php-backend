@@ -1,12 +1,10 @@
 import React, { useRef, useReducer, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import ReactQuill from "react-quill";
-import styles from "./styles/Quill.module.scss";
+import "./styles/Text.scss";
 import "react-quill/dist/quill.snow.css";
 
-import BoldDropdownButton from "./BoldDropdownButton";
-import ListDropdownButton from "./ListDropdownButton";
-import AlignDropdownButton from "./AlignDropdownButton";
+import ToolBar from "./toolbar/ToolBar";
 
 export const formats = [
   "bold",
@@ -77,10 +75,6 @@ const Text = () => {
       editorRef.current.focus();
     }
   }, [defaultState.editorFocus]);
-
-  const [boldVisibility, setBoldVisibility] = useState(false);
-  const [listVisibility, setListVisibility] = useState(false);
-  const [alignVisibility, setAlignVisibility] = useState(false);
 
   return (
     <>
