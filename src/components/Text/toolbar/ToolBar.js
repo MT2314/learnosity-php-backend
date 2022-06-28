@@ -5,6 +5,7 @@ import "../styles/Toolbar.scss";
 import BoldDropdownButton from "./BoldDropdownButton";
 import ListDropdownButton from "./ListDropdownButton";
 import AlignDropdownButton from "./AlignDropdownButton";
+import { set } from "draft-js/lib/EditorState";
 
 const ToolBar = () => {
   const [boldVisibility, setBoldVisibility] = useState(false);
@@ -25,6 +26,8 @@ const ToolBar = () => {
       <button
         onClick={() => {
           setBoldVisibility(!boldVisibility);
+          setAlignVisibility(false)
+          setListVisibility(false)
         }}
         className="ql-bold"
         aria-label="formatting button dropdown"
@@ -45,6 +48,8 @@ const ToolBar = () => {
       <button
         onClick={() => {
           setListVisibility(!listVisibility);
+          setAlignVisibility(false)
+          setBoldVisibility(false)
         }}
         className="ql-list"
         value="bullet"
@@ -61,6 +66,8 @@ const ToolBar = () => {
       <button
         onClick={() => {
           setAlignVisibility(!alignVisibility);
+          setBoldVisibility(false)
+          setListVisibility(false)
         }}
         className="ql-align"
         aria-label="alignment buttons dropdown"
