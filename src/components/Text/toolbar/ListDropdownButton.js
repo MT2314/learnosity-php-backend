@@ -15,13 +15,17 @@ const ListDropdownButton = (props) => {
         }}
         className="dropdown-content"
       >
-        <button alt="bullet list" className="ql-list" value="bullet">
-          <span className="sr-only">bullet list</span>
-        </button>
+        <button
+          aria-label="bullet list"
+          className="ql-list"
+          value="bullet"
+        ></button>
 
-        <button alt="numbered list" className="ql-list" value="ordered">
-          <span className="sr-only">bullet list</span>
-        </button>
+        <button
+          aria-label="numbered list"
+          className="ql-list"
+          value="ordered"
+        ></button>
       </Card>
     </>
   );

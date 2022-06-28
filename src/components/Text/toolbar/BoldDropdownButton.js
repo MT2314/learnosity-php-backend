@@ -13,24 +13,20 @@ const BoldDropdownButton = (props) => {
         }}
         className="dropdown-content"
       >
-        <button alt="bold" className="ql-bold">
-          <span className="sr-only">bold</span>
-        </button>
-        <button alt="italic" className="ql-italic">
-          <span className="sr-only">italic</span>
-        </button>
-        <button alt="underline" className="ql-underline">
-          <span className="sr-only">underline</span>
-        </button>
-        <button alt="strike" className="ql-strike">
-          <span className="sr-only">strike thru</span>
-        </button>
-        <button alt="super script" className="ql-script" value="super">
-          <span className="sr-only">super script</span>
-        </button>
-        <button alt="sub script" className="ql-script" value="sub">
-          <span className="sr-only">sub script</span>
-        </button>
+        <button aria-label="bold" className="ql-bold"></button>
+        <button aria-label="italic" className="ql-italic"></button>
+        <button aria-label="underline" className="ql-underline"></button>
+        <button aria-label="strike" className="ql-strike"></button>
+        <button
+          aria-label="super script"
+          className="ql-script"
+          value="super"
+        ></button>
+        <button
+          aria-label="sub script"
+          className="ql-script"
+          value="sub"
+        ></button>
       </Card>
     </>
   );
