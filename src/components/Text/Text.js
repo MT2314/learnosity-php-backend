@@ -1,7 +1,7 @@
 import React, { useRef, useReducer, useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import ReactQuill from "react-quill";
-import styles from "./styles/Quill.module.scss";
+import "./styles/Text.scss";
 import "react-quill/dist/quill.snow.css";
 
 import ToolBar from "./toolbar/ToolBar";
@@ -51,7 +51,8 @@ const Text = () => {
           editor: true,
           focus: false,
         };
-      default: return state
+      default:
+        return state;
     }
   };
   const [defaultState, dispatch] = useReducer(switchFunction, {
@@ -74,7 +75,7 @@ const Text = () => {
         <Grid item sm={12}>
           {defaultState.defaultBox && (
             <div
-              className={styles.mainContainer}
+              className="mainContainer"
               onClick={() => {
                 dispatch({ type: "SHOW_EDITOR" });
               }}
@@ -89,30 +90,27 @@ const Text = () => {
       </Grid>
       {defaultState.editor && (
         <>
-          <div
-            className={
-              defaultState.focus ? styles.showToolBar : styles.hideToolBar
-            }
-          >
-            <ToolBar/>
+          <div className={defaultState.focus ? "showToolBar" : "hideToolBar"}>
+            <ToolBar />
           </div>
-
-          <ReactQuill
-            placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          <div className="quillContainer">
+            <ReactQuill
+              placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
         enim ad minim veniam, quis nostrud exercitation ullamco laboris
         nisi ut aliquip ex ea commodo consequat."
-            formats={formats}
-            modules={modules}
-            ref={editorRef}
-            className={styles.hi}
-            onBlur={() => {
-              dispatch({ type: "BLURR_EDITOR" });
-            }}
-            onFocus={() => {
-              dispatch({ type: "SHOW_EDITOR" });
-            }}
-          />
+              formats={formats}
+              modules={modules}
+              ref={editorRef}
+              className="quillEditor"
+              onBlur={() => {
+                dispatch({ type: "BLURR_EDITOR" });
+              }}
+              onFocus={() => {
+                dispatch({ type: "SHOW_EDITOR" });
+              }}
+            />
+          </div>
         </>
       )}
     </>
