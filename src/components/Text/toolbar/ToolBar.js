@@ -12,7 +12,11 @@ const ToolBar = () => {
   const [alignVisibility, setAlignVisibility] = useState(false);
 
   return (
-    <div id="toolbar" style={{ paddingBottom: "10px" }}>
+    <div
+      id="toolbar"
+      className="toolbarContainer"
+      style={{ paddingBottom: "10px" }}
+    >
       <span className="ql-formats">
         <button aria-label="add link button" className="ql-link" />
       </span>
