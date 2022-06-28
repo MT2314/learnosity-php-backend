@@ -3,7 +3,6 @@ import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 
 const BoldDropdownButton = (props) => {
-  
   return (
     <>
       <Card
@@ -14,12 +13,24 @@ const BoldDropdownButton = (props) => {
         }}
         className="dropdown-content"
       >
-        <button className="ql-bold" />
-        <button className="ql-italic" />
-        <button className="ql-underline" />
-        <button className="ql-strike" />
-        <button className="ql-script" value="super" />
-        <button className="ql-script" value="sub" />
+        <button alt="bold" className="ql-bold">
+          <span className="sr-only">bold</span>
+        </button>
+        <button alt="italic" className="ql-italic">
+          <span className="sr-only">italic</span>
+        </button>
+        <button alt="underline" className="ql-underline">
+          <span className="sr-only">underline</span>
+        </button>
+        <button alt="strike" className="ql-strike">
+          <span className="sr-only">strike thru</span>
+        </button>
+        <button alt="super script" className="ql-script" value="super">
+          <span className="sr-only">super script</span>
+        </button>
+        <button alt="sub script" className="ql-script" value="sub">
+          <span className="sr-only">sub script</span>
+        </button>
       </Card>
     </>
   );
