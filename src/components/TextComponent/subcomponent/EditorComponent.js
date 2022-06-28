@@ -30,7 +30,7 @@ const EditorComponent = () => {
 
   const handleEditorBlur = () => {
     setShowToolBar(false);
-   };
+  };
 
   return (
     <div className="text-editor">
@@ -50,7 +50,7 @@ const EditorComponent = () => {
         enim ad minim veniam, quis nostrud exercitation ullamco laboris
         nisi ut aliquip ex ea commodo consequat."
         onFocus={handleEditorFocus}
-        onBlur={handleEditorBlur}
+        // onBlur={handleEditorBlur}
         className="quillEditor"
       />
     </div>
