@@ -12,6 +12,7 @@ const ListDropdownButton = (props) => {
           position: "absolute",
           zIndex: "25",
           left: "66px",
+          bottom: '-20px'
         }}
         className="dropdown-content"
       >
