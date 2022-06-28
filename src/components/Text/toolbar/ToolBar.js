@@ -5,9 +5,9 @@ import "../styles/Toolbar.scss";
 import BoldDropdownButton from "./BoldDropdownButton";
 import ListDropdownButton from "./ListDropdownButton";
 import AlignDropdownButton from "./AlignDropdownButton";
-import { set } from "draft-js/lib/EditorState";
 
 const ToolBar = () => {
+
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
