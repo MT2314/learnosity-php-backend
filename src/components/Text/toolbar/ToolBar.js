@@ -30,24 +30,16 @@ const ToolBar = () => {
         aria-label="formatting button dropdown"
         ariaRole="select"
         style={{ position: "relative" }}
-      >
-        <span className="sr-only">
-          Select dropdown menu- formatting buttons
-        </span>
-      </button>
+      ></button>
       <BoldDropdownButton
         show={boldVisibility}
         ariaRole="select"
         aria-label="formatting options select dropdown"
         className="dropdown-content"
-      >
-        <span className="sr-only">formatting options group</span>
-      </BoldDropdownButton>
+      ></BoldDropdownButton>
 
       {/* formula btn */}
-      <button className="ql-formula" alt="math equation button">
-        <span className="sr-only">Insert Math equation</span>
-      </button>
+      <button className="ql-formula" aria-label="math equation button"></button>
 
       {/* bullets drowdown starts */}
       <button
@@ -58,16 +50,12 @@ const ToolBar = () => {
         value="bullet"
         ariaRole="select"
         aria-label="list options select group"
-      >
-        <span className="sr-only">Select dropdown menu- list options</span>
-      </button>
+      ></button>
       <ListDropdownButton
         show={listVisibility}
         className="dropdown-content"
         aria-label="list buttons dropdown"
-      >
-        <span className="sr-only">list options button group</span>
-      </ListDropdownButton>
+      ></ListDropdownButton>
 
       {/* alignment dropdown */}
       <button
@@ -76,9 +64,7 @@ const ToolBar = () => {
         }}
         className="ql-align"
         aria-label="alignment buttons dropdown"
-      >
-        <span className="sr-only">Select dropdown menu- alignment options</span>
-      </button>
+      ></button>
       <AlignDropdownButton
         show={alignVisibility}
         className="dropdown-content"
