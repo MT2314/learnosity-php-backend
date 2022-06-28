@@ -12,7 +12,7 @@ const ToolBar = () => {
   return (
     <div id="toolbar" style={{ paddingBottom: "10px" }}>
       <span className="ql-formats">
-        <button alt="add link button" className="ql-link" />
+        <button aria-label="add link button" className="ql-link" />
       </span>
 
       {/* bold dropdown starts */}
@@ -22,13 +22,19 @@ const ToolBar = () => {
         }}
         className="ql-bold"
         aria-label="formatting button dropdown"
+        ariaRole="select"
         style={{ position: "relative" }}
       >
         <span className="sr-only">
           Select dropdown menu- formatting buttons
         </span>
       </button>
-      <BoldDropdownButton show={boldVisibility} className="dropdown-content">
+      <BoldDropdownButton
+        show={boldVisibility}
+        ariaRole="select"
+        aria-label="formatting options select dropdown"
+        className="dropdown-content"
+      >
         <span className="sr-only">formatting options group</span>
       </BoldDropdownButton>
 
@@ -44,6 +50,8 @@ const ToolBar = () => {
         }}
         className="ql-list"
         value="bullet"
+        ariaRole="select"
+        aria-label="list options select group"
       >
         <span className="sr-only">Select dropdown menu- list options</span>
       </button>
