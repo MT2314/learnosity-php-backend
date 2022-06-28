@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 
 import "../styles/Toolbar.scss";
+import { Divider } from "@mui/material";
 
 import BoldDropdownButton from "./BoldDropdownButton";
 import ListDropdownButton from "./ListDropdownButton";
 import AlignDropdownButton from "./AlignDropdownButton";
 
 const ToolBar = () => {
+
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
@@ -17,14 +19,12 @@ const ToolBar = () => {
       className="toolbarContainer"
       style={{ paddingBottom: "10px" }}
     >
-      <span className="ql-formats">
-        <button aria-label="add link button" className="ql-link" />
-      </span>
-
       {/* bold dropdown starts */}
       <button
         onClick={() => {
           setBoldVisibility(!boldVisibility);
+          setAlignVisibility(false);
+          setListVisibility(false);
         }}
         className="ql-bold"
         aria-label="formatting button dropdown"
@@ -45,6 +45,8 @@ const ToolBar = () => {
       <button
         onClick={() => {
           setListVisibility(!listVisibility);
+          setAlignVisibility(false);
+          setBoldVisibility(false);
         }}
         className="ql-list"
         value="bullet"
@@ -61,6 +63,8 @@ const ToolBar = () => {
       <button
         onClick={() => {
           setAlignVisibility(!alignVisibility);
+          setBoldVisibility(false);
+          setListVisibility(false);
         }}
         className="ql-align"
         aria-label="alignment buttons dropdown"
@@ -74,6 +78,10 @@ const ToolBar = () => {
         // ariaRole="select"
         aria-label="alignment buttons options"
       ></AlignDropdownButton>
+
+      {/* link btn and divider */}
+      <Divider orientation="vertical" variant="middle" flexItem />
+      <button aria-label="add link button" className="ql-link" />
     </div>
   );
 };

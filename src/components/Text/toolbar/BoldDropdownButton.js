@@ -10,6 +10,7 @@ const BoldDropdownButton = (props) => {
           display: props.show ? "block" : "none",
           position: "absolute",
           zIndex: "25",
+          bottom: '-20px'
         }}
         className="dropdown-content"
       >
