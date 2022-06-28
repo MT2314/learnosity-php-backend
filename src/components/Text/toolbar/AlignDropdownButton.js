@@ -14,10 +14,16 @@ const AlignDropdownButton = (props) => {
         }}
         className="dropdown-content"
       >
-        <span className="ql-formats" style={{marginRight: "0px"}}>
-          <button className="ql-align"/>
-          <button className="ql-align" value="center" />
-          <button className="ql-align" value="right" />
+        <span className="ql-formats" style={{ marginRight: "0px" }}>
+          <button alt="left align" className="ql-align">
+            left align
+          </button>
+          <button alt="align center" className="ql-align" value="center">
+            <span className="sr-only">center align</span>
+          </button>
+          <button alt="right align" className="ql-align" value="right">
+            <span className="sr-only">right align</span>
+          </button>
         </span>
       </Card>
     </>
