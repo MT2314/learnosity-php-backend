@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import "../styles/Toolbar.scss";
-import { Divider } from "@mui/material";
+import { Divider } from '@mui/material/';
 
 import BoldDropdownButton from "./BoldDropdownButton";
 import ListDropdownButton from "./ListDropdownButton";
@@ -80,7 +80,7 @@ const ToolBar = () => {
       ></AlignDropdownButton>
 
       {/* link btn and divider */}
-      <Divider orientation="vertical" variant="middle" flexItem />
+      <Divider orientation="vertical"/>
       <button aria-label="add link button" className="ql-link" />
     </div>
   );
