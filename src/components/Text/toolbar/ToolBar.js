@@ -12,13 +12,9 @@ const ToolBar = () => {
   const [alignVisibility, setAlignVisibility] = useState(false);
 
   return (
-    <div
-      id="toolbar"
-      className="toolbarContainer"
-      style={{ paddingBottom: "10px" }}
-    >
+    <div id="toolbar" style={{ paddingBottom: "10px" }}>
       <span className="ql-formats">
-        <button className="ql-link" />
+        <button aria-label="add link button" className="ql-link" />
       </span>
 
       {/* bold dropdown starts */}
@@ -27,15 +23,27 @@ const ToolBar = () => {
           setBoldVisibility(!boldVisibility);
         }}
         className="ql-bold"
+        aria-label="formatting button dropdown"
+        ariaRole="select"
         style={{ position: "relative" }}
-      ></button>
+      >
+        <span className="sr-only">
+          Select dropdown menu- formatting buttons
+        </span>
+      </button>
       <BoldDropdownButton
         show={boldVisibility}
+        ariaRole="select"
+        aria-label="formatting options select dropdown"
         className="dropdown-content"
-      ></BoldDropdownButton>
+      >
+        <span className="sr-only">formatting options group</span>
+      </BoldDropdownButton>
 
       {/* formula btn */}
-      <button className="ql-formula"></button>
+      <button className="ql-formula" alt="math equation button">
+        <span className="sr-only">Insert Math equation</span>
+      </button>
 
       {/* bullets drowdown starts */}
       <button
@@ -44,11 +52,18 @@ const ToolBar = () => {
         }}
         className="ql-list"
         value="bullet"
-      ></button>
+        ariaRole="select"
+        aria-label="list options select group"
+      >
+        <span className="sr-only">Select dropdown menu- list options</span>
+      </button>
       <ListDropdownButton
         show={listVisibility}
         className="dropdown-content"
-      ></ListDropdownButton>
+        aria-label="list buttons dropdown"
+      >
+        <span className="sr-only">list options button group</span>
+      </ListDropdownButton>
 
       {/* alignment dropdown */}
       <button
@@ -56,10 +71,14 @@ const ToolBar = () => {
           setAlignVisibility(!alignVisibility);
         }}
         className="ql-align"
-      ></button>
+        aria-label="alignment buttons dropdown"
+      >
+        <span className="sr-only">Select dropdown menu- alignment options</span>
+      </button>
       <AlignDropdownButton
         show={alignVisibility}
         className="dropdown-content"
+        aria-label="alignment buttons options"
       ></AlignDropdownButton>
     </div>
   );
