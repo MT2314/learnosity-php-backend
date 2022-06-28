@@ -33,7 +33,7 @@ const ToolBar = () => {
       ></button>
       <BoldDropdownButton
         show={boldVisibility}
-        ariaRole="select"
+        // ariaRole="select"
         aria-label="formatting options select dropdown"
         className="dropdown-content"
       ></BoldDropdownButton>
@@ -48,7 +48,7 @@ const ToolBar = () => {
         }}
         className="ql-list"
         value="bullet"
-        ariaRole="select"
+        // ariaRole="select"
         aria-label="list options select group"
       ></button>
       <ListDropdownButton
@@ -64,10 +64,14 @@ const ToolBar = () => {
         }}
         className="ql-align"
         aria-label="alignment buttons dropdown"
+        // ariaRole="label"
+        id="alignment-dropdown"
       ></button>
       <AlignDropdownButton
         show={alignVisibility}
         className="dropdown-content"
+        // aria-labelledby="alignment-dropdown"
+        // ariaRole="select"
         aria-label="alignment buttons options"
       ></AlignDropdownButton>
     </div>
