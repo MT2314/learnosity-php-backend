@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import BoldDropdownButton from "../../Text/BoldDropdownButton";
-import ListDropdownButton from "../../Text/ListDropdownButton";
-import AlignDropdownButton from "../../Text/AlignDropdownButton";
+import BoldDropdownButton from "../../Text/toolbar/BoldDropdownButton";
+import ListDropdownButton from "../../Text/toolbar/ListDropdownButton";
+import AlignDropdownButton from "../../Text/toolbar/AlignDropdownButton";
 import "../styles/CustomToolBar.scss";
 
 const CustomToolBar = ({ toolbarId }) => {
