@@ -11,6 +11,7 @@ import QuoteBoxPage from "./pages/QuoteBoxPage";
 import ImagePage from "./pages/ImagePage";
 import exposedVersion from "../exposedStage";
 import Text from "../src/components/Text/Text";
+import TextComponent from "../src/components/TextComponent/TextComponent";
 
 import "./index.css";
 
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/QuoteBoxPage" element={<QuoteBoxPage />} />
             <Route path="/ImagePage" element={<ImagePage />} />
             <Route path="/react-quill" element={<Text />} />
+            <Route path="/text-component" element={<TextComponent />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </BrowserRouter>
