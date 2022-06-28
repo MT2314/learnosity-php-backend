@@ -9,7 +9,7 @@ const AlignDropdownButton = (props) => {
         style={{
           display: props.show ? "block" : "none",
           position: "absolute",
-          left: "103px",
+          left: "94px",
           zIndex: "25",
         }}
         className="dropdown-content"
