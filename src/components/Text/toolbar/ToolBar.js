@@ -56,28 +56,6 @@ const ToolBar = () => {
           />
         </button>
 
-        {/* bullets drowdown starts */}
-        <button
-          onClick={() => {
-            setListVisibility(!listVisibility);
-            setAlignVisibility(false);
-            setBoldVisibility(false);
-          }}
-          className="ql-list"
-          value="bullet"
-          aria-label="list options select group"
-        >
-          <img
-            src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/bullet_list.svg"
-            alt="bullet list dropdown button"
-          />
-        </button>
-        <ListDropdownButton
-          show={listVisibility}
-          className="dropdown-content"
-          aria-label="list buttons dropdown"
-        ></ListDropdownButton>
-
         {/* alignment dropdown */}
         <button
           onClick={() => {
@@ -101,6 +79,28 @@ const ToolBar = () => {
           className="dropdown-content"
           aria-label="alignment buttons options"
         ></AlignDropdownButton>
+
+        {/* bullets drowdown starts */}
+        <button
+          onClick={() => {
+            setListVisibility(!listVisibility);
+            setAlignVisibility(false);
+            setBoldVisibility(false);
+          }}
+          className="ql-list"
+          value="bullet"
+          aria-label="list options select group"
+        >
+          <img
+            src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/bullet_list.svg"
+            alt="bullet list dropdown button"
+          />
+        </button>
+        <ListDropdownButton
+          show={listVisibility}
+          className="dropdown-content"
+          aria-label="list buttons dropdown"
+        ></ListDropdownButton>
 
         {/* link btn and divider */}
         <Divider orientation="vertical" />
