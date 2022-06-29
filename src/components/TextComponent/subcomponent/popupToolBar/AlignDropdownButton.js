@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
-import { ToolBarDropDowns } from "../../TextComponent/subcomponent/CustomToolBar";
+import { ToolBarDropDowns } from "../CustomToolBar";
 
 const AlignDropdownButton = (props) => {
   const [activeDropDownItem, setActiveDropDownItem] =

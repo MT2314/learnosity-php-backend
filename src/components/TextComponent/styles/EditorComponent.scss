@@ -24,7 +24,13 @@
 
   &::placeholder {
     font-style: normal;
-    color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.12) !important;
+    font-weight: 400;
+  }
+
+  .ql-editor.ql-blank::before {
+    color: rgba(0, 0, 0, 0.12) !important;
+    font-weight: 400;
   }
 }
 
@@ -33,7 +39,8 @@
 }
 
 .showtool {
-  display: block;
+  display: flex;
+  justify-content: center;
 }
 
 .ql-toolbar.ql-snow .ql-formats {

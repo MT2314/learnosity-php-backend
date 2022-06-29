@@ -28,10 +28,6 @@ const EditorComponent = () => {
     setShowToolBar(true);
   };
 
-  const handleEditorBlur = () => {
-    setShowToolBar(false);
-  };
-
   return (
     <div className="text-editor">
       <div className={showToolBar ? "showtool" : "hidetool"}>
