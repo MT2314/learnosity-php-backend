@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
+import { ToolBarDropDowns } from "./ToolBar";
 
 const AlignDropdownButton = (props) => {
+  const [activeDropDownItem, setActiveDropDownItem] =
+    useContext(ToolBarDropDowns);
+
   return (
     <>
       <Card
         style={{
           display: props.show ? "block" : "none",
           position: "absolute",
-          left: "94px",
+          left: "66px",
           zIndex: "25",
-          bottom: '-20px'
+          bottom: "-32px",
+          padding: "3px",
         }}
         className="dropdown-content"
       >
@@ -21,11 +26,13 @@ const AlignDropdownButton = (props) => {
             aria-label="align center"
             className="ql-align"
             value="center"
+            onClick={() => setActiveDropDownItem("center")}
           ></button>
           <button
             aria-label="right align"
             className="ql-align"
             value="right"
+            onClick={() => setActiveDropDownItem("right")}
           ></button>
         </span>
       </Card>

@@ -9,6 +9,8 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     width: 184px;
     position: relative;
+    display: flex;
+    justify-content: space-between;
   }
 
   .ql-toolbar.ql-snow .ql-formats{

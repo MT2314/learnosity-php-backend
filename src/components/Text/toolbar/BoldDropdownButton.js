@@ -10,11 +10,19 @@ const BoldDropdownButton = (props) => {
           display: props.show ? "block" : "none",
           position: "absolute",
           zIndex: "25",
-          bottom: '-20px'
+          bottom: "-32px",
+          padding: "3px",
+          width: "180px",
         }}
         className="dropdown-content"
       >
-        <button aria-label="bold" className="ql-bold"></button>
+        <button aria-label="bold" className="ql-bold">
+          {/* <img
+          src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/bold.svg"
+          alt="font formatting dropdown menu"
+          
+        /> */}
+        </button>
         <button aria-label="italic" className="ql-italic"></button>
         <button aria-label="underline" className="ql-underline"></button>
         <button aria-label="strike" className="ql-strike"></button>
