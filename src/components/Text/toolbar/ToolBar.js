@@ -49,7 +49,15 @@ const ToolBar = () => {
         ></BoldDropdownButton>
 
         {/* formula btn */}
-        <button className="ql-formula" aria-label="math equation button">
+        <button
+          className="ql-formula"
+          aria-label="math equation button"
+          onClick={() => {
+            setAlignVisibility(false);
+            setBoldVisibility(false);
+            setListVisibility(false);
+          }}
+        >
           <img
             src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/pi.svg"
             alt="mathematical pi button for inserting equation"
@@ -107,11 +115,11 @@ const ToolBar = () => {
         <button
           aria-label="add link button"
           className="ql-link"
-          // onClick={() => {
-          //   setAlignVisibility(false);
-          //   setBoldVisibility(false);
-          //   setListVisibility(false);
-          // }}
+          onClick={() => {
+            setAlignVisibility(false);
+            setBoldVisibility(false);
+            setListVisibility(false);
+          }}
         />
       </div>
     </ToolBarDropDowns.Provider>
