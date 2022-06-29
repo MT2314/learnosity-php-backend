@@ -1,8 +1,21 @@
-.ql-snow.ql-toolbar.toolbarContainer {
-  border-radius: 4px;
-  border-left: 4px solid #1565c0;
-  height: 40px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  .ql-formats {
+.showToolBar{
+  display: flex;
+  justify-content: center;
+
+  .ql-snow.ql-toolbar.toolbarContainer {
+    border-radius: 4px;
+    border-left: 4px solid #1565c0;
+    height: 40px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 184px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
   }
+
+  .ql-toolbar.ql-snow .ql-formats{
+    margin-right: 0px;
+  }
+
 }
+

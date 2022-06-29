@@ -10,6 +10,8 @@
   min-height: 72px;
   padding: 40px 104px;
   letter-spacing: 0.15px;
+  font-weight: 400;
+  color: #232323;
 }
 
 .ql-container.ql-snow {
@@ -36,7 +38,13 @@
 
   &::placeholder {
     font-style: normal;
-    color: rgba(0, 0, 0, 0.12);
+    color: rgba(0, 0, 0, 0.12) !important;
+    font-weight: 400;
+  }
+
+  .ql-editor.ql-blank::before {
+    color: rgba(0, 0, 0, 0.12) !important;
+    font-weight: 400;
   }
 }
 
