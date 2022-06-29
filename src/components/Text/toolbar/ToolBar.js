@@ -14,11 +14,13 @@ const ToolBar = () => {
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
-  const [ activeDropDownItem, setActiveDropDownItem ] = useState("")
-  
+  const [activeDropDownItem, setActiveDropDownItem] = useState("");
+
   console.log(`====>`, activeDropDownItem);
   return (
-    <ToolBarDropDowns.Provider value={[activeDropDownItem, setActiveDropDownItem]}>
+    <ToolBarDropDowns.Provider
+      value={[activeDropDownItem, setActiveDropDownItem]}
+    >
       <div
         id="toolbar"
         className="toolbarContainer"
@@ -31,23 +33,28 @@ const ToolBar = () => {
             setAlignVisibility(false);
             setListVisibility(false);
           }}
-          className="ql-bold"
+          // className="ql-bold"
           aria-label="formatting button dropdown"
-          ariaRole="select"
-          style={{ position: "relative" }}
-        ></button>
+          style={{ position: "relative", padding: "0px" }}
+        >
+          <img
+            src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/bold.svg"
+            alt="font formatting dropdown menu"
+          />
+        </button>
         <BoldDropdownButton
           show={boldVisibility}
-          // ariaRole="select"
           aria-label="formatting options select dropdown"
           className="dropdown-content"
         ></BoldDropdownButton>
 
         {/* formula btn */}
-        <button
-          className="ql-formula"
-          aria-label="math equation button"
-        ></button>
+        <button className="ql-formula" aria-label="math equation button">
+          <img
+            src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/pi.svg"
+            alt="mathematical pi button for inserting equation"
+          />
+        </button>
 
         {/* bullets drowdown starts */}
         <button
@@ -58,9 +65,13 @@ const ToolBar = () => {
           }}
           className="ql-list"
           value="bullet"
-          // ariaRole="select"
           aria-label="list options select group"
-        ></button>
+        >
+          <img
+            src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/bullet_list.svg"
+            alt="bullet list dropdown button"
+          />
+        </button>
         <ListDropdownButton
           show={listVisibility}
           className="dropdown-content"
@@ -74,17 +85,20 @@ const ToolBar = () => {
             setBoldVisibility(false);
             setListVisibility(false);
           }}
-          className="ql-align"
+          // className="ql-align"
           aria-label="alignment buttons dropdown"
           // ariaRole="label"
           value={activeDropDownItem}
           id="alignment-dropdown"
-        ></button>
+        >
+          <img
+            src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/left_align.svg"
+            alt="text alignment dropdown menu"
+          />
+        </button>
         <AlignDropdownButton
           show={alignVisibility}
           className="dropdown-content"
-          // aria-labelledby="alignment-dropdown"
-          // ariaRole="select"
           aria-label="alignment buttons options"
         ></AlignDropdownButton>
 
