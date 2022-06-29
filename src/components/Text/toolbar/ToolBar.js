@@ -104,7 +104,15 @@ const ToolBar = () => {
 
         {/* link btn and divider */}
         <Divider orientation="vertical" />
-        <button aria-label="add link button" className="ql-link" />
+        <button
+          aria-label="add link button"
+          className="ql-link"
+          // onClick={() => {
+          //   setAlignVisibility(false);
+          //   setBoldVisibility(false);
+          //   setListVisibility(false);
+          // }}
+        />
       </div>
     </ToolBarDropDowns.Provider>
   );
