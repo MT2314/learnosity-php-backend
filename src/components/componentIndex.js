@@ -2,9 +2,6 @@ import Callout, {
   defaultProps as calloutDefaultProps,
 } from "./Callout/Callout";
 import Image, { defaultProps as imageDefaultProps } from "./Image/Image";
-import FormattedText, {
-  defaultProps as formattedTextDefaultProps,
-} from "./FormattedText/FormattedText";
 import QuoteBox, {
   defaultProps as quoteBoxDefaultProps,
 } from "./QuoteBox/QuoteBox";
@@ -29,12 +26,6 @@ const componentIndex = {
     Component: TextComponent,
     readableName: "TextComponent",
     defaultProps: quillDefaultProps,
-    version: "0.0.1",
-  },
-  FormattedText: {
-    Component: FormattedText,
-    readableName: "Formatted Text",
-    defaultProps: formattedTextDefaultProps,
     version: "0.0.1",
   },
   Image: {
