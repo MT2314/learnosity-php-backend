@@ -1,19 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
-.mainContainer {
-  font-family: "Inter", sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  background-color: #f9f9fc;
-  width: 968px;
-  height: auto;
-  min-height: 72px;
-  padding: 40px 104px;
-  letter-spacing: 0.15px;
-  font-weight: 400;
-  color: #232323;
-}
-
 .ql-container.ql-snow {
   font-size: 16px;
   letter-spacing: 0.15px;
@@ -48,12 +34,13 @@
   }
 }
 
-.hideToolBar {
+.hidetool {
   display: none;
 }
 
-.showToolBar {
-  display: block;
+.showtool {
+  display: flex;
+  justify-content: center;
 }
 
 .ql-toolbar.ql-snow .ql-formats {

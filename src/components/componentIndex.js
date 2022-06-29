@@ -2,9 +2,6 @@ import Callout, {
   defaultProps as calloutDefaultProps,
 } from "./Callout/Callout";
 import Image, { defaultProps as imageDefaultProps } from "./Image/Image";
-import FormattedText, {
-  defaultProps as formattedTextDefaultProps,
-} from "./FormattedText/FormattedText";
 import QuoteBox, {
   defaultProps as quoteBoxDefaultProps,
 } from "./QuoteBox/QuoteBox";
@@ -14,7 +11,9 @@ import Video, { defaultProps as videoDefaultProps } from "./Video/Video";
 import VideoConfig from "./Video/VideoConfig";
 import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
-import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
+import TextComponent, {
+  defaultProps as quillDefaultProps,
+} from "./TextComponent/TextComponent";
 
 const componentIndex = {
   Callout: {
@@ -24,15 +23,9 @@ const componentIndex = {
     version: "0.0.1",
   },
   Text: {
-    Component: Text,
-    readableName: "Text",
+    Component: TextComponent,
+    readableName: "TextComponent",
     defaultProps: quillDefaultProps,
-    version: "0.0.1",
-  },
-  FormattedText: {
-    Component: FormattedText,
-    readableName: "Formatted Text",
-    defaultProps: formattedTextDefaultProps,
     version: "0.0.1",
   },
   Image: {

@@ -1,28 +1,28 @@
 import React, { useState, createContext } from "react";
-
-import "../styles/Toolbar.scss";
 import { Divider } from "@mui/material/";
-
-import BoldDropdownButton from "./BoldDropdownButton";
-import ListDropdownButton from "./ListDropdownButton";
-import AlignDropdownButton from "./AlignDropdownButton";
+import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
+import ListDropdownButton from "./popupToolBar/ListDropdownButton";
+import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
+import "../styles/CustomToolBar.scss";
 
 //context to save state of active drop down items
 export const ToolBarDropDowns = createContext();
 
-const ToolBar = () => {
+const CustomToolBar = ({ toolbarId }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
+
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
 
   console.log(`====>`, activeDropDownItem);
+
   return (
     <ToolBarDropDowns.Provider
       value={[activeDropDownItem, setActiveDropDownItem]}
     >
       <div
-        id="toolbar"
+        id={toolbarId}
         className="toolbarContainer"
         style={{ paddingBottom: "10px" }}
       >
@@ -125,4 +125,5 @@ const ToolBar = () => {
     </ToolBarDropDowns.Provider>
   );
 };
-export default ToolBar;
+
+export default CustomToolBar;
