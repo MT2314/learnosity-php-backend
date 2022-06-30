@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
@@ -23,6 +23,12 @@ const EditorComponent = () => {
     "image",
     "color",
   ];
+
+  const focusRef = useRef(null)
+
+  useEffect(() => {
+    focusRef.current.focus()
+  }, [])
  
 
   return (
@@ -33,6 +39,7 @@ const EditorComponent = () => {
       </div>
 
       <ReactQuill
+        ref={focusRef}
         modules={{
           toolbar: {
             container: `#${toolbarId}`,
