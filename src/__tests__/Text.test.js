@@ -25,7 +25,7 @@ describe("<Text/>", () => {
   })
 
   test('Default lorem ipsum renders', () => {
-    render(<DefaultText/>)
+    render(<TextComponent/>)
 
     expect(screen.getByText(/Lorem ipsum/i)).toBeInTheDocument()
   })
