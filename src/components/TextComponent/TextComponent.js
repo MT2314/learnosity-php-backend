@@ -20,6 +20,7 @@ const TextComponent = () => {
             handleOnClick();
           }}
           className="mainContainer"
+          data-testid='text-component'
         >
           <DefaultText />
         </div>

@@ -9,6 +9,7 @@ import "../styles/CustomToolBar.scss";
 export const ToolBarDropDowns = createContext();
 
 const CustomToolBar = ({ toolbarId }) => {
+  
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
