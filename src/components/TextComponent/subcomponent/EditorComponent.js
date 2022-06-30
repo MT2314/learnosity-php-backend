@@ -1,10 +1,10 @@
-import React, { useState, forwardRef } from "react";
+import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
 
-const EditorComponent = forwardRef(({focusRef}) => {
+const EditorComponent = () => {
 
   const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
   const formats = [
@@ -48,6 +48,6 @@ const EditorComponent = forwardRef(({focusRef}) => {
       />
       </div>
   );
-});
+};
 
 export default EditorComponent;
