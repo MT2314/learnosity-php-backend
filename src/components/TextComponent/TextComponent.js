@@ -12,21 +12,17 @@ const TextComponent = () => {
     setShowEditor(true);
   };
 
-  return (
+
+  return(
     <>
-      {!showEditor && (
-        <div
-          onClick={() => {
-            handleOnClick();
-          }}
-          className="mainContainer"
-        >
-          <DefaultText />
-        </div>
-      )}
-      {showEditor && <EditorComponent />}
+    {!showEditor ?
+      <div onClick={() => {handleOnClick()}} className='mainContainer'><DefaultText /></div>  
+    : 
+      <EditorComponent/>
+      }
     </>
-  );
+  )
+
 };
 
 export default TextComponent;

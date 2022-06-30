@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
 
 const EditorComponent = () => {
-  const [showToolBar, setShowToolBar] = useState(false);
+
   const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
   const formats = [
     "header",
@@ -24,16 +24,22 @@ const EditorComponent = () => {
     "color",
   ];
 
-  const handleEditorFocus = () => {
-    setShowToolBar(true);
-  };
+  const focusRef = useRef(null)
+
+  useEffect(() => {
+    focusRef.current.focus()
+  }, [])
+ 
 
   return (
     <div className="text-editor">
-      <div className={showToolBar ? "showtool" : "hidetool"}>
+
+      <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
+
       <ReactQuill
+        ref={focusRef}
         modules={{
           toolbar: {
             container: `#${toolbarId}`,
@@ -45,11 +51,9 @@ const EditorComponent = () => {
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
         enim ad minim veniam, quis nostrud exercitation ullamco laboris
         nisi ut aliquip ex ea commodo consequat."
-        onFocus={handleEditorFocus}
-        // onBlur={handleEditorBlur}
         className="quillEditor"
       />
-    </div>
+      </div>
   );
 };
 
