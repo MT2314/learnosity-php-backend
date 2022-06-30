@@ -5,7 +5,7 @@ import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
 
 const EditorComponent = forwardRef(({focusRef}) => {
-  const [showToolBar, setShowToolBar] = useState(false);
+
   const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
   const formats = [
     "header",
@@ -25,10 +25,6 @@ const EditorComponent = forwardRef(({focusRef}) => {
   ];
  
 
-  // const handleEditorFocus = () => {
-  //   setShowToolBar(true);
-  // };
-
   return (
     <div className="text-editor">
 
@@ -36,8 +32,6 @@ const EditorComponent = forwardRef(({focusRef}) => {
         <CustomToolBar toolbarId={toolbarId} />
       </div>
 
-      <p ref={focusRef}>test focus</p>
-      
       <ReactQuill
         modules={{
           toolbar: {
@@ -50,8 +44,6 @@ const EditorComponent = forwardRef(({focusRef}) => {
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
         enim ad minim veniam, quis nostrud exercitation ullamco laboris
         nisi ut aliquip ex ea commodo consequat."
-        //onFocus={handleEditorFocus}
-        // onBlur={handleEditorBlur}
         className="quillEditor"
       />
       </div>

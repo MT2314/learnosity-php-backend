@@ -8,24 +8,25 @@ export const defaultProps = { body: null };
 const TextComponent = () => {
   const [showEditor, setShowEditor] = useState(false);
 
-  const focusRef = useRef(null)
+  //const focusRef = useRef(null)
   
   const handleOnClick = () => {
-    focusRef.current.focus()
+    //focusRef.current.focus()
     setShowEditor(true);
   };
 
 
-  return (
-    <div
-      onClick={() => {
-        handleOnClick();
-      }}
-      className="mainContainer"
-    >
-      {!showEditor ? <DefaultText /> : <EditorComponent focusRef={focusRef}/>}
-    </div>
-  );
+  return(
+    <>
+    {!showEditor ?
+      <div onClick={() => {handleOnClick()}} className='mainContainer'><DefaultText /></div>  
+    : 
+      <EditorComponent/>
+      
+      }
+    </>
+  )
+
 };
 
 export default TextComponent;
