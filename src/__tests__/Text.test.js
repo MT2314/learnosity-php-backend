@@ -30,16 +30,16 @@ describe("<Text/>", () => {
     expect(screen.getByText(/Lorem ipsum/i)).toBeInTheDocument()
   })
 
-  test('On click text editor is called', () => {
+  test('On click text editor renders', () => {
     render(<TextComponent/>)
-    const mockFn = jest.fn()
-    
+
     const editorContainer = screen.getByTestId('text-component')
 
     expect(editorContainer).toBeInTheDocument()
 
     fireEvent.click(editorContainer)
-    expect(mockFn).toHaveBeenCalled()
+    
+    expect(screen.getByTestId('text-editor-component')).toBeInTheDocument()
     
   })
 
