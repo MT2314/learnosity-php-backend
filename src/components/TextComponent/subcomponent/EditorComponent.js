@@ -30,7 +30,7 @@ const EditorComponent = () => {
 
   return (
     <div className="text-editor">
-      <div className={showToolBar ? "showtool" : "hidetool"}>
+      <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
       <ReactQuill

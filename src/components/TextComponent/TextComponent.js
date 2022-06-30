@@ -9,23 +9,19 @@ const TextComponent = () => {
   const [showEditor, setShowEditor] = useState(false);
 
   const handleOnClick = () => {
+    console.log(`showEditor:`, showEditor);
     setShowEditor(true);
   };
 
   return (
-    <>
-      {!showEditor && (
-        <div
-          onClick={() => {
-            handleOnClick();
-          }}
-          className="mainContainer"
-        >
-          <DefaultText />
-        </div>
-      )}
-      {showEditor && <EditorComponent />}
-    </>
+    <div
+      onClick={() => {
+        handleOnClick();
+      }}
+      className="mainContainer"
+    >
+      {!showEditor ? <DefaultText /> : <EditorComponent />}
+    </div>
   );
 };
 
