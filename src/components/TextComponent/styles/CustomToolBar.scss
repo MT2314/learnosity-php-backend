@@ -12,3 +12,12 @@
 .ql-toolbar.ql-snow .ql-formats {
   margin-right: 0px;
 }
+
+.ql-toolbar button {
+  border-radius: 4px;
+}
+.center-active {
+  .ql-toolbar button {
+    background-color: rgb(226, 236, 245) !important;
+  }
+}
