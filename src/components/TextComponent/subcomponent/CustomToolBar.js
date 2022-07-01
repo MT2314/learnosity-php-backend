@@ -14,6 +14,7 @@ const CustomToolBar = ({ toolbarId }) => {
   const [alignVisibility, setAlignVisibility] = useState(false);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
+  const [activeTopMenu, setActiveTopMenu] = useState("");
 
   console.log(`====>`, activeDropDownItem);
 
@@ -32,10 +33,15 @@ const CustomToolBar = ({ toolbarId }) => {
             setBoldVisibility(!boldVisibility);
             setAlignVisibility(false);
             setListVisibility(false);
+            setActiveTopMenu("bold");
           }}
-          // className="ql-bold"
           aria-label="formatting button dropdown"
-          style={{ position: "relative", padding: "0px" }}
+          style={{
+            position: "relative",
+            padding: "0px",
+            backgroundColor:
+              activeTopMenu === "bold" ? "rgb(226, 236, 245)" : "",
+          }}
         >
           <img
             src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/bold.svg"
@@ -56,6 +62,11 @@ const CustomToolBar = ({ toolbarId }) => {
             setAlignVisibility(false);
             setBoldVisibility(false);
             setListVisibility(false);
+            setActiveTopMenu("math");
+          }}
+          style={{
+            backgroundColor:
+              activeTopMenu === "math" ? "rgb(226, 236, 245)" : "",
           }}
         >
           <img
@@ -70,8 +81,12 @@ const CustomToolBar = ({ toolbarId }) => {
             setAlignVisibility(!alignVisibility);
             setBoldVisibility(false);
             setListVisibility(false);
+            setActiveTopMenu("align");
           }}
-          // className="ql-align"
+          style={{
+            backgroundColor:
+              activeTopMenu === "align" ? "rgb(226, 236, 245)" : "",
+          }}
           aria-label="alignment buttons dropdown"
           // ariaRole="label"
           value={activeDropDownItem}
@@ -94,8 +109,13 @@ const CustomToolBar = ({ toolbarId }) => {
             setListVisibility(!listVisibility);
             setAlignVisibility(false);
             setBoldVisibility(false);
+            setActiveTopMenu("lists");
           }}
           className="ql-list"
+          style={{
+            backgroundColor:
+              activeTopMenu === "lists" ? "rgb(226, 236, 245)" : "",
+          }}
           value="bullet"
           aria-label="list options select group"
         >
@@ -119,6 +139,11 @@ const CustomToolBar = ({ toolbarId }) => {
             setAlignVisibility(false);
             setBoldVisibility(false);
             setListVisibility(false);
+            setActiveTopMenu("link");
+          }}
+          style={{
+            backgroundColor:
+              activeTopMenu === "link" ? "rgb(226, 236, 245)" : "",
           }}
         />
       </div>
