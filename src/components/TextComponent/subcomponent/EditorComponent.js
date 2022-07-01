@@ -5,7 +5,6 @@ import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
 
 const EditorComponent = () => {
-
   const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
   const formats = [
     "header",
@@ -16,6 +15,7 @@ const EditorComponent = () => {
     "underline",
     "strike",
     "blockquote",
+    "align",
     "list",
     "bullet",
     "indent",
@@ -24,16 +24,14 @@ const EditorComponent = () => {
     "color",
   ];
 
-  const focusRef = useRef(null)
+  const focusRef = useRef(null);
 
   useEffect(() => {
-    focusRef.current.focus()
-  }, [])
- 
+    focusRef.current.focus();
+  }, []);
 
   return (
     <div className="text-editor">
-
       <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
@@ -53,7 +51,7 @@ const EditorComponent = () => {
         nisi ut aliquip ex ea commodo consequat."
         className="quillEditor"
       />
-      </div>
+    </div>
   );
 };
 
