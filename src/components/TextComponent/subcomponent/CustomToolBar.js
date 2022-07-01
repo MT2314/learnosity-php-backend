@@ -15,6 +15,7 @@ const CustomToolBar = ({ toolbarId }) => {
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
+  const topMenuActiveColor = "rgb(226, 236, 245)";
 
   console.log(`====>`, activeDropDownItem);
 
@@ -34,6 +35,7 @@ const CustomToolBar = ({ toolbarId }) => {
             setAlignVisibility(false);
             setListVisibility(false);
             setActiveTopMenu("bold");
+            setActiveDropDownItem("");
           }}
           aria-label="formatting button dropdown"
           style={{
@@ -63,6 +65,7 @@ const CustomToolBar = ({ toolbarId }) => {
             setBoldVisibility(false);
             setListVisibility(false);
             setActiveTopMenu("math");
+            setActiveDropDownItem("");
           }}
           style={{
             backgroundColor:
@@ -82,6 +85,7 @@ const CustomToolBar = ({ toolbarId }) => {
             setBoldVisibility(false);
             setListVisibility(false);
             setActiveTopMenu("align");
+            setActiveDropDownItem("");
           }}
           style={{
             backgroundColor:
@@ -110,6 +114,7 @@ const CustomToolBar = ({ toolbarId }) => {
             setAlignVisibility(false);
             setBoldVisibility(false);
             setActiveTopMenu("lists");
+            setActiveDropDownItem("");
           }}
           className="ql-list"
           style={{
@@ -140,6 +145,7 @@ const CustomToolBar = ({ toolbarId }) => {
             setBoldVisibility(false);
             setListVisibility(false);
             setActiveTopMenu("link");
+            setActiveDropDownItem("");
           }}
           style={{
             backgroundColor:
