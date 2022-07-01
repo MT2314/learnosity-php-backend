@@ -23,13 +23,14 @@ const AlignDropdownButton = (props) => {
         <span className="ql-formats">
           <button
             aria-label="left align"
-            className="ql-align"
             onClick={() => setActiveDropDownItem("left")}
+            className="ql-align"
             style={{
               backgroundColor:
                 activeDropDownItem === "left" ? "rgb(226, 236, 245)" : "",
             }}
           ></button>
+
           <button
             aria-label="align center"
             className="ql-align"

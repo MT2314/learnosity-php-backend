@@ -96,10 +96,22 @@ const CustomToolBar = ({ toolbarId }) => {
           value={activeDropDownItem}
           id="alignment-dropdown"
         >
-          <img
-            src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/left_align.svg"
-            alt="text alignment dropdown menu"
-          />
+          {activeDropDownItem === "left" ? (
+            <img
+              src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/left_align.svg"
+              alt="text alignment dropdown menu - left align set"
+            />
+          ) : activeDropDownItem === "center" ? (
+            <img
+              src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/center_align.svg"
+              alt="text alignment dropdown menu - right align set"
+            />
+          ) : (
+            <img
+              src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/right_align.svg"
+              alt="text alignment dropdown menu"
+            />
+          )}
         </button>
         <AlignDropdownButton
           show={alignVisibility}
