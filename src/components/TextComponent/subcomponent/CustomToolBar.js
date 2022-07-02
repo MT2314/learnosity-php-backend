@@ -6,8 +6,9 @@ import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FaGreaterThanEqual } from "react-icons/fa";
 
 //context to save state of active drop down items
 export const ToolBarDropDowns = createContext();
@@ -21,7 +22,7 @@ const CustomToolBar = ({ toolbarId }) => {
   const [activeTopMenu, setActiveTopMenu] = useState("");
 
   var icons = ReactQuill.Quill.import("ui/icons");
-  icons["ql-formula"] = faCoffee;
+  icons["ql-formula"] = FaGreaterThanEqual;
   icons["ql-italic"] = '<i class="fa-solid fa-italic"></i>';
 
   console.log(`====>`, activeDropDownItem);
@@ -66,6 +67,7 @@ const CustomToolBar = ({ toolbarId }) => {
         {/* formula btn */}
         <button
           className="ql-formula"
+          icon={FaGreaterThanEqual}
           aria-label="math equation button"
           onClick={() => {
             setAlignVisibility(false);
@@ -83,7 +85,7 @@ const CustomToolBar = ({ toolbarId }) => {
             src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/pi.svg"
             alt="mathematical pi button for inserting equation"
           /> */}
-          <FontAwesomeIcon className="ql-italic" />
+          <FontAwesomeIcon icon={FaGreaterThanEqual} className="ql-formula" />
         </button>
 
         {/* alignment dropdown */}
