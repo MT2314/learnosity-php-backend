@@ -2,11 +2,14 @@ import React, { useContext } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { ToolBarDropDowns } from "../CustomToolBar";
 
 const BoldDropdownButton = (props) => {
   const [activeDropDownItem, setActiveDropDownItem] =
     useContext(ToolBarDropDowns);
+
   return (
     <>
       <Card
@@ -37,7 +40,9 @@ const BoldDropdownButton = (props) => {
             backgroundColor:
               activeDropDownItem === "italic" ? "rgb(226, 236, 245)" : "",
           }}
-        ></button>
+        >
+          <FontAwesomeIcon icon="fa-solid fa-italic" />
+        </button>
         <button
           aria-label="underline"
           className="ql-underline"

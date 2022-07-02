@@ -22,6 +22,7 @@ const CustomToolBar = ({ toolbarId }) => {
 
   var icons = ReactQuill.Quill.import("ui/icons");
   icons["ql-formula"] = faCoffee;
+  icons["ql-italic"] = '<i class="fa-solid fa-italic"></i>';
 
   console.log(`====>`, activeDropDownItem);
 
@@ -82,7 +83,7 @@ const CustomToolBar = ({ toolbarId }) => {
             src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/pi.svg"
             alt="mathematical pi button for inserting equation"
           /> */}
-          {/* <FontAwesomeIcon icon={faCoffee} className="ql-italic" /> */}
+          <FontAwesomeIcon className="ql-italic" />
         </button>
 
         {/* alignment dropdown */}
