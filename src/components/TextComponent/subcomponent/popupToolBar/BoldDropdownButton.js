@@ -28,13 +28,7 @@ const BoldDropdownButton = (props) => {
             backgroundColor:
               activeDropDownItem === "bold" ? "rgb(226, 236, 245)" : "",
           }}
-        >
-          {/* <img
-          src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/bold.svg"
-          alt="font formatting dropdown menu"
-          
-        /> */}
-        </button>
+        ></button>
         <button
           aria-label="italic"
           className="ql-italic"

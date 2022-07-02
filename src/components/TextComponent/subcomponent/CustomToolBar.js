@@ -21,7 +21,7 @@ const CustomToolBar = ({ toolbarId }) => {
   const [activeTopMenu, setActiveTopMenu] = useState("");
 
   var icons = ReactQuill.Quill.import("ui/icons");
-  icons["italic"] = faCoffee;
+  icons["ql-formula"] = faCoffee;
 
   console.log(`====>`, activeDropDownItem);
 
@@ -35,7 +35,7 @@ const CustomToolBar = ({ toolbarId }) => {
         style={{ paddingBottom: "10px" }}
       >
         {/* bold dropdown starts */}
-        {/* <button
+        <button
           onClick={() => {
             setBoldVisibility(!boldVisibility);
             setAlignVisibility(false);
@@ -44,23 +44,18 @@ const CustomToolBar = ({ toolbarId }) => {
             setActiveDropDownItem("");
           }}
           aria-label="formatting button dropdown"
-          // className="ql-italic"
           style={{
             position: "relative",
             padding: "0px",
             backgroundColor:
               activeTopMenu === "bold" ? "rgb(226, 236, 245)" : "",
           }}
-        > */}
-        <button icon={faCoffee} className="ql-italic">
-          <FontAwesomeIcon icon={faCoffee} className="ql-italic" />
-        </button>
-        {/* <FontAwesomeIcon icon={faCoffee} className="ql-italic" /> */}
-        {/* <img
+        >
+          <img
             src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/bold.svg"
             alt="font formatting dropdown menu"
-          /> */}
-        {/* </button> */}
+          />
+        </button>
         <BoldDropdownButton
           show={boldVisibility}
           aria-label="formatting options select dropdown"
@@ -83,10 +78,11 @@ const CustomToolBar = ({ toolbarId }) => {
               activeTopMenu === "math" ? "rgb(226, 236, 245)" : "",
           }}
         >
-          <img
+          {/* <img
             src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/pi.svg"
             alt="mathematical pi button for inserting equation"
-          />
+          /> */}
+          {/* <FontAwesomeIcon icon={faCoffee} className="ql-italic" /> */}
         </button>
 
         {/* alignment dropdown */}
