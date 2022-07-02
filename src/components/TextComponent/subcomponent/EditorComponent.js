@@ -23,7 +23,8 @@ const EditorComponent = () => {
     "image",
     "color",
   ];
-
+  var icons = ReactQuill.Quill.import("ui/icons");
+  icons["italic"] = '<i class="fa fa-italic" aria-hidden="true"></i>';
   const focusRef = useRef(null);
 
   useEffect(() => {
