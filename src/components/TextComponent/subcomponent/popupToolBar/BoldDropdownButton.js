@@ -26,7 +26,13 @@ const BoldDropdownButton = (props) => {
         <button
           aria-label="bold"
           className="ql-bold"
-          onClick={() => setActiveDropDownItem("bold")}
+          onClick={() => {
+            if (activeDropDownItem === "bold") {
+              setActiveDropDownItem("");
+            } else {
+              setActiveDropDownItem("bold");
+            }
+          }}
           style={{
             backgroundColor:
               activeDropDownItem === "bold" ? "rgb(226, 236, 245)" : "",
@@ -35,7 +41,13 @@ const BoldDropdownButton = (props) => {
         <button
           aria-label="italic"
           className="ql-italic"
-          onClick={() => setActiveDropDownItem("italic")}
+          onClick={() => {
+            if (activeDropDownItem === "italic") {
+              setActiveDropDownItem("");
+            } else {
+              setActiveDropDownItem("italic");
+            }
+          }}
           style={{
             backgroundColor:
               activeDropDownItem === "italic" ? "rgb(226, 236, 245)" : "",
@@ -46,7 +58,13 @@ const BoldDropdownButton = (props) => {
         <button
           aria-label="underline"
           className="ql-underline"
-          onClick={() => setActiveDropDownItem("underline")}
+          onClick={() => {
+            if (activeDropDownItem === "underline") {
+              setActiveDropDownItem("");
+            } else {
+              setActiveDropDownItem("underline");
+            }
+          }}
           style={{
             backgroundColor:
               activeDropDownItem === "underline" ? "rgb(226, 236, 245)" : "",
@@ -55,7 +73,13 @@ const BoldDropdownButton = (props) => {
         <button
           aria-label="strike"
           className="ql-strike"
-          onClick={() => setActiveDropDownItem("strike")}
+          onClick={() => {
+            if (activeDropDownItem === "strike") {
+              setActiveDropDownItem("");
+            } else {
+              setActiveDropDownItem("strike");
+            }
+          }}
           style={{
             backgroundColor:
               activeDropDownItem === "strike" ? "rgb(226, 236, 245)" : "",
@@ -65,7 +89,13 @@ const BoldDropdownButton = (props) => {
           aria-label="super script"
           className="ql-script"
           value="super"
-          onClick={() => setActiveDropDownItem("super")}
+          onClick={() => {
+            if (activeDropDownItem === "super") {
+              setActiveDropDownItem("");
+            } else {
+              setActiveDropDownItem("super");
+            }
+          }}
           style={{
             backgroundColor:
               activeDropDownItem === "super" ? "rgb(226, 236, 245)" : "",
@@ -75,7 +105,13 @@ const BoldDropdownButton = (props) => {
           aria-label="sub script"
           className="ql-script"
           value="sub"
-          onClick={() => setActiveDropDownItem("sub")}
+          onClick={() => {
+            if (activeDropDownItem === "sub") {
+              setActiveDropDownItem("");
+            } else {
+              setActiveDropDownItem("sub");
+            }
+          }}
           style={{
             backgroundColor:
               activeDropDownItem === "sub" ? "rgb(226, 236, 245)" : "",
