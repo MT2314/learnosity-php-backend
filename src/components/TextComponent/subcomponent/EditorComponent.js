@@ -3,9 +3,15 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
+import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EditorComponent = () => {
   const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
+
+  var icons = ReactQuill.Quill.import("ui/icons");
+  icons["ql-formula"] = faCoffee;
+
   const formats = [
     "header",
     "font",

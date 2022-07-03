@@ -22,7 +22,13 @@ const CustomToolBar = ({ toolbarId }) => {
   const [activeTopMenu, setActiveTopMenu] = useState("");
 
   var icons = ReactQuill.Quill.import("ui/icons");
-  icons["ql-formula"] = FaGreaterThanEqual;
+  // const piIcon = (
+  //   <img
+  //     src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/pi.svg"
+  //     alt="mathematical pi button for inserting equation"
+  //   />
+  // );
+  icons["ql-formula"] = faCoffee;
   icons["ql-italic"] = '<i class="fa-solid fa-italic"></i>';
 
   console.log(`====>`, activeDropDownItem);
@@ -71,7 +77,7 @@ const CustomToolBar = ({ toolbarId }) => {
         {/* formula btn */}
         <button
           className="ql-formula"
-          icon={FaGreaterThanEqual}
+          icon={faCoffee}
           aria-label="math equation button"
           onClick={() => {
             setAlignVisibility(false);
@@ -89,11 +95,7 @@ const CustomToolBar = ({ toolbarId }) => {
               activeTopMenu === "math" ? "rgb(226, 236, 245)" : "",
           }}
         >
-          {/* <img
-            src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/pi.svg"
-            alt="mathematical pi button for inserting equation"
-          /> */}
-          <FontAwesomeIcon icon={FaGreaterThanEqual} className="ql-formula" />
+          <FontAwesomeIcon icon={faCoffee} className="ql-formula" />
         </button>
 
         {/* alignment dropdown */}
