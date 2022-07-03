@@ -13,6 +13,7 @@ const EditorComponent = () => {
     "bold",
     "italic",
     "underline",
+    "script",
     "strike",
     "blockquote",
     "align",
