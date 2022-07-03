@@ -25,7 +25,13 @@ const ListDropdownButton = (props) => {
           aria-label="bullet list"
           className="ql-list"
           value="bullet"
-          onClick={() => setActiveDropDownItem("bullet")}
+          onClick={() => {
+            if (activeDropDownItem === "bullet") {
+              setActiveDropDownItem("");
+            } else {
+              setActiveDropDownItem("bullet");
+            }
+          }}
           style={{
             backgroundColor:
               activeDropDownItem === "bullet" ? "rgb(226, 236, 245)" : "",
@@ -36,7 +42,13 @@ const ListDropdownButton = (props) => {
           aria-label="numbered list"
           className="ql-list"
           value="ordered"
-          onClick={() => setActiveDropDownItem("ordered")}
+          onClick={() => {
+            if (activeDropDownItem === "ordered") {
+              setActiveDropDownItem("");
+            } else {
+              setActiveDropDownItem("ordered");
+            }
+          }}
           style={{
             backgroundColor:
               activeDropDownItem === "ordered" ? "rgb(226, 236, 245)" : "",

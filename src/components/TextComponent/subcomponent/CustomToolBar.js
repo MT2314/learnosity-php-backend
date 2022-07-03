@@ -42,7 +42,11 @@ const CustomToolBar = ({ toolbarId }) => {
             setBoldVisibility(!boldVisibility);
             setAlignVisibility(false);
             setListVisibility(false);
-            setActiveTopMenu("bold");
+            if (activeTopMenu === "bold") {
+              setActiveTopMenu("");
+            } else {
+              setActiveTopMenu("bold");
+            }
             setActiveDropDownItem("");
           }}
           aria-label="formatting button dropdown"
@@ -73,7 +77,11 @@ const CustomToolBar = ({ toolbarId }) => {
             setAlignVisibility(false);
             setBoldVisibility(false);
             setListVisibility(false);
-            setActiveTopMenu("math");
+            if (activeTopMenu === "math") {
+              setActiveTopMenu("");
+            } else {
+              setActiveTopMenu("math");
+            }
             setActiveDropDownItem("");
           }}
           style={{
@@ -94,7 +102,11 @@ const CustomToolBar = ({ toolbarId }) => {
             setAlignVisibility(!alignVisibility);
             setBoldVisibility(false);
             setListVisibility(false);
-            setActiveTopMenu("align");
+            if (activeTopMenu === "align") {
+              setActiveTopMenu("");
+            } else {
+              setActiveTopMenu("align");
+            }
             setActiveDropDownItem("");
           }}
           style={{
@@ -135,7 +147,11 @@ const CustomToolBar = ({ toolbarId }) => {
             setListVisibility(!listVisibility);
             setAlignVisibility(false);
             setBoldVisibility(false);
-            setActiveTopMenu("lists");
+            if (activeTopMenu === "lists") {
+              setActiveTopMenu("");
+            } else {
+              setActiveTopMenu("lists");
+            }
             setActiveDropDownItem("");
           }}
           className="ql-list"
@@ -166,7 +182,11 @@ const CustomToolBar = ({ toolbarId }) => {
             setAlignVisibility(false);
             setBoldVisibility(false);
             setListVisibility(false);
-            setActiveTopMenu("link");
+            if (activeTopMenu === "link") {
+              setActiveTopMenu("");
+            } else {
+              setActiveTopMenu("link");
+            }
             setActiveDropDownItem("");
           }}
           style={{
