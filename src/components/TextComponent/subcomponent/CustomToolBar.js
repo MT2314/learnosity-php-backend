@@ -28,8 +28,10 @@ const CustomToolBar = ({ toolbarId }) => {
   //     alt="mathematical pi button for inserting equation"
   //   />
   // );
-  icons["ql-formula"] = faCoffee;
-  icons["ql-italic"] = '<i class="fa-solid fa-italic"></i>';
+  // below actually target the icons we want (don't use the classname, use actual name)
+  // icons["formula"] =
+  //   '<i class="fa-regular fa-pi fa-9x" style="color:#9b479f"></i>';
+  // icons["italic"] = '<i class="fa-solid fa-italic"></i>';
 
   console.log(`====>`, activeDropDownItem);
 

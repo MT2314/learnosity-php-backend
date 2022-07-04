@@ -10,7 +10,8 @@ const EditorComponent = () => {
   const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
 
   var icons = ReactQuill.Quill.import("ui/icons");
-  icons["ql-formula"] = faCoffee;
+  icons["ql-formula"] =
+    '<i class="fa-regular fa-pi fa-9x" style="color:#9b479f"></i>';
 
   const formats = [
     "header",
