@@ -3,7 +3,6 @@ import { unmountComponentAtNode } from "react-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import TextComponent from '../components/TextComponent/TextComponent'
-import DefaultText from "../components/TextComponent/subcomponent/DefaultText";
 
 let container = null;
 beforeEach(() => {
