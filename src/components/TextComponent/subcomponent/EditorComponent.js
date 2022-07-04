@@ -3,10 +3,16 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
+import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EditorComponent = () => {
-
   const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
+
+  var icons = ReactQuill.Quill.import("ui/icons");
+  icons["ql-formula"] =
+    '<i class="fa-regular fa-pi fa-9x" style="color:#9b479f"></i>';
+
   const formats = [
     "header",
     "font",
@@ -14,8 +20,10 @@ const EditorComponent = () => {
     "bold",
     "italic",
     "underline",
+    "script",
     "strike",
     "blockquote",
+    "align",
     "list",
     "bullet",
     "indent",
@@ -24,16 +32,14 @@ const EditorComponent = () => {
     "color",
   ];
 
-  const focusRef = useRef(null)
+  const focusRef = useRef(null);
 
   useEffect(() => {
-    focusRef.current.focus()
-  }, [])
- 
+    focusRef.current.focus();
+  }, []);
 
   return (
     <div className="text-editor">
-
       <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
@@ -53,7 +59,7 @@ const EditorComponent = () => {
         nisi ut aliquip ex ea commodo consequat."
         className="quillEditor"
       />
-      </div>
+    </div>
   );
 };
 
