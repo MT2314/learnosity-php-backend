@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 
+import { ToolBarDropDowns } from "../CustomToolBar";
+
 const ListDropdownButton = (props) => {
+  const [activeDropDownItem, setActiveDropDownItem] =
+    useContext(ToolBarDropDowns);
   return (
     <>
       <Card
@@ -21,12 +25,34 @@ const ListDropdownButton = (props) => {
           aria-label="bullet list"
           className="ql-list"
           value="bullet"
+          onClick={() => {
+            if (activeDropDownItem === "bullet") {
+              setActiveDropDownItem("");
+            } else {
+              setActiveDropDownItem("bullet");
+            }
+          }}
+          style={{
+            backgroundColor:
+              activeDropDownItem === "bullet" ? "rgb(226, 236, 245)" : "",
+          }}
         ></button>
 
         <button
           aria-label="numbered list"
           className="ql-list"
           value="ordered"
+          onClick={() => {
+            if (activeDropDownItem === "ordered") {
+              setActiveDropDownItem("");
+            } else {
+              setActiveDropDownItem("ordered");
+            }
+          }}
+          style={{
+            backgroundColor:
+              activeDropDownItem === "ordered" ? "rgb(226, 236, 245)" : "",
+          }}
         ></button>
       </Card>
     </>

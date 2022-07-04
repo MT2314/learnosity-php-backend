@@ -5,7 +5,6 @@ import {
   Canvas,
 } from "../Utility/mockWrapper";
 import Header from "../components/Header";
-import FormattedText from "../components/FormattedText";
 
 export const Home = () => {
   return (
@@ -15,7 +14,7 @@ export const Home = () => {
         className="container"
         style={{ display: "flex", minWidth: "1100px" }}
       >
-        <Canvas unwrappedComponents={[<FormattedText />]} />
+        <Canvas unwrappedComponents={[]} />
 
         <div
           className="editPanel"
