@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EditorComponent = ({ body, setProp }) => {
 
-  const toolbarId = `unique-id`;
+  const toolbarId = `unique-id-${Math.floor(Math.random() * 1000000)}`;
 
   var icons = Quill.import("ui/icons");
   icons["ql-formula"] =
@@ -40,24 +40,17 @@ const EditorComponent = ({ body, setProp }) => {
       focusRef.current.focus();
     }, []);
 
-  const ops = [{insert:''}]
-  const [ state, setState ] = useState(new Delta(ops));
-
   const handleDataChange = (content, delta, source, editor) => {
-    let userInput = editor.getContents()
-    console.log("eidtor:", userInput)
-    setProp({body: 'testing 123'})
+    let editorContent = editor.getContents()
+    setProp({ body: editorContent })
   };
-
-
+  
   return (
     <div className="text-editor" data-testid='text-editor-component'>
 
       <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
-      <button onClick={() => setProp({body: 'please work'})}>click me</button>
-
       <ReactQuill
         ref={focusRef}
         modules={{
@@ -65,7 +58,6 @@ const EditorComponent = ({ body, setProp }) => {
             container: `#${toolbarId}`,
           },
         }}
-        value={state}
         formats={formats}
         theme={"snow"}
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
