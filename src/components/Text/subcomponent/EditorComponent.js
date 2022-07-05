@@ -50,7 +50,8 @@ const EditorComponent = ({ body, setProp }) => {
 
 
   return (
-    <div className="text-editor">
+    <div className="text-editor" data-testid='text-editor-component'>
+
       <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
