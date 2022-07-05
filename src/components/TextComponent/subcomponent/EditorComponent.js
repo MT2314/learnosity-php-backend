@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
+import Delta from 'quill-delta';
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
@@ -7,9 +8,10 @@ import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EditorComponent = ({ body, setProp }) => {
+  
   const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
 
-  var icons = ReactQuill.Quill.import("ui/icons");
+  var icons = Quill.import("ui/icons");
   icons["ql-formula"] =
     '<i class="fa-regular fa-pi fa-9x" style="color:#9b479f"></i>';
 
@@ -33,23 +35,25 @@ const EditorComponent = ({ body, setProp }) => {
   ];
 
   const focusRef = useRef(null);
+  
+    useEffect(() => {
+      focusRef.current.focus();
+    }, []);
 
-  const [state, setState] = useState(null);
+  const ops = [{insert:'this is a test'}]
+  const [state, setState] = useState(new Delta(ops));
 
-  const handleChange = (content, delta, source, editor) => {
-    console.log("Content:", content);
-    console.log("Delta:", delta);
-    console.log("Source:", source);
-    console.log("Editor.getContents():", editor.getContents());
-    const userInput = editor.getContents();
-    console.log(userInput.ops[0].insert);
-    setState(userInput.ops[0].insert);
-    setProp({ body: state });
-  };
+  // const handleChange = (content, delta, source, editor) => {
+  //   //console.log("Content:", content);
+  //   //console.log("Delta:", delta);
+  //   //console.log("Source:", source);
+  //   console.log("Editor.getContents():", editor.getContents());
+  //   const userInput = editor.getContents();
+  //   //console.log(userInput.ops[0].insert);
+  //   setState(userInput);
+  //   setProp({ body: state });
+  // };
 
-  useEffect(() => {
-    focusRef.current.focus();
-  }, []);
 
   return (
     <div className="text-editor">
@@ -64,8 +68,11 @@ const EditorComponent = ({ body, setProp }) => {
             container: `#${toolbarId}`,
           },
         }}
-        defaultValue={state}
-        onChange={handleChange}
+        value={state}
+        onChange={( editor ) => {
+            setState(editor.getContents());
+            console.log(`state:`, state);
+        }}
         formats={formats}
         theme={"snow"}
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
