@@ -40,12 +40,13 @@ const EditorComponent = ({ body, setProp }) => {
       focusRef.current.focus();
     }, []);
 
-  const ops = [{insert:'this is a test'}]
-  const [state, setState] = useState(new Delta(ops));
+  const ops = [{insert:''}]
+  const [ state, setState ] = useState(new Delta(ops));
 
   const handleDataChange = (content, delta, source, editor) => {
     let userInput = editor.getContents()
-    console.log("eidtor:",userInput)
+    console.log("eidtor:", userInput)
+    setProp({body: 'testing 123'})
   };
 
 
@@ -65,10 +66,6 @@ const EditorComponent = ({ body, setProp }) => {
           },
         }}
         value={state}
-        onChange={( editor ) => {
-            setState(editor.getContents());
-            console.log(`state:`, state);
-        }}
         formats={formats}
         theme={"snow"}
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
