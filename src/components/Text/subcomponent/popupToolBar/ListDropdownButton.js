@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
+import { Tooltip } from "@material-ui/core/";
 
 import { ToolBarDropDowns } from "../CustomToolBar";
 
@@ -21,39 +22,42 @@ const ListDropdownButton = (props) => {
         }}
         className="dropdown-content"
       >
-        <button
-          aria-label="bullet list"
-          className="ql-list"
-          value="bullet"
-          onClick={() => {
-            if (activeDropDownItem === "bullet") {
-              setActiveDropDownItem("");
-            } else {
-              setActiveDropDownItem("bullet");
-            }
-          }}
-          style={{
-            backgroundColor:
-              activeDropDownItem === "bullet" ? "rgb(226, 236, 245)" : "",
-          }}
-        ></button>
-
-        <button
-          aria-label="numbered list"
-          className="ql-list"
-          value="ordered"
-          onClick={() => {
-            if (activeDropDownItem === "ordered") {
-              setActiveDropDownItem("");
-            } else {
-              setActiveDropDownItem("ordered");
-            }
-          }}
-          style={{
-            backgroundColor:
-              activeDropDownItem === "ordered" ? "rgb(226, 236, 245)" : "",
-          }}
-        ></button>
+        <Tooltip title="bullets" placement="top">
+          <button
+            aria-label="bullet list"
+            className="ql-list"
+            value="bullet"
+            onClick={() => {
+              if (activeDropDownItem === "bullet") {
+                setActiveDropDownItem("");
+              } else {
+                setActiveDropDownItem("bullet");
+              }
+            }}
+            style={{
+              backgroundColor:
+                activeDropDownItem === "bullet" ? "rgb(226, 236, 245)" : "",
+            }}
+          ></button>
+        </Tooltip>
+        <Tooltip title="numbering" placement="top">
+          <button
+            aria-label="numbered list"
+            className="ql-list"
+            value="ordered"
+            onClick={() => {
+              if (activeDropDownItem === "ordered") {
+                setActiveDropDownItem("");
+              } else {
+                setActiveDropDownItem("ordered");
+              }
+            }}
+            style={{
+              backgroundColor:
+                activeDropDownItem === "ordered" ? "rgb(226, 236, 245)" : "",
+            }}
+          ></button>
+        </Tooltip>
       </Card>
     </>
   );
