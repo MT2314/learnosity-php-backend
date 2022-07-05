@@ -24,7 +24,7 @@ const BoldDropdownButton = (props) => {
         }}
         className="dropdown-content"
       >
-        <Tooltip title="bold" placement="top">
+        <Tooltip arrow title="bold" placement="top">
           <button
             aria-label="bold"
             className="ql-bold"
@@ -41,7 +41,7 @@ const BoldDropdownButton = (props) => {
             }}
           ></button>
         </Tooltip>
-        <Tooltip title="italic" placement="top">
+        <Tooltip arrow title="italic" placement="top">
           <button
             aria-label="italic"
             className="ql-italic"
@@ -60,7 +60,7 @@ const BoldDropdownButton = (props) => {
             <FontAwesomeIcon icon="fa-solid fa-italic" />
           </button>
         </Tooltip>
-        <Tooltip title="underline" placement="top">
+        <Tooltip arrow title="underline" placement="top">
           <button
             aria-label="underline"
             className="ql-underline"
@@ -77,7 +77,7 @@ const BoldDropdownButton = (props) => {
             }}
           ></button>
         </Tooltip>
-        <Tooltip title="strikethrough" placement="top">
+        <Tooltip arrow title="strikethrough" placement="top">
           <button
             aria-label="strike"
             className="ql-strike"
@@ -94,7 +94,7 @@ const BoldDropdownButton = (props) => {
             }}
           ></button>
         </Tooltip>
-        <Tooltip title="subscript" placement="top">
+        <Tooltip arrow title="subscript" placement="top">
           <button
             aria-label="sub script"
             className="ql-script"
@@ -112,7 +112,7 @@ const BoldDropdownButton = (props) => {
             }}
           ></button>
         </Tooltip>
-        <Tooltip title="superscript" placement="top">
+        <Tooltip arrow title="superscript" placement="top">
           <button
             aria-label="super script"
             className="ql-script"
