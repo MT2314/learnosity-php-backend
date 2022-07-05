@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
@@ -6,7 +6,7 @@ import "../styles/EditorComponent.scss";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const EditorComponent = () => {
+const EditorComponent = ({ body, setProp }) => {
   const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
 
   var icons = ReactQuill.Quill.import("ui/icons");
@@ -34,6 +34,19 @@ const EditorComponent = () => {
 
   const focusRef = useRef(null);
 
+  const [state, setState] = useState(null);
+
+  const handleChange = (content, delta, source, editor) => {
+    console.log("Content:", content);
+    console.log("Delta:", delta);
+    console.log("Source:", source);
+    console.log("Editor.getContents():", editor.getContents());
+    const userInput = editor.getContents();
+    console.log(userInput.ops[0].insert);
+    setState(userInput.ops[0].insert);
+    setProp({ body: state });
+  };
+
   useEffect(() => {
     focusRef.current.focus();
   }, []);
@@ -51,6 +64,8 @@ const EditorComponent = () => {
             container: `#${toolbarId}`,
           },
         }}
+        defaultValue={state}
+        onChange={handleChange}
         formats={formats}
         theme={"snow"}
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

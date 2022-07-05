@@ -5,24 +5,29 @@ import "./styles/TextComponent.scss";
 
 export const defaultProps = { body: null };
 
-const TextComponent = () => {
+const TextComponent = ({ body = null, setProp = () => {} }) => {
   const [showEditor, setShowEditor] = useState(false);
 
   const handleOnClick = () => {
     setShowEditor(true);
   };
 
-
-  return(
+  return (
     <>
-    {!showEditor ?
-      <div onClick={() => {handleOnClick()}} className='mainContainer'><DefaultText /></div>  
-    : 
-      <EditorComponent/>
-      }
+      {!showEditor ? (
+        <div
+          onClick={() => {
+            handleOnClick();
+          }}
+          className="mainContainer"
+        >
+          <DefaultText />
+        </div>
+      ) : (
+        <EditorComponent body={body} setProp={setProp} />
+      )}
     </>
-  )
-
+  );
 };
 
 export default TextComponent;
