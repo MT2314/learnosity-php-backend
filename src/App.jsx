@@ -10,7 +10,7 @@ import CalloutPage from "./pages/CalloutPage";
 import QuoteBoxPage from "./pages/QuoteBoxPage";
 import ImagePage from "./pages/ImagePage";
 import exposedVersion from "../exposedStage";
-import TextComponent from "../src/components/TextComponent/TextComponent";
+import Text from "./components/Text/Text";
 
 import "./index.css";
 
@@ -29,7 +29,7 @@ const App = () => {
             <Route path="/CalloutPage" element={<CalloutPage />} />
             <Route path="/QuoteBoxPage" element={<QuoteBoxPage />} />
             <Route path="/ImagePage" element={<ImagePage />} />
-            <Route path="/text-component" element={<TextComponent />} />
+            <Route path="/text-component" element={<Text />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </BrowserRouter>
