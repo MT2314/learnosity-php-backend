@@ -16,7 +16,7 @@ const Text = () => {
   return(
     <>
     {!showEditor ?
-      <div onClick={() => {handleOnClick()}} className='mainContainer'><DefaultText /></div>  
+      <div onClick={() => {handleOnClick()}} className='mainContainer' data-testid="text-component"><DefaultText /></div>  
     : 
       <EditorComponent/>
       }
