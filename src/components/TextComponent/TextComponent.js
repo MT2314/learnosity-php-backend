@@ -3,9 +3,10 @@ import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
 import "./styles/TextComponent.scss";
 
-export const defaultProps = { body: null };
+export const defaultProps = { body: 'testing' };
 
-const TextComponent = ({ body = null, setProp = () => {} }) => {
+const TextComponent = ({body, setProp = () => {} }) => {
+  
   const [showEditor, setShowEditor] = useState(false);
 
   const handleOnClick = () => {
@@ -21,10 +22,11 @@ const TextComponent = ({ body = null, setProp = () => {} }) => {
           }}
           className="mainContainer"
         >
+          
           <DefaultText />
         </div>
       ) : (
-        <EditorComponent body={body} setProp={setProp} />
+        <EditorComponent body={body} setProp={setProp}/>
       )}
     </>
   );

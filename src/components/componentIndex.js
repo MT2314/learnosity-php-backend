@@ -11,9 +11,8 @@ import Video, { defaultProps as videoDefaultProps } from "./Video/Video";
 import VideoConfig from "./Video/VideoConfig";
 import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
-import TextComponent, {
-  defaultProps as quillDefaultProps,
-} from "./TextComponent/TextComponent";
+import TextComponent from "./TextComponent/TextComponent";
+import { defaultProps as quillDefaultProps } from "./TextComponent/TextComponent";
 
 const componentIndex = {
   Callout: {

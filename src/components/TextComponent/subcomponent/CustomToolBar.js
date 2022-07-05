@@ -33,8 +33,6 @@ const CustomToolBar = ({ toolbarId }) => {
   //   '<i class="fa-regular fa-pi fa-9x" style="color:#9b479f"></i>';
   // icons["italic"] = '<i class="fa-solid fa-italic"></i>';
 
-  console.log(`====>`, activeDropDownItem);
-
   return (
     <ToolBarDropDowns.Provider
       value={[activeDropDownItem, setActiveDropDownItem]}

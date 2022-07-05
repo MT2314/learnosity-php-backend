@@ -8,8 +8,8 @@ import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EditorComponent = ({ body, setProp }) => {
-  
-  const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
+
+  const toolbarId = `unique-id`;
 
   var icons = Quill.import("ui/icons");
   icons["ql-formula"] =
@@ -43,16 +43,10 @@ const EditorComponent = ({ body, setProp }) => {
   const ops = [{insert:'this is a test'}]
   const [state, setState] = useState(new Delta(ops));
 
-  // const handleChange = (content, delta, source, editor) => {
-  //   //console.log("Content:", content);
-  //   //console.log("Delta:", delta);
-  //   //console.log("Source:", source);
-  //   console.log("Editor.getContents():", editor.getContents());
-  //   const userInput = editor.getContents();
-  //   //console.log(userInput.ops[0].insert);
-  //   setState(userInput);
-  //   setProp({ body: state });
-  // };
+  const handleDataChange = (content, delta, source, editor) => {
+    let userInput = editor.getContents()
+    console.log("eidtor:",userInput)
+  };
 
 
   return (
@@ -60,6 +54,7 @@ const EditorComponent = ({ body, setProp }) => {
       <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
+      <button onClick={() => setProp({body: 'please work'})}>click me</button>
 
       <ReactQuill
         ref={focusRef}
@@ -80,6 +75,7 @@ const EditorComponent = ({ body, setProp }) => {
         enim ad minim veniam, quis nostrud exercitation ullamco laboris
         nisi ut aliquip ex ea commodo consequat."
         className="quillEditor"
+        onChange={handleDataChange}
       />
     </div>
   );
