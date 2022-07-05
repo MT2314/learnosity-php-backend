@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
-import "./styles/TextComponent.scss";
+import "./styles/Text.scss";
 
 export const defaultProps = { body: null };
 
-const TextComponent = () => {
+const Text = () => {
   const [showEditor, setShowEditor] = useState(false);
 
   const handleOnClick = () => {
@@ -25,4 +25,4 @@ const TextComponent = () => {
 
 };
 
-export default TextComponent;
+export default Text;
