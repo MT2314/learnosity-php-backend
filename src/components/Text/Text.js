@@ -5,7 +5,8 @@ import "./styles/Text.scss";
 
 export const defaultProps = { body: null };
 
-const Text = () => {
+const Text = ({ body = null, setProp = () => {} }) => {
+  
   const [showEditor, setShowEditor] = useState(false);
 
   const handleOnClick = () => {
@@ -18,7 +19,7 @@ const Text = () => {
     {!showEditor ?
       <div onClick={() => {handleOnClick()}} className='mainContainer' data-testid="text-component"><DefaultText /></div>  
     : 
-      <EditorComponent/>
+      <EditorComponent body={body} setProp={setProp}/>
       }
     </>
   )
