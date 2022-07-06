@@ -6,9 +6,6 @@ import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FaGreaterThanEqual } from "react-icons/fa";
 
 //context to save state of active drop down items
 export const ToolBarDropDowns = createContext();
@@ -19,7 +16,6 @@ const CustomToolBar = ({ toolbarId }) => {
   const [alignVisibility, setAlignVisibility] = useState(false);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
-  const [activeAlignIcon, setActiveAlignIcon] = useState("left");
   const [activeTopMenu, setActiveTopMenu] = useState("");
 
   var icons = ReactQuill.Quill.import("ui/icons");
@@ -137,14 +133,14 @@ const CustomToolBar = ({ toolbarId }) => {
           }}
           className={
             activeTopMenu === "align"
-              ? "ql-selected ql-active"
+              ? "ql-align ql-selected ql-active"
               : "toolbar-button"
           }
           aria-label="alignment buttons dropdown"
-          value={activeAlignIcon}
+          value={activeDropDownItem}
           id="alignment-dropdown"
         >
-          {activeAlignIcon === "left" ? (
+          {activeDropDownItem === "left" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -157,7 +153,7 @@ const CustomToolBar = ({ toolbarId }) => {
                 fill={activeDropDownItem === "left" ? "#1565c0" : "#232323"}
               />
             </svg>
-          ) : activeAlignIcon === "center" ? (
+          ) : activeDropDownItem === "center" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -170,7 +166,7 @@ const CustomToolBar = ({ toolbarId }) => {
                 fill={activeDropDownItem === "center" ? "#1565c0" : "#232323"}
               />
             </svg>
-          ) : activeAlignIcon === "right" ? (
+          ) : activeDropDownItem === "right" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -200,8 +196,6 @@ const CustomToolBar = ({ toolbarId }) => {
         </button>
         <AlignDropdownButton
           show={alignVisibility}
-          activeAlignIcon={activeAlignIcon}
-          setActiveAlignIcon={setActiveAlignIcon}
           className="dropdown-content"
           aria-label="alignment buttons options"
         />
