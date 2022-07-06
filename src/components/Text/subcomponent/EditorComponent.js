@@ -50,7 +50,9 @@ const EditorComponent = ({ body, setProp }) => {
       <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
+
       <ReactQuill
+        data-testid="test"
         ref={focusRef}
         modules={{
           toolbar: {

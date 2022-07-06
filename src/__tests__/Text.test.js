@@ -3,7 +3,7 @@ import { unmountComponentAtNode } from "react-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Text from '../components/Text/Text'
-import CustomToolBar from "../components/Text/subcomponent/CustomToolBar";
+import EditorComponent from "../components/Text/subcomponent/EditorComponent";
 
 let container = null;
 beforeEach(() => {
@@ -30,7 +30,7 @@ describe("<Text/>", () => {
     expect(screen.getByText(/Lorem ipsum/i)).toBeInTheDocument()
   })
 
-  test('On click text editor renders', () => {
+  test('On click text editor and custom tool bar renders', () => {
     render(<Text/>)
 
     const editorContainer = screen.getByTestId('text-component')
@@ -40,21 +40,7 @@ describe("<Text/>", () => {
     fireEvent.click(editorContainer)
     
     expect(screen.getByTestId('text-editor-component')).toBeInTheDocument()
-    
-  })
-
-  test('On click custom toolbar renders', () => {
-    render(<Text/>)
-
-    const editorContainer = screen.getByTestId('text-component')
-
-    expect(editorContainer).toBeInTheDocument()
-
-    fireEvent.click(editorContainer)
-
-    const toolBar = screen.getByRole("button", { name: /formatting button dropdown/i})
-    expect(toolBar).toBeInTheDocument()
-
+    expect(screen.getByRole("button", { name: /formatting button dropdown/i})).toBeInTheDocument()
   })
 
   test('On click bold-drop-down renders', () => {
@@ -81,13 +67,49 @@ describe("<Text/>", () => {
 
   test('On click align-drop-down renders', () => {
     render(<Text/>)
+
+    const editorContainer = screen.getByTestId('text-component')
+    
+    expect(editorContainer).toBeInTheDocument()
+    
+    fireEvent.click(editorContainer)
+    
+    const alignBtn = screen.getByRole("button", { name: /alignment buttons dropdown/i})
+    expect(alignBtn).toBeInTheDocument()
+
+    fireEvent.click(alignBtn)
+
+    expect(screen.getByRole("button", { name:/left align/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /align center/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /right align/i })).toBeInTheDocument()
   })
 
   test('On click list-drop-down renders', () => {
     render(<Text/>)
+
+    const editorContainer = screen.getByTestId('text-component')
+    
+    expect(editorContainer).toBeInTheDocument()
+    
+    fireEvent.click(editorContainer)
+    
+    const listBtn = screen.getByRole("button", { name: /list options select group/i})
+    expect(listBtn).toBeInTheDocument()
+
+    fireEvent.click(listBtn)
+
+    expect(screen.getByRole("button", { name:/numbered list/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /bullet list/i })).toBeInTheDocument()
+
   })
 
   test('SetProp function is called when user starts typing', () => {
-    render(<Text/>)
+    const mockFunction = jest.fn()
+    render(<EditorComponent setProp={mockFunction}/>)
+
+    const editor = screen.getByTestId("test")
+
+    fireEvent.change(editor)
+    expect(mockFunction).toHaveBeenCalled()
   })
 })
