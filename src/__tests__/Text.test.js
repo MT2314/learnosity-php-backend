@@ -57,6 +57,28 @@ describe("<Text/>", () => {
 
   })
 
+  test('On click bold-drop-down renders', () => {
+    render(<Text/>)
+    const editorContainer = screen.getByTestId('text-component')
+    
+    expect(editorContainer).toBeInTheDocument()
+    
+    fireEvent.click(editorContainer)
+    
+    const boldBtn = screen.getByRole("button", { name: /formatting button dropdown/i})
+    expect(boldBtn).toBeInTheDocument()
+
+    fireEvent.click(boldBtn)
+
+    expect(screen.getByRole("button", { name:/bold/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /italic/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /underline/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /strike/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /sub script/i})).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /super/i})).toBeInTheDocument()
+
+  })
+
   test('On click align-drop-down renders', () => {
     render(<Text/>)
   })
@@ -65,7 +87,7 @@ describe("<Text/>", () => {
     render(<Text/>)
   })
 
-  test('SetProp function is called', () => {
+  test('SetProp function is called when user starts typing', () => {
     render(<Text/>)
   })
 })
