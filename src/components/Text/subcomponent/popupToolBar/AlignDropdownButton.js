@@ -3,7 +3,7 @@ import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 import { ToolBarDropDowns } from "../CustomToolBar";
 
-const AlignDropdownButton = (props) => {
+const AlignDropdownButton = ({ show, activeAlignIcon, setActiveAlignIcon }) => {
   const [activeDropDownItem, setActiveDropDownItem] =
     useContext(ToolBarDropDowns);
 
@@ -11,7 +11,7 @@ const AlignDropdownButton = (props) => {
     <>
       <Card
         style={{
-          display: props.show ? "block" : "none",
+          display: show ? "block" : "none",
           position: "absolute",
           left: "66px",
           zIndex: "25",
@@ -31,6 +31,7 @@ const AlignDropdownButton = (props) => {
               }
             }}
             className="ql-align"
+            value=""
             style={{
               backgroundColor:
                 activeDropDownItem === "left" ? "rgb(226, 236, 245)" : "",

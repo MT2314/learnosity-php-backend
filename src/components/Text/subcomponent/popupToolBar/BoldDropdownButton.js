@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import "react-quill/dist/quill.snow.css";
+import "../../styles/BoldDropdownButton.scss";
 import { Card } from "@mui/material";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,15 +14,9 @@ const BoldDropdownButton = (props) => {
   return (
     <>
       <Card
-        style={{
-          display: props.show ? "block" : "none",
-          position: "absolute",
-          zIndex: "25",
-          bottom: "-32px",
-          padding: "3px",
-          width: "180px",
-        }}
-        className="dropdown-content"
+        className={
+          props.show ? "dropdown-content show" : "dropdown-content hide"
+        }
       >
         <button
           aria-label="bold"

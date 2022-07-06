@@ -14,22 +14,23 @@ const EditorComponent = () => {
     '<i class="fa-regular fa-pi fa-9x" style="color:#9b479f"></i>';
 
   const formats = [
-    "header",
+    // "header",
     "font",
-    "size",
+    // "size",
     "bold",
     "italic",
     "underline",
     "script",
     "strike",
-    "blockquote",
+    "formula",
+    // "blockquote",
     "align",
     "list",
     "bullet",
-    "indent",
+    // "indent",
     "link",
-    "image",
-    "color",
+    // "image",
+    // "color",
   ];
 
   const focusRef = useRef(null);
@@ -39,8 +40,7 @@ const EditorComponent = () => {
   }, []);
 
   return (
-    <div className="text-editor" data-testid='text-editor-component'>
-
+    <div className="text-editor" data-testid="text-editor-component">
       <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
@@ -53,7 +53,7 @@ const EditorComponent = () => {
           },
         }}
         formats={formats}
-        theme={"snow"}
+        theme="snow"
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
         enim ad minim veniam, quis nostrud exercitation ullamco laboris
