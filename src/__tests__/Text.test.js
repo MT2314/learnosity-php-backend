@@ -30,7 +30,7 @@ describe("<Text/>", () => {
     expect(screen.getByText(/Lorem ipsum/i)).toBeInTheDocument()
   })
 
-  test('On click text editor and custom tool bar renders', () => {
+  test('On click text editor and custom tool bar render', () => {
     render(<Text/>)
 
     const editorContainer = screen.getByTestId('text-component')
