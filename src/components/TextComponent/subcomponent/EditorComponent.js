@@ -3,6 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
+import "quill-paste-smart";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -14,23 +15,48 @@ const EditorComponent = () => {
     '<i class="fa-regular fa-pi fa-9x" style="color:#9b479f"></i>';
 
   const formats = [
-    "header",
-    "font",
-    "size",
     "bold",
     "italic",
     "underline",
     "script",
     "strike",
-    "blockquote",
     "align",
     "list",
     "bullet",
-    "indent",
     "link",
-    "image",
-    "color",
   ];
+
+  const modules = {
+    toolbar: {
+      container: `#${toolbarId}`,
+    },
+    clipboard: {
+      allowed: {
+        tags: [
+          "a",
+          "strong",
+          "u",
+          "s",
+          "i",
+          "p",
+          "br",
+          "ul",
+          "ol",
+          "li",
+          "span",
+        ],
+        attributes: ["href", "rel", "target", "class"],
+      },
+      keepSelection: true,
+      substituteBlockElements: true,
+      magicPasteLinks: true,
+      hooks: {
+        uponSanitizeElement(node, data, config) {
+          console.log(node);
+        },
+      },
+    },
+  };
 
   const focusRef = useRef(null);
 
@@ -46,11 +72,7 @@ const EditorComponent = () => {
 
       <ReactQuill
         ref={focusRef}
-        modules={{
-          toolbar: {
-            container: `#${toolbarId}`,
-          },
-        }}
+        modules={modules}
         formats={formats}
         theme={"snow"}
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
