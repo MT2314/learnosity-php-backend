@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactQuill, { Quill } from "react-quill";
-import Delta from 'quill-delta';
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
