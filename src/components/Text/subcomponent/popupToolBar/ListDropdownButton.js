@@ -22,7 +22,7 @@ const ListDropdownButton = (props) => {
         }}
         className="dropdown-content"
       >
-        <Tooltip title="bullets" placement="top">
+        <Tooltip arrow title="bullets" placement="top">
           <button
             aria-label="bullet list"
             className="ql-list"
@@ -40,7 +40,7 @@ const ListDropdownButton = (props) => {
             }}
           ></button>
         </Tooltip>
-        <Tooltip title="numbering" placement="top">
+        <Tooltip arrow title="numbering" placement="top">
           <button
             aria-label="numbered list"
             className="ql-list"

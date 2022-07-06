@@ -46,7 +46,7 @@ const CustomToolBar = ({ toolbarId }) => {
         style={{ paddingBottom: "10px" }}
       >
         {/* bold dropdown starts */}
-        <Tooltip title="font styles" placement="top">
+        <Tooltip arrow title="font styles" placement="top">
           <button
             onClick={() => {
               setBoldVisibility(!boldVisibility);
@@ -80,7 +80,7 @@ const CustomToolBar = ({ toolbarId }) => {
         ></BoldDropdownButton>
 
         {/* formula btn */}
-        <Tooltip title="equation" placement="top">
+        <Tooltip arrow title="equation" placement="top">
           <button
             className="ql-formula"
             icon={faCoffee}
@@ -106,7 +106,7 @@ const CustomToolBar = ({ toolbarId }) => {
         </Tooltip>
 
         {/* alignment dropdown */}
-        <Tooltip title="alignment" placement="top">
+        <Tooltip arrow title="alignment" placement="top">
           <button
             onClick={() => {
               setAlignVisibility(!alignVisibility);
@@ -153,7 +153,7 @@ const CustomToolBar = ({ toolbarId }) => {
         ></AlignDropdownButton>
 
         {/* bullets drowdown starts */}
-        <Tooltip title="add list" placement="top">
+        <Tooltip arrow title="add list" placement="top">
           <button
             onClick={() => {
               setListVisibility(!listVisibility);
@@ -188,7 +188,7 @@ const CustomToolBar = ({ toolbarId }) => {
 
         {/* link btn and divider */}
         <Divider orientation="vertical" />
-        <Tooltip title="insert link" placement="top">
+        <Tooltip arrow title="insert link" placement="top">
           <button
             aria-label="add link button"
             className="ql-link"

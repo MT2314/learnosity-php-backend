@@ -22,7 +22,7 @@ const AlignDropdownButton = (props) => {
         className="dropdown-content"
       >
         <span className="ql-formats">
-          <Tooltip title="align left" placement="top">
+          <Tooltip arrow title="align left" placement="top">
             <button
               aria-label="left align"
               onClick={() => {
@@ -39,7 +39,7 @@ const AlignDropdownButton = (props) => {
               }}
             ></button>
           </Tooltip>
-          <Tooltip title="centre text" placement="top">
+          <Tooltip arrow title="centre text" placement="top">
             <button
               aria-label="align center"
               className="ql-align"
@@ -57,7 +57,7 @@ const AlignDropdownButton = (props) => {
               }}
             ></button>
           </Tooltip>
-          <Tooltip title="align right" placement="top">
+          <Tooltip arrow title="align right" placement="top">
             <button
               aria-label="right align"
               className="ql-align"
