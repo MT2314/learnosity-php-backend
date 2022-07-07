@@ -42,7 +42,7 @@ const BoldDropdownButton = ({ show }) => {
           aria-label="bold"
           className={
             activeInlineOptions.bold === true
-              ? "ql-bold inline-active"
+              ? "ql-bold ql-selected ql-active"
               : "ql-bold"
           }
           onClick={() => {
@@ -72,7 +72,7 @@ const BoldDropdownButton = ({ show }) => {
           aria-label="italic"
           className={
             activeInlineOptions.italic === true
-              ? "ql-italic inline-active"
+              ? "ql-italic ql-selected ql-active"
               : "ql-italic"
           }
           onClick={() => {
@@ -102,7 +102,7 @@ const BoldDropdownButton = ({ show }) => {
           aria-label="underline"
           className={
             activeInlineOptions.underline === true
-              ? "ql-underline inline-active"
+              ? "ql-underline ql-selected ql-active"
               : "ql-underline"
           }
           onClick={() => {
@@ -125,7 +125,7 @@ const BoldDropdownButton = ({ show }) => {
           aria-label="strike"
           className={
             activeInlineOptions.strike === true
-              ? "ql-strike inline-active"
+              ? "ql-strike ql-selected ql-active"
               : "ql-strike"
           }
           onClick={() => {
@@ -139,7 +139,7 @@ const BoldDropdownButton = ({ show }) => {
               setActiveDropdownItem("strike");
               setActiveInlineOptions({
                 ...activeInlineOptions,
-                strike: false,
+                strike: true,
               });
             }
           }}
@@ -148,7 +148,7 @@ const BoldDropdownButton = ({ show }) => {
           aria-label="sub script"
           className={
             activeInlineOptions.sub === true
-              ? "ql-script inline-active"
+              ? "ql-script ql-selected ql-active"
               : "ql-script"
           }
           value="sub"
@@ -173,7 +173,7 @@ const BoldDropdownButton = ({ show }) => {
           aria-label="super script"
           className={
             activeInlineOptions.super === true
-              ? "ql-script inline-active"
+              ? "ql-script ql-selected ql-active"
               : "ql-script"
           }
           value="super"

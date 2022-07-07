@@ -19,7 +19,7 @@ const CustomToolBar = ({ toolbarId }) => {
   const [activeAlignIcon, setActiveAlignIcon] = useState("left");
   const [activeTopMenu, setActiveTopMenu] = useState("");
 
-  var icons = ReactQuill.Quill.import("ui/icons");
+  const icons = ReactQuill.Quill.import("ui/icons");
   icons["formula"] = (
     <img
       src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/pi.svg"
