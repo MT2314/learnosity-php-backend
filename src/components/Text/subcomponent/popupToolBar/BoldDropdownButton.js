@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import "react-quill/dist/quill.snow.css";
 import "../../styles/BoldDropdownButton.scss";
 import { Card } from "@mui/material";
@@ -7,45 +7,52 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { ToolBarDropDowns } from "../CustomToolBar";
 
-const BoldDropdownButton = (props) => {
-  const [activeDropDownItem, setActiveDropDownItem] =
+const BoldDropdownButton = ({ show }) => {
+  const [activeDropdownItem, setactiveDropdownItem] =
     useContext(ToolBarDropDowns);
+
+  const [activeInlineOptions, setActiveInlineOptions] = useState({
+    bold: false,
+    italic: false,
+    underline: false,
+    strikethrough: false,
+    subscript: false,
+    superscript: false,
+  });
 
   return (
     <>
-      <Card
-        className={
-          props.show ? "dropdown-content show" : "dropdown-content hide"
-        }
-      >
+      <Card className={show ? "bold-dropdown show" : "bold-dropdown hide"}>
         <button
           aria-label="bold"
-          className="ql-bold"
+          className={
+            activeDropdownItem === "bold" ? "ql-bold inline-active" : "ql-bold"
+          }
           onClick={() => {
-            if (activeDropDownItem === "bold") {
-              setActiveDropDownItem("");
+            if (activeDropdownItem === "bold") {
+              setactiveDropdownItem("");
             } else {
-              setActiveDropDownItem("bold");
+              setactiveDropdownItem("bold");
             }
           }}
           style={{
             backgroundColor:
-              activeDropDownItem === "bold" ? "rgb(226, 236, 245)" : "",
+              activeDropdownItem === "bold" ? "rgb(226, 236, 245)" : "",
           }}
         ></button>
         <button
           aria-label="italic"
           className="ql-italic"
           onClick={() => {
-            if (activeDropDownItem === "italic") {
-              setActiveDropDownItem("");
+            if (activeDropdownItem === "italic") {
+              setactiveDropdownItem("");
             } else {
-              setActiveDropDownItem("italic");
+              setactiveDropdownItem("italic");
             }
           }}
           style={{
             backgroundColor:
-              activeDropDownItem === "italic" ? "rgb(226, 236, 245)" : "",
+              activeDropdownItem === "italic" ? "rgb(226, 236, 245)" : "",
           }}
         >
           <FontAwesomeIcon icon="fa-solid fa-italic" />
@@ -54,30 +61,30 @@ const BoldDropdownButton = (props) => {
           aria-label="underline"
           className="ql-underline"
           onClick={() => {
-            if (activeDropDownItem === "underline") {
-              setActiveDropDownItem("");
+            if (activeDropdownItem === "underline") {
+              setactiveDropdownItem("");
             } else {
-              setActiveDropDownItem("underline");
+              setactiveDropdownItem("underline");
             }
           }}
           style={{
             backgroundColor:
-              activeDropDownItem === "underline" ? "rgb(226, 236, 245)" : "",
+              activeDropdownItem === "underline" ? "rgb(226, 236, 245)" : "",
           }}
         ></button>
         <button
           aria-label="strike"
           className="ql-strike"
           onClick={() => {
-            if (activeDropDownItem === "strike") {
-              setActiveDropDownItem("");
+            if (activeDropdownItem === "strike") {
+              setactiveDropdownItem("");
             } else {
-              setActiveDropDownItem("strike");
+              setactiveDropdownItem("strike");
             }
           }}
           style={{
             backgroundColor:
-              activeDropDownItem === "strike" ? "rgb(226, 236, 245)" : "",
+              activeDropdownItem === "strike" ? "rgb(226, 236, 245)" : "",
           }}
         ></button>
         <button
@@ -85,15 +92,15 @@ const BoldDropdownButton = (props) => {
           className="ql-script"
           value="super"
           onClick={() => {
-            if (activeDropDownItem === "super") {
-              setActiveDropDownItem("");
+            if (activeDropdownItem === "super") {
+              setactiveDropdownItem("");
             } else {
-              setActiveDropDownItem("super");
+              setactiveDropdownItem("super");
             }
           }}
           style={{
             backgroundColor:
-              activeDropDownItem === "super" ? "rgb(226, 236, 245)" : "",
+              activeDropdownItem === "super" ? "rgb(226, 236, 245)" : "",
           }}
         ></button>
         <button
@@ -101,15 +108,15 @@ const BoldDropdownButton = (props) => {
           className="ql-script"
           value="sub"
           onClick={() => {
-            if (activeDropDownItem === "sub") {
-              setActiveDropDownItem("");
+            if (activeDropdownItem === "sub") {
+              setactiveDropdownItem("");
             } else {
-              setActiveDropDownItem("sub");
+              setactiveDropdownItem("sub");
             }
           }}
           style={{
             backgroundColor:
-              activeDropDownItem === "sub" ? "rgb(226, 236, 245)" : "",
+              activeDropdownItem === "sub" ? "rgb(226, 236, 245)" : "",
           }}
         ></button>
       </Card>

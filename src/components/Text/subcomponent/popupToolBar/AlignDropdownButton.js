@@ -4,7 +4,7 @@ import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 import { ToolBarDropDowns } from "../CustomToolBar";
 
-const AlignDropdownButton = ({ show }) => {
+const AlignDropdownButton = ({ show, activeAlignIcon, setActiveAlignIcon }) => {
   var icons = ReactQuill.Quill.import("ui/icons");
   icons["align"] = (
     <img
@@ -49,8 +49,10 @@ const AlignDropdownButton = ({ show }) => {
             onClick={() => {
               if (activeDropDownItem === "left") {
                 setActiveDropDownItem("");
+                setActiveAlignIcon("");
               } else {
                 setActiveDropDownItem("left");
+                setActiveAlignIcon("left");
               }
             }}
             className="ql-align"
@@ -81,8 +83,10 @@ const AlignDropdownButton = ({ show }) => {
             onClick={() => {
               if (activeDropDownItem === "center") {
                 setActiveDropDownItem("");
+                setActiveAlignIcon("");
               } else {
                 setActiveDropDownItem("center");
+                setActiveAlignIcon("center");
               }
             }}
             style={{
@@ -110,8 +114,10 @@ const AlignDropdownButton = ({ show }) => {
             onClick={() => {
               if (activeDropDownItem === "right") {
                 setActiveDropDownItem("");
+                setActiveAlignIcon("");
               } else {
                 setActiveDropDownItem("right");
+                setActiveAlignIcon("right");
               }
             }}
             style={{

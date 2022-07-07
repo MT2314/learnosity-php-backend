@@ -16,6 +16,7 @@ const CustomToolBar = ({ toolbarId }) => {
   const [alignVisibility, setAlignVisibility] = useState(false);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
+  const [activeAlignIcon, setActiveAlignIcon] = useState("left");
   const [activeTopMenu, setActiveTopMenu] = useState("");
 
   var icons = ReactQuill.Quill.import("ui/icons");
@@ -137,10 +138,10 @@ const CustomToolBar = ({ toolbarId }) => {
               : "toolbar-button"
           }
           aria-label="alignment buttons dropdown"
-          value={activeDropDownItem}
+          value={activeAlignIcon}
           id="alignment-dropdown"
         >
-          {activeDropDownItem === "left" ? (
+          {activeAlignIcon === "left" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -150,10 +151,10 @@ const CustomToolBar = ({ toolbarId }) => {
             >
               <path
                 d="M10.6667 10.6667H0V12.4444H10.6667V10.6667ZM10.6667 3.55556H0V5.33333H10.6667V3.55556ZM0 8.88889H16V7.11111H0V8.88889ZM0 16H16V14.2222H0V16ZM0 0V1.77778H16V0H0Z"
-                fill={activeDropDownItem === "left" ? "#1565c0" : "#232323"}
+                fill={activeTopMenu === "align" ? "#1565c0" : "#232323"}
               />
             </svg>
-          ) : activeDropDownItem === "center" ? (
+          ) : activeAlignIcon === "center" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -163,10 +164,10 @@ const CustomToolBar = ({ toolbarId }) => {
             >
               <path
                 d="M3.55556 10.6667V12.4444H12.4444V10.6667H3.55556ZM0 16H16V14.2222H0V16ZM0 8.88889H16V7.11111H0V8.88889ZM3.55556 3.55556V5.33333H12.4444V3.55556H3.55556ZM0 0V1.77778H16V0H0Z"
-                fill={activeDropDownItem === "center" ? "#1565c0" : "#232323"}
+                fill={activeTopMenu === "align" ? "#1565c0" : "#232323"}
               />
             </svg>
-          ) : activeDropDownItem === "right" ? (
+          ) : activeAlignIcon === "right" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -176,7 +177,7 @@ const CustomToolBar = ({ toolbarId }) => {
             >
               <path
                 d="M0 16H16V14.2222H0V16ZM5.33333 12.4444H16V10.6667H5.33333V12.4444ZM0 8.88889H16V7.11111H0V8.88889ZM5.33333 5.33333H16V3.55556H5.33333V5.33333ZM0 0V1.77778H16V0H0Z"
-                fill={activeDropDownItem === "right" ? "#1565c0" : "#232323"}
+                fill={activeTopMenu === "align" ? "#1565c0" : "#232323"}
               />
             </svg>
           ) : (
@@ -189,7 +190,7 @@ const CustomToolBar = ({ toolbarId }) => {
             >
               <path
                 d="M10.6667 10.6667H0V12.4444H10.6667V10.6667ZM10.6667 3.55556H0V5.33333H10.6667V3.55556ZM0 8.88889H16V7.11111H0V8.88889ZM0 16H16V14.2222H0V16ZM0 0V1.77778H16V0H0Z"
-                fill="#232323"
+                fill={activeTopMenu === "align" ? "#1565c0" : "#232323"}
               />
             </svg>
           )}
@@ -198,6 +199,8 @@ const CustomToolBar = ({ toolbarId }) => {
           show={alignVisibility}
           className="dropdown-content"
           aria-label="alignment buttons options"
+          activeAlignIcon={activeAlignIcon}
+          setActiveAlignIcon={setActiveAlignIcon}
         />
 
         {/* bullets drowdown starts */}
