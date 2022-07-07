@@ -20,4 +20,13 @@
   .ql-toolbar button {
     background-color: rgb(226, 236, 245) !important;
   }
+
+}
+
+.ql-snow .ql-tooltip a.ql-action::after{
+content: "pencil"
+}
+
+.ql-snow .ql-tooltip a.ql-remove::before{
+  content: "trash"
 }
