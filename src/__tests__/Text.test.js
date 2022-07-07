@@ -3,7 +3,6 @@ import { unmountComponentAtNode } from "react-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Text from '../components/Text/Text'
-import EditorComponent from "../components/Text/subcomponent/EditorComponent";
 
 let container = null;
 beforeEach(() => {
@@ -103,13 +102,4 @@ describe("<Text/>", () => {
 
   })
 
-  test('SetProp function is called when user starts typing', () => {
-    const mockFunction = jest.fn()
-    render(<EditorComponent setProp={mockFunction}/>)
-
-    const editor = screen.getByTestId("test")
-
-    fireEvent.change(editor)
-    expect(mockFunction).toHaveBeenCalled()
-  })
 })
