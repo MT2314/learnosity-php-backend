@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { Divider } from "@mui/material/";
 import { Tooltip } from "@material-ui/core/";
-import { DeleteOutline, EditOutlined } from "@mui/icons-material/"
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //context to save state of active drop down items
+export const ToolBarDropDowns = createContext();
 
 const CustomToolBar = ({ toolbarId }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
@@ -20,14 +21,18 @@ const CustomToolBar = ({ toolbarId }) => {
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
 
+  var icons = ReactQuill.Quill.import("ui/icons");
+
+
   return (
+    <ToolBarDropDowns.Provider
+      value={[activeDropDownItem, setActiveDropDownItem]}
+    >
       <div
         id={toolbarId}
         className="toolbarContainer"
         style={{ paddingBottom: "10px" }}
       >
-        <DeleteOutline/>
-        <EditOutlined/>
         {/* bold dropdown starts */}
         <Tooltip arrow title="font styles" placement="top">
           <button
@@ -56,7 +61,6 @@ const CustomToolBar = ({ toolbarId }) => {
             />
           </button>
         </Tooltip>
-
         <BoldDropdownButton
           show={boldVisibility}
           aria-label="formatting options select dropdown"
@@ -194,6 +198,7 @@ const CustomToolBar = ({ toolbarId }) => {
           />
         </Tooltip>
       </div>
+    </ToolBarDropDowns.Provider>
   );
 };
 
