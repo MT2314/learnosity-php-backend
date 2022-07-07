@@ -41,7 +41,7 @@ const AlignDropdownButton = ({ show, activeAlignIcon, setActiveAlignIcon }) => {
           bottom: "-32px",
           padding: "3px",
         }}
-        className="dropdown-content"
+        className="align-dropdown"
       >
         <span className="ql-formats">
           <button

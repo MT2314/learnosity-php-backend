@@ -12,4 +12,18 @@
   &.hide {
     display: none;
   }
+
+  .inline-active {
+    background-color: rgba(21, 101, 192, 0.12) !important;
+  }
+
+  button {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background-color: rgba(21, 101, 192, 0.12);
+    }
+  }
 }
