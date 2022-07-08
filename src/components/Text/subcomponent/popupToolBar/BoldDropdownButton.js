@@ -1,20 +1,10 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../../styles/BoldDropdownButton.scss";
 import { Card } from "@mui/material";
-import { ToolBarDropDowns } from "../CustomToolBar";
 
 const BoldDropdownButton = ({ show }) => {
-  const [activeInlineOptions, setActiveInlineOptions] = useState({
-    bold: false,
-    italic: false,
-    underline: false,
-    strike: false,
-    sub: false,
-    superscript: false,
-  });
-
   const icons = ReactQuill.Quill.import("ui/icons");
   icons["bold"] = (
     <svg
@@ -106,130 +96,25 @@ const BoldDropdownButton = ({ show }) => {
     </svg>
   );
 
-  const [activeDropdownItem, setActiveDropdownItem] =
-    useContext(ToolBarDropDowns);
-
-  console.log(activeInlineOptions);
-
   return (
     <>
       <Card className={show ? "bold-dropdown show" : "bold-dropdown hide"}>
-        <button
-          aria-label="bold"
-          className="ql-bold"
-          onClick={() => {
-            if (activeDropdownItem === "bold") {
-              setActiveDropdownItem("");
-              setActiveInlineOptions({ ...activeInlineOptions, bold: false });
-            } else {
-              setActiveDropdownItem("bold");
-              setActiveInlineOptions({ ...activeInlineOptions, bold: true });
-            }
-          }}
-        >
+        <button aria-label="bold" className="ql-bold">
           {icons["bold"]}
         </button>
-        <button
-          aria-label="italic"
-          className="ql-italic"
-          onClick={() => {
-            if (activeDropdownItem === "italic") {
-              setActiveDropdownItem("");
-              setActiveInlineOptions({ ...activeInlineOptions, italic: false });
-            } else {
-              setActiveDropdownItem("italic");
-              setActiveInlineOptions({ ...activeInlineOptions, italic: true });
-            }
-          }}
-        >
+        <button aria-label="italic" className="ql-italic">
           {icons["italic"]}
         </button>
-        <button
-          aria-label="underline"
-          className="ql-underline"
-          onClick={() => {
-            if (activeDropdownItem === "underline") {
-              setActiveDropdownItem("");
-              setActiveInlineOptions({
-                ...activeInlineOptions,
-                underline: false,
-              });
-            } else {
-              setActiveDropdownItem("underline");
-              setActiveInlineOptions({
-                ...activeInlineOptions,
-                underline: true,
-              });
-            }
-          }}
-        >
+        <button aria-label="underline" className="ql-underline">
           {icons["underline"]}
         </button>
-        <button
-          aria-label="strike"
-          className="ql-strike"
-          onClick={() => {
-            if (activeDropdownItem === "strike") {
-              setActiveDropdownItem("");
-              setActiveInlineOptions({
-                ...activeInlineOptions,
-                strike: false,
-              });
-            } else {
-              setActiveDropdownItem("strike");
-              setActiveInlineOptions({
-                ...activeInlineOptions,
-                strike: true,
-              });
-            }
-          }}
-        >
+        <button aria-label="strike" className="ql-strike">
           {icons["strike"]}
         </button>
-        <button
-          aria-label="sub script"
-          className="ql-script"
-          value="sub"
-          onClick={() => {
-            if (activeDropdownItem === "sub") {
-              setActiveDropdownItem("");
-              setActiveInlineOptions({
-                ...activeInlineOptions,
-                sub: false,
-              });
-            } else {
-              setActiveDropdownItem("sub");
-              setActiveInlineOptions({
-                ...activeInlineOptions,
-                sub: true,
-                super: false,
-              });
-            }
-          }}
-        >
+        <button aria-label="sub script" className="ql-script" value="sub">
           {icons["script"]}
         </button>
-        <button
-          aria-label="super script"
-          className="ql-script"
-          value="super"
-          onClick={() => {
-            if (activeDropdownItem === "super") {
-              setActiveDropdownItem("");
-              setActiveInlineOptions({
-                ...activeInlineOptions,
-                super: false,
-              });
-            } else {
-              setActiveDropdownItem("super");
-              setActiveInlineOptions({
-                ...activeInlineOptions,
-                super: true,
-                sub: false,
-              });
-            }
-          }}
-        >
+        <button aria-label="super script" className="ql-script" value="super">
           {icons["super"]}
         </button>
       </Card>
