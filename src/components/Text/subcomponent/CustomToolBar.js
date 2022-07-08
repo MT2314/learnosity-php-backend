@@ -21,23 +21,35 @@ const CustomToolBar = ({ toolbarId }) => {
 
   const icons = ReactQuill.Quill.import("ui/icons");
   icons["formula"] = (
-    <img
-      src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/pi.svg"
-      alt="mathematical pi button for inserting equation"
-    />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+      className="ql-formula"
+    >
+      <path
+        d="M0.321167 5.7144L0.953631 5.76125C1.60952 5.01947 1.86719 2.82537 5.73225 3.25482C5.5917 12.6559 1.46897 13.6475 1.72664 15.5762C1.82034 16.6693 2.68705 17.3408 3.62403 17.3798C6.58334 17.2783 6.4506 13.2884 7.37197 3.2314H11.1902C10.9872 6.77632 10.4328 10.3212 10.3703 13.7959C10.4172 16.1071 11.8226 17.3408 13.6732 17.3564C16.7184 17.4579 17.6788 13.9052 17.6788 12.3904H17.0229C16.9604 13.6397 16.3592 14.5377 15.0787 14.5923C11.5884 14.6392 13.5092 8.45508 13.5326 3.27825L17.6788 3.30167L17.6554 0.654692C0.422354 0.571215 2.60971 0.233369 0.321167 5.7144Z"
+        fill={activeTopMenu === "math" ? "#1565c0" : "#232323"}
+      />
+    </svg>
   );
 
   icons["link"] = (
-    <img
-      src="https://content-solutions.s3.ca-central-1.amazonaws.com/karen/link-icon.svg"
-      alt="link"
-    />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="10"
+      viewBox="0 0 20 10"
+      fill="none"
+    >
+      <path
+        d="M15 0H11V2H15C16.65 2 18 3.35 18 5C18 6.65 16.65 8 15 8H11V10H15C17.76 10 20 7.76 20 5C20 2.24 17.76 0 15 0ZM9 8H5C3.35 8 2 6.65 2 5C2 3.35 3.35 2 5 2H9V0H5C2.24 0 0 2.24 0 5C0 7.76 2.24 10 5 10H9V8ZM6 4H14V6H6V4Z"
+        fill={activeTopMenu === "link" ? "#1565c0" : "#232323"}
+      />
+    </svg>
   );
-
-  // below actually target the icons we want (don't use the classname, use actual name)
-  // icons["formula"] =
-  //   '<i class="fa-regular fa-pi fa-9x" style="color:#9b479f"></i>';
-  // icons["italic"] = '<i class="fa-solid fa-italic"></i>';
 
   console.log(`====>`, activeDropDownItem);
 
@@ -63,7 +75,7 @@ const CustomToolBar = ({ toolbarId }) => {
           className={
             activeTopMenu === "bold"
               ? "bold-dropdown-button ql-selected ql-active"
-              : "bold-dropdown-button toolbar-button"
+              : "bold-dropdown-button"
           }
         >
           <svg
@@ -97,7 +109,7 @@ const CustomToolBar = ({ toolbarId }) => {
           className={
             activeTopMenu === "math"
               ? "ql-formula ql-selected ql-active"
-              : "ql-formula toolbar-button"
+              : "ql-formula"
           }
           aria-label="math equation button"
           onClick={() => {
@@ -112,19 +124,7 @@ const CustomToolBar = ({ toolbarId }) => {
             setActiveDropDownItem("");
           }}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            className="ql-formula"
-          >
-            <path
-              d="M0.321167 5.7144L0.953631 5.76125C1.60952 5.01947 1.86719 2.82537 5.73225 3.25482C5.5917 12.6559 1.46897 13.6475 1.72664 15.5762C1.82034 16.6693 2.68705 17.3408 3.62403 17.3798C6.58334 17.2783 6.4506 13.2884 7.37197 3.2314H11.1902C10.9872 6.77632 10.4328 10.3212 10.3703 13.7959C10.4172 16.1071 11.8226 17.3408 13.6732 17.3564C16.7184 17.4579 17.6788 13.9052 17.6788 12.3904H17.0229C16.9604 13.6397 16.3592 14.5377 15.0787 14.5923C11.5884 14.6392 13.5092 8.45508 13.5326 3.27825L17.6788 3.30167L17.6554 0.654692C0.422354 0.571215 2.60971 0.233369 0.321167 5.7144Z"
-              fill={activeTopMenu === "math" ? "#1565c0" : "#232323"}
-            />
-          </svg>
+          {icons["formula"]}
         </button>
 
         {/* alignment dropdown */}
@@ -143,7 +143,7 @@ const CustomToolBar = ({ toolbarId }) => {
           className={
             activeTopMenu === "align"
               ? "ql-align ql-selected ql-active"
-              : "toolbar-button"
+              : "ql-align"
           }
           aria-label="alignment buttons dropdown"
           value={activeAlignIcon}
@@ -224,11 +224,7 @@ const CustomToolBar = ({ toolbarId }) => {
             }
             setActiveDropDownItem("");
           }}
-          className={
-            activeTopMenu === "lists"
-              ? "ql-selected ql-active toolbar-button"
-              : "toolbar-button"
-          }
+          className={activeTopMenu === "lists" ? "ql-selected ql-active" : null}
           value="bullet"
           aria-label="list options select group"
         >
@@ -249,8 +245,8 @@ const CustomToolBar = ({ toolbarId }) => {
           aria-label="add link button"
           className={
             activeTopMenu === "link"
-              ? "ql-selected ql-active toolbar-button ql-link"
-              : "toolbar-button ql-link"
+              ? "ql-link ql-selected ql-active"
+              : "ql-link"
           }
           onClick={() => {
             setAlignVisibility(false);
@@ -264,18 +260,7 @@ const CustomToolBar = ({ toolbarId }) => {
             setActiveDropDownItem("link");
           }}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="10"
-            viewBox="0 0 20 10"
-            fill="none"
-          >
-            <path
-              d="M15 0H11V2H15C16.65 2 18 3.35 18 5C18 6.65 16.65 8 15 8H11V10H15C17.76 10 20 7.76 20 5C20 2.24 17.76 0 15 0ZM9 8H5C3.35 8 2 6.65 2 5C2 3.35 3.35 2 5 2H9V0H5C2.24 0 0 2.24 0 5C0 7.76 2.24 10 5 10H9V8ZM6 4H14V6H6V4Z"
-              fill={activeTopMenu === "link" ? "#1565c0" : "#232323"}
-            />
-          </svg>
+          {icons["link"]}
         </button>
       </div>
     </ToolBarDropDowns.Provider>
