@@ -13,8 +13,20 @@
     display: none;
   }
 
-  .ql-selected.ql-active {
+  svg {
+    .svg-fill {
+      fill: #232323;
+    }
+  }
+
+  .ql-active,
+  .ql-selected {
     background-color: rgba(21, 101, 192, 0.12) !important;
+    svg {
+      .svg-fill {
+        fill: #1565c0;
+      }
+    }
   }
 
   button {
