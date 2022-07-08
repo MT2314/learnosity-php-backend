@@ -95,7 +95,7 @@ icons["super"] = (
   </svg>
 );
 
-// formula
+// Formula
 icons["formula"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -112,7 +112,7 @@ icons["formula"] = (
   </svg>
 );
 
-// Alignment icons
+// Alignment ("align" is default for left-alignment)
 icons["align"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -158,6 +158,9 @@ icons["right"] = (
   </svg>
 );
 
+// Lists
+
+// Link
 icons["link"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
