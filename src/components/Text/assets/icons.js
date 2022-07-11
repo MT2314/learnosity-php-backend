@@ -3,6 +3,23 @@ import ReactQuill from "react-quill";
 
 const icons = ReactQuill.Quill.import("ui/icons");
 
+// Custom bold with underline symbol from design
+icons["customBold"] = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <path
+      d="M15.2 10.2637C16.2377 9.54698 16.9651 8.37023 16.9651 7.27907C16.9651 4.8614 15.093 3 12.686 3H6V17.9767H13.5312C15.767 17.9767 17.5 16.1581 17.5 13.9223C17.5 12.2963 16.58 10.9056 15.2 10.2637ZM9.2093 5.67442H12.4186C13.3065 5.67442 14.0233 6.39116 14.0233 7.27907C14.0233 8.16698 13.3065 8.88372 12.4186 8.88372H9.2093V5.67442ZM12.9535 15.3023H9.2093V12.093H12.9535C13.8414 12.093 14.5581 12.8098 14.5581 13.6977C14.5581 14.5856 13.8414 15.3023 12.9535 15.3023Z"
+      className="svg-fill"
+    />
+    <rect x="6" y="19" width="11" height="2" className="svg-fill" />
+  </svg>
+);
+
 // Inline configuration icons (bold, italic, underline, strike, sub, super)
 icons["bold"] = (
   <svg
@@ -159,6 +176,35 @@ icons["right"] = (
 );
 
 // Lists
+icons["bullet"] = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="19"
+    height="16"
+    viewBox="0 0 19 16"
+    fill="none"
+  >
+    <path
+      d="M2 6.5C1.17 6.5 0.5 7.17 0.5 8C0.5 8.83 1.17 9.5 2 9.5C2.83 9.5 3.5 8.83 3.5 8C3.5 7.17 2.83 6.5 2 6.5ZM2 0.5C1.17 0.5 0.5 1.17 0.5 2C0.5 2.83 1.17 3.5 2 3.5C2.83 3.5 3.5 2.83 3.5 2C3.5 1.17 2.83 0.5 2 0.5ZM2 12.5C1.17 12.5 0.5 13.18 0.5 14C0.5 14.82 1.18 15.5 2 15.5C2.82 15.5 3.5 14.82 3.5 14C3.5 13.18 2.83 12.5 2 12.5ZM5 15H19V13H5V15ZM5 9H19V7H5V9ZM5 1V3H19V1H5Z"
+      className="svg-fill"
+    />
+  </svg>
+);
+
+icons["ordered"] = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="19"
+    height="16"
+    viewBox="0 0 19 16"
+    fill="none"
+  >
+    <path
+      d="M0 13H2V13.5H1V14.5H2V15H0V16H3V12H0V13ZM1 4H2V0H0V1H1V4ZM0 7H1.8L0 9.1V10H3V9H1.2L3 6.9V6H0V7ZM5 1V3H19V1H5ZM5 15H19V13H5V15ZM5 9H19V7H5V9Z"
+      className="svg-fill"
+    />
+  </svg>
+);
 
 // Link
 icons["link"] = (
@@ -171,6 +217,38 @@ icons["link"] = (
   >
     <path
       d="M15 0H11V2H15C16.65 2 18 3.35 18 5C18 6.65 16.65 8 15 8H11V10H15C17.76 10 20 7.76 20 5C20 2.24 17.76 0 15 0ZM9 8H5C3.35 8 2 6.65 2 5C2 3.35 3.35 2 5 2H9V0H5C2.24 0 0 2.24 0 5C0 7.76 2.24 10 5 10H9V8ZM6 4H14V6H6V4Z"
+      className="svg-fill"
+    />
+  </svg>
+);
+
+// Edit pencil
+icons["edit"] = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="19"
+    height="18"
+    viewBox="0 0 19 18"
+    fill="none"
+  >
+    <path
+      d="M11.06 6.02L11.98 6.94L2.92 16H2V15.08L11.06 6.02ZM14.66 0C14.41 0 14.15 0.1 13.96 0.29L12.13 2.12L15.88 5.87L17.71 4.04C18.1 3.65 18.1 3.02 17.71 2.63L15.37 0.29C15.17 0.09 14.92 0 14.66 0ZM11.06 3.19L0 14.25V18H3.75L14.81 6.94L11.06 3.19Z"
+      className="svg-fill"
+    />
+  </svg>
+);
+
+// Delete garbage icon
+icons["delete"] = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="14"
+    height="18"
+    viewBox="0 0 14 18"
+    fill="none"
+  >
+    <path
+      d="M11 6V16H3V6H11ZM9.5 0H4.5L3.5 1H0V3H14V1H10.5L9.5 0ZM13 4H1V16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4Z"
       className="svg-fill"
     />
   </svg>
