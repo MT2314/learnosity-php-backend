@@ -3,34 +3,20 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EditorComponent = ({ body, setProp }) => {
 
-  const toolbarId = `unique-id-${Math.floor(Math.random() * 1000000)}`;
-
-  var icons = Quill.import("ui/icons");
-  icons["ql-formula"] =
-    '<i class="fa-regular fa-pi fa-9x" style="color:#9b479f"></i>';
-
   const formats = [
-    "header",
-    "font",
-    "size",
     "bold",
     "italic",
     "underline",
     "script",
     "strike",
-    "blockquote",
+    "formula",
     "align",
     "list",
     "bullet",
-    "indent",
     "link",
-    "image",
-    "color",
   ];
 
   const focusRef = useRef(null);
@@ -45,8 +31,7 @@ const EditorComponent = ({ body, setProp }) => {
   };
   
   return (
-    <div className="text-editor" data-testid='text-editor-component'>
-
+    <div className="text-editor" data-testid="text-editor-component">
       <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
@@ -58,7 +43,7 @@ const EditorComponent = ({ body, setProp }) => {
           },
         }}
         formats={formats}
-        theme={"snow"}
+        theme="snow"
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
         enim ad minim veniam, quis nostrud exercitation ullamco laboris
