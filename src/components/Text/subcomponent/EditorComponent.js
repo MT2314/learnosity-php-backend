@@ -3,6 +3,7 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
+import "quill-paste-smart";
 
 const EditorComponent = ({ body, setProp }) => {
   const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
@@ -19,6 +20,40 @@ const EditorComponent = ({ body, setProp }) => {
     "bullet",
     "link",
   ];
+
+  const modules = {
+    toolbar: {
+      container: `#${toolbarId}`,
+    },
+    clipboard: {
+      allowed: {
+        tags: [
+          "a",
+          "strong",
+          "u",
+          "s",
+          "i",
+          "p",
+          "br",
+          "ul",
+          "ol",
+          "li",
+          "b",
+          "sub",
+          "sup",
+        ],
+        attributes: ["href", "rel", "target", "class"],
+      },
+      keepSelection: true,
+      substituteBlockElements: true,
+      magicPasteLinks: true,
+      hooks: {
+        uponSanitizeElement(node, data, config) {
+          console.log(node);
+        },
+      },
+    },
+  };
 
   const focusRef = useRef(null);
 
@@ -38,11 +73,7 @@ const EditorComponent = ({ body, setProp }) => {
       </div>
       <ReactQuill
         ref={focusRef}
-        modules={{
-          toolbar: {
-            container: `#${toolbarId}`,
-          },
-        }}
+        modules={modules}
         formats={formats}
         theme="snow"
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
