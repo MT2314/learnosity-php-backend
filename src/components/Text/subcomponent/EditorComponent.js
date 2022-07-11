@@ -3,10 +3,11 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
+import { v4 as uuidv4 } from "uuid";
 import "quill-paste-smart";
 
 const EditorComponent = ({ body, setProp }) => {
-  const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
+  const toolbarId = `unique-id-${uuidv4()}`;
 
   const formats = [
     "bold",
