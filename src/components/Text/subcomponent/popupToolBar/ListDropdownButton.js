@@ -1,29 +1,24 @@
-import React, { useContext } from "react";
+import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
+import "../../styles/ListDropdownButton.scss";
+import icons from "../../assets/icons";
 
-import { ToolBarDropDowns } from "../CustomToolBar";
-
-const ListDropdownButton = (props) => {
-  const [activeDropDownItem, setActiveDropDownItem] =
-    useContext(ToolBarDropDowns);
+const ListDropdownButton = ({
+  show,
+  activeDropDownItem,
+  setActiveDropDownItem,
+}) => {
   return (
     <>
-      <Card
-        style={{
-          display: props.show ? "block" : "none",
-          maxWidth: "150px",
-          position: "absolute",
-          zIndex: "25",
-          left: "103px",
-          bottom: "-32px",
-          padding: "3px",
-        }}
-        className="dropdown-content"
-      >
+      <Card className={show ? "list-dropdown show" : "list-dropdown hide"}>
         <button
           aria-label="bullet list"
-          className="ql-list"
+          className={
+            activeDropDownItem === "bullet"
+              ? "ql-list ql-selected ql-active"
+              : "ql-list"
+          }
           value="bullet"
           onClick={() => {
             if (activeDropDownItem === "bullet") {
@@ -32,15 +27,17 @@ const ListDropdownButton = (props) => {
               setActiveDropDownItem("bullet");
             }
           }}
-          style={{
-            backgroundColor:
-              activeDropDownItem === "bullet" ? "rgb(226, 236, 245)" : "",
-          }}
-        ></button>
+        >
+          {icons["bullet"]}
+        </button>
 
         <button
           aria-label="numbered list"
-          className="ql-list"
+          className={
+            activeDropDownItem === "ordered"
+              ? "ql-list ql-selected ql-active"
+              : "ql-list"
+          }
           value="ordered"
           onClick={() => {
             if (activeDropDownItem === "ordered") {
@@ -49,11 +46,9 @@ const ListDropdownButton = (props) => {
               setActiveDropDownItem("ordered");
             }
           }}
-          style={{
-            backgroundColor:
-              activeDropDownItem === "ordered" ? "rgb(226, 236, 245)" : "",
-          }}
-        ></button>
+        >
+          {icons["ordered"]}
+        </button>
       </Card>
     </>
   );

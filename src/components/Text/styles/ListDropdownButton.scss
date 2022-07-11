@@ -1,0 +1,32 @@
+.list-dropdown {
+  max-width: 150px;
+  position: absolute;
+  z-index: 25;
+  left: 103px;
+  bottom: -32px;
+  padding: 3px;
+
+  &.show {
+    display: block;
+  }
+
+  &.hide {
+    display: none;
+  }
+
+  svg {
+    .svg-fill {
+      fill: #232323;
+    }
+  }
+
+  .ql-active,
+  .ql-selected {
+    background-color: rgba(21, 101, 192, 0.12);
+    svg {
+      .svg-fill {
+        fill: #1565c0;
+      }
+    }
+  }
+}
