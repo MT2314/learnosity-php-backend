@@ -24,6 +24,10 @@
 }
 
 .ql-snow .ql-tooltip a.ql-action{
+  margin-left: 4px;
+  height: 100%;
+  height: 2rem;
+  display: inline-block;
   &:hover{
     background-color: rgba(21, 101, 192, 0.12);
   }
@@ -38,6 +42,9 @@
 }
 
 .ql-snow .ql-tooltip a.ql-remove{
+  height: 100%;
+  height: 2rem;
+  display: inline-block;
   &:hover{
     background-color: rgba(21, 101, 192, 0.12);
   }
