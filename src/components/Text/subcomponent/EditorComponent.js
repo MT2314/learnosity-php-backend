@@ -5,6 +5,7 @@ import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
 
 const EditorComponent = ({ body, setProp }) => {
+  const toolbarId = `unique-id-${Math.floor(Math.random() * 100000000)}`;
 
   const formats = [
     "bold",
@@ -20,16 +21,16 @@ const EditorComponent = ({ body, setProp }) => {
   ];
 
   const focusRef = useRef(null);
-  
-    useEffect(() => {
-      focusRef.current.focus();
-    }, []);
+
+  useEffect(() => {
+    focusRef.current.focus();
+  }, []);
 
   const handleDataChange = (content, delta, source, editor) => {
-    let editorContent = editor.getContents()
-    setProp({ body: editorContent })
+    let editorContent = editor.getContents();
+    setProp({ body: editorContent });
   };
-  
+
   return (
     <div className="text-editor" data-testid="text-editor-component">
       <div className="showtool">
