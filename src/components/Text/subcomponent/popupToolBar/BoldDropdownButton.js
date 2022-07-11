@@ -1,135 +1,31 @@
-import React, { useContext } from "react";
+import React from "react";
 import "react-quill/dist/quill.snow.css";
+import "../../styles/BoldDropdownButton.scss";
 import { Card } from "@mui/material";
-import { Tooltip } from "@material-ui/core/";
+import icons from "../../assets/icons";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { ToolBarDropDowns } from "../CustomToolBar";
-
-const BoldDropdownButton = (props) => {
-  const [activeDropDownItem, setActiveDropDownItem] =
-    useContext(ToolBarDropDowns);
-
+const BoldDropdownButton = ({ show }) => {
   return (
     <>
-      <Card
-        style={{
-          display: props.show ? "block" : "none",
-          position: "absolute",
-          zIndex: "25",
-          bottom: "-32px",
-          padding: "3px",
-          width: "180px",
-        }}
-        className="dropdown-content"
-      >
-        <Tooltip arrow title="bold" placement="top">
-          <button
-            aria-label="bold"
-            className="ql-bold"
-            onClick={() => {
-              if (activeDropDownItem === "bold") {
-                setActiveDropDownItem("");
-              } else {
-                setActiveDropDownItem("bold");
-              }
-            }}
-            style={{
-              backgroundColor:
-                activeDropDownItem === "bold" ? "rgb(226, 236, 245)" : "",
-            }}
-          ></button>
-        </Tooltip>
-        <Tooltip arrow title="italic" placement="top">
-          <button
-            aria-label="italic"
-            className="ql-italic"
-            onClick={() => {
-              if (activeDropDownItem === "italic") {
-                setActiveDropDownItem("");
-              } else {
-                setActiveDropDownItem("italic");
-              }
-            }}
-            style={{
-              backgroundColor:
-                activeDropDownItem === "italic" ? "rgb(226, 236, 245)" : "",
-            }}
-          >
-            <FontAwesomeIcon icon="fa-solid fa-italic" />
-          </button>
-        </Tooltip>
-        <Tooltip arrow title="underline" placement="top">
-          <button
-            aria-label="underline"
-            className="ql-underline"
-            onClick={() => {
-              if (activeDropDownItem === "underline") {
-                setActiveDropDownItem("");
-              } else {
-                setActiveDropDownItem("underline");
-              }
-            }}
-            style={{
-              backgroundColor:
-                activeDropDownItem === "underline" ? "rgb(226, 236, 245)" : "",
-            }}
-          ></button>
-        </Tooltip>
-        <Tooltip arrow title="strikethrough" placement="top">
-          <button
-            aria-label="strike"
-            className="ql-strike"
-            onClick={() => {
-              if (activeDropDownItem === "strike") {
-                setActiveDropDownItem("");
-              } else {
-                setActiveDropDownItem("strike");
-              }
-            }}
-            style={{
-              backgroundColor:
-                activeDropDownItem === "strike" ? "rgb(226, 236, 245)" : "",
-            }}
-          ></button>
-        </Tooltip>
-        <Tooltip arrow title="subscript" placement="top">
-          <button
-            aria-label="sub script"
-            className="ql-script"
-            value="sub"
-            onClick={() => {
-              if (activeDropDownItem === "sub") {
-                setActiveDropDownItem("");
-              } else {
-                setActiveDropDownItem("sub");
-              }
-            }}
-            style={{
-              backgroundColor:
-                activeDropDownItem === "sub" ? "rgb(226, 236, 245)" : "",
-            }}
-          ></button>
-        </Tooltip>
-        <Tooltip arrow title="superscript" placement="top">
-          <button
-            aria-label="super script"
-            className="ql-script"
-            value="super"
-            onClick={() => {
-              if (activeDropDownItem === "super") {
-                setActiveDropDownItem("");
-              } else {
-                setActiveDropDownItem("super");
-              }
-            }}
-            style={{
-              backgroundColor:
-                activeDropDownItem === "super" ? "rgb(226, 236, 245)" : "",
-            }}
-          ></button>
-        </Tooltip>
+      <Card className={show ? "bold-dropdown show" : "bold-dropdown hide"}>
+        <button aria-label="bold" className="ql-bold">
+          {icons["bold"]}
+        </button>
+        <button aria-label="italic" className="ql-italic">
+          {icons["italic"]}
+        </button>
+        <button aria-label="underline" className="ql-underline">
+          {icons["underline"]}
+        </button>
+        <button aria-label="strike" className="ql-strike">
+          {icons["strike"]}
+        </button>
+        <button aria-label="sub script" className="ql-script" value="sub">
+          {icons["script"]}
+        </button>
+        <button aria-label="super script" className="ql-script" value="super">
+          {icons["super"]}
+        </button>
       </Card>
     </>
   );
