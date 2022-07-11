@@ -22,7 +22,7 @@
 
   .ql-active,
   .ql-selected {
-    background-color: rgba(21, 101, 192, 0.12);
+    background-color: rgba(21, 101, 192, 0.12) !important;
     svg {
       .svg-fill {
         fill: #1565c0;
