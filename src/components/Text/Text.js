@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
-import "./styles/TextComponent.scss";
+import "./styles/Text.scss";
 
 export const defaultProps = { body: null };
 
-const TextComponent = () => {
+const Text = ({ body = null, setProp = () => {} }) => {
+  
   const [showEditor, setShowEditor] = useState(false);
 
   const handleOnClick = () => {
@@ -16,13 +17,13 @@ const TextComponent = () => {
   return(
     <>
     {!showEditor ?
-      <div onClick={() => {handleOnClick()}} className='mainContainer'><DefaultText /></div>  
+      <div onClick={() => {handleOnClick()}} className='mainContainer' data-testid="text-component"><DefaultText /></div>  
     : 
-      <EditorComponent/>
+      <EditorComponent body={body} setProp={setProp}/>
       }
     </>
   )
 
 };
 
-export default TextComponent;
+export default Text;
