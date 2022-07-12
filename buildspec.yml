@@ -1,32 +1,32 @@
-version: 0.2
+# version: 0.2
 
-phases:
-  install:
-    runtime-versions:
-      nodejs: 14
+# phases:
+#   install:
+#     runtime-versions:
+#       nodejs: 14
 
-  pre_build:
-    commands:
-      - echo Installing dependencies...
-      - npm ci 
-      - echo Running tests
+#   pre_build:
+#     commands:
+#       - echo Installing dependencies...
+#       - npm ci 
+#       - echo Running tests
 
-  build:
-    commands:
-      - echo Building project...
-      - echo Build started on `date`
-      - npm run build:$BUILD_ENV
+#   build:
+#     commands:
+#       - echo Building project...
+#       - echo Build started on `date`
+#       - npm run build:$BUILD_ENV
 
-  post_build:
-    commands:
-      - echo Build completed on `date`
+#   post_build:
+#     commands:
+#       - echo Build completed on `date`
 
-artifacts:
-  files:
-    - "**/*"
-  base-directory: "dist"
+# artifacts:
+#   files:
+#     - "**/*"
+#   base-directory: "dist"
 
-cache:
-  paths:
-    - "/node_modules/"
+# cache:
+#   paths:
+#     - "/node_modules/"
 
