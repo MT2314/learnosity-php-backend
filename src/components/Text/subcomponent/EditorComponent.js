@@ -40,14 +40,32 @@ export function useOnClickOutside(ref, handler) {
 const EditorComponent = ({ body, setProp }) => {
 
   const toolbarId = `unique-id-${uuidv4()}`;
-  
+
+  //state to hide toolbar if clicked outside text component
   const [ editorIsFocus, setEditorIsFocus ] = useState(false)
 
+  //add focus to editor
   const focusRef = useRef(null);
+
+  //track clicks outside text div
   const textRef = useRef(null);
 
   useOnClickOutside(textRef, () => setEditorIsFocus(false))
 
+  useEffect(() => {
+    //on render set focus on the editor
+    focusRef.current.focus();
+    //on render toolbar appears
+    setEditorIsFocus(true);
+  }, []);
+  
+    //set the data when the editor content changes
+    const handleDataChange = (content, delta, source, editor) => {
+      let editorContent = editor.getContents();
+      setProp({ body: editorContent });
+    };
+  
+  //customization settings for toolbar
   const formats = [
     "bold",
     "italic",
@@ -93,17 +111,6 @@ const EditorComponent = ({ body, setProp }) => {
         },
       },
     },
-  };
-
-useEffect(() => {
-  focusRef.current.focus();
-  setEditorIsFocus(true);
-}, []);
-
-
-  const handleDataChange = (content, delta, source, editor) => {
-    let editorContent = editor.getContents();
-    setProp({ body: editorContent });
   };
 
   return (
