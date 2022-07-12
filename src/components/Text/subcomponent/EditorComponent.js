@@ -92,20 +92,34 @@ const EditorComponent = ({ body, setProp }) => {
   const focusRef = useRef(null);
   const textRef = useRef(null);
 
-  useEffect(() => {
-    focusRef.current.focus();
-    console.log(textRef)
-  }, []);
+//   useEffect(() => {
+//     focusRef.current.focus();
+//     window.onclick = (event) => {
+//       if (event.target.contains(textRef.current)
+//         && event.target !== textRef.current) {     
+//           console.log(`You clicked Outside the box!`);
+//           setEditorIsFocus(false)
+//         } else {     
+//           console.log(`You clicked Inside the box!`);
+//           setEditorIsFocus(true)
+//       }
+//       console.log(event.target)
+//     }
+// }, []);
 
-  useEffect(() => {
-    window.onclick = (event) => {
-      if (event.target.contains(textRef.current)
-        && event.target !== textRef.current) {     
-        console.log(`You clicked Outside the box!`);
-      } else {     
-        console.log(`You clicked Inside the box!`);
-      }
+useEffect(() => {
+  focusRef.current.focus();
+  setEditorIsFocus(true)
+  window.onclick = (event) => {
+    if (textRef.current !== event.target && !textRef.current.contains(event.target)) {    
+      console.log('clicking outside the div');
+      setEditorIsFocus(false)
+    }else{
+      console.log(`clicked inside div`);
+      setEditorIsFocus(true)
     }
+
+  }
 }, []);
 
   const handleDataChange = (content, delta, source, editor) => {
@@ -114,22 +128,24 @@ const EditorComponent = ({ body, setProp }) => {
   };
 
   return (
-    <div ref={textRef} className="text-editor" data-testid="text-editor-component">
+    <div className="text-editor" data-testid="text-editor-component">
       <div className="showtool" style={editorIsFocus ? { display: 'flex'} : { display: 'none'}}>
         <CustomToolBar toolbarId={toolbarId} />
       </div>
-      <ReactQuill
-        ref={focusRef}
-        modules={modules}
-        formats={formats}
-        theme="snow"
-        placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-        enim ad minim veniam, quis nostrud exercitation ullamco laboris
-        nisi ut aliquip ex ea commodo consequat."
-        className="quillEditor"
-        onChange={handleDataChange}
-      />
+      <div ref={textRef}>
+        <ReactQuill
+          ref={focusRef}
+          modules={modules}
+          formats={formats}
+          theme="snow"
+          placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+          enim ad minim veniam, quis nostrud exercitation ullamco laboris
+          nisi ut aliquip ex ea commodo consequat."
+          className="quillEditor"
+          onChange={handleDataChange}
+        />
+      </div>
     </div>
   );
 };
