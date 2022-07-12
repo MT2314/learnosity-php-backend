@@ -20,7 +20,6 @@ const AlignDropdownButton = (props) => {
           padding: "3px",
         }}
         className="dropdown-content"
-        data-testid="test"
       >
         <span className="ql-formats">
           <Tooltip arrow title="align left" placement="top">
