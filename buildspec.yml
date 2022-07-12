@@ -1,32 +1,40 @@
-# version: 0.2
+version: 0.2
 
-# phases:
-#   install:
-#     runtime-versions:
-#       nodejs: 14
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
 
-#   pre_build:
-#     commands:
-#       - echo Installing dependencies...
-#       - npm ci 
-#       - echo Running tests
+  pre_build:
+    commands:
+      - echo Installing dependencies...
+      - npm ci
+      - cd amp-template-generator
+      - npm ci 
+      - cd ./mf-component-library
+      - npm run test-templates
+      - cd amp-template-generator
+      - npm run build
+      - echo Building project...
 
-#   build:
-#     commands:
-#       - echo Building project...
-#       - echo Build started on `date`
-#       - npm run build:$BUILD_ENV
+  build:
+    commands:
+      - echo Building project...
+      - echo Build started on `date`
+      - cd build
+      - aws s3 sync . s3://platypus-cl-student-templates/ --exclude "node_modules" --include "*"
 
-#   post_build:
-#     commands:
-#       - echo Build completed on `date`
 
-# artifacts:
-#   files:
-#     - "**/*"
-#   base-directory: "dist"
+  post_build:
+    commands:
+      - echo Build completed on `date`
 
-# cache:
-#   paths:
-#     - "/node_modules/"
+artifacts:
+  files:
+    - "**/*"
+  base-directory: "dist"
+
+cache:
+  paths:
+    - "/node_modules/"
 
