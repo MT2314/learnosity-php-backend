@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  ilc-amp:
+    build: .
+    container_name:
+      'ilc-amp'
+    command: >
+      sh -c "cp .npmrc_config .npmrc && npm install --no-optional --no-shrinkwrap && npm rebuild node-sass && rm .npmrc && npm run start"
+    environment:
+      - GITLAB_NPM_TOKEN=${GITLAB_NPM_TOKEN}
+      - NODE_ENV=${NODE_ENV}
+      - API_PORT=${API_PORT}
+    ports:
+      - '8000:8000'
+    working_dir: /var/www/ilc-amp
+    volumes:
+      - .:/var/www/ilc-amp:cached
+    networks:
+      - ws
+    labels:
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:ilc-amp.localhost"
+networks:
+  ws:

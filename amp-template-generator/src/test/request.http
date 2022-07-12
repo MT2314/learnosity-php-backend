@@ -1,0 +1,13 @@
+### This file can be used to trigger the courseware api request
+### 1. Install the VS Code extension: REST Client by Huachao Mao from the Extension:Marketplace, or run command line: code --install-extension humao.rest-client
+### 2. Type an HTTP request string (see samples below); The extension will generate a Send Request link 
+### 3. Click the Send Request link to send the request
+### See the extension details for more options
+
+GET http://localhost:7000/local/courseware?eid=1&fn=n&uid=username
+
+###
+
+GET http://localhost:7000/local/courseware?eid=26&fn=p&uid=username3
+
+###

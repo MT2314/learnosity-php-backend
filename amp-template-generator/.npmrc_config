@@ -1,0 +1,7 @@
+# This is a local (project) npm config file for connecting to the gitlab registry.
+# During docker-compose up, the file is copied as .npmrc, packages are installed,
+# and then the copied file is deleted. This is to prevent local NPM development
+# in this directory from being blocked because ${} is a docker thing, not a NPM thing.
+#
+@content-solutions:registry=https://gitlab.tvo.org/api/v4/packages/npm/
+//gitlab.tvo.org/api/v4/packages/npm/:_authToken=${GITLAB_NPM_TOKEN}
