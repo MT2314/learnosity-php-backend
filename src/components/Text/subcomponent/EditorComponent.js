@@ -85,7 +85,7 @@ const EditorComponent = ({ body, setProp }) => {
 
   return (
     <div ref={textRef} onClick={() => setEditorIsFocus(true)} className="text-editor" data-testid="text-editor-component">
-      <div className="showtool" style={ editorIsFocus ? { display: 'flex'} : { display: 'none'} }>
+      <div className={ editorIsFocus ? "showtool" : "hidetool"}>
         <CustomToolBar toolbarId={toolbarId} />
       </div>
         <ReactQuill
