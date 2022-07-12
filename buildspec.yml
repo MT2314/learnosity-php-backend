@@ -21,9 +21,6 @@ phases:
     commands:
       - echo Building project...
       - echo Build started on `date`
-      - cd build
-      - aws s3 sync . s3://platypus-cl-student-templates/ --exclude "node_modules" --include "*"
-
 
   post_build:
     commands:
@@ -32,7 +29,7 @@ phases:
 artifacts:
   files:
     - "**/*"
-  base-directory: "dist"
+  base-directory: "build"
 
 cache:
   paths:
