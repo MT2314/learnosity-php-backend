@@ -1,0 +1,23 @@
+{%- assign videoId = data.videoUrl | split: '=' | last -%}
+<div class="youtube wrapper bottom-margin">
+{%comment%}
+    The player will always be 16x9 (widescreen) and take up the "full width" of it's parent.
+    The Youtube player itself will determine the height/width of the video source, and letterbox
+    as needed.
+    The Placeholder image will be stretched to "full width" regardless of thumbnail dimensions.
+{%endcomment%}
+    <amp-youtube
+        width="16"
+        height="9"
+        layout="responsive"
+        data-param-modestbranding="1"
+        data-param-rel="1"
+        data-videoid="{{ videoId }}"
+    >
+        <amp-img
+            src="{{data.thumbnailUrl}}"
+            placeholder
+            layout="fill"
+        ></amp-img>
+    </amp-youtube>
+</div>

@@ -1,0 +1,71 @@
+{%- assign type = data.type | downcase -%}
+{%- case type -%}
+    {%- when "audio" -%}
+        {%- assign phrase = "Transcript" -%}
+        {%- assign heading = false -%}
+        {%- assign headingLabel = false -%}
+        {%- assign revealString = data.transcript -%}
+    {%- when "question_and_answer" -%}
+        {%- assign answerType = data.answerType | downcase -%}
+        {%- case answerType -%}
+            {%- when "hint" -%}
+                {%- assign phrase = "Hint" -%}
+                {%- assign heading = true -%}
+                {%- assign headingLabel = "Hint" -%}
+                {%- assign revealString = data.answer -%}
+            {%- when "suggested answer" -%}
+                {%- assign phrase = "Suggested Answer" -%}  
+                {%- assign heading = false -%}
+                {%- assign headingLabel = false -%}
+                {%- assign revealString = data.answer -%}
+        {%- endcase -%}
+ {%- endcase -%}        
+
+{%- assign nodeId = "entity" | append: data.uuidClean -%}
+
+<!-- Begin Click-to-Reveal: {{ phrase }} -->
+<div class="reveal wrapper inner">
+    <button [class]="{{ nodeId }} ? 'btn btn-primary btn-answer-reveal active': 'btn btn-primary btn-answer-reveal'" class="btn btn-primary btn-answer-reveal"
+            on="tap:AMP.setState({ {{ nodeId }}: !{{ nodeId }} })"
+            [aria-expanded]="{{ nodeId }} ? 'true' : 'false'"
+            aria-expanded="false"
+            aria-controls="{{ nodeId }}_reveal">
+        <span class="sr-only">{{ phrase }}</span>
+        <span aria-hidden="true">
+            <span [text]="{{ nodeId }} ? 'Hide {{ phrase }}': 'Show {{ phrase }}'">
+                Show {{ phrase }}
+            </span>
+            &nbsp;<i [class]="{{ nodeId }} ? 'fa fa-chevron-up': 'fa fa-chevron-down'" class="fa fa-chevron-down"></i>
+        </span>
+    </button>
+
+    <div id="{{ nodeId }}_reveal"
+        [class]="{{ nodeId }} ? 'answer-reveal pt2 px3 box-shadow': 'display-none'" 
+        class="display-none">
+    {% if heading -%}
+        <div class="heading clearfix mb2">
+            <div class="left mr1">
+                    <amp-img
+                        width="43px"
+                        height="43px"
+                        alt=""
+                        layout="fixed"
+                        class="callout-icon"
+                        src="https://dcc.ilc.org/mpm1d/assets/img/infoIcon.png"
+                        >
+                    </amp-img>
+            </div>
+            <div class="heading-label overflow-hidden">
+                {% if heading -%}
+                    {{ headingLabel | default: '' }}
+                {%- endif %}
+            </div>
+        </div>
+    {%- endif %}
+        <div>
+            {{ revealString | default: '' }}
+        </div>
+    </div>
+    <!-- End Click-to-Reveal: {{ phrase }} -->
+</div>
+

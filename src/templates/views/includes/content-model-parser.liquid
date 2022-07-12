@@ -1,0 +1,48 @@
+{%comment%} This block is for toggling "demo wrapper" labels in the showcase demo {%endcomment%}
+{%- if projectConfig.showcaseWrapper -%}
+    <div class="demo-wrapper">
+        <p class="demo-wrapper-title">{{item.type}}</p>
+{%- endif -%}
+
+
+{%comment%} Main Content Model Parser block {%endcomment%}
+{%- case item.type -%}
+    {%- when "formatted_text_no_heading" -%}
+        {% include amp-formatted-text.html data:item %}
+    {%- when "formatted_text" -%}
+        {% include amp-formatted-text.html data:item %}
+    {%- when "quote_box" -%}
+        {% include amp-quote.html data:item %}
+    {%- when "accordion" -%}
+        {% include amp-accordion.html data:item %}
+    {%- when "audio" -%}
+        {% include amp-audio.html data:item %}
+    {%- when "brightcove_video" -%}
+        {% include amp-brightcove-video.html data:item %}
+    {%- when "iframe" -%}
+        {% include amp-iframe.html data:item %}
+    {%- when "image" -%}
+        {% include amp-image.html data:item %}
+    {%- when "callout" -%}
+        {% include amp-callout.html data:item %}
+    {%- when "youtube_video" -%}
+        {% include amp-youtube-video.html data:item %}
+    {%- when "question_and_answer" -%}
+        {% include amp-question-and-answer.html data:item %}
+    {%- when "table" -%}
+        {% include amp-table.html data:item %}
+    {%- when "carousel" -%}
+        {% include amp-carousel.html data:item %} 
+    {%- when "quiz" -%}
+        {% include amp-quiz.html data:item %}        
+    {%- when "tabs" -%}
+        {% include amp-tabs.html data:item %}
+{%- endcase -%}
+{%comment%} End Main Content Model Parser block {%endcomment%}
+
+
+{%comment%} This block is for toggling "demo wrapper" labels in the showcase demo {%endcomment%}
+{%- if projectConfig.showcaseWrapper -%}
+        <p class="demo-wrapper-end">end {{item.type}}</p>
+    </div><!-- /.demo-wrapper -->
+{%- endif -%}

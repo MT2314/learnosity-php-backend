@@ -1,0 +1,16 @@
+<div class="student-answer wrapper bottom-margin">
+
+{%- if data.allowStudentResponse == true -%}
+    <label class="question" for="entity{{data.uuid}}_textarea">{{ data.question }}</label>
+    <div class="clearfix mb2"></div>
+    <div class="max-width-1 mx-auto">
+        <textarea id="entity{{data.uuid}}_textarea" class="student-answer mb1 p1" placeholder="Answer here..."></textarea>
+    </div>
+{%- else -%}
+    <p class="question">{{ data.question }}</p>
+{%- endif -%}
+
+    <div class="max-width-1 mx-auto">
+        {%- include amp-click-to-reveal.html data:data -%}
+    </div>
+</div>
