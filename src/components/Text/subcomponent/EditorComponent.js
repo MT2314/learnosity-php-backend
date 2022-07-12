@@ -3,50 +3,72 @@ import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { v4 as uuidv4 } from "uuid";
+import "quill-paste-smart";
 
 const EditorComponent = ({ body, setProp }) => {
-
-  const toolbarId = `unique-id-${Math.floor(Math.random() * 1000000)}`;
-
-  var icons = Quill.import("ui/icons");
-  icons["ql-formula"] =
-    '<i class="fa-regular fa-pi fa-9x" style="color:#9b479f"></i>';
+  const toolbarId = `unique-id-${uuidv4()}`;
 
   const formats = [
-    "header",
-    "font",
-    "size",
     "bold",
     "italic",
     "underline",
     "script",
     "strike",
-    "blockquote",
+    "formula",
     "align",
     "list",
     "bullet",
-    "indent",
     "link",
-    "image",
-    "color",
   ];
 
+  const modules = {
+    toolbar: {
+      container: `#${toolbarId}`,
+    },
+    clipboard: {
+      allowed: {
+        tags: [
+          "a",
+          "strong",
+          "u",
+          "s",
+          "i",
+          "p",
+          "br",
+          "ul",
+          "ol",
+          "li",
+          "b",
+          "sub",
+          "sup",
+        ],
+        attributes: ["href", "rel", "target", "class"],
+      },
+      keepSelection: true,
+      substituteBlockElements: true,
+      magicPasteLinks: true,
+      hooks: {
+        uponSanitizeElement(node, data, config) {
+          console.log(node);
+        },
+      },
+    },
+  };
+
   const focusRef = useRef(null);
-  
-    useEffect(() => {
-      focusRef.current.focus();
-    }, []);
+
+  useEffect(() => {
+    focusRef.current.focus();
+  }, []);
 
   const handleDataChange = (content, delta, source, editor) => {
-    let editorContent = editor.getContents()
-    setProp({ body: editorContent })
+    let editorContent = editor.getContents();
+    setProp({ body: editorContent });
   };
-  
-  return (
-    <div className="text-editor" data-testid='text-editor-component'>
 
+  return (
+    <div className="text-editor" data-testid="text-editor-component">
       <div className="showtool">
         <CustomToolBar toolbarId={toolbarId} />
       </div>
@@ -54,13 +76,9 @@ const EditorComponent = ({ body, setProp }) => {
       <ReactQuill
         data-testid={'test'}
         ref={focusRef}
-        modules={{
-          toolbar: {
-            container: `#${toolbarId}`,
-          },
-        }}
+        modules={modules}
         formats={formats}
-        theme={"snow"}
+        theme="snow"
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
         enim ad minim veniam, quis nostrud exercitation ullamco laboris

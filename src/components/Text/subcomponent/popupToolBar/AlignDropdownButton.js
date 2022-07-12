@@ -1,26 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core/";
-import { ToolBarDropDowns } from "../CustomToolBar";
+import "../../styles/AlignDropdownButton.scss";
+import icons from "../../assets/icons";
 
-const AlignDropdownButton = (props) => {
-  const [activeDropDownItem, setActiveDropDownItem] =
-    useContext(ToolBarDropDowns);
-
+const AlignDropdownButton = ({
+  show,
+  activeDropDownItem,
+  setActiveDropDownItem,
+  setActiveAlignIcon,
+}) => {
   return (
     <>
-      <Card
-        style={{
-          display: props.show ? "block" : "none",
-          position: "absolute",
-          left: "66px",
-          zIndex: "25",
-          bottom: "-32px",
-          padding: "3px",
-        }}
-        className="dropdown-content"
-      >
+      <Card className={show ? "align-dropdown show" : "align-dropdown hide"}>
         <span className="ql-formats">
           <Tooltip arrow title="align left" placement="top">
             <button
@@ -28,52 +21,65 @@ const AlignDropdownButton = (props) => {
               onClick={() => {
                 if (activeDropDownItem === "left") {
                   setActiveDropDownItem("");
+                  setActiveAlignIcon("");
                 } else {
                   setActiveDropDownItem("left");
+                  setActiveAlignIcon("left");
                 }
               }}
-              className="ql-align"
-              style={{
-                backgroundColor:
-                  activeDropDownItem === "left" ? "rgb(226, 236, 245)" : "",
-              }}
-            ></button>
+              className={
+                activeDropDownItem === "left"
+                  ? "ql-align ql-selected ql-active"
+                  : "ql-align"
+              }
+              value=""
+            >
+              {icons["align"]}
+            </button>
           </Tooltip>
           <Tooltip arrow title="centre text" placement="top">
             <button
               aria-label="align center"
-              className="ql-align"
+              className={
+                activeDropDownItem === "center"
+                  ? "ql-align ql-selected ql-active"
+                  : "ql-align"
+              }
               value="center"
               onClick={() => {
                 if (activeDropDownItem === "center") {
                   setActiveDropDownItem("");
+                  setActiveAlignIcon("");
                 } else {
                   setActiveDropDownItem("center");
+                  setActiveAlignIcon("center");
                 }
               }}
-              style={{
-                backgroundColor:
-                  activeDropDownItem === "center" ? "rgb(226, 236, 245)" : "",
-              }}
-            ></button>
+            >
+              {icons["center"]}
+            </button>
           </Tooltip>
           <Tooltip arrow title="align right" placement="top">
             <button
               aria-label="right align"
-              className="ql-align"
+              className={
+                activeDropDownItem === "right"
+                  ? "ql-align ql-selected ql-active"
+                  : "ql-align"
+              }
               value="right"
               onClick={() => {
                 if (activeDropDownItem === "right") {
                   setActiveDropDownItem("");
+                  setActiveAlignIcon("");
                 } else {
                   setActiveDropDownItem("right");
+                  setActiveAlignIcon("right");
                 }
               }}
-              style={{
-                backgroundColor:
-                  activeDropDownItem === "right" ? "rgb(226, 236, 245)" : "",
-              }}
-            ></button>
+            >
+              {icons["right"]}
+            </button>
           </Tooltip>
         </span>
       </Card>
