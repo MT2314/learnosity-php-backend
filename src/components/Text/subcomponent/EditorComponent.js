@@ -84,11 +84,10 @@ const EditorComponent = ({ body, setProp }) => {
   };
 
   return (
-    <div className="text-editor" data-testid="text-editor-component">
-      <div className="showtool" style={editorIsFocus ? { display: 'flex'} : { display: 'none'}}>
+    <div ref={textRef} onClick={() => setEditorIsFocus(true)} className="text-editor" data-testid="text-editor-component">
+      <div className="showtool" style={ editorIsFocus ? { display: 'flex'} : { display: 'none'} }>
         <CustomToolBar toolbarId={toolbarId} />
       </div>
-      <div ref={textRef} onClick={() => setEditorIsFocus(true)}>
         <ReactQuill
           ref={focusRef}
           modules={modules}
@@ -101,7 +100,6 @@ const EditorComponent = ({ body, setProp }) => {
           className="quillEditor"
           onChange={handleDataChange}
         />
-      </div>
     </div>
   );
 };
