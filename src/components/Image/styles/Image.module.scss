@@ -20,10 +20,6 @@
      height: auto;
      align-self: center;
 
-     &:hover {
-      cursor: pointer;
-     }
-
      &:focus {
       outline: 3px solid #ffc46b;
      }
@@ -38,10 +34,6 @@
       width: 100%;
       transition: border ease-in-out 0.3s;
       border: 1px solid #707070;
-      
-      &:hover {
-         cursor: pointer;
-      }
       
       &:focus {
          outline: 3px solid #ffc46b;
