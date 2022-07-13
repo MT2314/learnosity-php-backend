@@ -1,8 +1,12 @@
-# ilc-amp
+# Amp-template-generator
 
-Template *(luke)* layer which generates AMP-valid HTML files using [Eleventy Static Site Generator (11ty)](https://www.11ty.dev/docs/)
+This is a minirepo within the mf-component-library which generates AMP-valid HTML files using [Eleventy Static Site Generator (11ty)](https://www.11ty.dev/docs/). 
 
-It includes templates for building 20+ components (many of them interactive) custom-tailored for ILC courseware.
+This provides the ability to see the output of the work in progress, file compilation and build/packaging of the ready-for-use amp templates
+
+ilc-amp
+
+Initially called 'ilc-amp', this template *(luke)* layer includes templates for building 20+ components (many of them interactive) custom-tailored for ILC courseware.
 
 The code in this repo works as a layer on top of a NodeJS-based transcompiler in AWS Lambda that exports courseware data from headless CMS (via GraphQL) to the HTML files. 
 
@@ -13,25 +17,12 @@ This project can be found in use as a layer on AWS [here](https://ca-central-1.c
 See original codebase [project wiki](https://gitlab.tvo.org/content-solutions/courseware-graphql-output/wikis/) for other documentation.
 
 
-## Installation
+## Working with this repo
 
-Create a local project directory and clone the repository
+When you first start working with the subrepo:
 ```
-cd projects/courseware
-git clone git@gitlab.tvo.org:content-solutions/transcompiler/layers/luke/ilc-amp.git
-
-```
-Checkout the feature branch
-```
-cd ilc-amp
-git checkout <branch name>
-git pull
-
-```
-Npm package installs and updates
-```
-# After npm installations or updates run the following command
-npm run install-templates
+cd amp-template-generator
+npm install
 
 ```
 Configure .env
@@ -41,58 +32,29 @@ cd ilc-amp
 cp .env.local .env
 # Update environment variables as needed
 ```
-Create the docker images
-```
-# Run the following command once for the first time; or when there is a significant change to the project configuration
-docker-compose up --build
-# Run the following command thereafter
-docker-compose up
-```
 
-In a browser navigate to the live reload server to view the results
+Make changes to the template files OUTSIDE amp-template-generator, within the src
+folder of mf-component-library. These can be found in the templates folder. Once you are ready to see your changes, pointing at mf-component-library:
 ```
-http://localhost:8000/
+npm run test-templates
+
 ```
-
-
-## Layer Deployment
+Npm package installs and updates
 ```
-# to add a layer on top of tatooine-prod-compile (AWS Lambda Layer)
-# run the following command to trigger a build to package this up in zip folder for layer upload
-# once zipped, it can be uploaded directly to your Lambda using the AWS layer wizard
+# After npm installations or updates run the following command
+npm run install-templates
 
+```
+This copies the scss, test and views folders and contents from the mf-component-library into the node_modules of amp-template-generator, installs the templates on the mini-repo, and runs demo builds for you to view from /dist/demo and /dist/showcase.
+
+When you are ready to do a proper build of the amp templates, pointing at amp-template-generator:
+```
 npm run build
 ```
-
-## Use within Lambda Function
-The Lambda that this layer is attached to will kick off the template process via NPM task:
-```
-npm run compile
-```
-
-## Running manual commands in the container
-Either open a bash shell to the running container using a terminal
-```
-cd ilc-amp
-docker exec -it ilc-amp /bin/bash
-```
-Or, open a bash shell to the running container using Visual Studio Code
-
-- Click the Docker tab from the left menu
-- Right click on a container and select ```Attach Shell```
-
-
-## Docker commands
-`docker ps -a` - lists running containers
-
-`docker network list` - lists available networks
-
-`docker network inspect <network name>` - provides details of the network; including attached containers/services
+This compiles the templates, generatates the files needed by the transcompiler Lambda and outputs them to the /build folder. Currently this is a manual process but we're working toward automation. This build folder contains both the required output as both loose files and a zipped folder.
 
 
 ## Command options for local development
-
-`npm run install-templates` - Copies component-library templates from `node_modules` and `src/views` to `./views` for use with 11ty. This should be run the first time this project is installed, as well as every time the component-library is updated to a new version.
 
 Manual testing is made possible by editing values in the ```.env``` file. Please note that by uncommenting ```ENTITY_ID```, the value set here may override the entity id (eid) in the url query value when run via the api call. Both examples output to ```./dist/liquid/```
 
