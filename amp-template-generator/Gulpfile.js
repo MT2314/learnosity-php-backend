@@ -387,8 +387,6 @@ function _copyNodeResults() {
   return gulp
     .src("src/views/data/*")
     .pipe(gulp.dest("build/nodejs/views/data"));
-  // .src(["nodeResults.js"], { base: "./" })
-  // .pipe(gulp.dest("build/nodejs/views/data"));
 }
 
 function _copyStyles() {
