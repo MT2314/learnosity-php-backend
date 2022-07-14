@@ -354,7 +354,6 @@ var createViewsFolder = gulp.series(_deleteViewsFolder, function () {
     .src([
       "node_modules/@publishing-platform/component-library/dist/templates/views/**/*",
       "src/views/**/*",
-      "!src/views/data/nodeResults.js",
     ])
     .pipe(gulp.dest("views"));
 });
