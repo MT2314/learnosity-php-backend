@@ -53,6 +53,21 @@ npm run build
 ```
 This compiles the templates, generatates the files needed by the transcompiler Lambda and outputs them to the /build folder. Currently this is a manual process but we're working toward automation. This build folder contains both the required output as both loose files and a zipped folder.
 
+## Brightcove Stylesheet
+The stylings of an &lt;amp-brightcove/&gt; component work a little differently than other components. Brightcove videos are loaded inside an iframe, so the CSS to style the video player must be uploaded directly to Brightcove via the Digital Media Services team (Keith Lennox).
+
+The Brightcove CSS uses the same mixins and color variables as our other SASS, but it is compiled as a standalone CSS output.
+
+The process for changing the Brightcove player styles is:
+1. Copy `src/test/brightcove.html` to `dist/`.
+
+   This is a non-amp test file which will load a Brightcove video and refer to our CSS, so we can see our changes in the browser locally.
+
+2. Change the styles in `src/scss/brightcove.scss` as required.
+
+3. `npm run sass:bc` will compile the sass to `dist/brightcove.css`. 
+
+4. When the changes are ready, contact Digital Media Services so they can upload/replace the CSS in our player.
 
 ## Command options for local development
 
@@ -76,8 +91,6 @@ Other commands (for more information, [see the wiki](https://gitlab.tvo.org/cont
 `npm run builds` - Builds the "showcase" page (Compile SASS to CSS, and generate showcase HTML page in `./dist/showcase`). 
 
 `npm run sass:bc` - (local only) Compiles the Brightcove player CSS file. See [Brightcove Stylesheet](#brightcove-stylesheet), below.
-
-`npm run {jeff/tom/fish/karen}` - dev scripts for local experimentation, without breaking the "main demo".
 
 `npm run reset` - erases all files in `./.tmp` and `./dist`
 
@@ -103,20 +116,6 @@ Once some HTML files have been generated in this fashion, if you only wish to re
 npm run sass
 ```
 
-## Brightcove Stylesheet
-The stylings of an &lt;amp-brightcove/&gt; component work a little differently than other components. Brightcove videos are loaded inside an iframe, so the CSS to style the video player must be uploaded directly to Brightcove via the Digital Media Services team (Keith Lennox).
 
-The Brightcove CSS uses the same mixins and color variables as our other SASS, but it is compiled as a standalone CSS output.
-
-The process for changing the Brightcove player styles is:
-1. Copy `src/test/brightcove.html` to `dist/`.
-
-   This is a non-amp test file which will load a Brightcove video and refer to our CSS, so we can see our changes in the browser locally.
-
-2. Change the styles in `src/scss/brightcove.scss` as required.
-
-3. `npm run sass:bc` will compile the sass to `dist/brightcove.css`. 
-
-4. When the changes are ready, contact Digital Media Services so they can upload/replace the CSS in our player.
 
 
