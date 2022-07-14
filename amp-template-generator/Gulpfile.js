@@ -70,9 +70,7 @@ exports.reset = reset;
 function _sass() {
   return (
     gulp
-      .src(
-        "node_modules/@publishing-platform/component-library/dist/templates/scss/styles.scss"
-      )
+      .src("../src/templates/scss/styles.scss")
       .pipe(
         sass({
           includePaths: ["node_modules"],
@@ -352,7 +350,8 @@ exports.buildLocal = buildLocal;
 var createViewsFolder = gulp.series(_deleteViewsFolder, function () {
   return gulp
     .src([
-      "node_modules/@publishing-platform/component-library/dist/templates/views/**/*",
+      // "node_modules/@publishing-platform/component-library/dist/templates/views/**/*",
+      "../src/templates/views/**/*",
       "src/views/**/*",
       "!src/views/data/nodeResults.js",
     ])
