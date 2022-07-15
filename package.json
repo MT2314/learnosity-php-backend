@@ -7,6 +7,7 @@
     "build:prod": "webpack --mode production --env ENVIRONMENT=prod",
     "build:stage": "webpack --mode production --env ENVIRONMENT=stage",
     "build:start": "cd dist && PORT=3001 npx serve",
+     "build-templates": "mkdir -p ./dist/templates && cp -R -a ./src/templates ./dist",
     "start": "webpack serve --open --mode development --env ENVIRONMENT=local",
     "start:live": "webpack serve --open --mode development --live-reload --hot --env ENVIRONMENT=local",
     "test": "react-scripts test --watchAll",
@@ -14,7 +15,8 @@
     "test:local": "CI=true react-scripts test --ci --watchAll=false",
     "test:qa": "CI=true react-scripts test --ci --watchAll=false",
     "test:stage": "CI=true react-scripts test --ci --watchAll=false",
-    "test:dev": "CI=true react-scripts test --ci --watchAll=false"
+    "test:dev": "CI=true react-scripts test --ci --watchAll=false",
+    "test-templates": "sh ./test-templates.sh"
   },
   "license": "MIT",
   "devDependencies": {

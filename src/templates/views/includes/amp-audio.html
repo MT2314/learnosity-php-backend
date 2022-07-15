@@ -1,0 +1,14 @@
+<div class="audio wrapper bottom-margin">
+    <div class="audio-intro">
+        {{ data.introduction | default: '' }}
+    </div>
+    <div class="max-width-1 mx-auto">
+        <amp-audio width="auto" height="54" controls controlsList="nodownload" class="audio-style mb2" src="{{ data.url }}">
+        <div fallback>
+            <p>Your browser doesn’t support HTML5 audio</p>
+        </div>
+     </amp-audio>
+   
+    {% include amp-click-to-reveal.html data:data %}
+    </div>
+</div>

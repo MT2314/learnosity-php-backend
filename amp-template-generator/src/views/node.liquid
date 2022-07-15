@@ -1,0 +1,11 @@
+---
+pagination:
+  data: nodeResults
+  alias: result
+  size: 1
+layout: amp-layout.njk
+permalink: "{{result.lessonPaths[0].courseCode | default: 'default' }}_u{{result.lessonPaths[0].unitNumber}}la{{result.lessonPaths[0].lessonNumber}}.html"
+---
+{%- for section in result.sections -%}
+  {% include amp-section.html section:section %}
+{%- endfor -%}
