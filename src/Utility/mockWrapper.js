@@ -56,13 +56,15 @@ export const ComponentStateWrapper = ({ id, name, ...componentState }) => {
   */
   const [state, setState] = useContext(WidgetContext);
 
-  const handleChange = (newState) => {
-    console.log(`Updating state for ${id} ->`, state, newState);
-    setState((prevState) => ({
-      ...prevState,
-      [id]: { ...prevState[id], ...newState },
-    }));
-  };
+	const handleChange = (newState) => {
+		console.log(`Updating state for ${id} ->`, state, newState);
+		if (state[id]?.name !== "Text") {
+			setState((prevState) => ({
+				...prevState,
+				[id]: { ...prevState[id], ...newState },
+			}));
+		}
+	};
 
   const Component = componentIndex[name]?.Component;
   if (!Component) {
