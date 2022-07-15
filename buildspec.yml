@@ -8,14 +8,9 @@ phases:
   pre_build:
     commands:
       - echo Installing dependencies...
-      - npm i
-      - cd amp-template-generator
-      - npm i 
-      - cd ../mf-component-library
-      - npm run test-templates
-      - cd amp-template-generator
-      - npm run build
-      - echo Building project...
+      - npm ci 
+      - echo Running tests
+      - npm run test:$TEST_ENV
 
   build:
     commands:

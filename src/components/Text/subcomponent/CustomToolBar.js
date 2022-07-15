@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import { Divider } from "@mui/material/";
 import { Tooltip } from "@material-ui/core/";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";

@@ -20,7 +20,7 @@ const callout = [
     type_id: 3,
     title: "Try It",
     iconUrl:
-      "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/tryit_icon.svg",
+      "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/try_icon.svg",
   },
   {
     type_id: 4,
