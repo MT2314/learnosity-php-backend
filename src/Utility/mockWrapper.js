@@ -37,12 +37,8 @@ export const WidgetContextProvider = ({ children }) => {
 };
 
 export const ComponentStateWrapper = ({ id, name, ...componentState }) => {
-  
   //error boundary is added to each component
-  const OurFallbackComponent = ({
-    error,
-    resetErrorBoundary,
-  }) => {
+  const OurFallbackComponent = ({ error, resetErrorBoundary }) => {
     return (
       <div>
         <h1>An error occurred: {error.message}</h1>
@@ -56,15 +52,13 @@ export const ComponentStateWrapper = ({ id, name, ...componentState }) => {
   */
   const [state, setState] = useContext(WidgetContext);
 
-	const handleChange = (newState) => {
-		console.log(`Updating state for ${id} ->`, state, newState);
-		if (state[id]?.name !== "Text") {
-			setState((prevState) => ({
-				...prevState,
-				[id]: { ...prevState[id], ...newState },
-			}));
-		}
-	};
+  const handleChange = (newState) => {
+    console.log(`Updating state for ${id} ->`, state, newState);
+    setState((prevState) => ({
+      ...prevState,
+      [id]: { ...prevState[id], ...newState },
+    }));
+  };
 
   const Component = componentIndex[name]?.Component;
   if (!Component) {
