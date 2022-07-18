@@ -1,0 +1,58 @@
+<div class="clearfix">
+
+    {% assign prevFocusable = thisFocusable %}
+    {% assign thisFocusable = "" %}
+    {% assign questionId = question.uuidClean %}  
+    <div class="mb4  font-small">
+        {% for questionPart in question.question %}
+            {% if questionPart.type == "formatted_text" %}
+            {% include amp-formatted-text.html data:questionPart wrapperStyles:"inner" %}        
+            {% elsif questionPart.type == "image" %}
+            {% include amp-image.html data:questionPart wrapperStyles:"inner" %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="mb2"> 
+        <div class="input">   
+            {% assign answerCount = 0 %}
+            {% for questionPart in question.answers %}          
+                {% assign questionPartId = questionPart.uuidClean %}
+                {% assign questionFeedback = questionPart.feedback | strip_html | escape %}
+                <div class="quiz-choice" [class]="thisSelected_{{ questionPartId }} && displayFeedback{{questionId}} == 'f_{{questionPartId}}' ? 'quiz-choice selected':enabledState{{ questionId }} && a{{ count }}{{ questionId }} ?'quiz-choice noclick':'quiz-choice'">
+                    <label [class]="enabledState{{ questionId }} && a{{ count }}{{ questionId }} ? 'radio-disabled':'radio-enabled'" class="radio-enabled" for="choice_{{ questionPartId }}">
+                        <input [class]="enabledState{{ questionId }} && a{{ count }}{{ questionId }}  ? 'mr1 radio-disabled':'mr1 radio-enabled'" class="mr1 radio-enabled" type="radio" id="choice_{{ questionPartId }}" name="q{{quizId}}{{ count }}" value="f_{{ questionPartId }}" 
+                            on="input-debounced:AMP.setState({ thisSelected_{{ questionPartId }}: true, displayFeedback{{ questionId }}:'f_{{questionPartId}}', a{{ count }}{{ questionId }}: {% if questionPart.correctAnswer %}event.value{% else %}''{% endif %}, submitButtonReady{{ questionId }}: true, enabledState{{ questionId }}: false }) " >
+                        {{ questionPart.answerCopy }}
+                    </label>     
+                </div>
+                {% if thisFocusable == "" %}{% assign thisFocusable = "choice_" | append: questionPartId %}{% endif %}  
+                {% if firstFocusable == "" %}{% assign firstFocusable = "choice_" | append: questionPartId %}{% endif %}   
+            {% endfor %} 
+        </div>
+    </div>  
+</div>
+<div class="button-group">
+    <button  class="btn btn-primary full-width" type="button" [class]="!submitButtonReady{{ questionId }} && enabledState{{ questionId }} ? 'btn btn-primary full-width active' : 'btn btn-primary full-width'" on="tap:AMP.setState({ countCorrect{{quizId}}: a{{ count }}{{ questionId }} ? countCorrect{{quizId}} + 1 : countCorrect{{quizId}}, submitButtonReady{{ questionId }}: false, enabledState{{ questionId }}: true })" disabled [disabled]="!submitButtonReady{{ questionId }}">Submit</button>
+    <div [class]="enabledState{{ questionId }}  ? 'feedback-reveal box-shadow show-fb' : 'hide-fb'" class="hidden">
+        <div class="hide-fb" [class]="enabledState{{ questionId }} && !a{{count}}{{ questionId }}? 'show-fb mb3' : 'hide-fb'" ><i class="fa fa-times font-large wrong mr1" aria-hidden="true"></i><span>Incorrect</span></div>
+        <div class="hide-fb" [class]="enabledState{{ questionId }} && a{{count}}{{ questionId }}? 'show-fb mb3' : 'hide-fb'" ><i class="fa fa-check font-large correct mr1" aria-hidden="true"></i><span>Correct</span></div>
+        {% for questionPart in question.answers %}   
+        {% assign questionPartId = questionPart.uuidClean %}
+            {% assign questionFeedback = questionPart.feedback | strip_html  %}
+            <div id="f_{{ questionPartId }}" class="hide-fb" [class]="enabledState{{ questionId }} && displayFeedback{{questionId}} == 'f_{{questionPartId}}' ? 'font-large show-fb ml3' : 'hide-fb'" >
+                <p class="fbp">{{questionFeedback}}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>    
+ <div class="mt2 px4 pb1 clearfix">
+        {% if count > 1 %}
+        <button class="btn btn-primary btn-flex pull-left" type="button" on="tap:AMP.setState({ quizPage{{quizId}} : quizPage{{quizId}}  - 1 }), quizTop{{quizId}}.scrollTo(duration=200), {{prevFocusable}}.focus">
+            <i class="fa fa-chevron-left circle-icon btn-col"></i><span class="btn-col label">Previous</span>
+        </button>
+        {% endif %}
+        <button class="btn btn-primary btn-flex pull-right" type="button" on="tap:AMP.setState({ quizPage{{quizId}} : quizPage{{quizId}}  + 1 }), quizTop{{quizId}}.scrollTo(duration=200)">
+            <span class="btn-col label">Next</span><i class="fa fa-chevron-right circle-icon btn-col"></i>
+        </button>
+</div>
+

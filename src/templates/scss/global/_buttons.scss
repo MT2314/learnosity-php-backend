@@ -1,0 +1,87 @@
+.btn {
+    background-color: $btn-default-bg;
+    font-weight: bold;
+    text-align: center;
+    color: $btn-default-text;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: $btn-default-bg-hover; // took out box shadow on hover
+    }
+    
+    &:disabled,
+    &[disabled] {
+        background-color: $btn-disabled-bg;
+        color: $btn-disabled-text;
+        box-shadow: 0 0 0 1px $btn-disabled-border;
+    }
+
+    &.btn-primary {    // rectangular green with rounded corners
+        border-radius: $btn-primary-rad;
+        //height: $btn-primary-ht;
+        padding: 1rem 2rem;
+    }
+    &.btn-primary-sm {    // rectangular green with rounded corners and less padding than btn-primary
+        border-radius: $btn-primary-rad;
+        //height: $btn-primary-ht;
+        padding: .5rem 2rem;
+    }
+    &.btn-goto {      // round Next and Previous buttons
+        @include font-large;
+        border-radius: $btn-goto-rad;
+        width: $btn-goto-size;
+        height: $btn-goto-size;
+        
+        &.right {
+            &:before {
+                content: "\f054"; 
+                font-family: FontAwesome;
+                padding-left: 2px;
+            }
+        }
+        &.left {
+            &:before {
+                content: "\f053"; 
+                font-family: FontAwesome;
+                padding-right: 2px;
+            }
+        }
+    }
+    
+    &.btn-launch-start {
+        line-height: 1.15;
+        text-decoration: none;
+    }
+
+    // To style buttons as links, use .btn.link
+    &.link {
+        @include font-small;
+        border: none;
+        background: none;
+        text-decoration: underline;
+        color: $btn-link-text;
+        font-weight: normal;
+
+        & .fa {
+            text-decoration: none;
+            margin-right: 0.25rem;
+        }
+    }
+
+    // The skip to content link is styled as a button,
+    // and needs to overwrite some .btn inheritance.
+    &.skip-to-content {
+        z-index: 1000;
+        font-weight: 400;
+        left: calc(50% - 53px);
+        position: absolute;
+        transform: translateY(-26px);
+        transition: transform 0.3s;
+        
+        &:focus {
+            transform: translateY(35px);
+        }
+    }
+}

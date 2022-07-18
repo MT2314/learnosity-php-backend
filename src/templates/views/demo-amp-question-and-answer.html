@@ -1,0 +1,71 @@
+---
+{
+  "result": {
+    "title": "Question and Answer",
+    "components": [
+# Example 1: Suggested Answer with Student Entry
+      {
+        "uuid": "4d0e9579-5ac8-4390-a986-85af56e11009",
+        "uuidClean": "4d0e9579_5ac8_4390_a986_85af56e11009",
+        "type": "question_and_answer",
+        "answerType": "Suggested Answer",
+        "question": "Who has reasoned appropriately? Type your response in the space provided, then check your answer to see how you did.",
+        "allowStudentResponse": true,
+        "answer": "<p>Each student has sound reasoning! There are 12 thumbs up emojis out of the total of 18 emojis. Marie reduced Nick’s ratio by dividing each of the terms by 2. Sanjita reduced Marie’s ratio by dividing each of the terms by 3.</p>\n"
+      },
+# Example 2: Suggested Answer w/o Student Entry
+      {
+        "uuid": "4d0e9579-5ac8-4390-a986-85af56e11010",
+        "uuidClean": "4d0e9579_5ac8_4390_a986_85af56e11010",
+        "type": "question_and_answer",
+        "answerType": "Suggested Answer",
+        "question": "What did you Wonder?",
+        "allowStudentResponse": false,
+        "answer": "<p>What relationships do you see among the green-marked cells in spreadsheets 3 and 4? What formulas were used to fill D8 and F8?</p>\n"
+      },
+# Example 3: Hint w/o Student Entry
+      {
+        "uuid": "4d0e9579-5ac8-4390-a986-85af56e11011",
+        "uuidClean": "4d0e9579_5ac8_4390_a986_85af56e11011",
+        "type": "question_and_answer",
+        "answerType": "Hint",
+        "question": "Create a graph of this relation.
+        ",
+        "allowStudentResponse": false,
+        "answer": "<p>The hot air balloon starts at a height of 300 m. That is the initial value. The rate of change can be recognized as the speed at which the balloon descends (–60 m/min), or it can be calculated using any two data points.</p><p>The independent variable, time in minutes, is plotted on the horizontal axis.</p><p>The dependent variable, height above the ground, is plotted on the vertical axis.</p><p>The graph and each axis are given a title and each axis is given units.</p>\n"
+      },
+# Example 3: Hint with Student Entry
+      {
+        "uuid": "4d0e9579-5ac8-4390-a986-85af56e11012",
+        "uuidClean": "4d0e9579_5ac8_4390_a986_85af56e11012",
+        "type": "question_and_answer",
+        "answerType": "Hint",
+        "question": "How many layers would you get if you could fold the page more than 9 times? Try filling in the following table.",
+        "allowStudentResponse": true,
+        "answer": "<p>If you can’t see the pattern in the data, note the following: when the number of layers is 16, the number of folds is 4. You obtain 16 when you multiply 2 by 2 four times.</p>\n"
+      }
+    ]
+  },
+  "layout": "amp-layout.njk",
+  "permalink": "demo-amp-question-and-answer.html"
+}
+---
+<h1>{{result.title}} {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+<h2>Example 1: Suggested Answer (with student entry)</h2>
+{% include amp-question-and-answer.html data:result.components[0] -%}
+<hr>
+
+<h2>Example 2: Suggested Answer (without student entry)</h2>
+{% include amp-question-and-answer.html data:result.components[1] -%}
+<hr>
+
+<h2>Example 3: Hint (without student entry)</h2>
+{% include amp-question-and-answer.html data:result.components[2] -%}
+<hr>
+
+<h2>Example 4: Hint (with student entry)</h2>
+{% include amp-question-and-answer.html data:result.components[3] -%}
+<hr>
+
+<p>This is additional page content after the last hint.</p>

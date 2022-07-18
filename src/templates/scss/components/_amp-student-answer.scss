@@ -1,0 +1,14 @@
+    .wrapper.student-answer {
+        .student-answer {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            width: 100%;
+            height:200px;
+            min-height:200px;
+            resize: vertical;
+            border-color: $border-color;
+            border-radius: 6px;
+        }
+    }
+    

@@ -1,0 +1,33 @@
+<div class="tabs wrapper bottom-margin">
+    {%- assign tablistId = 'tablist' | append: data.uuidClean -%}
+    <amp-selector class="tabs"
+        role="tablist"
+        keyboard-select-mode="focus"
+        id="{{tablistId}}">
+
+    {%- for tab in data.tabs -%}
+        <div id="{{tablistId}}_tab{{forloop.index}}"
+            role="tab"
+            aria-controls="{{tablistId}}_tabpanel{{forloop.index}}"
+            class="p1"
+            option
+        {% if forloop.index == 1 -%}
+            selected
+        {%- endif -%}
+        >
+            {{tab.tabLabel}}
+        </div>
+
+        <div id="{{tablistId}}_tabpanel{{forloop.index}}"
+            role="tabpanel"
+            aria-labelledby="{{tablistId}}_tab{{forloop.index}}"
+            class="border-left border-right border-bottom px3 pt3">
+
+            {%- for c in tab.components -%}
+                {% include content-model-parser.liquid item:c %}
+            {%- endfor -%}
+        </div>
+    {%- endfor -%}
+
+    </amp-selector>
+</div>

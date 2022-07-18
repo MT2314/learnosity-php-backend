@@ -1,0 +1,57 @@
+.wrapper.accordion {
+    .btn.link:hover {
+        background-color: $accordion-btn-link-bg-hover;
+        color: $accordion-btn-link-text-hover;
+        box-shadow: none;
+    }
+
+    .accordion {
+        clear: right;
+
+        .heading {
+            background-color: $accordion-heading-bg;
+            border-color: $border-color;
+            
+            &:hover {
+                background-color: $accordion-heading-bg-hover;
+            }
+
+            span {
+                width: calc(100% - 1.5rem);
+            }
+        }
+        
+        .section-content {
+            border-color: $border-color;
+        }
+
+        section {
+            &:first-child {
+                .heading {
+                    border-radius: 6px 6px 0 0;
+                }
+            }
+        
+            &:last-child {
+                .heading {
+                    border-radius: 0 0 6px 6px;
+                }
+            }
+        }
+    }
+}
+
+/*! purgecss start ignore */
+.wrapper.accordion .accordion section[expanded] .heading {
+    background-color: $accordion-heading-active-bg;
+    border-color: $accordion-heading-active-border;
+}
+
+.wrapper.accordion .accordion section:last-child[expanded] .heading {
+    border-radius: 0;
+}
+
+.wrapper.accordion .accordion section:last-child[expanded] .section-content {
+    border-bottom: 1px solid $border-color;
+}
+/*! purgecss end ignore */
