@@ -40,7 +40,6 @@ const EditorComponent = ({ body, setProp }) => {
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
     setProp({ body: editorContent });
-    // setProp({ body: data });
   };
 
   //customization settings for toolbar
