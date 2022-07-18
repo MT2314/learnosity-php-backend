@@ -21,8 +21,6 @@ const EditorComponent = ({ body, setProp }) => {
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
 
-  const [test, setTest] = useState("");
-
   //add focus to editor
   const focusRef = useRef(null);
 
@@ -132,10 +130,6 @@ const EditorComponent = ({ body, setProp }) => {
       <div className={editorIsFocus ? "showtool" : "hidetool"}>
         <CustomToolBar toolbarId={toolbarId} />
       </div>
-
-      {/* <div className="showtool">
-        <CustomToolBar toolbarId={toolbarId} />
-      </div> */}
 
       <ReactQuill
         ref={focusRef}
