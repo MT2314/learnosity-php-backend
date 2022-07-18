@@ -2,7 +2,6 @@ import React, {
   useEffect,
   useRef,
   useState,
-  useCallback,
   useMemo,
 } from "react";
 import ReactQuill, { Quill } from "react-quill";
@@ -13,7 +12,6 @@ import { v4 as uuidv4 } from "uuid";
 import "quill-paste-smart";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
-const Emitter = Quill.import("core/emitter");
 
 const EditorComponent = ({ body, setProp }) => {
   const toolbarId = `unique-id-${uuidv4()}`;
