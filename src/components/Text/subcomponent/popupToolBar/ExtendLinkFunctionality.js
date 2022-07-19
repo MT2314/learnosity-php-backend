@@ -1,3 +1,12 @@
+import React from "react";
+import ReactDOM from "react-dom";
+
+import {
+  TrashcanTooltip,
+  PencilTooltip,
+  ApplyTooltip,
+} from "./LinkCustomIcons";
+
 const linkValidityRegex =
   /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
@@ -33,99 +42,13 @@ const ExtendLinkFunctionality = (id) => {
   const dummyQuillRemoveBtnContainer = document.createElement("span");
   const dummyQuillEditBtnContainer = document.createElement("span");
 
-  dummyQuillRemoveBtnContainer.innerHTML = `<span class="btn-container"><span>delete link</span></span>`;
-  dummyQuillEditBtnContainer.innerHTML = `<span class="btn-container"><span>edit link</span></span>`;
-  dummyQuillActionBtnContainer.innerHTML = `<span class="btn-container"><span>add link</span></span>`;
-
   quillActionBtn.style.display = "none";
   quillRemoveBtn.style.display = "none";
 
   dummyQuillActionBtn.setAttribute("class", "btn-action");
 
-  const observeChanges = new MutationObserver((changes) => {
-    if (!changes[0].target.classList.contains("ql-editing")) {
-      dummyQuillActionBtnContainer.style.display = "none";
-      dummyQuillRemoveBtn.setAttribute("class", "btn-remove");
-      dummyQuillEditBtn.setAttribute("class", "btn-edit");
-    } else {
-      dummyQuillActionBtnContainer.style.display = "";
-      dummyQuillRemoveBtn.setAttribute("class", "");
-      dummyQuillEditBtn.setAttribute("class", "");
-    }
-  });
-
-  observeChanges.observe(linkTooltipElement, {
-    attributes: true,
-  });
-
-  const linkTooltipInput = linkTooltipElement.querySelector(`input`);
-
-  linkTooltipInput.setAttribute("data-link", "Paste a link");
-
-  linkTooltipInput.addEventListener("focus", (e) => {
-    linkTooltipInput.value = "";
-
-    dummyQuillActionBtn.classList.add("disabled");
-    linkTooltipInput.classList.remove("input-error");
-
-    errorMessageDiv.style.display = "none";
-    quillActionBtn.style.display = "none";
-    dummyQuillActionBtn.hidden = false;
-  });
-
-  linkTooltipInput.addEventListener("input", (e) => {
-    e.target.value?.length === 0
-      ? dummyQuillActionBtn.classList.add("disabled")
-      : dummyQuillActionBtn.classList.remove("disabled");
-  });
-
-  dummyQuillActionBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (dummyQuillActionBtn.classList.contains("disabled")) return;
-
-    if (linkTooltipElement.getAttribute("data-mode") === "link") {
-      if (linkTooltipInput?.value.match(linkValidityRegex)) {
-        quillActionBtn.click();
-        dummyQuillActionBtn.hidden = true;
-      } else {
-        errorMessageDiv.style.display = "block";
-        linkTooltipInput.classList.add("input-error");
-      }
-    } else {
-      quillActionBtn.click();
-    }
-  });
-
-  dummyQuillRemoveBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    quillRemoveBtn.click();
-  });
-
-  dummyQuillEditBtnContainer.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    quillActionBtn.click();
-  });
-
-  linkTooltipElement.addEventListener("focus", (e) => {
-    console.log("linkTooltipElement.focus");
-  });
-
-  document.addEventListener("click", (e) => {
-    const isClickInside = linkTooltipElement.contains(e.target);
-
-    if (!isClickInside) {
-      errorMessageDiv.style.display = "none";
-      document.removeEventListener("click", () => {});
-    }
-  });
-
   dummyQuillActionBtnContainer.appendChild(dummyQuillActionBtn);
+  dummyQuillActionBtnContainer.setAttribute("class", "apply-link-btn");
 
   quillActionBtn.parentNode.insertBefore(
     dummyQuillActionBtnContainer,
@@ -147,6 +70,103 @@ const ExtendLinkFunctionality = (id) => {
     dummyQuillEditBtnContainer,
     quillActionBtn.nextSibling
   );
+
+  const Trashcan = quillElement.querySelector(".trash-icon");
+  const Pencil = quillElement.querySelector(".pencil-icon");
+  const Apply = quillElement.querySelector(".apply-link-btn");
+
+  ReactDOM.render(<TrashcanTooltip />, Trashcan);
+  ReactDOM.render(<PencilTooltip />, Pencil);
+  ReactDOM.render(<ApplyTooltip />, Apply);
+
+  const observeChanges = new MutationObserver((changes) => {
+    if (!changes[0].target.classList.contains("ql-editing")) {
+      Trashcan.style.display = "";
+      Pencil.style.display = "";
+      Apply.style.display = "none";
+      // dummyQuillActionBtnContainer.style.display = "none";
+      // dummyQuillRemoveBtn.setAttribute("class", "btn-remove");
+      // dummyQuillEditBtn.setAttribute("class", "btn-edit");
+    } else {
+      Trashcan.style.display = "none";
+      Pencil.style.display = "none";
+      Apply.style.display = "";
+      // dummyQuillActionBtnContainer.style.display = "";
+      // dummyQuillRemoveBtn.setAttribute("class", "");
+      // dummyQuillEditBtn.setAttribute("class", "");
+    }
+  });
+
+  observeChanges.observe(linkTooltipElement, {
+    attributes: true,
+  });
+
+  const linkTooltipInput = linkTooltipElement.querySelector(`input`);
+
+  linkTooltipInput.setAttribute("data-link", "Paste a link");
+
+  linkTooltipInput.addEventListener("focus", (e) => {
+    linkTooltipInput.value = "";
+
+    Apply.classList.add("disabled");
+    linkTooltipInput.classList.remove("input-error");
+
+    errorMessageDiv.style.display = "none";
+    quillActionBtn.style.display = "none";
+    Apply.hidden = false;
+  });
+
+  linkTooltipInput.addEventListener("input", (e) => {
+    e.target.value?.length === 0
+      ? Apply.classList.add("disabled")
+      : Apply.classList.remove("disabled");
+  });
+
+  Apply.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (Apply.classList.contains("disabled")) return;
+
+    if (linkTooltipElement.getAttribute("data-mode") === "link") {
+      if (linkTooltipInput?.value.match(linkValidityRegex)) {
+        quillActionBtn.click();
+        Apply.hidden = true;
+      } else {
+        errorMessageDiv.style.display = "block";
+        linkTooltipInput.classList.add("input-error");
+      }
+    } else {
+      quillActionBtn.click();
+    }
+  });
+
+  Trashcan.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    quillRemoveBtn.click();
+  });
+
+  Pencil.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    quillActionBtn.click();
+  });
+
+  linkTooltipElement.addEventListener("focus", (e) => {
+    console.log("linkTooltipElement.focus");
+  });
+
+  document.addEventListener("click", (e) => {
+    const isClickInside = linkTooltipElement.contains(e.target);
+
+    if (!isClickInside) {
+      errorMessageDiv.style.display = "none";
+      document.removeEventListener("click", () => {});
+    }
+  });
 };
 
 export default ExtendLinkFunctionality;
