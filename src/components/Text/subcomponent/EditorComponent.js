@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useMemo,
-} from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
@@ -12,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import "quill-paste-smart";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
-
+import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 const EditorComponent = ({ body, setProp }) => {
   const toolbarId = `unique-id-${uuidv4()}`;
 
@@ -28,6 +23,8 @@ const EditorComponent = ({ body, setProp }) => {
   useOnClickOutside(textRef, () => setEditorIsFocus(false));
 
   useEffect(() => {
+    ExtendLinkFunctionality(`toolbar-${toolbarId}`);
+
     //on render set focus on the editor
     focusRef.current.focus();
     //on render toolbar appears
@@ -58,32 +55,32 @@ const EditorComponent = ({ body, setProp }) => {
     () => ({
       toolbar: {
         container: `#${toolbarId}`,
-        handlers: {
-          link: function (value) {
-            if (value) {
-              const editorInstance = focusRef.current;
-              let range = editorInstance.editor.getSelection();
-              if (range == null || range.length === 0) return;
-              let preview = editorInstance.editor.getText(range);
-              const tooltip = editorInstance.editor.theme.tooltip;
-              console.log(tooltip);
-              tooltip.save = function () {
-                const val = tooltip.textbox.value;
-                console.log(tooltip.textbox.value);
-                const linkValidityRegex =
-                  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+        //   handlers: {
+        //     link: function (value) {
+        //       if (value) {
+        //         const editorInstance = focusRef.current;
+        //         let range = editorInstance.editor.getSelection();
+        //         if (range == null || range.length === 0) return;
+        //         let preview = editorInstance.editor.getText(range);
+        //         const tooltip = editorInstance.editor.theme.tooltip;
+        //         console.log(tooltip);
+        //         tooltip.save = function () {
+        //           const val = tooltip.textbox.value;
+        //           console.log(tooltip.textbox.value);
+        //           const linkValidityRegex =
+        //             /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
-                if (val.match(linkValidityRegex)) {
-                  console.log("success");
-                  editorInstance.editor.format("link", val);
-                } else {
-                  console.log("fail");
-                }
-              };
-              tooltip.edit("link", preview);
-            }
-          },
-        },
+        //           if (val.match(linkValidityRegex)) {
+        //             console.log("success");
+        //             editorInstance.editor.format("link", val);
+        //           } else {
+        //             console.log("fail");
+        //           }
+        //         };
+        //         tooltip.edit("link", preview);
+        //       }
+        //     },
+        //   },
       },
       clipboard: {
         allowed: {
@@ -122,6 +119,7 @@ const EditorComponent = ({ body, setProp }) => {
       ref={textRef}
       onClick={() => setEditorIsFocus(true)}
       className="text-editor"
+      id={`toolbar-${toolbarId}`}
       data-testid="text-editor-component"
     >
       <div className={editorIsFocus ? "showtool" : "hidetool"}>
