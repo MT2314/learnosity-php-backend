@@ -12,6 +12,12 @@ export let defaultProps = {
   type: "",
 };
 
+export const categoryProps = {
+  categoryName: "Media",
+  icon: "da",
+  label: "Media",
+};
+
 const Video = ({
   type,
   videoId,

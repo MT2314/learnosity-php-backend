@@ -17,6 +17,12 @@ export const defaultProps = {
   ],
 };
 
+export const categoryProps = {
+  categoryName: "Interactive",
+  icon: "da",
+  label: "Interactive",
+};
+
 const Tab = ({ tabs, setProp = () => {} }) => {
 
   const [currTabIndex, setCurrTabIndex] = useState(0);

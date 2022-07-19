@@ -12,6 +12,12 @@ export const defaultProps = {
   quoteBoxUrl: null,
 };
 
+export const categoryProps = {
+  categoryName: "Text",
+  icon: "da",
+  label: "Text",
+};
+
 const QuoteBox = ({
   quoteBoxBody,
   quoteBoxCitation,

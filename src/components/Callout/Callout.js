@@ -5,6 +5,11 @@ import FormattedText from "../FormattedText/FormattedText";
 import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 import calloutOptions from "./utility/CalloutOptions";
 export const defaultProps = { heading: "", body: "" };
+export const categoryProps = {
+  categoryName: "Text",
+  icon: "da",
+  label: "Text",
+};
 
 const Callout = ({
   calloutTypeSvg,
