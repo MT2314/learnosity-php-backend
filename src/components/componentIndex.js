@@ -13,6 +13,7 @@ import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
 import Text, {
   defaultProps as quillDefaultProps,
+  categoryProps as textCategoryProps
 } from "./Text/Text";
 
 const componentIndex = {
@@ -27,6 +28,7 @@ const componentIndex = {
     readableName: "Text",
     defaultProps: quillDefaultProps,
     version: "0.0.1",
+    categoryProps: textCategoryProps
   },
   Image: {
     Component: Image,
