@@ -12,12 +12,6 @@ export const defaultProps = {
   widthType: "px",
 };
 
-export const categoryProps = {
-  categoryName: "Media",
-  icon: "da",
-  label: "Media",
-};
-
 const IFrame = ({
   title,
   titleDisplay = false,

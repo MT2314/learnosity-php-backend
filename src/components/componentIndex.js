@@ -1,22 +1,35 @@
 import Callout, {
   defaultProps as calloutDefaultProps,
-  categoryProps as calloutCategoryProps
 } from "./Callout/Callout";
-import Image, { defaultProps as imageDefaultProps, categoryProps as imageCategoryProps } from "./Image/Image";
+import Image, { defaultProps as imageDefaultProps } from "./Image/Image";
 import QuoteBox, {
   defaultProps as quoteBoxDefaultProps,
-  categoryProps as quoteBoxCategoryProps
 } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
-import Tab, { defaultProps as tabsDefaultProps, categoryProps as tabsCategoryProps } from "./Tab/Tab";
-import Video, { defaultProps as videoDefaultProps, categoryProps as videoCategoryProps } from "./Video/Video";
+import Tab, { defaultProps as tabsDefaultProps } from "./Tab/Tab";
+import Video, { defaultProps as videoDefaultProps } from "./Video/Video";
 import VideoConfig from "./Video/VideoConfig";
-import IFrame, { defaultProps as iFrameDefaultProps, categoryProps as iframeCategoryProps } from "./IFrame/IFrame";
+import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
-import Text, {
-  defaultProps as quillDefaultProps,
-  categoryProps as textCategoryProps
-} from "./Text/Text";
+import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
+
+const categories = {
+  interactive: {
+    readableName: "Interactive",
+    icon: ".../src/",
+    components: ["Tab"],
+  },
+  text: {
+    readableName: "Text",
+    icon: "",
+    components: ["Text", "Callout"],
+  },
+  media: {
+    readableName: "Media",
+    icon: "",
+    components: ["Image", "IFrame", "Video"],
+  },
+};
 
 const componentIndex = {
   Callout: {
@@ -24,14 +37,14 @@ const componentIndex = {
     readableName: "Callout",
     defaultProps: calloutDefaultProps,
     version: "0.0.1",
-    categoryProps: calloutCategoryProps
+    category: "interactive",
   },
   Text: {
     Component: Text,
     readableName: "Text",
     defaultProps: quillDefaultProps,
     version: "0.0.1",
-    categoryProps: textCategoryProps
+    category: "text",
   },
   Image: {
     Component: Image,
@@ -39,29 +52,29 @@ const componentIndex = {
     defaultProps: imageDefaultProps,
     version: "0.0.1",
     ConfigPanel: ImageConfig,
-    categoryProps: imageCategoryProps
+    category: "media",
   },
   QuoteBox: {
     Component: QuoteBox,
     readableName: "Quote Box",
     defaultProps: quoteBoxDefaultProps,
     version: "0.0.1",
-    categoryProps: quoteBoxCategoryProps
+    category: "text",
   },
   Tab: {
     Component: Tab,
     readableName: "Tab",
     defaultProps: tabsDefaultProps,
     version: "0.0.1",
-    categoryProps: tabsCategoryProps
+    category: "interactive",
   },
   Video: {
     Component: Video,
     readableName: "Video",
     defaultProps: videoDefaultProps,
     version: "0.0.1",
-    ConfigPanel: VideoConfig,
-    categoryProps: videoCategoryProps
+    ConfigPanel: VideoConfig, 
+    category: "media",
   },
   IFrame: {
     Component: IFrame,
@@ -69,7 +82,7 @@ const componentIndex = {
     defaultProps: iFrameDefaultProps,
     version: "0.0.1",
     ConfigPanel: IFrameConfig,
-    categoryProps: iframeCategoryProps
+    category: "media",
   },
 };
 

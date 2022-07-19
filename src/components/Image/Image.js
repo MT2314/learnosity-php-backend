@@ -13,11 +13,6 @@ export const defaultProps = {
   credit: null,
 };
 
-export const categoryProps = {
-  categoryName: "Media",
-  icon: "da",
-  label: "Media",
-};
 
 const Image = ({
   setProp,
