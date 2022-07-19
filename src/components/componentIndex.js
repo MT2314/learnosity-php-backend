@@ -16,18 +16,23 @@ import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
 const categories = {
   interactive: {
     readableName: "Interactive",
-    icon: ".../src/",
+    icon: "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/category-icons-menu/interactive.png",
     components: ["Tab"],
   },
   text: {
     readableName: "Text",
-    icon: "",
+    icon: "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/category-icons-menu/text.png",
     components: ["Text", "Callout"],
   },
   media: {
     readableName: "Media",
-    icon: "",
-    components: ["Image", "IFrame", "Video"],
+    icon: "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/category-icons-menu/media.png",
+    components: ["IFrame", "Video"],
+  },
+  image: {
+    readableName: "Image",
+    icon: "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/category-icons-menu/image.png",
+    components: ["Image"],
   },
 };
 
@@ -52,7 +57,7 @@ const componentIndex = {
     defaultProps: imageDefaultProps,
     version: "0.0.1",
     ConfigPanel: ImageConfig,
-    category: "media",
+    category: "image",
   },
   QuoteBox: {
     Component: QuoteBox,
@@ -73,7 +78,7 @@ const componentIndex = {
     readableName: "Video",
     defaultProps: videoDefaultProps,
     version: "0.0.1",
-    ConfigPanel: VideoConfig, 
+    ConfigPanel: VideoConfig,
     category: "media",
   },
   IFrame: {
