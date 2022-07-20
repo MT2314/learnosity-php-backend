@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState } from "react";
 import { Divider } from "@mui/material/";
 import { Tooltip } from "@material-ui/core/";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
@@ -16,6 +16,25 @@ const CustomToolBar = ({ toolbarId }) => {
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeAlignIcon, setActiveAlignIcon] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
+
+  const editorDiv = document.getElementsByClassName("ql-editor");
+
+  const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
+  if (editorDiv[0]) {
+    for (let i = 0; i < editorDiv[0].children.length; i++) {
+      editorDiv[0].children[i].setAttribute("data-id", i);
+
+      editorDiv[0].children[i].onclick = function () {
+        if (editorDiv[0].children[i].className === "ql-align-center") {
+          setVisibleAlignIcon(icons["center"]);
+        } else if (editorDiv[0].children[i].className === "ql-align-right") {
+          setVisibleAlignIcon(icons["right"]);
+        } else {
+          setVisibleAlignIcon(icons["align"]);
+        }
+      };
+    }
+  }
 
   return (
     <div id={toolbarId} className="toolbarContainer">
@@ -97,13 +116,7 @@ const CustomToolBar = ({ toolbarId }) => {
           value={activeAlignIcon}
           id="alignment-dropdown"
         >
-          {activeAlignIcon === "left"
-            ? icons["align"]
-            : activeAlignIcon === "center"
-            ? icons["center"]
-            : activeAlignIcon === "right"
-            ? icons["right"]
-            : icons["align"]}
+          {visibleAlignIcon}
         </button>
       </Tooltip>
       <AlignDropdownButton
@@ -113,6 +126,7 @@ const CustomToolBar = ({ toolbarId }) => {
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
         setActiveAlignIcon={setActiveAlignIcon}
+        setVisibleAlignIcon={setVisibleAlignIcon}
       />
 
       {/* bullets drowdown starts */}
