@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
 .ql-snow.ql-toolbar.toolbarContainer {
   border-radius: 4px;
   border-left: 4px solid #1565c0;
@@ -52,8 +54,12 @@
   }
 }
 
-.ql-snow .ql-tooltip{
+.ql-snow .ql-tooltip {
   height: 40px;
+  background: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  border: none;
 }
 
 .ql-snow .ql-tooltip a.ql-action,
@@ -71,9 +77,15 @@
 }
 
 .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
-  border-right: 0px;
   content: "Apply";
-  padding-right: 0px;
+  bottom: 0px !important;
+  left: 0px !important;
+  padding: 4px 9px !important;
+  font-family: "Inter";
+  font-style: normal;
+  color: #1565c0 !important;
+  font-weight: 500;
+  font-size: 13px;
 }
 
 .ql-snow .ql-tooltip a.ql-action {
@@ -99,7 +111,6 @@
     position: relative;
     padding: 11px 9px 4px 9px;
     bottom: -4px;
-    
   }
   &:hover::before {
     background: rgba(21, 101, 192, 0.12);
