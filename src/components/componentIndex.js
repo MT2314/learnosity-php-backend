@@ -16,6 +16,10 @@ import interactiveIcon from "./categoriesIcons/interactive.png";
 import imageIcon from "./categoriesIcons/image.png";
 import mediaIcon from "./categoriesIcons/media.png";
 import textIcon from "./categoriesIcons/text.png";
+import textDndLabel from "./categoriesIcons/DNDLabels/textDndLabel.png"
+import calloutDndLabel from "./categoriesIcons/DNDLabels/calloutDndLabel.png"
+import tabsDndLabel from "./categoriesIcons/DNDLabels/tabsDndLabel.png"
+import defaultDndLabel from "./categoriesIcons/DNDLabels/defaultDndLabel.png"
 
 export const categories = {
   interactive: {
@@ -43,6 +47,7 @@ const componentIndex = {
     defaultProps: calloutDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
+    dndLabel: calloutDndLabel
   },
   Text: {
     Component: Text,
@@ -50,6 +55,7 @@ const componentIndex = {
     defaultProps: quillDefaultProps,
     version: "0.0.1",
     category: categories.text,
+    dndLabel: textDndLabel
   },
   Image: {
     Component: Image,
@@ -58,6 +64,7 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: ImageConfig,
     category: categories.image,
+    dndLabel: defaultDndLabel
   },
   QuoteBox: {
     Component: QuoteBox,
@@ -65,6 +72,7 @@ const componentIndex = {
     defaultProps: quoteBoxDefaultProps,
     version: "0.0.1",
     category: categories.text,
+    dndLabel: defaultDndLabel
   },
   Tab: {
     Component: Tab,
@@ -72,6 +80,7 @@ const componentIndex = {
     defaultProps: tabsDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
+    dndLabel: tabsDndLabel
   },
   Video: {
     Component: Video,
@@ -80,6 +89,7 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: VideoConfig,
     category: categories.media,
+    dndLabel: defaultDndLabel
   },
   IFrame: {
     Component: IFrame,
@@ -88,6 +98,7 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: IFrameConfig,
     category: categories.media,
+    dndLabel: defaultDndLabel
   },
 };
 
