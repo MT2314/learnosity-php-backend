@@ -16,10 +16,10 @@ import interactiveIcon from "./categoriesIcons/interactive.png";
 import imageIcon from "./categoriesIcons/image.png";
 import mediaIcon from "./categoriesIcons/media.png";
 import textIcon from "./categoriesIcons/text.png";
-import textDndLabel from "./categoriesIcons/textDndLabel.png"
-import calloutDndLabel from "./categoriesIcons/calloutDndLabel.png"
-import tabsDndLabel from "./categoriesIcons/tabsDndLabel.png"
-import defaultDndLabel from "./categoriesIcons/defaultDndLabel.png"
+import textDndLabel from "./categoriesIcons/dndIcons/textDnd.png"
+import calloutDndLabel from "./categoriesIcons/dndIcons/calloutDnd.png"
+import tabsDndLabel from "./categoriesIcons/dndIcons/tabsDnd.png"
+import defaultDndLabel from "./categoriesIcons/dndIcons/defaultDnd.png"
 
 export const categories = {
   interactive: {
