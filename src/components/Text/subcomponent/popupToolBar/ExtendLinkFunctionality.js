@@ -61,7 +61,7 @@ const ExtendLinkFunctionality = (id) => {
   ReactDOM.render(<PencilTooltip />, Pencil);
   ReactDOM.render(<ApplyTooltip />, Apply);
 
-  let [isEdit, isRemoving, newLink, linkHolder] = [false, false, false, ""];
+  let [isEdit, isRemoving, linkHolder] = [false, false, ""];
 
   const linkTooltipInput = linkTooltipElement.querySelector(`input`);
 
@@ -92,7 +92,6 @@ const ExtendLinkFunctionality = (id) => {
 
     if (linkTooltipElement.getAttribute("data-mode") === "link") {
       if (linkTooltipInput?.value.match(linkValidityRegex)) {
-        newLink = true;
         linkHolder = linkTooltipInput.value;
         quillActionBtn.click();
         Apply.hidden = true;
@@ -140,24 +139,14 @@ const ExtendLinkFunctionality = (id) => {
   });
 
   const observeChanges = new MutationObserver((changes) => {
-    if (newLink) {
-      newLink = false;
-      linkTooltipElement
-        .querySelector(".ql-preview")
-        .setAttribute("href", linkHolder);
-      linkTooltipElement.querySelector(".ql-preview").innerHTML = linkHolder;
-      linkTooltipElement.classList.remove("ql-hidden", "ql-editing");
-      linkTooltipElement.setAttribute("data-mode", "link");
+    if (!changes[0].target.classList.contains("ql-editing")) {
+      Trashcan.style.display = "";
+      Pencil.style.display = "";
+      Apply.style.display = "none";
     } else {
-      if (!changes[0].target.classList.contains("ql-editing")) {
-        Trashcan.style.display = "";
-        Pencil.style.display = "";
-        Apply.style.display = "none";
-      } else {
-        Trashcan.style.display = "none";
-        Pencil.style.display = "none";
-        Apply.style.display = "";
-      }
+      Trashcan.style.display = "none";
+      Pencil.style.display = "none";
+      Apply.style.display = "";
     }
   });
 
