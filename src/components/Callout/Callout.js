@@ -32,7 +32,6 @@ const Callout = ({
           Callout Type: &nbsp;
           <NativeSelect
             role="listbox"
-            autoFocus
             name="callout-selector"
             aria-labelledby={`callout-${labelId}`}
             data-testid="calloutTitle"
