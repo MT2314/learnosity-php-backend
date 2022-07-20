@@ -10,6 +10,7 @@ const AlignDropdownButton = ({
   activeDropDownItem,
   setActiveDropDownItem,
   setActiveAlignIcon,
+  setVisibleAlignIcon,
 }) => {
   return (
     <>
@@ -25,6 +26,7 @@ const AlignDropdownButton = ({
                 } else {
                   setActiveDropDownItem("left");
                   setActiveAlignIcon("left");
+                  setVisibleAlignIcon(icons["align"]);
                 }
               }}
               className={
@@ -53,6 +55,7 @@ const AlignDropdownButton = ({
                 } else {
                   setActiveDropDownItem("center");
                   setActiveAlignIcon("center");
+                  setVisibleAlignIcon(icons["center"]);
                 }
               }}
             >
@@ -75,6 +78,7 @@ const AlignDropdownButton = ({
                 } else {
                   setActiveDropDownItem("right");
                   setActiveAlignIcon("right");
+                  setVisibleAlignIcon(icons["right"]);
                 }
               }}
             >

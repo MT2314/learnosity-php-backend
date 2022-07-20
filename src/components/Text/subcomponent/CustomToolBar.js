@@ -17,52 +17,24 @@ const CustomToolBar = ({ toolbarId }) => {
   const [activeAlignIcon, setActiveAlignIcon] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
 
-  // If we can access/add className(s) to p tags in editor, use those to assign a value to the icon supposed to show in toolbar
-
-  // document.getElementsByClassName("ql-right-align") with an onClick() to trigger icon change
-
   const editorDiv = document.getElementsByClassName("ql-editor");
 
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
   if (editorDiv[0]) {
-    console.log("hello world");
-
     for (let i = 0; i < editorDiv[0].children.length; i++) {
-      console.log("hit: ", editorDiv[0].children[i]);
-
       editorDiv[0].children[i].setAttribute("data-id", i);
 
       editorDiv[0].children[i].onclick = function () {
-        console.log("i have been clicked", editorDiv[0].children[i]);
-
         if (editorDiv[0].children[i].className === "ql-align-center") {
-          console.log("center aligned", editorDiv[0].children[i]);
           setVisibleAlignIcon(icons["center"]);
         } else if (editorDiv[0].children[i].className === "ql-align-right") {
-          console.log("right aligned", editorDiv[0].children[i]);
           setVisibleAlignIcon(icons["right"]);
         } else {
-          console.log("left aligned", editorDiv[0].children[i]);
           setVisibleAlignIcon(icons["align"]);
         }
       };
     }
   }
-
-  // if (toolbarId) {
-  //   const currentAlignIcon = document.getElementsByClassName(
-  //     "ql-align ql-active ql-selected"
-  //   );
-  //   // console.log(currentAlignIcon[0].value);
-  //   // const alignIconArray = Array.prototype.slice.call(currentAlignIcon);
-  //   // console.log(alignIconArray[0]);
-  //   let alignIconValue;
-  //   if (currentAlignIcon[0]) {
-  //     alignIconValue = currentAlignIcon[0].value;
-  //     // console.log(alignIconValue);
-  //   }
-
-  // }
 
   return (
     <div id={toolbarId} className="toolbarContainer">
@@ -154,6 +126,7 @@ const CustomToolBar = ({ toolbarId }) => {
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
         setActiveAlignIcon={setActiveAlignIcon}
+        setVisibleAlignIcon={setVisibleAlignIcon}
       />
 
       {/* bullets drowdown starts */}
