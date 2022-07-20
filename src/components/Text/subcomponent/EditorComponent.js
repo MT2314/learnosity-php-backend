@@ -33,7 +33,6 @@ const EditorComponent = ({ body, setProp }) => {
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
-    console.log(editor.getContents());
     setProp({ body: editorContent });
   };
 
