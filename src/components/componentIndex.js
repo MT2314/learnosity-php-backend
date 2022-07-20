@@ -12,23 +12,27 @@ import VideoConfig from "./Video/VideoConfig";
 import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
 import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
+import interactiveIcon from "./categoriesIcons/interactive.png";
+import imageIcon from "./categoriesIcons/image.png";
+import mediaIcon from "./categoriesIcons/media.png";
+import textIcon from "./categoriesIcons/text.png";
 
 export const categories = {
   interactive: {
     readableName: "Interactive",
-    icon: "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/category-icons-menu/interactive.png",
+    icon: interactiveIcon,
   },
   text: {
     readableName: "Text",
-    icon: "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/category-icons-menu/text.png",
+    icon: textIcon,
   },
   media: {
     readableName: "Media",
-    icon: "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/category-icons-menu/media.png",
+    icon: mediaIcon,
   },
   image: {
     readableName: "Image",
-    icon: "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/category-icons-menu/image.png",
+    icon: imageIcon,
   },
 };
 
