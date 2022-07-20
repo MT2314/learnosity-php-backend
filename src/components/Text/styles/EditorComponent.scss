@@ -46,3 +46,118 @@
 .ql-toolbar.ql-snow .ql-formats {
   margin-right: 0px;
 }
+
+.link-error-message-container {
+  display: block;
+  margin-top: 6px;
+  position: relative;
+
+  .link-error-message {
+    position: absolute;
+    background: linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.9),
+        rgba(255, 255, 255, 0.9)
+      ),
+      #d32f2f;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+
+    left: -12px;
+
+    width: 255px !important;
+    height: 30px;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px 10px;
+
+    span {
+      padding-left: 10px;
+      color: #541313;
+      font-family: "Inter";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 20px;
+    }
+  }
+}
+
+.ql-tooltip.ql-editing > input[type="text"] {
+  border: none;
+
+  &.input-error {
+    color: #d32f2f !important;
+  }
+}
+
+.ql-snow .ql-tooltip > span.trash-icon > button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 4px 9px;
+  outline: inherit;
+  border-radius: 4px;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    > svg {
+      color: #1565c0 !important;
+    }
+  }
+}
+
+.ql-snow .ql-tooltip > span.pencil-icon > button {
+  margin-left: 10px;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 4px 6px;
+  outline: inherit;
+  border-radius: 4px;
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    > svg {
+      color: #1565c0 !important;
+    }
+  }
+}
+
+.ql-snow .ql-tooltip.ql-editing > span.apply-link-btn {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  color: #1565c0;
+  margin-left: 10px;
+
+  &.disabled {
+    color: grey !important;
+    & > button {
+      background: none;
+      color: inherit;
+      border: none;
+      cursor: default;
+      padding: 4px 9px;
+
+      &:hover {
+        background-color: transparent !important;
+      }
+    }
+  }
+
+  > button {
+    background: none;
+    color: inherit;
+    border: none;
+    cursor: pointer;
+    padding: 4px 9px;
+    &:hover {
+      background-color: rgba(21, 101, 192, 0.12);
+      border-radius: 4px;
+    }
+  }
+}
