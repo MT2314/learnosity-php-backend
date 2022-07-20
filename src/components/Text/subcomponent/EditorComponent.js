@@ -6,8 +6,8 @@ import "../styles/EditorComponent.scss";
 import { v4 as uuidv4 } from "uuid";
 import "quill-paste-smart";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-
 import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
+
 const EditorComponent = ({ body, setProp }) => {
   const toolbarId = `unique-id-${uuidv4()}`;
 
@@ -33,6 +33,7 @@ const EditorComponent = ({ body, setProp }) => {
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
+    console.log(editor.getContents());
     setProp({ body: editorContent });
   };
 

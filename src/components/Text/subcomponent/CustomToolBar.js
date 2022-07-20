@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState } from "react";
 import { Divider } from "@mui/material/";
 import { Tooltip } from "@material-ui/core/";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
@@ -16,6 +16,41 @@ const CustomToolBar = ({ toolbarId }) => {
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeAlignIcon, setActiveAlignIcon] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
+
+  // If we can access/add className(s) to p tags in editor, use those to assign a value to the icon supposed to show in toolbar
+
+  // document.getElementsByClassName("ql-right-align") with an onClick() to trigger icon change
+
+  // ql-editor is the className of containing div around p tags in editor
+  // if we can access p tags can use onClicks on them
+  const centeredPTag = document.getElementsByClassName("ql-align-center");
+  // console.log(centeredPTag);
+  // centeredPTag.onClick()
+
+  let visibleAlignIcon;
+  if (toolbarId) {
+    const currentAlignIcon = document.getElementsByClassName(
+      "ql-align ql-active ql-selected"
+    );
+    // console.log(currentAlignIcon[0].value);
+    // const alignIconArray = Array.prototype.slice.call(currentAlignIcon);
+    // console.log(alignIconArray[0]);
+    let alignIconValue;
+    if (currentAlignIcon[0]) {
+      alignIconValue = currentAlignIcon[0].value;
+      console.log(alignIconValue);
+    }
+
+    if (alignIconValue === "") {
+      visibleAlignIcon = icons["align"];
+    } else if (alignIconValue === "center") {
+      visibleAlignIcon = icons["center"];
+    } else if (alignIconValue === "right") {
+      visibleAlignIcon = icons["right"];
+    } else {
+      visibleAlignIcon = icons["align"];
+    }
+  }
 
   return (
     <div id={toolbarId} className="toolbarContainer">
@@ -97,13 +132,7 @@ const CustomToolBar = ({ toolbarId }) => {
           value={activeAlignIcon}
           id="alignment-dropdown"
         >
-          {activeAlignIcon === "left"
-            ? icons["align"]
-            : activeAlignIcon === "center"
-            ? icons["center"]
-            : activeAlignIcon === "right"
-            ? icons["right"]
-            : icons["align"]}
+          {visibleAlignIcon}
         </button>
       </Tooltip>
       <AlignDropdownButton
