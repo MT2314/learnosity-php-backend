@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Divider } from "@mui/material/";
 import { Tooltip } from "@material-ui/core/";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
@@ -8,7 +8,7 @@ import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
 
-const CustomToolBar = ({ toolbarId }) => {
+const CustomToolBar = ({ toolbarId, testId }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
@@ -16,25 +16,30 @@ const CustomToolBar = ({ toolbarId }) => {
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeAlignIcon, setActiveAlignIcon] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
-
-  const editorDiv = document.getElementsByClassName("ql-editor");
-
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
-  if (editorDiv[0]) {
-    for (let i = 0; i < editorDiv[0].children.length; i++) {
-      editorDiv[0].children[i].setAttribute("data-id", i);
 
-      editorDiv[0].children[i].onclick = function () {
-        if (editorDiv[0].children[i].className === "ql-align-center") {
-          setVisibleAlignIcon(icons["center"]);
-        } else if (editorDiv[0].children[i].className === "ql-align-right") {
-          setVisibleAlignIcon(icons["right"]);
-        } else {
-          setVisibleAlignIcon(icons["align"]);
-        }
-      };
+  useEffect(() => {
+    const parentDiv = document.getElementById(toolbarId);
+
+    const editorDiv = parentDiv.getElementsByClassName("ql-editor");
+    console.log(editorDiv);
+
+    if (editorDiv[0]) {
+      for (let i = 0; i < editorDiv[0].children.length; i++) {
+        editorDiv[0].children[i].setAttribute("data-id", i);
+
+        editorDiv[0].children[i].onclick = function () {
+          if (editorDiv[0].children[i].className === "ql-align-center") {
+            setVisibleAlignIcon(icons["center"]);
+          } else if (editorDiv[0].children[i].className === "ql-align-right") {
+            setVisibleAlignIcon(icons["right"]);
+          } else {
+            setVisibleAlignIcon(icons["align"]);
+          }
+        };
+      }
     }
-  }
+  }, []);
 
   return (
     <div id={toolbarId} className="toolbarContainer">

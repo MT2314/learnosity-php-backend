@@ -96,7 +96,7 @@ const EditorComponent = ({ body, setProp }) => {
       data-testid="text-editor-component"
     >
       <div className={editorIsFocus ? "showtool" : "hidetool"}>
-        <CustomToolBar toolbarId={toolbarId} />
+        <CustomToolBar toolbarId={toolbarId} testId={`toolbar-${toolbarId}`} />
       </div>
 
       <ReactQuill
