@@ -254,4 +254,37 @@ icons["delete"] = (
   </svg>
 );
 
+icons["trashcan"] = (
+  <svg
+    width="14"
+    height="18"
+    viewBox="0 0 14 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M11 6V16H3V6H11ZM9.5 0H4.5L3.5 1H0V3H14V1H10.5L9.5 0ZM13 4H1V16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V4Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+icons["pencil"] = (
+  <svg
+    width="19"
+    height="18"
+    viewBox="0 0 19 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M11.06 6.02L11.98 6.94L2.92 16H2V15.08L11.06 6.02V6.02ZM14.66 0C14.41 0 14.15 0.1 13.96 0.29L12.13 2.12L15.88 5.87L17.71 4.04C18.1 3.65 18.1 3.02 17.71 2.63L15.37 0.29C15.17 0.09 14.92 0 14.66 0V0ZM11.06 3.19L0 14.25V18H3.75L14.81 6.94L11.06 3.19V3.19Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
 export default icons;
+
+
+

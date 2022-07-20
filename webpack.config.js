@@ -9,9 +9,12 @@ const dotenv = require("dotenv");
 
 module.exports = (_, argv) => {
   const envFolderPath = path.join(__dirname, "environments");
-  process.env.NODE_ENV = argv.mode; 
-  
-  let envPath = path.join(envFolderPath, `.env.${argv.env.ENVIRONMENT || 'prod'}`);
+  process.env.NODE_ENV = argv.mode;
+
+  let envPath = path.join(
+    envFolderPath,
+    `.env.${argv.env.ENVIRONMENT || "prod"}`
+  );
 
   if (!fs.existsSync(envPath)) throw new Error(`.env file for not found`);
 
@@ -19,23 +22,23 @@ module.exports = (_, argv) => {
 
   console.log(fileEnv);
 
-  fileEnv.APP_STAGE = _.ENVIRONMENT
+  fileEnv.APP_STAGE = _.ENVIRONMENT;
 
-  console.log(fileEnv.APP_STAGE)
+  console.log(fileEnv.APP_STAGE);
 
   const envKeys = Object.keys(fileEnv).reduce((envObject, next) => {
     envObject[`process.env.${next}`] = JSON.stringify(fileEnv[next]);
     return envObject;
   }, {});
 
-  console.log(envKeys)
+  console.log(envKeys);
   return {
     output: {
       publicPath:
         argv.mode === "development"
           ? `http://localhost:3001/`
           : `${fileEnv.WEBPACK_PUBLIC_PATH}`,
-    clean:true,
+      clean: true,
     },
 
     resolve: {
@@ -77,6 +80,17 @@ module.exports = (_, argv) => {
           },
         },
         {
+          test: /\.(jpe?g|png|gif|svg)$/i,
+          use: [
+            {
+              loader: "file-loader",
+              options: {
+                name: "icons/[name].[ext]",
+              },
+            },
+          ],
+        },
+        {
           test: /\.svg$/,
           use: [
             {
@@ -98,7 +112,6 @@ module.exports = (_, argv) => {
         remotes: {},
         exposes: {
           "./componentIndex": "./src/components/componentIndex.js",
-          "./exposedStage": "./exposedStage.js"
         },
         shared: {
           ...deps,
@@ -113,9 +126,9 @@ module.exports = (_, argv) => {
         },
       }),
       new HtmlWebPackPlugin({
-        hash: true, 
+        hash: true,
         template: "./src/index.html",
-        inject:'body'
+        inject: "body",
       }),
     ],
   };

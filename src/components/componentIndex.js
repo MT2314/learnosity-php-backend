@@ -11,9 +11,30 @@ import Video, { defaultProps as videoDefaultProps } from "./Video/Video";
 import VideoConfig from "./Video/VideoConfig";
 import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
-import Text, {
-  defaultProps as quillDefaultProps,
-} from "./Text/Text";
+import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
+import interactiveIcon from "./categoriesIcons/interactive.png";
+import imageIcon from "./categoriesIcons/image.png";
+import mediaIcon from "./categoriesIcons/media.png";
+import textIcon from "./categoriesIcons/text.png";
+
+export const categories = {
+  interactive: {
+    readableName: "Interactive",
+    icon: interactiveIcon,
+  },
+  text: {
+    readableName: "Text",
+    icon: textIcon,
+  },
+  media: {
+    readableName: "Media",
+    icon: mediaIcon,
+  },
+  image: {
+    readableName: "Image",
+    icon: imageIcon,
+  },
+};
 
 const componentIndex = {
   Callout: {
@@ -21,12 +42,14 @@ const componentIndex = {
     readableName: "Callout",
     defaultProps: calloutDefaultProps,
     version: "0.0.1",
+    category: categories.interactive,
   },
   Text: {
     Component: Text,
     readableName: "Text",
     defaultProps: quillDefaultProps,
     version: "0.0.1",
+    category: categories.text,
   },
   Image: {
     Component: Image,
@@ -34,18 +57,21 @@ const componentIndex = {
     defaultProps: imageDefaultProps,
     version: "0.0.1",
     ConfigPanel: ImageConfig,
+    category: categories.image,
   },
   QuoteBox: {
     Component: QuoteBox,
     readableName: "Quote Box",
     defaultProps: quoteBoxDefaultProps,
     version: "0.0.1",
+    category: categories.text,
   },
   Tab: {
     Component: Tab,
     readableName: "Tab",
     defaultProps: tabsDefaultProps,
     version: "0.0.1",
+    category: categories.interactive,
   },
   Video: {
     Component: Video,
@@ -53,6 +79,7 @@ const componentIndex = {
     defaultProps: videoDefaultProps,
     version: "0.0.1",
     ConfigPanel: VideoConfig,
+    category: categories.media,
   },
   IFrame: {
     Component: IFrame,
@@ -60,6 +87,7 @@ const componentIndex = {
     defaultProps: iFrameDefaultProps,
     version: "0.0.1",
     ConfigPanel: IFrameConfig,
+    category: categories.media,
   },
 };
 
