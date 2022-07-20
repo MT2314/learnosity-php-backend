@@ -85,7 +85,7 @@ module.exports = (_, argv) => {
             {
               loader: "file-loader",
               options: {
-                name: "//public/icons/[name].[ext]",
+                name: "/public/icons/[name].[ext]",
               },
             },
           ],
