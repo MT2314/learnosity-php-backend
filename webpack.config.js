@@ -80,6 +80,17 @@ module.exports = (_, argv) => {
           },
         },
         {
+          test: /\.(jpe?g|png|gif|svg)$/i,
+          use: [
+            {
+              loader: "file-loader",
+              options: {
+                name: "icons/[name].[ext]",
+              },
+            },
+          ],
+        },
+        {
           test: /\.svg$/,
           use: [
             {
