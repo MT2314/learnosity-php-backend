@@ -27,6 +27,14 @@ const CustomToolBar = ({ toolbarId }) => {
   // console.log(centeredPTag);
   // centeredPTag.onClick()
 
+  const editorDiv = document.getElementsByClassName("ql-editor");
+  if (editorDiv[0]) {
+    console.log("hello world");
+    for (let i; i < editorDiv[0].length; i++) {
+      console.log(editorDiv[0][i].children);
+    }
+  }
+
   let visibleAlignIcon;
   if (toolbarId) {
     const currentAlignIcon = document.getElementsByClassName(
@@ -38,7 +46,7 @@ const CustomToolBar = ({ toolbarId }) => {
     let alignIconValue;
     if (currentAlignIcon[0]) {
       alignIconValue = currentAlignIcon[0].value;
-      console.log(alignIconValue);
+      // console.log(alignIconValue);
     }
 
     if (alignIconValue === "") {
