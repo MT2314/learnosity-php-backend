@@ -28,10 +28,26 @@ const CustomToolBar = ({ toolbarId }) => {
   // centeredPTag.onClick()
 
   const editorDiv = document.getElementsByClassName("ql-editor");
+
   if (editorDiv[0]) {
     console.log("hello world");
-    for (let i; i < editorDiv[0].length; i++) {
-      console.log(editorDiv[0][i].children);
+
+    for (let i = 0; i < editorDiv[0].children.length; i++) {
+      console.log("hit: ", editorDiv[0].children[i]);
+
+      editorDiv[0].children[i].setAttribute("data-id", i);
+
+      editorDiv[0].children[i].onclick = function () {
+        console.log("i have been clicked", editorDiv[0].children[i]);
+
+        if (editorDiv[0].children[i].className === "ql-align-center") {
+          console.log("center aligned", editorDiv[0].children[i]);
+        } else if (editorDiv[0].children[i].className === "ql-align-right") {
+          console.log("right aligned", editorDiv[0].children[i]);
+        } else {
+          console.log("left aligned", editorDiv[0].children[i]);
+        }
+      };
     }
   }
 
