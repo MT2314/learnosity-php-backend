@@ -104,6 +104,13 @@
     cursor: pointer;
     background-color: rgba(21, 101, 192, 0.12) !important;
     > svg {
+      color: black!important;
+    }
+  }
+  &:active {
+    cursor: pointer;
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    > svg {
       color: #1565c0 !important;
     }
   }
@@ -118,6 +125,13 @@
   outline: inherit;
   border-radius: 4px;
   &:hover {
+    cursor: pointer;
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    > svg {
+      color: black !important;
+    }
+  }
+  &:active {
     cursor: pointer;
     background-color: rgba(21, 101, 192, 0.12) !important;
     > svg {
