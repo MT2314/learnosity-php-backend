@@ -21,14 +21,9 @@ const CustomToolBar = ({ toolbarId }) => {
 
   // document.getElementsByClassName("ql-right-align") with an onClick() to trigger icon change
 
-  // ql-editor is the className of containing div around p tags in editor
-  // if we can access p tags can use onClicks on them
-  const centeredPTag = document.getElementsByClassName("ql-align-center");
-  // console.log(centeredPTag);
-  // centeredPTag.onClick()
-
   const editorDiv = document.getElementsByClassName("ql-editor");
 
+  const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
   if (editorDiv[0]) {
     console.log("hello world");
 
@@ -42,39 +37,32 @@ const CustomToolBar = ({ toolbarId }) => {
 
         if (editorDiv[0].children[i].className === "ql-align-center") {
           console.log("center aligned", editorDiv[0].children[i]);
+          setVisibleAlignIcon(icons["center"]);
         } else if (editorDiv[0].children[i].className === "ql-align-right") {
           console.log("right aligned", editorDiv[0].children[i]);
+          setVisibleAlignIcon(icons["right"]);
         } else {
           console.log("left aligned", editorDiv[0].children[i]);
+          setVisibleAlignIcon(icons["align"]);
         }
       };
     }
   }
 
-  let visibleAlignIcon;
-  if (toolbarId) {
-    const currentAlignIcon = document.getElementsByClassName(
-      "ql-align ql-active ql-selected"
-    );
-    // console.log(currentAlignIcon[0].value);
-    // const alignIconArray = Array.prototype.slice.call(currentAlignIcon);
-    // console.log(alignIconArray[0]);
-    let alignIconValue;
-    if (currentAlignIcon[0]) {
-      alignIconValue = currentAlignIcon[0].value;
-      // console.log(alignIconValue);
-    }
+  // if (toolbarId) {
+  //   const currentAlignIcon = document.getElementsByClassName(
+  //     "ql-align ql-active ql-selected"
+  //   );
+  //   // console.log(currentAlignIcon[0].value);
+  //   // const alignIconArray = Array.prototype.slice.call(currentAlignIcon);
+  //   // console.log(alignIconArray[0]);
+  //   let alignIconValue;
+  //   if (currentAlignIcon[0]) {
+  //     alignIconValue = currentAlignIcon[0].value;
+  //     // console.log(alignIconValue);
+  //   }
 
-    if (alignIconValue === "") {
-      visibleAlignIcon = icons["align"];
-    } else if (alignIconValue === "center") {
-      visibleAlignIcon = icons["center"];
-    } else if (alignIconValue === "right") {
-      visibleAlignIcon = icons["right"];
-    } else {
-      visibleAlignIcon = icons["align"];
-    }
-  }
+  // }
 
   return (
     <div id={toolbarId} className="toolbarContainer">
