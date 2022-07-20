@@ -13,6 +13,7 @@ export const defaultProps = {
   credit: null,
 };
 
+
 const Image = ({
   setProp,
   imgSize = "default",
