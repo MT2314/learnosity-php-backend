@@ -6,8 +6,8 @@ import "../styles/EditorComponent.scss";
 import { v4 as uuidv4 } from "uuid";
 import "quill-paste-smart";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-
 import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
+
 const EditorComponent = ({ body, setProp }) => {
   const toolbarId = `unique-id-${uuidv4()}`;
 

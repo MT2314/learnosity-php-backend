@@ -6,7 +6,7 @@ import icons from "../../assets/icons";
 
 export const TrashcanTooltip = () => {
   return (
-    <Tooltip arrow title="remove link" placement="top">
+    <Tooltip arrow title="delete link" placement="top">
       <button aria-label="remove link" className="trashcan">
         {icons["trashcan"]}
       </button>
