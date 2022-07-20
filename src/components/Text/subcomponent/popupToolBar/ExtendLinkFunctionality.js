@@ -34,21 +34,21 @@ const ExtendLinkFunctionality = (id) => {
   const quillActionBtn = quillElement.querySelector(".ql-action");
   const quillRemoveBtn = quillElement.querySelector(".ql-remove");
 
-  const dummyQuillActionBtnContainer = document.createElement("span");
-  const dummyQuillRemoveBtnContainer = document.createElement("span");
-  const dummyQuillEditBtnContainer = document.createElement("span");
+  const tooltipSaveBtnContainer = document.createElement("span");
+  const tooltipRemoveButtonContainer = document.createElement("span");
+  const tooltipEditorButtonContainer = document.createElement("span");
 
   quillActionBtn.style.display = "none";
   quillRemoveBtn.style.display = "none";
 
-  dummyQuillActionBtnContainer.setAttribute("class", "apply-link-btn");
-  dummyQuillEditBtnContainer.classList.add("pencil-icon");
-  dummyQuillRemoveBtnContainer.classList.add("trash-icon");
+  tooltipSaveBtnContainer.setAttribute("class", "apply-link-btn");
+  tooltipEditorButtonContainer.classList.add("pencil-icon");
+  tooltipRemoveButtonContainer.classList.add("trash-icon");
 
   [
-    { insert: dummyQuillActionBtnContainer, sibling: quillActionBtn },
-    { insert: dummyQuillRemoveBtnContainer, sibling: quillRemoveBtn },
-    { insert: dummyQuillEditBtnContainer, sibling: quillActionBtn },
+    { insert: tooltipSaveBtnContainer, sibling: quillActionBtn },
+    { insert: tooltipRemoveButtonContainer, sibling: quillRemoveBtn },
+    { insert: tooltipEditorButtonContainer, sibling: quillActionBtn },
   ].map(({ insert, sibling }) => {
     return sibling.parentNode.insertBefore(insert, sibling.nextSibling);
   });
