@@ -24,7 +24,6 @@ const EditorComponent = ({ body, setProp }) => {
 
   useEffect(() => {
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
-
     //on render set focus on the editor
     focusRef.current.focus();
     //on render toolbar appears
