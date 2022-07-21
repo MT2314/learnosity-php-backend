@@ -2,19 +2,11 @@
     "callout": "Type de légende :",
     "calloutTitle": [
         {
-            "title": "Select Value"
-        },
-        {
-            "title": "Challenge"
-        },
-        {
-            "title": "Notebook"
-        },
-        {
-            "title": "Try It"
-        },
-        {
-            "title": "Definition"
+            "0": "Sélectionnez la valeur",
+            "1": "Défi",
+            "2": "Carnet",
+            "3": "Essayez-le",
+            "4": "Définition"
         }
     ] 
 }

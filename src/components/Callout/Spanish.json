@@ -2,19 +2,11 @@
     "callout": "Tipo de llamada:",
     "calloutTitle": [
         {
-            "title": "Select Value"
-        },
-        {
-            "title": "Challenge"
-        },
-        {
-            "title": "Notebook"
-        },
-        {
-            "title": "Try It"
-        },
-        {
-            "title": "Definition"
+            "0": "Selecciona valor",
+            "1": "Desafío",
+            "2": "Computadora portátil",
+            "3": "Intentalo",
+            "4": "Definición"
         }
-    ] 
+    ]  
 }

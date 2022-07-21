@@ -2,19 +2,11 @@
     "callout": "Callout Type:",
     "calloutTitle": [
         {
-            "title": "Select Value"
-        },
-        {
-            "title": "Challenge"
-        },
-        {
-            "title": "Notebook"
-        },
-        {
-            "title": "Try It"
-        },
-        {
-            "title": "Definition"
+            "0": "Select Value",
+            "1": "Challenge",
+            "2": "Notebook",
+            "3": "Try It",
+            "4": "Definition"
         }
     ]    
 }

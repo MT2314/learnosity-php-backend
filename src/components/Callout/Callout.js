@@ -50,13 +50,9 @@ const Callout = ({
             className={styles.Callout_type_dropdown}
           >
             {calloutOptions.map(({ type_id, title }) =>
-              randomItem.calloutTitle.map((test) => {
                 <option key={type_id} value={calloutOptions[type_id].type_id}>
-                  {/* {title} */}
-                  {console.log(test.title)}
-                  {test.title}
-                </option>;
-              })
+                  {randomItem.calloutTitle[0][type_id]}
+                </option>
             )}
           </NativeSelect>
         </label>
