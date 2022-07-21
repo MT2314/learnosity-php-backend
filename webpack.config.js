@@ -101,6 +101,10 @@ module.exports = (_, argv) => {
             },
           ],
         },
+        {
+          test: /\.json$/,
+          loader: "json-loader",
+        },
       ],
     },
 
