@@ -24,8 +24,6 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
 
     if (editorDiv[0]) {
       for (let i = 0; i < editorDiv[0].children.length; i++) {
-        editorDiv[0].children[i].setAttribute("data-id", i);
-
         editorDiv[0].children[i].onclick = function () {
           if (editorDiv[0].children[i].className === "ql-align-center") {
             setVisibleAlignIcon(icons["center"]);
