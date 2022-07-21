@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Divider } from "@mui/material/";
 import { Tooltip } from "@material-ui/core/";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
@@ -14,7 +14,6 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   const [alignVisibility, setAlignVisibility] = useState(false);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
-  // const [activeAlignIcon, setActiveAlignIcon] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
@@ -117,7 +116,6 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
               : "align-button"
           }
           aria-label="alignment buttons dropdown"
-          // value={activeAlignIcon}
           value={visibleAlignIcon}
           id="alignment-dropdown"
         >
@@ -130,7 +128,6 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         aria-label="alignment buttons options"
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
-        // setActiveAlignIcon={setActiveAlignIcon}
         setVisibleAlignIcon={setVisibleAlignIcon}
       />
 
