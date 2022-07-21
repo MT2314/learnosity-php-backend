@@ -27,7 +27,6 @@
     "@11ty/eleventy": "^0.11.1",
     "@content-solutions/gulp-amp-optimizer": "^1.1.3",
     "@content-solutions/gulp-purge-css": "^1.1.2",
-    "@publishing-platform/component-library": "^1.0.1",
     "del": "^6.0.0",
     "dotenv": "^8.2.0",
     "fancy-log": "^1.3.3",

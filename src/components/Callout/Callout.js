@@ -5,6 +5,14 @@ import FormattedText from "../FormattedText/FormattedText";
 import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 import calloutOptions from "./utility/CalloutOptions";
 export const defaultProps = { heading: "", body: "" };
+import English from "./English.json";
+import French from "./French.json";
+import Spanish from "./Spanish.json";
+import Chinese from "./Chinese.json";
+
+const languages = [English, French, Spanish, Chinese];
+
+const randomItem = languages[Math.floor(Math.random() * languages.length)];
 
 const Callout = ({
   calloutTypeSvg,
@@ -12,7 +20,6 @@ const Callout = ({
   calloutBody,
   setProp = () => {},
 }) => {
-
   let labelId = Math.floor(Math.random() * 100000);
 
   const calloutToolBar = useToolBarOptions(
@@ -29,7 +36,10 @@ const Callout = ({
     >
       <div className={styles.dropdownContainer}>
         <label id={`callout-${labelId}`} className={styles.Callout_label}>
-          Callout Type: &nbsp;
+          {randomItem.language}
+          <br />
+          {randomItem.callout} &nbsp;
+          {/* Callout Type: &nbsp; */}
           <NativeSelect
             role="listbox"
             name="callout-selector"
@@ -39,13 +49,21 @@ const Callout = ({
               setProp({
                 calloutTypeSvg: calloutOptions[e.target.value].iconUrl,
               });
-              setProp({ calloutTitle: calloutOptions[e.target.value].title });
+              setProp({
+                calloutTitle: randomItem.calloutTitle[0][e.target.value],
+              });
             }}
             className={styles.Callout_type_dropdown}
           >
-            {calloutOptions.map(({ type_id, title }) => (
+            {/* {calloutOptions.map(({ type_id, title }) => (
               <option key={type_id} value={calloutOptions[type_id].type_id}>
                 {title}
+              </option>
+            ))} */}
+
+            {calloutOptions.map(({ type_id }) => (
+              <option key={type_id} value={calloutOptions[type_id].type_id}>
+                {randomItem.calloutTitle[0][type_id]}
               </option>
             ))}
           </NativeSelect>
@@ -60,7 +78,8 @@ const Callout = ({
               className={styles.Callout_img}
               src={calloutTypeSvg}
               alt={""}
-              aria-label="Callout type icon"
+              // aria-label="Callout type icon"
+              aria-label={randomItem.calloutImg[0].AriaLabel}
             />
             <p data-testid="calloutTitle" className={styles.Callout_heading}>
               {calloutTitle}
@@ -69,13 +88,15 @@ const Callout = ({
         ) : (
           <div
             className={styles.Callout_icon_placeholder}
-            aria-label="Callout type icon placeholder"
+            // aria-label="Callout type icon placeholder"
+            aria-label={randomItem.calloutImg[0].AriaLabelDiv}
           ></div>
         )}
       </div>
       <div className={styles.Callout_text_area} data-testid="calloutBody">
         <FormattedText
-          placeHolderText="Enter callout body text here..."
+          // placeHolderText="Enter callout body text here..."
+          placeHolderText={randomItem.calloutPlaceHolderText}
           toolbar={calloutToolBar}
           body={calloutBody}
           className={styles.Callout_body}

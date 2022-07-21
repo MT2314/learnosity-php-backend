@@ -1,0 +1,20 @@
+{
+    "language": "French",
+    "callout": "Type de légende :",
+    "calloutTitle": [
+        {
+            "0": "Sélectionnez la valeur",
+            "1": "Défi",
+            "2": "Carnet",
+            "3": "Essayez-le",
+            "4": "Définition"
+        }
+    ], 
+    "calloutImg": [
+        {
+            "AriaLabel": "Icône de type de légende",
+            "AriaLabelDiv": "Espace réservé pour l'icône du type de légende"
+        }
+    ],
+    "calloutPlaceHolderText": "Entrez le corps du texte de la légende ici..."     
+}

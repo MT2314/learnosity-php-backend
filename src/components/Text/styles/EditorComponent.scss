@@ -91,6 +91,9 @@
   &.input-error {
     color: #d32f2f !important;
   }
+  &:focus {
+    outline: none !important;
+  }
 }
 
 .ql-snow .ql-tooltip > span.trash-icon > button {
@@ -104,7 +107,7 @@
     cursor: pointer;
     background-color: rgba(21, 101, 192, 0.12) !important;
     > svg {
-      color: black!important;
+      color: black !important;
     }
   }
   &:active {

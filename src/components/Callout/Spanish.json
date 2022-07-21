@@ -1,0 +1,20 @@
+{
+    "language": "Spanish",
+    "callout": "Tipo de llamada:",
+    "calloutTitle": [
+        {
+            "0": "Selecciona valor",
+            "1": "Desafío",
+            "2": "Computadora portátil",
+            "3": "Intentalo",
+            "4": "Definición"
+        }
+    ],
+    "calloutImg": [
+        {
+            "AriaLabel": "Icono de tipo de llamada",
+            "AriaLabelDiv": "Marcador de posición de icono de tipo de llamada"
+        }
+    ],
+    "calloutPlaceHolderText": "Ingrese el texto del cuerpo de la llamada aquí..."       
+}
