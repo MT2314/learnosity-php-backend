@@ -8,7 +8,7 @@ import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
 
-const CustomToolBar = ({ toolbarId, testId }) => {
+const CustomToolBar = ({ toolbarId, containerId }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
@@ -19,10 +19,11 @@ const CustomToolBar = ({ toolbarId, testId }) => {
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
   useEffect(() => {
-    const parentDiv = document.getElementById(toolbarId);
+    const parentDiv = document.getElementById(containerId);
+    console.log(parentDiv);
 
     const editorDiv = parentDiv.getElementsByClassName("ql-editor");
-    console.log(editorDiv);
+    console.log(editorDiv[0]);
 
     if (editorDiv[0]) {
       for (let i = 0; i < editorDiv[0].children.length; i++) {
