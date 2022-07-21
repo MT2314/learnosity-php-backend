@@ -113,6 +113,7 @@ const EditorComponent = ({ body, setProp }) => {
           nisi ut aliquip ex ea commodo consequat."
         className="quillEditor"
         onChange={handleDataChange}
+        value={body}
       />
     </div>
   );
