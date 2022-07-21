@@ -1,0 +1,20 @@
+{
+    "language": "English",
+    "callout": "Callout Type:",
+    "calloutTitle": [
+        {
+            "0": "Select Value",
+            "1": "Challenge",
+            "2": "Notebook",
+            "3": "Try It",
+            "4": "Definition"
+        }
+    ],    
+    "calloutImg": [
+        {
+            "AriaLabel": "Callout type icon",
+            "AriaLabelDiv": "Callout type icon placeholder"
+        }
+    ],
+    "calloutPlaceHolderText": "Enter callout body text here..."    
+}
