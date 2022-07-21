@@ -18,10 +18,10 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
-  useEffect(() => {
-    const parentDiv = document.getElementById(containerId);
-    console.log(parentDiv);
+  const parentDiv = document.getElementById(containerId);
+  console.log(parentDiv);
 
+  if (parentDiv) {
     const editorDiv = parentDiv.getElementsByClassName("ql-editor");
     console.log(editorDiv[0]);
 
@@ -40,7 +40,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         };
       }
     }
-  }, []);
+  }
 
   return (
     <div id={toolbarId} className="toolbarContainer">
