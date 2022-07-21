@@ -14,7 +14,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   const [alignVisibility, setAlignVisibility] = useState(false);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
-  const [activeAlignIcon, setActiveAlignIcon] = useState("");
+  // const [activeAlignIcon, setActiveAlignIcon] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
@@ -117,7 +117,8 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
               : "align-button"
           }
           aria-label="alignment buttons dropdown"
-          value={activeAlignIcon}
+          // value={activeAlignIcon}
+          value={visibleAlignIcon}
           id="alignment-dropdown"
         >
           {visibleAlignIcon}
@@ -129,7 +130,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         aria-label="alignment buttons options"
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
-        setActiveAlignIcon={setActiveAlignIcon}
+        // setActiveAlignIcon={setActiveAlignIcon}
         setVisibleAlignIcon={setVisibleAlignIcon}
       />
 
