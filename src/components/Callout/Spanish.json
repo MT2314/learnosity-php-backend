@@ -8,5 +8,11 @@
             "3": "Intentalo",
             "4": "Definición"
         }
-    ]  
+    ],
+    "calloutImg": [
+        {
+            "AriaLabel": "Icono de tipo de llamada",
+            "AriaLabelDiv": "Marcador de posición de icono de tipo de llamada"
+        }
+    ]     
 }

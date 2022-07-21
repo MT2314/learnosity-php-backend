@@ -45,7 +45,7 @@ const Callout = ({
               setProp({
                 calloutTypeSvg: calloutOptions[e.target.value].iconUrl,
               });
-              setProp({ calloutTitle: calloutOptions[e.target.value].title });
+              setProp({ calloutTitle: randomItem.calloutTitle[0][e.target.value] });
             }}
             className={styles.Callout_type_dropdown}
           >
@@ -66,7 +66,7 @@ const Callout = ({
               className={styles.Callout_img}
               src={calloutTypeSvg}
               alt={""}
-              aria-label="Callout type icon"
+              aria-label={randomItem.calloutImg[0].AriaLabel}
             />
             <p data-testid="calloutTitle" className={styles.Callout_heading}>
               {calloutTitle}
@@ -75,7 +75,7 @@ const Callout = ({
         ) : (
           <div
             className={styles.Callout_icon_placeholder}
-            aria-label="Callout type icon placeholder"
+            aria-label={randomItem.calloutImg[0].AriaLabelDiv}
           ></div>
         )}
       </div>

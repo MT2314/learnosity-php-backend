@@ -8,5 +8,11 @@
             "3": "Essayez-le",
             "4": "Définition"
         }
-    ] 
+    ], 
+    "calloutImg": [
+        {
+            "AriaLabel": "Icône de type de légende",
+            "AriaLabelDiv": "Espace réservé pour l'icône du type de légende"
+        }
+    ]   
 }

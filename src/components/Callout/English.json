@@ -8,5 +8,11 @@
             "3": "Try It",
             "4": "Definition"
         }
+    ],    
+    "calloutImg": [
+        {
+            "AriaLabel": "Callout type icon",
+            "AriaLabelDiv": "Callout type icon placeholder"
+        }
     ]    
 }
