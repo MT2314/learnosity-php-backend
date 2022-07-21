@@ -19,11 +19,9 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
   const parentDiv = document.getElementById(containerId);
-  console.log(parentDiv);
 
   if (parentDiv) {
     const editorDiv = parentDiv.getElementsByClassName("ql-editor");
-    console.log(editorDiv[0]);
 
     if (editorDiv[0]) {
       for (let i = 0; i < editorDiv[0].children.length; i++) {
