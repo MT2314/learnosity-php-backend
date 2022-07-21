@@ -35,6 +35,8 @@ const Callout = ({
     >
       <div className={styles.dropdownContainer}>
         <label id={`callout-${labelId}`} className={styles.Callout_label}>
+          {randomItem.language}
+          <br />
           {randomItem.callout} &nbsp;
           <NativeSelect
             role="listbox"
@@ -45,15 +47,17 @@ const Callout = ({
               setProp({
                 calloutTypeSvg: calloutOptions[e.target.value].iconUrl,
               });
-              setProp({ calloutTitle: randomItem.calloutTitle[0][e.target.value] });
+              setProp({
+                calloutTitle: randomItem.calloutTitle[0][e.target.value],
+              });
             }}
             className={styles.Callout_type_dropdown}
           >
-            {calloutOptions.map(({ type_id, title }) =>
-                <option key={type_id} value={calloutOptions[type_id].type_id}>
-                  {randomItem.calloutTitle[0][type_id]}
-                </option>
-            )}
+            {calloutOptions.map(({ type_id, title }) => (
+              <option key={type_id} value={calloutOptions[type_id].type_id}>
+                {randomItem.calloutTitle[0][type_id]}
+              </option>
+            ))}
           </NativeSelect>
         </label>
       </div>
@@ -81,7 +85,7 @@ const Callout = ({
       </div>
       <div className={styles.Callout_text_area} data-testid="calloutBody">
         <FormattedText
-          placeHolderText="Enter callout body text here..."
+          placeHolderText={randomItem.calloutPlaceHolderText}
           toolbar={calloutToolBar}
           body={calloutBody}
           className={styles.Callout_body}

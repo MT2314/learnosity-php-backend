@@ -1,4 +1,5 @@
 {
+    "language": "French",
     "callout": "Type de légende :",
     "calloutTitle": [
         {
@@ -14,5 +15,6 @@
             "AriaLabel": "Icône de type de légende",
             "AriaLabelDiv": "Espace réservé pour l'icône du type de légende"
         }
-    ]   
+    ],
+    "calloutPlaceHolderText": "Entrez le corps du texte de la légende ici..."     
 }

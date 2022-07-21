@@ -1,4 +1,5 @@
 {
+    "language": "English",
     "callout": "Callout Type:",
     "calloutTitle": [
         {
@@ -14,5 +15,6 @@
             "AriaLabel": "Callout type icon",
             "AriaLabelDiv": "Callout type icon placeholder"
         }
-    ]    
+    ],
+    "calloutPlaceHolderText": "Enter callout body text here..."    
 }

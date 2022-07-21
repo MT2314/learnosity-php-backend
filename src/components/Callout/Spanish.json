@@ -1,4 +1,5 @@
 {
+    "language": "Spanish",
     "callout": "Tipo de llamada:",
     "calloutTitle": [
         {
@@ -14,5 +15,6 @@
             "AriaLabel": "Icono de tipo de llamada",
             "AriaLabelDiv": "Marcador de posición de icono de tipo de llamada"
         }
-    ]     
+    ],
+    "calloutPlaceHolderText": "Ingrese el texto del cuerpo de la llamada aquí..."       
 }
