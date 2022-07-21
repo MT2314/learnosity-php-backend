@@ -8,8 +8,9 @@ export const defaultProps = { heading: "", body: "" };
 import English from "./English.json";
 import French from "./French.json";
 import Spanish from "./Spanish.json";
+import Chinese from "./Chinese.json";
 
-const languages = [English, French, Spanish];
+const languages = [English, French, Spanish, Chinese];
 
 const randomItem = languages[Math.floor(Math.random() * languages.length)];
 
