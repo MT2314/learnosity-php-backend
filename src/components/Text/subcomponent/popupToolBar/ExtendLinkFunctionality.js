@@ -59,7 +59,7 @@ const ExtendLinkFunctionality = (id) => {
 
   ReactDOM.render(<TrashcanTooltip />, Trashcan);
   ReactDOM.render(<PencilTooltip />, Pencil);
-  ReactDOM.render(<ApplyTooltip />, Apply);
+  ReactDOM.render(<ApplyTooltip quill={quillElement} />, Apply);
 
   let [isEdit, isRemoving, linkHolder] = [false, false, ""];
 
