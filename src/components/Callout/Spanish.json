@@ -1,0 +1,20 @@
+{
+    "callout": "Tipo de llamada:",
+    "calloutTitle": [
+        {
+            "title": "Select Value"
+        },
+        {
+            "title": "Challenge"
+        },
+        {
+            "title": "Notebook"
+        },
+        {
+            "title": "Try It"
+        },
+        {
+            "title": "Definition"
+        }
+    ] 
+}

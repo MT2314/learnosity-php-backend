@@ -1,0 +1,20 @@
+{
+    "callout": "Type de légende :",
+    "calloutTitle": [
+        {
+            "title": "Select Value"
+        },
+        {
+            "title": "Challenge"
+        },
+        {
+            "title": "Notebook"
+        },
+        {
+            "title": "Try It"
+        },
+        {
+            "title": "Definition"
+        }
+    ] 
+}

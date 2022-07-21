@@ -5,6 +5,13 @@ import FormattedText from "../FormattedText/FormattedText";
 import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 import calloutOptions from "./utility/CalloutOptions";
 export const defaultProps = { heading: "", body: "" };
+import English from "./English.json";
+import French from "./French.json";
+import Spanish from "./Spanish.json";
+
+const languages = [English, French, Spanish];
+
+const randomItem = languages[Math.floor(Math.random() * languages.length)];
 
 const Callout = ({
   calloutTypeSvg,
@@ -12,7 +19,6 @@ const Callout = ({
   calloutBody,
   setProp = () => {},
 }) => {
-
   let labelId = Math.floor(Math.random() * 100000);
 
   const calloutToolBar = useToolBarOptions(
@@ -29,7 +35,7 @@ const Callout = ({
     >
       <div className={styles.dropdownContainer}>
         <label id={`callout-${labelId}`} className={styles.Callout_label}>
-          Callout Type: &nbsp;
+          {randomItem.callout} &nbsp;
           <NativeSelect
             role="listbox"
             name="callout-selector"
@@ -43,11 +49,15 @@ const Callout = ({
             }}
             className={styles.Callout_type_dropdown}
           >
-            {calloutOptions.map(({ type_id, title }) => (
-              <option key={type_id} value={calloutOptions[type_id].type_id}>
-                {title}
-              </option>
-            ))}
+            {calloutOptions.map(({ type_id, title }) =>
+              randomItem.calloutTitle.map((test) => {
+                <option key={type_id} value={calloutOptions[type_id].type_id}>
+                  {/* {title} */}
+                  {console.log(test.title)}
+                  {test.title}
+                </option>;
+              })
+            )}
           </NativeSelect>
         </label>
       </div>
