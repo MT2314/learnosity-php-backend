@@ -9,7 +9,6 @@ const AlignDropdownButton = ({
   show,
   activeDropDownItem,
   setActiveDropDownItem,
-  // setActiveAlignIcon,
   setVisibleAlignIcon,
 }) => {
   return (
@@ -22,10 +21,8 @@ const AlignDropdownButton = ({
               onClick={() => {
                 if (activeDropDownItem === "left") {
                   setActiveDropDownItem("");
-                  // setActiveAlignIcon("");
                 } else {
                   setActiveDropDownItem("left");
-                  // setActiveAlignIcon("left");
                   setVisibleAlignIcon(icons["align"]);
                 }
               }}
@@ -52,10 +49,8 @@ const AlignDropdownButton = ({
                 if (activeDropDownItem === "center") {
                   setActiveDropDownItem("");
                   setVisibleAlignIcon(icons["align"]);
-                  // setActiveAlignIcon("");
                 } else {
                   setActiveDropDownItem("center");
-                  // setActiveAlignIcon("center");
                   setVisibleAlignIcon(icons["center"]);
                 }
               }}
@@ -76,10 +71,8 @@ const AlignDropdownButton = ({
                 if (activeDropDownItem === "right") {
                   setActiveDropDownItem("");
                   setVisibleAlignIcon(icons["align"]);
-                  // setActiveAlignIcon("");
                 } else {
                   setActiveDropDownItem("right");
-                  // setActiveAlignIcon("right");
                   setVisibleAlignIcon(icons["right"]);
                 }
               }}
