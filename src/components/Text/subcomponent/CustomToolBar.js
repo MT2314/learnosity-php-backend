@@ -7,6 +7,15 @@ import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
 import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
+// Config styles of MUI components
+import { makeStyles } from "@material-ui/core/styles";
+
+// Classes for styling modification. (Tooltip class)
+const useStyles = makeStyles((theme) => ({
+  tooltip: {
+    backgroundColor: "rgba(112, 112, 112, 0.9)",
+  },
+}));
 
 const CustomToolBar = ({ toolbarId, containerId }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
@@ -16,31 +25,39 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
+  // Allow the use of materialUI styled component classes
+  let classes = useStyles();
 
   const parentDiv = document.getElementById(containerId);
-
   if (parentDiv) {
     const QLformats = parentDiv.querySelector(`.ql-formats`)
     const QLactive = QLformats.querySelector(`.ql-active`)
-    const options = {
-      attributes: true
-    }
+    if (QLactive) {
+      const options = {
+        attributes: true
+      }
 
-    function callback(mutationList) {
-      mutationList.forEach(function (mutation) {
-        if (mutation.target.classList.contains(`ql-active`)) {
-          setVisibleAlignIcon(icons[mutation.target.value ? mutation.target.value : "align"])
-        }
-      })
+      function callback(mutationList) {
+        mutationList.forEach(function (mutation) {
+          if (mutation.target.classList.contains(`ql-active`)) {
+            setVisibleAlignIcon(icons[mutation.target.value ? mutation.target.value : "align"])
+          }
+        })
+      }
+      const observer = new MutationObserver(callback)
+      observer.observe(QLactive, options)
     }
-    const observer = new MutationObserver(callback)
-    observer.observe(QLactive, options)
   }
 
   return (
     <div id={toolbarId} className="toolbarContainer">
       {/* bold dropdown starts */}
-      <Tooltip arrow title="font styles" placement="top">
+      <Tooltip
+        arrow
+        title="font styles"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
         <button
           onClick={() => {
             setBoldVisibility(!boldVisibility);
@@ -70,7 +87,12 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       ></BoldDropdownButton>
 
       {/* formula btn */}
-      <Tooltip arrow title="equation" placement="top">
+      <Tooltip
+        arrow
+        title="equation"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
         <button
           className={
             activeTopMenu === "math"
@@ -95,7 +117,12 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       </Tooltip>
 
       {/* alignment dropdown */}
-      <Tooltip arrow title="alignment" placement="top">
+      <Tooltip
+        arrow
+        title="alignment"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
         <button
           onClick={() => {
             setAlignVisibility(!alignVisibility);
@@ -130,7 +157,12 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       />
 
       {/* bullets drowdown starts */}
-      <Tooltip arrow title="add list" placement="top">
+      <Tooltip
+        arrow
+        title="add list"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
         <button
           onClick={() => {
             setListVisibility(!listVisibility);
@@ -160,7 +192,12 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
 
       {/* link btn and divider */}
       <Divider orientation="vertical" />
-      <Tooltip arrow title="insert link" placement="top">
+      <Tooltip
+        arrow
+        title="insert link"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
         <button
           aria-label="add link button"
           className={
