@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
 import "./styles/Text.scss";
@@ -12,9 +12,20 @@ const Text = ({ body = { ops: [{ insert: "\n" }] }, setProp = () => {} }) => {
     setShowEditor(true);
   };
 
+  // useEffect(() => {
+  //   if (body) {
+  //     if (body.ops[0].insert === "\n") {
+  //       console.log("hit: ", body.ops[0]);
+  //       setShowEditor(false);
+  //     }
+  //   }
+  // }, [body]);
+
   return (
     <>
-      {!showEditor && body === null ? (
+      {/* {!showEditor && body === null ? ( */}
+      {(!showEditor && body === null) ||
+      (!showEditor && body.ops[0].insert === "\n") ? (
         <div
           onClick={() => {
             handleOnClick();
@@ -25,7 +36,12 @@ const Text = ({ body = { ops: [{ insert: "\n" }] }, setProp = () => {} }) => {
           <DefaultText />
         </div>
       ) : (
-        <EditorComponent body={body} setProp={setProp} />
+        <EditorComponent
+          body={body}
+          setProp={setProp}
+          showEditor={showEditor}
+          setShowEditor={setShowEditor}
+        />
       )}
     </>
   );
