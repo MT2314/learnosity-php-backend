@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // Classes for styling modification. (Tooltip class)
 const useStyles = makeStyles((theme) => ({
   tooltip: {
-    backgroundColor: "rgba(112, 112, 112, 0.9)",
+    backgroundColor: "rgba(97, 97, 97, 0.9)",
   },
 }));
 
@@ -30,22 +30,24 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
 
   const parentDiv = document.getElementById(containerId);
   if (parentDiv) {
-    const QLformats = parentDiv.querySelector(`.ql-formats`)
-    const QLactive = QLformats.querySelector(`.ql-active`)
+    const QLformats = parentDiv.querySelector(`.ql-formats`);
+    const QLactive = QLformats.querySelector(`.ql-active`);
     if (QLactive) {
       const options = {
-        attributes: true
-      }
+        attributes: true,
+      };
 
       function callback(mutationList) {
         mutationList.forEach(function (mutation) {
           if (mutation.target.classList.contains(`ql-active`)) {
-            setVisibleAlignIcon(icons[mutation.target.value ? mutation.target.value : "align"])
+            setVisibleAlignIcon(
+              icons[mutation.target.value ? mutation.target.value : "align"]
+            );
           }
-        })
+        });
       }
-      const observer = new MutationObserver(callback)
-      observer.observe(QLactive, options)
+      const observer = new MutationObserver(callback);
+      observer.observe(QLactive, options);
     }
   }
 
