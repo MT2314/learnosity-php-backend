@@ -18,27 +18,24 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
   const parentDiv = document.getElementById(containerId);
-  try {
+
+  if (parentDiv) {
     const QLformats = parentDiv.querySelector(`.ql-formats`)
     const QLactive = QLformats.querySelector(`.ql-active`)
     const options = {
       attributes: true
     }
 
-    function callback(mutationList, observer) {
+    function callback(mutationList) {
       mutationList.forEach(function (mutation) {
-        if(mutation.target.classList.contains(`ql-active`)){
-          if(mutation.target.value) {
-            setVisibleAlignIcon(icons[mutation.target.value])
-          } else {
-            setVisibleAlignIcon(icons["align"])
-          }
+        if (mutation.target.classList.contains(`ql-active`)) {
+          setVisibleAlignIcon(icons[mutation.target.value ? mutation.target.value : "align"])
         }
       })
     }
     const observer = new MutationObserver(callback)
     observer.observe(QLactive, options)
-  } catch (err) { }
+  }
 
   return (
     <div id={toolbarId} className="toolbarContainer">
