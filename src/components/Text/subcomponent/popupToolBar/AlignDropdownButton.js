@@ -9,7 +9,6 @@ const AlignDropdownButton = ({
   show,
   activeDropDownItem,
   setActiveDropDownItem,
-  setActiveAlignIcon,
   setVisibleAlignIcon,
 }) => {
   return (
@@ -22,10 +21,8 @@ const AlignDropdownButton = ({
               onClick={() => {
                 if (activeDropDownItem === "left") {
                   setActiveDropDownItem("");
-                  setActiveAlignIcon("");
                 } else {
                   setActiveDropDownItem("left");
-                  setActiveAlignIcon("left");
                   setVisibleAlignIcon(icons["align"]);
                 }
               }}
@@ -51,10 +48,9 @@ const AlignDropdownButton = ({
               onClick={() => {
                 if (activeDropDownItem === "center") {
                   setActiveDropDownItem("");
-                  setActiveAlignIcon("");
+                  setVisibleAlignIcon(icons["align"]);
                 } else {
                   setActiveDropDownItem("center");
-                  setActiveAlignIcon("center");
                   setVisibleAlignIcon(icons["center"]);
                 }
               }}
@@ -74,10 +70,9 @@ const AlignDropdownButton = ({
               onClick={() => {
                 if (activeDropDownItem === "right") {
                   setActiveDropDownItem("");
-                  setActiveAlignIcon("");
+                  setVisibleAlignIcon(icons["align"]);
                 } else {
                   setActiveDropDownItem("right");
-                  setActiveAlignIcon("right");
                   setVisibleAlignIcon(icons["right"]);
                 }
               }}

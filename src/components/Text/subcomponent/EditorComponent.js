@@ -8,7 +8,7 @@ import "quill-paste-smart";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 
-const EditorComponent = ({ body, setProp }) => {
+const EditorComponent = ({ body, setProp, setShowEditor }) => {
   const toolbarId = `unique-id-${uuidv4()}`;
 
   //state to hide toolbar if clicked outside text component
@@ -20,7 +20,10 @@ const EditorComponent = ({ body, setProp }) => {
   //track clicks outside text div
   const textRef = useRef(null);
 
-  useOnClickOutside(textRef, () => setEditorIsFocus(false));
+  useOnClickOutside(textRef, () => {
+    setEditorIsFocus(false);
+    setShowEditor(false);
+  });
 
   useEffect(() => {
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
@@ -96,7 +99,10 @@ const EditorComponent = ({ body, setProp }) => {
       data-testid="text-editor-component"
     >
       <div className={editorIsFocus ? "showtool" : "hidetool"}>
-        <CustomToolBar toolbarId={toolbarId} />
+        <CustomToolBar
+          toolbarId={toolbarId}
+          containerId={`toolbar-${toolbarId}`}
+        />
       </div>
 
       <ReactQuill
@@ -110,6 +116,7 @@ const EditorComponent = ({ body, setProp }) => {
           nisi ut aliquip ex ea commodo consequat."
         className="quillEditor"
         onChange={handleDataChange}
+        defaultValue={body}
       />
     </div>
   );
