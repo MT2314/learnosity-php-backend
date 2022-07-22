@@ -56,7 +56,6 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       {/* bold dropdown starts */}
       <Tooltip
         arrow
-        open
         title="font styles"
         placement="top"
         classes={{ tooltip: classes.tooltip }}
