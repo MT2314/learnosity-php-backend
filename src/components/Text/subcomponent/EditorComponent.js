@@ -9,7 +9,7 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 
 const EditorComponent = ({ body, setProp, setShowEditor }) => {
-  const toolbarId = `unique-id-${uuidv4()}`;
+  const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
