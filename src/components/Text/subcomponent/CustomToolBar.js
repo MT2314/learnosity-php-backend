@@ -18,24 +18,27 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
   const parentDiv = document.getElementById(containerId);
-
-  if (parentDiv) {
-    const editorDiv = parentDiv.getElementsByClassName("ql-editor");
-
-    if (editorDiv[0]) {
-      for (let i = 0; i < editorDiv[0].children.length; i++) {
-        editorDiv[0].children[i].onclick = function () {
-          if (editorDiv[0].children[i].className === "ql-align-center") {
-            setVisibleAlignIcon(icons["center"]);
-          } else if (editorDiv[0].children[i].className === "ql-align-right") {
-            setVisibleAlignIcon(icons["right"]);
-          } else {
-            setVisibleAlignIcon(icons["align"]);
-          }
-        };
-      }
+  try {
+    const QLformats = parentDiv.querySelector(`.ql-formats`)
+    const QLactive = QLformats.querySelector(`.ql-active`)
+    const options = {
+      attributes: true
     }
-  }
+
+    function callback(mutationList, observer) {
+      mutationList.forEach(function (mutation) {
+        if(mutation.target.classList.contains(`ql-active`)){
+          if(mutation.target.value) {
+            setVisibleAlignIcon(icons[mutation.target.value])
+          } else {
+            setVisibleAlignIcon(icons["align"])
+          }
+        }
+      })
+    }
+    const observer = new MutationObserver(callback)
+    observer.observe(QLactive, options)
+  } catch (err) { }
 
   return (
     <div id={toolbarId} className="toolbarContainer">
