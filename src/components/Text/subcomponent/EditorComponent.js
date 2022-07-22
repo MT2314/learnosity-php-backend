@@ -96,7 +96,10 @@ const EditorComponent = ({ body, setProp }) => {
       data-testid="text-editor-component"
     >
       <div className={editorIsFocus ? "showtool" : "hidetool"}>
-        <CustomToolBar toolbarId={toolbarId} />
+        <CustomToolBar
+          toolbarId={toolbarId}
+          containerId={`toolbar-${toolbarId}`}
+        />
       </div>
 
       <ReactQuill
@@ -110,6 +113,7 @@ const EditorComponent = ({ body, setProp }) => {
           nisi ut aliquip ex ea commodo consequat."
         className="quillEditor"
         onChange={handleDataChange}
+        defaultValue={body}
       />
     </div>
   );

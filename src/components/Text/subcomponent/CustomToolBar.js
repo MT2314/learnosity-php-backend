@@ -8,32 +8,33 @@ import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
 
-const CustomToolBar = ({ toolbarId }) => {
+const CustomToolBar = ({ toolbarId, containerId }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
-  const [activeAlignIcon, setActiveAlignIcon] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
-
-  const editorDiv = document.getElementsByClassName("ql-editor");
-
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
-  if (editorDiv[0]) {
-    for (let i = 0; i < editorDiv[0].children.length; i++) {
-      editorDiv[0].children[i].setAttribute("data-id", i);
 
-      editorDiv[0].children[i].onclick = function () {
-        if (editorDiv[0].children[i].className === "ql-align-center") {
-          setVisibleAlignIcon(icons["center"]);
-        } else if (editorDiv[0].children[i].className === "ql-align-right") {
-          setVisibleAlignIcon(icons["right"]);
-        } else {
-          setVisibleAlignIcon(icons["align"]);
-        }
-      };
+  const parentDiv = document.getElementById(containerId);
+
+  if (parentDiv) {
+    const QLformats = parentDiv.querySelector(`.ql-formats`)
+    const QLactive = QLformats.querySelector(`.ql-active`)
+    const options = {
+      attributes: true
     }
+
+    function callback(mutationList) {
+      mutationList.forEach(function (mutation) {
+        if (mutation.target.classList.contains(`ql-active`)) {
+          setVisibleAlignIcon(icons[mutation.target.value ? mutation.target.value : "align"])
+        }
+      })
+    }
+    const observer = new MutationObserver(callback)
+    observer.observe(QLactive, options)
   }
 
   return (
@@ -113,7 +114,7 @@ const CustomToolBar = ({ toolbarId }) => {
               : "align-button"
           }
           aria-label="alignment buttons dropdown"
-          value={activeAlignIcon}
+          value={visibleAlignIcon}
           id="alignment-dropdown"
         >
           {visibleAlignIcon}
@@ -125,7 +126,6 @@ const CustomToolBar = ({ toolbarId }) => {
         aria-label="alignment buttons options"
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
-        setActiveAlignIcon={setActiveAlignIcon}
         setVisibleAlignIcon={setVisibleAlignIcon}
       />
 
