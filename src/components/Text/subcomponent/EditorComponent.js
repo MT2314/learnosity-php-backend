@@ -8,7 +8,7 @@ import "quill-paste-smart";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 
-const EditorComponent = ({ body, setProp, showEditor, setShowEditor }) => {
+const EditorComponent = ({ body, setProp, setShowEditor }) => {
   const toolbarId = `unique-id-${uuidv4()}`;
 
   //state to hide toolbar if clicked outside text component
@@ -22,8 +22,6 @@ const EditorComponent = ({ body, setProp, showEditor, setShowEditor }) => {
 
   useOnClickOutside(textRef, () => {
     setEditorIsFocus(false);
-    console.log("outside");
-    console.log(showEditor);
     setShowEditor(false);
   });
 
