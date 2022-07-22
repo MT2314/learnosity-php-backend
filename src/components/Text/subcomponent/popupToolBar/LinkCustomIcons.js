@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // Classes for styling modification. (Tooltip class)
 const useStyles = makeStyles((theme) => ({
   tooltip: {
-    backgroundColor: "rgba(112, 112, 112, 0.9)",
+    backgroundColor: "rgba(97, 97, 97, 0.9)",
   },
 }));
 
