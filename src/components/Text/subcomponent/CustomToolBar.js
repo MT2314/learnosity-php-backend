@@ -30,23 +30,23 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
 
   const parentDiv = document.getElementById(containerId);
   if (parentDiv) {
-    const QLformats = parentDiv.querySelector(`.ql-formats`);
-    const QLactive = QLformats.querySelector(`.ql-active`);
-    const options = {
-      attributes: true,
-    };
+    const QLformats = parentDiv.querySelector(`.ql-formats`)
+    const QLactive = QLformats.querySelector(`.ql-active`)
+    if (QLactive) {
+      const options = {
+        attributes: true
+      }
 
-    function callback(mutationList) {
-      mutationList.forEach(function (mutation) {
-        if (mutation.target.classList.contains(`ql-active`)) {
-          setVisibleAlignIcon(
-            icons[mutation.target.value ? mutation.target.value : "align"]
-          );
-        }
-      });
+      function callback(mutationList) {
+        mutationList.forEach(function (mutation) {
+          if (mutation.target.classList.contains(`ql-active`)) {
+            setVisibleAlignIcon(icons[mutation.target.value ? mutation.target.value : "align"])
+          }
+        })
+      }
+      const observer = new MutationObserver(callback)
+      observer.observe(QLactive, options)
     }
-    const observer = new MutationObserver(callback);
-    observer.observe(QLactive, options);
   }
 
   return (
