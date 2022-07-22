@@ -4,18 +4,34 @@ import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core/";
 import "../../styles/AlignDropdownButton.scss";
 import icons from "../../assets/icons";
+// Config styles of MUI components
+import { makeStyles } from "@material-ui/core/styles";
 
+// Classes for styling modification. (Tooltip class)
+const useStyles = makeStyles((theme) => ({
+  tooltip: {
+    backgroundColor: "rgba(112, 112, 112, 0.9)",
+  },
+}));
 const AlignDropdownButton = ({
   show,
   activeDropDownItem,
   setActiveDropDownItem,
   setVisibleAlignIcon,
 }) => {
+  // Allow the use of materialUI styled component classes
+  let classes = useStyles();
+
   return (
     <>
       <Card className={show ? "align-dropdown show" : "align-dropdown hide"}>
         <span className="ql-formats">
-          <Tooltip arrow title="align left" placement="top">
+          <Tooltip
+            arrow
+            title="align left"
+            placement="top"
+            classes={{ tooltip: classes.tooltip }}
+          >
             <button
               aria-label="left align"
               onClick={() => {
@@ -36,7 +52,12 @@ const AlignDropdownButton = ({
               {icons["align"]}
             </button>
           </Tooltip>
-          <Tooltip arrow title="centre text" placement="top">
+          <Tooltip
+            arrow
+            title="centre text"
+            placement="top"
+            classes={{ tooltip: classes.tooltip }}
+          >
             <button
               aria-label="align center"
               className={
@@ -58,7 +79,12 @@ const AlignDropdownButton = ({
               {icons["center"]}
             </button>
           </Tooltip>
-          <Tooltip arrow title="align right" placement="top">
+          <Tooltip
+            arrow
+            title="align right"
+            placement="top"
+            classes={{ tooltip: classes.tooltip }}
+          >
             <button
               aria-label="right align"
               className={
