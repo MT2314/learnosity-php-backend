@@ -14,7 +14,8 @@ const Text = ({ body = { ops: [{ insert: "\n" }] }, setProp = () => {} }) => {
 
   return (
     <>
-      {!showEditor && body === null ? (
+      {(!showEditor && body === null) ||
+      (!showEditor && body.ops[0].insert === "\n") ? (
         <div
           onClick={() => {
             handleOnClick();
@@ -25,7 +26,11 @@ const Text = ({ body = { ops: [{ insert: "\n" }] }, setProp = () => {} }) => {
           <DefaultText />
         </div>
       ) : (
-        <EditorComponent body={body} setProp={setProp} />
+        <EditorComponent
+          body={body}
+          setProp={setProp}
+          setShowEditor={setShowEditor}
+        />
       )}
     </>
   );
