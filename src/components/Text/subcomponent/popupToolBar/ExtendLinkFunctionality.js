@@ -41,7 +41,7 @@ const ExtendLinkFunctionality = (id) => {
   quillActionBtn.style.display = "none";
   quillRemoveBtn.style.display = "none";
 
-  tooltipSaveBtnContainer.setAttribute("class", "apply-link-btn");
+  tooltipSaveBtnContainer.classList.add("apply-link-btn");
   tooltipEditorButtonContainer.classList.add("pencil-icon");
   tooltipRemoveButtonContainer.classList.add("trash-icon");
 
@@ -68,7 +68,9 @@ const ExtendLinkFunctionality = (id) => {
   linkTooltipInput.setAttribute("data-link", "Paste a link");
 
   linkTooltipInput.addEventListener("focus", (e) => {
-    !isEdit && (linkTooltipInput.value = "");
+    linkTooltipInput.classList.contains("input-error")
+      ? (linkTooltipInput.value = e.target.value)
+      : !isEdit && (linkTooltipInput.value = "");
 
     !isEdit && Apply.classList.add("disabled");
     linkTooltipInput.classList.remove("input-error");
