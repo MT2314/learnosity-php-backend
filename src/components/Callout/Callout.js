@@ -89,7 +89,7 @@ const Callout = ({
                 aria-label={t("imgAriaLabel")}
               />
               <p data-testid="calloutTitle" className={styles.Callout_heading}>
-                {calloutTitle}
+                {t(calloutTitle)}
               </p>
             </>
           ) : (
