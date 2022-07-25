@@ -12,7 +12,8 @@ import { useTranslation, Trans } from "react-i18next";
 const lngs = {
   en: { nativeName: 'English' },
   fr: { nativeName: 'French' },
-  ch: { nativeName: 'Chinese' },
+  cn: { nativeName: 'Chinese' },
+  es: { nativeName: 'Spanish'}
 }
 
 const Callout = ({
@@ -62,7 +63,7 @@ const Callout = ({
             >
               {calloutOptions.map(({ type_id, title }) => (
                 <option key={type_id} value={calloutOptions[type_id].type_id}>
-                  {title}
+                  {t(title)}
                 </option>
               ))}
             </NativeSelect>
@@ -77,7 +78,7 @@ const Callout = ({
                 className={styles.Callout_img}
                 src={calloutTypeSvg}
                 alt={""}
-                aria-label="Callout type icon"
+                aria-label={t("imgAriaLabel")}
               />
               <p data-testid="calloutTitle" className={styles.Callout_heading}>
                 {calloutTitle}
@@ -86,13 +87,13 @@ const Callout = ({
           ) : (
             <div
               className={styles.Callout_icon_placeholder}
-              aria-label="Callout type icon placeholder"
+              aria-label={t("imgAriaLabelDiv")}
             ></div>
           )}
         </div>
         <div className={styles.Callout_text_area} data-testid="calloutBody">
           <FormattedText
-            placeHolderText="Enter callout body text here..."
+            placeHolderText={t("calloutPlaceHolderText")}
             toolbar={calloutToolBar}
             body={calloutBody}
             className={styles.Callout_body}

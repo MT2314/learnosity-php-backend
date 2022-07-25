@@ -1,3 +1,11 @@
 {
-    "callout": "Type de légende :"
+    "callout": "Type de légende :",
+    "Select Value": "Sélectionnez la valeur",
+    "Challenge": "Défi",
+    "Notebook": "Carnet",
+    "Try It": "Essayez-le",
+    "Definition": "Définition",
+    "imgAriaLabel": "Icône de type de légende",
+    "imgAriaLabelDiv": "Espace réservé pour l'icône du type de légende",
+    "calloutPlaceHolderText": "Entrez le corps du texte de la légende ici..."
 }

@@ -1,0 +1,11 @@
+{
+    "callout": "标注类型:",
+    "Select Value": "选择值",
+    "Challenge": "挑战",
+    "Notebook": "笔记本",
+    "Try It": "试试看",
+    "Definition": "定义",
+    "imgAriaLabel": "标注类型图标",
+    "imgAriaLabelDiv": "标注类型图标占位符",
+    "calloutPlaceHolderText": "在此处输入标注正文..."
+}

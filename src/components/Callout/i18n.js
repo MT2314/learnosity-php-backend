@@ -13,24 +13,6 @@ i18n
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
-    // here we will place our translations...
-    // resources: {
-    //   en: { 
-    //     translation: { 
-    //       callout: "Callout Type:" 
-    //     }
-    //   },
-    //   fr: { 
-    //     translation: { 
-    //       callout: "Type de légende :" 
-    //     }
-    //   },
-    //   ch: { 
-    //     translation: { 
-    //       callout: "标注类型:" 
-    //     }
-    //   },
-    // },
   });
 
 export default i18n;
