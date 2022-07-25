@@ -146,5 +146,6 @@ describe("<Text/>", () => {
     expect(quillEditor).toHaveTextContent("bold");
     expect(quillEditor).toHaveTextContent("italic");
     expect(quillEditor).toHaveTextContent("underline");
+    expect(quillEditor).not.toHaveTextContent("Polkaroo");
   });
 });
