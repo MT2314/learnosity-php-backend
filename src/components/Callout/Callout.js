@@ -11,7 +11,8 @@ import { useTranslation, Trans } from "react-i18next";
 
 const lngs = {
   en: { nativeName: 'English' },
-  fr: { nativeName: 'French' }
+  fr: { nativeName: 'French' },
+  ch: { nativeName: 'Chinese' },
 }
 
 const Callout = ({

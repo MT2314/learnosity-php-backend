@@ -18,6 +18,8 @@ const App = () => {
   console.log(`Stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`)
   return (
     <>
+            <React.Suspense fallback="loading">
+
       <WidgetContextProvider>
         <BrowserRouter>
           <Routes>
@@ -26,7 +28,7 @@ const App = () => {
               path="/AccessibilityKeysPage"
               element={<AccessibilityKeysPage />}
             />
-            <Route path="/CalloutPage" element={<CalloutPage />} />
+              <Route path="/CalloutPage" element={<CalloutPage />} />
             <Route path="/QuoteBoxPage" element={<QuoteBoxPage />} />
             <Route path="/ImagePage" element={<ImagePage />} />
             <Route path="/text-component" element={<Text />} />
@@ -34,6 +36,8 @@ const App = () => {
           </Routes>
         </BrowserRouter>
       </WidgetContextProvider>
+      </React.Suspense>
+
     </>
   );
 };
