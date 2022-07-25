@@ -4,23 +4,24 @@ import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
 import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 import calloutOptions from "./utility/CalloutOptions";
-export const defaultProps = { heading: "", body: "" };
 
 import "./i18n";
 import { useTranslation, Trans } from "react-i18next";
 
+export const defaultProps = { heading: "", body: "" };
+
 const lngs = {
-  en: { nativeName: 'English' },
-  fr: { nativeName: 'French' },
-  cn: { nativeName: 'Chinese' },
-  es: { nativeName: 'Spanish'}
-}
+  en: { nativeName: "English" },
+  fr: { nativeName: "French" },
+  cn: { nativeName: "Chinese" },
+  es: { nativeName: "Spanish" },
+};
 
 const Callout = ({
   calloutTypeSvg,
   calloutTitle,
   calloutBody,
-  setProp = () => { },
+  setProp = () => {},
 }) => {
   let labelId = Math.floor(Math.random() * 100000);
 
@@ -43,7 +44,14 @@ const Callout = ({
           <label id={`callout-${labelId}`} className={styles.Callout_label}>
             <div>
               {Object.keys(lngs).map((lng) => (
-                <button type="submit" key={lng} onClick={() => i18n.changeLanguage(lng)} disabled={i18n.resolvedLanguage === lng}>{lngs[lng].nativeName}</button>
+                <button
+                  type="submit"
+                  key={lng}
+                  onClick={() => i18n.changeLanguage(lng)}
+                  disabled={i18n.resolvedLanguage === lng}
+                >
+                  {lngs[lng].nativeName}
+                </button>
               ))}
             </div>
             {t("callout")}&nbsp;
