@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Paper, NativeSelect } from "@mui/material";
 import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
@@ -21,7 +21,7 @@ const Callout = ({
   calloutTypeSvg,
   calloutTitle,
   calloutBody,
-  setProp = () => {},
+  setProp = () => { },
 }) => {
   let labelId = Math.floor(Math.random() * 100000);
 
@@ -33,86 +33,84 @@ const Callout = ({
   const { t, i18n } = useTranslation();
 
   return (
-    <Suspense fallback="Loading...">
-      <Paper
-        aria-label="Callout"
-        data-id="callout"
-        data-testid="callout"
-        className={styles.Callout_container}
-      >
-        <div className={styles.dropdownContainer}>
-          <label id={`callout-${labelId}`} className={styles.Callout_label}>
-            <div>
-              {Object.keys(lngs).map((lng) => (
-                <button
-                  type="submit"
-                  key={lng}
-                  onClick={() => i18n.changeLanguage(lng)}
-                  disabled={i18n.resolvedLanguage === lng}
-                >
-                  {lngs[lng].nativeName}
-                </button>
-              ))}
-            </div>
-            {t("callout")}&nbsp;
-            <NativeSelect
-              role="listbox"
-              autoFocus
-              name="callout-selector"
-              aria-labelledby={`callout-${labelId}`}
-              data-testid="calloutTitle"
-              onChange={(e) => {
-                setProp({
-                  calloutTypeSvg: calloutOptions[e.target.value].iconUrl,
-                });
-                setProp({ calloutTitle: calloutOptions[e.target.value].title });
-              }}
-              className={styles.Callout_type_dropdown}
-            >
-              {calloutOptions.map(({ type_id, title }) => (
-                <option key={type_id} value={calloutOptions[type_id].type_id}>
-                  {t(title)}
-                </option>
-              ))}
-            </NativeSelect>
-          </label>
-        </div>
-        &nbsp;
-        <div className={styles.Callout_icon_title} data-testid="calloutTypeSvg">
-          {/* decorative icon */}
-          {calloutTypeSvg ? (
-            <>
-              <img
-                className={styles.Callout_img}
-                src={calloutTypeSvg}
-                alt={""}
-                aria-label={t("imgAriaLabel")}
-              />
-              <p data-testid="calloutTitle" className={styles.Callout_heading}>
-                {t(calloutTitle)}
-              </p>
-            </>
-          ) : (
-            <div
-              className={styles.Callout_icon_placeholder}
-              aria-label={t("imgAriaLabelDiv")}
-            ></div>
-          )}
-        </div>
-        <div className={styles.Callout_text_area} data-testid="calloutBody">
-          <FormattedText
-            placeHolderText={t("calloutPlaceHolderText")}
-            toolbar={calloutToolBar}
-            body={calloutBody}
-            className={styles.Callout_body}
-            editorClassName="callout_editor_class"
-            setProp={(stateUpdate) =>
-              setProp({ calloutBody: stateUpdate.body })
-            }
-          />
-        </div>
-      </Paper>
-    </Suspense>
+    <Paper
+      aria-label="Callout"
+      data-id="callout"
+      data-testid="callout"
+      className={styles.Callout_container}
+    >
+      <div className={styles.dropdownContainer}>
+        <label id={`callout-${labelId}`} className={styles.Callout_label}>
+          <div>
+            {Object.keys(lngs).map((lng) => (
+              <button
+                type="submit"
+                key={lng}
+                onClick={() => i18n.changeLanguage(lng)}
+                disabled={i18n.resolvedLanguage === lng}
+              >
+                {lngs[lng].nativeName}
+              </button>
+            ))}
+          </div>
+          {t("callout")}&nbsp;
+          <NativeSelect
+            role="listbox"
+            autoFocus
+            name="callout-selector"
+            aria-labelledby={`callout-${labelId}`}
+            data-testid="calloutTitle"
+            onChange={(e) => {
+              setProp({
+                calloutTypeSvg: calloutOptions[e.target.value].iconUrl,
+              });
+              setProp({ calloutTitle: calloutOptions[e.target.value].title });
+            }}
+            className={styles.Callout_type_dropdown}
+          >
+            {calloutOptions.map(({ type_id, title }) => (
+              <option key={type_id} value={calloutOptions[type_id].type_id}>
+                {t(title)}
+              </option>
+            ))}
+          </NativeSelect>
+        </label>
+      </div>
+      &nbsp;
+      <div className={styles.Callout_icon_title} data-testid="calloutTypeSvg">
+        {/* decorative icon */}
+        {calloutTypeSvg ? (
+          <>
+            <img
+              className={styles.Callout_img}
+              src={calloutTypeSvg}
+              alt={""}
+              aria-label={t("imgAriaLabel")}
+            />
+            <p data-testid="calloutTitle" className={styles.Callout_heading}>
+              {t(calloutTitle)}
+            </p>
+          </>
+        ) : (
+          <div
+            className={styles.Callout_icon_placeholder}
+            aria-label={t("imgAriaLabelDiv")}
+          ></div>
+        )}
+      </div>
+      <div className={styles.Callout_text_area} data-testid="calloutBody">
+        <FormattedText
+          placeHolderText={t("calloutPlaceHolderText")}
+          toolbar={calloutToolBar}
+          body={calloutBody}
+          className={styles.Callout_body}
+          editorClassName="callout_editor_class"
+          setProp={(stateUpdate) =>
+            setProp({ calloutBody: stateUpdate.body })
+          }
+        />
+      </div>
+    </Paper>
   );
 };
 
