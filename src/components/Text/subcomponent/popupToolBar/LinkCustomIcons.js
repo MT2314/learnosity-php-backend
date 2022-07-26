@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Tooltip } from "@material-ui/core/";
-import "../../styles/ListDropdownButton.scss";
-import icons from "../../assets/icons";
 // Config styles of MUI components
 import { makeStyles } from "@material-ui/core/styles";
+import "../../styles/ListDropdownButton.scss";
+import icons from "../../assets/icons";
 
 // Classes for styling modification. (Tooltip class)
 const useStyles = makeStyles((theme) => ({
