@@ -24,7 +24,7 @@ export const TrashcanTooltip = () => {
       placement="top"
       classes={{ tooltip: classes.tooltip }}
     >
-      <button aria-label="remove link" className="trashcan">
+      <button aria-label="delete link" className="trashcan">
         {icons["trashcan"]}
       </button>
     </Tooltip>
@@ -53,7 +53,7 @@ export const ApplyTooltip = ({ quill }) => {
   let classes = useStyles();
 
   const props = {
-    title: "add link",
+    title: "apply link",
     placement: "top",
     disableHoverListener: isDisabled,
     disableFocusListener: isDisabled,
@@ -71,7 +71,7 @@ export const ApplyTooltip = ({ quill }) => {
       onMouseEnter={handleMouseOver}
       classes={{ tooltip: classes.tooltip }}
     >
-      <button aria-label="add link" className="apply">
+      <button aria-label="apply link" className="apply">
         Apply
       </button>
     </Tooltip>
