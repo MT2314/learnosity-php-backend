@@ -20,40 +20,14 @@ afterEach(() => {
 });
 
 const testProps = {
-  name: "Callout",
-  calloutTypeSvg: {
-    blocks: [
-      {
-        key: "testSvg",
-        text: "www.tvo.org",
-        type: "unstyled",
-        depth: 0,
-        inlineStyleRanges: [],
-        entityRanges: [],
-        data: {},
-      },
-    ],
-    entityMap: {},
-  },
-  calloutTitle: {
-    blocks: [
-      {
-        key: "title1",
-        text: "Definition",
-        type: "unstyled",
-        depth: 0,
-        inlineStyleRanges: [],
-        entityRanges: [],
-        data: {},
-      },
-    ],
-    entityMap: {},
-  },
+  calloutTypeSvg:
+    "https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/challenge_icon.svg",
+  calloutTitle: "Challenge",
   calloutBody: {
     blocks: [
       {
-        key: "calloutText2",
-        text: "Hi this is my callout body!",
+        key: "2ga6c",
+        text: "Polkaroo was a great television show",
         type: "unstyled",
         depth: 0,
         inlineStyleRanges: [],
@@ -65,7 +39,7 @@ const testProps = {
   },
 };
 
-xdescribe("Callout", () => {
+describe("Callout", () => {
   it("renders callout without any given data", () => {
     render(<Callout />);
 
@@ -85,14 +59,11 @@ xdescribe("Callout", () => {
     );
 
     expect(screen.getByTestId("callout")).toHaveTextContent(
-      "Hi this is my callout body!"
+      "Polkaroo was a great television show"
     );
     expect(screen.getByTestId("calloutBody")).not.toHaveTextContent(
       "Thanks for this scaffold Sam!"
     );
-    // expect(screen.getByTestId("calloutTypeSvg")).toHaveTextContent(
-    //   "www.tvo.org"
-    // );
     expect(screen.getByTestId("calloutTitle")).not.toHaveTextContent("123");
     expect(screen.getByTestId("calloutTitle")).toHaveTextContent("Definition");
   });
