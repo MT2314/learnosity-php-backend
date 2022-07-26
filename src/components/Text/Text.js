@@ -5,7 +5,7 @@ import "./styles/Text.scss";
 
 export const defaultProps = { body: null };
 
-const Text = ({ body = { ops: [{ insert: "\n" }] }, setProp = () => {} }) => {
+const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
   const [showEditor, setShowEditor] = useState(false);
 
   const handleOnClick = () => {
@@ -15,7 +15,7 @@ const Text = ({ body = { ops: [{ insert: "\n" }] }, setProp = () => {} }) => {
   return (
     <>
       {(!showEditor && body === null) ||
-      (!showEditor && body.ops[0].insert === "\n") ? (
+      (!showEditor && body.ops[0].insert === "") ? (
         <div
           onClick={() => {
             handleOnClick();

@@ -141,15 +141,19 @@ const ExtendLinkFunctionality = (id) => {
   });
 
   const observeChanges = new MutationObserver((changes) => {
-    if (!changes[0].target.classList.contains("ql-editing")) {
-      Trashcan.style.display = "";
-      Pencil.style.display = "";
-      Apply.style.display = "none";
-    } else {
-      Trashcan.style.display = "none";
-      Pencil.style.display = "none";
-      Apply.style.display = "";
-    }
+    const modifyingLink = changes[0].target.classList.contains("ql-editing");
+
+    Trashcan.style.display = modifyingLink ? "none" : "";
+    Pencil.style.display = modifyingLink ? "none" : "";
+    Apply.style.display = modifyingLink ? "" : "none";
+
+    const closed = changes[0].target.classList.contains(
+      "ql-tooltip",
+      "ql-hidden",
+      "ql-editing"
+    );
+    const ToolbarLinkBtn = quillElement.querySelector(".ql-link");
+    closed && ToolbarLinkBtn.classList.remove("ql-selected", "ql-active");
   });
 
   observeChanges.observe(linkTooltipElement, {
