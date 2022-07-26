@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { WidgetContextProvider } from "./Utility/mockWrapper";
 // import Header from "./components/Header";
@@ -18,22 +18,24 @@ const App = () => {
   console.log(`Stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`)
   return (
     <>
-      <WidgetContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/AccessibilityKeysPage"
-              element={<AccessibilityKeysPage />}
-            />
-            <Route path="/CalloutPage" element={<CalloutPage />} />
-            <Route path="/QuoteBoxPage" element={<QuoteBoxPage />} />
-            <Route path="/ImagePage" element={<ImagePage />} />
-            <Route path="/text-component" element={<Text />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
-        </BrowserRouter>
-      </WidgetContextProvider>
+      <Suspense fallback="loading">
+        <WidgetContextProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/AccessibilityKeysPage"
+                element={<AccessibilityKeysPage />}
+              />
+              <Route path="/CalloutPage" element={<CalloutPage />} />
+              <Route path="/QuoteBoxPage" element={<QuoteBoxPage />} />
+              <Route path="/ImagePage" element={<ImagePage />} />
+              <Route path="/text-component" element={<Text />} />
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </BrowserRouter>
+        </WidgetContextProvider>
+      </Suspense>
     </>
   );
 };
