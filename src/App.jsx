@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { WidgetContextProvider } from "./Utility/mockWrapper";
 // import Header from "./components/Header";
@@ -18,7 +18,7 @@ const App = () => {
   console.log(`Stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`)
   return (
     <>
-      <React.Suspense fallback="loading">
+      <Suspense fallback="loading">
         <WidgetContextProvider>
           <BrowserRouter>
             <Routes>
@@ -35,7 +35,7 @@ const App = () => {
             </Routes>
           </BrowserRouter>
         </WidgetContextProvider>
-      </React.Suspense>
+      </Suspense>
     </>
   );
 };
