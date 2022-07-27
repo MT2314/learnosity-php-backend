@@ -37,9 +37,9 @@ const Callout = ({
     i18n.changeLanguage(lng);
     let editorContents = document.getElementsByClassName(`notranslate public-DraftEditor-content`);
     for (let i = 0; i < editorContents.length; i++) {
-      editorContents[i].focus();
+      editorContents[i].focus({preventScroll: true});
     }
-    lngRef.current[index].current.focus();
+    lngRef.current[index].current.focus({preventScroll: true});
   }
 
   return (
