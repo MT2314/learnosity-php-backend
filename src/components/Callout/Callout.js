@@ -4,21 +4,24 @@ import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
 import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 import calloutOptions from "./utility/CalloutOptions";
+
+import "./i18n";
+import { useTranslation, Trans } from "react-i18next";
+
 export const defaultProps = { heading: "", body: "" };
-import English from "./English.json";
-import French from "./French.json";
-import Spanish from "./Spanish.json";
-import Chinese from "./Chinese.json";
 
-const languages = [English, French, Spanish, Chinese];
-
-const randomItem = languages[Math.floor(Math.random() * languages.length)];
+const lngs = {
+  en: { nativeName: "English" },
+  fr: { nativeName: "French" },
+  cn: { nativeName: "Chinese" },
+  es: { nativeName: "Spanish" },
+};
 
 const Callout = ({
   calloutTypeSvg,
   calloutTitle,
   calloutBody,
-  setProp = () => {},
+  setProp = () => { },
 }) => {
   let labelId = Math.floor(Math.random() * 100000);
 
@@ -26,6 +29,8 @@ const Callout = ({
     ["inline", "link", "list"],
     ["bold", "italic", "underline", "strikethrough"]
   );
+
+  const { t, i18n } = useTranslation();
 
   return (
     <Paper
@@ -36,12 +41,22 @@ const Callout = ({
     >
       <div className={styles.dropdownContainer}>
         <label id={`callout-${labelId}`} className={styles.Callout_label}>
-          {randomItem.language}
-          <br />
-          {randomItem.callout} &nbsp;
-          {/* Callout Type: &nbsp; */}
+          <div>
+            {Object.keys(lngs).map((lng) => (
+              <button
+                type="submit"
+                key={lng}
+                onClick={() => i18n.changeLanguage(lng)}
+                disabled={i18n.resolvedLanguage === lng}
+              >
+                {lngs[lng].nativeName}
+              </button>
+            ))}
+          </div>
+          {t("callout")}&nbsp;
           <NativeSelect
             role="listbox"
+            autoFocus
             name="callout-selector"
             aria-labelledby={`callout-${labelId}`}
             data-testid="calloutTitle"
@@ -49,21 +64,13 @@ const Callout = ({
               setProp({
                 calloutTypeSvg: calloutOptions[e.target.value].iconUrl,
               });
-              setProp({
-                calloutTitle: randomItem.calloutTitle[0][e.target.value],
-              });
+              setProp({ calloutTitle: calloutOptions[e.target.value].title });
             }}
             className={styles.Callout_type_dropdown}
           >
-            {/* {calloutOptions.map(({ type_id, title }) => (
+            {calloutOptions.map(({ type_id, title }) => (
               <option key={type_id} value={calloutOptions[type_id].type_id}>
-                {title}
-              </option>
-            ))} */}
-
-            {calloutOptions.map(({ type_id }) => (
-              <option key={type_id} value={calloutOptions[type_id].type_id}>
-                {randomItem.calloutTitle[0][type_id]}
+                {t(title)}
               </option>
             ))}
           </NativeSelect>
@@ -78,30 +85,29 @@ const Callout = ({
               className={styles.Callout_img}
               src={calloutTypeSvg}
               alt={""}
-              // aria-label="Callout type icon"
-              aria-label={randomItem.calloutImg[0].AriaLabel}
+              aria-label={t("imgAriaLabel")}
             />
             <p data-testid="calloutTitle" className={styles.Callout_heading}>
-              {calloutTitle}
+              {t(calloutTitle)}
             </p>
           </>
         ) : (
           <div
             className={styles.Callout_icon_placeholder}
-            // aria-label="Callout type icon placeholder"
-            aria-label={randomItem.calloutImg[0].AriaLabelDiv}
+            aria-label={t("imgAriaLabelDiv")}
           ></div>
         )}
       </div>
       <div className={styles.Callout_text_area} data-testid="calloutBody">
         <FormattedText
-          // placeHolderText="Enter callout body text here..."
-          placeHolderText={randomItem.calloutPlaceHolderText}
+          placeHolderText={t("calloutPlaceHolderText")}
           toolbar={calloutToolBar}
           body={calloutBody}
           className={styles.Callout_body}
           editorClassName="callout_editor_class"
-          setProp={(stateUpdate) => setProp({ calloutBody: stateUpdate.body })}
+          setProp={(stateUpdate) =>
+            setProp({ calloutBody: stateUpdate.body })
+          }
         />
       </div>
     </Paper>

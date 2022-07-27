@@ -41,7 +41,7 @@ const ExtendLinkFunctionality = (id) => {
   quillActionBtn.style.display = "none";
   quillRemoveBtn.style.display = "none";
 
-  tooltipSaveBtnContainer.setAttribute("class", "apply-link-btn");
+  tooltipSaveBtnContainer.classList.add("apply-link-btn");
   tooltipEditorButtonContainer.classList.add("pencil-icon");
   tooltipRemoveButtonContainer.classList.add("trash-icon");
 
@@ -68,7 +68,9 @@ const ExtendLinkFunctionality = (id) => {
   linkTooltipInput.setAttribute("data-link", "Paste a link");
 
   linkTooltipInput.addEventListener("focus", (e) => {
-    !isEdit && (linkTooltipInput.value = "");
+    linkTooltipInput.classList.contains("input-error")
+      ? (linkTooltipInput.value = e.target.value)
+      : !isEdit && (linkTooltipInput.value = "");
 
     !isEdit && Apply.classList.add("disabled");
     linkTooltipInput.classList.remove("input-error");
@@ -139,15 +141,19 @@ const ExtendLinkFunctionality = (id) => {
   });
 
   const observeChanges = new MutationObserver((changes) => {
-    if (!changes[0].target.classList.contains("ql-editing")) {
-      Trashcan.style.display = "";
-      Pencil.style.display = "";
-      Apply.style.display = "none";
-    } else {
-      Trashcan.style.display = "none";
-      Pencil.style.display = "none";
-      Apply.style.display = "";
-    }
+    const modifyingLink = changes[0].target.classList.contains("ql-editing");
+
+    Trashcan.style.display = modifyingLink ? "none" : "";
+    Pencil.style.display = modifyingLink ? "none" : "";
+    Apply.style.display = modifyingLink ? "" : "none";
+
+    const closed = changes[0].target.classList.contains(
+      "ql-tooltip",
+      "ql-hidden",
+      "ql-editing"
+    );
+    const ToolbarLinkBtn = quillElement.querySelector(".ql-link");
+    closed && ToolbarLinkBtn.classList.remove("ql-selected", "ql-active");
   });
 
   observeChanges.observe(linkTooltipElement, {

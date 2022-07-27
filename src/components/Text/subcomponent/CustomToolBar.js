@@ -203,20 +203,14 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         <button
           aria-label="add link button"
           className={
-            activeTopMenu === "link"
-              ? "ql-link ql-selected ql-active"
-              : "ql-link"
+            activeTopMenu === "link" ? "ql-link ql-selected" : "ql-link ql-test"
           }
           onClick={() => {
             setAlignVisibility(false);
             setBoldVisibility(false);
             setListVisibility(false);
-            if (activeTopMenu === "link") {
-              setActiveTopMenu("");
-            } else {
-              setActiveTopMenu("link");
-            }
-            setActiveDropDownItem("link");
+
+            setActiveTopMenu(activeTopMenu === "link" ? "" : "link");
           }}
         >
           {icons["link"]}

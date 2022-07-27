@@ -36,7 +36,13 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
-    setProp({ body: editorContent });
+
+    if (editorContent.ops[0].insert === "\n") {
+      editorContent.ops[0].insert = "";
+      setProp({ body: editorContent });
+    } else {
+      setProp({ body: editorContent });
+    }
   };
 
   //customization settings for toolbar
