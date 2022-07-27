@@ -36,8 +36,12 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
-
-    if (editorContent.ops[0].insert === "\n") {
+    console.log(editorContent.ops.length);
+    console.log(editorContent.ops);
+    if (
+      editorContent.ops[0].insert === "\n" &&
+      editorContent.ops.length === 1
+    ) {
       editorContent.ops[0].insert = "";
       setProp({ body: editorContent });
     } else {
@@ -88,7 +92,7 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
         magicPasteLinks: true,
         hooks: {
           uponSanitizeElement(node, data, config) {
-            console.log(node);
+            // console.log(node);
           },
         },
       },
