@@ -3,7 +3,7 @@ import { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-// import userEvent from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 
 import Callout from "../components/Callout/Callout";
 
@@ -39,7 +39,7 @@ const testProps = {
   },
 };
 
-describe("Callout", () => {
+describe("Callout (English)", () => {
   it("renders callout without any given data", () => {
     render(<Callout />);
 
@@ -87,5 +87,18 @@ describe("Callout", () => {
   it("renders text entry box", () => {
     render(<Callout />);
     expect(screen.getByText("Enter callout body text here...")).toBeDefined();
+  });
+});
+
+xdescribe("Callout, French:", () => {
+  it("Renders Callout in French", () => {
+    render(<Callout />);
+    // const user = userEvent.setup();
+
+    const frenchButton = screen.getByRole("button", { name: "French" });
+    expect(frenchButton).toBeInTheDocument();
+    userEvent.click(frenchButton);
+
+    expect(screen.getByText("Type de légende:")).toBeInTheDocument();
   });
 });
