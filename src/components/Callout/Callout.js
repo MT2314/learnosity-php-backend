@@ -31,15 +31,15 @@ const Callout = ({
   );
 
   const { t, i18n } = useTranslation();
-  const lngRef = useRef(Object.keys(lngs).map(() => useRef()));
+  const lngRef = useRef([]);
 
-  function lngFunction(lng, index) {
+  function lngFunction(lng) {
     i18n.changeLanguage(lng);
     let editorContents = document.getElementsByClassName(`notranslate public-DraftEditor-content`);
     for (let i = 0; i < editorContents.length; i++) {
       editorContents[i].focus({preventScroll: true});
     }
-    lngRef.current[index].current.focus({preventScroll: true});
+    lngRef.current[lng].focus({preventScroll: true});
   }
 
   return (
@@ -52,12 +52,12 @@ const Callout = ({
       <div className={styles.dropdownContainer}>
         <label id={`callout-${labelId}`} className={styles.Callout_label}>
           <div>
-            {Object.keys(lngs).map((lng, index) => (
+            {Object.keys(lngs).map((lng) => (
               <button
-                ref={lngRef.current[index]}
+                ref={el => lngRef.current[lng] = el}
                 type="submit"
                 key={lng}
-                onClick={() => lngFunction(lng, index)}
+                onClick={() => lngFunction(lng)}
                 disabled={i18n.resolvedLanguage === lng}
               >
                 {lngs[lng].nativeName}
