@@ -194,6 +194,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
 
       {/* link btn and divider */}
       <Divider orientation="vertical" />
+      <HiddenQuillLinkButton />
       <Tooltip
         arrow
         title="insert link"
@@ -203,7 +204,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         <button
           aria-label="add link button"
           className={
-            activeTopMenu === "link" ? "ql-link ql-selected" : "ql-link ql-test"
+            activeTopMenu === "link" ? "al-link ql-selected" : "al-link"
           }
           onClick={() => {
             setAlignVisibility(false);
@@ -216,8 +217,21 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
           {icons["link"]}
         </button>
       </Tooltip>
+      <HiddenQuillBackgroundColorSelector />
     </div>
   );
+};
+
+const HiddenQuillBackgroundColorSelector = () => {
+  return (
+    <span className="ql-formats" style={{ display: "none" }}>
+      <select className="ql-background" style={{ display: "none" }}></select>
+    </span>
+  );
+};
+
+const HiddenQuillLinkButton = () => {
+  return <button className="ql-link" style={{ display: "none" }}></button>;
 };
 
 export default CustomToolBar;
