@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Paper, NativeSelect } from "@mui/material";
 import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
@@ -31,6 +31,16 @@ const Callout = ({
   );
 
   const { t, i18n } = useTranslation();
+  const lngRef = useRef(Object.keys(lngs).map(() => useRef()));
+
+  function lngFunction(lng, index) {
+    i18n.changeLanguage(lng);
+    let editorContents = document.getElementsByClassName(`notranslate public-DraftEditor-content`);
+    for (let i = 0; i < editorContents.length; i++) {
+      editorContents[i].focus();
+    }
+    lngRef.current[index].current.focus();
+  }
 
   return (
     <Paper
@@ -42,11 +52,12 @@ const Callout = ({
       <div className={styles.dropdownContainer}>
         <label id={`callout-${labelId}`} className={styles.Callout_label}>
           <div>
-            {Object.keys(lngs).map((lng) => (
+            {Object.keys(lngs).map((lng, index) => (
               <button
+                ref={lngRef.current[index]}
                 type="submit"
                 key={lng}
-                onClick={() => i18n.changeLanguage(lng)}
+                onClick={() => lngFunction(lng, index)}
                 disabled={i18n.resolvedLanguage === lng}
               >
                 {lngs[lng].nativeName}
