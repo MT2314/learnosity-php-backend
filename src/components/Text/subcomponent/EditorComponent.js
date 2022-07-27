@@ -36,8 +36,10 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
-
-    if (editorContent.ops[0].insert === "\n") {
+    if (
+      editorContent.ops[0].insert === "\n" &&
+      editorContent.ops.length === 1
+    ) {
       editorContent.ops[0].insert = "";
       setProp({ body: editorContent });
     } else {
