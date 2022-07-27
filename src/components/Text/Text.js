@@ -15,6 +15,7 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
   return (
     <>
       {(!showEditor && body === null) ||
+      (!showEditor && !body.ops) ||
       (!showEditor && body.ops[0].insert === "") ? (
         <div
           onClick={() => {
