@@ -1,6 +1,7 @@
 import React, { createContext, useState, useReducer } from "react";
+//import components
 import TabEl from "./subcomponents/TabEl";
-
+import "./styles/Tab.scss"
 //import immer
 import produce from 'immer';
 
