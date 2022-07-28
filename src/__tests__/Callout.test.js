@@ -65,7 +65,7 @@ const testProps = {
   },
 };
 
-xdescribe("Callout", () => {
+describe("Callout", () => {
   it("renders callout without any given data", () => {
     render(<Callout />);
 
