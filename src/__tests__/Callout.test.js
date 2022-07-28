@@ -119,12 +119,14 @@ xdescribe("Callout", () => {
   });
 });
 
-describe("Callout, French:", () => {
-  it("Renders Callout in French", () => {
+describe("Callout, French and English:", () => {
+  it("Renders Callout in French, then renders in English after click", () => {
     render(<Callout />);
 
     const frenchButton = screen.getByRole("button", { name: "French" });
+
     expect(frenchButton).toBeInTheDocument();
+
     fireEvent.click(frenchButton);
 
     expect(screen.getByText("Type de légende :")).toBeInTheDocument();
@@ -132,5 +134,19 @@ describe("Callout, French:", () => {
     expect(
       screen.getByText("Entrez le corps du texte de la légende ici...")
     ).toBeInTheDocument();
+
+    expect(frenchButton).toBeDisabled();
+
+    const englishButton = screen.getByRole("button", { name: "English" });
+
+    fireEvent.click(englishButton);
+
+    expect(screen.getByText("Callout Type:")).toBeInTheDocument();
+    expect(screen.getByText("Select Value")).toBeInTheDocument();
+    expect(
+      screen.getByText("Enter callout body text here...")
+    ).toBeInTheDocument();
+
+    expect(englishButton).toBeDisabled();
   });
 });
