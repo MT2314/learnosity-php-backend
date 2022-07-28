@@ -1,6 +1,6 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 // import userEvent from "@testing-library/user-event";
@@ -116,5 +116,17 @@ xdescribe("Callout", () => {
   it("renders text entry box", () => {
     render(<Callout />);
     expect(screen.getByText("Enter callout body text here...")).toBeDefined();
+  });
+});
+
+describe("Callout, French:", () => {
+  it("Renders Callout in French", () => {
+    render(<Callout />);
+
+    const frenchButton = screen.getByRole("button", { name: "French" });
+    expect(frenchButton).toBeInTheDocument();
+    fireEvent.click(frenchButton);
+
+    expect(screen.getByText("Type de légende :")).toBeInTheDocument();
   });
 });
