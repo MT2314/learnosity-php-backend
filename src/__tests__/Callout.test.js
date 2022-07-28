@@ -128,5 +128,9 @@ describe("Callout, French:", () => {
     fireEvent.click(frenchButton);
 
     expect(screen.getByText("Type de légende :")).toBeInTheDocument();
+    expect(screen.getByText("Sélectionnez la valeur")).toBeInTheDocument();
+    expect(
+      screen.getByText("Entrez le corps du texte de la légende ici...")
+    ).toBeInTheDocument();
   });
 });
