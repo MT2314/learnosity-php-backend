@@ -21,7 +21,7 @@ const Callout = ({
   calloutTypeSvg,
   calloutTitle,
   calloutBody,
-  setProp = () => { },
+  setProp = () => {},
 }) => {
   let labelId = Math.floor(Math.random() * 100000);
 
@@ -36,8 +36,8 @@ const Callout = ({
 
   function lngFunction(lng) {
     i18n.changeLanguage(lng);
-    textEditorRef?.focus({preventScroll:true});
-    lngRef.current[lng].focus({preventScroll:true});
+    textEditorRef?.focus({ preventScroll: true });
+    lngRef.current[lng].focus({ preventScroll: true });
   }
 
   return (
@@ -52,11 +52,12 @@ const Callout = ({
           <div>
             {Object.keys(lngs).map((lng) => (
               <button
-                ref={el => lngRef.current[lng] = el}
+                ref={(el) => (lngRef.current[lng] = el)}
                 type="submit"
                 key={lng}
                 onClick={() => lngFunction(lng)}
                 disabled={i18n.resolvedLanguage === lng}
+                aria-label={lngs[lng].nativeName}
               >
                 {lngs[lng].nativeName}
               </button>
@@ -114,10 +115,10 @@ const Callout = ({
           body={calloutBody}
           className={styles.Callout_body}
           editorClassName="callout_editor_class"
-          setProp={(stateUpdate) =>
-            setProp({ calloutBody: stateUpdate.body })
-          }
-          editorRef={(ref)=>{ !textEditorRef && setTextEditorRef(ref)}}
+          setProp={(stateUpdate) => setProp({ calloutBody: stateUpdate.body })}
+          editorRef={(ref) => {
+            !textEditorRef && setTextEditorRef(ref);
+          }}
         />
       </div>
     </Paper>
