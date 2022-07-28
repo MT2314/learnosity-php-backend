@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { Button } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material/";
 import componentIndex from "../componentIndex";
@@ -16,6 +16,8 @@ export const defaultProps = {
     },
   ],
 };
+
+export const TabContext = createContext()
 
 const Tab = ({ tabs, setProp = () => {} }) => {
 
@@ -75,6 +77,7 @@ const Tab = ({ tabs, setProp = () => {} }) => {
 
     return (
       <>
+
         <ul className="nav nav-tabs">{allTabs}</ul>
         {editMode === false && (
           <button onClick={handleEditTab}>Edit Current Tab Name</button>

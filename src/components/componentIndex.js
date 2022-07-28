@@ -12,6 +12,7 @@ import VideoConfig from "./Video/VideoConfig";
 import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
 import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
+import TabPrep, { defaultProps as testTabDefaultProps } from "./TabPrep/TabPrep";
 import interactiveIcon from "./categoriesIcons/interactive.png";
 import imageIcon from "./categoriesIcons/image.png";
 import mediaIcon from "./categoriesIcons/media.png";
@@ -99,6 +100,14 @@ const componentIndex = {
     ConfigPanel: IFrameConfig,
     category: categories.media,
     dndLabel: defaultDndLabel
+  },
+  TabPrep: {
+    Component: TabPrep,
+    readableName: "Tab",
+    defaultProps: testTabDefaultProps,
+    // version: "0.0.1",
+    // category: categories.interactive,
+    // dndLabel: tabsDndLabel
   },
 };
 
