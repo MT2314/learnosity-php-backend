@@ -1,28 +1,24 @@
-.tab-container{
-  display: flex;
-  max-width: 968px;
-  border-radius: 10px 10px 0px 0px;
-  border: 1px solid #BDBDBD;
-  font-family: 'Inter';
+.tab-container {
+  box-sizing: border-box;
 
-  .tab-instance{
+  .tab-titles {
+    display: flex;
+    height: 40px;
+  }
+
+  .tab-title {
     text-align: center;
-    background-color: #F5F5F5;
-    
-    .tab-title{
-      width: 484px;
-      height: 40px;
-      font-size: 18px;
-      letter-spacing: 0.15px;
-      font-weight: 500;
-      color: #232323;
-      h3{
-        margin: 0;
-      }
+    background-color: #bdbdbd;
+    color: #636363;
+    border: 1px solid #bdbdbd;
+    border-radius: 10px 10px 0px 0px;
+    width: 484px;
+    h3 {
+      margin: 0;
     }
   }
-  .active-tab{
-    background-color: #FFF;
-    color:#636363;
+
+  .active{
+    background-color: #fff;
   }
 }
