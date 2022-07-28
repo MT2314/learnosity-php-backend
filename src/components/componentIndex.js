@@ -105,9 +105,9 @@ const componentIndex = {
     Component: TabPrep,
     readableName: "Tab",
     defaultProps: testTabDefaultProps,
-    // version: "0.0.1",
-    // category: categories.interactive,
-    // dndLabel: tabsDndLabel
+    version: "0.0.1",
+    category: categories.interactive,
+    dndLabel: tabsDndLabel
   },
 };
 
