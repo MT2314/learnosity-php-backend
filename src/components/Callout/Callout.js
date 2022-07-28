@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Paper, NativeSelect } from "@mui/material";
 import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
@@ -31,15 +31,13 @@ const Callout = ({
   );
 
   const { t, i18n } = useTranslation();
+  const [textEditorRef, setTextEditorRef] = useState();
   const lngRef = useRef([]);
 
   function lngFunction(lng) {
     i18n.changeLanguage(lng);
-    let editorContents = document.getElementsByClassName(`notranslate public-DraftEditor-content`);
-    for (let i = 0; i < editorContents.length; i++) {
-      editorContents[i].focus({preventScroll: true});
-    }
-    lngRef.current[lng].focus({preventScroll: true});
+    textEditorRef?.focus({preventScroll:true});
+    lngRef.current[lng].focus({preventScroll:true});
   }
 
   return (
@@ -119,6 +117,7 @@ const Callout = ({
           setProp={(stateUpdate) =>
             setProp({ calloutBody: stateUpdate.body })
           }
+          editorRef={(ref)=>{ !textEditorRef && setTextEditorRef(ref)}}
         />
       </div>
     </Paper>
