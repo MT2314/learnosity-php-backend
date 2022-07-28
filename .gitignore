@@ -122,3 +122,4 @@ dist
 
 # prettierrc
 .prettierrc
+.vscode/settings.json

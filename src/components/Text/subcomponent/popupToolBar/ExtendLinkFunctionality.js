@@ -11,28 +11,33 @@ const linkValidityRegex =
   /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
 const ExtendLinkFunctionality = (id) => {
+  let isEditing = false;
+  let isRemoving = false;
+  let isTextHighlighted = false;
+  let modifyingLink = null;
+  let highlightColor = null;
+  let defaultColor = null;
+  let targetSpan = null;
+  let savedLink = "";
+
   const quillElement = document.getElementById(id);
 
-  const linkTooltipElement = quillElement.querySelector(`.ql-tooltip`);
+  const linkTooltipElement = quillElement.querySelector(".ql-tooltip");
   const invalidLinkMessage = document.createElement("div");
 
-  invalidLinkMessage.setAttribute("class", "link-error-message-container");
-  invalidLinkMessage.innerHTML = `
-    <div class="link-error-message">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-              d="M9.96083 1.66667C5.3875 1.66667 1.66667 5.405 1.66667 10C1.66667 14.595 5.405 18.3333 10 18.3333C14.595 18.3333 18.3333 14.595 18.3333 10C18.3333 5.405 14.5775 1.66667 9.96083 1.66667ZM10 16.6667C6.32417 16.6667 3.33333 13.6758 3.33333 10C3.33333 6.32417 6.30583 3.33333 9.96083 3.33333C13.6592 3.33333 16.6667 6.32417 16.6667 10C16.6667 13.6758 13.6758 16.6667 10 16.6667Z"
-              fill="#D32F2F" />
-          <path d="M9.16667 5.83334H10.8333V11.6667H9.16667V5.83334ZM9.16667 12.5H10.8333V14.1667H9.16667V12.5Z"
-              fill="#D32F2F" />
-        </svg>
-        <span>Invalid URL</span>
-    </div>`;
-
-  linkTooltipElement.appendChild(invalidLinkMessage);
+  const altQuillLink = quillElement.querySelector(".al-link");
+  const defaultQuillLink = quillElement.querySelector(".ql-link");
 
   const quillActionBtn = quillElement.querySelector(".ql-action");
   const quillRemoveBtn = quillElement.querySelector(".ql-remove");
+
+  const linkTooltipInput = linkTooltipElement.querySelector(`input`);
+  const toolbarContainer = quillElement.querySelector(".toolbarContainer");
+  const quillEditor = quillElement.querySelector(".ql-editor");
+
+  const quillBgPicker = toolbarContainer.querySelector(".ql-background");
+  const colorPicker = quillBgPicker.querySelector(".ql-picker-options");
+  const colorOptions = colorPicker.querySelectorAll(".ql-picker-item");
 
   const tooltipSaveBtnContainer = document.createElement("span");
   const tooltipRemoveButtonContainer = document.createElement("span");
@@ -53,6 +58,23 @@ const ExtendLinkFunctionality = (id) => {
     return sibling.parentNode.insertBefore(insert, sibling.nextSibling);
   });
 
+  invalidLinkMessage.setAttribute("class", "link-error-message-container");
+  invalidLinkMessage.innerHTML = `
+  <div class="link-error-message">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M9.96083 1.66667C5.3875 1.66667 1.66667 5.405 1.66667 10C1.66667 14.595 5.405 18.3333 10 18.3333C14.595 18.3333 18.3333 14.595 18.3333 10C18.3333 5.405 14.5775 1.66667 9.96083 1.66667ZM10 16.6667C6.32417 16.6667 3.33333 13.6758 3.33333 10C3.33333 6.32417 6.30583 3.33333 9.96083 3.33333C13.6592 3.33333 16.6667 6.32417 16.6667 10C16.6667 13.6758 13.6758 16.6667 10 16.6667Z"
+            fill="#D32F2F" />
+        <path d="M9.16667 5.83334H10.8333V11.6667H9.16667V5.83334ZM9.16667 12.5H10.8333V14.1667H9.16667V12.5Z"
+            fill="#D32F2F" />
+      </svg>
+      <span>Invalid URL</span>
+  </div>`;
+
+  linkTooltipElement.appendChild(invalidLinkMessage);
+  linkTooltipInput.setAttribute("data-link", "Paste a link");
+  linkTooltipElement.setAttribute("tabindex", "0");
+
   const Trashcan = quillElement.querySelector(".trash-icon");
   const Pencil = quillElement.querySelector(".pencil-icon");
   const Apply = quillElement.querySelector(".apply-link-btn");
@@ -61,18 +83,29 @@ const ExtendLinkFunctionality = (id) => {
   ReactDOM.render(<PencilTooltip />, Pencil);
   ReactDOM.render(<ApplyTooltip quill={quillElement} />, Apply);
 
-  let [isEdit, isRemoving, linkHolder] = [false, false, ""];
+  colorOptions.forEach((color, index) => {
+    color.dataset.value === "#cce0f5" && (highlightColor = color);
+    index === 7 && (defaultColor = color);
+  });
 
-  const linkTooltipInput = linkTooltipElement.querySelector(`input`);
+  const setBackgroundColor = (type = "default") => {
+    quillBgPicker.click();
+    type !== "default" ? highlightColor.click() : defaultColor.click();
+  };
 
-  linkTooltipInput.setAttribute("data-link", "Paste a link");
+  altQuillLink.addEventListener("click", (e) => {
+    altQuillLink.classList.add("ql-selected");
+    setBackgroundColor("highlight");
+    defaultQuillLink.click();
+    isTextHighlighted = true;
+  });
 
   linkTooltipInput.addEventListener("focus", (e) => {
     linkTooltipInput.classList.contains("input-error")
       ? (linkTooltipInput.value = e.target.value)
-      : !isEdit && (linkTooltipInput.value = "");
+      : !isEditing && (linkTooltipInput.value = "");
 
-    !isEdit && Apply.classList.add("disabled");
+    !isEditing && Apply.classList.add("disabled");
     linkTooltipInput.classList.remove("input-error");
 
     invalidLinkMessage.style.display = "none";
@@ -94,7 +127,7 @@ const ExtendLinkFunctionality = (id) => {
 
     if (linkTooltipElement.getAttribute("data-mode") === "link") {
       if (linkTooltipInput?.value.match(linkValidityRegex)) {
-        linkHolder = linkTooltipInput.value;
+        savedLink = linkTooltipInput.value;
         quillActionBtn.click();
         Apply.hidden = true;
       } else {
@@ -103,14 +136,14 @@ const ExtendLinkFunctionality = (id) => {
       }
     } else {
       quillActionBtn.click();
-      isEdit = false;
+      isEditing = false;
     }
   });
 
   Trashcan.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
-    isEdit = false;
+    isEditing = false;
     isRemoving = true;
     quillActionBtn.click();
   });
@@ -119,41 +152,74 @@ const ExtendLinkFunctionality = (id) => {
     e.preventDefault();
     e.stopPropagation();
 
-    isEdit = true;
+    isEditing = true;
     quillActionBtn.click();
   });
 
   document.addEventListener("click", (e) => {
     const isClickInside = linkTooltipElement.contains(e.target);
+    const isClickInsideTooltip = altQuillLink.contains(e.target);
 
     if (!isClickInside) {
-      invalidLinkMessage.style.display = "none";
+      if (isTextHighlighted && modifyingLink && !isClickInsideTooltip) {
+        e.preventDefault();
+        e.stopPropagation();
 
-      if (isRemoving) {
-        isRemoving = false;
-        linkTooltipElement.classList.remove("ql-hidden", "ql-editing");
-        linkTooltipInput.value = linkHolder;
+        isTextHighlighted = false;
+        setBackgroundColor("default");
+        quillElement.click();
+      } else {
+        invalidLinkMessage.style.display = "none";
 
-        quillRemoveBtn.click();
+        if (isRemoving) {
+          isRemoving = false;
+          linkTooltipElement.classList.remove("ql-hidden", "ql-editing");
+          linkTooltipInput.value = savedLink;
+
+          quillRemoveBtn.click();
+        }
       }
       document.removeEventListener("click", () => {});
     }
   });
 
   const observeChanges = new MutationObserver((changes) => {
-    const modifyingLink = changes[0].target.classList.contains("ql-editing");
+    modifyingLink = changes[0].target.classList.contains("ql-editing");
 
     Trashcan.style.display = modifyingLink ? "none" : "";
     Pencil.style.display = modifyingLink ? "none" : "";
     Apply.style.display = modifyingLink ? "" : "none";
 
-    const closed = changes[0].target.classList.contains(
-      "ql-tooltip",
-      "ql-hidden",
-      "ql-editing"
-    );
-    const ToolbarLinkBtn = quillElement.querySelector(".ql-link");
-    closed && ToolbarLinkBtn.classList.remove("ql-selected", "ql-active");
+    const closed =
+      changes[0].target.classList.contains("ql-tooltip") &&
+      changes[0].target.classList.contains("ql-hidden") &&
+      changes[0].target.classList.contains("ql-editing");
+
+    if (closed) {
+      quillEditor.querySelectorAll("p").forEach((p) => {
+        const span = p.querySelector("span");
+        span && span.style.backgroundColor && (targetSpan = span);
+        p.querySelectorAll("a").forEach((anchor) => {
+          anchor.removeAttribute("style");
+        });
+      });
+
+      if (isTextHighlighted && targetSpan) {
+        const range = document.createRange();
+        const selection = window.getSelection();
+
+        range.selectNode(targetSpan);
+
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        isTextHighlighted = false;
+        setBackgroundColor("default");
+        targetSpan = null;
+      }
+      defaultQuillLink.classList.remove("ql-selected", "ql-active");
+      altQuillLink.classList.remove("ql-selected", "ql-active");
+    }
   });
 
   observeChanges.observe(linkTooltipElement, {
