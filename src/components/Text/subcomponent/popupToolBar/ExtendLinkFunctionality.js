@@ -13,16 +13,16 @@ const linkValidityRegex =
 const ExtendLinkFunctionality = (id) => {
   let isEditing = false;
   let isRemoving = false;
-  let savedLink = "";
+  let isTextHighlighted = false;
   let modifyingLink = null;
   let highlightColor = null;
   let defaultColor = null;
-  let isTextHighlighted = false;
   let targetSpan = null;
+  let savedLink = "";
 
   const quillElement = document.getElementById(id);
 
-  const linkTooltipElement = quillElement.querySelector(`.ql-tooltip`);
+  const linkTooltipElement = quillElement.querySelector(".ql-tooltip");
   const invalidLinkMessage = document.createElement("div");
 
   const altQuillLink = quillElement.querySelector(".al-link");
@@ -60,16 +60,16 @@ const ExtendLinkFunctionality = (id) => {
 
   invalidLinkMessage.setAttribute("class", "link-error-message-container");
   invalidLinkMessage.innerHTML = `
-    <div class="link-error-message">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-              d="M9.96083 1.66667C5.3875 1.66667 1.66667 5.405 1.66667 10C1.66667 14.595 5.405 18.3333 10 18.3333C14.595 18.3333 18.3333 14.595 18.3333 10C18.3333 5.405 14.5775 1.66667 9.96083 1.66667ZM10 16.6667C6.32417 16.6667 3.33333 13.6758 3.33333 10C3.33333 6.32417 6.30583 3.33333 9.96083 3.33333C13.6592 3.33333 16.6667 6.32417 16.6667 10C16.6667 13.6758 13.6758 16.6667 10 16.6667Z"
-              fill="#D32F2F" />
-          <path d="M9.16667 5.83334H10.8333V11.6667H9.16667V5.83334ZM9.16667 12.5H10.8333V14.1667H9.16667V12.5Z"
-              fill="#D32F2F" />
-        </svg>
-        <span>Invalid URL</span>
-    </div>`;
+  <div class="link-error-message">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M9.96083 1.66667C5.3875 1.66667 1.66667 5.405 1.66667 10C1.66667 14.595 5.405 18.3333 10 18.3333C14.595 18.3333 18.3333 14.595 18.3333 10C18.3333 5.405 14.5775 1.66667 9.96083 1.66667ZM10 16.6667C6.32417 16.6667 3.33333 13.6758 3.33333 10C3.33333 6.32417 6.30583 3.33333 9.96083 3.33333C13.6592 3.33333 16.6667 6.32417 16.6667 10C16.6667 13.6758 13.6758 16.6667 10 16.6667Z"
+            fill="#D32F2F" />
+        <path d="M9.16667 5.83334H10.8333V11.6667H9.16667V5.83334ZM9.16667 12.5H10.8333V14.1667H9.16667V12.5Z"
+            fill="#D32F2F" />
+      </svg>
+      <span>Invalid URL</span>
+  </div>`;
 
   linkTooltipElement.appendChild(invalidLinkMessage);
   linkTooltipInput.setAttribute("data-link", "Paste a link");
@@ -94,6 +94,7 @@ const ExtendLinkFunctionality = (id) => {
   };
 
   altQuillLink.addEventListener("click", (e) => {
+    altQuillLink.classList.add("ql-selected");
     setBackgroundColor("highlight");
     defaultQuillLink.click();
     isTextHighlighted = true;
@@ -156,8 +157,6 @@ const ExtendLinkFunctionality = (id) => {
   });
 
   document.addEventListener("click", (e) => {
-    e.preventDefault();
-
     const isClickInside = linkTooltipElement.contains(e.target);
     const isClickInsideTooltip = altQuillLink.contains(e.target);
 
@@ -200,17 +199,23 @@ const ExtendLinkFunctionality = (id) => {
       quillEditor.querySelectorAll("p").forEach((p) => {
         const span = p.querySelector("span");
         span && span.style.backgroundColor && (targetSpan = span);
+        p.querySelectorAll("a").forEach((anchor) => {
+          anchor.removeAttribute("style");
+        });
       });
 
-      if (isTextHighlighted) {
+      if (isTextHighlighted && targetSpan) {
         const range = document.createRange();
-        range.selectNode(targetSpan);
         const selection = window.getSelection();
+
+        range.selectNode(targetSpan);
+
         selection.removeAllRanges();
         selection.addRange(range);
 
         isTextHighlighted = false;
         setBackgroundColor("default");
+        targetSpan = null;
       }
       defaultQuillLink.classList.remove("ql-selected", "ql-active");
       altQuillLink.classList.remove("ql-selected", "ql-active");

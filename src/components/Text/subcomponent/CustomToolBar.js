@@ -203,9 +203,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       >
         <button
           aria-label="add link button"
-          className={
-            activeTopMenu === "link" ? "al-link ql-selected" : "al-link"
-          }
+          className="al-link"
           onClick={() => {
             setAlignVisibility(false);
             setBoldVisibility(false);
