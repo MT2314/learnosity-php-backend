@@ -68,11 +68,8 @@ export const LayoutProvider = ({ children }) => {
 export const TabContext = createContext();
 
 const TabPrep = ({ layout, setProp = () => {} }) => {
+  
   const [activeTab, setActiveTab] = useState(0);
-
-  const _tabs = layout.map((tab, tabIndex) => {
-    return <TabEl tabIndex={tabIndex} tab={tab} />;
-  });
 
   return (
     <LayoutProvider>
@@ -81,8 +78,11 @@ const TabPrep = ({ layout, setProp = () => {} }) => {
           <div className="tab-titles">
             {layout.map((tab, tabIndex) => {
               return (
-                <div className="tab-title">
-                  <h3 onClick={() => setActiveTab(tabIndex)}>{tab.title}</h3>
+                <div 
+                  className={`tab-title ${activeTab === tabIndex ? 'active-tab' : ''}`}
+                  onClick={() => setActiveTab(tabIndex)}
+                  >
+                  <h3>{tab.title}</h3>
                 </div>
               );
             })}
