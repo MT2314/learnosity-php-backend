@@ -122,7 +122,7 @@ describe("<Text/>", () => {
     ).toBeInTheDocument();
   });
 
-  test("on click link dropdown renders", async () => {
+  test("on click link dropdown renders", () => {
     const mockData = {
       body: {
         ops: [
@@ -157,7 +157,7 @@ describe("<Text/>", () => {
     const linkedText = screen.getByText("underline");
     expect(linkedText).toBeInTheDocument();
     expect(linkedText).toHaveStyle({ "text-decoration": "underline" });
-    await fireEvent.click(linkedText);
+    fireEvent.click(linkedText);
 
     // Check pencil/trashcan icon buttons are rendering
     const pencilButton = screen.getByRole("button", { name: "edit link" });
