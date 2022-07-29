@@ -142,10 +142,17 @@ describe("<Text/>", () => {
 
     expect(quillEditor).toBeInTheDocument();
 
-    // const linkBtn = screen.getByRole("button", {
-    //   name: /add link button/i,
-    // });
-    // expect(linkBtn).toBeInTheDocument();
+    // Click text that reads "underline" so user can select text to add link to
+    const textToBeLinked = screen.getByText("underline");
+    expect(textToBeLinked).toBeInTheDocument();
+
+    fireEvent.click(textToBeLinked);
+
+    // Link button in toolbar
+    const linkBtn = screen.getByRole("button", {
+      name: /add link button/i,
+    });
+    expect(linkBtn).toBeInTheDocument();
 
     // fireEvent.click(linkBtn);
   });
