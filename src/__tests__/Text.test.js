@@ -4,6 +4,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Text from "../components/Text/Text";
 
+import userEvent from "@testing-library/user-event";
+
 let container = null;
 beforeEach(() => {
   container = document.createElement("div");
@@ -122,7 +124,7 @@ describe("<Text/>", () => {
     ).toBeInTheDocument();
   });
 
-  test("on click link dropdown renders", () => {
+  test("on click link dropdown renders", async () => {
     const mockData = {
       body: {
         ops: [
@@ -130,11 +132,16 @@ describe("<Text/>", () => {
           { attributes: { bold: true }, insert: "bold, " },
           { attributes: { italic: true }, insert: "italic," },
           { insert: " " },
-          { attributes: { underline: true }, insert: "underline" },
+          {
+            attributes: { underline: true, link: "https://www.google.com" },
+            insert: "underline",
+          },
           { insert: "\n" },
         ],
       },
     };
+
+    // const user = userEvent.setup();
 
     render(<Text body={mockData.body} />);
 
@@ -142,19 +149,24 @@ describe("<Text/>", () => {
 
     expect(quillEditor).toBeInTheDocument();
 
-    // Click text that reads "underline" so user can select text to add link to
-    const textToBeLinked = screen.getByText("underline");
-    expect(textToBeLinked).toBeInTheDocument();
-
-    fireEvent.click(textToBeLinked);
-
-    // Link button in toolbar
+    // Link button in toolbar displays
     const linkBtn = screen.getByRole("button", {
       name: /add link button/i,
     });
     expect(linkBtn).toBeInTheDocument();
 
-    // fireEvent.click(linkBtn);
+    // Click text that reads "underline" so user can select text to add link to
+    const linkedText = screen.getByText("underline");
+    expect(linkedText).toBeInTheDocument();
+    await fireEvent.click(linkedText);
+
+    // Check for pencil/trashcan icon buttons are rendering
+    expect(
+      screen.getByRole("button", { name: "edit link" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "delete link" })
+    ).toBeInTheDocument();
   });
 
   test("Data can be serialized", () => {
