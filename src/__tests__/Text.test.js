@@ -122,6 +122,34 @@ describe("<Text/>", () => {
     ).toBeInTheDocument();
   });
 
+  test("on click link dropdown renders", () => {
+    const mockData = {
+      body: {
+        ops: [
+          { insert: "Normal, " },
+          { attributes: { bold: true }, insert: "bold, " },
+          { attributes: { italic: true }, insert: "italic," },
+          { insert: " " },
+          { attributes: { underline: true }, insert: "underline" },
+          { insert: "\n" },
+        ],
+      },
+    };
+
+    render(<Text body={mockData.body} />);
+
+    const quillEditor = screen.getByTestId("text-editor-component");
+
+    expect(quillEditor).toBeInTheDocument();
+
+    // const linkBtn = screen.getByRole("button", {
+    //   name: /add link button/i,
+    // });
+    // expect(linkBtn).toBeInTheDocument();
+
+    // fireEvent.click(linkBtn);
+  });
+
   test("Data can be serialized", () => {
     const mockData = {
       body: {
