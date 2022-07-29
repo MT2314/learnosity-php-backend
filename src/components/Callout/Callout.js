@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Paper, NativeSelect } from "@mui/material";
 import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
@@ -21,7 +21,7 @@ const Callout = ({
   calloutTypeSvg,
   calloutTitle,
   calloutBody,
-  setProp = () => { },
+  setProp = () => {},
 }) => {
   let labelId = Math.floor(Math.random() * 100000);
 
@@ -31,6 +31,14 @@ const Callout = ({
   );
 
   const { t, i18n } = useTranslation();
+  const [textEditorRef, setTextEditorRef] = useState();
+  const lngRef = useRef([]);
+
+  function lngFunction(lng) {
+    i18n.changeLanguage(lng);
+    textEditorRef?.focus({ preventScroll: true });
+    lngRef.current[lng].focus({ preventScroll: true });
+  }
 
   return (
     <Paper
@@ -44,10 +52,12 @@ const Callout = ({
           <div>
             {Object.keys(lngs).map((lng) => (
               <button
+                ref={(el) => (lngRef.current[lng] = el)}
                 type="submit"
                 key={lng}
-                onClick={() => i18n.changeLanguage(lng)}
+                onClick={() => lngFunction(lng)}
                 disabled={i18n.resolvedLanguage === lng}
+                aria-label={lngs[lng].nativeName}
               >
                 {lngs[lng].nativeName}
               </button>
@@ -105,9 +115,10 @@ const Callout = ({
           body={calloutBody}
           className={styles.Callout_body}
           editorClassName="callout_editor_class"
-          setProp={(stateUpdate) =>
-            setProp({ calloutBody: stateUpdate.body })
-          }
+          setProp={(stateUpdate) => setProp({ calloutBody: stateUpdate.body })}
+          editorRef={(ref) => {
+            !textEditorRef && setTextEditorRef(ref);
+          }}
         />
       </div>
     </Paper>
