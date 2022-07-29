@@ -4,8 +4,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Text from "../components/Text/Text";
 
-import userEvent from "@testing-library/user-event";
-
 let container = null;
 beforeEach(() => {
   container = document.createElement("div");
@@ -158,15 +156,14 @@ describe("<Text/>", () => {
     // Click text that reads "underline" so user can select text to add link to
     const linkedText = screen.getByText("underline");
     expect(linkedText).toBeInTheDocument();
+    expect(linkedText).toHaveStyle({ "text-decoration": "underline" });
     await fireEvent.click(linkedText);
 
-    // Check for pencil/trashcan icon buttons are rendering
-    expect(
-      screen.getByRole("button", { name: "edit link" })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: "delete link" })
-    ).toBeInTheDocument();
+    // Check pencil/trashcan icon buttons are rendering
+    const pencilButton = screen.getByRole("button", { name: "edit link" });
+    const trashButton = screen.getByRole("button", { name: "delete link" });
+    expect(pencilButton).toBeInTheDocument();
+    expect(trashButton).toBeInTheDocument();
   });
 
   test("Data can be serialized", () => {
