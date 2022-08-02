@@ -1,8 +1,8 @@
 import React from 'react'
 
-const TabComponents = ({ component, compIndex, tabIndex}) => { 
+const TabComponent = ({ component, compIndex }) => { 
 
-  const { componentType, type } = component
+  const { componentType } = component
 
   return (
        <li
@@ -12,4 +12,4 @@ const TabComponents = ({ component, compIndex, tabIndex}) => {
       </li>
   )
 }  
-export default TabComponents;
+export default TabComponent;

@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from "react";
-import { TabContext, LayoutContext } from "../TabPrep";
-import TabEl from "./TabEl";
+import React, { useContext } from "react";
+import { TabContext, LayoutContext } from "../TabsMain";
+import Tab from "./Tab";
 
-const TabsWidget = () => {
+const Tabs = () => {
   
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
@@ -28,10 +28,10 @@ const TabsWidget = () => {
         })}
       </div>
       {state.map((tab, tabIndex) => {
-        return <TabEl tabIndex={tabIndex} tab={tab} />;
+        return <Tab tabIndex={tabIndex} tab={tab} />;
       })}
     </div>
   );
 };
 
-export default TabsWidget;
+export default Tabs;

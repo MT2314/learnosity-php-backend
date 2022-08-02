@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { TabContext } from "../TabPrep";
+import { TabContext } from "../TabsMain";
 
 //components
 import Placeholder from "./Placeholder";
-import TabComponents from "./TabComponents";
+import TabComponent from "./TabComponent";
 
-const TabEl = ({ tab, tabIndex }) => {
+const Tab = ({ tab, tabIndex }) => {
 
   const { id, components } = tab;
 
@@ -20,7 +20,7 @@ const TabEl = ({ tab, tabIndex }) => {
           <ul>
             {components.map((component, compIndex) => {
               return (
-                <TabComponents
+                <TabComponent
                   component={component}
                   compIndex={compIndex}
                   tabIndex={tabIndex}
@@ -32,4 +32,4 @@ const TabEl = ({ tab, tabIndex }) => {
       </div>
   );
 };
-export default TabEl;
+export default Tab;
