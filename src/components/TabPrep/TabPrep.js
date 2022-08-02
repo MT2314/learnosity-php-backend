@@ -2,6 +2,7 @@ import React, { createContext, useState, useReducer, useEffect } from "react";
 //import components
 import TabsWidget from "./subcomponents/TabsWidget";
 import "./styles/Tab.scss";
+
 //import immer
 import produce from "immer";
 
@@ -24,8 +25,8 @@ export const defaultProps = {
 
 //state of Layout
 export const LayoutContext = createContext();
+
 //layout provider wraps the tab component
-//state for the active tab index
 export const LayoutProvider = ({ children, setProp, layoutState }) => {
 
   const [state, dispatch] = useReducer(
@@ -68,6 +69,7 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   );
 };
 
+//state of the active tab
 export const TabContext = createContext();
 
 const TabPrep = ({ layoutState = [], setProp = () => {},  }) => {
@@ -86,5 +88,4 @@ const TabPrep = ({ layoutState = [], setProp = () => {},  }) => {
 
 export default TabPrep;
 
-// have layout provider accept a prop, initial state
 
