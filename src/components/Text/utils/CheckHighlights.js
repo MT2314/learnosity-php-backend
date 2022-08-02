@@ -1,5 +1,5 @@
 const CheckHighlights = (editorContent) => {
-  const ops = [...editorContent.ops];
+  const ops = editorContent.ops;
 
   for (const delta of ops) {
     if (delta?.attributes?.background) {

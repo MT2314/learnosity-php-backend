@@ -11,7 +11,7 @@ export const defaultAnchorState = {
 };
 
 export const ModifyAnchorText = (editorContent, quillText) => {
-  const ops = [...editorContent.ops];
+  const ops = editorContent.ops;
 
   let removeIndex = null;
   let removeLength = null;
@@ -125,7 +125,7 @@ export const ModifyAnchorText = (editorContent, quillText) => {
 };
 
 export const ConvertLinks = (editorContent, quillText) => {
-  const ops = [...editorContent.ops];
+  const ops = editorContent.ops;
 
   let startLinkIndex = null;
   let endLinkIndex = null;
