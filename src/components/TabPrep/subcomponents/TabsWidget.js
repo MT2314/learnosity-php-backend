@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { TabContext, LayoutContext } from "../TabPrep";
 import TabEl from "./TabEl";
 
@@ -6,6 +6,7 @@ const TabsWidget = () => {
   
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
+
 
   return (
     <div className="tab-container">

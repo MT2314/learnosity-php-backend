@@ -1,4 +1,4 @@
-import React, { createContext, useState, useReducer } from "react";
+import React, { createContext, useState, useReducer, useEffect } from "react";
 //import components
 import TabsWidget from "./subcomponents/TabsWidget";
 import "./styles/Tab.scss";
@@ -6,7 +6,7 @@ import "./styles/Tab.scss";
 import produce from "immer";
 
 export const defaultProps = {
-  layout: [
+  layoutState: [
     {
       type: "TAB",
       id: 0,
@@ -26,9 +26,7 @@ export const defaultProps = {
 export const LayoutContext = createContext();
 //layout provider wraps the tab component
 //state for the active tab index
-export const LayoutProvider = ({ children }) => {
-
-  const { layout } = defaultProps
+export const LayoutProvider = ({ children, setProp, layoutState }) => {
 
   const [state, dispatch] = useReducer(
     produce((draft, action) => {
@@ -56,25 +54,29 @@ export const LayoutProvider = ({ children }) => {
           break;
       }
     }),
-    layout
+    layoutState
   );
 
-  console.log("state:", state)
+  useEffect(() => {
+    setProp({ layoutState: state})
+  }, [ state ])
+
   return (
     <LayoutContext.Provider value={[state, dispatch]}>
       {children}
     </LayoutContext.Provider>
   );
 };
+
 export const TabContext = createContext();
 
-const TabPrep = ({ layout }) => {
+const TabPrep = ({ layoutState = [], setProp = () => {},  }) => {
   
   const [activeTab, setActiveTab] = useState(0);
   
   
   return (
-    <LayoutProvider>
+    <LayoutProvider layoutState= {layoutState} setProp={setProp}>
       <TabContext.Provider value={[activeTab, setActiveTab]}>
         <TabsWidget/>
       </TabContext.Provider>
@@ -83,3 +85,6 @@ const TabPrep = ({ layout }) => {
 };
 
 export default TabPrep;
+
+// have layout provider accept a prop, initial state
+

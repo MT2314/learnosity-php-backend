@@ -1,13 +1,11 @@
 import React, { useContext } from "react";
-import { defaultProps, TabContext } from "../TabPrep";
+import { TabContext } from "../TabPrep";
 
 //components
 import Placeholder from "./Placeholder";
 import TabComponents from "./TabComponents";
 
-const TabEl = ({ tab, tabIndex, setProp, }) => {
-
-  const { layout } = defaultProps;
+const TabEl = ({ tab, tabIndex }) => {
 
   const { id, components } = tab;
 
@@ -16,7 +14,7 @@ const TabEl = ({ tab, tabIndex, setProp, }) => {
 
   return (
       <div className="tab-body" key={id}>
-        {activeTab === tabIndex && layout[tabIndex].components.length === 0 ? (
+        {activeTab === tabIndex && components.length === 0 ? (
           <Placeholder />
         ) : (
           <ul>
