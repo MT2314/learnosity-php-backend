@@ -10,20 +10,17 @@ const Tabs = () => {
 
   return (
     <div className="tab-container">
-      <button onClick={() => dispatch({ func: "ADD_TAB", title: "Tab 3" })}>
-        add tab
-      </button>
       <div className="tab-titles">
         {state.map((tab, tabIndex) => {
           return (
-            <div
+            <button
               className={`tab-title ${
                 activeTab === tabIndex ? "active-tab" : ""
               }`}
               onClick={() => setActiveTab(tabIndex)}
             >
-              <h3>{tab.title}</h3>
-            </div>
+            {tab.title}
+            </button>
           );
         })}
       </div>
