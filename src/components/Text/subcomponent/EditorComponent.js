@@ -152,7 +152,6 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
         container: `#${toolbarId}`,
       },
       clipboard: {
-        // matchers: [[Node.TEXT_NODE, pasteLink]],
         matchVisual: false,
         allowed: {
           tags: [
@@ -173,7 +172,7 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
           attributes: ["href", "rel", "target", "class"],
         },
         keepSelection: true,
-        substituteBlockElements: false,
+        substituteBlockElements: true,
         magicPasteLinks: true,
         hooks: {
           uponSanitizeElement(node, data, config) {
