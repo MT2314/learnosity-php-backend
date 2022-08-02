@@ -127,6 +127,16 @@ const ExtendLinkFunctionality = (id) => {
 
     if (linkTooltipElement.getAttribute("data-mode") === "link") {
       if (linkTooltipInput?.value.match(linkValidityRegex)) {
+        if (
+          linkTooltipInput.value.indexOf("http://") === -1 ||
+          linkTooltipInput.value.indexOf("https://") === -1
+        ) {
+          linkTooltipInput.value = linkTooltipInput.value.replace(
+            "www.",
+            "http://www."
+          );
+        }
+        console.log(linkTooltipInput.value.indexOf("http://"));
         savedLink = linkTooltipInput.value;
         quillActionBtn.click();
         Apply.hidden = true;

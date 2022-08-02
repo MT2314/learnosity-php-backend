@@ -7,17 +7,22 @@ import { v4 as uuidv4 } from "uuid";
 import "quill-paste-smart";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
-import ConvertPastedLinks from "../utils/ConvertPastedLinks";
-
-const Delta = Quill.import("delta");
+import {
+  defaultAnchorState,
+  ModifyAnchorText,
+  ConvertLinks,
+} from "../utils/HandleLinks";
+import CheckHighlights from "../utils/CheckHighlights";
 
 const EditorComponent = ({ body, setProp, setShowEditor }) => {
   //generate a unique id for toolbar and keep it from changing with useMemo
-
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
+
+  //state to modify link text
+  const [modifyAnchorText, setModifyAnchorText] = useState(defaultAnchorState);
 
   //add focus to editor
   const focusRef = useRef(null);
@@ -30,30 +35,9 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
     setShowEditor(false);
   });
 
-  // const reFocus = (link) => {
-  //   if (link) {
-  //     const editor = document.querySelector(".ql-editor");
-  //     const p = editor.querySelector("p");
-  //     console.log(p);
-  //     const a = p.querySelector("a");
-  //     console.log(a);
-  //     const range = document.createRange();
-  //     const selection = window.getSelection();
-
-  //     range.selectNode(a);
-
-  //     console.log("Range ", range);
-  //     editor.click();
-  //     selection.removeAllRanges();
-  //     selection.addRange(range);
-  //   }
-  // };
-
   useEffect(() => {
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
-    // focusRef.current.editor.clipboard.addMatcher("A", CustomMatcher);
-    // focusRef.current.editor.clipboard.addMatcher(Node.TEXT_NODE, pasteLink);
     focusRef.current.editor.setContents(body);
     //on render set focus on the editor
     focusRef.current.focus();
@@ -61,49 +45,90 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
     setEditorIsFocus(true);
   }, []);
 
-  useEffect(() => {
-    console.log(body);
-    // focusRef.current.editor.setContents(body);
-  }, [body]);
-
-  // const len = focusRef.current.unprivilegedEditor.getLength();
-  // console.log(len);
-  // const selection = { index: 0, length: len };
-  // focusRef.current.setEditorSelection(focusRef.current.editor, selection);
-
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
-    let link;
 
-    [editorContent, link] = ConvertPastedLinks(Delta, editorContent);
+    //quill instance
+    const quill = focusRef.current;
+    const quillText = quill.getEditor().getText();
 
-    // link && focusRef.current.editor.setContents(editorContent);
+    //check for links
+    const linksChecked = checkForLinks(quill, quillText, editorContent);
 
-    // link && setValue(editorContent);
-    // const len = focusRef.current.unprivilegedEditor.getLength();
-    // console.log("Lenght: " + len);
-    // const selection = { index: len - 1, length: len };
-    // console.log(selection);
-    // focusRef.current.setEditorSelection(focusRef.current.editor, selection);
+    //check for selection with highlights
+    const noHighlights = CheckHighlights(editorContent);
 
-    // const ed = document.querySelector(".ql-editor");
-    // console.log(ed);
-    // const p = ed.querySelector("p");
-    // console.log(p);
-    // link && p.focus();
+    //edit ops on paste
+    const onPaste =
+      editorContent.ops[0].insert === "\n" && editorContent.ops.length === 1;
+    onPaste && (editorContent.ops[0].insert = "");
 
-    // console.log(focusRef.current.getEditor());
+    noHighlights && linksChecked && setProp({ body: editorContent });
+  };
 
-    if (
-      editorContent.ops[0].insert === "\n" &&
-      editorContent.ops.length === 1
-    ) {
-      editorContent.ops[0].insert = "";
-      setProp({ body: editorContent });
-    } else {
-      setProp({ body: editorContent });
+  //check and modify links
+  const checkForLinks = (quill, quillText, editorContent) => {
+    let changeFromAPI = false;
+    const {
+      anchorTextEqualToLink,
+      insertRange,
+      linkText,
+      placeSelectionRight,
+    } = modifyAnchorText;
+
+    if (anchorTextEqualToLink) {
+      const { index, length } = insertRange;
+      const selection = { index: index + length, length: 0 };
+
+      setModifyAnchorText(defaultAnchorState);
+      placeSelectionRight && quill.setEditorSelection(quill.editor, selection);
+
+      changeFromAPI = true;
+      quill.getEditor().formatText(index, length, "link", linkText);
     }
+    if (!anchorTextEqualToLink) {
+      const { link, startLinkIndex, endLinkIndex } = ConvertLinks(
+        editorContent,
+        quillText
+      );
+
+      if (link) {
+        const selection = { index: startLinkIndex + endLinkIndex, length: 0 };
+        quill.setEditorSelection(quill.editor, selection);
+
+        changeFromAPI = true;
+        quill
+          .getEditor()
+          .formatText(startLinkIndex, endLinkIndex, "link", link);
+      }
+
+      const {
+        removeRange,
+        insertRange,
+        linkText,
+        anchorTextEqualToLink,
+        removeFormat,
+        placeSelectionRight,
+      } = ModifyAnchorText(editorContent, quillText);
+
+      if (!link && (linkText || removeFormat)) {
+        const { index, length } = removeRange;
+
+        !removeFormat &&
+          setModifyAnchorText({
+            anchorTextEqualToLink,
+            insertRange,
+            linkText,
+            placeSelectionRight,
+          });
+
+        quill.getEditor().removeFormat(index, length);
+        changeFromAPI = true;
+      }
+    }
+
+    return !changeFromAPI;
   };
 
   //customization settings for toolbar
@@ -128,6 +153,7 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
       },
       clipboard: {
         // matchers: [[Node.TEXT_NODE, pasteLink]],
+        matchVisual: false,
         allowed: {
           tags: [
             "a",
@@ -143,12 +169,11 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
             "b",
             "sub",
             "sup",
-            "span",
           ],
           attributes: ["href", "rel", "target", "class"],
         },
         keepSelection: true,
-        substituteBlockElements: true,
+        substituteBlockElements: false,
         magicPasteLinks: true,
         hooks: {
           uponSanitizeElement(node, data, config) {
@@ -186,6 +211,7 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
           nisi ut aliquip ex ea commodo consequat."
         className="quillEditor"
         onChange={handleDataChange}
+        defaultValue={body}
       />
     </div>
   );
