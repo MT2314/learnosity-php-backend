@@ -1,32 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
 .tab-container {
   box-sizing: border-box;
+
+  //TYPOGRAPHY
+  font-family: "Inter", sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.15px;
+  color: #636363;
+  line-height: 25px;
+ 
 
   .tab-titles {
     display: flex;
     height: 40px;
+    font-weight: 400;
+    background-color: #F5F5F5;
   }
-
+  
   .tab-title {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    background-color: #bdbdbd;
-    color: #636363;
     border: 1px solid #bdbdbd;
     border-radius: 10px 10px 0px 0px;
     width: 484px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     h3 {
       margin: 0;
     }
   }
 
+  //on click active tab styles apply
   .active-tab{
     background-color: #fff;
     color: #232323
   }
 
   .tab-body{
-    
+    margin: 10px;
   }
+
+  .placeholder-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    border: 3px dashed #1565C0;
+    h3{
+      font-weight: 400;
+      font-size: 24px;
+      margin-bottom: 0;
+    }
+    p{
+      font: 14px;
+      margin-bottom: 0;
+    }
+    p:last-child{
+      margin-top: 0;
+      color: #1565C0;
+    }
+
+  }
+
 }
