@@ -5,13 +5,14 @@ import { defaultProps, TabContext } from "../TabPrep";
 import Placeholder from "./Placeholder";
 import TabComponents from "./TabComponents";
 
-const TabEl = ({ tab, tabIndex }) => {
+const TabEl = ({ tab, tabIndex, setProp, }) => {
 
   const { layout } = defaultProps;
 
-  const { id, title, components } = tab;
+  const { id, components } = tab;
 
   const [activeTab, setActiveTab] = useContext(TabContext);
+
 
   return (
       <div className="tab-body" key={id}>
