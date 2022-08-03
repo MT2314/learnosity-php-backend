@@ -51,10 +51,10 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
         case "DELETE_COMPONENT":
           draft[action.tabIndex].components.splice(action.componentIndex, 1);
           break;
-        case "CHANGED_TITLE":
-          const todo = draft.find((todo) => todo.id == action.id);
-          console.log(todo);
-          todo.title = action.title;
+        case "CHANGE_TITLE":
+          const tab = draft.find((tab) => tab.id == action.id);
+          console.log(tab);
+          tab.title = action.title;
           break;
         default:
           break;

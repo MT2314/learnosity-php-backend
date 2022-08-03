@@ -18,7 +18,7 @@ const Tabs = () => {
     console.log(e.target.value);
 
     dispatch({
-      func: "CHANGED_TITLE",
+      func: "CHANGE_TITLE",
       title: e.target.value,
       id: e.target.dataset.id,
     });
