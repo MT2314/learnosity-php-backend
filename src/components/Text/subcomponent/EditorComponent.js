@@ -14,7 +14,7 @@ import {
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 
-const EditorComponent = ({ body, setProp, setShowEditor }) => {
+const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText }) => {
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
@@ -244,9 +244,7 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
           if (e.key === 'Escape') {
             setEditorIsFocus(false);
             setShowEditor(false);
-            e.preventDefault();
-            e.target.blur();
-            return false;
+            focusOutofText.focus();
           }
         }}
       />
