@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import ReactQuill, { Quill } from "react-quill";
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
@@ -29,8 +29,6 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
   useEffect(() => {
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
-    //on render set focus on the editor
-    focusRef.current.focus();
     //on render toolbar appears
     setEditorIsFocus(true);
   }, []);
