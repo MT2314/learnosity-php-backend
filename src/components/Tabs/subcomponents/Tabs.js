@@ -1,19 +1,18 @@
 import React, { useContext } from "react";
-import { TabContext, LayoutContext } from "../TabsMain";
+import { LayoutContext, TabContext } from "../TabsMain";
 import Tab from "./Tab";
 
 const Tabs = () => {
   
-  const [activeTab, setActiveTab] = useContext(TabContext);
-  const [state, dispatch] = useContext(LayoutContext);
-
+  const [ activeTab, setActiveTab ] = useContext(TabContext);
+  const [ state, dispatch ] = useContext(LayoutContext);
 
   return (
-    <div className="tab-container">
+    <div className="tab-container" data-testid='tab-container'>
       <div className="tab-titles">
         {state.map((tabTitle, tabIndex) => {
           return (
-            <button
+            <button key={`tab-title-${tabIndex}`}
               className={`tab-title ${
                 activeTab === tabIndex ? "active-tab" : ""
               }`}
@@ -25,7 +24,7 @@ const Tabs = () => {
         })}
       </div>
       {state.map((tab, tabIndex) => {
-        return <Tab tabIndex={tabIndex} tab={tab} />;
+        return <Tab tabIndex={tabIndex} tab={tab}/>;
       })}
     </div>
   );

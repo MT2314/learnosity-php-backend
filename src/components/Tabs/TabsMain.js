@@ -1,6 +1,6 @@
 import React, { createContext, useState, useReducer, useEffect } from "react";
 //import components
-import TabsWidget from "./subcomponents/Tabs";
+import Tabs from "./subcomponents/Tabs";
 import "./styles/Tab.scss";
 //import immer
 import produce from "immer";
@@ -72,16 +72,27 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
 //state of the active tab
 export const TabContext = createContext();
 
+export const ActiveTabProvider = ({ children }) => {
+
+  const [ activeTab, setActiveTab ] = useState(0);
+
+  console.log(activeTab, setActiveTab)
+
+  return(
+    <TabContext.Provider value={[activeTab, setActiveTab]}>
+      {children}
+    </TabContext.Provider>
+  )
+}
+
 const TabsMain = ({ layoutState = [], setProp = () => {},  }) => {
-  
-  const [activeTab, setActiveTab] = useState(0);
   
   
   return (
     <LayoutProvider layoutState= {layoutState} setProp={setProp}>
-      <TabContext.Provider value={[activeTab, setActiveTab]}>
-        <TabsWidget/>
-      </TabContext.Provider>
+      <ActiveTabProvider>
+        <Tabs/>
+      </ActiveTabProvider>
     </LayoutProvider>
   );
 };

@@ -10,10 +10,9 @@ const Tab = ({ tab, tabIndex }) => {
   const { id, components } = tab;
 
   const [activeTab, setActiveTab] = useContext(TabContext);
-
-
+  
   return (
-      <div className="tab-body" key={id}>
+      <div className="tab-body" key={`tab-${id}`}>
         {activeTab === tabIndex && components.length === 0 ? (
           <Placeholder />
         ) : (
