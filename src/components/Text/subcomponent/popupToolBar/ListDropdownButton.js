@@ -4,16 +4,33 @@ import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core/";
 import "../../styles/ListDropdownButton.scss";
 import icons from "../../assets/icons";
+// Config styles of MUI components
+import { makeStyles } from "@material-ui/core/styles";
+
+// Classes for styling modification. (Tooltip class)
+const useStyles = makeStyles((theme) => ({
+  tooltip: {
+    backgroundColor: "rgba(97, 97, 97, 0.9)",
+  },
+}));
 
 const ListDropdownButton = ({
   show,
   activeDropDownItem,
   setActiveDropDownItem,
 }) => {
+  // Allow the use of materialUI styled component classes
+  let classes = useStyles();
+
   return (
     <>
       <Card className={show ? "list-dropdown show" : "list-dropdown hide"}>
-        <Tooltip arrow title="bullets" placement="top">
+        <Tooltip
+          arrow
+          title="bullets"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
           <button
             aria-label="bullet list"
             className={
@@ -34,7 +51,12 @@ const ListDropdownButton = ({
           </button>
         </Tooltip>
 
-        <Tooltip arrow title="numbering" placement="top">
+        <Tooltip
+          arrow
+          title="numbering"
+          placement="top"
+          classes={{ tooltip: classes.tooltip }}
+        >
           <button
             aria-label="numbered list"
             className={

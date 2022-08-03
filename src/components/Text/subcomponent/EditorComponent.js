@@ -6,10 +6,11 @@ import "../styles/EditorComponent.scss";
 import { v4 as uuidv4 } from "uuid";
 import "quill-paste-smart";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-
 import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
-const EditorComponent = ({ body, setProp }) => {
-  const toolbarId = `unique-id-${uuidv4()}`;
+
+const EditorComponent = ({ body, setProp, setShowEditor }) => {
+  //generate a unique id for toolbar and keep it from changing with useMemo
+  const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
@@ -20,9 +21,13 @@ const EditorComponent = ({ body, setProp }) => {
   //track clicks outside text div
   const textRef = useRef(null);
 
-  useOnClickOutside(textRef, () => setEditorIsFocus(false));
+  useOnClickOutside(textRef, () => {
+    setEditorIsFocus(false);
+    setShowEditor(false);
+  });
 
   useEffect(() => {
+    //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
     //on render set focus on the editor
     focusRef.current.focus();
@@ -33,7 +38,15 @@ const EditorComponent = ({ body, setProp }) => {
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
-    setProp({ body: editorContent });
+    if (
+      editorContent.ops[0].insert === "\n" &&
+      editorContent.ops.length === 1
+    ) {
+      editorContent.ops[0].insert = "";
+      setProp({ body: editorContent });
+    } else {
+      setProp({ body: editorContent });
+    }
   };
 
   //customization settings for toolbar
@@ -48,6 +61,7 @@ const EditorComponent = ({ body, setProp }) => {
     "list",
     "bullet",
     "link",
+    "background",
   ];
 
   const modules = useMemo(
@@ -71,6 +85,7 @@ const EditorComponent = ({ body, setProp }) => {
             "b",
             "sub",
             "sup",
+            "span",
           ],
           attributes: ["href", "rel", "target", "class"],
         },
@@ -96,7 +111,10 @@ const EditorComponent = ({ body, setProp }) => {
       data-testid="text-editor-component"
     >
       <div className={editorIsFocus ? "showtool" : "hidetool"}>
-        <CustomToolBar toolbarId={toolbarId} />
+        <CustomToolBar
+          toolbarId={toolbarId}
+          containerId={`toolbar-${toolbarId}`}
+        />
       </div>
 
       <ReactQuill
@@ -110,6 +128,7 @@ const EditorComponent = ({ body, setProp }) => {
           nisi ut aliquip ex ea commodo consequat."
         className="quillEditor"
         onChange={handleDataChange}
+        defaultValue={body}
       />
     </div>
   );

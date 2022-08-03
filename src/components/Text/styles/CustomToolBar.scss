@@ -40,6 +40,15 @@
     }
   }
 
+  .al-link.ql-selected {
+    background-color: rgb(226, 236, 245) !important;
+    svg {
+      .svg-fill {
+        fill: #1565c0;
+      }
+    }
+  }
+
   .ql-selected.ql-active,
   .ql-selected.ql-formula {
     background-color: rgb(226, 236, 245) !important;

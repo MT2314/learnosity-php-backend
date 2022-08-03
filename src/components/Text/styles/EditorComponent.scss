@@ -21,6 +21,7 @@
   font-family: "Inter", sans-serif;
   padding: 40px 104px;
   line-height: 24px;
+  background-color: #fff;
 
   &::placeholder {
     font-style: normal;
@@ -41,6 +42,7 @@
 .showtool {
   display: flex;
   justify-content: center;
+  background-color: #fff;
 }
 
 .ql-toolbar.ql-snow .ql-formats {
@@ -91,6 +93,9 @@
   &.input-error {
     color: #d32f2f !important;
   }
+  &:focus {
+    outline: none !important;
+  }
 }
 
 .ql-snow .ql-tooltip > span.trash-icon > button {
@@ -101,6 +106,13 @@
   outline: inherit;
   border-radius: 4px;
   &:hover {
+    cursor: pointer;
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    > svg {
+      color: black !important;
+    }
+  }
+  &:active {
     cursor: pointer;
     background-color: rgba(21, 101, 192, 0.12) !important;
     > svg {
@@ -121,6 +133,13 @@
     cursor: pointer;
     background-color: rgba(21, 101, 192, 0.12) !important;
     > svg {
+      color: black !important;
+    }
+  }
+  &:active {
+    cursor: pointer;
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    > svg {
       color: #1565c0 !important;
     }
   }
@@ -135,7 +154,7 @@
   margin-left: 10px;
 
   &.disabled {
-    color: grey !important;
+    color: #89B1DF !important;
     & > button {
       background: none;
       color: inherit;

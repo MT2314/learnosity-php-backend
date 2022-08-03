@@ -16,6 +16,7 @@ export const defaultProps = { placeHolderText: "", body: null };
 
 const FormattedText = ({
   placeHolderText,
+  editorRef,
   body = null,
   toolbar = toolbarOptions,
   setProp = () => console.warn("No state change function provided"),
@@ -53,6 +54,7 @@ const FormattedText = ({
         toolbar={toolbar}
         // toolbarCustomButtons={[<KeysLink />]}
         placeholder={placeHolderText}
+        editorRef={editorRef}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState } from "react";
 import { Divider } from "@mui/material/";
 import { Tooltip } from "@material-ui/core/";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
@@ -7,20 +7,59 @@ import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
 import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
+// Config styles of MUI components
+import { makeStyles } from "@material-ui/core/styles";
 
-const CustomToolBar = ({ toolbarId }) => {
+// Classes for styling modification. (Tooltip class)
+const useStyles = makeStyles((theme) => ({
+  tooltip: {
+    backgroundColor: "rgba(97, 97, 97, 0.9)",
+  },
+}));
+
+const CustomToolBar = ({ toolbarId, containerId }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
-  const [activeAlignIcon, setActiveAlignIcon] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
+  const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
+  // Allow the use of materialUI styled component classes
+  let classes = useStyles();
+
+  const parentDiv = document.getElementById(containerId);
+  if (parentDiv) {
+    const QLformats = parentDiv.querySelector(`.ql-formats`);
+    const QLactive = QLformats.querySelector(`.ql-active`);
+    if (QLactive) {
+      const options = {
+        attributes: true,
+      };
+
+      function callback(mutationList) {
+        mutationList.forEach(function (mutation) {
+          if (mutation.target.classList.contains(`ql-active`)) {
+            setVisibleAlignIcon(
+              icons[mutation.target.value ? mutation.target.value : "align"]
+            );
+          }
+        });
+      }
+      const observer = new MutationObserver(callback);
+      observer.observe(QLactive, options);
+    }
+  }
 
   return (
     <div id={toolbarId} className="toolbarContainer">
       {/* bold dropdown starts */}
-      <Tooltip arrow title="font styles" placement="top">
+      <Tooltip
+        arrow
+        title="font styles"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
         <button
           onClick={() => {
             setBoldVisibility(!boldVisibility);
@@ -50,7 +89,12 @@ const CustomToolBar = ({ toolbarId }) => {
       ></BoldDropdownButton>
 
       {/* formula btn */}
-      <Tooltip arrow title="equation" placement="top">
+      <Tooltip
+        arrow
+        title="equation"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
         <button
           className={
             activeTopMenu === "math"
@@ -75,7 +119,12 @@ const CustomToolBar = ({ toolbarId }) => {
       </Tooltip>
 
       {/* alignment dropdown */}
-      <Tooltip arrow title="alignment" placement="top">
+      <Tooltip
+        arrow
+        title="alignment"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
         <button
           onClick={() => {
             setAlignVisibility(!alignVisibility);
@@ -94,16 +143,10 @@ const CustomToolBar = ({ toolbarId }) => {
               : "align-button"
           }
           aria-label="alignment buttons dropdown"
-          value={activeAlignIcon}
+          value={visibleAlignIcon}
           id="alignment-dropdown"
         >
-          {activeAlignIcon === "left"
-            ? icons["align"]
-            : activeAlignIcon === "center"
-            ? icons["center"]
-            : activeAlignIcon === "right"
-            ? icons["right"]
-            : icons["align"]}
+          {visibleAlignIcon}
         </button>
       </Tooltip>
       <AlignDropdownButton
@@ -112,11 +155,16 @@ const CustomToolBar = ({ toolbarId }) => {
         aria-label="alignment buttons options"
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
-        setActiveAlignIcon={setActiveAlignIcon}
+        setVisibleAlignIcon={setVisibleAlignIcon}
       />
 
       {/* bullets drowdown starts */}
-      <Tooltip arrow title="add list" placement="top">
+      <Tooltip
+        arrow
+        title="add list"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
         <button
           onClick={() => {
             setListVisibility(!listVisibility);
@@ -146,31 +194,42 @@ const CustomToolBar = ({ toolbarId }) => {
 
       {/* link btn and divider */}
       <Divider orientation="vertical" />
-      <Tooltip arrow title="insert link" placement="top">
+      <HiddenQuillLinkButton />
+      <Tooltip
+        arrow
+        title="insert link"
+        placement="top"
+        classes={{ tooltip: classes.tooltip }}
+      >
         <button
           aria-label="add link button"
-          className={
-            activeTopMenu === "link"
-              ? "ql-link ql-selected ql-active"
-              : "ql-link"
-          }
+          className="al-link"
           onClick={() => {
             setAlignVisibility(false);
             setBoldVisibility(false);
             setListVisibility(false);
-            if (activeTopMenu === "link") {
-              setActiveTopMenu("");
-            } else {
-              setActiveTopMenu("link");
-            }
-            setActiveDropDownItem("link");
+
+            setActiveTopMenu(activeTopMenu === "link" ? "" : "link");
           }}
         >
           {icons["link"]}
         </button>
       </Tooltip>
+      <HiddenQuillBackgroundColorSelector />
     </div>
   );
+};
+
+const HiddenQuillBackgroundColorSelector = () => {
+  return (
+    <span className="ql-formats" style={{ display: "none" }}>
+      <select className="ql-background" style={{ display: "none" }}></select>
+    </span>
+  );
+};
+
+const HiddenQuillLinkButton = () => {
+  return <button className="ql-link" style={{ display: "none" }}></button>;
 };
 
 export default CustomToolBar;

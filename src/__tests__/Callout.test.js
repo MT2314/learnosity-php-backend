@@ -1,6 +1,6 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 // import userEvent from "@testing-library/user-event";
@@ -116,5 +116,37 @@ describe("Callout", () => {
   it("renders text entry box", () => {
     render(<Callout />);
     expect(screen.getByText("Enter callout body text here...")).toBeDefined();
+  });
+});
+
+describe("Callout, French and English:", () => {
+  it("Renders Callout in French, then renders in English after click", () => {
+    render(<Callout />);
+
+    const frenchButton = screen.getByRole("button", { name: "French" });
+
+    expect(frenchButton).toBeInTheDocument();
+
+    fireEvent.click(frenchButton);
+
+    expect(screen.getByText("Type de légende :")).toBeInTheDocument();
+    expect(screen.getByText("Sélectionnez la valeur")).toBeInTheDocument();
+    expect(
+      screen.getByText("Entrez le corps du texte de la légende ici...")
+    ).toBeInTheDocument();
+
+    expect(frenchButton).toBeDisabled();
+
+    const englishButton = screen.getByRole("button", { name: "English" });
+
+    fireEvent.click(englishButton);
+
+    expect(screen.getByText("Callout Type:")).toBeInTheDocument();
+    expect(screen.getByText("Select Value")).toBeInTheDocument();
+    expect(
+      screen.getByText("Enter callout body text here...")
+    ).toBeInTheDocument();
+
+    expect(englishButton).toBeDisabled();
   });
 });

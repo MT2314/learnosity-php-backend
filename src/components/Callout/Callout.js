@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Paper, NativeSelect } from "@mui/material";
 import styles from "./styles/Callout.module.scss";
 import FormattedText from "../FormattedText/FormattedText";
 import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 import calloutOptions from "./utility/CalloutOptions";
+
+import "./i18n";
+import { useTranslation, Trans } from "react-i18next";
+
 export const defaultProps = { heading: "", body: "" };
+
+const lngs = {
+  en: { nativeName: "English" },
+  fr: { nativeName: "French" },
+  cn: { nativeName: "Chinese" },
+  es: { nativeName: "Spanish" },
+};
 
 const Callout = ({
   calloutTypeSvg,
@@ -12,13 +23,22 @@ const Callout = ({
   calloutBody,
   setProp = () => {},
 }) => {
-
   let labelId = Math.floor(Math.random() * 100000);
 
   const calloutToolBar = useToolBarOptions(
     ["inline", "link", "list"],
     ["bold", "italic", "underline", "strikethrough"]
   );
+
+  const { t, i18n } = useTranslation();
+  const [textEditorRef, setTextEditorRef] = useState();
+  const lngRef = useRef([]);
+
+  function lngFunction(lng) {
+    i18n.changeLanguage(lng);
+    textEditorRef?.focus({ preventScroll: true });
+    lngRef.current[lng].focus({ preventScroll: true });
+  }
 
   return (
     <Paper
@@ -29,7 +49,21 @@ const Callout = ({
     >
       <div className={styles.dropdownContainer}>
         <label id={`callout-${labelId}`} className={styles.Callout_label}>
-          Callout Type: &nbsp;
+          <div>
+            {Object.keys(lngs).map((lng) => (
+              <button
+                ref={(el) => (lngRef.current[lng] = el)}
+                type="submit"
+                key={lng}
+                onClick={() => lngFunction(lng)}
+                disabled={i18n.resolvedLanguage === lng}
+                aria-label={lngs[lng].nativeName}
+              >
+                {lngs[lng].nativeName}
+              </button>
+            ))}
+          </div>
+          {t("callout")}&nbsp;
           <NativeSelect
             role="listbox"
             autoFocus
@@ -46,7 +80,7 @@ const Callout = ({
           >
             {calloutOptions.map(({ type_id, title }) => (
               <option key={type_id} value={calloutOptions[type_id].type_id}>
-                {title}
+                {t(title)}
               </option>
             ))}
           </NativeSelect>
@@ -61,27 +95,30 @@ const Callout = ({
               className={styles.Callout_img}
               src={calloutTypeSvg}
               alt={""}
-              aria-label="Callout type icon"
+              aria-label={t("imgAriaLabel")}
             />
             <p data-testid="calloutTitle" className={styles.Callout_heading}>
-              {calloutTitle}
+              {t(calloutTitle)}
             </p>
           </>
         ) : (
           <div
             className={styles.Callout_icon_placeholder}
-            aria-label="Callout type icon placeholder"
+            aria-label={t("imgAriaLabelDiv")}
           ></div>
         )}
       </div>
       <div className={styles.Callout_text_area} data-testid="calloutBody">
         <FormattedText
-          placeHolderText="Enter callout body text here..."
+          placeHolderText={t("calloutPlaceHolderText")}
           toolbar={calloutToolBar}
           body={calloutBody}
           className={styles.Callout_body}
           editorClassName="callout_editor_class"
           setProp={(stateUpdate) => setProp({ calloutBody: stateUpdate.body })}
+          editorRef={(ref) => {
+            !textEditorRef && setTextEditorRef(ref);
+          }}
         />
       </div>
     </Paper>
