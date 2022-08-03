@@ -21,8 +21,9 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
           className="mainContainer"
           data-testid="text-component"
           tabIndex="0"
-          onKeyDown={() => {
-            setShowEditor(true);
+          aria-label={"or hit Enter to edit the comment section"}
+          onKeyDown={(e) => {
+            e.key === "Enter" && setShowEditor(true);
           }}
         >
           <DefaultText />

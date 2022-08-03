@@ -240,6 +240,10 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText }) => {
         className="quillEditor"
         onChange={handleDataChange}
         defaultValue={body}
+        onBlur={() => {
+          setEditorIsFocus(false);
+          setShowEditor(false);
+        }}
         onKeyDown={(e) => {
           if (e.key === 'Escape') {
             setEditorIsFocus(false);
