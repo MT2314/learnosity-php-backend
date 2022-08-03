@@ -28,13 +28,13 @@ export const LayoutContext = createContext();
 
 //layout provider wraps the tab component to access reducer
 export const LayoutProvider = ({ children, setProp, layoutState }) => {
-
   const [state, dispatch] = useReducer(
     produce((draft, action) => {
       switch (action.func) {
         case "ADD_TAB":
           console.log(`added tab`);
           draft.push({
+            type: "TAB",
             id: action.id,
             title: action.title,
             components: [],
@@ -51,6 +51,11 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
         case "DELETE_COMPONENT":
           draft[action.tabIndex].components.splice(action.componentIndex, 1);
           break;
+        case "CHANGE_TITLE":
+          const tab = draft.find((tab) => tab.id == action.id);
+          console.log(tab);
+          tab.title = action.title;
+          break;
         default:
           break;
       }
@@ -59,8 +64,9 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   );
 
   useEffect(() => {
-    setProp({ layoutState: state})
-  }, [ state ])
+    console.log("state", state);
+    setProp({ layoutState: state });
+  }, [state]);
 
   return (
     <LayoutContext.Provider value={[state, dispatch]}>
@@ -98,5 +104,3 @@ const TabsMain = ({ layoutState = [], setProp = () => {},  }) => {
 };
 
 export default TabsMain;
-
-

@@ -42,6 +42,7 @@ const ExtendLinkFunctionality = (id) => {
   const tooltipSaveBtnContainer = document.createElement("span");
   const tooltipRemoveButtonContainer = document.createElement("span");
   const tooltipEditorButtonContainer = document.createElement("span");
+  const customLinkInput = document.createElement("input");
 
   quillActionBtn.style.display = "none";
   quillRemoveBtn.style.display = "none";
@@ -50,10 +51,17 @@ const ExtendLinkFunctionality = (id) => {
   tooltipEditorButtonContainer.classList.add("pencil-icon");
   tooltipRemoveButtonContainer.classList.add("trash-icon");
 
+  linkTooltipInput.style.display = "none";
+  customLinkInput.setAttribute("data-link", "Paste a link");
+  customLinkInput.setAttribute("data-video", "Embed URL");
+  customLinkInput.setAttribute("data-formula", "e=mc^2");
+  customLinkInput.setAttribute("placeholder", "Paste a link");
+
   [
     { insert: tooltipSaveBtnContainer, sibling: quillActionBtn },
     { insert: tooltipRemoveButtonContainer, sibling: quillRemoveBtn },
     { insert: tooltipEditorButtonContainer, sibling: quillActionBtn },
+    { insert: customLinkInput, sibling: linkTooltipInput },
   ].map(({ insert, sibling }) => {
     return sibling.parentNode.insertBefore(insert, sibling.nextSibling);
   });
@@ -102,31 +110,51 @@ const ExtendLinkFunctionality = (id) => {
     altQuillLink.classList.add("ql-selected");
     setBackgroundColor("highlight");
     defaultQuillLink.click();
+    customLinkInput.value = "";
     isTextHighlighted = true;
   });
 
-  linkTooltipInput.addEventListener("focus", (e) => {
-    linkTooltipInput.classList.contains("input-error")
-      ? (linkTooltipInput.value = e.target.value)
-      : !isEditing && (linkTooltipInput.value = "");
+  customLinkInput.addEventListener("focus", (e) => {
+    isRemoving && (customLinkInput.value = "");
+
+    customLinkInput.classList.contains("input-error")
+      ? (customLinkInput.value = e.target.value)
+      : !isEditing && (customLinkInput.value = "");
 
     !isEditing && Apply.classList.add("disabled");
-    linkTooltipInput.classList.remove("input-error");
+    customLinkInput.classList.remove("input-error");
 
     invalidLinkMessage.style.display = "none";
     quillActionBtn.style.display = "none";
     Apply.hidden = false;
   });
 
-  linkTooltipInput.addEventListener("input", (e) => {
+  customLinkInput.addEventListener("input", (e) => {
     e.target.value?.length === 0
       ? Apply.classList.add("disabled")
       : Apply.classList.remove("disabled");
+
+    customLinkInput.classList.contains("input-error") &&
+      customLinkInput.classList.remove("input-error");
+
+    invalidLinkMessage.style.display = "none";
+  });
+
+  customLinkInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+
+      linkTooltipInput.value = customLinkInput.value;
+      Apply.click();
+    }
   });
 
   Apply.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    linkTooltipInput.value = customLinkInput.value;
 
     if (Apply.classList.contains("disabled")) return;
 
@@ -146,7 +174,7 @@ const ExtendLinkFunctionality = (id) => {
         Apply.hidden = true;
       } else {
         invalidLinkMessage.style.display = "block";
-        linkTooltipInput.classList.add("input-error");
+        customLinkInput.classList.add("input-error");
       }
     } else {
       quillActionBtn.click();
@@ -188,7 +216,7 @@ const ExtendLinkFunctionality = (id) => {
         if (isRemoving) {
           isRemoving = false;
           linkTooltipElement.classList.remove("ql-hidden", "ql-editing");
-          linkTooltipInput.value = savedLink;
+          customLinkInput.value = savedLink;
 
           quillRemoveBtn.click();
         }
@@ -203,6 +231,9 @@ const ExtendLinkFunctionality = (id) => {
     Trashcan.style.display = modifyingLink ? "none" : "";
     Pencil.style.display = modifyingLink ? "none" : "";
     Apply.style.display = modifyingLink ? "" : "none";
+    customLinkInput.style.display = modifyingLink ? "" : "none";
+
+    modifyingLink && customLinkInput.select() && customLinkInput.focus();
 
     const closed =
       changes[0].target.classList.contains("ql-tooltip") &&
