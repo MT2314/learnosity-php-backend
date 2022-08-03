@@ -94,6 +94,11 @@ const ExtendLinkFunctionality = (id) => {
   };
 
   altQuillLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (window.getSelection().toString().length === 0) return;
+
     altQuillLink.classList.add("ql-selected");
     setBackgroundColor("highlight");
     defaultQuillLink.click();
@@ -127,6 +132,15 @@ const ExtendLinkFunctionality = (id) => {
 
     if (linkTooltipElement.getAttribute("data-mode") === "link") {
       if (linkTooltipInput?.value.match(linkValidityRegex)) {
+        if (
+          linkTooltipInput.value.indexOf("http://") === -1 ||
+          linkTooltipInput.value.indexOf("https://") === -1
+        ) {
+          linkTooltipInput.value = linkTooltipInput.value.replace(
+            "www.",
+            "http://www."
+          );
+        }
         savedLink = linkTooltipInput.value;
         quillActionBtn.click();
         Apply.hidden = true;
