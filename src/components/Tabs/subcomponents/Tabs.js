@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useCallback } from "react";
 import { TabContext, LayoutContext } from "../TabsMain";
 import Tab from "./Tab";
 
@@ -6,27 +6,26 @@ const Tabs = () => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
-  const [saveText, setSaveText] = useState("");
-
-  const test = (e) => {
+  const enableTitleChange = (e) => {
     e.stopPropagation();
     if (e.target.dataset.id == activeTab) {
-      console.log(e.target);
-      console.log(typeof e.target.dataset.id);
-      console.log("dataid:", e.target.dataset.id);
-      console.log("activeTab:", activeTab);
+      // console.log("dataid:", e.target.dataset.id);
+      // console.log("activeTab:", activeTab);
       e.target.disabled = false;
-
-      dispatch({
-        func: "CHANGE_TITLE",
-        title: saveText,
-        // id: state.length + 1,
-        // title: `tab ${state.length + 1}`,
-      });
     } else {
       console.log("fail");
     }
   };
+
+  const handleTitleChange = useCallback((e) => {
+    console.log(e.target.value);
+
+    dispatch({
+      func: "CHANGED_TITLE",
+      title: e.target.value,
+      id: e.target.dataset.id,
+    });
+  }, []);
 
   return (
     <div className="tab-container">
@@ -34,8 +33,8 @@ const Tabs = () => {
         onClick={() =>
           dispatch({
             func: "ADD_TAB",
-            id: state.length + 1,
-            title: `tab ${state.length + 1}`,
+            id: state.length,
+            title: `tab ${state.length}`,
           })
         }
       >
@@ -57,8 +56,8 @@ const Tabs = () => {
                 placeholder={tabTitle.title}
                 aria-label="testing"
                 disabled={activeTab == tabIndex ? false : true}
-                onClick={(e) => test(e)}
-                onChange={(e) => setSaveText(e.target.value)}
+                onClick={(e) => enableTitleChange(e)}
+                onChange={handleTitleChange}
                 data-id={tabIndex}
               />
             </button>

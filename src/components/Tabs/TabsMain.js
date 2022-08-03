@@ -34,6 +34,7 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
         case "ADD_TAB":
           console.log(`added tab`);
           draft.push({
+            type: "TAB",
             id: action.id,
             title: action.title,
             components: [],
@@ -50,9 +51,15 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
         case "DELETE_COMPONENT":
           draft[action.tabIndex].components.splice(action.componentIndex, 1);
           break;
-        case "CHANGE_TITLE":
-          console.log("title changed");
-          console.log(action.title);
+        case "CHANGED_TITLE":
+          console.log("action:", action);
+          console.log("draft:", draft);
+
+          console.log("layoutState", layoutState);
+
+          const todo = draft.find((todo) => todo.id == action.id);
+          console.log(todo);
+          todo.title = action.title;
           break;
         default:
           break;
