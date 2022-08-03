@@ -50,6 +50,7 @@ const Tabs = () => {
               {console.log(activeTab)}
               <input
                 type="text"
+                className="tab-title-input"
                 placeholder={tabTitle.title}
                 aria-label="testing"
                 disabled={activeTab == tabIndex ? false : true}
