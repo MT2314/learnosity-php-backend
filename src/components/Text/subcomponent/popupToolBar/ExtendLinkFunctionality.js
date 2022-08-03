@@ -94,6 +94,11 @@ const ExtendLinkFunctionality = (id) => {
   };
 
   altQuillLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (window.getSelection().toString().length === 0) return;
+
     altQuillLink.classList.add("ql-selected");
     setBackgroundColor("highlight");
     defaultQuillLink.click();
@@ -136,7 +141,6 @@ const ExtendLinkFunctionality = (id) => {
             "http://www."
           );
         }
-        console.log(linkTooltipInput.value.indexOf("http://"));
         savedLink = linkTooltipInput.value;
         quillActionBtn.click();
         Apply.hidden = true;

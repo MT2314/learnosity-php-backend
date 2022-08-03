@@ -38,7 +38,6 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
   useEffect(() => {
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
-    focusRef.current.editor.setContents(body);
     //on render set focus on the editor
     focusRef.current.focus();
     //on render toolbar appears
@@ -64,12 +63,16 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
       editorContent.ops[0].insert === "\n" && editorContent.ops.length === 1;
     onPaste && (editorContent.ops[0].insert = "");
 
+    //update setProp with new editorContent
     noHighlights && linksChecked && setProp({ body: editorContent });
   };
 
   //check and modify links
   const checkForLinks = (quill, quillText, editorContent) => {
+    //a flag to check if the change is coming from the API.
     let changeFromAPI = false;
+
+    //destructuring modifyAnchorText state
     const {
       anchorTextEqualToLink,
       insertRange,
@@ -77,32 +80,54 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
       placeSelectionRight,
     } = modifyAnchorText;
 
+    //check to see if the link text is equal to the anchor text
     if (anchorTextEqualToLink) {
+      //destructuring insertRange
       const { index, length } = insertRange;
-      const selection = { index: index + length, length: 0 };
 
+      //resetting setModifyAnchorText with default state
       setModifyAnchorText(defaultAnchorState);
-      placeSelectionRight && quill.setEditorSelection(quill.editor, selection);
 
+      //set cursor position at the end of the link
+      placeSelectionRight &&
+        quill.setEditorSelection(quill.editor, {
+          index: index + length,
+          length: 0,
+        });
+
+      //change coming from API
       changeFromAPI = true;
+
+      //format text to link
       quill.getEditor().formatText(index, length, "link", linkText);
     }
+
+    //check if anchor text and link text are not the same
     if (!anchorTextEqualToLink) {
+      //returns the link, the start index and the end index of the link
       const { link, startLinkIndex, endLinkIndex } = ConvertLinks(
         editorContent,
         quillText
       );
 
+      //if the link is valid format the text to be a link
       if (link) {
-        const selection = { index: startLinkIndex + endLinkIndex, length: 0 };
-        quill.setEditorSelection(quill.editor, selection);
+        //set cursor position to the end of the link
+        quill.setEditorSelection(quill.editor, {
+          index: startLinkIndex + endLinkIndex,
+          length: 0,
+        });
 
+        //change coming from API
         changeFromAPI = true;
+
+        //format the text to be a link
         quill
           .getEditor()
           .formatText(startLinkIndex, endLinkIndex, "link", link);
       }
 
+      //destructuring modifyAnchorText state
       const {
         removeRange,
         insertRange,
@@ -112,9 +137,12 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
         placeSelectionRight,
       } = ModifyAnchorText(editorContent, quillText);
 
+      //check if link is valid, and if linkText or removeFormat is true
       if (!link && (linkText || removeFormat)) {
+        //destructuring removeRange state
         const { index, length } = removeRange;
 
+        //if removeFormat is false, then set setModifyAnchorText
         !removeFormat &&
           setModifyAnchorText({
             anchorTextEqualToLink,
@@ -123,11 +151,14 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
             placeSelectionRight,
           });
 
+        //removing link format from quill instance
         quill.getEditor().removeFormat(index, length);
+
+        //change coming from API
         changeFromAPI = true;
       }
     }
-
+    //return true if change is not from API
     return !changeFromAPI;
   };
 
@@ -172,7 +203,7 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
           attributes: ["href", "rel", "target", "class"],
         },
         keepSelection: true,
-        substituteBlockElements: true,
+        substituteBlockElements: false,
         magicPasteLinks: true,
         hooks: {
           uponSanitizeElement(node, data, config) {
