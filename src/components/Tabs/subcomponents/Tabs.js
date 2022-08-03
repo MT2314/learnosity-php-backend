@@ -8,15 +8,10 @@ const Tabs = () => {
 
   const enableTitleChange = (e) => {
     e.stopPropagation();
-    if (e.target.dataset.id == activeTab) {
-      console.log("hit");
-      e.target.disabled = false;
-    }
+    e.target.dataset.id == activeTab ? (e.target.disabled = false) : null;
   };
 
   const handleTitleChange = useCallback((e) => {
-    console.log(e.target.value);
-
     dispatch({
       func: "CHANGE_TITLE",
       title: e.target.value,
@@ -47,11 +42,9 @@ const Tabs = () => {
               }`}
               onClick={() => setActiveTab(tabIndex)}
             >
-              {console.log(activeTab)}
               <input
-                type="text"
                 className="tab-title-input"
-                placeholder={tabTitle.title}
+                placeholder={`Tab ${tabIndex + 1}`}
                 aria-label="tab title input"
                 maxLength="200"
                 disabled={activeTab == tabIndex ? false : true}
