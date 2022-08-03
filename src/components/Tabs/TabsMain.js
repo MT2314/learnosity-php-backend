@@ -28,7 +28,6 @@ export const LayoutContext = createContext();
 
 //layout provider wraps the tab component to access reducer
 export const LayoutProvider = ({ children, setProp, layoutState }) => {
-
   const [state, dispatch] = useReducer(
     produce((draft, action) => {
       switch (action.func) {
@@ -51,6 +50,10 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
         case "DELETE_COMPONENT":
           draft[action.tabIndex].components.splice(action.componentIndex, 1);
           break;
+        case "CHANGE_TITLE":
+          console.log("title changed");
+          console.log(action.title);
+          break;
         default:
           break;
       }
@@ -59,8 +62,9 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   );
 
   useEffect(() => {
-    setProp({ layoutState: state})
-  }, [ state ])
+    console.log("state", state);
+    setProp({ layoutState: state });
+  }, [state]);
 
   return (
     <LayoutContext.Provider value={[state, dispatch]}>
@@ -72,20 +76,16 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
 //state of the active tab
 export const TabContext = createContext();
 
-const TabsMain = ({ layoutState = [], setProp = () => {},  }) => {
-  
+const TabsMain = ({ layoutState = [], setProp = () => {} }) => {
   const [activeTab, setActiveTab] = useState(0);
-  
-  
+
   return (
-    <LayoutProvider layoutState= {layoutState} setProp={setProp}>
+    <LayoutProvider layoutState={layoutState} setProp={setProp}>
       <TabContext.Provider value={[activeTab, setActiveTab]}>
-        <TabsWidget/>
+        <TabsWidget />
       </TabContext.Provider>
     </LayoutProvider>
   );
 };
 
 export default TabsMain;
-
-

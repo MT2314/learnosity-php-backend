@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { TabContext, LayoutContext } from "../TabsMain";
 import Tab from "./Tab";
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
+
+  const [saveText, setSaveText] = useState("");
 
   const test = (e) => {
     e.stopPropagation();
@@ -13,6 +15,14 @@ const Tabs = () => {
       console.log(typeof e.target.dataset.id);
       console.log("dataid:", e.target.dataset.id);
       console.log("activeTab:", activeTab);
+      e.target.disabled = false;
+
+      dispatch({
+        func: "CHANGE_TITLE",
+        title: saveText,
+        // id: state.length + 1,
+        // title: `tab ${state.length + 1}`,
+      });
     } else {
       console.log("fail");
     }
@@ -20,6 +30,18 @@ const Tabs = () => {
 
   return (
     <div className="tab-container">
+      <button
+        onClick={() =>
+          dispatch({
+            func: "ADD_TAB",
+            id: state.length + 1,
+            title: `tab ${state.length + 1}`,
+          })
+        }
+      >
+        add tab
+      </button>
+
       <div className="tab-titles">
         {state.map((tabTitle, tabIndex) => {
           return (
@@ -30,9 +52,15 @@ const Tabs = () => {
               onClick={() => setActiveTab(tabIndex)}
             >
               {console.log(activeTab)}
-              <span onClick={(e) => test(e)} data-id={tabIndex}>
-                {tabTitle.title}
-              </span>
+              <input
+                type="text"
+                placeholder={tabTitle.title}
+                aria-label="testing"
+                disabled={activeTab == tabIndex ? false : true}
+                onClick={(e) => test(e)}
+                onChange={(e) => setSaveText(e.target.value)}
+                data-id={tabIndex}
+              />
             </button>
           );
         })}
