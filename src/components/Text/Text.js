@@ -12,6 +12,10 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
     setShowEditor(true);
   };
 
+  const focusFunction = () => {
+    console.log(document.activeElement)
+  }
+
   return (
     <>
       {(!showEditor && body === null) ||
@@ -23,6 +27,10 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
           }}
           className="mainContainer"
           data-testid="text-component"
+          tabIndex="0"
+          onKeyDown={() => {
+            setShowEditor(true);
+          }}
         >
           <DefaultText />
         </div>
