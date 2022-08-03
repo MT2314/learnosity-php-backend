@@ -63,7 +63,13 @@ const Tabs = () => {
         })}
       </div>
       {state.map((tab, tabIndex) => {
-        return <Tab tabIndex={tabIndex} tab={tab} />;
+        return (
+          <>
+            {activeTab === tabIndex ? (
+              <Tab tabIndex={tabIndex} tab={tab} />
+            ) : null}
+          </>
+        );
       })}
     </div>
   );
