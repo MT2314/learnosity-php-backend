@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
-import { Tooltip } from "../../../../theme/styledComponents/tooltip";
+import { Tooltip } from "@mui/material";
+
 import "../../styles/ListDropdownButton.scss";
 import icons from "../../assets/icons";
 

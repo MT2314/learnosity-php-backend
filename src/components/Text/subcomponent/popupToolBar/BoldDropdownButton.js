@@ -2,7 +2,7 @@ import React from "react";
 import "react-quill/dist/quill.snow.css";
 import "../../styles/BoldDropdownButton.scss";
 import { Card } from "@mui/material";
-import { Tooltip } from "../../../../theme/styledComponents/tooltip";
+import { Tooltip } from "@mui/material";
 import icons from "../../assets/icons";
 
 const BoldDropdownButton = ({ show }) => {

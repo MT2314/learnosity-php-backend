@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Divider } from "@mui/material/";
-import { Tooltip } from "../../../theme/styledComponents/tooltip";
+import { Tooltip } from "@mui/material";
+
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";

@@ -1,7 +1,8 @@
 import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
-import { Tooltip } from "../../../../theme/styledComponents/tooltip";
+import { Tooltip } from "@mui/material";
+
 import "../../styles/AlignDropdownButton.scss";
 import icons from "../../assets/icons";
 
