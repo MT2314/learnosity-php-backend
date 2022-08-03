@@ -8,14 +8,6 @@ export const defaultProps = { body: null };
 const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
   const [showEditor, setShowEditor] = useState(false);
 
-  const handleOnClick = () => {
-    setShowEditor(true);
-  };
-
-  const focusFunction = () => {
-    console.log(document.activeElement)
-  }
-
   return (
     <>
       {(!showEditor && body === null) ||
@@ -23,11 +15,11 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
       (!showEditor && body.ops[0].insert === "") ? (
         <div
           onClick={() => {
-            handleOnClick();
+            setShowEditor(true);
           }}
           className="mainContainer"
           data-testid="text-component"
-          tabIndex="0"
+          tabIndex={0}
           onKeyDown={() => {
             setShowEditor(true);
           }}

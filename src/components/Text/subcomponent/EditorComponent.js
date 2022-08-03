@@ -216,7 +216,7 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
   return (
     <div
       ref={textRef}
-      onClick={() => setEditorIsFocus(true)}
+      onFocus={() => setEditorIsFocus(true)}
       className="text-editor"
       id={`toolbar-${toolbarId}`}
       data-testid="text-editor-component"
@@ -240,12 +240,12 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
         className="quillEditor"
         onChange={handleDataChange}
         defaultValue={body}
-        onKeyDown={(ev) => {
-          if (ev.key === 'Escape') {
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') {
             setEditorIsFocus(false);
             setShowEditor(false);
-            ev.preventDefault();
-            ev.target.blur();
+            e.preventDefault();
+            e.target.blur();
             return false;
           }
         }}
