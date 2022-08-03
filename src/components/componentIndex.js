@@ -110,7 +110,8 @@ const componentIndex = {
     defaultProps: testTabDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
-    dndLabel: tabsDndLabel
+    dndLabel: tabsDndLabel, 
+    componentIcon: tabsComponentIcon
   },
 };
 
