@@ -1,8 +1,8 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Tab from "../components/Tab/Tab";
+import TabsMain from "../components/Tabs/TabsMain";
 
 let container = null;
 beforeEach(() => {
@@ -31,7 +31,7 @@ describe("Tab", () => {
   const numOfTabs = testTabs.tabs.filter(tab => tab.id).length
 
   xit("renders tabs with given data", () => {
-    render(<Tab tabs={testTabs.tabs}/>)
+    render(<TabsMain tabs={testTabs.tabs}/>)
 
     expect(screen.getByTestId("tab")).toBeInTheDocument();
     expect(screen.getByTestId("add-For")).toBeInTheDocument(); 
@@ -39,7 +39,7 @@ describe("Tab", () => {
   })
   
   xit("has a minimum of 2 tabs on render", () => {
-    render(<Tab tabs={testTabs.tabs}/>)
+    render(<TabsMain tabs={testTabs.tabs}/>)
 
     expect(testTabs.tabs).not.toHaveLength(3)
     expect(testTabs.tabs).not.toHaveLength(1)
@@ -47,7 +47,7 @@ describe("Tab", () => {
   })
 
   xit("renders add tab button", () => {
-    render(<Tab tabs={testTabs.tabs}/>)
+    render(<TabsMain tabs={testTabs.tabs}/>)
     
     expect(screen.getByTestId("add-tab-btn")).toBeInTheDocument()
   })
@@ -63,7 +63,7 @@ describe("Tab", () => {
         },
       ]
     }
-    render(<Tab tabs={addingTabArr.tabs} setProp={(stateUpdate) => addingTabArr = {...addingTabArr, ...stateUpdate}}/>)
+    render(<TabsMain tabs={addingTabArr.tabs} setProp={(stateUpdate) => addingTabArr = {...addingTabArr, ...stateUpdate}}/>)
 
     const addTabBtn = screen.getByRole("button", {name: /add tab/i});
 
@@ -88,7 +88,7 @@ describe("Tab", () => {
       ]
     }
 
-    render(<Tab tabs={addingTabArr.tabs} setProp={mockFn}/>)
+    render(<TabsMain tabs={addingTabArr.tabs} setProp={mockFn}/>)
 
     const formattedTextBtn = screen.getByRole("button", {name: /add formatted text/i})
     const imageBtn = screen.getByRole("button", {name: /add image/i})
