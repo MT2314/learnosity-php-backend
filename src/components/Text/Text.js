@@ -24,6 +24,7 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
   };
   const saasTheme = createTheme("DEFAULT");
   const textTheme = createPPTheme();
+
   return (
     <>
       <CssBaseline />

@@ -14,12 +14,10 @@
 
 .ql-editor.ql-blank {
   line-height: 24px;
-  min-height: 72px;
 }
 
 .quill.quillEditor {
   font-family: "Inter", sans-serif;
-  padding: 40px 104px;
   line-height: 24px;
   background-color: #fff;
 
@@ -154,7 +152,7 @@
   margin-left: 10px;
 
   &.disabled {
-    color: #89B1DF !important;
+    color: #89b1df !important;
     & > button {
       background: none;
       color: inherit;

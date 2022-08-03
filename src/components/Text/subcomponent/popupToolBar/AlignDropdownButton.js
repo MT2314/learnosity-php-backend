@@ -1,37 +1,21 @@
 import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
-import { Tooltip } from "@material-ui/core/";
+import { Tooltip } from "../../../../theme/styledComponents/tooltip";
 import "../../styles/AlignDropdownButton.scss";
 import icons from "../../assets/icons";
-// Config styles of MUI components
-import { makeStyles } from "@material-ui/core/styles";
 
-// Classes for styling modification. (Tooltip class)
-const useStyles = makeStyles((theme) => ({
-  tooltip: {
-    backgroundColor: "rgba(97, 97, 97, 0.9)",
-  },
-}));
 const AlignDropdownButton = ({
   show,
   activeDropDownItem,
   setActiveDropDownItem,
   setVisibleAlignIcon,
 }) => {
-  // Allow the use of materialUI styled component classes
-  let classes = useStyles();
-
   return (
     <>
       <Card className={show ? "align-dropdown show" : "align-dropdown hide"}>
         <span className="ql-formats">
-          <Tooltip
-            arrow
-            title="align left"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
+          <Tooltip arrow title="align left" placement="top">
             <button
               aria-label="left align"
               onClick={() => {
@@ -52,12 +36,7 @@ const AlignDropdownButton = ({
               {icons["align"]}
             </button>
           </Tooltip>
-          <Tooltip
-            arrow
-            title="centre text"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
+          <Tooltip arrow title="centre text" placement="top">
             <button
               aria-label="align center"
               className={
@@ -79,12 +58,7 @@ const AlignDropdownButton = ({
               {icons["center"]}
             </button>
           </Tooltip>
-          <Tooltip
-            arrow
-            title="align right"
-            placement="top"
-            classes={{ tooltip: classes.tooltip }}
-          >
+          <Tooltip arrow title="align right" placement="top">
             <button
               aria-label="right align"
               className={

@@ -1,21 +1,12 @@
 import React, { useState } from "react";
 import { Divider } from "@mui/material/";
-import { Tooltip } from "@material-ui/core/";
+import { Tooltip } from "../../../theme/styledComponents/tooltip";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
 import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
-// Config styles of MUI components
-import { makeStyles } from "@material-ui/core/styles";
-
-// Classes for styling modification. (Tooltip class)
-const useStyles = makeStyles((theme) => ({
-  tooltip: {
-    backgroundColor: "rgba(97, 97, 97, 0.9)",
-  },
-}));
 
 const CustomToolBar = ({ toolbarId, containerId }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
@@ -25,8 +16,6 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
-  // Allow the use of materialUI styled component classes
-  let classes = useStyles();
 
   const parentDiv = document.getElementById(containerId);
   if (parentDiv) {
@@ -54,12 +43,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   return (
     <div id={toolbarId} className="toolbarContainer">
       {/* bold dropdown starts */}
-      <Tooltip
-        arrow
-        title="font styles"
-        placement="top"
-        classes={{ tooltip: classes.tooltip }}
-      >
+      <Tooltip arrow title="font styles" placement="top">
         <button
           onClick={() => {
             setBoldVisibility(!boldVisibility);
@@ -89,12 +73,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       ></BoldDropdownButton>
 
       {/* formula btn */}
-      <Tooltip
-        arrow
-        title="equation"
-        placement="top"
-        classes={{ tooltip: classes.tooltip }}
-      >
+      <Tooltip arrow title="equation" placement="top">
         <button
           className={
             activeTopMenu === "math"
@@ -119,12 +98,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       </Tooltip>
 
       {/* alignment dropdown */}
-      <Tooltip
-        arrow
-        title="alignment"
-        placement="top"
-        classes={{ tooltip: classes.tooltip }}
-      >
+      <Tooltip arrow title="alignment" placement="top">
         <button
           onClick={() => {
             setAlignVisibility(!alignVisibility);
@@ -159,12 +133,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       />
 
       {/* bullets drowdown starts */}
-      <Tooltip
-        arrow
-        title="add list"
-        placement="top"
-        classes={{ tooltip: classes.tooltip }}
-      >
+      <Tooltip arrow title="add list" placement="top">
         <button
           onClick={() => {
             setListVisibility(!listVisibility);
@@ -195,12 +164,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       {/* link btn and divider */}
       <Divider orientation="vertical" />
       <HiddenQuillLinkButton />
-      <Tooltip
-        arrow
-        title="insert link"
-        placement="top"
-        classes={{ tooltip: classes.tooltip }}
-      >
+      <Tooltip arrow title="insert link" placement="top">
         <button
           aria-label="add link button"
           className="al-link"

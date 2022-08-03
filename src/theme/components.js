@@ -4,7 +4,7 @@ const components = {
   MuiCard: {
     styleOverrides: {
       root: {
-        boxShadow: "0px 0px 10px 0px #0000001A",
+        boxShadow: "0px 0px 0px 0px #0000001A",
       },
     },
   },

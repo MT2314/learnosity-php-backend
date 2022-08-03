@@ -12,9 +12,9 @@ export const Tooltip = styled(({ theme, className, ...props }) => (
     classes={{ popper: className }}
     style={{
       // * Background of each config icon
-      color: "white",
+      color: "#fff",
       // * Background of custom config
-      background: "white",
+      background: "#fff",
     }}
   />
 ))``;
