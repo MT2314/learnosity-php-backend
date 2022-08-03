@@ -11,7 +11,7 @@ const Tabs = () => {
   return (
     <div className="tab-container">
       <div className="tab-titles">
-        {state.map((tab, tabIndex) => {
+        {state.map((tabTitle, tabIndex) => {
           return (
             <button
               className={`tab-title ${
@@ -19,7 +19,7 @@ const Tabs = () => {
               }`}
               onClick={() => setActiveTab(tabIndex)}
             >
-            {tab.title}
+            {tabTitle.title}
             </button>
           );
         })}
