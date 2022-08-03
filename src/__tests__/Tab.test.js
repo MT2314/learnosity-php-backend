@@ -44,23 +44,29 @@ describe("Tabs", () => {
     )
 
     await waitFor(() => {
-      expect(screen.getByRole('button', {name: /polkaroo/ig})).toBeInTheDocument()
+      expect(screen.getByRole('button', {name:/polkaroo/ig})).toBeInTheDocument()
     })
     
     await waitFor(() => {
       expect(screen.getByRole('button', {name:/juno/ig})).toBeInTheDocument()
     })
   })
-  
-  // xit("has a minimum of 2 tabs on render", () => {
-  //   render(<TabsMain tabs={layoutState}/>)
 
-  //   expect(layoutState).not.toHaveLength(3)
-  //   expect(layoutState).not.toHaveLength(1)
-  //   expect(layoutState).toHaveLength(numOfTabs)
-  // })
+  it('renders the tab component with placeholder text if no components are added tab', async () => {
+    render(
+      <LayoutProvider layoutState={TestLayout} setProp={() => { console.log("set props function")}}>
+        <ActiveTabProvider>
+          <Tabs/>
+        </ActiveTabProvider>
+      </LayoutProvider>
+    )
+    
+    await waitFor(() => {
+      expect(screen.getByText(/add a component here/ig)).toBeInTheDocument()
+    })
 
-  
+  })
+
   xit("renders a new tab when add tab btn is pressed", () => { 
     let addingTabArr = {
       tabs: [
