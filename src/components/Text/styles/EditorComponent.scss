@@ -87,7 +87,10 @@
   }
 }
 
-.ql-tooltip.ql-editing > input[type="text"] {
+.ql-tooltip.ql-editing > input {
+  width: 170px;
+  height: 26px;
+  padding: 3px 5px;
   border: none;
 
   &.input-error {
@@ -154,7 +157,7 @@
   margin-left: 10px;
 
   &.disabled {
-    color: #89B1DF !important;
+    color: #89b1df !important;
     & > button {
       background: none;
       color: inherit;
