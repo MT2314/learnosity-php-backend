@@ -161,8 +161,9 @@ const ExtendLinkFunctionality = (id) => {
     if (linkTooltipElement.getAttribute("data-mode") === "link") {
       if (linkTooltipInput?.value.match(linkValidityRegex)) {
         if (
-          linkTooltipInput.value.indexOf("http://") === -1 ||
-          linkTooltipInput.value.indexOf("https://") === -1
+          linkTooltipInput.value.indexOf("http://") === -1
+            ? linkTooltipInput.value.indexOf("https://") === -1
+            : linkTooltipInput.value.indexOf("https://") !== -1
         ) {
           linkTooltipInput.value = linkTooltipInput.value.replace(
             "www.",
