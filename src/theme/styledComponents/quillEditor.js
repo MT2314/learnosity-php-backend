@@ -8,7 +8,7 @@ export const ReactQuillContainer = styled("div")(({ theme }) => ({
   },
   "& .ql-editor": {
     minHeight: "96px",
-    padding: "0px",
+    padding: "0 15px",
     border: `none`,
     borderRadius: `none`,
     boxShadow: `none`,
