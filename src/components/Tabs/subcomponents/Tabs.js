@@ -3,10 +3,13 @@ import { TabContext, LayoutContext } from "../TabsMain";
 import Tab from "./Tab";
 
 const Tabs = () => {
-  
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
+  const test = (e) => {
+    e.stopPropagation();
+    console.log(e.target);
+  };
 
   return (
     <div className="tab-container">
@@ -19,7 +22,8 @@ const Tabs = () => {
               }`}
               onClick={() => setActiveTab(tabIndex)}
             >
-            {tabTitle.title}
+              {console.log(activeTab)}
+              <span onClick={(e) => test(e)}>{tabTitle.title}</span>
             </button>
           );
         })}
