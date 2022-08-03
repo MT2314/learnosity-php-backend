@@ -31,14 +31,14 @@ const Tabs = () => {
           dispatch({
             func: "ADD_TAB",
             id: state.length,
-            title: `tab ${state.length}`,
+            title: `Tab ${state.length + 1}`,
           })
         }
       >
         add tab
       </button>
 
-      <div className="tab-titles">
+      <div className="tab-title-wrapper">
         {state.map((tabTitle, tabIndex) => {
           return (
             <button
@@ -52,7 +52,8 @@ const Tabs = () => {
                 type="text"
                 className="tab-title-input"
                 placeholder={tabTitle.title}
-                aria-label="testing"
+                aria-label="tab title input"
+                maxLength="200"
                 disabled={activeTab == tabIndex ? false : true}
                 onClick={(e) => enableTitleChange(e)}
                 onChange={handleTitleChange}
