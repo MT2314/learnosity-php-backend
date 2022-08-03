@@ -9,11 +9,8 @@ const Tabs = () => {
   const enableTitleChange = (e) => {
     e.stopPropagation();
     if (e.target.dataset.id == activeTab) {
-      // console.log("dataid:", e.target.dataset.id);
-      // console.log("activeTab:", activeTab);
+      console.log("hit");
       e.target.disabled = false;
-    } else {
-      console.log("fail");
     }
   };
 

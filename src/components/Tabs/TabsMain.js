@@ -52,11 +52,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           draft[action.tabIndex].components.splice(action.componentIndex, 1);
           break;
         case "CHANGED_TITLE":
-          console.log("action:", action);
-          console.log("draft:", draft);
-
-          console.log("layoutState", layoutState);
-
           const todo = draft.find((todo) => todo.id == action.id);
           console.log(todo);
           todo.title = action.title;
