@@ -8,7 +8,14 @@ const Tabs = () => {
 
   const test = (e) => {
     e.stopPropagation();
-    console.log(e.target);
+    if (e.target.dataset.id == activeTab) {
+      console.log(e.target);
+      console.log(typeof e.target.dataset.id);
+      console.log("dataid:", e.target.dataset.id);
+      console.log("activeTab:", activeTab);
+    } else {
+      console.log("fail");
+    }
   };
 
   return (
@@ -23,7 +30,9 @@ const Tabs = () => {
               onClick={() => setActiveTab(tabIndex)}
             >
               {console.log(activeTab)}
-              <span onClick={(e) => test(e)}>{tabTitle.title}</span>
+              <span onClick={(e) => test(e)} data-id={tabIndex}>
+                {tabTitle.title}
+              </span>
             </button>
           );
         })}
