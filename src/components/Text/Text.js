@@ -22,7 +22,6 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
 
   //* Creating theme
   const textTheme = createPPTheme();
-  console.log(textTheme);
 
   return (
     <>
