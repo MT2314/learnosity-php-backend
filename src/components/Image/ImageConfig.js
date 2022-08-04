@@ -4,7 +4,7 @@ import ImageUploader from "./ImageUploader";
 import EditPanelIcon from "../EditPanelIcon";
 import styles from "./styles/ImageConfig.module.scss";
 
-import {NativeSelect} from "@mui/material";
+import { NativeSelect } from "@mui/material";
 import { ImageOutlined } from "@mui/icons-material/";
 
 // Component will be wrapped with something that handles which component is selected
@@ -12,7 +12,6 @@ function ImageConfig({
   componentState = {},
   setState = () => console.error("Setter function not passed in"),
 }) {
-
   const { alt = "", longDesc = "", imgLink } = componentState;
 
   const altTextCounter = alt.length + "/200";
@@ -20,6 +19,11 @@ function ImageConfig({
   const handleSubmit = (e) => {
     e.preventDefault();
     setState({ imgLink });
+    if (!componentState.uploadedImg) {
+      alert(
+        "No image has been uploaded. Please upload an image to the component"
+      );
+    }
   };
 
   return (
@@ -32,8 +36,8 @@ function ImageConfig({
         <div className={styles.imageConfigSection}>
           <h2 className={styles.imageH2}>Alt Text</h2>
           <label className={styles.imageConfigLabel} htmlFor="image-alt">
-            This text will be used by screen readers, search engines, or when the image can't be loaded (Maximum 200
-            characters).
+            This text will be used by screen readers, search engines, or when
+            the image can't be loaded (Maximum 200 characters).
           </label>
           <textarea
             name="image-alt"
@@ -46,7 +50,11 @@ function ImageConfig({
             onChange={(e) => setState({ alt: e.target.value })}
             className={styles.imageConfigTextArea}
             placeholder="Type alt text here..."
-            onInvalid={(e) => e.target.setCustomValidity("Alt text is required for all uploaded images.")}
+            onInvalid={(e) =>
+              e.target.setCustomValidity(
+                "Alt text is required for all uploaded images."
+              )
+            }
             onInput={(e) => e.target.setCustomValidity("")}
           ></textarea>
           <span className={styles.altCount}>{altTextCounter || 200}</span>
@@ -54,7 +62,8 @@ function ImageConfig({
         <div className={styles.imageConfigSection}>
           <h2 className={styles.imageH2}>Long Description</h2>
           <label className={styles.imageConfigLabel} htmlFor="long-desc">
-            This text will be used by screen readers, search engines, or when the image can't be loaded.
+            This text will be used by screen readers, search engines, or when
+            the image can't be loaded.
           </label>
           <textarea
             name="long-desc"
@@ -103,7 +112,9 @@ function ImageConfig({
             className={styles.urlInput}
             onChange={(e) => setState({ imgLink: e.target.value })}
             onInvalid={(e) =>
-              e.target.setCustomValidity("Invalid URL.  Please make sure URL begins with 'http://' or 'https://")
+              e.target.setCustomValidity(
+                "Invalid URL.  Please make sure URL begins with 'http://' or 'https://"
+              )
             }
             onInput={(e) => e.target.setCustomValidity("")}
           />

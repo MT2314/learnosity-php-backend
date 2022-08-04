@@ -14,12 +14,10 @@
 
 .ql-editor.ql-blank {
   line-height: 24px;
-  min-height: 72px;
 }
 
 .quill.quillEditor {
   font-family: "Inter", sans-serif;
-  padding: 40px 104px;
   line-height: 24px;
   background-color: #fff;
 
@@ -87,7 +85,10 @@
   }
 }
 
-.ql-tooltip.ql-editing > input[type="text"] {
+.ql-tooltip.ql-editing > input {
+  width: 170px;
+  height: 26px;
+  padding: 3px 5px;
   border: none;
 
   &.input-error {
@@ -154,7 +155,7 @@
   margin-left: 10px;
 
   &.disabled {
-    color: #89B1DF !important;
+    color: #89b1df !important;
     & > button {
       background: none;
       color: inherit;

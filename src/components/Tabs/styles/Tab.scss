@@ -1,68 +1,106 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
 
 .tab-container {
   box-sizing: border-box;
-  border-color: #bdbdbd;
-  border-style: solid;
-  border-width: 0px 1px 1px 1px;
-  border-radius: 10px 10px 0px 0px;
 
   //TYPOGRAPHY
   font-family: "Inter", sans-serif;
   letter-spacing: 0.15px;
   line-height: 25px;
   color: #636363;
-  
-  .tab-titles {
+
+  .tab-title-wrapper {
     display: flex;
     height: 40px;
-  }
-  
-  //tab title styles
-  .tab-title {
-    background-color: #F5F5F5;
-    border: 1px solid #bdbdbd;
-    border-radius: 10px 10px 0px 0px;
-    width: 484px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    color: #636363;
-    font-weight: 500;
-  }
-  //on click active tab styles apply
-  .active-tab{
-    background-color: #fff;
-    color: #232323;
-    border-bottom: 0px;
+
+    //tab title styles
+    .tab-title {
+      background-color: #f5f5f5;
+      border: 1px solid #bdbdbd;
+      border-radius: 10px 10px 0px 0px;
+      width: 484px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      color: #636363;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .tab-title-input {
+      border: none;
+      font-size: 18px;
+
+      &::placeholder {
+        text-align: center;
+      }
+
+      &::placeholder-shown {
+        text-align: left;
+      }
+    }
+
+    //on click active tab styles apply
+    .active-tab {
+      background-color: #fff;
+      color: #232323;
+      border-bottom: 0px;
+
+      .tab-title-input {
+        width: fit-content;
+
+        &::placeholder {
+          color: #232323;
+          text-align: center;
+        }
+
+        &::placeholder-shown {
+          text-align: left;
+        }
+
+        &:focus {
+          border: none;
+          outline: none;
+
+          &::placeholder {
+            color: rgba(0, 0, 0, 0.12);
+          }
+        }
+      }
+    }
   }
 
   //tab placeholder styles
-  .tab-body{
-    margin: 10px;
+  .tab-body {
+    padding: 10px;
+    border: 1px solid #bdbdbd;
+    border-top: none;
   }
 
-  .placeholder-container{
+  .placeholder-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 150px;
-    border: 3px dashed #1565C0;
-    h3{
+    border: 3px dashed #1565c0;
+
+    h3 {
       font-weight: 400;
       font-size: 24px;
       margin: 0;
     }
-    p{
+
+    p {
       font: 14px;
       margin-bottom: 0;
       font-weight: 500;
     }
-    p:last-child{
+
+    p:last-child {
       margin-top: 0;
-      color: #1565C0;
+      color: #1565c0;
     }
   }
 }
