@@ -10,7 +10,6 @@ phases:
       - echo Installing dependencies...
       - npm ci 
       - echo Running tests
-      - npm run test:$TEST_ENV
 
   build:
     commands:
