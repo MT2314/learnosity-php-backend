@@ -44,11 +44,11 @@ describe("Tabs", () => {
     )
 
     await waitFor(() => {
-      expect(screen.getByRole('button', {name:/polkaroo/ig})).toBeInTheDocument()
+      expect(screen.getByPlaceholderText(/polkaroo/ig)).toBeInTheDocument()
     })
     
     await waitFor(() => {
-      expect(screen.getByRole('button', {name:/juno/ig})).toBeInTheDocument()
+      expect(screen.getByPlaceholderText(/juno/ig)).toBeInTheDocument()
     })
   })
 
@@ -64,7 +64,22 @@ describe("Tabs", () => {
     await waitFor(() => {
       expect(screen.getByText(/add a component here/ig)).toBeInTheDocument()
     })
+  })
 
+  it('Active tab updates on click', async () => {
+    render(
+      <LayoutProvider layoutState={TestLayout} setProp={() => { console.log("set props function")}}>
+        <ActiveTabProvider>
+          <Tabs/>
+        </ActiveTabProvider>
+      </LayoutProvider>
+    )
+    
+    //get the btns with active tab
+    const tabBtn = screen.getByPlaceholderText(/polkaroo/ig)
+    //fire event
+    fireEvent.click(tabBtn);
+    //expect the active tab to be updated
   })
 })
 

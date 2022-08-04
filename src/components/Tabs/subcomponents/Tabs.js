@@ -3,6 +3,7 @@ import { TabContext, LayoutContext } from "../TabsMain";
 import Tab from "./Tab";
 
 const Tabs = () => {
+  
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
