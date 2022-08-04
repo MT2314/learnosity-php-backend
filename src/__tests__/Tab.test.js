@@ -1,8 +1,8 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {  render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import TabsMain, { ActiveTabProvider } from "../components/Tabs/TabsMain";
+import { ActiveTabProvider } from "../components/Tabs/TabsMain";
 import { LayoutProvider } from "../components/Tabs/TabsMain"
 import Tabs from "../components/Tabs/subcomponents/Tabs";
 
@@ -54,7 +54,7 @@ describe("Tabs", () => {
 
   it('renders the tab component with placeholder text if no components are added tab', async () => {
     render(
-      <LayoutProvider layoutState={TestLayout} setProp={() => { console.log("set props function")}}>
+      <LayoutProvider layoutState={TestLayout} setProp={() => {}}>
         <ActiveTabProvider>
           <Tabs/>
         </ActiveTabProvider>
@@ -66,21 +66,6 @@ describe("Tabs", () => {
     })
   })
 
-  it('Active tab updates on click', async () => {
-    render(
-      <LayoutProvider layoutState={TestLayout} setProp={() => { console.log("set props function")}}>
-        <ActiveTabProvider>
-          <Tabs/>
-        </ActiveTabProvider>
-      </LayoutProvider>
-    )
-    
-    //get the btns with active tab
-    const tabBtn = screen.getByPlaceholderText(/polkaroo/ig)
-    //fire event
-    fireEvent.click(tabBtn);
-    //expect the active tab to be updated
-  })
 })
 
 
