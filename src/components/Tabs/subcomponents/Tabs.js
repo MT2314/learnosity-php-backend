@@ -23,7 +23,7 @@ const Tabs = () => {
     });
   }, []);
 
-  const test = (e) => {
+  const handleTitleBlur = (e) => {
     console.log("blur", e.target);
     e.target.style.overflow = "hidden";
     e.target.scrollTo(0, 0);
@@ -67,7 +67,7 @@ const Tabs = () => {
                   WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
                   // WebkitLineClamp: 2,
                 }}
-                onBlur={test}
+                onBlur={handleTitleBlur}
               />
             </button>
           );
