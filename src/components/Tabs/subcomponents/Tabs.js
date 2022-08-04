@@ -21,7 +21,7 @@ const Tabs = () => {
 
   return (
     <div className="tab-container">
-      {/* <button
+      <button
         onClick={() =>
           dispatch({
             func: "ADD_TAB",
@@ -31,7 +31,7 @@ const Tabs = () => {
         }
       >
         add tab
-      </button> */}
+      </button>
 
       <div className="tab-title-wrapper">
         {state.map((tabTitle, tabIndex) => {
@@ -42,7 +42,7 @@ const Tabs = () => {
               }`}
               onClick={() => setActiveTab(tabIndex)}
             >
-              <input
+              <textarea
                 className="tab-title-input"
                 placeholder={`Tab ${tabIndex + 1}`}
                 aria-label="tab title input"
@@ -51,6 +51,17 @@ const Tabs = () => {
                 onClick={(e) => enableTitleChange(e)}
                 onChange={handleTitleChange}
                 data-id={tabIndex}
+                rows="2"
+                wrap="hard"
+                style={{
+                  overflow: "hidden",
+                  resize: "none",
+                  // height: "100%",
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical",
+                  WebkitLineClamp: 2,
+                }}
               />
             </button>
           );
