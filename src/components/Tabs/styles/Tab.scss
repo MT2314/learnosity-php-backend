@@ -30,10 +30,15 @@
     }
 
     .tab-title-input {
+      font-family: "Inter", sans-serif;
       border: none;
       font-size: 18px;
       width: 100%;
       text-align: center;
+      resize: none;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
 
       &::-webkit-scrollbar {
         width: 10px;

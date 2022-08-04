@@ -64,11 +64,6 @@ const Tabs = () => {
                 rows="2"
                 wrap="hard"
                 style={{
-                  // overflow: "hidden",
-                  resize: "none",
-                  textOverflow: "ellipsis",
-                  display: "-webkit-box",
-                  WebkitBoxOrient: "vertical",
                   WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
                   // WebkitLineClamp: 2,
                 }}
