@@ -3,6 +3,7 @@ import { TabContext, LayoutContext } from "../TabsMain";
 import Tab from "./Tab";
 
 const Tabs = () => {
+  
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -46,7 +47,7 @@ const Tabs = () => {
       <div className="tab-title-wrapper">
         {state.map((tabTitle, tabIndex) => {
           return (
-            <button
+            <button key={`tab-title-${tabIndex}`}
               className={`tab-title ${
                 activeTab === tabIndex ? "active-tab" : ""
               }`}

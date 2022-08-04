@@ -76,14 +76,27 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
 //state of the active tab
 export const TabContext = createContext();
 
-const TabsMain = ({ layoutState = [], setProp = () => {} }) => {
-  const [activeTab, setActiveTab] = useState(0);
+export const ActiveTabProvider = ({ children }) => {
 
+  const [ activeTab, setActiveTab ] = useState(0);
+
+  console.log(activeTab, setActiveTab)
+
+  return(
+    <TabContext.Provider value={[activeTab, setActiveTab]}>
+      {children}
+    </TabContext.Provider>
+  )
+}
+
+const TabsMain = ({ layoutState = [], setProp = () => {},  }) => {
+  
+  
   return (
-    <LayoutProvider layoutState={layoutState} setProp={setProp}>
-      <TabContext.Provider value={[activeTab, setActiveTab]}>
-        <Tabs />
-      </TabContext.Provider>
+    <LayoutProvider layoutState= {layoutState} setProp={setProp}>
+      <ActiveTabProvider>
+        <Tabs/>
+      </ActiveTabProvider>
     </LayoutProvider>
   );
 };

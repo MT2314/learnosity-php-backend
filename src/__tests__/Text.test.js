@@ -16,7 +16,7 @@ afterEach(() => {
   container = null;
 });
 
-describe("<Text/>", () => {
+xdescribe("<Text/>", () => {
   test("Text component renders to the page", () => {
     render(<Text />);
 
