@@ -30,10 +30,10 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText }) => {
   //track clicks outside text div
   const textRef = useRef(null);
 
-  document
+  textRef.current
     ?.getElementsByClassName("ql-editor")[0]
     ?.removeAttribute("aria-label");
-  document
+  textRef.current
     ?.getElementsByClassName("ql-blank")[0]
     ?.setAttribute("aria-label", "Hit Escape to exit the Text Component.");
 
