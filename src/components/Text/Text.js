@@ -21,10 +21,8 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
           className="mainContainer"
           data-testid="text-component"
           tabIndex="0"
-          role="button"
-          aria-label={"Hit Enter to edit the Text Component. Hit Escape to exit."}
-          onKeyDown={(e) => {
-            e.key === "Enter" && setShowEditor(true);
+          onFocus={() => {
+            setShowEditor(true);
           }}
         >
           <DefaultText />
@@ -37,7 +35,7 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
           focusOutofText={focusOutofText.current}
         />
       )}
-      <div tabIndex="-1" ref={focusOutofText} />
+      <div className="sr-only" tabIndex="-1" ref={focusOutofText}>Exit Text Component</div>
     </>
   );
 };
