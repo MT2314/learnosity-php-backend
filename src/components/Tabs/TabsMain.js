@@ -53,7 +53,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           break;
         case "CHANGE_TITLE":
           const tab = draft.find((tab) => tab.id == action.id);
-          console.log(tab);
           tab.title = action.title;
           break;
         default:
@@ -64,7 +63,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   );
 
   useEffect(() => {
-    console.log("state", state);
     setProp({ layoutState: state });
   }, [state]);
 
