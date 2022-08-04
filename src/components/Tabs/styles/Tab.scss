@@ -33,14 +33,7 @@
       border: none;
       font-size: 18px;
       width: 100%;
-
-      &::placeholder {
-        text-align: center;
-      }
-
-      &::placeholder-shown {
-        text-align: left;
-      }
+      text-align: center;
     }
 
     //on click active tab styles apply
@@ -54,11 +47,6 @@
 
         &::placeholder {
           color: #232323;
-          text-align: center;
-        }
-
-        &::placeholder-shown {
-          text-align: left;
         }
 
         &:focus {

@@ -21,7 +21,7 @@ const Tabs = () => {
 
   return (
     <div className="tab-container">
-      <button
+      {/* <button
         onClick={() =>
           dispatch({
             func: "ADD_TAB",
@@ -31,7 +31,7 @@ const Tabs = () => {
         }
       >
         add tab
-      </button>
+      </button> */}
 
       <div className="tab-title-wrapper">
         {state.map((tabTitle, tabIndex) => {
