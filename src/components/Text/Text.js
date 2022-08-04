@@ -6,12 +6,8 @@ import "./styles/Text.scss";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
-//* Theming styles
-//? SaaS Imports
-import createTheme from "saas/createTheme";
-
 //? PP Imports
-import createPPTheme from "../../theme/index";
+import createMFTheme from "../../theme/index";
 import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
 
 export const defaultProps = { body: null };
@@ -19,43 +15,43 @@ export const defaultProps = { body: null };
 const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
   const [showEditor, setShowEditor] = useState(false);
   const focusOutofText = useRef(null);
-  const saasTheme = createTheme("DEFAULT");
-  const textTheme = createPPTheme();
+
+  //* Creating theme
+  const textTheme = createMFTheme();
 
   return (
     <>
       <CssBaseline />
-      <ThemeProvider theme={saasTheme}>
-        <ThemeProvider theme={textTheme}>
-          <ReactQuillContainer>
-            {(!showEditor && body === null) ||
-              (!showEditor && !body.ops) ||
-              (!showEditor && body.ops[0].insert === "") ? (
-              <div
-                onClick={() => {
-                  setShowEditor(true);
-                }}
-                className="mainContainer"
-                data-testid="text-component"
-                tabIndex="0"
-                onFocus={() => {
-                  setShowEditor(true);
-                }}
-
-              >
-                <DefaultText />
-              </div>
-            ) : (
-              <EditorComponent
-                body={body}
-                setProp={setProp}
-                setShowEditor={setShowEditor}
-                focusOutofText={focusOutofText.current}
-              />
-            )}
-            <div className="sr-only" tabIndex="-1" ref={focusOutofText}>Exit Text Component</div>
-          </ReactQuillContainer>
-        </ThemeProvider>
+      <ThemeProvider theme={textTheme}>
+        <ReactQuillContainer>
+          {(!showEditor && body === null) ||
+          (!showEditor && !body.ops) ||
+          (!showEditor && body.ops[0].insert === "") ? (
+            <div
+              onClick={() => {
+                setShowEditor(true);
+              }}
+              className="mainContainer"
+              data-testid="text-component"
+              tabIndex="0"
+              onFocus={() => {
+                setShowEditor(true);
+              }}
+            >
+              <DefaultText />
+            </div>
+          ) : (
+            <EditorComponent
+              body={body}
+              setProp={setProp}
+              setShowEditor={setShowEditor}
+              focusOutofText={focusOutofText.current}
+            />
+          )}
+          <div className="sr-only" tabIndex="-1" ref={focusOutofText}>
+            Exit Text Component
+          </div>
+        </ReactQuillContainer>
       </ThemeProvider>
     </>
   );
