@@ -10,6 +10,7 @@ const Tabs = () => {
     e.stopPropagation();
     if (e.target.dataset.id == activeTab) {
       e.target.disabled = false;
+      e.target.style.overflow = "unset";
       // e.target.style.WebkitLineClamp = "unset";
     }
   };
@@ -24,6 +25,7 @@ const Tabs = () => {
 
   const test = (e) => {
     console.log("blur", e.target);
+    e.target.style.overflow = "hidden";
     e.target.scrollTo(0, 0);
   };
 
