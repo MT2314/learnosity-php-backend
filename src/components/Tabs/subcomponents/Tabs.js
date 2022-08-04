@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useState, useRef } from "react";
+import React, { useContext, useCallback } from "react";
 import { TabContext, LayoutContext } from "../TabsMain";
 import Tab from "./Tab";
 
@@ -6,30 +6,11 @@ const Tabs = () => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
-  const titleRef = useRef([]);
-  // const [toggleEllipsis, setToggleEllipsis] = useState(true);
-
   const enableTitleChange = (e) => {
     e.stopPropagation();
     if (e.target.dataset.id == activeTab) {
-      console.log("active", e.target);
-      console.log("webkit line clamp", e.target.style.WebkitLineClamp);
       e.target.disabled = false;
-
-      for (let i = 0; i < titleRef.current.length; i++) {
-        if (e.target.dataset.id === titleRef.current[i].dataset.id) {
-          console.log("hit");
-          console.log(titleRef.current[i]);
-          titleRef.current[i].style.WebkitLineClamp = "unset";
-        } else {
-          console.log("false");
-          console.log(titleRef.current[i]);
-          titleRef.current[i].style.WebkitLineClamp = 2;
-        }
-      }
-
       // e.target.style.WebkitLineClamp = "unset";
-      // setToggleEllipsis(false);
     }
   };
 
@@ -40,6 +21,11 @@ const Tabs = () => {
       id: e.target.dataset.id,
     });
   }, []);
+
+  const test = (e) => {
+    console.log("blur", e.target);
+    e.target.scrollTo(0, 0);
+  };
 
   return (
     <div className="tab-container">
@@ -56,7 +42,6 @@ const Tabs = () => {
       </button>
 
       <div className="tab-title-wrapper">
-        {/* {console.log(toggleEllipsis)} */}
         {state.map((tabTitle, tabIndex) => {
           return (
             <button
@@ -82,10 +67,10 @@ const Tabs = () => {
                   textOverflow: "ellipsis",
                   display: "-webkit-box",
                   WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 2,
-                  // WebkitLineClamp: toggleEllipsis ? 2 : 0,
+                  WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
+                  // WebkitLineClamp: 2,
                 }}
-                ref={(el) => (titleRef.current[tabIndex] = el)}
+                onBlur={test}
               />
             </button>
           );
