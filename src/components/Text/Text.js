@@ -16,10 +16,6 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
   const [showEditor, setShowEditor] = useState(false);
   const focusOutofText = useRef(null);
 
-  const handleOnClick = () => {
-    setShowEditor(true);
-  };
-
   //* Creating theme
   const textTheme = createMFTheme();
 
