@@ -30,8 +30,12 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText }) => {
   //track clicks outside text div
   const textRef = useRef(null);
 
-  document?.getElementsByClassName("ql-editor")[0]?.removeAttribute('aria-label');
-  document?.getElementsByClassName("ql-blank")[0]?.setAttribute('aria-label', 'Hit Escape to exit the Text Component.');
+  document
+    ?.getElementsByClassName("ql-editor")[0]
+    ?.removeAttribute("aria-label");
+  document
+    ?.getElementsByClassName("ql-blank")[0]
+    ?.setAttribute("aria-label", "Hit Escape to exit the Text Component.");
 
   useOnClickOutside(textRef, () => {
     setEditorIsFocus(false);
@@ -41,6 +45,8 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText }) => {
   useEffect(() => {
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
+    // on render editor is focused
+    focusRef.current.focus();
     //on render toolbar appears
     setEditorIsFocus(true);
   }, []);
@@ -248,7 +254,7 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText }) => {
           setShowEditor(false);
         }}
         onKeyDown={(e) => {
-          if (e.key === 'Escape') {
+          if (e.key === "Escape") {
             setEditorIsFocus(false);
             setShowEditor(false);
             focusOutofText.focus();
