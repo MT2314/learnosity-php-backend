@@ -7,7 +7,7 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 
 //? PP Imports
-import createPPTheme from "../../theme/index";
+import createMFTheme from "../../theme/index";
 import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
 
 export const defaultProps = { body: null };
@@ -21,7 +21,7 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
   };
 
   //* Creating theme
-  const textTheme = createPPTheme();
+  const textTheme = createMFTheme();
 
   return (
     <>

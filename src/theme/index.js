@@ -9,7 +9,7 @@ import createTheme from "saas/createTheme";
 //? SaaS Imports
 const saasTheme = createTheme("DEFAULT");
 
-export const createPPTheme = () => {
+export const createMFTheme = () => {
   return createMuiTheme(
     {
       typography: typography,
@@ -19,4 +19,4 @@ export const createPPTheme = () => {
   );
 };
 
-export default createPPTheme;
+export default createMFTheme;
