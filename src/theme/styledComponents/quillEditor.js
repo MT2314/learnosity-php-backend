@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 export const ReactQuillContainer = styled("div")(({ theme }) => ({
   "& .ql-container": {
-    backgroundColor: theme.palette.primary.white,
+    backgroundColor: theme.palette.test.qa,
     padding: "40px 104px",
     minHeight: "100px",
   },
