@@ -14,7 +14,7 @@ import {
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 
-const EditorComponent = ({ body, setProp, setShowEditor }) => {
+const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText }) => {
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
@@ -29,6 +29,9 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
 
   //track clicks outside text div
   const textRef = useRef(null);
+
+  document?.getElementsByClassName("ql-editor")[0]?.removeAttribute('aria-label');
+  document?.getElementsByClassName("ql-blank")[0]?.setAttribute('aria-label', 'Hit Escape to exit the Text Component.');
 
   useOnClickOutside(textRef, () => {
     setEditorIsFocus(false);
@@ -216,7 +219,7 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
   return (
     <div
       ref={textRef}
-      onClick={() => setEditorIsFocus(true)}
+      onFocus={() => setEditorIsFocus(true)}
       className="text-editor"
       id={`toolbar-${toolbarId}`}
       data-testid="text-editor-component"
@@ -240,6 +243,17 @@ const EditorComponent = ({ body, setProp, setShowEditor }) => {
         className="quillEditor"
         onChange={handleDataChange}
         defaultValue={body}
+        onBlur={() => {
+          setEditorIsFocus(false);
+          setShowEditor(false);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') {
+            setEditorIsFocus(false);
+            setShowEditor(false);
+            focusOutofText.focus();
+          }
+        }}
       />
     </div>
   );

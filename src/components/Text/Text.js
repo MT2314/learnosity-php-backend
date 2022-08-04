@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
 import "./styles/Text.scss";
@@ -18,10 +18,7 @@ export const defaultProps = { body: null };
 
 const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
   const [showEditor, setShowEditor] = useState(false);
-
-  const handleOnClick = () => {
-    setShowEditor(true);
-  };
+  const focusOutofText = useRef(null);
   const saasTheme = createTheme("DEFAULT");
   const textTheme = createPPTheme();
 
@@ -32,14 +29,19 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
         <ThemeProvider theme={textTheme}>
           <ReactQuillContainer>
             {(!showEditor && body === null) ||
-            (!showEditor && !body.ops) ||
-            (!showEditor && body.ops[0].insert === "") ? (
+              (!showEditor && !body.ops) ||
+              (!showEditor && body.ops[0].insert === "") ? (
               <div
                 onClick={() => {
-                  handleOnClick();
+                  setShowEditor(true);
                 }}
                 className="mainContainer"
                 data-testid="text-component"
+                tabIndex="0"
+                onFocus={() => {
+                  setShowEditor(true);
+                }}
+
               >
                 <DefaultText />
               </div>
@@ -48,8 +50,10 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
                 body={body}
                 setProp={setProp}
                 setShowEditor={setShowEditor}
+                focusOutofText={focusOutofText.current}
               />
             )}
+            <div className="sr-only" tabIndex="-1" ref={focusOutofText}>Exit Text Component</div>
           </ReactQuillContainer>
         </ThemeProvider>
       </ThemeProvider>
