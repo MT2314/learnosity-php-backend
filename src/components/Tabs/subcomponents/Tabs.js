@@ -9,20 +9,25 @@ const Tabs = () => {
   const enableTitleChange = (e) => {
     e.stopPropagation();
     if (e.target.dataset.id == activeTab) {
-      console.log("hit");
       e.target.disabled = false;
+      e.target.style.overflow = "unset";
+      // e.target.style.WebkitLineClamp = "unset";
     }
   };
 
   const handleTitleChange = useCallback((e) => {
-    console.log(e.target.value);
-
     dispatch({
       func: "CHANGE_TITLE",
       title: e.target.value,
       id: e.target.dataset.id,
     });
   }, []);
+
+  const handleTitleBlur = (e) => {
+    console.log("blur", e.target);
+    e.target.style.overflow = "hidden";
+    e.target.scrollTo(0, 0);
+  };
 
   return (
     <div className="tab-container">
@@ -47,17 +52,22 @@ const Tabs = () => {
               }`}
               onClick={() => setActiveTab(tabIndex)}
             >
-              {console.log(activeTab)}
-              <input
-                type="text"
+              <textarea
                 className="tab-title-input"
-                placeholder={tabTitle.title}
+                placeholder={`Tab ${tabIndex + 1}`}
                 aria-label="tab title input"
                 maxLength="200"
                 disabled={activeTab == tabIndex ? false : true}
                 onClick={(e) => enableTitleChange(e)}
                 onChange={handleTitleChange}
                 data-id={tabIndex}
+                rows="2"
+                wrap="hard"
+                style={{
+                  WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
+                  // WebkitLineClamp: 2,
+                }}
+                onBlur={handleTitleBlur}
               />
             </button>
           );
