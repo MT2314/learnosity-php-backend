@@ -62,7 +62,7 @@ const Tabs = () => {
                 rows="2"
                 wrap="hard"
                 style={{
-                  overflow: "hidden",
+                  // overflow: "hidden",
                   resize: "none",
                   textOverflow: "ellipsis",
                   display: "-webkit-box",
