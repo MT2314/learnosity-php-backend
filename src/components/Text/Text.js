@@ -45,6 +45,7 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
               body={body}
               setProp={setProp}
               setShowEditor={setShowEditor}
+              showEditor={showEditor}
               focusOutofText={focusOutofText.current}
             />
           )}
