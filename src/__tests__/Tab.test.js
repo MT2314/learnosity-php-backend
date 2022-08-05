@@ -1,8 +1,10 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import {  render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import TabsMain from "../components/Tabs/TabsMain";
+import { ActiveTabProvider } from "../components/Tabs/TabsMain";
+import { LayoutProvider } from "../components/Tabs/TabsMain"
+import Tabs from "../components/Tabs/subcomponents/Tabs";
 
 let container = null;
 beforeEach(() => {
@@ -16,93 +18,54 @@ afterEach(() => {
   container = null;
 });
 
-describe("Tab", () => {
-  const testTabs = {
-    tabs: [
-      { id: 1, name: "Math", content: [] },
+describe("Tabs", () => {
+  const TestLayout = [
       {
-        id: 2,
-        name: "Geography",
-        content: [],
+        type: "TAB",
+        id: 0,
+        title: "Polkaroo",
+        components: [],
       },
-    ],
-  };
-  
-  const numOfTabs = testTabs.tabs.filter(tab => tab.id).length
+      {
+        type: "TAB",
+        id: 1,
+        title: "Juno",
+        components: [],
+      },
+    ]
 
-  xit("renders tabs with given data", () => {
-    render(<TabsMain tabs={testTabs.tabs}/>)
+  it("renders tab component with two tabs", async () => {
+    render(
+      <LayoutProvider layoutState={TestLayout} setProp={() => { console.log("set props function")}}>
+        <ActiveTabProvider>
+          <Tabs/>
+        </ActiveTabProvider>
+      </LayoutProvider>
+    )
 
-    expect(screen.getByTestId("tab")).toBeInTheDocument();
-    expect(screen.getByTestId("add-For")).toBeInTheDocument(); 
-    expect(screen.getByTestId("add-Ima")).toBeInTheDocument();
-  })
-  
-  xit("has a minimum of 2 tabs on render", () => {
-    render(<TabsMain tabs={testTabs.tabs}/>)
-
-    expect(testTabs.tabs).not.toHaveLength(3)
-    expect(testTabs.tabs).not.toHaveLength(1)
-    expect(testTabs.tabs).toHaveLength(numOfTabs)
-  })
-
-  xit("renders add tab button", () => {
-    render(<TabsMain tabs={testTabs.tabs}/>)
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText(/polkaroo/ig)).toBeInTheDocument()
+    })
     
-    expect(screen.getByTestId("add-tab-btn")).toBeInTheDocument()
-  })
-  
-  xit("renders a new tab when add tab btn is pressed", () => { 
-    let addingTabArr = {
-      tabs: [
-        { id: 1, name: "Math", content: [] },
-        {
-          id: 2,
-          name: "Geography",
-          content: [],
-        },
-      ]
-    }
-    render(<TabsMain tabs={addingTabArr.tabs} setProp={(stateUpdate) => addingTabArr = {...addingTabArr, ...stateUpdate}}/>)
-
-    const addTabBtn = screen.getByRole("button", {name: /add tab/i});
-
-    expect(addTabBtn).toBeInTheDocument()
-
-    fireEvent.click(addTabBtn)
-    expect(addingTabArr.tabs).toHaveLength(3)    
+    await waitFor(() => {
+      expect(screen.getByPlaceholderText(/juno/ig)).toBeInTheDocument()
+    })
   })
 
-  xit("formatted text and image btns are in the document and fire add component function", () => { 
-
-    const mockFn = jest.fn()
-
-    let addingTabArr = {
-      tabs: [
-        { id: 1, name: "Math", content: [] },
-        {
-          id: 2,
-          name: "Geography",
-          content: [],
-        },
-      ]
-    }
-
-    render(<TabsMain tabs={addingTabArr.tabs} setProp={mockFn}/>)
-
-    const formattedTextBtn = screen.getByRole("button", {name: /add formatted text/i})
-    const imageBtn = screen.getByRole("button", {name: /add image/i})
-
-    expect(formattedTextBtn).toBeInTheDocument()
-    expect(imageBtn).toBeInTheDocument()
+  it('renders the tab component with placeholder text if no components are added tab', async () => {
+    render(
+      <LayoutProvider layoutState={TestLayout} setProp={() => {}}>
+        <ActiveTabProvider>
+          <Tabs/>
+        </ActiveTabProvider>
+      </LayoutProvider>
+    )
     
-    fireEvent.click(formattedTextBtn)
-    expect(mockFn).toHaveBeenCalled()
-
-    fireEvent.click(imageBtn)
-    expect(mockFn).toHaveBeenCalled()
-
+    await waitFor(() => {
+      expect(screen.getByText(/add a component here/ig)).toBeInTheDocument()
+    })
   })
+
 })
 
 

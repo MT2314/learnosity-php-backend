@@ -53,7 +53,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           break;
         case "CHANGE_TITLE":
           const tab = draft.find((tab) => tab.id == action.id);
-          console.log(tab);
           tab.title = action.title;
           break;
         default:
@@ -64,7 +63,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   );
 
   useEffect(() => {
-    console.log("state", state);
     setProp({ layoutState: state });
   }, [state]);
 
@@ -78,14 +76,27 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
 //state of the active tab
 export const TabContext = createContext();
 
-const TabsMain = ({ layoutState = [], setProp = () => {} }) => {
-  const [activeTab, setActiveTab] = useState(0);
+export const ActiveTabProvider = ({ children }) => {
 
+  const [ activeTab, setActiveTab ] = useState(0);
+
+  console.log(activeTab, setActiveTab)
+
+  return(
+    <TabContext.Provider value={[activeTab, setActiveTab]}>
+      {children}
+    </TabContext.Provider>
+  )
+}
+
+const TabsMain = ({ layoutState = [], setProp = () => {},  }) => {
+  
+  
   return (
-    <LayoutProvider layoutState={layoutState} setProp={setProp}>
-      <TabContext.Provider value={[activeTab, setActiveTab]}>
-        <Tabs />
-      </TabContext.Provider>
+    <LayoutProvider layoutState= {layoutState} setProp={setProp}>
+      <ActiveTabProvider>
+        <Tabs/>
+      </ActiveTabProvider>
     </LayoutProvider>
   );
 };
