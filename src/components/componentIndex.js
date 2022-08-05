@@ -14,7 +14,6 @@ import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
 import TabsMain, { defaultProps as testTabDefaultProps } from "./Tabs/TabsMain";
 // Category Icons
 import interactiveCategoryIcon from "../Icons/categoriesIcons/interactive.png";
-import imageCategoryIcon from "../Icons/categoriesIcons/image.png";
 import mediaCategoryIcon from "../Icons/categoriesIcons/media.png";
 import textCategoryIcon from "../Icons/categoriesIcons/text.png";
 // DND Icons
@@ -40,10 +39,6 @@ export const categories = {
     readableName: "Media",
     icon: mediaCategoryIcon,
   },
-  image: {
-    readableName: "Image",
-    icon: imageCategoryIcon,
-  },
 };
 
 const componentIndex = {
@@ -52,7 +47,7 @@ const componentIndex = {
     readableName: "Callout",
     defaultProps: calloutDefaultProps,
     version: "0.0.1",
-    category: categories.interactive,
+    category: categories.text,
     dndLabel: calloutDndLabel, 
     componentIcon: defaultComponentIcon
   },
@@ -71,7 +66,7 @@ const componentIndex = {
     defaultProps: imageDefaultProps,
     version: "0.0.1",
     ConfigPanel: ImageConfig,
-    category: categories.image,
+    category: categories.media,
     dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon
   },
