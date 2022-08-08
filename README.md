@@ -22,27 +22,5 @@ Step 3 - install node modules and open local server
 yarn && yarn start
 ```
 
-# How to configure webpack to s3 bucket
 
-Step 1 - create dist folder
-```
-yarn build
-```
-Step 2 - upload files in dist folder to s3
-
-Step 3 - Open webpack.config.js
-
-Step 4 - Replace instances of "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-demo-component-library/" with the url to the s3 bucket where you are hosting the files. 
-
-Example
-```
-const deps = require("./package.json").dependencies;
-module.exports = (_, argv) => ({
-  output: {
-    publicPath: 
-      argv.mode === "development"
-        ? "http://localhost:3001/"
-        : "https://content-solutions.s3.ca-central-1.amazonaws.com/courseware/wip/el-demo-component-library/"
-  }
-```
 

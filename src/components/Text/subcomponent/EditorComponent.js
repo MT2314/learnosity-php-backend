@@ -11,10 +11,18 @@ import {
   defaultAnchorState,
   ModifyAnchorText,
   ConvertLinks,
+  AddLinkEvents,
+  handleSelection,
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 
-const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEditor }) => {
+const EditorComponent = ({
+  body,
+  setProp,
+  setShowEditor,
+  focusOutofText,
+  showEditor,
+}) => {
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
@@ -42,10 +50,6 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEdi
     showEditor && focusRef.current.focus();
     //on render toolbar appears
     showEditor && setEditorIsFocus(true);
-    //Add aria-label to Text Component 
-    textRef.current
-      ?.getElementsByClassName("ql-editor")[0]
-      ?.setAttribute("aria-label", "Hit Escape to exit the Text Component.");
   }, []);
 
   //set the data when the editor content changes
@@ -59,6 +63,9 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEdi
     //check for links
     const linksChecked = checkForLinks(quill, quillText, editorContent);
 
+    // add eventListeners to editor
+    AddLinkEvents(`toolbar-${toolbarId}`);
+
     //check for selection with highlights
     const noHighlights = CheckHighlights(editorContent);
 
@@ -68,6 +75,7 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEdi
     onPaste && (editorContent.ops[0].insert = "");
 
     //update setProp with new editorContent
+
     noHighlights && linksChecked && setProp({ body: editorContent });
   };
 
@@ -82,6 +90,7 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEdi
       insertRange,
       linkText,
       placeSelectionRight,
+      firstInsert,
     } = modifyAnchorText;
 
     //check to see if the link text is equal to the anchor text
@@ -102,8 +111,10 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEdi
       //change coming from API
       changeFromAPI = true;
 
-      //format text to link
-      quill.getEditor().formatText(index, length, "link", linkText);
+      // format text to link
+      quill
+        .getEditor()
+        .formatText(index - (firstInsert ? 1 : 0), length, "link", linkText);
     }
 
     //check if anchor text and link text are not the same
@@ -139,6 +150,7 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEdi
         anchorTextEqualToLink,
         removeFormat,
         placeSelectionRight,
+        firstInsert,
       } = ModifyAnchorText(editorContent, quillText);
 
       //check if link is valid, and if linkText or removeFormat is true
@@ -153,6 +165,7 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEdi
             insertRange,
             linkText,
             placeSelectionRight,
+            firstInsert,
           });
 
         //removing link format from quill instance
@@ -222,7 +235,14 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEdi
   return (
     <div
       ref={textRef}
+      onClick={() => setEditorIsFocus(true)}
       onFocus={() => setEditorIsFocus(true)}
+      onBlur={(e) => {
+        const relatedTarget = e.relatedTarget || document.activeElement;
+        (!relatedTarget || !e.currentTarget.contains(relatedTarget)) &&
+          setEditorIsFocus(false) &&
+          setShowEditor(false);
+      }}
       className="text-editor"
       id={`toolbar-${toolbarId}`}
       data-testid="text-editor-component"
@@ -246,10 +266,15 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEdi
         className="quillEditor"
         onChange={handleDataChange}
         defaultValue={body}
-        onBlur={() => {
-          setEditorIsFocus(false);
-          setShowEditor(false);
-        }}
+        onChangeSelection={(range, source, editor) =>
+          handleSelection(
+            range,
+            source,
+            editor,
+            `toolbar-${toolbarId}`,
+            focusRef.current
+          )
+        }
         onKeyDown={(e) => {
           if (e.key === "Escape") {
             setEditorIsFocus(false);

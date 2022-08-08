@@ -17,7 +17,6 @@ const ExtendLinkFunctionality = (id) => {
   let modifyingLink = null;
   let highlightColor = null;
   let defaultColor = null;
-  let targetSpan = null;
   let savedLink = "";
 
   const quillElement = document.getElementById(id);
@@ -31,7 +30,7 @@ const ExtendLinkFunctionality = (id) => {
   const quillActionBtn = quillElement.querySelector(".ql-action");
   const quillRemoveBtn = quillElement.querySelector(".ql-remove");
 
-  const linkTooltipInput = linkTooltipElement.querySelector(`input`);
+  const linkTooltipInput = linkTooltipElement.querySelector("input");
   const toolbarContainer = quillElement.querySelector(".toolbarContainer");
   const quillEditor = quillElement.querySelector(".ql-editor");
 
@@ -50,6 +49,11 @@ const ExtendLinkFunctionality = (id) => {
   tooltipSaveBtnContainer.classList.add("apply-link-btn");
   tooltipEditorButtonContainer.classList.add("pencil-icon");
   tooltipRemoveButtonContainer.classList.add("trash-icon");
+
+  quillEditor.setAttribute(
+    "aria-label",
+    "Hit Escape to exit the Text Component."
+  );
 
   linkTooltipInput.style.display = "none";
   customLinkInput.setAttribute("data-link", "Paste a link");
@@ -105,13 +109,26 @@ const ExtendLinkFunctionality = (id) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (window.getSelection().toString().length === 0) return;
+    linkTooltipElement.style.display = "";
 
-    altQuillLink.classList.add("ql-selected");
-    setBackgroundColor("highlight");
-    defaultQuillLink.click();
-    customLinkInput.value = "";
-    isTextHighlighted = true;
+    const selection = window.getSelection();
+    if (selection.toString().length === 0) return;
+
+    const linkStart = selection.anchorNode.parentNode.tagName === "A";
+    const linkEnd = selection.focusNode.parentNode.tagName === "A";
+
+    if (linkStart && linkEnd) {
+      selection.anchorNode.parentNode.removeAttribute("href");
+      altQuillLink.classList.remove("ql-selected");
+      return;
+    } else {
+      altQuillLink.classList.add("ql-selected");
+
+      setBackgroundColor("highlight");
+      defaultQuillLink.click();
+      customLinkInput.value = "";
+      isTextHighlighted = true;
+    }
   });
 
   customLinkInput.addEventListener("focus", (e) => {
@@ -244,27 +261,13 @@ const ExtendLinkFunctionality = (id) => {
     if (closed) {
       quillEditor.querySelectorAll("p").forEach((p) => {
         const span = p.querySelector("span");
-        span && span.style.backgroundColor && (targetSpan = span);
+        span && span.style.backgroundColor && span.removeAttribute("style");
         p.querySelectorAll("a").forEach((anchor) => {
           anchor.removeAttribute("style");
         });
       });
 
-      if (isTextHighlighted && targetSpan) {
-        const range = document.createRange();
-        const selection = window.getSelection();
-
-        range.selectNode(targetSpan);
-
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        isTextHighlighted = false;
-        setBackgroundColor("default");
-        targetSpan = null;
-      }
       defaultQuillLink.classList.remove("ql-selected", "ql-active");
-      altQuillLink.classList.remove("ql-selected", "ql-active");
     }
   });
 
