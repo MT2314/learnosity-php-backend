@@ -66,8 +66,8 @@ export const ModifyAnchorText = (editorContent, quillText) => {
         if (anchorTextEqualToLink) {
           //check if added character is still a valid link
           if (urlRegExp.test(compare) && /(http(s?)):\/\//i.test(compare)) {
-            // pre.concat(linkText);
-            insertIndex = insertIndex + 1;
+            pre.concat(linkText);
+            // insertIndex = insertIndex + 1;
             breakLoop = true;
           }
         } else {
@@ -220,10 +220,7 @@ export const AddLinkEvents = (id) => {
 
 // wIP - Nesh
 export const handleSelection = (range, source, editor, textRef, quillRef) => {
-  // console.log("Changed ", range);
-
   if (range?.length) {
-    // console.log("Link Selected");
     const selection = window.getSelection();
 
     const startA = selection.anchorNode.parentNode.tagName === "A";
@@ -240,7 +237,7 @@ export const handleSelection = (range, source, editor, textRef, quillRef) => {
   if (range?.length === 0) {
     const linkBtn = textRef.querySelector(".al-link");
     linkBtn.classList.remove("ql-selected");
-    const [leaf, offset] = quillRef.getEditor().getLeaf(range.index);
+    const [leaf, _] = quillRef.getEditor().getLeaf(range.index);
 
     const LeafLink =
       leaf?.parent?.domNode?.tagName === "A" ? leaf?.parent?.domNode : null;
@@ -248,9 +245,9 @@ export const handleSelection = (range, source, editor, textRef, quillRef) => {
     const nextLeaf = leaf?.next?.domNode;
     const isLink = nextLeaf?.tagName === "A";
 
-    const text = LeafLink?.innerText;
-    const link = LeafLink?.href;
-    console.log("IS TRUE? ", text === link);
+    let text = LeafLink?.innerText;
+    let link = LeafLink?.getAttribute("href");
+
     const quillTooltip = textRef.querySelector(".ql-tooltip");
 
     if (text === link || isLink) {
