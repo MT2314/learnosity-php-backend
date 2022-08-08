@@ -14,7 +14,7 @@ import {
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 
-const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText }) => {
+const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText, showEditor }) => {
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
@@ -30,13 +30,6 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText }) => {
   //track clicks outside text div
   const textRef = useRef(null);
 
-  textRef.current
-    ?.getElementsByClassName("ql-editor")[0]
-    ?.removeAttribute("aria-label");
-  textRef.current
-    ?.getElementsByClassName("ql-blank")[0]
-    ?.setAttribute("aria-label", "Hit Escape to exit the Text Component.");
-
   useOnClickOutside(textRef, () => {
     setEditorIsFocus(false);
     setShowEditor(false);
@@ -46,9 +39,13 @@ const EditorComponent = ({ body, setProp, setShowEditor, focusOutofText }) => {
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
     // on render editor is focused
-    focusRef.current.focus();
+    showEditor && focusRef.current.focus();
     //on render toolbar appears
-    setEditorIsFocus(true);
+    showEditor && setEditorIsFocus(true);
+    //Add aria-label to Text Component 
+    textRef.current
+      ?.getElementsByClassName("ql-editor")[0]
+      ?.setAttribute("aria-label", "Hit Escape to exit the Text Component.");
   }, []);
 
   //set the data when the editor content changes

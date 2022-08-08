@@ -13,6 +13,7 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
 
   return (
     <>
+      <CssBaseline />
       <ReactQuillContainer>
         {(!showEditor && body === null) ||
         (!showEditor && !body.ops) ||
@@ -35,8 +36,20 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
             body={body}
             setProp={setProp}
             setShowEditor={setShowEditor}
+            showEditor={showEditor}
             focusOutofText={focusOutofText.current}
           />
+        )}
+        <div className="sr-only" tabIndex="-1" ref={focusOutofText}>
+          Exit Text Component
+        </div>
+        ) : (
+        <EditorComponent
+          body={body}
+          setProp={setProp}
+          setShowEditor={setShowEditor}
+          focusOutofText={focusOutofText.current}
+        />
         )}
         <div className="sr-only" tabIndex="-1" ref={focusOutofText}>
           Exit Text Component
