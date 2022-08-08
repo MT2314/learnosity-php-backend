@@ -2,9 +2,7 @@ import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { ActiveTabProvider } from "../components/Tabs/TabsMain";
-import { LayoutProvider } from "../components/Tabs/TabsMain";
-import Tabs from "../components/Tabs/subcomponents/Tabs";
+import TabsMain from "../components/Tabs/TabsMain";
 
 let container = null;
 beforeEach(() => {
@@ -18,53 +16,36 @@ afterEach(() => {
   container = null;
 });
 
-describe("Tabs", () => {
-  const TestLayout = [
-    {
-      type: "TAB",
-      id: 0,
-      title: "Polkaroo",
-      components: [],
-    },
-    {
-      type: "TAB",
-      id: 1,
-      title: "Juno",
-      components: [],
-    },
-  ];
+const testLayout = [
+  {
+    type: "TAB",
+    id: 0,
+    title: "Polkaroo",
+    components: [],
+  },
+  {
+    type: "TAB",
+    id: 1,
+    title: "Juno",
+    components: [],
+  },
+];
 
-  it("renders tab component with two tabs", async () => {
-    render(
-      <LayoutProvider
-        layoutState={TestLayout}
-        setProp={() => {
-          console.log("set props function");
-        }}
-      >
-        <ActiveTabProvider>
-          <Tabs />
-        </ActiveTabProvider>
-      </LayoutProvider>
-    );
+describe("Tabs", () => {
+  it("renders tab component with two tabs, saved titles", async () => {
+    render(<TabsMain layoutState={testLayout} />);
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText(/Tab 1/gi)).toBeInTheDocument();
+      expect(screen.getByText(/Polkaroo/gi)).toBeInTheDocument();
     });
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText(/Tab 2/gi)).toBeInTheDocument();
+      expect(screen.getByText(/Juno/gi)).toBeInTheDocument();
     });
   });
 
   it("renders the tab component with placeholder text if no components are added tab", async () => {
-    render(
-      <LayoutProvider layoutState={TestLayout} setProp={() => {}}>
-        <ActiveTabProvider>
-          <Tabs />
-        </ActiveTabProvider>
-      </LayoutProvider>
-    );
+    render(<TabsMain layoutState={testLayout} />);
 
     await waitFor(() => {
       expect(screen.getByText(/add a component here/gi)).toBeInTheDocument();
