@@ -1,6 +1,6 @@
 //regular expression that matches a url
 const urlRegExp =
-  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/i;
+  /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 //default defaultAnchorState
 export const defaultAnchorState = {
@@ -65,8 +65,9 @@ export const ModifyAnchorText = (editorContent, quillText) => {
 
         if (anchorTextEqualToLink) {
           //check if added character is still a valid link
-          if (urlRegExp.test(compare)) {
-            pre.concat(linkText);
+          if (urlRegExp.test(compare) && /(http(s?)):\/\//i.test(compare)) {
+            // pre.concat(linkText);
+            insertIndex = insertIndex + 1;
             breakLoop = true;
           }
         } else {
@@ -89,7 +90,7 @@ export const ModifyAnchorText = (editorContent, quillText) => {
         const compare = linkText + append;
         if (anchorTextEqualToLink) {
           //check if added character is still a valid link
-          if (urlRegExp.test(compare)) {
+          if (urlRegExp.test(compare) && /(http(s?)):\/\//i.test(compare)) {
             linkText.concat(append);
             placeSelectionRight = true;
             breakLoop = true;
@@ -161,7 +162,10 @@ export const ConvertLinks = (editorContent, quillText) => {
       //split text into an array by removing any empty strings
       const textArray = deltaText.split(/(\s+)/).filter((t) => t.length > 0);
       //find the index of the first link in the textArray
-      linkTextIndex = textArray.findIndex((t) => urlRegExp.test(t));
+      linkTextIndex = textArray.findIndex(
+        (t) => urlRegExp.test(t) && /(http(s?)):\/\//i.test(t)
+      );
+
       //if linkTextIndex is not -1 set linkText to the link in the textArray
       linkTextIndex !== -1 && (linkText = textArray[linkTextIndex]);
 
@@ -186,4 +190,73 @@ export const ConvertLinks = (editorContent, quillText) => {
   }
 
   return { link: linkText, startLinkIndex, endLinkIndex };
+};
+
+//WIP - Nesh
+export const AddLinkEvents = (id) => {
+  const quill = document.getElementById(id);
+  const qlEditor = quill.querySelector(".ql-editor");
+  const qlTooltip = quill.querySelector(".ql-tooltip");
+
+  qlEditor.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const text = e.target.innerText;
+      const linkHref = e.target.getAttribute("href");
+      if (text === linkHref) {
+        window.open(linkHref, "_blank");
+        !qlTooltip.classList.contains("ql-hidden") &&
+          qlTooltip.classList.add("ql-hidden");
+      }
+    });
+    link.addEventListener("mouseover", (e) => {
+      const href = link.getAttribute("href");
+      const text = link.innerText;
+      if (href === text) {
+        e.target.style.cursor = "pointer";
+      }
+    });
+  });
+};
+
+// wIP - Nesh
+export const handleSelection = (range, source, editor, textRef, quillRef) => {
+  // console.log("Changed ", range);
+
+  if (range?.length) {
+    // console.log("Link Selected");
+    const selection = window.getSelection();
+
+    const startA = selection.anchorNode.parentNode.tagName === "A";
+    const endA = selection.focusNode.parentNode.tagName === "A";
+
+    if (startA && endA) {
+      const linkBtn = textRef.querySelector(".al-link");
+      linkBtn.classList.add("ql-selected");
+    } else {
+      const linkBtn = textRef.querySelector(".al-link");
+      linkBtn.classList.remove("ql-selected");
+    }
+  }
+  if (range?.length === 0) {
+    const linkBtn = textRef.querySelector(".al-link");
+    linkBtn.classList.remove("ql-selected");
+    const [leaf, offset] = quillRef.getEditor().getLeaf(range.index);
+
+    const LeafLink =
+      leaf?.parent?.domNode?.tagName === "A" ? leaf?.parent?.domNode : null;
+
+    const nextLeaf = leaf?.next?.domNode;
+    const isLink = nextLeaf?.tagName === "A";
+
+    const text = LeafLink?.innerText;
+    const link = LeafLink?.href;
+    console.log("IS TRUE? ", text === link);
+    const quillTooltip = textRef.querySelector(".ql-tooltip");
+
+    if (text === link || isLink) {
+      quillTooltip.style.display = "none";
+    } else {
+      quillTooltip.style.display = "";
+    }
+  }
 };
