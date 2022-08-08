@@ -31,7 +31,7 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
               onClick={() => {
                 setShowEditor(true);
               }}
-              className="mainContainer"
+              className={focusOutofText.current === document.activeElement ? "mainContainer fakeHover" : "mainContainer"}
               data-testid="text-component"
               tabIndex="0"
               onFocus={() => {
@@ -56,6 +56,7 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
             onBlur={() => { 
               const removeFakeHover = document?.getElementsByClassName("fakeHover")[0];
               removeFakeHover?.classList.remove("fakeHover");
+              
             }}
           >
             Exit Text Component
