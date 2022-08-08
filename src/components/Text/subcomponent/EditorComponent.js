@@ -90,6 +90,7 @@ const EditorComponent = ({
       insertRange,
       linkText,
       placeSelectionRight,
+      firstInsert,
     } = modifyAnchorText;
 
     //check to see if the link text is equal to the anchor text
@@ -110,8 +111,10 @@ const EditorComponent = ({
       //change coming from API
       changeFromAPI = true;
 
-      //format text to link
-      quill.getEditor().formatText(index, length, "link", linkText);
+      // format text to link
+      quill
+        .getEditor()
+        .formatText(index - (firstInsert ? 1 : 0), length, "link", linkText);
     }
 
     //check if anchor text and link text are not the same
@@ -147,6 +150,7 @@ const EditorComponent = ({
         anchorTextEqualToLink,
         removeFormat,
         placeSelectionRight,
+        firstInsert,
       } = ModifyAnchorText(editorContent, quillText);
 
       //check if link is valid, and if linkText or removeFormat is true
@@ -161,6 +165,7 @@ const EditorComponent = ({
             insertRange,
             linkText,
             placeSelectionRight,
+            firstInsert,
           });
 
         //removing link format from quill instance
@@ -266,7 +271,7 @@ const EditorComponent = ({
             range,
             source,
             editor,
-            textRef.current,
+            `toolbar-${toolbarId}`,
             focusRef.current
           )
         }
