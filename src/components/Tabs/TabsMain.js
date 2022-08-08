@@ -5,6 +5,10 @@ import "./styles/Tab.scss";
 //import immer
 import produce from "immer";
 
+// ? DndProvider Imports
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 //tabs default props
 export const defaultProps = {
   layoutState: [
@@ -90,11 +94,13 @@ export const ActiveTabProvider = ({ children }) => {
 
 const TabsMain = ({ layoutState = [], setProp = () => {} }) => {
   return (
-    <LayoutProvider layoutState={layoutState} setProp={setProp}>
-      <ActiveTabProvider>
-        <Tabs />
-      </ActiveTabProvider>
-    </LayoutProvider>
+    <DndProvider backend={HTML5Backend}>
+      <LayoutProvider layoutState={layoutState} setProp={setProp}>
+        <ActiveTabProvider>
+          <Tabs />
+        </ActiveTabProvider>
+      </LayoutProvider>
+    </DndProvider>
   );
 };
 
