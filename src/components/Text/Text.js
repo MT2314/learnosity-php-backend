@@ -25,8 +25,8 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
       <ThemeProvider theme={textTheme}>
         <ReactQuillContainer>
           {(!showEditor && body === null) ||
-          (!showEditor && !body.ops) ||
-          (!showEditor && body.ops[0].insert === "") ? (
+            (!showEditor && !body.ops) ||
+            (!showEditor && body.ops[0].insert === "") ? (
             <div
               onClick={() => {
                 setShowEditor(true);
@@ -49,7 +49,15 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
               focusOutofText={focusOutofText.current}
             />
           )}
-          <div className="sr-only" tabIndex="-1" ref={focusOutofText}>
+          <div
+            className="sr-only"
+            tabIndex="-1"
+            ref={focusOutofText}
+            onBlur={() => { 
+              const removeFakeHover = document?.getElementsByClassName("fakeHover")[0];
+              removeFakeHover?.classList.remove("fakeHover");
+            }}
+          >
             Exit Text Component
           </div>
         </ReactQuillContainer>
