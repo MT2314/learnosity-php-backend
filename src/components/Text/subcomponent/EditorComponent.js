@@ -281,6 +281,7 @@ const EditorComponent = ({
             setEditorIsFocus(false);
             setShowEditor(false);
             focusOutofText.focus();
+            textRef.current?.classList.add("fakeFocus");
           }
         }}
       />
