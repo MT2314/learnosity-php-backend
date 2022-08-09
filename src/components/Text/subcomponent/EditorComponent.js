@@ -239,9 +239,10 @@ const EditorComponent = ({
       onFocus={() => setEditorIsFocus(true)}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
-        (!relatedTarget || !e.currentTarget.contains(relatedTarget)) &&
-          setEditorIsFocus(false) &&
+        if (!relatedTarget || !e.currentTarget.contains(relatedTarget)) {
+          setEditorIsFocus(false);
           setShowEditor(false);
+        }
       }}
       className="text-editor"
       id={`toolbar-${toolbarId}`}
@@ -280,6 +281,7 @@ const EditorComponent = ({
             setEditorIsFocus(false);
             setShowEditor(false);
             focusOutofText.focus();
+            textRef.current?.classList.add("fakeFocus");
           }
         }}
       />
