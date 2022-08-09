@@ -22,6 +22,8 @@ const EditorComponent = ({
   setShowEditor,
   focusOutofText,
   showEditor,
+  isActiveComponent,
+  setActiveComponent,
 }) => {
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
@@ -37,6 +39,17 @@ const EditorComponent = ({
 
   //track clicks outside text div
   const textRef = useRef(null);
+
+  useEffect(() => {
+    console.log("focused");
+
+    if (editorIsFocus) {
+      setActiveComponent(true);
+    } else {
+      console.log("component looses the focus");
+      setActiveComponent(false);
+    }
+  }, [editorIsFocus, setActiveComponent]);
 
   useOnClickOutside(textRef, () => {
     setEditorIsFocus(false);
@@ -232,6 +245,18 @@ const EditorComponent = ({
     []
   );
 
+  const ConfigBar = {
+    display: !isActiveComponent ? (editorIsFocus ? "flex" : "none") : "flex",
+    position: "fixed",
+    top: "80px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: 1000,
+    justifyContent: "center",
+    backgroundColor: "#fff",
+  };
+
+
   return (
     <div
       ref={textRef}
@@ -247,7 +272,7 @@ const EditorComponent = ({
       id={`toolbar-${toolbarId}`}
       data-testid="text-editor-component"
     >
-      <div className={editorIsFocus ? "showtool" : "hidetool"}>
+      <div style={ConfigBar}>
         <CustomToolBar
           toolbarId={toolbarId}
           containerId={`toolbar-${toolbarId}`}
