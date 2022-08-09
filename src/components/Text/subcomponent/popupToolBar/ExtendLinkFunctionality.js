@@ -8,7 +8,7 @@ import {
 } from "./LinkCustomIcons";
 
 const linkValidityRegex =
-  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
 const ExtendLinkFunctionality = (id) => {
   let isEditing = false;
@@ -172,7 +172,6 @@ const ExtendLinkFunctionality = (id) => {
     e.stopPropagation();
 
     linkTooltipInput.value = customLinkInput.value;
-
     if (Apply.classList.contains("disabled")) return;
 
     if (linkTooltipElement.getAttribute("data-mode") === "link") {
@@ -184,6 +183,13 @@ const ExtendLinkFunctionality = (id) => {
         ) {
           linkTooltipInput.value = linkTooltipInput.value.replace(
             "www.",
+            "http://www."
+          );
+        }
+
+        if (linkTooltipInput.value.indexOf("www.") === -1) {
+          linkTooltipInput.value = linkTooltipInput.value.replace(
+            /^/,
             "http://www."
           );
         }
