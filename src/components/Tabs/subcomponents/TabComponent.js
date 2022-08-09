@@ -8,7 +8,7 @@ const TabComponent = ({ component, compIndex }) => {
        <li
         key={`comp-${compIndex}`}
       >
-        <p>{componentType}</p>
+        <p>I am a component</p>
       </li>
   )
 }  

@@ -16,7 +16,7 @@ export const defaultProps = {
       type: "TAB",
       id: 0,
       title: "Tab 1",
-      components: [],
+      components: [{}],
     },
     {
       type: "TAB",
@@ -81,9 +81,8 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
 export const TabContext = createContext();
 
 export const ActiveTabProvider = ({ children }) => {
-  const [activeTab, setActiveTab] = useState(0);
 
-  console.log(activeTab, setActiveTab);
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
     <TabContext.Provider value={[activeTab, setActiveTab]}>

@@ -15,18 +15,18 @@ const Tab = ({ tab, tabIndex }) => {
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ["component"],
-    drop: (item) => console.log("hello world"),
+    drop: (item) => console.log("item:", item),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   }));
 
   return (
-    <div className="tab-body" key={id}>
+    <div ref={drop} className="tab-body" key={id} style={{ backgroundColor: isOver ? 'green' : 'inherit'}}>
       {activeTab === tabIndex && components.length === 0 ? (
         <Placeholder />
       ) : (
-        <ul ref={drop}>
+        <ul >
           {components.map((component, compIndex) => {
             return (
               <TabComponent
