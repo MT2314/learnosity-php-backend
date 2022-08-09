@@ -280,8 +280,7 @@ const EditorComponent = ({
             setEditorIsFocus(false);
             setShowEditor(false);
             focusOutofText.focus();
-            console.log(textRef.current)
-            textRef.current?.classList.add("fakeHover");
+            textRef.current?.classList.add("fakeFocus");
           }
         }}
       />

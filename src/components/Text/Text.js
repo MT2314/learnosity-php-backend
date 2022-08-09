@@ -12,7 +12,7 @@ import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
 
 export const defaultProps = { body: null };
 
-const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
+const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => { } }) => {
   const [showEditor, setShowEditor] = useState(false);
   const focusOutofText = useRef(null);
 
@@ -31,7 +31,7 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
               onClick={() => {
                 setShowEditor(true);
               }}
-              className={focusOutofText.current === document.activeElement ? "mainContainer fakeHover" : "mainContainer"}
+              className={`mainContainer ${focusOutofText.current === document.activeElement && "fakeFocus"}`}
               data-testid="text-component"
               tabIndex="0"
               onFocus={() => {
@@ -53,10 +53,9 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
             className="sr-only"
             tabIndex="-1"
             ref={focusOutofText}
-            onBlur={() => { 
-              const removeFakeHover = document?.getElementsByClassName("fakeHover")[0];
-              removeFakeHover?.classList.remove("fakeHover");
-              
+            onBlur={() => {
+              const removefakeFocus = document?.getElementsByClassName("fakeFocus");
+              removefakeFocus[0]?.classList.remove("fakeFocus");
             }}
           >
             Exit Text Component

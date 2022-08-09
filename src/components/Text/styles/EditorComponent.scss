@@ -146,8 +146,12 @@
   }
 }
 
-.fakeHover {
-  border: 1px solid #000;
+.text-editor {
+  border: 1px solid transparent;
+}
+
+.fakeFocus {
+  border: 1px solid #000 !important;
 }
 
 .ql-snow .ql-tooltip.ql-editing > span.apply-link-btn {
