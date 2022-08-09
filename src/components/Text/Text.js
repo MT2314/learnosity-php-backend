@@ -4,10 +4,10 @@ import EditorComponent from "./subcomponent/EditorComponent";
 import "./styles/Text.scss";
 
 import { CssBaseline } from "@mui/material";
-import { ThemeProvider } from "@mui/material/styles";
+// import { ThemeProvider } from "@mui/material/styles";
 
 //? PP Imports
-import createMFTheme from "../../theme/index";
+// import createMFTheme from "../../theme/index";
 import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
 
 export const defaultProps = { body: null };
@@ -17,12 +17,12 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => { } }) => {
   const focusOutofText = useRef(null);
 
   //* Creating theme
-  const textTheme = createMFTheme();
+  // const textTheme = createMFTheme();
 
   return (
     <>
       <CssBaseline />
-      <ThemeProvider theme={textTheme}>
+      {/* <ThemeProvider theme={textTheme}> */}
         <ReactQuillContainer>
           {(!showEditor && body === null) ||
             (!showEditor && !body.ops) ||
@@ -61,7 +61,7 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => { } }) => {
             Exit Text Component
           </div>
         </ReactQuillContainer>
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     </>
   );
 };
