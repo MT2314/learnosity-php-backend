@@ -248,7 +248,7 @@ const EditorComponent = ({
   const ConfigBar = {
     display: !isActiveComponent ? (editorIsFocus ? "flex" : "none") : "flex",
     position: "fixed",
-    top: "80px",
+    top: "100px",
     left: "50%",
     transform: "translateX(-50%)",
     zIndex: 1000,
