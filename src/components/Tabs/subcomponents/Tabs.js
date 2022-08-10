@@ -6,14 +6,14 @@ const Tabs = () => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
-  const enableTitleChange = (e) => {
-    e.stopPropagation();
-    if (e.target.dataset.id == activeTab) {
-      e.target.disabled = false;
-      e.target.style.overflow = "unset";
-      // e.target.style.WebkitLineClamp = "unset";
-    }
-  };
+  // const enableTitleChange = (e) => {
+  //   e.stopPropagation();
+  //   if (e.target.dataset.id == activeTab) {
+  //     e.target.disabled = false;
+  //     e.target.style.overflow = "unset";
+  //     // e.target.style.WebkitLineClamp = "unset";
+  //   }
+  // };
 
   const handleTitleChange = useCallback((e) => {
     dispatch({
@@ -67,11 +67,10 @@ const Tabs = () => {
                   placeholder={`Tab ${tabIndex + 1}`}
                   aria-label="tab title input"
                   aria-multiline="true"
-                  role={activeTab == tabIndex ? null : "button"}
+                  role={activeTab == tabIndex ? "textbox" : "tab"}
                   disabled={activeTab == tabIndex ? false : true}
                   contentEditable
                   maxLength="200"
-                  onClick={(e) => enableTitleChange(e)}
                   onChange={handleTitleChange}
                   onFocus={() =>
                     inputRef.current.setSelectionRange(
@@ -81,13 +80,8 @@ const Tabs = () => {
                   }
                   data-id={tabIndex}
                   value={state[tabIndex].title}
-                  rows="2"
-                  wrap="hard"
-                  style={{
-                    WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
-                    // WebkitLineClamp: 2,
-                  }}
                   onBlur={handleTitleBlur}
+                  ref={inputRef}
                 />
               ) : (
                 <p
