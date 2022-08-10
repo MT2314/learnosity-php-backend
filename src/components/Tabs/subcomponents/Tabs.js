@@ -2,8 +2,6 @@ import React, { useContext, useCallback } from "react";
 import { TabContext, LayoutContext } from "../TabsMain";
 import Tab from "./Tab";
 
-import { useDrag } from 'react-dnd';
-
 const Tabs = () => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
@@ -30,26 +28,9 @@ const Tabs = () => {
     e.target.scrollTo(0, 0);
   };
 
-  const [collected, drag, dragPreview] = useDrag(() => ({
-    type: 'component',
-    item: { type: 'component', msg: 'i am button'}
-  }))
 
   return (
     <div className="tab-container">
-      {/* <button
-        onClick={() =>
-          dispatch({
-            func: "ADD_TAB",
-            id: state.length,
-            title: `Tab ${state.length + 1}`,
-          })
-        }
-      >
-        add tab
-      </button> */}
-      <button ref={drag}>test drag</button>
-
       <div className="tab-title-wrapper">
         {state.map((tabTitle, tabIndex) => {
           return (

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TabContext } from "../TabsMain";
+import { TabContext, LayoutContext } from "../TabsMain";
 
 //components
 import Placeholder from "./Placeholder";
@@ -12,10 +12,11 @@ const Tab = ({ tab, tabIndex }) => {
   const { id, components } = tab;
 
   const [activeTab, setActiveTab] = useContext(TabContext);
+  const [state, dispatch] = useContext(LayoutContext);
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["component"],
-    drop: (item) => console.log("item:", item),
+    accept: ["COMPONENT"],
+    drop: (item) => dispatch({func: "ADD_TAB", item: item}),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
