@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabsMain";
 import Tab from "./Tab";
 
@@ -28,6 +28,8 @@ const Tabs = () => {
     e.target.style.overflow = "hidden";
     e.target.scrollTo(0, 0);
   };
+
+  const inputRef = useRef();
 
   return (
     <div className="tab-container">
@@ -66,10 +68,17 @@ const Tabs = () => {
                   aria-label="tab title input"
                   aria-multiline="true"
                   role={activeTab == tabIndex ? null : "button"}
+                  disabled={activeTab == tabIndex ? false : true}
                   contentEditable
                   maxLength="200"
                   onClick={(e) => enableTitleChange(e)}
                   onChange={handleTitleChange}
+                  onFocus={() =>
+                    inputRef.current.setSelectionRange(
+                      state[tabIndex].title.length,
+                      state[tabIndex].title.length
+                    )
+                  }
                   data-id={tabIndex}
                   value={state[tabIndex].title}
                   rows="2"
