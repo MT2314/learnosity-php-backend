@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Divider } from "@mui/material/";
-import { Tooltip } from "@mui/material";
+import { Tooltip } from "@material-ui/core";
 
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
@@ -44,7 +44,24 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   return (
     <div id={toolbarId} className="toolbarContainer">
       {/* bold dropdown starts */}
-      <Tooltip arrow title="font styles" placement="top">
+      <Tooltip
+        aria-label="font styles"
+        title="font styles"
+        placement="top"
+        arrow
+        PopperProps={{
+          disablePortal: true,
+          popperOptions: {
+            positionFixed: true,
+            modifiers: {
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "window", // where "window" is the boundary
+              },
+            },
+          },
+        }}
+      >
         <button
           onClick={() => {
             setBoldVisibility(!boldVisibility);
@@ -74,7 +91,24 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       ></BoldDropdownButton>
 
       {/* formula btn */}
-      <Tooltip arrow title="equation" placement="top">
+      <Tooltip
+        aria-label="equation"
+        title="equation"
+        placement="top"
+        arrow
+        PopperProps={{
+          disablePortal: true,
+          popperOptions: {
+            positionFixed: true,
+            modifiers: {
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "window", // where "window" is the boundary
+              },
+            },
+          },
+        }}
+      >
         <button
           className={
             activeTopMenu === "math"
@@ -99,7 +133,24 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       </Tooltip>
 
       {/* alignment dropdown */}
-      <Tooltip arrow title="alignment" placement="top">
+      <Tooltip
+        aria-label="alignment"
+        title="alignment"
+        placement="top"
+        arrow
+        PopperProps={{
+          disablePortal: true,
+          popperOptions: {
+            positionFixed: true,
+            modifiers: {
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "window", // where "window" is the boundary
+              },
+            },
+          },
+        }}
+      >
         <button
           onClick={() => {
             setAlignVisibility(!alignVisibility);
@@ -134,7 +185,24 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       />
 
       {/* bullets drowdown starts */}
-      <Tooltip arrow title="add list" placement="top">
+      <Tooltip
+        aria-label="add list"
+        title="add list"
+        placement="top"
+        arrow
+        PopperProps={{
+          disablePortal: true,
+          popperOptions: {
+            positionFixed: true,
+            modifiers: {
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "window", // where "window" is the boundary
+              },
+            },
+          },
+        }}
+      >
         <button
           onClick={() => {
             setListVisibility(!listVisibility);
@@ -165,7 +233,24 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       {/* link btn and divider */}
       <Divider orientation="vertical" />
       <HiddenQuillLinkButton />
-      <Tooltip arrow title="insert link" placement="top">
+      <Tooltip
+        aria-label="link"
+        title="link"
+        placement="top"
+        arrow
+        PopperProps={{
+          disablePortal: true,
+          popperOptions: {
+            positionFixed: true,
+            modifiers: {
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "window", // where "window" is the boundary
+              },
+            },
+          },
+        }}
+      >
         <button
           aria-label="add link button"
           className="al-link"

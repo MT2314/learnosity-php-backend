@@ -15,13 +15,13 @@ export const defaultProps = {
     {
       type: "TAB",
       id: 0,
-      title: "Tab 1",
-      components: [{}],
+      title: "",
+      components: [],
     },
     {
       type: "TAB",
       id: 1,
-      title: "Tab 2",
+      title: "",
       components: [],
     },
   ],
@@ -80,7 +80,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
 export const TabContext = createContext();
 
 export const ActiveTabProvider = ({ children }) => {
-
   const [activeTab, setActiveTab] = useState(0);
 
   return (

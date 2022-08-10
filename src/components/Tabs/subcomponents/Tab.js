@@ -16,22 +16,28 @@ const Tab = ({ tab, tabIndex }) => {
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ["COMPONENT"],
-    drop: (item) => dispatch({func: "ADD_COMPONENT", tabIndex: tabIndex, component: item,}),
+    drop: (item) =>
+      dispatch({ func: "ADD_COMPONENT", tabIndex: tabIndex, component: item }),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   }));
 
   return (
-    <div ref={drop} className="tab-body" key={id} style={{ backgroundColor: isOver ? 'green' : 'inherit'}}>
+    <div
+      ref={drop}
+      className="tab-body"
+      key={id}
+      style={{ backgroundColor: isOver ? "green" : "inherit" }}
+    >
       {activeTab === tabIndex && components.length === 0 ? (
         <Placeholder />
       ) : (
-        <ul >
+        <ul>
           {components.map((component, compIndex) => {
             return (
               <TabComponent
-                component={JSON.stringify(component)}
+                component={component}
                 compIndex={compIndex}
                 tabIndex={tabIndex}
               />

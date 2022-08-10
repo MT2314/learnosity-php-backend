@@ -1,13 +1,30 @@
 import React, { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
-import { Tooltip } from "@mui/material";
+import { Tooltip } from "@material-ui/core";
 
 import "../../styles/ListDropdownButton.scss";
 import icons from "../../assets/icons";
 
 export const TrashcanTooltip = () => {
   return (
-    <Tooltip arrow title="delete link" placement="top">
+    <Tooltip
+      aria-label="delete link"
+      title="delete link"
+      placement="top"
+      arrow
+      PopperProps={{
+        disablePortal: true,
+        popperOptions: {
+          positionFixed: true,
+          modifiers: {
+            preventOverflow: {
+              enabled: true,
+              boundariesElement: "window", // where "window" is the boundary
+            },
+          },
+        },
+      }}
+    >
       <button aria-label="delete link" className="trashcan">
         {icons["trashcan"]}
       </button>

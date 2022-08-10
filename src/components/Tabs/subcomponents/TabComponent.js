@@ -1,15 +1,13 @@
-import React from 'react'
+import React from "react";
 
-const TabComponent = ({ component, compIndex }) => { 
-
-  const { componentProps } = component
+const TabComponent = ({ component, compIndex }) => {
+  console.log(component.componentName);
+  const componentName = component.componentName;
 
   return (
-       <li
-        key={`comp-${compIndex}`}
-      >
-        <p>{componentProps.componentName}</p>
-      </li>
-  )
-}  
+    <li key={`comp-${compIndex}`}>
+      <p>{componentName}</p>
+    </li>
+  );
+};
 export default TabComponent;
