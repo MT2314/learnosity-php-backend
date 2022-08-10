@@ -19,7 +19,8 @@
       border: 1px solid #bdbdbd;
       border-radius: 10px 10px 0px 0px;
       width: 100%;
-
+      min-height: 40px;
+      padding: 10px 10px 0 10px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -32,6 +33,7 @@
     .tab-title-input {
       font-family: "Inter", sans-serif;
       border: none;
+      padding: 0;
       font-size: 18px;
       width: 100%;
       text-align: center;
