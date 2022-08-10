@@ -8,7 +8,7 @@ import {
 } from "./LinkCustomIcons";
 
 const linkValidityRegex =
-  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|[a-zA-Z0-9-]+[a-zA-Z0-9]?\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
 const ExtendLinkFunctionality = (id) => {
   let isEditing = false;
@@ -176,23 +176,35 @@ const ExtendLinkFunctionality = (id) => {
 
     if (linkTooltipElement.getAttribute("data-mode") === "link") {
       if (linkTooltipInput?.value.match(linkValidityRegex)) {
+        // If no http or https scheme is specified
         if (
           linkTooltipInput.value.indexOf("http://") === -1
             ? linkTooltipInput.value.indexOf("https://") === -1
             : linkTooltipInput.value.indexOf("https://") !== -1
         ) {
-          linkTooltipInput.value = linkTooltipInput.value.replace(
-            "www.",
-            "http://www."
-          );
+          // If www. is and isn't within url => http://www.
+          linkTooltipInput.value.indexOf("www.") !== -1
+            ? (linkTooltipInput.value = linkTooltipInput.value.replace(
+                "www.",
+                "http://www."
+              ))
+            : (linkTooltipInput.value = linkTooltipInput.value.replace(
+                /^/,
+                "http://www."
+              ));
+        }
+        if (
+          linkTooltipInput.value.indexOf("http://") !== -1 ||
+          linkTooltipInput.value.indexOf("https://") !== -1
+        ) {
+          if (linkTooltipInput.value.indexOf("www.") === -1) {
+            linkTooltipInput.value = linkTooltipInput.value.replace(
+              "://",
+              "://www."
+            );
+          }
         }
 
-        if (linkTooltipInput.value.indexOf("www.") === -1) {
-          linkTooltipInput.value = linkTooltipInput.value.replace(
-            /^/,
-            "http://www."
-          );
-        }
         savedLink = linkTooltipInput.value;
         quillActionBtn.click();
         Apply.hidden = true;
