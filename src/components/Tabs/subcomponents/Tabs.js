@@ -87,6 +87,7 @@ const Tabs = () => {
                 <p
                   className="placeholder-title"
                   onClick={() => setActiveTab(tabIndex)}
+                  role="tab"
                 >
                   {state[tabIndex].title
                     ? state[tabIndex].title
