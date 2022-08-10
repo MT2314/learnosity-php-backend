@@ -2,13 +2,13 @@ import React from 'react'
 
 const TabComponent = ({ component, compIndex }) => { 
 
-  const { componentType } = component
+  // const { componentType } = component
 
   return (
        <li
-        key={`comp-${compIndex}`}
+        // key={`comp-${compIndex}`}
       >
-        <p>I am a component</p>
+        <p>You added a component yay!</p>
       </li>
   )
 }  

@@ -36,18 +36,18 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
     produce((draft, action) => {
       switch (action.func) {
         case "ADD_TAB":
-          console.log(`added tab:`, action.item);
-          // draft.push({
-          //   type: "TAB",
-          //   id: action.id,
-          //   title: action.title,
-          //   components: [],
-          // });
+          draft.push({
+            type: "TAB",
+            id: action.id,
+            title: action.title,
+            components: [],
+          });
           break;
         case "REMOVE_TAB":
           draft.splice(action.tabIndex, 1);
           break;
         case "ADD_COMPONENT":
+          console.log(`added component:`, action.item);
           draft[action.tabIndex].components.push({
             ...action.component,
           });
