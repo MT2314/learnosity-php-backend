@@ -47,7 +47,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           draft.splice(action.tabIndex, 1);
           break;
         case "ADD_COMPONENT":
-          console.log(`added component:`, action.item);
           draft[action.tabIndex].components.push({
             ...action.component,
           });

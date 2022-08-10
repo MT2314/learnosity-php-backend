@@ -31,7 +31,7 @@ const Tab = ({ tab, tabIndex }) => {
           {components.map((component, compIndex) => {
             return (
               <TabComponent
-                component={component}
+                component={JSON.stringify(component)}
                 compIndex={compIndex}
                 tabIndex={tabIndex}
               />
