@@ -18,7 +18,7 @@ export const ReactQuillContainer = styled("div")(({ theme }) => ({
     fontSize: "16px",
     fontFamily: ["Inter", "sans-serif"].join(","),
     letterSpacing: "0.15px",
-    letterHeight: "24px"
+    letterHeight: "24px",
   },
   "& .ql-editor.ql-blank::before": {
     padding: "0px 104px",
