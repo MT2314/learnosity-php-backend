@@ -46,7 +46,7 @@ const Tabs = () => {
       <div className="tab-title-wrapper">
         {state.map((tabTitle, tabIndex) => {
           return (
-            <button
+            <div
               key={`tab-title-${tabIndex}`}
               role="tab"
               aria-label={
@@ -80,7 +80,7 @@ const Tabs = () => {
                 }}
                 onBlur={handleTitleBlur}
               />
-            </button>
+            </div>
           );
         })}
       </div>
