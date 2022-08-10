@@ -48,6 +48,12 @@ const Tabs = () => {
           return (
             <button
               key={`tab-title-${tabIndex}`}
+              role="tab"
+              aria-label={
+                state[tabIndex].title
+                  ? state[tabIndex].title
+                  : `Untitled Tab ${tabIndex + 1}`
+              }
               className={`tab-title ${
                 activeTab === tabIndex ? "active-tab" : ""
               }`}
@@ -57,6 +63,9 @@ const Tabs = () => {
                 className="tab-title-input"
                 placeholder={`Tab ${tabIndex + 1}`}
                 aria-label="tab title input"
+                aria-multiline="true"
+                // role="textbox"
+                contentEditable
                 maxLength="200"
                 disabled={activeTab == tabIndex ? false : true}
                 onClick={(e) => enableTitleChange(e)}
