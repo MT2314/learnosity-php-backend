@@ -43,7 +43,7 @@ const Tabs = () => {
         add tab
       </button> */}
 
-      <div className="tab-title-wrapper">
+      <div className="tab-title-wrapper" role="tablist">
         {state.map((tabTitle, tabIndex) => {
           return (
             <div
