@@ -101,7 +101,7 @@ const componentIndex = {
   },
   Tab: {
     Component: TabsMain,
-    readableName: "Tab",
+    readableName: "Tabs",
     defaultProps: testTabDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
