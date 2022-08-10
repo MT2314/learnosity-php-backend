@@ -70,6 +70,15 @@ const componentIndex = {
     dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon
   },
+  QuoteBox: {
+    Component: QuoteBox,
+    readableName: "Quote Box",
+    defaultProps: quoteBoxDefaultProps,
+    version: "0.0.1",
+    category: categories.text,
+    dndLabel: defaultDndLabel,
+    componentIcon: defaultComponentIcon
+  },
   Video: {
     Component: Video,
     readableName: "Video",

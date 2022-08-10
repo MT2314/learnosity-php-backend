@@ -12,7 +12,7 @@ import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
 
 export const defaultProps = { body: null };
 
-const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {}, isActiveComponent = false, setActiveComponent = () => {} }) => {
+const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
   const [showEditor, setShowEditor] = useState(false);
   const focusOutofText = useRef(null);
 
@@ -47,8 +47,6 @@ const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {}, isActiveCo
               setShowEditor={setShowEditor}
               showEditor={showEditor}
               focusOutofText={focusOutofText.current}
-              setActiveComponent={setActiveComponent}
-              isActiveComponent={isActiveComponent}
             />
           )}
           <div className="sr-only" tabIndex="-1" ref={focusOutofText}>
