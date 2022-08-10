@@ -64,7 +64,7 @@ const Tabs = () => {
                 placeholder={`Tab ${tabIndex + 1}`}
                 aria-label="tab title input"
                 aria-multiline="true"
-                // role="textbox"
+                role={activeTab == tabIndex ? null : "button"}
                 contentEditable
                 maxLength="200"
                 disabled={activeTab == tabIndex ? false : true}

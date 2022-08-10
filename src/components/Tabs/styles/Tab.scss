@@ -56,6 +56,15 @@
         background: #1d388f61;
         border-radius: 2px;
       }
+
+      &:disabled {
+        background: #f5f5f5;
+      }
+
+      &:focus-visible {
+        border: none;
+        outline: none;
+      }
     }
 
     //on click active tab styles apply
