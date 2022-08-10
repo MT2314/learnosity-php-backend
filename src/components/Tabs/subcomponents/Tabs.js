@@ -59,27 +59,37 @@ const Tabs = () => {
               }`}
               onClick={() => setActiveTab(tabIndex)}
             >
-              <textarea
-                className="tab-title-input"
-                placeholder={`Tab ${tabIndex + 1}`}
-                aria-label="tab title input"
-                aria-multiline="true"
-                role={activeTab == tabIndex ? null : "button"}
-                contentEditable
-                maxLength="200"
-                disabled={activeTab == tabIndex ? false : true}
-                onClick={(e) => enableTitleChange(e)}
-                onChange={handleTitleChange}
-                data-id={tabIndex}
-                value={state[tabIndex].title}
-                rows="2"
-                wrap="hard"
-                style={{
-                  WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
-                  // WebkitLineClamp: 2,
-                }}
-                onBlur={handleTitleBlur}
-              />
+              {activeTab == tabIndex ? (
+                <textarea
+                  className="tab-title-input"
+                  placeholder={`Tab ${tabIndex + 1}`}
+                  aria-label="tab title input"
+                  aria-multiline="true"
+                  role={activeTab == tabIndex ? null : "button"}
+                  contentEditable
+                  maxLength="200"
+                  onClick={(e) => enableTitleChange(e)}
+                  onChange={handleTitleChange}
+                  data-id={tabIndex}
+                  value={state[tabIndex].title}
+                  rows="2"
+                  wrap="hard"
+                  style={{
+                    WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
+                    // WebkitLineClamp: 2,
+                  }}
+                  onBlur={handleTitleBlur}
+                />
+              ) : (
+                <p
+                  className="placeholder-title"
+                  onClick={() => setActiveTab(tabIndex)}
+                >
+                  {state[tabIndex].title
+                    ? state[tabIndex].title
+                    : `Tab ${tabIndex + 1}`}
+                </p>
+              )}
             </div>
           );
         })}
