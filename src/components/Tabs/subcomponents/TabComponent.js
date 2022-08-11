@@ -1,12 +1,18 @@
 import React from "react";
+import componentIndex from "../../componentIndex";
 
 const TabComponent = ({ component, compIndex }) => {
-  console.log(component.componentName);
-  const componentName = component.componentName;
+
+  const {componentName, componentProps} = component
+
+  //get the matching component from the componentIndex
+  const componentDetails = componentIndex[componentName]
+
+  const { Component } = componentDetails;
 
   return (
     <li key={`comp-${compIndex}`}>
-      <p>{componentName}</p>
+      <Component {...componentProps}/>
     </li>
   );
 };

@@ -28,7 +28,6 @@ const Tab = ({ tab, tabIndex }) => {
       ref={drop}
       className="tab-body"
       key={id}
-      style={{ backgroundColor: isOver ? "green" : "inherit" }}
     >
       {activeTab === tabIndex && components.length === 0 ? (
         <Placeholder />
