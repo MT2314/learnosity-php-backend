@@ -2,6 +2,8 @@ import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabsMain";
 import Tab from "./Tab";
 
+import { TextareaAutosize } from "@material-ui/core";
+
 const Tabs = () => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
@@ -62,7 +64,7 @@ const Tabs = () => {
               onClick={() => setActiveTab(tabIndex)}
             >
               {activeTab == tabIndex ? (
-                <textarea
+                <TextareaAutosize
                   className="tab-title-input"
                   placeholder={`Tab ${tabIndex + 1}`}
                   aria-label="tab title input"
@@ -70,6 +72,8 @@ const Tabs = () => {
                   role={activeTab == tabIndex ? "textbox" : "tab"}
                   disabled={activeTab == tabIndex ? false : true}
                   contentEditable
+                  minRows="1"
+                  maxRows="2"
                   maxLength="200"
                   onChange={handleTitleChange}
                   onFocus={() =>
