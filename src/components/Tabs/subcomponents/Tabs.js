@@ -8,15 +8,6 @@ const Tabs = () => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
-  // const enableTitleChange = (e) => {
-  //   e.stopPropagation();
-  //   if (e.target.dataset.id == activeTab) {
-  //     e.target.disabled = false;
-  //     e.target.style.overflow = "unset";
-  //     // e.target.style.WebkitLineClamp = "unset";
-  //   }
-  // };
-
   const handleTitleChange = useCallback((e) => {
     dispatch({
       func: "CHANGE_TITLE",
@@ -90,8 +81,10 @@ const Tabs = () => {
               ) : (
                 <p
                   className="placeholder-title"
-                  onClick={() => setActiveTab(tabIndex)}
                   role="tab"
+                  style={{
+                    WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
+                  }}
                 >
                   {state[tabIndex].title
                     ? state[tabIndex].title
