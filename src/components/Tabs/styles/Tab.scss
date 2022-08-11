@@ -11,7 +11,8 @@
 
   .tab-title-wrapper {
     display: flex;
-    // height: 40px;
+    min-height: 40px;
+    max-height: 69px;
 
     //tab title styles
     .tab-title {
@@ -19,38 +20,60 @@
       border: 1px solid #bdbdbd;
       border-radius: 10px 10px 0px 0px;
       width: 100%;
-
+      max-width: 484px;
+      padding: 8px 10px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 18px;
       color: #636363;
       font-weight: 500;
       text-align: center;
-    }
 
-    .tab-title-input {
-      font-family: "Inter", sans-serif;
-      border: none;
-      font-size: 18px;
-      width: 100%;
-      text-align: center;
-      resize: none;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-
-      &::-webkit-scrollbar {
-        width: 10px;
+      .placeholder-title {
+        width: 100%;
+        max-width: 484px;
+        max-height: 50px;
+        padding: 0;
+        margin: 0;
+        font-size: 18px;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
       }
 
-      &::-webkit-scrollbar-track {
-        background: #e4efef;
-      }
+      .tab-title-input {
+        font-family: "Inter", sans-serif;
+        border: none;
+        padding: 0;
+        font-size: 18px;
+        font-weight: 500;
+        width: 100%;
+        min-height: 25px;
+        max-height: 50px;
+        text-align: center;
+        resize: none;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
 
-      &::-webkit-scrollbar-thumb {
-        background: #1d388f61;
-        border-radius: 2px;
+        &::-webkit-scrollbar {
+          -webkit-appearance: none;
+          width: 7px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 4px;
+          background-color: rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+          -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+        }
+
+        &:disabled {
+          background: #f5f5f5;
+        }
       }
     }
 
@@ -59,6 +82,9 @@
       background-color: #fff;
       color: #232323;
       border-bottom: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       .tab-title-input {
         width: 100%;

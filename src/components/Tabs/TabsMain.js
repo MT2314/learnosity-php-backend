@@ -11,13 +11,13 @@ export const defaultProps = {
     {
       type: "TAB",
       id: 0,
-      title: "Tab 1",
+      title: "",
       components: [],
     },
     {
       type: "TAB",
       id: 1,
-      title: "Tab 2",
+      title: "",
       components: [],
     },
   ],

@@ -1,7 +1,7 @@
 import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
-import { Tooltip } from "@mui/material";
+import { Tooltip } from "@material-ui/core";
 
 import "../../styles/AlignDropdownButton.scss";
 import icons from "../../assets/icons";
@@ -16,7 +16,24 @@ const AlignDropdownButton = ({
     <>
       <Card className={show ? "align-dropdown show" : "align-dropdown hide"}>
         <span className="ql-formats">
-          <Tooltip arrow title="align left" placement="top">
+          <Tooltip
+            aria-label="align left"
+            title="align left"
+            placement="top"
+            arrow
+            PopperProps={{
+              disablePortal: true,
+              popperOptions: {
+                positionFixed: true,
+                modifiers: {
+                  preventOverflow: {
+                    enabled: true,
+                    boundariesElement: "window", // where "window" is the boundary
+                  },
+                },
+              },
+            }}
+          >
             <button
               aria-label="left align"
               onClick={() => {
@@ -37,7 +54,24 @@ const AlignDropdownButton = ({
               {icons["align"]}
             </button>
           </Tooltip>
-          <Tooltip arrow title="centre text" placement="top">
+          <Tooltip
+            aria-label="center text"
+            title="center text"
+            placement="top"
+            arrow
+            PopperProps={{
+              disablePortal: true,
+              popperOptions: {
+                positionFixed: true,
+                modifiers: {
+                  preventOverflow: {
+                    enabled: true,
+                    boundariesElement: "window", // where "window" is the boundary
+                  },
+                },
+              },
+            }}
+          >
             <button
               aria-label="align center"
               className={
@@ -59,7 +93,24 @@ const AlignDropdownButton = ({
               {icons["center"]}
             </button>
           </Tooltip>
-          <Tooltip arrow title="align right" placement="top">
+          <Tooltip
+            aria-label="align right"
+            title="align right"
+            placement="top"
+            arrow
+            PopperProps={{
+              disablePortal: true,
+              popperOptions: {
+                positionFixed: true,
+                modifiers: {
+                  preventOverflow: {
+                    enabled: true,
+                    boundariesElement: "window", // where "window" is the boundary
+                  },
+                },
+              },
+            }}
+          >
             <button
               aria-label="right align"
               className={
