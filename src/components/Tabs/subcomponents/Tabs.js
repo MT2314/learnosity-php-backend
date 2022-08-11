@@ -44,6 +44,7 @@ const Tabs = () => {
             <div
               key={`tab-title-${tabIndex}`}
               role="tab"
+              tabIndex="0"
               aria-label={
                 state[tabIndex].title
                   ? state[tabIndex].title
@@ -53,6 +54,11 @@ const Tabs = () => {
                 activeTab === tabIndex ? "active-tab" : ""
               }`}
               onClick={() => setActiveTab(tabIndex)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  setActiveTab(tabIndex);
+                }
+              }}
             >
               {activeTab == tabIndex ? (
                 <TextareaAutosize
