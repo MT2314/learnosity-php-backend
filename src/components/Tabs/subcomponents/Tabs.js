@@ -1,19 +1,12 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabsMain";
 import Tab from "./Tab";
+
+import { TextareaAutosize } from "@material-ui/core";
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
-
-  const enableTitleChange = (e) => {
-    e.stopPropagation();
-    if (e.target.dataset.id == activeTab) {
-      e.target.disabled = false;
-      e.target.style.overflow = "unset";
-      // e.target.style.WebkitLineClamp = "unset";
-    }
-  };
 
   const handleTitleChange = useCallback((e) => {
     dispatch({
@@ -29,6 +22,8 @@ const Tabs = () => {
     e.target.scrollTo(0, 0);
   };
 
+  const inputRef = useRef();
+
   return (
     <div className="tab-container">
       {/* <button
@@ -43,35 +38,66 @@ const Tabs = () => {
         add tab
       </button> */}
 
-      <div className="tab-title-wrapper">
+      <div className="tab-title-wrapper" role="tablist">
         {state.map((tabTitle, tabIndex) => {
           return (
-            <button
+            <div
               key={`tab-title-${tabIndex}`}
+              role="tab"
+              tabIndex="0"
+              aria-label={
+                state[tabIndex].title
+                  ? state[tabIndex].title
+                  : `Untitled Tab ${tabIndex + 1}`
+              }
               className={`tab-title ${
                 activeTab === tabIndex ? "active-tab" : ""
               }`}
               onClick={() => setActiveTab(tabIndex)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  setActiveTab(tabIndex);
+                }
+              }}
             >
-              <textarea
-                className="tab-title-input"
-                placeholder={`Tab ${tabIndex + 1}`}
-                aria-label="tab title input"
-                maxLength="200"
-                disabled={activeTab == tabIndex ? false : true}
-                onClick={(e) => enableTitleChange(e)}
-                onChange={handleTitleChange}
-                data-id={tabIndex}
-                value={state[tabIndex].title}
-                rows="2"
-                wrap="hard"
-                style={{
-                  WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
-                  // WebkitLineClamp: 2,
-                }}
-                onBlur={handleTitleBlur}
-              />
-            </button>
+              {activeTab == tabIndex ? (
+                <TextareaAutosize
+                  className="tab-title-input"
+                  placeholder={`Tab ${tabIndex + 1}`}
+                  aria-label="tab title input"
+                  aria-multiline="true"
+                  role={activeTab == tabIndex ? "textbox" : "tab"}
+                  disabled={activeTab == tabIndex ? false : true}
+                  contentEditable
+                  minRows="1"
+                  maxRows="2"
+                  maxLength="200"
+                  onChange={handleTitleChange}
+                  onFocus={() =>
+                    inputRef.current.setSelectionRange(
+                      state[tabIndex].title.length,
+                      state[tabIndex].title.length
+                    )
+                  }
+                  data-id={tabIndex}
+                  value={state[tabIndex].title}
+                  onBlur={handleTitleBlur}
+                  ref={inputRef}
+                />
+              ) : (
+                <p
+                  className="placeholder-title"
+                  role="tab"
+                  style={{
+                    WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
+                  }}
+                >
+                  {state[tabIndex].title
+                    ? state[tabIndex].title
+                    : `Tab ${tabIndex + 1}`}
+                </p>
+              )}
+            </div>
           );
         })}
       </div>
