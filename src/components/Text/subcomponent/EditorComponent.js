@@ -196,6 +196,18 @@ const EditorComponent = ({
     return !changeFromAPI;
   };
 
+  // keyboard exit the text component
+  const onKeyDownExit = (e) => {
+    if (e.key === "Escape") {
+      setEditorIsFocus(false);
+      setShowEditor(false);
+      focusOutofText.focus();
+      textRef.current?.classList.add("fakeFocus");
+    } else if (e.shiftKey && e.key === 'Tab') {
+      console.log("tab here")
+    }
+  }
+
   //customization settings for toolbar
   const formats = [
     "bold",
@@ -297,14 +309,7 @@ const EditorComponent = ({
             focusRef.current
           )
         }
-        onKeyDown={(e) => {
-          if (e.key === "Escape") {
-            setEditorIsFocus(false);
-            setShowEditor(false);
-            focusOutofText.focus();
-            textRef.current?.classList.add("fakeFocus");
-          }
-        }}
+        onKeyDown={(e) => { onKeyDownExit(e) }}
       />
     </div>
   );
