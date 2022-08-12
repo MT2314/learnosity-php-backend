@@ -40,6 +40,9 @@ const EditorComponent = ({
   //track clicks outside text div
   const textRef = useRef(null);
 
+  //focus to the bold 
+  const boldRef = useRef(null);
+
   const ConfigBar = {
     display: !isActiveComponent ? (editorIsFocus ? "flex" : "none") : "flex",
     position: "fixed",
@@ -204,7 +207,8 @@ const EditorComponent = ({
       focusOutofText.focus();
       textRef.current?.classList.add("fakeFocus");
     } else if (e.shiftKey && e.key === 'Tab') {
-      console.log("tab here")
+      e.preventDefault();
+      boldRef.current.focus();
     }
   }
 
@@ -285,6 +289,7 @@ const EditorComponent = ({
         <CustomToolBar
           toolbarId={toolbarId}
           containerId={`toolbar-${toolbarId}`}
+          boldRef={boldRef}
         />
       </div>
 

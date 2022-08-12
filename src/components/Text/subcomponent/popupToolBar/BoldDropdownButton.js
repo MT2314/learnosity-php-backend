@@ -5,10 +5,10 @@ import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core";
 import icons from "../../assets/icons";
 
-const BoldDropdownButton = ({ show }) => {
+const BoldDropdownButton = ({ show, onKeyDownExit }) => {
   return (
     <>
-      <Card className={show ? "bold-dropdown show" : "bold-dropdown hide"}>
+      <Card className={show ? "bold-dropdown show" : "bold-dropdown hide"} onKeyDown={onKeyDownExit}>
         <Tooltip
           aria-label="bold"
           title="bold"
