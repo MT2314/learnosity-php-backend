@@ -10,10 +10,11 @@ const ListDropdownButton = ({
   show,
   activeDropDownItem,
   setActiveDropDownItem,
+  onKeyDownExit,
 }) => {
   return (
     <>
-      <Card className={show ? "list-dropdown show" : "list-dropdown hide"}>
+      <Card className={show ? "list-dropdown show" : "list-dropdown hide"} onKeyDown={onKeyDownExit}>
         <Tooltip
           aria-label="bullets"
           title="bullets"
