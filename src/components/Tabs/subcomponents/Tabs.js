@@ -24,6 +24,15 @@ const Tabs = () => {
 
   const inputRef = useRef();
 
+  const handleCursorFocus = (i) => {
+    inputRef.current.setSelectionRange(
+      state[i].title.length,
+      state[i].title.length
+    );
+    inputRef.current.focus();
+    inputRef.current.scrollTo(state[i].title.length, state[i].title.length);
+  };
+
   return (
     <div className="tab-container">
       {/* <button
@@ -73,12 +82,7 @@ const Tabs = () => {
                   maxRows="2"
                   maxLength="200"
                   onChange={handleTitleChange}
-                  onFocus={() =>
-                    inputRef.current.setSelectionRange(
-                      state[tabIndex].title.length,
-                      state[tabIndex].title.length
-                    )
-                  }
+                  onFocus={() => handleCursorFocus(tabIndex)}
                   data-id={tabIndex}
                   value={state[tabIndex].title}
                   onBlur={handleTitleBlur}

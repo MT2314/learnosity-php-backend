@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Divider } from "@mui/material/";
 import { Tooltip } from "@material-ui/core";
 
@@ -9,7 +9,7 @@ import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
 
-const CustomToolBar = ({ toolbarId, containerId }) => {
+const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
@@ -18,26 +18,38 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
-  const parentDiv = document.getElementById(containerId);
-  if (parentDiv) {
-    const QLformats = parentDiv.querySelector(`.ql-formats`);
-    const QLactive = QLformats.querySelector(`.ql-active`);
-    if (QLactive) {
-      const options = {
-        attributes: true,
-      };
+  //focus to the list and align. Bold Ref is found in EditorComponent.js 
+  const listRef = useRef(null);
+  const alignRef = useRef(null);
 
-      function callback(mutationList) {
-        mutationList.forEach(function (mutation) {
-          if (mutation.target.classList.contains(`ql-active`)) {
-            setVisibleAlignIcon(
-              icons[mutation.target.value ? mutation.target.value : "align"]
-            );
-          }
-        });
-      }
-      const observer = new MutationObserver(callback);
-      observer.observe(QLactive, options);
+  const parentDiv = document.getElementById(containerId);
+  const QLformats = parentDiv?.querySelector(`.ql-formats`);
+  const QLactive = QLformats?.querySelector(`.ql-active`);
+  if (QLactive) {
+    const options = {
+      attributes: true,
+    };
+
+    function callback(mutationList) {
+      mutationList.forEach(function (mutation) {
+        if (mutation.target.classList.contains(`ql-active`)) {
+          setVisibleAlignIcon(
+            icons[mutation.target.value ? mutation.target.value : "align"]
+          );
+        }
+      });
+    }
+    const observer = new MutationObserver(callback);
+    observer.observe(QLactive, options);
+  }
+
+  const onKeyDownExit = (e, currentRef) => {
+    if (e.key === "Escape") {
+      currentRef.current.focus();
+      setAlignVisibility(false);
+      setListVisibility(false);
+      setBoldVisibility(false);
+      setActiveTopMenu(false);
     }
   }
 
@@ -63,6 +75,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         }}
       >
         <button
+          ref={boldRef}
           onClick={() => {
             setBoldVisibility(!boldVisibility);
             setAlignVisibility(false);
@@ -88,6 +101,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         show={boldVisibility}
         aria-label="formatting options select dropdown"
         className="dropdown-content"
+        onKeyDownExit={(e) => { onKeyDownExit(e, boldRef); }}
       ></BoldDropdownButton>
 
       {/* formula btn */}
@@ -152,6 +166,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         }}
       >
         <button
+          ref={alignRef}
           onClick={() => {
             setAlignVisibility(!alignVisibility);
             setBoldVisibility(false);
@@ -182,6 +197,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
         setVisibleAlignIcon={setVisibleAlignIcon}
+        onKeyDownExit={(e) => { onKeyDownExit(e, alignRef); }}
       />
 
       {/* bullets drowdown starts */}
@@ -204,6 +220,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         }}
       >
         <button
+          ref={listRef}
           onClick={() => {
             setListVisibility(!listVisibility);
             setAlignVisibility(false);
@@ -228,6 +245,7 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         aria-label="list buttons dropdown"
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
+        onKeyDownExit={(e) => { onKeyDownExit(e, listRef); }}
       ></ListDropdownButton>
 
       {/* link btn and divider */}
