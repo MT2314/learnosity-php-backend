@@ -1,12 +1,15 @@
 import React from "react";
+import componentIndex from "../../../components/componentIndex";
 
 const TabComponent = ({ component, compIndex }) => {
-  console.log(component.componentName);
-  const componentName = component.componentName;
+  const { componentName } = component;
+
+  const Component = componentIndex[componentName]?.Component;
 
   return (
     <li key={`comp-${compIndex}`}>
       <p>{componentName}</p>
+      <Component />
     </li>
   );
 };
