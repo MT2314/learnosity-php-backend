@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import componentIndex from "../../../components/componentIndex";
 import styled from "@emotion/styled";
+import { LayoutContext } from "../TabsMain";
 
 const InnerBox = styled("div")({
   boxShadow: "0px 0px 0px 1px #E0E0E0",
@@ -16,14 +17,14 @@ const ListItem = styled("li")(({ theme }) => ({
 }));
 
 const MockStateWrapper = ({ Component, data }) => {
-  const [state, setState] = useState({ data });
+  const [state, dispatch] = useContext(LayoutContext);
+
   console.log(state);
   return (
     <Component
-      setProp={(stateUpdate) =>
-        setState((state) => ({ ...state, ...stateUpdate }))
-      }
-      {...state}
+      setProp={() => {
+        dispatch({ func: "UPDATE_COMPONENT" });
+      }}
     />
   );
 };
