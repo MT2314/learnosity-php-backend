@@ -16,10 +16,8 @@ import {
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 
-import "../utils/jquery";
 import katex from "katex";
 import "katex/dist/katex.css";
-window.katex = katex;
 
 const EditorComponent = ({
   body,
@@ -45,7 +43,7 @@ const EditorComponent = ({
   //track clicks outside text div
   const textRef = useRef(null);
 
-  //focus to the bold 
+  //focus to the bold
   const boldRef = useRef(null);
 
   const ConfigBar = {
@@ -69,6 +67,7 @@ const EditorComponent = ({
   });
 
   useEffect(() => {
+    window.katex = katex;
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
     // on render editor is focused
@@ -211,11 +210,11 @@ const EditorComponent = ({
       setShowEditor(false);
       focusOutofText.focus();
       textRef.current?.classList.add("fakeFocus");
-    } else if (e.shiftKey && e.key === 'Tab') {
+    } else if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
       boldRef.current.focus();
     }
-  }
+  };
 
   //customization settings for toolbar
   const formats = [
@@ -319,7 +318,9 @@ const EditorComponent = ({
             focusRef.current
           )
         }
-        onKeyDown={(e) => { onKeyDownExit(e) }}
+        onKeyDown={(e) => {
+          onKeyDownExit(e);
+        }}
       />
     </div>
   );

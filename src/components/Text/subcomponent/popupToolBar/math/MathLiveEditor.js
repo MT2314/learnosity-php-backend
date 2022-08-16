@@ -1,15 +1,20 @@
-import * as React from "react";
+import React, {
+  useImperativeHandle,
+  useEffect,
+  forwardRef,
+  useRef,
+} from "react";
 import "mathlive/dist/mathlive.min";
 
 import "mathlive/dist/mathlive-fonts.css";
 import "mathlive/dist/mathlive-static.css";
 
-const MathLiveEditor = React.forwardRef((props, ref) => {
-  const _ref = React.useRef(null);
+const MathLiveEditor = forwardRef((props, ref) => {
+  const _ref = useRef(null);
 
-  React.useImperativeHandle(ref, () => _ref.current, [_ref]);
+  useImperativeHandle(ref, () => _ref.current, [_ref]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (_ref.current?.getValue() !== props.value) {
       _ref.current?.setValue(props.value || " ");
     }
