@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import componentIndex from "../../../components/componentIndex";
 import styled from "@emotion/styled";
-import { LayoutContext } from "../TabsMain";
+import { LayoutContext, TabContext } from "../TabsMain";
 
 const InnerBox = styled("div")({
   boxShadow: "0px 0px 0px 1px #E0E0E0",
@@ -16,14 +16,20 @@ const ListItem = styled("li")(({ theme }) => ({
   listStyle: "none",
 }));
 
-const MockStateWrapper = ({ Component, data }) => {
+const MockStateWrapper = ({ Component, componentState, compIndex }) => {
   const [state, dispatch] = useContext(LayoutContext);
+  const [activeTab, setActiveTab] = useContext(TabContext);
 
-  console.log(state);
+  console.log(activeTab);
   return (
     <Component
       setProp={() => {
-        dispatch({ func: "UPDATE_COMPONENT" });
+        dispatch({
+          func: "UPDATE_COMPONENT",
+          compIndex: compIndex,
+          tabIndex: activeTab,
+          componentState: componentState,
+        });
       }}
     />
   );
@@ -37,7 +43,11 @@ const TabComponent = ({ component, compIndex }) => {
   return (
     <InnerBox>
       <ListItem key={`comp-${compIndex}`}>
-        <MockStateWrapper Component={Component} data={componentProps} />
+        <MockStateWrapper
+          Component={Component}
+          componentState={componentProps}
+          compIndex={compIndex}
+        />
       </ListItem>
     </InnerBox>
   );
