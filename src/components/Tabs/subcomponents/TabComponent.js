@@ -32,7 +32,6 @@ const TabComponent = ({ component, compIndex }) => {
   return (
     <li key={`comp-${compIndex}`}>
       <Component setProp={(stateUpdate) => {
-        console.log("componentProps in setProp:", stateUpdate)
         dispatch({
           func: "UPDATE_COMPONENT",
           compIndex: compIndex,
