@@ -16,6 +16,9 @@ import {
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 
+import katex from "katex";
+import "katex/dist/katex.css";
+
 const EditorComponent = ({
   body,
   setProp,
@@ -40,7 +43,7 @@ const EditorComponent = ({
   //track clicks outside text div
   const textRef = useRef(null);
 
-  //focus to the bold 
+  //focus to the bold
   const boldRef = useRef(null);
 
   const ConfigBar = {
@@ -64,6 +67,7 @@ const EditorComponent = ({
   });
 
   useEffect(() => {
+    window.katex = katex;
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
     // on render editor is focused
@@ -76,6 +80,7 @@ const EditorComponent = ({
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
 
+    console.log(focusRef.current.getEditor().root.innerHTML);
     //quill instance
     const quill = focusRef.current;
     const quillText = quill.getEditor().getText();
@@ -95,7 +100,6 @@ const EditorComponent = ({
     onPaste && (editorContent.ops[0].insert = "");
 
     //update setProp with new editorContent
-
     noHighlights && linksChecked && setProp({ body: editorContent });
   };
 
@@ -206,11 +210,11 @@ const EditorComponent = ({
       setShowEditor(false);
       focusOutofText.focus();
       textRef.current?.classList.add("fakeFocus");
-    } else if (e.shiftKey && e.key === 'Tab') {
+    } else if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
       boldRef.current.focus();
     }
-  }
+  };
 
   //customization settings for toolbar
   const formats = [
@@ -314,10 +318,14 @@ const EditorComponent = ({
             focusRef.current
           )
         }
-        onKeyDown={(e) => { onKeyDownExit(e) }}
+        onKeyDown={(e) => {
+          onKeyDownExit(e);
+        }}
       />
     </div>
   );
 };
 
 export default EditorComponent;
+
+/// \\
