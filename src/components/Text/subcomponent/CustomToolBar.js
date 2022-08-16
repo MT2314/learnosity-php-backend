@@ -5,6 +5,7 @@ import { Tooltip } from "@material-ui/core";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
+import MathPopup from "./popupToolbar/math/MathPopup";
 import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
@@ -18,7 +19,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
-  //focus to the list and align. Bold Ref is found in EditorComponent.js 
+  //focus to the list and align. Bold Ref is found in EditorComponent.js
   const listRef = useRef(null);
   const alignRef = useRef(null);
 
@@ -51,7 +52,12 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
       setBoldVisibility(false);
       setActiveTopMenu(false);
     }
-  }
+  };
+
+  const closeMath = () => {
+    setActiveDropDownItem("");
+    setActiveTopMenu("");
+  };
 
   return (
     <div id={toolbarId} className="toolbarContainer">
@@ -101,7 +107,9 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
         show={boldVisibility}
         aria-label="formatting options select dropdown"
         className="dropdown-content"
-        onKeyDownExit={(e) => { onKeyDownExit(e, boldRef); }}
+        onKeyDownExit={(e) => {
+          onKeyDownExit(e, boldRef);
+        }}
       ></BoldDropdownButton>
 
       {/* formula btn */}
@@ -145,7 +153,9 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
           {icons["formula"]}
         </button>
       </Tooltip>
-
+      {activeTopMenu === "math" && (
+        <MathPopup toolbarId={toolbarId} closeMath={closeMath} />
+      )}
       {/* alignment dropdown */}
       <Tooltip
         aria-label="alignment"
@@ -197,7 +207,9 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
         setVisibleAlignIcon={setVisibleAlignIcon}
-        onKeyDownExit={(e) => { onKeyDownExit(e, alignRef); }}
+        onKeyDownExit={(e) => {
+          onKeyDownExit(e, alignRef);
+        }}
       />
 
       {/* bullets drowdown starts */}
@@ -245,7 +257,9 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
         aria-label="list buttons dropdown"
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
-        onKeyDownExit={(e) => { onKeyDownExit(e, listRef); }}
+        onKeyDownExit={(e) => {
+          onKeyDownExit(e, listRef);
+        }}
       ></ListDropdownButton>
 
       {/* link btn and divider */}
