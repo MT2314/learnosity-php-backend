@@ -5,6 +5,7 @@ import { Tooltip } from "@material-ui/core";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
+import MathPopup from "./popupToolbar/math/MathPopup";
 import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
@@ -40,6 +41,11 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
       observer.observe(QLactive, options);
     }
   }
+
+  const closeMath = () => {
+    setActiveDropDownItem("");
+    setActiveTopMenu("");
+  };
 
   return (
     <div id={toolbarId} className="toolbarContainer">
@@ -131,7 +137,9 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
           {icons["formula"]}
         </button>
       </Tooltip>
-
+      {activeTopMenu === "math" && (
+        <MathPopup toolbarId={toolbarId} closeMath={closeMath} />
+      )}
       {/* alignment dropdown */}
       <Tooltip
         aria-label="alignment"

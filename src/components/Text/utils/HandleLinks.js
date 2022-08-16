@@ -159,7 +159,7 @@ export const ConvertLinks = (editorContent, quillText) => {
 
   for (const delta of ops) {
     //Check if delta does not have a link attribute but has a insert property
-    if (!delta?.attributes?.link && delta.insert) {
+    if (!delta?.attributes?.link && delta.insert && !delta.insert.formula) {
       const deltaText = delta?.insert;
 
       //split text into an array by removing any empty strings

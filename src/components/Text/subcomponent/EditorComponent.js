@@ -16,6 +16,11 @@ import {
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 
+import "../utils/jquery";
+import katex from "katex";
+import "katex/dist/katex.css";
+window.katex = katex;
+
 const EditorComponent = ({
   body,
   setProp,
@@ -73,6 +78,7 @@ const EditorComponent = ({
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
 
+    console.log(focusRef.current.getEditor().root.innerHTML);
     //quill instance
     const quill = focusRef.current;
     const quillText = quill.getEditor().getText();
@@ -92,7 +98,6 @@ const EditorComponent = ({
     onPaste && (editorContent.ops[0].insert = "");
 
     //update setProp with new editorContent
-
     noHighlights && linksChecked && setProp({ body: editorContent });
   };
 
@@ -311,3 +316,5 @@ const EditorComponent = ({
 };
 
 export default EditorComponent;
+
+/// \\
