@@ -52,19 +52,15 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           });
           break;
         case "UPDATE_COMPONENT":
-          console.log(action.compIndex);
-          // draft[action.tabIndex].components[action.compIndex]({
+          console.log(`Hello`);
+          draft[action.tabIndex].components[action.compIndex].componentState = {...action.component.componentState}
           break;
-
         case "DELETE_COMPONENT":
           draft[action.tabIndex].components.splice(action.componentIndex, 1);
           break;
         case "CHANGE_TITLE":
           const tab = draft.find((tab) => tab.id === action.id);
           tab.title = action.title;
-          break;
-        case "UPDATE_COMPONENT":
-          console.log('updated component')
           break;
         default:
           break;

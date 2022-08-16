@@ -15,7 +15,8 @@ const Tab = ({ tab, tabIndex }) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ["COMPONENT"],
     drop: (item) =>
-      dispatch({ func: "ADD_COMPONENT", tabIndex: tabIndex, component: item }),
+    {console.log("compo prpos",JSON.parse(item.componentProps))
+      dispatch({ func: "ADD_COMPONENT", tabIndex: tabIndex, component: { componentName: item.componentName, componentState: JSON.parse(item.componentProps) } })},
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
