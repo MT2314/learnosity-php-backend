@@ -5,7 +5,7 @@ import { Tooltip } from "@material-ui/core";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
-import MathPopup from "./popupToolbar/math/MathPopup";
+import MathPopup from "../subcomponent/popupToolBar/math/MathPopup";
 import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
