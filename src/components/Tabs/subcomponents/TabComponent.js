@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
+import { LayoutContext } from "../TabsMain";
 import componentIndex from "../../componentIndex";
 
 const TabComponent = ({ component, compIndex }) => {
+
+  const [state, dispatch] = useContext(LayoutContext);
 
   const {componentName, componentProps} = component
 
@@ -10,9 +13,18 @@ const TabComponent = ({ component, compIndex }) => {
 
   const { Component } = componentDetails;
 
+  // const handleChange = (newState) => {
+  //   console.log(`Updating state for ${id} ->`, state, newState);
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     [id]: { ...prevState[id], ...newState },
+  //   }));
+  // };
+
+
   return (
     <li key={`comp-${compIndex}`}>
-      <Component {...componentProps}/>
+      <Component setProp={dispatch({func:"UPDATE_COMPONENT"})} {...componentProps} />
     </li>
   );
 };
