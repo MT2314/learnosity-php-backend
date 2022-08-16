@@ -16,27 +16,7 @@ import { LayoutContext, TabContext } from "../TabsMain";
 //   listStyle: "none",
 // }));
 
-// const MockStateWrapper = ({ Component, componentState, compIndex }) => {
-//   const [state, dispatch] = useContext(LayoutContext);
-  
-
-//   console.log(activeTab);
-//   return (
-//     <Component
-//       setProp={() => {
-//         dispatch({
-//           func: "UPDATE_COMPONENT",
-//           compIndex: compIndex,
-//           tabIndex: activeTab,
-//           componentState: componentState,
-//         });
-//       }}
-//     />
-//   );
-// };
-
 const TabComponent = ({ component, compIndex }) => {
-  console.log(`component is tabComponent:`, component);
 
   const [state, dispatch] = useContext(LayoutContext);
   const [activeTab, setActiveTab] = useContext(TabContext);
@@ -51,13 +31,15 @@ const TabComponent = ({ component, compIndex }) => {
 
   return (
     <li key={`comp-${compIndex}`}>
-      <Component setProp={() => {
+      <Component setProp={(stateUpdate) => {
+        console.log("componentProps in setProp:", stateUpdate)
         dispatch({
           func: "UPDATE_COMPONENT",
           compIndex: compIndex,
           tabIndex: activeTab,
-          component: component.componentState,
+          stateUpdate: stateUpdate
         });
+
       }} {...componentProps} />
     </li>
   );

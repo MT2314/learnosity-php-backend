@@ -52,8 +52,7 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           });
           break;
         case "UPDATE_COMPONENT":
-          console.log(`Hello`);
-          draft[action.tabIndex].components[action.compIndex].componentState = {...action.component.componentState}
+          draft[action.tabIndex].components[action.compIndex].componentProps = {...action.stateUpdate}
           break;
         case "DELETE_COMPONENT":
           draft[action.tabIndex].components.splice(action.componentIndex, 1);

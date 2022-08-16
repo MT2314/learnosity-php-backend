@@ -12,7 +12,7 @@ import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
 
 export const defaultProps = { body: null };
 
-const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => { } }) => {
+const Text = ({ body = { ops: [{ insert: "" }] }, setProp = () => {} }) => {
   const [showEditor, setShowEditor] = useState(false);
   const focusOutofText = useRef(null);
 

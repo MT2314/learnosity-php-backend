@@ -16,7 +16,7 @@ const Tab = ({ tab, tabIndex }) => {
     accept: ["COMPONENT"],
     drop: (item) =>
     {console.log("compo prpos",JSON.parse(item.componentProps))
-      dispatch({ func: "ADD_COMPONENT", tabIndex: tabIndex, component: { componentName: item.componentName, componentState: JSON.parse(item.componentProps) } })},
+      dispatch({ func: "ADD_COMPONENT", tabIndex: tabIndex, component: { componentName: item.componentName, componentProps: JSON.parse(item.componentProps) } })},
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
