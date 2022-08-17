@@ -42,7 +42,7 @@ npm run test-templates
 ```
 Npm package installs and updates
 ```
-# After npm installations or updates run the following command
+# After npm installations or updates run the following command ***POINTING AT amp-template-generator***
 npm run install-templates
 
 ```
