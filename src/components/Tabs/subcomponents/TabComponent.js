@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import componentIndex from "../../../components/componentIndex";
 import styled from "@emotion/styled";
-import { LayoutContext, TabContext } from "../TabsMain";
+import { LayoutContext, TabContext } from "../TabContext";
 
 // const InnerBox = styled("div")({
 //   boxShadow: "0px 0px 0px 1px #E0E0E0",

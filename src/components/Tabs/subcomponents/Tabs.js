@@ -1,5 +1,5 @@
 import React, { useContext, useCallback, useRef } from "react";
-import { TabContext, LayoutContext } from "../TabsMain";
+import { TabContext, LayoutContext } from "../TabContext";
 import Tab from "./Tab";
 
 import { TextareaAutosize } from "@material-ui/core";

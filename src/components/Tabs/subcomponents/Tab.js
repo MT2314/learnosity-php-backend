@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TabContext, LayoutContext } from "../TabsMain";
+import { TabContext, LayoutContext } from "../TabContext";
 import { useDrop } from "react-dnd";
 
 //components
@@ -13,7 +13,7 @@ const Tab = ({ tab, tabIndex }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["COMPONENT"],
+    accept: ["Text", ],
     drop: (item) =>
     {console.log("compo prpos",JSON.parse(item.componentProps))
       dispatch({ func: "ADD_COMPONENT", tabIndex: tabIndex, component: { componentName: item.componentName, componentProps: JSON.parse(item.componentProps) } })},
