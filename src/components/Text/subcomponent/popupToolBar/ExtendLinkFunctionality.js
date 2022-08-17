@@ -50,11 +50,6 @@ const ExtendLinkFunctionality = (id) => {
   tooltipEditorButtonContainer.classList.add("pencil-icon");
   tooltipRemoveButtonContainer.classList.add("trash-icon");
 
-  quillEditor.setAttribute(
-    "aria-label",
-    "Hit Escape to exit the Text Component."
-  );
-
   linkTooltipInput.style.display = "none";
   customLinkInput.setAttribute("data-link", "Paste a link");
   customLinkInput.setAttribute("data-video", "Embed URL");

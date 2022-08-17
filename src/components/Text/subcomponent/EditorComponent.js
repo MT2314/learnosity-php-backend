@@ -23,7 +23,6 @@ const EditorComponent = ({
   body,
   setProp,
   setShowEditor,
-  focusOutofText,
   showEditor,
   setActiveComponent,
   isActiveComponent,
@@ -203,14 +202,9 @@ const EditorComponent = ({
     return !changeFromAPI;
   };
 
-  // keyboard exit the text component
+  // focus to the bold
   const onKeyDownExit = (e) => {
-    if (e.key === "Escape") {
-      setEditorIsFocus(false);
-      setShowEditor(false);
-      focusOutofText.focus();
-      textRef.current?.classList.add("fakeFocus");
-    } else if (e.shiftKey && e.key === "Tab") {
+    if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
       boldRef.current.focus();
     }
@@ -236,6 +230,7 @@ const EditorComponent = ({
       toolbar: {
         container: `#${toolbarId}`,
       },
+      keyboard: { bindings: { tab: false } },
       clipboard: {
         matchVisual: false,
         allowed: {
