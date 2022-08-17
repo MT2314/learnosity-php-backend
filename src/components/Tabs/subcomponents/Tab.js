@@ -13,7 +13,7 @@ const Tab = ({ tab, tabIndex }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["Text", ],
+    accept: ["COMPONENT"],
     drop: (item) =>
     {console.log("compo prpos",JSON.parse(item.componentProps))
       dispatch({ func: "ADD_COMPONENT", tabIndex: tabIndex, component: { componentName: item.componentName, componentProps: JSON.parse(item.componentProps) } })},
