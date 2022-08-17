@@ -18,8 +18,6 @@ See original codebase [project wiki](https://gitlab.tvo.org/content-solutions/co
 
 ## Working with this repo
 
-<!-- test -->
-
 When you first start working with the subrepo:
 
 ```
