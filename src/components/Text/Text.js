@@ -19,7 +19,6 @@ const Text = ({
   isActiveComponent = false,
 }) => {
   const [showEditor, setShowEditor] = useState(false);
-  const focusOutofText = useRef(null);
 
   //* Creating theme
   // const textTheme = createMFTheme();
@@ -36,7 +35,7 @@ const Text = ({
               onClick={() => {
                 setShowEditor(true);
               }}
-              className={`mainContainer ${focusOutofText.current === document.activeElement && "fakeFocus"}`}
+              className="mainContainer"
               data-testid="text-component"
               tabIndex="0"
               onFocus={() => {
@@ -51,22 +50,10 @@ const Text = ({
               setProp={setProp}
               setShowEditor={setShowEditor}
               showEditor={showEditor}
-              focusOutofText={focusOutofText.current}
               setActiveComponent={setActiveComponent}
               isActiveComponent={isActiveComponent}
             />
           )}
-          <div
-            className="sr-only"
-            tabIndex="-1"
-            ref={focusOutofText}
-            onBlur={() => {
-              const removefakeFocus = document?.getElementsByClassName("fakeFocus");
-              removefakeFocus[0]?.classList.remove("fakeFocus");
-            }}
-          >
-            Exit Text Component
-          </div>
         </ReactQuillContainer>
       {/* </ThemeProvider> */}
     </>
