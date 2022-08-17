@@ -202,7 +202,7 @@ const EditorComponent = ({
     return !changeFromAPI;
   };
 
-  // keyboard exit the text component
+  // focus to the bold
   const onKeyDownExit = (e) => {
     if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
