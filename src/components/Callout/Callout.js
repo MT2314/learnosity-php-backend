@@ -5,8 +5,8 @@ import FormattedText from "../FormattedText/FormattedText";
 import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 import calloutOptions from "./utility/CalloutOptions";
 
-import "../../i18n/i18n";
 import { useTranslation, Trans } from "react-i18next";
+import "../../i18n/i18n";
 
 export const defaultProps = { heading: "", body: "" };
 

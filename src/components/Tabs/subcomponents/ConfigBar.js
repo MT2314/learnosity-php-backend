@@ -86,11 +86,28 @@ const ConfigBar = () => {
           >
             <ArrowForwardIcon />
           </IconButton>
+
           <IconButton edge="start" color="inherit">
-            <AddIcon />
+            <AddIcon
+              onClick={() =>
+                dispatch({
+                  func: "ADD_TAB",
+                  id: Math.floor(Math.random() * 10),
+                  title: `Tab ${state.length + 1}`,
+                })
+              }
+            />
           </IconButton>
           <IconButton edge="start" color="inherit">
-            <RemoveIcon />
+            <RemoveIcon
+              onClick={() =>
+                dispatch({
+                  func: "REMOVE_TAB",
+                  currentTab: activeTab,
+                  updateTabFunc: setActiveTab(),
+                })
+              }
+            />
           </IconButton>
         </Toolbar>
       </AppBar>
