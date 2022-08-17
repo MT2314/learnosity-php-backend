@@ -3,23 +3,17 @@ import componentIndex from "../../../components/componentIndex";
 import styled from "@emotion/styled";
 import { LayoutContext, TabContext } from "../TabContext";
 
-// const InnerBox = styled("div")({
-//   boxShadow: "0px 0px 0px 1px #E0E0E0",
-//   borderRadius: 4,
-//   padding: "8px 10px",
-//   marginBottom: 18,
-// });
 
-// const ListItem = styled("li")(({ theme }) => ({
-//   color: theme.palette.primary.main,
-//   fontFamily: theme.typography.fontFamily,
-//   listStyle: "none",
-// }));
+const StyledListItem = styled("li")(({ theme }) => ({
+  color: theme.palette.primary.main,
+  fontFamily: theme.typography.fontFamily,
+  listStyle: "none",
+}));
 
 const TabComponent = ({ component, compIndex }) => {
 
-  const [state, dispatch] = useContext(LayoutContext);
-  const [activeTab, setActiveTab] = useContext(TabContext);
+  const [dispatch] = useContext(LayoutContext);
+  const [activeTab] = useContext(TabContext);
 
   const {componentName, componentProps} = component
 
@@ -30,7 +24,7 @@ const TabComponent = ({ component, compIndex }) => {
 
 
   return (
-    <li key={`comp-${compIndex}`}>
+    <StyledListItem key={`comp-${compIndex}`}>
       <Component setProp={(stateUpdate) => {
         dispatch({
           func: "UPDATE_COMPONENT",
@@ -40,7 +34,7 @@ const TabComponent = ({ component, compIndex }) => {
         });
 
       }} {...componentProps} />
-    </li>
+    </StyledListItem>
   );
 };
 export default TabComponent;
