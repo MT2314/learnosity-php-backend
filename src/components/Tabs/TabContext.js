@@ -18,7 +18,7 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           });
           break;
         case "REMOVE_TAB":
-          draft.splice(action.tabIndex, 1);
+          draft.splice(action.currentTab, 1);
           break;
         case "ADD_COMPONENT":
           draft[action.tabIndex].components.push({

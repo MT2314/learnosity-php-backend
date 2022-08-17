@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import AppBar from "@material-ui/core/AppBar";
 import { Toolbar as MUIToolbar } from "@material-ui/core/";
@@ -7,6 +7,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { TabContext, LayoutContext } from "../TabContext";
 
 const Container = styled("div")({
   display: "absolute",
@@ -43,6 +44,8 @@ const IconButton = styled(MUIIconButton)({
 });
 
 const ConfigBar = () => {
+  const [activeTab, setActiveTab] = useContext(TabContext);
+  const [state, dispatch] = useContext(LayoutContext)
   return (
     <Container>
       <AppBar position="static">
@@ -54,10 +57,26 @@ const ConfigBar = () => {
             <ArrowForwardIcon />
           </IconButton>
           <IconButton edge="start" color="inherit">
-            <AddIcon />
+            <AddIcon
+              onClick={() =>
+                dispatch({
+                  func: "ADD_TAB",
+                  id: Math.floor(Math.random() * 10),
+                  title: `Tab ${state.length + 1}`,
+                })
+              }
+            />
           </IconButton>
           <IconButton edge="start" color="inherit">
-            <RemoveIcon />
+            <RemoveIcon
+              onClick={() =>
+                dispatch({
+                  func: "REMOVE_TAB",
+                  currentTab: activeTab, 
+                  updateTabFunc: setActiveTab()
+                })
+              }
+            />
           </IconButton>
         </Toolbar>
       </AppBar>
