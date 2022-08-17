@@ -11,10 +11,11 @@ const AlignDropdownButton = ({
   activeDropDownItem,
   setActiveDropDownItem,
   setVisibleAlignIcon,
+  onKeyDownExit,
 }) => {
   return (
     <>
-      <Card className={show ? "align-dropdown show" : "align-dropdown hide"}>
+      <Card className={show ? "align-dropdown show" : "align-dropdown hide"} onKeyDown={onKeyDownExit}>
         <span className="ql-formats">
           <Tooltip
             aria-label="align left"

@@ -16,12 +16,17 @@ import {
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 
+import katex from "katex";
+import "katex/dist/katex.css";
+
 const EditorComponent = ({
   body,
   setProp,
   setShowEditor,
   focusOutofText,
   showEditor,
+  setActiveComponent,
+  isActiveComponent,
 }) => {
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
@@ -38,12 +43,31 @@ const EditorComponent = ({
   //track clicks outside text div
   const textRef = useRef(null);
 
+  //focus to the bold
+  const boldRef = useRef(null);
+
+  const ConfigBar = {
+    display: !isActiveComponent ? (editorIsFocus ? "flex" : "none") : "flex",
+    position: "fixed",
+    top: "80px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    zIndex: 1000,
+    justifyContent: "center",
+    backgroundColor: "#fff",
+  };
+
+  useEffect(() => {
+    editorIsFocus ? setActiveComponent(true) : setActiveComponent(false);
+  }, [editorIsFocus, setActiveComponent]);
+
   useOnClickOutside(textRef, () => {
     setEditorIsFocus(false);
     setShowEditor(false);
   });
 
   useEffect(() => {
+    window.katex = katex;
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
     // on render editor is focused
@@ -56,6 +80,7 @@ const EditorComponent = ({
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
 
+    console.log(focusRef.current.getEditor().root.innerHTML);
     //quill instance
     const quill = focusRef.current;
     const quillText = quill.getEditor().getText();
@@ -75,7 +100,6 @@ const EditorComponent = ({
     onPaste && (editorContent.ops[0].insert = "");
 
     //update setProp with new editorContent
-
     noHighlights && linksChecked && setProp({ body: editorContent });
   };
 
@@ -179,6 +203,19 @@ const EditorComponent = ({
     return !changeFromAPI;
   };
 
+  // keyboard exit the text component
+  const onKeyDownExit = (e) => {
+    if (e.key === "Escape") {
+      setEditorIsFocus(false);
+      setShowEditor(false);
+      focusOutofText.focus();
+      textRef.current?.classList.add("fakeFocus");
+    } else if (e.shiftKey && e.key === "Tab") {
+      e.preventDefault();
+      boldRef.current.focus();
+    }
+  };
+
   //customization settings for toolbar
   const formats = [
     "bold",
@@ -252,10 +289,11 @@ const EditorComponent = ({
       id={`toolbar-${toolbarId}`}
       data-testid="text-editor-component"
     >
-      <div className={editorIsFocus ? "showtool" : "hidetool"}>
+      <div style={ConfigBar}>
         <CustomToolBar
           toolbarId={toolbarId}
           containerId={`toolbar-${toolbarId}`}
+          boldRef={boldRef}
         />
       </div>
 
@@ -281,12 +319,7 @@ const EditorComponent = ({
           )
         }
         onKeyDown={(e) => {
-          if (e.key === "Escape") {
-            setEditorIsFocus(false);
-            setShowEditor(false);
-            focusOutofText.focus();
-            textRef.current?.classList.add("fakeFocus");
-          }
+          onKeyDownExit(e);
         }}
       />
     </div>
@@ -294,3 +327,5 @@ const EditorComponent = ({
 };
 
 export default EditorComponent;
+
+/// \\
