@@ -28,9 +28,7 @@ const Tab = ({ tab, tabIndex }) => {
       className="tab-body"
       key={id}
       style={{
-        border: isOver ? "dashed 2px rgba(201, 210, 221, 1)" : "inherit",
         backgroundColor: isOver ? "rgba(233, 236, 244, 0.2)" : "inherit",
-        borderRadius: isOver ? 4 : "inherit",
       }}
     >
       {activeTab === tabIndex && components.length === 0 ? (
