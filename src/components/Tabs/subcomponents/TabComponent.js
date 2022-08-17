@@ -1,19 +1,11 @@
 import React, { useContext } from "react";
 import componentIndex from "../../../components/componentIndex";
-import styled from "@emotion/styled";
 import { LayoutContext, TabContext } from "../TabContext";
-
-
-const StyledListItem = styled("li")(({ theme }) => ({
-  color: theme.palette.primary.main,
-  fontFamily: theme.typography.fontFamily,
-  listStyle: "none",
-}));
 
 const TabComponent = ({ component, compIndex }) => {
 
-  const [dispatch] = useContext(LayoutContext);
-  const [activeTab] = useContext(TabContext);
+  const [state, dispatch] = useContext(LayoutContext);
+  const [activeTab, setActiveTab] = useContext(TabContext);
 
   const {componentName, componentProps} = component
 
@@ -24,7 +16,7 @@ const TabComponent = ({ component, compIndex }) => {
 
 
   return (
-    <StyledListItem key={`comp-${compIndex}`}>
+    <li key={`comp-${compIndex}`}>
       <Component setProp={(stateUpdate) => {
         dispatch({
           func: "UPDATE_COMPONENT",
@@ -34,7 +26,7 @@ const TabComponent = ({ component, compIndex }) => {
         });
 
       }} {...componentProps} />
-    </StyledListItem>
+    </li>
   );
 };
 export default TabComponent;
