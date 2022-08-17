@@ -1,6 +1,7 @@
 import React from "react";
 
 const Placeholder = () => { 
+
   return(
     <div className="placeholder-container">
       <h3>Add a component here!</h3>

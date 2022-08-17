@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { TabContext } from "../TabsMain";
+import { TabContext, LayoutContext } from "../TabContext";
+import { useDrop } from "react-dnd";
 
 //components
 import Placeholder from "./Placeholder";
@@ -9,9 +10,27 @@ const Tab = ({ tab, tabIndex }) => {
   const { id, components } = tab;
 
   const [activeTab, setActiveTab] = useContext(TabContext);
+  const [state, dispatch] = useContext(LayoutContext);
+
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: ["Text","Image","Video","Table"],
+    drop: (item) =>
+    {console.log("compo prpos",JSON.parse(item.componentProps))
+      dispatch({ func: "ADD_COMPONENT", tabIndex: tabIndex, component: { componentName: item.componentName, componentProps: JSON.parse(item.componentProps) } })},
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
 
   return (
-    <div className="tab-body" key={id}>
+    <div
+      ref={drop}
+      className="tab-body"
+      key={id}
+      style={{
+        backgroundColor: isOver ? "rgba(233, 236, 244, 0.2)" : "inherit",
+      }}
+    >
       {activeTab === tabIndex && components.length === 0 ? (
         <Placeholder />
       ) : (
