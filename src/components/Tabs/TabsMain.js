@@ -14,13 +14,13 @@ export const defaultProps = {
     {
       type: "TAB",
       id: 0,
-      title: "",
+      title: "Tab 1",
       components: [],
     },
     {
       type: "TAB",
       id: 1,
-      title: "",
+      title: "Tab 2",
       components: [],
     },
   ],
@@ -31,7 +31,6 @@ const TabsMain = ({ layoutState = [], setProp = () => {} }) => {
     <DndProvider backend={HTML5Backend}>
       <LayoutProvider layoutState={layoutState} setProp={setProp}>
         <ActiveTabProvider>
-          {/* <ConfirmDialog open={open} /> */}
           <ConfigBar />
           <Tabs />
         </ActiveTabProvider>

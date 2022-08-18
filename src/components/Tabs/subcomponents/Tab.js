@@ -13,7 +13,7 @@ const Tab = ({ tab, tabIndex }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["Text", "Video", "Image", "Table"],
+    accept: ["COMPONENT"],
     drop: (item) => {
       dispatch({
         func: "ADD_COMPONENT",

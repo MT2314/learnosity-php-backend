@@ -45,10 +45,16 @@ const IconButton = styled(MUIIconButton)({
 });
 
 const ConfigBar = () => {
+  // ? State of tab component
   const [state, dispatch] = useContext(LayoutContext);
+
+  // ? Active Tab
   const [activeTab, setActiveTab] = useContext(TabContext);
+
+  //? Remove tab dialog open state
   const [showDialog, setShowDialog] = useState(false);
 
+  // ? Move Tab to the Left
   const moveTabLeft = (state, activeTab) => {
     dispatch({
       func: "MOVE_TAB_LEFT",
@@ -58,6 +64,7 @@ const ConfigBar = () => {
     setActiveTab(activeTab - 1);
   };
 
+  // ? Move Tab to the Right
   const moveTabRight = (state, activeTab) => {
     dispatch({
       func: "MOVE_TAB_RIGHT",
@@ -67,6 +74,7 @@ const ConfigBar = () => {
     setActiveTab(activeTab + 1);
   };
 
+  // ? Remove Tab
   const removeTab = async (state, activeTab) => {
     dispatch({
       func: "REMOVE_TAB",
@@ -80,6 +88,7 @@ const ConfigBar = () => {
       : setActiveTab(activeTab);
   };
 
+  // ? Add Tab
   const addTab = (state, activeTab) => {
     dispatch({
       func: "ADD_TAB",
@@ -89,22 +98,24 @@ const ConfigBar = () => {
     setActiveTab(activeTab + 1);
   };
 
+  // ? Props for removeTab Dialog
   const removeTabDialog = {
+    title: "Delete Tab?",
+    message: [
+      `Deleting "${state[activeTab].title}" tab will also delete ${state[activeTab].components.length} of components`,
+      <br />,
+      <br />,
+      `You are able to undo this action.`,
+    ],
     onConfirm: () => {
       onConfirm();
     },
     onCancel: () => {
       handleClose();
     },
-    message: [
-      `Deleting this tab will also delete the # of components`,
-      <br />,
-      <br />,
-      `You are able to undo this action.`,
-    ],
-    title: "Delete Tab",
-    confirmMessage: "Confirm",
+    confirmMessage: "Delete",
   };
+
   const handleClose = useCallback(() => {
     setShowDialog(false);
   }, []);
@@ -151,13 +162,16 @@ const ConfigBar = () => {
             onCancel={removeTabDialog.onCancel}
             title={removeTabDialog.title}
             message={removeTabDialog.message}
+            confirmMessage={removeTabDialog.confirmMessage}
           />
           <IconButton
             edge="start"
             color="inherit"
             disabled={state.length <= 2}
             onClick={() => {
-              setShowDialog(true);
+              state[activeTab].components.length > 0
+                ? setShowDialog(true)
+                : removeTab(state, activeTab);
             }}
           >
             <RemoveIcon />
