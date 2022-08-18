@@ -1,8 +1,9 @@
 import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
+import Tab from "./Tab";
 import { TextareaAutosize } from "@material-ui/core";
 
-const TabTitle = ({tabIndex}) => {
+const TabTitle = ({tabIndex, tabTitle}) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -84,4 +85,3 @@ const TabTitle = ({tabIndex}) => {
       </div>
   )
 }
-export default TabTitle;
