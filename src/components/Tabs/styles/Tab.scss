@@ -31,6 +31,7 @@
       &:focus{
         outline: 2px solid black;
       }
+    }
 
       .placeholder-title {
         width: 100%;
@@ -78,7 +79,6 @@
           background: #f5f5f5;
         }
       }
-    }
 
     //on click active tab styles apply
     .active-tab {

@@ -1,9 +1,10 @@
 import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
 import { TextareaAutosize } from "@material-ui/core";
+import styled from "@emotion/styled";
 
 const TabTitle = ({tabIndex, tabTitle}) => {
-  console.log(`tabtitle:`, tabTitle);
+ 
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -30,8 +31,26 @@ const TabTitle = ({tabIndex, tabTitle}) => {
     inputRef.current.scrollTo(state[i].title.length, state[i].title.length);
   };
 
+  const StyledTabTitle = styled('div')({
+    backgroundColor: '#f5f5f5',
+    border: '1px solid #bdbdbd',
+    borderRadius: '10px 10px 0px 0px',
+    width: '100%',
+    maxWidth: '484px',
+    padding: '8px 10px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#636363',
+    fontWeight: '500',
+    textAlign: 'center',
+    '&:focus':{
+      outline: '2px solid black',
+    }
+  })
+
     return (
-      <div
+      <StyledTabTitle
         key={`tab-title-${tabIndex}`}
         role="tab"
         tabIndex="0"
@@ -82,7 +101,7 @@ const TabTitle = ({tabIndex, tabTitle}) => {
               : `Tab ${tabIndex + 1}`}
           </p>
         )}
-      </div>
+      </StyledTabTitle>
   )
 }
 export default TabTitle;
