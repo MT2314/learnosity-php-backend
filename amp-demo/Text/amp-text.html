@@ -2,104 +2,25 @@
 <html ⚡ lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      as="script"
-      crossorigin="anonymous"
-      href="https://cdn.ampproject.org/v0.mjs"
-      rel="modulepreload"
-    />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="title" content="Formatted Text" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preload" href="https://cdn.ampproject.org/v0.js" as="script" />
     <meta
       name="amp-script-src"
       content="sha384-PhGNtk99XobWL40o6ao4VYWQ-Qozkpt2eJ6gBHuR4B9XW4H24JwDghZ6D2F0lgZu"
     />
-    <!-- <script
-      async
-      nomodule
-      src="https://cdn.ampproject.org/v0.js"
-      crossorigin="anonymous"
-    ></script>
+    <script data-auto async src="https://cdn.ampproject.org/v0.js"></script>
     <script
-      data-auto
       async
-      src="https://cdn.ampproject.org/v0.mjs"
-      type="module"
-      crossorigin="anonymous"
+      src="https://cdn.ampproject.org/v0/amp-mathml-0.1.js"
+      custom-element="amp-mathml"
     ></script>
     <script
       async
-      nomodule
       src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"
-      crossorigin="anonymous"
       custom-element="amp-bind"
     ></script>
-    <script
-      async
-      src="https://cdn.ampproject.org/v0/amp-bind-0.1.mjs"
-      custom-element="amp-bind"
-      type="module"
-      crossorigin="anonymous"
-    ></script> -->
-    <style data-auto amp-boilerplate>
-      body {
-        -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
-        -moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
-        -ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
-        animation: -amp-start 8s steps(1, end) 0s 1 normal both;
-      }
-      @-webkit-keyframes -amp-start {
-        from {
-          visibility: hidden;
-        }
-        to {
-          visibility: visible;
-        }
-      }
-      @-moz-keyframes -amp-start {
-        from {
-          visibility: hidden;
-        }
-        to {
-          visibility: visible;
-        }
-      }
-      @-ms-keyframes -amp-start {
-        from {
-          visibility: hidden;
-        }
-        to {
-          visibility: visible;
-        }
-      }
-      @-o-keyframes -amp-start {
-        from {
-          visibility: hidden;
-        }
-        to {
-          visibility: visible;
-        }
-      }
-      @keyframes -amp-start {
-        from {
-          visibility: hidden;
-        }
-        to {
-          visibility: visible;
-        }
-      }
-    </style>
-    <!-- <noscript data-auto
-      ><style data-auto amp-boilerplate>
-        body {
-          -webkit-animation: none;
-          -moz-animation: none;
-          -ms-animation: none;
-          animation: none;
-        }
-      </style></noscript
-    > -->
     <link
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       rel="stylesheet"
@@ -165,6 +86,9 @@
         --line-height-4: 1.5;
         --caps-letter-spacing: 0.2em;
         --bold-font-weight: bold;
+      }
+      .inline {
+        display: inline;
       }
       .clearfix:before,
       .clearfix:after {
@@ -299,7 +223,7 @@
       .alert > p {
         margin-bottom: 0;
       }
-      .btn {
+      /* .btn {
         background-color: #0e8515;
         font-weight: bold;
         text-align: center;
@@ -335,7 +259,7 @@
       }
       .btn.skip-to-content:focus {
         transform: translateY(35px);
-      }
+      } */
       .wrapper.accordion .accordion section[expanded] .heading {
         background-color: #deeddf;
         border-color: #0e8515;
@@ -537,15 +461,8 @@
         .wrapper.main-nav #goal-btn {
           height: 65px;
           width: 111px;
-          right: 157px;
-        }
-      }
-      @media (min-width: 751px) and (min-width: 835px) {
-        .wrapper.main-nav #goal-btn {
           right: 190px;
         }
-      }
-      @media (min-width: 751px) {
         @supports (-webkit-touch-callout: none) {
           .wrapper.main-nav #goal-btn {
             width: 115px;
@@ -571,16 +488,9 @@
         .wrapper.main-nav #content-btn {
           height: 65px;
           width: 125px;
-          right: 37px;
+          right: 65px;
           margin-left: 12px;
         }
-      }
-      @media (min-width: 751px) and (min-width: 835px) {
-        .wrapper.main-nav #content-btn {
-          right: 65px;
-        }
-      }
-      @media (min-width: 751px) {
         @supports (-webkit-touch-callout: none) {
           .wrapper.main-nav #content-btn {
             width: 136px;
@@ -637,12 +547,7 @@
         margin-left: 37px;
         margin-top: 13.14px;
         margin-bottom: 13.08px;
-        margin-right: 36px;
-      }
-      @media (min-width: 832px) {
-        .wrapper.main-nav .ilc-icon-lg {
-          margin-left: 60px;
-        }
+        margin-right: 12.77px;
       }
       .wrapper.main-nav .nav-side {
         padding-left: 40px;
@@ -682,7 +587,7 @@
       }
       .wrapper.main-nav .nav-side a.active .circle {
         visibility: visible;
-        color: #0e8515;
+        color: #096e0f;
         font-size: 19px;
         position: absolute;
         top: 0;
@@ -782,12 +687,18 @@
         }
       }
       .wrapper.main-nav .lsn-number {
-        position: absolute;
-        top: 24px;
-        left: 65px;
-        margin-top: 0px;
-        font-size: 1rem;
-        line-height: 1.25rem;
+        color: #212628;
+        font-weight: bold;
+      }
+      @media (max-width: 750px) {
+        .wrapper.main-nav .lsn-number {
+          position: absolute;
+          top: 24px;
+          left: 65px;
+          margin-top: 0px;
+          font-size: 1rem;
+          line-height: 1.25rem;
+        }
       }
       @media (min-width: 751px) {
         .wrapper.main-nav .lsn-number {
@@ -799,17 +710,9 @@
           margin-bottom: 18px;
         }
       }
-      @media (min-width: 832px) {
-        .wrapper.main-nav .lsn-number {
-          font-size: 1.4rem;
-          line-height: 1.6rem;
-          position: absolute;
-          left: 263px;
-        }
-      }
       .wrapper.main-nav .course-code {
-        font-size: 0.9rem;
-        line-height: 1.1rem;
+        color: #212628;
+        font-size: 12.8px;
         position: absolute;
         left: 65px;
         margin-top: 7px;
@@ -817,15 +720,10 @@
       }
       @media (min-width: 751px) {
         .wrapper.main-nav .course-code {
-          font-size: 1.1rem;
-          line-height: 1.3rem;
+          position: absolute;
+          font-size: 19.8px;
           left: 133px;
           top: 15px;
-        }
-      }
-      @media (min-width: 832px) {
-        .wrapper.main-nav .course-code {
-          left: 173px;
         }
       }
       .wrapper.main-nav .title-div {
@@ -881,7 +779,7 @@
       }
       .wrapper.main-nav .sections li .circle {
         visibility: hidden;
-        color: #0e8515;
+        color: #096e0f;
         font-size: 22pt;
         position: absolute;
         top: 10px;
@@ -890,9 +788,10 @@
       .wrapper.main-nav .sections .topic {
         padding: 6px 7px 5px 7px;
       }
-      .wrapper.main-nav .toc-lsn-title {
+      .wrapper.main-nav .lsn-title {
+        text-align: left;
         line-height: normal;
-        margin-block-end: 0.83em;
+        color: #212628;
       }
       .wrapper.main-nav #progress-bar {
         position: fixed;
@@ -910,25 +809,21 @@
         background-color: #ececec;
         border-radius: 0px 0px 20px 25px;
         padding-top: 38px;
-        padding-right: 37px;
+        padding-right: 24px;
         padding-left: 37px;
       }
       @media (min-width: 751px) {
         .main-title-div {
           padding-top: 50px;
-          padding-left: 65px;
-          padding-right: 65px;
+          padding-left: 11.75%;
+          height: 55px;
           border-radius: 0px 0px 40px 40px;
         }
       }
-      @media (min-width: 751px) and (min-width: 834px) {
-        .main-title-div {
-          padding-left: 128px;
-          padding-right: 128px;
-        }
-      }
       .main-title-div .lsn-title {
+        text-align: left;
         line-height: normal;
+        color: #212628;
         padding-bottom: 16px;
       }
       .main-blur {
@@ -1159,11 +1054,69 @@
       }
     </style>
     <link data-auto rel="canonical" href="." />
+    <style data-auto amp-boilerplate>
+      body {
+        -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+      }
+      @-webkit-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @-moz-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @-ms-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @-o-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+      @keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+        to {
+          visibility: visible;
+        }
+      }
+    </style>
+    <noscript data-auto
+      ><style data-auto amp-boilerplate>
+        body {
+          -webkit-animation: none;
+          -moz-animation: none;
+          -ms-animation: none;
+          animation: none;
+        }
+      </style></noscript
+    >
   </head>
   <body>
-    <a class="btn skip-to-content px2 py1 font-small" href="#main">
+    <!-- <a class="btn skip-to-content px2 py1 font-small" href="#main">
       Skip to content
-    </a>
+    </a> -->
 
     <noscript>
       <div class="alert alert-warning clearfix" role="alert">
@@ -1178,8 +1131,6 @@
     <div>
       <div class="clearfix">
         <main id="main" [class]="[twobtns.bluron]" role="main">
-          <h1>Formatted Text 2.0.0 - 8/17/2022</h1>
-
           <div class="formatted-text wrapper">
             <h2 class="heading border-bottom" style>
               Formatted text with a heading!
@@ -1192,8 +1143,19 @@
               (word form).
             </p>
             <p>
-              We can also write this as adults : children = \(2:3\) (colon form)
-              or it can be written \(\frac{2}{3}\) (fraction form).
+              We can also write this as adults : children =
+              <amp-mathml
+                layout="container"
+                inline
+                data-formula="\(2:3\)"
+              ></amp-mathml>
+              (colon form) or it can be written
+              <amp-mathml
+                layout="container"
+                inline
+                data-formula="\(\frac{2}{3}\)"
+              ></amp-mathml>
+              (fraction form).
             </p>
             <p>
               The order in which we write the numbers depends on the order in
@@ -1210,8 +1172,19 @@
               (word form).
             </p>
             <p>
-              We can also write this as adults : children = \(2:3\) (colon form)
-              or it can be written \(\frac{2}{3}\) (fraction form).
+              We can also write this as adults : children =
+              <amp-mathml
+                layout="container"
+                inline
+                data-formula="\(2:3\)"
+              ></amp-mathml>
+              (colon form) or it can be written
+              <amp-mathml
+                layout="container"
+                inline
+                data-formula="\(\frac{2}{3}\)"
+              ></amp-mathml>
+              (fraction form).
             </p>
             <p>
               The order in which we write the numbers depends on the order in
@@ -1231,12 +1204,29 @@
               (word form).
             </p>
             <p>
-              We can also write this as adults : children = \(2:3\) (colon form)
-              or it can be written \(\frac{2}{3}\) (fraction form).
+              We can also write this as adults : children =
+              <amp-mathml
+                layout="container"
+                inline
+                data-formula="\(2:3\)"
+              ></amp-mathml>
+              (colon form) or it can be written
+              <amp-mathml
+                layout="container"
+                inline
+                data-formula="\(\frac{2}{3}\)"
+              ></amp-mathml>
+              (fraction form).
             </p>
             <p>
               The order in which we write the numbers depends on the order in
               which we are describing the quantities.
+            </p>
+            <p>
+              <a
+                href="https://amp.dev/documentation/components/amp-truncate-text/?format=websites"
+                >Google AMP Documentation</a
+              >
             </p>
           </div>
         </main>
