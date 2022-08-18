@@ -26,6 +26,7 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           });
           break;
         case "MOVE_TAB_LEFT":
+          console.log(draft);
           const elementL = draft[action.tabIndex];
           draft.splice(action.tabIndex, 1);
           draft.splice(action.tabIndex - 1, 0, elementL);

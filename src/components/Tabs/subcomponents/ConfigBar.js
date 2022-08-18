@@ -62,6 +62,30 @@ const ConfigBar = () => {
     });
     setActiveTab(activeTab + 1);
   };
+
+  const removeTab = (state, activeTab) => {
+    dispatch({
+      func: "REMOVE_TAB",
+      currentTab: activeTab,
+      updateTabFunc: setActiveTab(),
+    });
+    if (activeTab === state.length - 1) {
+      setActiveTab(activeTab - 1);
+    } else if (activeTab === 0) {
+      setActiveTab(0);
+    } else {
+      setActiveTab(activeTab);
+    }
+  };
+
+  const addTab = (state, activeTab) => {
+    dispatch({
+      func: "ADD_TAB",
+      id: Math.floor(Math.random() * 10),
+      title: `Tab ${state.length + 1}`,
+    });
+    setActiveTab(activeTab + 1);
+  };
   return (
     <Container>
       <AppBar position="static">
@@ -70,44 +94,35 @@ const ConfigBar = () => {
             edge="start"
             color="inherit"
             disabled={activeTab === 0}
-            onClick={() => {
-              moveTabLeft(state, activeTab);
-            }}
+            onClick={() => moveTabLeft(state, activeTab)}
           >
             <ArrowBackIcon />
           </IconButton>
           <IconButton
-            disabled={activeTab == state.length - 1}
             edge="start"
             color="inherit"
-            onClick={() => {
-              moveTabRight(state, activeTab);
-            }}
+            disabled={activeTab >= state.length - 1}
+            onClick={() => moveTabRight(state, activeTab)}
           >
             <ArrowForwardIcon />
           </IconButton>
-
-          <IconButton edge="start" color="inherit">
-            <AddIcon
-              onClick={() =>
-                dispatch({
-                  func: "ADD_TAB",
-                  id: Math.floor(Math.random() * 10),
-                  title: `Tab ${state.length + 1}`,
-                })
-              }
-            />
+          <IconButton
+            edge="start"
+            color="inherit"
+            disabled={state.length >= 4}
+            onClick={() => {
+              addTab(state, activeTab);
+            }}
+          >
+            <AddIcon />
           </IconButton>
-          <IconButton edge="start" color="inherit">
-            <RemoveIcon
-              onClick={() =>
-                dispatch({
-                  func: "REMOVE_TAB",
-                  currentTab: activeTab,
-                  updateTabFunc: setActiveTab(),
-                })
-              }
-            />
+          <IconButton
+            edge="start"
+            color="inherit"
+            disabled={state.length <= 2}
+            onClick={() => removeTab(state, activeTab)}
+          >
+            <RemoveIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
