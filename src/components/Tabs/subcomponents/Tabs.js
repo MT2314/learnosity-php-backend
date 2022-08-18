@@ -1,5 +1,5 @@
 import React, { useContext, useCallback, useRef } from "react";
-import { TabContext, LayoutContext } from "../TabsMain";
+import { TabContext, LayoutContext } from "../TabContext";
 import Tab from "./Tab";
 
 import { TextareaAutosize } from "@material-ui/core";
@@ -17,7 +17,6 @@ const Tabs = () => {
   }, []);
 
   const handleTitleBlur = (e) => {
-    console.log("blur", e.target);
     e.target.style.overflow = "hidden";
     e.target.scrollTo(0, 0);
   };
