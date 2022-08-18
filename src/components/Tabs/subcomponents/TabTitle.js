@@ -3,6 +3,7 @@ import { TabContext, LayoutContext } from "../TabContext";
 import { TextareaAutosize } from "@material-ui/core";
 
 const TabTitle = ({tabIndex, tabTitle}) => {
+  console.log(`tabtitle:`, tabTitle);
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -76,8 +77,8 @@ const TabTitle = ({tabIndex, tabTitle}) => {
               WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
             }}
           >
-            {state[tabIndex].title
-              ? state[tabIndex].title
+            {tabTitle
+              ? tabTitle
               : `Tab ${tabIndex + 1}`}
           </p>
         )}

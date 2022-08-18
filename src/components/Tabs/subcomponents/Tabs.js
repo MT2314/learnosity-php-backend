@@ -12,7 +12,7 @@ const Tabs = () => {
       <div className="tab-title-wrapper" role="tablist">
         {state.map((tabTitle, tabIndex) => (
           <TabTitle
-            tabTitle={tabTitle}
+            tabTitle={tabTitle.title}
             tabIndex={tabIndex}/>
         ))}
       </div>
