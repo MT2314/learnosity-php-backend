@@ -310,7 +310,7 @@
       .alert > p {
         margin-bottom: 0;
       }
-      .btn {
+      /* .btn {
         background-color: #0e8515;
         font-weight: bold;
         text-align: center;
@@ -326,7 +326,7 @@
         background-color: #ececec;
         color: #c6cdd0;
         box-shadow: 0 0 0 1px #c6cdd0;
-      }
+      } */
       .btn.link {
         font-size: 0.9rem;
         line-height: 1.1rem;
@@ -340,7 +340,7 @@
         text-decoration: none;
         margin-right: 0.25rem;
       }
-      .btn.skip-to-content {
+      /* .btn.skip-to-content {
         z-index: 1000;
         font-weight: 400;
         left: calc(50% - 53px);
@@ -350,7 +350,7 @@
       }
       .btn.skip-to-content:focus {
         transform: translateY(35px);
-      }
+      } */
       .wrapper.accordion .btn.link:hover {
         background-color: #0e8515;
         color: #fff;
@@ -1232,9 +1232,9 @@
     >
   </head>
   <body>
-    <a class="btn skip-to-content px2 py1 font-small" href="#main">
+    <!-- <a class="btn skip-to-content px2 py1 font-small" href="#main">
       Skip to content
-    </a>
+    </a> -->
 
     <noscript>
       <div class="alert alert-warning clearfix" role="alert">
@@ -1245,12 +1245,9 @@
         </p>
       </div>
     </noscript>
-
     <div>
       <div class="clearfix">
         <main id="main" [class]="[twobtns.bluron]" role="main">
-          <strong>Accordion 1.1.0 - 12/3/2020</strong>
-
           <div class="accordion wrapper bottom-margin">
             <h1 class="heading border-bottom" style>
               Here’s what the other students said
@@ -1444,10 +1441,6 @@
               </section></amp-accordion
             >
           </div>
-          <p>
-            This is some additional content after the accordion for testing
-            screen reader focus.
-          </p>
         </main>
       </div>
     </div>
