@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect, useState} from "react";
+import React, { createContext, useReducer, useEffect, useState } from "react";
 import produce from "immer";
 
 //state of tabs data stored in LayoutContext
@@ -18,15 +18,28 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           });
           break;
         case "REMOVE_TAB":
-          draft.splice(action.tabIndex, 1);
+          draft.splice(action.currentTab, 1);
           break;
         case "ADD_COMPONENT":
           draft[action.tabIndex].components.push({
             ...action.component,
           });
           break;
+        case "MOVE_TAB_LEFT":
+          console.log(draft);
+          const elementL = draft[action.tabIndex];
+          draft.splice(action.tabIndex, 1);
+          draft.splice(action.tabIndex - 1, 0, elementL);
+          break;
+        case "MOVE_TAB_RIGHT":
+          const elementR = draft[action.tabIndex];
+          draft.splice(action.tabIndex, 1);
+          draft.splice(action.tabIndex + 1, 0, elementR);
+          break;
         case "UPDATE_COMPONENT":
-          draft[action.tabIndex].components[action.compIndex].componentProps = {...action.stateUpdate}
+          draft[action.tabIndex].components[action.compIndex].componentProps = {
+            ...action.stateUpdate,
+          };
           break;
         case "DELETE_COMPONENT":
           draft[action.tabIndex].components.splice(action.componentIndex, 1);
