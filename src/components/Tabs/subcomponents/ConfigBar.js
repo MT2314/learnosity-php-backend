@@ -69,13 +69,11 @@ const ConfigBar = () => {
       currentTab: activeTab,
       updateTabFunc: setActiveTab(),
     });
-    if (activeTab === state.length - 1) {
-      setActiveTab(activeTab - 1);
-    } else if (activeTab === 0) {
-      setActiveTab(0);
-    } else {
-      setActiveTab(activeTab);
-    }
+    activeTab === state.length - 1
+      ? setActiveTab(activeTab - 1)
+      : activeTab === 0
+      ? setActiveTab(0)
+      : setActiveTab(activeTab);
   };
 
   const addTab = (state, activeTab) => {
