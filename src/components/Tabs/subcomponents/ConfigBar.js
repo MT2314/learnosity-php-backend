@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
 import styled from "@emotion/styled";
 import { LayoutContext, TabContext } from "../TabContext";
+import ConfirmationDialog from "../../../theme/styledComponents/ConfirmationDialog";
 import AppBar from "@material-ui/core/AppBar";
 import { Toolbar as MUIToolbar } from "@material-ui/core/";
 import MUIIconButton from "@material-ui/core/IconButton";
@@ -42,9 +43,12 @@ const IconButton = styled(MUIIconButton)({
     backgroundColor: "rgb(226, 236, 245)",
   },
 });
+
 const ConfigBar = () => {
   const [state, dispatch] = useContext(LayoutContext);
   const [activeTab, setActiveTab] = useContext(TabContext);
+  const [showDialog, setShowDialog] = useState(false);
+
   const moveTabLeft = (state, activeTab) => {
     dispatch({
       func: "MOVE_TAB_LEFT",
@@ -63,7 +67,7 @@ const ConfigBar = () => {
     setActiveTab(activeTab + 1);
   };
 
-  const removeTab = (state, activeTab) => {
+  const removeTab = async (state, activeTab) => {
     dispatch({
       func: "REMOVE_TAB",
       currentTab: activeTab,
@@ -84,6 +88,32 @@ const ConfigBar = () => {
     });
     setActiveTab(activeTab + 1);
   };
+
+  const removeTabDialog = {
+    onConfirm: () => {
+      onConfirm();
+    },
+    onCancel: () => {
+      handleClose();
+    },
+    message: [
+      `Deleting this tab will also delete the # of components`,
+      <br />,
+      <br />,
+      `You are able to undo this action.`,
+    ],
+    title: "Delete Tab",
+    confirmMessage: "Confirm",
+  };
+  const handleClose = useCallback(() => {
+    setShowDialog(false);
+  }, []);
+
+  const onConfirm = useCallback(() => {
+    setShowDialog(false);
+    removeTab(state, activeTab);
+  }, []);
+
   return (
     <Container>
       <AppBar position="static">
@@ -114,11 +144,21 @@ const ConfigBar = () => {
           >
             <AddIcon />
           </IconButton>
+          <ConfirmationDialog
+            open={showDialog}
+            handleClose={handleClose}
+            onConfirm={removeTabDialog.onConfirm}
+            onCancel={removeTabDialog.onCancel}
+            title={removeTabDialog.title}
+            message={removeTabDialog.message}
+          />
           <IconButton
             edge="start"
             color="inherit"
             disabled={state.length <= 2}
-            onClick={() => removeTab(state, activeTab)}
+            onClick={() => {
+              setShowDialog(true);
+            }}
           >
             <RemoveIcon />
           </IconButton>

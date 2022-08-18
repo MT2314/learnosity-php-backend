@@ -4,6 +4,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { LayoutProvider, ActiveTabProvider } from "./TabContext";
 import Tabs from "./subcomponents/Tabs";
 import ConfigBar from "./subcomponents/ConfigBar";
+import ConfirmDialog from "./subcomponents/ConfigBar";
 
 import "./styles/Tab.scss";
 
@@ -30,6 +31,7 @@ const TabsMain = ({ layoutState = [], setProp = () => {} }) => {
     <DndProvider backend={HTML5Backend}>
       <LayoutProvider layoutState={layoutState} setProp={setProp}>
         <ActiveTabProvider>
+          {/* <ConfirmDialog open={open} /> */}
           <ConfigBar />
           <Tabs />
         </ActiveTabProvider>
