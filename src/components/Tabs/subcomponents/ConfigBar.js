@@ -97,12 +97,11 @@ const ConfigBar = () => {
     });
     setActiveTab(activeTab + 1);
   };
-
   // ? Props for removeTab Dialog
   const removeTabDialog = {
     title: "Delete Tab?",
     message: [
-      `Deleting "${state[activeTab].title}" tab will also delete ${state[activeTab].components.length} of components`,
+      `Deleting "${state[activeTab].title}" will also delete ${state[activeTab].components.length} component(s).`,
       <br />,
       <br />,
       `You are able to undo this action.`,
