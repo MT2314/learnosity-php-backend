@@ -107,4 +107,38 @@
       }
     }
   }
+
+  //tab placeholder styles
+  .tab-body {
+    padding: 10px;
+    border: 1px solid #bdbdbd;
+    border-top: none;
+  }
+
+  .placeholder-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+    border: 3px dashed #1565c0;
+
+    h3 {
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 32.02px;
+      margin: 0;
+    }
+
+    p {
+      font-size: 14px;
+      margin-bottom: 0;
+      font-weight: 500;
+    }
+
+    p:last-child {
+      margin-top: 0;
+      color: #1565c0;
+    }
+  }
 }
