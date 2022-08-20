@@ -6,6 +6,10 @@
     <meta name="title" content="Accordion" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preload" href="https://cdn.ampproject.org/v0.js" as="script" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+      rel="stylesheet"
+    />
     <meta
       name="amp-script-src"
       content="sha384-PhGNtk99XobWL40o6ao4VYWQ-Qozkpt2eJ6gBHuR4B9XW4H24JwDghZ6D2F0lgZu"
@@ -31,7 +35,7 @@
       rel="stylesheet"
       type="text/css"
     />
-    <title>Accordion</title>
+    <title>Accordion AMP</title>
     <style amp-custom>
       /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
       html {
@@ -351,6 +355,9 @@
       .btn.skip-to-content:focus {
         transform: translateY(35px);
       } */
+      .accordion {
+        font-family: "Inter", sans-serif;
+      }
       .wrapper.accordion .btn.link:hover {
         background-color: #0e8515;
         color: #fff;
@@ -1249,11 +1256,6 @@
       <div class="clearfix">
         <main id="main" [class]="[twobtns.bluron]" role="main">
           <div class="accordion wrapper bottom-margin">
-            <h1 class="heading border-bottom" style>
-              Here’s what the other students said
-            </h1>
-            <div></div>
-
             <div class="right pb1" aria-hidden="true">
               <button
                 id="accordionc2fc2507_39e3_47d9_a6c2_8d08bfe83358_expandAll"

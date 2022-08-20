@@ -306,11 +306,11 @@ function _11ty() {
   process.env.DEV_MODE = __isDevMode();
 
   return new Promise(function (resolve, reject) {
-    var p = cp.spawn("npx", [
-      "eleventy",
-      `--input=${input}`,
-      `--output=${output}`,
-    ]);
+    var p = cp.spawn(
+      "npx",
+      ["eleventy", `--input=${input}`, `--output=${output}`],
+      { shell: true }
+    );
     p.stdout.on("data", (data) => {
       log(`${data}`);
     });
