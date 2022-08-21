@@ -1,12 +1,15 @@
 import React, { createContext, useContext, useState, useCallback } from "react";
 import styled from "@emotion/styled";
 import { LayoutContext, TabContext } from "../TabContext";
-import ConfirmationDialog from "../../../theme/styledComponents/ConfirmationDialog";
 import AppBar from "@material-ui/core/AppBar";
 import { Toolbar as MUIToolbar } from "@material-ui/core/";
+import DialogProvider from "../../../Utility/DialogProvider";
+
+// ? Icons
 import MUIIconButton from "@material-ui/core/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
@@ -51,7 +54,7 @@ const ConfigBar = () => {
   // ? Active Tab
   const [activeTab, setActiveTab] = useContext(TabContext);
 
-  //? Remove tab dialog open state
+  //? Dialog toggle for remove tab button
   const [showDialog, setShowDialog] = useState(false);
 
   // ? Move Tab to the Left
@@ -97,6 +100,7 @@ const ConfigBar = () => {
     });
     setActiveTab(activeTab + 1);
   };
+
   // ? Props for removeTab Dialog
   const removeTabDialog = {
     title: "Delete Tab?",
@@ -113,6 +117,7 @@ const ConfigBar = () => {
       handleClose();
     },
     confirmMessage: "Delete",
+    cancelMessage: "Cancel",
   };
 
   const handleClose = useCallback(() => {
@@ -154,15 +159,9 @@ const ConfigBar = () => {
           >
             <AddIcon />
           </IconButton>
-          <ConfirmationDialog
-            open={showDialog}
-            handleClose={handleClose}
-            onConfirm={removeTabDialog.onConfirm}
-            onCancel={removeTabDialog.onCancel}
-            title={removeTabDialog.title}
-            message={removeTabDialog.message}
-            confirmMessage={removeTabDialog.confirmMessage}
-          />
+          {showDialog && (
+            <DialogProvider initialState={removeTabDialog} defaultState />
+          )}
           <IconButton
             edge="start"
             color="inherit"

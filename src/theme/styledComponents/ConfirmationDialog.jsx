@@ -32,6 +32,7 @@ const ConfirmationDialog = ({
   title,
   message,
   confirmMessage = "Confirm",
+  cancelMessage = "Cancel",
 }) => (
   <Dialog
     open={open}
@@ -70,6 +71,7 @@ const ConfirmationDialog = ({
           fontFamily: "Inter",
           fontSize: "16px",
           letterSpacing: "0.15px",
+          line: "24px",
           color: "#232323",
         }}
       >
@@ -77,7 +79,7 @@ const ConfirmationDialog = ({
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button onClick={onCancel}>Cancel</Button>
+      <Button onClick={onCancel}>{cancelMessage}</Button>
       <Button onClick={onConfirm} autoFocus>
         {confirmMessage}
       </Button>
