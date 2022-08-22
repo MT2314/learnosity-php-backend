@@ -3,8 +3,6 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { LayoutProvider, ActiveTabProvider } from "./TabContext";
 import Tabs from "./subcomponents/Tabs";
-import ConfigBar from "./subcomponents/ConfigBar";
-import ConfirmDialog from "./subcomponents/ConfigBar";
 
 import "./styles/Tab.scss";
 
@@ -26,12 +24,16 @@ export const defaultProps = {
   ],
 };
 
-const TabsMain = ({ layoutState = [], setProp = () => {} }) => {
+const TabsMain = ({
+  layoutState = [],
+  setProp = () => {},
+  setActiveComponent = () => {},
+  isActiveComponent = false,
+}) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <LayoutProvider layoutState={layoutState} setProp={setProp}>
         <ActiveTabProvider>
-          <ConfigBar />
           <Tabs />
         </ActiveTabProvider>
       </LayoutProvider>
