@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import { LayoutContext, TabContext } from "../TabContext";
-import AppBar from "@material-ui/core/AppBar";
-import { IconButton, Toolbar } from '@mui/material'
+import { IconButton, Toolbar, AppBar } from '@mui/material'
 import { ArrowBack, ArrowForward, Add, Remove } from "@mui/icons-material"
 
 const Container = styled("div")({
@@ -32,7 +31,7 @@ const StyledIconButton = styled(IconButton)({
   padding: "7px",
   color: "#000",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-  borderLeft: "4px solid #1565c0",
+  //borderLeft: "4px solid #1565c0",
   borderRadius: "4px",
   "&:hover": {
     backgroundColor: "rgb(226, 236, 245)",
