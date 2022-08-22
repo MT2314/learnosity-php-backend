@@ -74,7 +74,7 @@ const IconButton = styled(MUIIconButton)({
   "&:hover": {
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
     color: "#1565C0",
-    borderRadius: "4px",
+    borderRadius: "4px!important",
   },
 });
 
@@ -166,7 +166,6 @@ const ConfigBar = () => {
         <Toolbar variant="dense" disableGutters>
           <StyledTooltip title="move tab left" arrow placement="top">
             <IconButton
-              disableRipple
               color="inherit"
               disabled={activeTab === 0}
               onClick={() => moveTabLeft(state, activeTab)}
