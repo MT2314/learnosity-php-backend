@@ -2,12 +2,8 @@ import React, { useContext } from "react";
 import styled from "@emotion/styled";
 import { LayoutContext, TabContext } from "../TabContext";
 import AppBar from "@material-ui/core/AppBar";
-import { Toolbar as MUIToolbar } from "@material-ui/core/";
-import MUIIconButton from "@material-ui/core/IconButton";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import { IconButton, Toolbar } from '@mui/material'
+import { ArrowBack, ArrowForward, Add, Remove } from "@mui/icons-material"
 
 const Container = styled("div")({
   display: "absolute",
@@ -16,7 +12,7 @@ const Container = styled("div")({
   margin: "auto",
 });
 
-const Toolbar = styled(MUIToolbar)({
+const StyledToolbar = styled(Toolbar)({
   position: "relative",
   display: "flex",
   justifyContent: "space-between",
@@ -30,7 +26,7 @@ const Toolbar = styled(MUIToolbar)({
   padding: "8px,10px",
 });
 
-const IconButton = styled(MUIIconButton)({
+const StyledIconButton = styled(IconButton)({
   width: "30px",
   height: "30px",
   padding: "7px",
@@ -87,24 +83,24 @@ const ConfigBar = () => {
   return (
     <Container>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
+        <StyledToolbar>
+          <StyledIconButton
             edge="start"
             color="inherit"
             disabled={activeTab === 0}
             onClick={() => moveTabLeft(state, activeTab)}
           >
-            <ArrowBackIcon />
-          </IconButton>
-          <IconButton
+            <ArrowBack />
+          </StyledIconButton>
+          <StyledIconButton
             edge="start"
             color="inherit"
             disabled={activeTab >= state.length - 1}
             onClick={() => moveTabRight(state, activeTab)}
           >
-            <ArrowForwardIcon />
-          </IconButton>
-          <IconButton
+            <ArrowForward />
+          </StyledIconButton>
+          <StyledIconButton
             edge="start"
             color="inherit"
             disabled={state.length >= 4}
@@ -112,17 +108,17 @@ const ConfigBar = () => {
               addTab(state, activeTab);
             }}
           >
-            <AddIcon />
-          </IconButton>
-          <IconButton
+            <Add/>
+          </StyledIconButton>
+          <StyledIconButton
             edge="start"
             color="inherit"
             disabled={state.length <= 2}
             onClick={() => removeTab(state, activeTab)}
           >
-            <RemoveIcon />
-          </IconButton>
-        </Toolbar>
+            <Remove/>
+          </StyledIconButton>
+        </StyledToolbar>
       </AppBar>
     </Container>
   );
