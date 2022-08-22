@@ -223,8 +223,7 @@
         }
 
         *:focus {
-            outline: #0B9F93 solid 3px;
-            outline-offset: 2px;
+            outline: 2px solid #000;
             z-index: 1
         }
 
@@ -267,7 +266,6 @@
         }
 
         a {
-            color: #0e8515;
             font-style: normal
         }
 
@@ -1013,6 +1011,10 @@
             }
         }
 
+        amp-selector [option][selected] {
+            outline: none
+        }
+
         .wrapper.tabs .tabs[role=tablist] {
             display: flex;
             flex-wrap: wrap
@@ -1021,32 +1023,58 @@
         .wrapper.tabs .tabs[role=tablist] [role=tab] {
             flex-grow: 1;
             text-align: center;
-            border: 1px solid #c6cdd0;
+            border: 1px solid #bdbdbd;
             border-left-width: 0;
-            font-weight: 600;
-            background-color: #ececec
+            background-color: #f5f5f5;
+            border-radius: 10px 10px 0px 0px;
+            max-width: 255px;
+            min-height: 25px;
+            max-height: 36px;
+            word-wrap: break-word;
+            overflow-x: hidden;
+            overflow-y: visible;
+            font-family: "Inter", sans-serif;
+            font-size: 18px;
+            font-weight: 500;
+            color: #636363;
+            resize: none;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+            z-index: -99;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
         }
 
         .wrapper.tabs .tabs[role=tablist] [role=tab]:first-child {
             border-left-width: 1px
         }
 
-        .wrapper.tabs .tabs[role=tablist] [role=tab]:hover {
-            color: inherit;
-            text-decoration: underline
-        }
-
         .wrapper.tabs .tabs[role=tablist] [role=tab][selected] {
             background-color: #fff;
-            border-bottom: none;
-            border-top: 5px solid #0e8515;
-            padding-top: 4px;
-            color: #0e8515;
-            text-decoration: underline
+            border-bottom: 0px;
+            color: #232323;
         }
 
         .wrapper.tabs .tabs[role=tablist] [role=tab][selected]:focus {
-            outline: #0B9F93 solid 3px
+            outline: 2px solid #000;
         }
 
         .wrapper.tabs .tabs[role=tablist] [role=tabpanel] {
@@ -1360,15 +1388,24 @@
             <main id="main" [class]="[twobtns.bluron]" role="main">
                 <h1>Tabs 1.1.0 - 12/3/2020</h1>
                 <p>
-                    Below is an example of a Tabs interface.
+                    Below is an example of a Tabs interface. When the Tabs interface is focused, select a Tab using the
+                    <kbd>&larr;</kbd> or <kbd>&rarr;</kbd> keys. To select a tab to display, press <kbd>Enter</kbd>.
                 </p>
                 <div class="tabs wrapper bottom-margin">
-                    <amp-selector class="tabs" role="tablist" keyboard-select-mode="none"
+                    <amp-selector class="tabs" role="tablist" keyboard-select-mode="focus"
                         id="tablist11ef1a53_b7ec_4c11_9554_43bbd6d44db1">
                         <div id="tablist11ef1a53_b7ec_4c11_9554_43bbd6d44db1_tab1" role="tab"
                             aria-controls="tablist11ef1a53_b7ec_4c11_9554_43bbd6d44db1_tabpanel1" class="p1" option
                             selected>
-                            Just Text
+                            Praesent id finibus odio, in rutrum lectus. Praesent feugiat nisi erat, eu posuere enim
+                            ullamcorper at. Suspendisse nibh tortor, cursus vitae sem eu, scelerisque dictum nunc. In at
+                            nisl at tortor suscipit posuere. Maecenas hendrerit sed ipsum a iaculis. Aliquam vitae orci
+                            nec mauris pharetra mattis at in lacus. In ut lorem quis magna fringilla bibendum non eu
+                            sem. Etiam massa erat, blandit a interdum vitae, varius a dolor. In a magna eget odio
+                            tincidunt rhoncus nec eget sapien. In eu facilisis tortor, id sodales felis. Curabitur
+                            facilisis, nisi a condimentum rutrum, ex erat eleifend mi, in feugiat ex mi ac nibh. Sed ut
+                            lorem iaculis, facilisis est in, venenatis risus. Lorem ipsum dolor sit amet, consectetur
+                            adipiscing elit. Vivamus accumsan massa et nibh elementum posuere eget id ipsum.
                         </div>
                         <div id="tablist11ef1a53_b7ec_4c11_9554_43bbd6d44db1_tabpanel1" role="tabpanel"
                             aria-labelledby="tablist11ef1a53_b7ec_4c11_9554_43bbd6d44db1_tab1"
