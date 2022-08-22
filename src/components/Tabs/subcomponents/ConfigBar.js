@@ -54,7 +54,7 @@ const Toolbar = styled(MUIToolbar)({
   borderLeft: "4px solid #1565c0",
   backgroundColor: "white",
   margin: "10px, 8px",
-
+  minHeight: "32px !important",
   "& .MuiToolbar-gutters": {
     paddingLeft: 0,
     paddingRight: 0,
@@ -70,12 +70,11 @@ const IconButton = styled(MUIIconButton)({
   color: "#000",
   backgroundColor: "none",
   borderLeft: "4px solid #1565c0",
-  borderRadius: "0!important",
+  borderRadius: "4px",
   "&:hover": {
-    backgroundColor: "rgba(21, 101, 192, 0.12)",
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
     color: "#1565C0",
-
-    borderRadius: "0",
+    borderRadius: "4px",
   },
 });
 
@@ -167,6 +166,7 @@ const ConfigBar = () => {
         <Toolbar variant="dense" disableGutters>
           <StyledTooltip title="move tab left" arrow placement="top">
             <IconButton
+              disableRipple
               color="inherit"
               disabled={activeTab === 0}
               onClick={() => moveTabLeft(state, activeTab)}
