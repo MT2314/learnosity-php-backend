@@ -70,11 +70,10 @@ const IconButton = styled(MUIIconButton)({
   color: "#000",
   backgroundColor: "none",
   borderLeft: "4px solid #1565c0",
-  borderRadius: "4px",
+  borderRadius: "4px!important",
   "&:hover": {
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
     color: "#1565C0",
-    borderRadius: "4px!important",
   },
 });
 
