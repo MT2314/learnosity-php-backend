@@ -35,9 +35,6 @@ const Tabs = () => {
 
   return (
     <>
-      <div className={toolbar ? 'show-tabtoolbar' : 'hide-tabtoolbar'}>
-        <ConfigBar />
-      </div>
       <div className="tab-container">
         <div
           className="tab-title-wrapper"
@@ -49,6 +46,9 @@ const Tabs = () => {
             }
           }}
         >
+          <div className={toolbar ? 'show-tabtoolbar' : 'hide-tabtoolbar'}>
+            <ConfigBar />
+          </div>
           {state.map((tabTitle, tabIndex) => {
             return (
               <div
