@@ -1,9 +1,6 @@
 html {
-    font: 16px/20px Arial, sans-serif;
-
-    @media(min-width: 832px) {
-        font: 18px/22.5px Arial, sans-serif;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+    font: 16px/20px Inter, sans-serif;
 }
 
 body {
