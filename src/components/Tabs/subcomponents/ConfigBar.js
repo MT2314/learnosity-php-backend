@@ -35,7 +35,6 @@ const StyledTooltip = styled(({ className, ...props }) => (
 // ? styled Toolbar
 const StyledToolbar = styled(Toolbar)({
   position: "relative",
-
   display: "flex",
   justifyContent: "space-evenly",
   width: "146px",
@@ -56,7 +55,6 @@ const StyledIconButton = styled(IconButton)({
   width: "30px",
   height: "30px",
   padding: "7px",
-  marginLeft: "4px",
   color: "#000",
   backgroundColor: "none",
   borderRadius: "4px!important",
