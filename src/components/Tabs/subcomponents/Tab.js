@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { TabContext, LayoutContext } from "../TabContext";
 import { useDrop } from "react-dnd";
+import { TabContext, LayoutContext } from "../TabContext";
 
 //components
 import Placeholder from "./Placeholder";
@@ -13,7 +13,7 @@ const Tab = ({ tab, tabIndex }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["Text", "Video", "Image", "Table"],
+    accept: ["Text","Image","Video","Table"],
     drop: (item) => {
       dispatch({
         func: "ADD_COMPONENT",

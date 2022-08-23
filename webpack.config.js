@@ -153,10 +153,10 @@ module.exports = (_, argv) => {
             singleton: true,
             requiredVersion: deps["react-dom"],
           },
-          // '@emotion/react': {
-          //   singleton: true,
-          //   requiredVersion: deps['@emotion/react'],
-          // },
+          '@emotion/react': {
+            singleton: true,
+            requiredVersion: deps['@emotion/react'],
+          },
         },
       }),
       new NodePolyfillPlugin(),
