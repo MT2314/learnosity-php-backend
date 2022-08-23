@@ -128,7 +128,6 @@ const ConfigBar = () => {
       id: Math.floor(Math.random() * 10),
       title: `Tab ${state.length + 1}`,
     });
-    setActiveTab(activeTab + 1);
   };
 
   // ? Props for removeTab Dialog

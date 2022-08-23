@@ -32,7 +32,8 @@ const Tabs = () => {
     inputRef.current.focus();
     inputRef.current.scrollTo(state[i].title.length, state[i].title.length);
   };
-
+  console.log("state: ", state);
+  console.log("activeTab: ", activeTab);
   return (
     <>
       <div className={toolbar ? "show-tabtoolbar" : "hide-tabtoolbar"}>
