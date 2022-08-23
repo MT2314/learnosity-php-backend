@@ -5,6 +5,7 @@ import { tooltipClasses } from "@mui/material/Tooltip";
 import DialogProvider from "../../../Utility/DialogProvider";
 import { IconButton, Toolbar, AppBar, Tooltip } from "@mui/material";
 import { ArrowBack, ArrowForward, Add, Remove } from "@mui/icons-material";
+import { v4 as uuidv4 } from "uuid";
 
 // * Styled Components
 // ? Styled Container for configBar
@@ -116,7 +117,7 @@ const ConfigBar = () => {
   const addTab = (state, activeTab) => {
     dispatch({
       func: "ADD_TAB",
-      id: Math.floor(Math.random() * 10),
+      id: uuidv4(),
       title: `Tab ${state.length + 1}`,
     });
   };

@@ -80,7 +80,7 @@ const Tabs = () => {
                     maxLength="200"
                     onChange={handleTitleChange}
                     onFocus={() => handleCursorFocus(tabIndex)}
-                    data-id={tabIndex}
+                    data-id={state[tabIndex].id}
                     value={state[tabIndex].title}
                     onBlur={handleTitleBlur}
                     ref={inputRef}
