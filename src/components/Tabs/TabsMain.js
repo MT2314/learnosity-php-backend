@@ -1,10 +1,9 @@
-
 import React from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { v4 as uuidv4 } from "uuid";
 import { LayoutProvider, ActiveTabProvider } from "./TabContext";
 import Tabs from "./subcomponents/Tabs";
-import { v4 as uuidv4 } from "uuid";
 
 import "./styles/Tab.scss";
 

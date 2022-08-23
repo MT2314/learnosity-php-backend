@@ -1,11 +1,11 @@
 import React, { useContext, useState, useCallback } from "react";
 import styled from "@emotion/styled";
+import { v4 as uuidv4 } from "uuid";
 import { LayoutContext, TabContext } from "../TabContext";
 import { tooltipClasses } from "@mui/material/Tooltip";
-import DialogProvider from "../../../Utility/DialogProvider";
 import { IconButton, Toolbar, AppBar, Tooltip } from "@mui/material";
 import { ArrowBack, ArrowForward, Add, Remove } from "@mui/icons-material";
-import { v4 as uuidv4 } from "uuid";
+import DialogProvider from "../../../Utility/DialogProvider";
 
 // * Styled Components
 // ? Styled Container for configBar

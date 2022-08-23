@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { TabContext, LayoutContext } from "../TabContext";
 import { useDrop } from "react-dnd";
+import { TabContext, LayoutContext } from "../TabContext";
 
 //components
 import Placeholder from "./Placeholder";
