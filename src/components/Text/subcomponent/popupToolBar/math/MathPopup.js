@@ -1,4 +1,6 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
+import { TextContext } from "../../../Provider";
+
 import { InlineMath } from "react-katex";
 
 import Grid from "@mui/material/Grid";
@@ -48,6 +50,8 @@ const style = {
   width: "800px",
   height: "contain",
   border: "1px solid black",
+  top: "80px",
+  left: "50%",
   transform: "translateX(-50%)",
   zIndex: 5,
   backgroundColor: "#fff",
@@ -66,6 +70,7 @@ const container = {
 };
 
 const MathPopup = ({ toolbarId, closeMath }) => {
+  const { quill } = useContext(TextContext);
   const [value, setValue] = useState("1");
 
   const mathfield = useRef(null);
@@ -86,13 +91,23 @@ const MathPopup = ({ toolbarId, closeMath }) => {
   };
 
   const handleClick = () => {
-    const toolbar = document.getElementById(`toolbar-${toolbarId}`);
-    const tooltip = toolbar.querySelector(".ql-tooltip");
-    const input = tooltip.querySelector("input");
-    input.removeAttribute("data-link");
-    const button = tooltip.querySelector(".ql-action");
-    input.value = mathfield.current.getValue("latex-expanded");
-    button.click();
+    // const toolbar = document.getElementById(`toolbar-${toolbarId}`);
+    // const tooltip = toolbar.querySelector(".ql-tooltip");
+    // const input = tooltip.querySelector("input");
+    // input.removeAttribute("data-link");
+    // const button = tooltip.querySelector(".ql-action");
+    // input.value = mathfield.current.getValue("latex-expanded");
+    // button.click();
+
+    const range = quill.getSelection(true);
+    quill.deleteText(range.index, range.length);
+    quill.insertEmbed(
+      range.index,
+      "mathpix",
+      mathfield.current.getValue("latex-expanded")
+    );
+    quill.insertText(range.index + range.length + 1, " ");
+    quill.setSelection(range.index + range.length + 1);
 
     closeMath();
   };
@@ -124,11 +139,11 @@ const MathPopup = ({ toolbarId, closeMath }) => {
               <TabContext value={value}>
                 <TabList onChange={handleChange}>
                   {tabs.map((tab, index) => (
-                    <Tab label={tab.label} value={`${index + 1}`} />
+                    <Tab key={index} label={tab.label} value={`${index + 1}`} />
                   ))}
                 </TabList>
                 {tabs.map((tab, index) => (
-                  <TabPanel value={`${index + 1}`}>
+                  <TabPanel key={index} value={`${index + 1}`}>
                     <Grid
                       container
                       spacing={1}
