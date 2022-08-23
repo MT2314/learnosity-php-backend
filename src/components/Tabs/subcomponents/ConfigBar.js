@@ -21,7 +21,7 @@ const StyledTooltip = styled(({ className, ...props }) => (
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "rgba(97, 97, 97, 0.9)",
     border: "4px",
-    color: theme.palette.common.white,
+    color: "#fff",
     height: "22px",
     padding: "4px, 8px, 4px, 8px",
     fontSize: "10px",
