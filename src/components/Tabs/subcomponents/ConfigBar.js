@@ -62,6 +62,10 @@ const StyledIconButton = styled(IconButton)({
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
     color: "#1565C0",
   },
+  "&:active": {
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    color: "#1565C0",
+  },
 });
 
 const ConfigBar = () => {
@@ -151,6 +155,7 @@ const ConfigBar = () => {
         <StyledToolbar variant="dense" disableGutters>
           <StyledTooltip title="move tab left" arrow placement="top">
             <StyledIconButton
+              disableRipple
               color="inherit"
               disabled={activeTab === 0}
               onClick={() => moveTabLeft(state, activeTab)}
@@ -160,6 +165,7 @@ const ConfigBar = () => {
           </StyledTooltip>
           <StyledTooltip title="move tab right" arrow placement="top">
             <StyledIconButton
+              disableRipple
               color="inherit"
               disabled={activeTab >= state.length - 1}
               onClick={() => moveTabRight(state, activeTab)}
@@ -169,6 +175,7 @@ const ConfigBar = () => {
           </StyledTooltip>
           <StyledTooltip title="add tab" arrow placement="top">
             <StyledIconButton
+              disableRipple
               color="inherit"
               disabled={state.length >= 4}
               onClick={() => {
@@ -183,6 +190,7 @@ const ConfigBar = () => {
           )}
           <StyledTooltip title="remove current tab" arrow placement="top">
             <StyledIconButton
+              disableRipple
               color="inherit"
               disabled={state.length <= 2}
               onClick={() => {
