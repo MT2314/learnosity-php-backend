@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
-import ReactQuill from "react-quill";
+import React, { useEffect, useRef, useState, useMemo, useContext } from "react";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
@@ -16,8 +16,12 @@ import {
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 
-import katex from "katex";
+import MathPixMarkdown from "../blots/MathPixMarkdown";
+import { TextContext } from "../Provider";
+
 import "katex/dist/katex.css";
+
+Quill.register("formats/mathpix", MathPixMarkdown);
 
 const EditorComponent = ({
   body,
@@ -28,6 +32,9 @@ const EditorComponent = ({
   setActiveComponent,
   isActiveComponent,
 }) => {
+  //get context for Text Component
+  const context = useContext(TextContext);
+
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
@@ -67,7 +74,8 @@ const EditorComponent = ({
   });
 
   useEffect(() => {
-    window.katex = katex;
+    //set quill instance
+    context.updateContext({ quill: focusRef.current.getEditor() });
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
     // on render editor is focused
@@ -80,7 +88,6 @@ const EditorComponent = ({
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
 
-    console.log(focusRef.current.getEditor().root.innerHTML);
     //quill instance
     const quill = focusRef.current;
     const quillText = quill.getEditor().getText();
@@ -229,6 +236,7 @@ const EditorComponent = ({
     "bullet",
     "link",
     "background",
+    "mathpix",
   ];
 
   const modules = useMemo(
@@ -327,5 +335,3 @@ const EditorComponent = ({
 };
 
 export default EditorComponent;
-
-/// \\

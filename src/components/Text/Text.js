@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
+import TextProvider from "./Provider";
 import "./styles/Text.scss";
 
 import { CssBaseline } from "@mui/material";
@@ -28,24 +29,27 @@ const Text = ({
     <>
       <CssBaseline />
       {/* <ThemeProvider theme={textTheme}> */}
-        <ReactQuillContainer>
-          {(!showEditor && body === null) ||
-            (!showEditor && !body.ops) ||
-            (!showEditor && body.ops[0].insert === "") ? (
-            <div
-              onClick={() => {
-                setShowEditor(true);
-              }}
-              className={`mainContainer ${focusOutofText.current === document.activeElement && "fakeFocus"}`}
-              data-testid="text-component"
-              tabIndex="0"
-              onFocus={() => {
-                setShowEditor(true);
-              }}
-            >
-              <DefaultText />
-            </div>
-          ) : (
+      <ReactQuillContainer>
+        {(!showEditor && body === null) ||
+        (!showEditor && !body.ops) ||
+        (!showEditor && body.ops[0].insert === "") ? (
+          <div
+            onClick={() => {
+              setShowEditor(true);
+            }}
+            className={`mainContainer ${
+              focusOutofText.current === document.activeElement && "fakeFocus"
+            }`}
+            data-testid="text-component"
+            tabIndex="0"
+            onFocus={() => {
+              setShowEditor(true);
+            }}
+          >
+            <DefaultText />
+          </div>
+        ) : (
+          <TextProvider>
             <EditorComponent
               body={body}
               setProp={setProp}
@@ -55,19 +59,21 @@ const Text = ({
               setActiveComponent={setActiveComponent}
               isActiveComponent={isActiveComponent}
             />
-          )}
-          <div
-            className="sr-only"
-            tabIndex="-1"
-            ref={focusOutofText}
-            onBlur={() => {
-              const removefakeFocus = document?.getElementsByClassName("fakeFocus");
-              removefakeFocus[0]?.classList.remove("fakeFocus");
-            }}
-          >
-            Exit Text Component
-          </div>
-        </ReactQuillContainer>
+          </TextProvider>
+        )}
+        <div
+          className="sr-only"
+          tabIndex="-1"
+          ref={focusOutofText}
+          onBlur={() => {
+            const removefakeFocus =
+              document?.getElementsByClassName("fakeFocus");
+            removefakeFocus[0]?.classList.remove("fakeFocus");
+          }}
+        >
+          Exit Text Component
+        </div>
+      </ReactQuillContainer>
       {/* </ThemeProvider> */}
     </>
   );
