@@ -297,6 +297,7 @@ const EditorComponent = ({
           toolbarId={toolbarId}
           containerId={`toolbar-${toolbarId}`}
           boldRef={boldRef}
+          focusRef={focusRef}
         />
       </div>
 

@@ -10,7 +10,7 @@ import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
 
-const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
+const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
@@ -54,13 +54,19 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
     }
   };
 
+  const exitToText = (e) => {
+    if (e.key === "Escape") {
+      focusRef.current.focus();
+    }
+  }
+
   const closeMath = () => {
     setActiveDropDownItem("");
     setActiveTopMenu("");
   };
 
   return (
-    <div id={toolbarId} className="toolbarContainer">
+    <div id={toolbarId} className="toolbarContainer" onKeyDown={(e) => {exitToText(e)}}>
       {/* bold dropdown starts */}
       <Tooltip
         aria-label="font styles"
@@ -92,6 +98,9 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
               setActiveTopMenu("bold");
             }
             setActiveDropDownItem("");
+          }}
+          onKeyDown={(e) => {
+            onKeyDownExit(e, boldRef);
           }}
           aria-label="formatting button dropdown"
           className={
@@ -196,6 +205,9 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
           aria-label="alignment buttons dropdown"
           value={visibleAlignIcon}
           id="alignment-dropdown"
+          onKeyDown={(e) => {
+            onKeyDownExit(e, alignRef);
+          }}
         >
           {visibleAlignIcon}
         </button>
@@ -247,6 +259,9 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
           className={activeTopMenu === "lists" ? "ql-selected ql-active" : null}
           value="bullet"
           aria-label="list options select group"
+          onKeyDown={(e) => {
+            onKeyDownExit(e, listRef);
+          }}
         >
           {icons["bullet"]}
         </button>
