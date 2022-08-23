@@ -91,14 +91,6 @@ const MathPopup = ({ toolbarId, closeMath }) => {
   };
 
   const handleClick = () => {
-    // const toolbar = document.getElementById(`toolbar-${toolbarId}`);
-    // const tooltip = toolbar.querySelector(".ql-tooltip");
-    // const input = tooltip.querySelector("input");
-    // input.removeAttribute("data-link");
-    // const button = tooltip.querySelector(".ql-action");
-    // input.value = mathfield.current.getValue("latex-expanded");
-    // button.click();
-
     const range = quill.getSelection(true);
     quill.deleteText(range.index, range.length);
     quill.insertEmbed(
