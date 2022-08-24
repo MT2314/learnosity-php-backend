@@ -151,9 +151,9 @@ const ConfigBar = () => {
   }, []);
 
   return (
-    <Container test-id="tab-toolbar">
+    <Container>
       <AppBar position="static">
-        <StyledToolbar variant="dense" disableGutters>
+        <StyledToolbar variant="dense" disableGutters test-id="tab-toolbar">
           <StyledTooltip title="move tab left" arrow placement="top">
             <StyledIconButton
               disableRipple
