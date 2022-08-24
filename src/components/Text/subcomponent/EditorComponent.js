@@ -210,7 +210,7 @@ const EditorComponent = ({
   };
 
   // focus to the bold
-  const onKeyDownExit = (e) => {
+  const onKeyDropDown = (e) => {
     if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
       boldRef.current.focus();
@@ -323,7 +323,7 @@ const EditorComponent = ({
           )
         }
         onKeyDown={(e) => {
-          onKeyDownExit(e);
+          onKeyDropDown(e);
         }}
       />
     </div>

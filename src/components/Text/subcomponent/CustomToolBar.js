@@ -44,7 +44,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
     observer.observe(QLactive, options);
   }
 
-  const onKeyDownExit = (e, currentRef) => {
+  const onKeyDropDown = (e, currentRef) => {
     if (e.key === "Escape") {
       currentRef.current.focus();
       setAlignVisibility(false);
@@ -54,8 +54,12 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
     }
   };
 
-  const exitToText = (e) => {
-    if (e.key === "Escape") {
+  const onKeyTopMenu = (e) => {
+    // e.preventDefault();
+    // if(e.key == 39){
+    //   e.dispatchEvent(new Event('keypress', {keyCode: 9}))
+    // }
+    if (e.key === "Escape" && !activeTopMenu) {
       focusRef.current.focus();
     }
   }
@@ -66,7 +70,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
   };
 
   return (
-    <div id={toolbarId} className="toolbarContainer" onKeyDown={(e) => {exitToText(e)}}>
+    <div id={toolbarId} className="toolbarContainer" onKeyDown={(e) => {onKeyTopMenu(e)}}>
       {/* bold dropdown starts */}
       <Tooltip
         aria-label="font styles"
@@ -100,7 +104,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
             setActiveDropDownItem("");
           }}
           onKeyDown={(e) => {
-            onKeyDownExit(e, boldRef);
+            onKeyDropDown(e, boldRef);
           }}
           aria-label="formatting button dropdown"
           className={
@@ -116,8 +120,8 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
         show={boldVisibility}
         aria-label="formatting options select dropdown"
         className="dropdown-content"
-        onKeyDownExit={(e) => {
-          onKeyDownExit(e, boldRef);
+        onKeyDropDown={(e) => {
+          onKeyDropDown(e, boldRef);
         }}
       ></BoldDropdownButton>
 
@@ -206,7 +210,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
           value={visibleAlignIcon}
           id="alignment-dropdown"
           onKeyDown={(e) => {
-            onKeyDownExit(e, alignRef);
+            onKeyDropDown(e, alignRef);
           }}
         >
           {visibleAlignIcon}
@@ -219,8 +223,8 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
         setVisibleAlignIcon={setVisibleAlignIcon}
-        onKeyDownExit={(e) => {
-          onKeyDownExit(e, alignRef);
+        onKeyDropDown={(e) => {
+          onKeyDropDown(e, alignRef);
         }}
       />
 
@@ -260,7 +264,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
           value="bullet"
           aria-label="list options select group"
           onKeyDown={(e) => {
-            onKeyDownExit(e, listRef);
+            onKeyDropDown(e, listRef);
           }}
         >
           {icons["bullet"]}
@@ -272,8 +276,8 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
         aria-label="list buttons dropdown"
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
-        onKeyDownExit={(e) => {
-          onKeyDownExit(e, listRef);
+        onKeyDropDown={(e) => {
+          onKeyDropDown(e, listRef);
         }}
       ></ListDropdownButton>
 
