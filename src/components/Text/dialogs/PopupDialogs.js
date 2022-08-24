@@ -42,8 +42,6 @@ const MathEditDialog = () => {
 const MathPopupDialog = () => {
   const showMath = useShowMath();
 
-  console.log("Show Math ", showMath);
-
   return <>{showMath && <MathPopup />}</>;
 };
 
