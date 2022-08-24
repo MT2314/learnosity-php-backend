@@ -2,7 +2,11 @@ import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import TabsMain from "../components/Tabs/TabsMain";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { LayoutProvider, ActiveTabProvider } from "../components/Tabs/TabContext";
+import Tabs from "../components/Tabs/subcomponents/Tabs";
+
 
 let container = null;
 beforeEach(() => {
@@ -32,23 +36,36 @@ const testLayout = [
 ];
 
 describe("Tabs", () => {
-  it("renders tab component with two tabs, saved titles", async () => {
-    render(<TabsMain layoutState={testLayout} />);
+   it('Renders Tab Component', async () => {
+    render(
+      <DndProvider backend={HTML5Backend}>
+      <LayoutProvider layoutState={testLayout} setProp={()=>{}}>
+        <ActiveTabProvider>
+          <Tabs />
+        </ActiveTabProvider>
+      </LayoutProvider>
+    </DndProvider>
+    )
 
-    await waitFor(() => {
-      expect(screen.getByText(/Polkaroo/gi)).toBeInTheDocument();
-    });
+      expect(screen.getByText("Tab")).toBeInTheDocument();
+   }) 
+  // it("renders tab component with two tabs, saved titles", async () => {
+  //   render(<TabsMain layoutState={testLayout} />);
 
-    await waitFor(() => {
-      expect(screen.getByText(/Juno/gi)).toBeInTheDocument();
-    });
-  });
+  //   await waitFor(() => {
+  //     expect(screen.getByText(/Polkaroo/gi)).toBeInTheDocument();
+  //   });
 
-  it("renders the tab component with placeholder text if no components are added tab", async () => {
-    render(<TabsMain layoutState={testLayout} />);
+  //   await waitFor(() => {
+  //     expect(screen.getByText(/Juno/gi)).toBeInTheDocument();
+  //   });
+  // });
 
-    await waitFor(() => {
-      expect(screen.getByText(/add a component here/gi)).toBeInTheDocument();
-    });
-  });
+  // it("renders the tab component with placeholder text if no components are added tab", async () => {
+  //   render(<TabsMain layoutState={testLayout} />);
+
+  //   await waitFor(() => {
+  //     expect(screen.getByText(/add a component here/gi)).toBeInTheDocument();
+  //   });
+  // });
 });
