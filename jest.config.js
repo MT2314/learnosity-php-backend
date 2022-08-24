@@ -1,8 +1,11 @@
-// const config = {
-//   verbose: true,
-//   testEnvironment: 'jest-environment-jsdom',
-//   transformIgnorePatterns: [
-//     '/node_modules/(?!(react-dnd|dnd-core|@react-dnd|dnd-core|react-dnd-html5-backend|react-dnd-test-utils|react-dnd-test-backend)/)',
-//   ],
-// }
-// module.exports = config
+const config = {
+  verbose:true,
+  transformIgnorePatterns: [
+    "/node_modules/(?!react-dnd|core-dnd|@react-dnd|dnd-core|react-dnd-html5-backend)"
+  ],
+  moduleNameMapper: {
+    "\\.(jpg|jpeg|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+    "\\.(css|less)$": "identity-obj-proxy"
+  }
+}
+module.exports = config

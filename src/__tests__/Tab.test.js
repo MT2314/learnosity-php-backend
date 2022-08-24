@@ -47,7 +47,8 @@ describe("Tabs", () => {
     </DndProvider>
     )
 
-      expect(screen.getByText("Tab")).toBeInTheDocument();
+      expect(screen.getByText(/polkaroo/ig)).toBeInTheDocument();
+      expect(screen.getByText(/juno/ig)).toBeInTheDocument();
    }) 
   // it("renders tab component with two tabs, saved titles", async () => {
   //   render(<TabsMain layoutState={testLayout} />);
