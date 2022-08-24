@@ -1,8 +1,8 @@
-import React, { useState, useContext, useCallback, useRef } from "react";
-import { TabContext, LayoutContext } from "../TabContext";
-import { TextareaAutosize } from "@material-ui/core";
-import Tab from "./Tab";
-import ConfigBar from "../subcomponents/ConfigBar";
+import React, { useState, useContext, useCallback, useRef } from 'react';
+import { TabContext, LayoutContext } from '../TabContext';
+import { TextareaAutosize } from '@material-ui/core';
+import Tab from './Tab';
+import ConfigBar from '../subcomponents/ConfigBar';
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useContext(TabContext);
@@ -11,14 +11,14 @@ const Tabs = () => {
 
   const handleTitleChange = useCallback((e) => {
     dispatch({
-      func: "CHANGE_TITLE",
+      func: 'CHANGE_TITLE',
       title: e.target.value,
       id: e.target.dataset.id,
     });
   }, []);
 
   const handleTitleBlur = (e) => {
-    e.target.style.overflow = "hidden";
+    e.target.style.overflow = 'hidden';
     e.target.scrollTo(0, 0);
   };
 
@@ -36,11 +36,20 @@ const Tabs = () => {
   console.log("activeTab: ", activeTab);
   return (
     <>
-      <div className={toolbar ? "show-tabtoolbar" : "hide-tabtoolbar"}>
-        <ConfigBar />
-      </div>
       <div className="tab-container">
-        <div className="tab-title-wrapper" role="tablist">
+        <div
+          className="tab-title-wrapper"
+          role="tablist"
+          onBlur={(e) => {
+            const relatedTarget = e.relatedTarget || document.activeElement;
+            if (!relatedTarget || !e.currentTarget.contains(relatedTarget)) {
+              showToolbar(false);
+            }
+          }}
+        >
+          <div className={toolbar ? 'show-tabtoolbar' : 'hide-tabtoolbar'}>
+            <ConfigBar />
+          </div>
           {state.map((tabTitle, tabIndex) => {
             return (
               <div
@@ -53,14 +62,18 @@ const Tabs = () => {
                     : `Untitled Tab ${tabIndex + 1}`
                 }
                 className={`tab-title ${
-                  activeTab === tabIndex ? "active-tab" : ""
+                  activeTab === tabIndex ? 'active-tab' : ''
                 }`}
                 onClick={() => {
                   setActiveTab(tabIndex);
                   showToolbar(true);
                 }}
+                onFocus={() => {
+                  setActiveTab(tabIndex);
+                  showToolbar(true);
+                }}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+                  if (e.key === 'Enter') {
                     setActiveTab(tabIndex);
                     showToolbar(true);
                   }
@@ -72,7 +85,7 @@ const Tabs = () => {
                     placeholder={`Tab ${tabIndex + 1}`}
                     aria-label="tab title input"
                     aria-multiline="true"
-                    role={activeTab == tabIndex ? "textbox" : "tab"}
+                    role={activeTab == tabIndex ? 'textbox' : 'tab'}
                     disabled={activeTab == tabIndex ? false : true}
                     contentEditable
                     minRows="1"
@@ -90,7 +103,7 @@ const Tabs = () => {
                     className="placeholder-title"
                     role="tab"
                     style={{
-                      WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
+                      WebkitLineClamp: activeTab == tabIndex ? 'unset' : 2,
                     }}
                   >
                     {state[tabIndex].title

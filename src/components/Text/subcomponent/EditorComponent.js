@@ -1,27 +1,27 @@
-import React, { useEffect, useRef, useState, useMemo, useContext } from "react";
-import ReactQuill, { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import CustomToolBar from "./CustomToolBar";
-import "../styles/EditorComponent.scss";
-import { v4 as uuidv4 } from "uuid";
-import "quill-paste-smart";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
+import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import CustomToolBar from './CustomToolBar';
+import '../styles/EditorComponent.scss';
+import { v4 as uuidv4 } from 'uuid';
+import 'quill-paste-smart';
+import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
+import ExtendLinkFunctionality from './popupToolBar/ExtendLinkFunctionality';
 import {
   defaultAnchorState,
   ModifyAnchorText,
   ConvertLinks,
   AddLinkEvents,
   handleSelection,
-} from "../utils/HandleLinks";
-import CheckHighlights from "../utils/CheckHighlights";
+} from '../utils/HandleLinks';
+import CheckHighlights from '../utils/CheckHighlights';
 
-import MathPixMarkdown from "../blots/MathPixMarkdown";
-import { TextContext } from "../Provider";
+import MathPixMarkdown from '../blots/MathPixMarkdown';
+import { TextContext } from '../Provider';
 
-import "katex/dist/katex.css";
+import 'katex/dist/katex.css';
 
-Quill.register("formats/mathpix", MathPixMarkdown);
+Quill.register('formats/mathpix', MathPixMarkdown);
 
 const EditorComponent = ({
   body,
@@ -53,14 +53,14 @@ const EditorComponent = ({
   const boldRef = useRef(null);
 
   const ConfigBar = {
-    display: !isActiveComponent ? (editorIsFocus ? "flex" : "none") : "flex",
-    position: "fixed",
-    top: "80px",
-    left: "50%",
-    transform: "translateX(-50%)",
+    display: !isActiveComponent ? (editorIsFocus ? 'flex' : 'none') : 'flex',
+    position: 'fixed',
+    top: '80px',
+    left: '50%',
+    transform: 'translateX(-50%)',
     zIndex: 1000,
-    justifyContent: "center",
-    backgroundColor: "#fff",
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   };
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const EditorComponent = ({
 
   useEffect(() => {
     //set quill instance
-    context.updateContext({ quill: focusRef.current.getEditor() });
+    context.updateContext({ quill: focusRef.current?.getEditor() });
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
     // on render editor is focused
@@ -89,7 +89,7 @@ const EditorComponent = ({
 
     //quill instance
     const quill = focusRef.current;
-    const quillText = quill.getEditor().getText();
+    const quillText = quill?.getEditor().getText();
 
     //check for links
     const linksChecked = checkForLinks(quill, quillText, editorContent);
@@ -102,8 +102,8 @@ const EditorComponent = ({
 
     //edit ops on paste
     const onPaste =
-      editorContent.ops[0].insert === "\n" && editorContent.ops.length === 1;
-    onPaste && (editorContent.ops[0].insert = "");
+      editorContent.ops[0].insert === '\n' && editorContent.ops.length === 1;
+    onPaste && (editorContent.ops[0].insert = '');
 
     //update setProp with new editorContent
     noHighlights && linksChecked && setProp({ body: editorContent });
@@ -144,7 +144,7 @@ const EditorComponent = ({
       // format text to link
       quill
         .getEditor()
-        .formatText(index - (firstInsert ? 1 : 0), length, "link", linkText);
+        .formatText(index - (firstInsert ? 1 : 0), length, 'link', linkText);
     }
 
     //check if anchor text and link text are not the same
@@ -169,7 +169,7 @@ const EditorComponent = ({
         //format the text to be a link
         quill
           .getEditor()
-          .formatText(startLinkIndex, endLinkIndex, "link", link);
+          .formatText(startLinkIndex, endLinkIndex, 'link', link);
       }
 
       //destructuring modifyAnchorText state
@@ -219,18 +219,18 @@ const EditorComponent = ({
 
   //customization settings for toolbar
   const formats = [
-    "bold",
-    "italic",
-    "underline",
-    "script",
-    "strike",
-    "formula",
-    "align",
-    "list",
-    "bullet",
-    "link",
-    "background",
-    "mathpix",
+    'bold',
+    'italic',
+    'underline',
+    'script',
+    'strike',
+    'formula',
+    'align',
+    'list',
+    'bullet',
+    'link',
+    'background',
+    'mathpix',
   ];
 
   const modules = useMemo(
@@ -243,21 +243,21 @@ const EditorComponent = ({
         matchVisual: false,
         allowed: {
           tags: [
-            "a",
-            "strong",
-            "u",
-            "s",
-            "i",
-            "p",
-            "br",
-            "ul",
-            "ol",
-            "li",
-            "b",
-            "sub",
-            "sup",
+            'a',
+            'strong',
+            'u',
+            's',
+            'i',
+            'p',
+            'br',
+            'ul',
+            'ol',
+            'li',
+            'b',
+            'sub',
+            'sup',
           ],
-          attributes: ["href", "rel", "target", "class"],
+          attributes: ['href', 'rel', 'target', 'class'],
         },
         keepSelection: true,
         substituteBlockElements: false,
@@ -279,7 +279,7 @@ const EditorComponent = ({
       onFocus={() => setEditorIsFocus(true)}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
-        if (relatedTarget.tagName === "BODY") {
+        if (relatedTarget.tagName === 'BODY') {
           e.preventDefault();
           return;
         }
