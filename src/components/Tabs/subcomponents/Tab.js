@@ -1,29 +1,19 @@
 import React, { useContext } from "react";
-import { TabContext, LayoutContext } from "../TabContext";
 import { useDrop } from "react-dnd";
-import styled from "@emotion/styled";
+import { TabContext, LayoutContext } from "../TabContext";
+
+//components
 import Placeholder from "./Placeholder";
 import TabComponent from "./TabComponent";
-
-const TabBodyContainer = styled('div')({
-  padding: '10px',
-  border: '1px solid #bdbdbd',
-  borderTop: 'none',
-})
-
-const ComponentList = styled('ul')({
-  listStyle: 'none',
-  paddingLeft: '0px'
-})
 
 const Tab = ({ tab, tabIndex }) => {
   const { id, components } = tab;
 
-  const [activeTab] = useContext(TabContext);
-  const [dispatch] = useContext(LayoutContext);
+  const [activeTab, setActiveTab] = useContext(TabContext);
+  const [state, dispatch] = useContext(LayoutContext);
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["Text", "Video", "Image", "Table"],
+    accept: ["Text","Image","Video","Table"],
     drop: (item) => {
       dispatch({
         func: "ADD_COMPONENT",
@@ -40,18 +30,15 @@ const Tab = ({ tab, tabIndex }) => {
   }));
 
   return (
-    <TabBodyContainer
+    <div
       ref={drop}
       className="tab-body"
       key={id}
-      style={{
-        backgroundColor: isOver ? "rgba(233, 236, 244, 0.2)" : "inherit",
-      }}
     >
       {activeTab === tabIndex && components.length === 0 ? (
-        <Placeholder />
+        <Placeholder isOver={isOver}/>
       ) : (
-        <ComponentList>
+        <ul>
           {components.map((component, compIndex) => {
             return (
               <TabComponent
@@ -61,9 +48,9 @@ const Tab = ({ tab, tabIndex }) => {
               />
             );
           })}
-        </ComponentList>
+        </ul>
       )}
-    </TabBodyContainer>
+    </div>
   );
 };
 export default Tab;
