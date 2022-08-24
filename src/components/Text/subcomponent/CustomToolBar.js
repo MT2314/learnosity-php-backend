@@ -10,7 +10,7 @@ import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
 
-const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
+const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
@@ -44,7 +44,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
     observer.observe(QLactive, options);
   }
 
-  const onKeyDownExit = (e, currentRef) => {
+  const onKeyDropDown = (e, currentRef) => {
     if (e.key === "Escape") {
       currentRef.current.focus();
       setAlignVisibility(false);
@@ -54,13 +54,19 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
     }
   };
 
+  const onKeyTopMenu = (e) => {
+    if (e.key === "Escape" && !activeTopMenu) {
+      focusRef.current.focus();
+    }
+  }
+
   const closeMath = () => {
     setActiveDropDownItem("");
     setActiveTopMenu("");
   };
 
   return (
-    <div id={toolbarId} className="toolbarContainer">
+    <div id={toolbarId} className="toolbarContainer" onKeyDown={(e) => {onKeyTopMenu(e)}}>
       {/* bold dropdown starts */}
       <Tooltip
         aria-label="font styles"
@@ -93,6 +99,9 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
             }
             setActiveDropDownItem("");
           }}
+          onKeyDown={(e) => {
+            onKeyDropDown(e, boldRef);
+          }}
           aria-label="formatting button dropdown"
           className={
             activeTopMenu === "bold"
@@ -107,8 +116,8 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
         show={boldVisibility}
         aria-label="formatting options select dropdown"
         className="dropdown-content"
-        onKeyDownExit={(e) => {
-          onKeyDownExit(e, boldRef);
+        onKeyDropDown={(e) => {
+          onKeyDropDown(e, boldRef);
         }}
       ></BoldDropdownButton>
 
@@ -196,6 +205,9 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
           aria-label="alignment buttons dropdown"
           value={visibleAlignIcon}
           id="alignment-dropdown"
+          onKeyDown={(e) => {
+            onKeyDropDown(e, alignRef);
+          }}
         >
           {visibleAlignIcon}
         </button>
@@ -207,8 +219,8 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
         setVisibleAlignIcon={setVisibleAlignIcon}
-        onKeyDownExit={(e) => {
-          onKeyDownExit(e, alignRef);
+        onKeyDropDown={(e) => {
+          onKeyDropDown(e, alignRef);
         }}
       />
 
@@ -247,6 +259,9 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
           className={activeTopMenu === "lists" ? "ql-selected ql-active" : null}
           value="bullet"
           aria-label="list options select group"
+          onKeyDown={(e) => {
+            onKeyDropDown(e, listRef);
+          }}
         >
           {icons["bullet"]}
         </button>
@@ -257,8 +272,8 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
         aria-label="list buttons dropdown"
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
-        onKeyDownExit={(e) => {
-          onKeyDownExit(e, listRef);
+        onKeyDropDown={(e) => {
+          onKeyDropDown(e, listRef);
         }}
       ></ListDropdownButton>
 
