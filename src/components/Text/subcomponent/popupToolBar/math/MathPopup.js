@@ -1,5 +1,10 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
-import { TextContext } from "../../../Provider";
+import {
+  useQuill,
+  useSetShowMath,
+  useUniqueId,
+  useEditFormula,
+} from "../../../Provider";
 
 import { InlineMath } from "react-katex";
 
@@ -38,6 +43,7 @@ const btnStyles = {
   lineHeight: "1.5",
   letterSpacing: "0.00938em",
   textTransform: "none",
+  cursor: "pointer",
 };
 
 const regularBtns = {
@@ -50,10 +56,10 @@ const style = {
   width: "800px",
   height: "contain",
   border: "1px solid black",
-  top: "80px",
+  top: "125px",
   left: "50%",
   transform: "translateX(-50%)",
-  zIndex: 5,
+  zIndex: 2000,
   backgroundColor: "#fff",
   padding: "10px",
   borderRadius: "5px",
@@ -66,11 +72,17 @@ const container = {
   height: "100px",
   padding: "0 8px",
   borderRadius: "5px",
-  zIndex: 10,
+  zIndex: 2010,
 };
 
-const MathPopup = ({ toolbarId, closeMath }) => {
-  const { quill } = useContext(TextContext);
+const MathPopup = () => {
+  const quill = useQuill();
+  const setMathShow = useSetShowMath();
+  const uniqueId = useUniqueId();
+  const editFormula = useEditFormula();
+
+  const isEdit = Boolean(editFormula.value);
+
   const [value, setValue] = useState("1");
 
   const mathfield = useRef(null);
@@ -84,6 +96,10 @@ const MathPopup = ({ toolbarId, closeMath }) => {
     { label: "Trig", render: Trig },
   ];
 
+  const closeMath = () => {
+    setMathShow(false);
+  };
+
   useOnClickOutside(containerRef, closeMath);
 
   const handleChange = (e, newValue) => {
@@ -91,15 +107,37 @@ const MathPopup = ({ toolbarId, closeMath }) => {
   };
 
   const handleClick = () => {
-    const range = quill.getSelection(true);
-    quill.deleteText(range.index, range.length);
-    quill.insertEmbed(
-      range.index,
-      "mathpix",
-      mathfield.current.getValue("latex-expanded")
-    );
-    quill.insertText(range.index + range.length + 1, " ");
-    quill.setSelection(range.index + range.length + 1);
+    if (isEdit) {
+      const Delta = quill.getContents();
+      const ops = Delta.ops;
+      let index = 0;
+
+      for (const delta of ops) {
+        if (delta.attributes.id === editFormula.id) {
+          break;
+        }
+        index++;
+      }
+
+      quill.deleteText(index, 1);
+      quill.insertEmbed(
+        index,
+        "mathpix",
+        mathfield.current.getValue("latex-expanded")
+      );
+      quill.insertText(index + 1 + 1, " ");
+      quill.setSelection(index + 1 + 1);
+    } else {
+      const range = quill.getSelection(true);
+      quill.deleteText(range.index, range.length);
+      quill.insertEmbed(
+        range.index,
+        "mathpix",
+        mathfield.current.getValue("latex-expanded")
+      );
+      quill.insertText(range.index + range.length + 1, " ");
+      quill.setSelection(range.index + range.length + 1);
+    }
 
     closeMath();
   };
@@ -109,16 +147,19 @@ const MathPopup = ({ toolbarId, closeMath }) => {
     document.body.style.setProperty("--placeholder-color", "#000000");
     document.body.style.setProperty("--selection-color", "#000000");
 
+    isEdit && mathfield.current.setValue(editFormula.value);
+
     mathfield.current.setOptions({
       mathModeSpace: "\\:",
       plonkSound: false,
       keypressSound: false,
     });
+    containerRef.current.click();
     mathfield.current.focus();
   }, []);
 
   return (
-    <div style={style} ref={containerRef}>
+    <div style={style} ref={containerRef} id={`mathpopup-${uniqueId}`}>
       <div>
         <MathLiveEditor style={container} ref={mathfield} />
       </div>
@@ -297,7 +338,7 @@ const MathPopup = ({ toolbarId, closeMath }) => {
       >
         <Grid item>
           <button style={regularBtns} onClick={handleClick}>
-            Insert
+            {isEdit ? "Update" : "Insert"}
           </button>
         </Grid>
         <Grid item>

@@ -1,16 +1,19 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useSetShowMath, useShowMath } from "../Provider";
 import { Divider } from "@mui/material/";
 import { Tooltip } from "@material-ui/core";
 
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
-import MathPopup from "../subcomponent/popupToolBar/math/MathPopup";
+
 import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
 
-const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
+const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
+  const setShowMath = useSetShowMath();
+  const showMath = useShowMath();
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
@@ -54,16 +57,21 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
     }
   };
 
-  const onKeyTopMenu = (e) => {
-    if (e.key === "Escape" && !activeTopMenu) {
-      focusRef.current.focus();
+  useEffect(() => {
+    if (activeTopMenu === "math") {
+      setShowMath(true);
     }
-  }
+  }, [activeTopMenu]);
 
-  const closeMath = () => {
-    setActiveDropDownItem("");
-    setActiveTopMenu("");
-  };
+  useEffect(() => {
+    if (activeTopMenu === "math" && !showMath) {
+      setActiveDropDownItem("");
+      setActiveTopMenu("");
+    }
+    if (activeTopMenu === "" && showMath) {
+      setActiveDropDownItem("math");
+    }
+  }, [showMath]);
 
   return (
     <div id={toolbarId} className="toolbarContainer" onKeyDown={(e) => {onKeyTopMenu(e)}}>
@@ -162,9 +170,11 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
           {icons["formula"]}
         </button>
       </Tooltip>
-      {activeTopMenu === "math" && (
+
+      {/* {activeTopMenu === "math" && (
         <MathPopup toolbarId={toolbarId} closeMath={closeMath} />
-      )}
+      )} */}
+
       {/* alignment dropdown */}
       <Tooltip
         aria-label="alignment"
