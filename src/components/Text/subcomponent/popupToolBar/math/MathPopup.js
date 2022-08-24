@@ -4,6 +4,7 @@ import {
   useSetShowMath,
   useUniqueId,
   useEditFormula,
+  useSetEditFormula,
 } from "../../../Provider";
 
 import { InlineMath } from "react-katex";
@@ -80,6 +81,7 @@ const MathPopup = () => {
   const setMathShow = useSetShowMath();
   const uniqueId = useUniqueId();
   const editFormula = useEditFormula();
+  const setEditFormula = useSetEditFormula();
 
   const isEdit = Boolean(editFormula.value);
 
@@ -97,6 +99,7 @@ const MathPopup = () => {
   ];
 
   const closeMath = () => {
+    setEditFormula({ value: null, id: null });
     setMathShow(false);
   };
 
@@ -108,16 +111,12 @@ const MathPopup = () => {
 
   const handleClick = () => {
     if (isEdit) {
-      const Delta = quill.getContents();
-      const ops = Delta.ops;
-      let index = 0;
+      console.log(quill.getContents());
+      const ops = quill.getContents().ops;
 
-      for (const delta of ops) {
-        if (delta.attributes.id === editFormula.id) {
-          break;
-        }
-        index++;
-      }
+      const index = ops.findIndex(
+        (delta) => delta?.attributes?.id === editFormula.id
+      );
 
       quill.deleteText(index, 1);
       quill.insertEmbed(
@@ -125,8 +124,9 @@ const MathPopup = () => {
         "mathpix",
         mathfield.current.getValue("latex-expanded")
       );
-      quill.insertText(index + 1 + 1, " ");
-      quill.setSelection(index + 1 + 1);
+
+      quill.setSelection(index + 1);
+      setEditFormula({ value: null, id: null });
     } else {
       const range = quill.getSelection(true);
       quill.deleteText(range.index, range.length);

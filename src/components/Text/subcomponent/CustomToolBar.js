@@ -69,7 +69,8 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
       setActiveTopMenu("");
     }
     if (activeTopMenu === "" && showMath) {
-      setActiveDropDownItem("math");
+      console.log("Setting Math active");
+      setActiveTopMenu("math");
     }
   }, [showMath]);
 
