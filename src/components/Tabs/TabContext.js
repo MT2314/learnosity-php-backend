@@ -13,7 +13,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           draft.push({
             type: "TAB",
             id: action.id,
-            title: "",
             components: [],
           });
           break;
