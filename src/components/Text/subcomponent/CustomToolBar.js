@@ -55,10 +55,6 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef, focusRef }) => {
   };
 
   const onKeyTopMenu = (e) => {
-    // e.preventDefault();
-    // if(e.key == 39){
-    //   e.dispatchEvent(new Event('keypress', {keyCode: 9}))
-    // }
     if (e.key === "Escape" && !activeTopMenu) {
       focusRef.current.focus();
     }
