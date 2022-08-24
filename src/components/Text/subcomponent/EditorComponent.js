@@ -210,8 +210,8 @@ const EditorComponent = ({
   };
 
   // focus to the bold
-  const onKeyDownExit = (e) => {
-    if (e.shiftKey && e.key === 'Tab') {
+  const onKeyDropDown = (e) => {
+    if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
       boldRef.current.focus();
     }
@@ -297,6 +297,7 @@ const EditorComponent = ({
           toolbarId={toolbarId}
           containerId={`toolbar-${toolbarId}`}
           boldRef={boldRef}
+          focusRef={focusRef}
         />
       </div>
 
@@ -322,7 +323,7 @@ const EditorComponent = ({
           )
         }
         onKeyDown={(e) => {
-          onKeyDownExit(e);
+          onKeyDropDown(e);
         }}
       />
     </div>
