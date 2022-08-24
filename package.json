@@ -10,7 +10,7 @@
     "build-templates": "mkdir -p ./dist/templates && cp -R -a ./src/templates ./dist",
     "start": "webpack serve --open --mode development --env ENVIRONMENT=local",
     "start:live": "webpack serve --open --mode development --live-reload --hot --env ENVIRONMENT=local",
-    "test": "jest --watch",
+    "test": "react-scripts test --watchAll",
     "test:prod": "CI=true react-scripts test --ci --watchAll=false",
     "test:local": "CI=true react-scripts test --ci --watchAll=false",
     "test:qa": "CI=true react-scripts test --ci --watchAll=false",
@@ -36,6 +36,7 @@
     "css-loader": "^6.3.0",
     "dotenv": "^16.0.0",
     "html-webpack-plugin": "^5.3.2",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
     "json-loader": "^0.5.7",
     "postcss": "^8.2.1",
@@ -98,5 +99,14 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!react-dnd|core-dnd|@react-dnd|dnd-core|react-dnd-html5-backend)"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy"
+    }
   }
 }
