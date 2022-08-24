@@ -1,8 +1,3 @@
-# demo-component-library
-
-A remote app to test with module federation spike. This spike demonstrates how components can be shared with demo-lesson-builder through module-federation. With module-federation we were able to remove craftjs depencies from the widgets.  The widgets can now be viewed within demo-component-library and are not reliant on demo-lesson-builder. 
-
-
 # How to open repo locally
 
 Step 1 - install node-modules
