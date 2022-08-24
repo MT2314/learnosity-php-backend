@@ -34,12 +34,9 @@ const Tab = ({ tab, tabIndex }) => {
       ref={drop}
       className="tab-body"
       key={id}
-      style={{
-        backgroundColor: isOver ? "rgba(233, 236, 244, 0.2)" : "inherit",
-      }}
     >
       {activeTab === tabIndex && components.length === 0 ? (
-        <Placeholder />
+        <Placeholder isOver={isOver}/>
       ) : (
         <ul>
           {components.map((component, compIndex) => {
