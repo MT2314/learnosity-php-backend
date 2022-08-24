@@ -1,8 +1,10 @@
 import React, { useState, useRef } from "react";
 import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
-import TextProvider from "./Provider";
+import { Provider } from "./Provider";
 import "./styles/Text.scss";
+
+import PopupDialogs from "./dialogs/PopupDialogs";
 
 import { CssBaseline } from "@mui/material";
 // import { ThemeProvider } from "@mui/material/styles";
@@ -46,7 +48,8 @@ const Text = ({
             <DefaultText />
           </div>
         ) : (
-          <TextProvider>
+          <Provider>
+            <PopupDialogs />
             <EditorComponent
               body={body}
               setProp={setProp}
@@ -55,7 +58,7 @@ const Text = ({
               setActiveComponent={setActiveComponent}
               isActiveComponent={isActiveComponent}
             />
-          </TextProvider>
+          </Provider>
         )}
       </ReactQuillContainer>
 

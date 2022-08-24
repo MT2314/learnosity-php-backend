@@ -88,6 +88,7 @@
     "react-youtube": "^9.0.2",
     "sass": "^1.51.0",
     "svg-url-loader": "^7.1.1",
+    "use-context-selector": "^1.4.1",
     "uuid": "^3.3.2"
   },
   "eslintConfig": {
