@@ -36,7 +36,7 @@ const Tabs = () => {
   console.log("activeTab: ", activeTab);
   return (
     <>
-      <div className="tab-container">
+      <div className="tab-container" test-id="tab-component">
         <div
           className="tab-title-wrapper"
           role="tablist"
