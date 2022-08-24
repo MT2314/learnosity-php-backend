@@ -291,6 +291,7 @@ const EditorComponent = ({
       onFocus={() => setEditorIsFocus(true)}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
+
         if (relatedTarget.tagName === "BODY") {
           e.preventDefault();
           return;
