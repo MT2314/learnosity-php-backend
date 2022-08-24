@@ -26,8 +26,6 @@ const EditMath = () => {
     });
   });
 
-  console.log(editState.clientX, editState.clientY);
-
   const container = {
     display: editState?.value ? "flex" : "none",
     position: "fixed",

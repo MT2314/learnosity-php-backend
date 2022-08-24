@@ -111,7 +111,6 @@ const MathPopup = () => {
 
   const handleClick = () => {
     if (isEdit) {
-      console.log(quill.getContents());
       const ops = quill.getContents().ops;
 
       const index = ops.findIndex(
