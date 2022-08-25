@@ -32,10 +32,8 @@
 
 <h1>{{result.title}} {{projectConfig.version}} - {{projectConfig.date}}</h1>
 
-{% mathformulas %} 
 {% include amp-formatted-text.html data:result.components[1] -%}
 <hr />
 {% include amp-formatted-text.html data:result.components[0] -%}
 <hr />
-{% include amp-formatted-text.html data:result.components[2] -%} 
-{% endmathformulas %}
+{% include amp-formatted-text.html data:result.components[2] -%}
