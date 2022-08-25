@@ -50,23 +50,4 @@ describe("Tabs", () => {
       expect(screen.getByText(/polkaroo/ig)).toBeInTheDocument();
       expect(screen.getByText(/juno/ig)).toBeInTheDocument();
    }) 
-  // it("renders tab component with two tabs, saved titles", async () => {
-  //   render(<TabsMain layoutState={testLayout} />);
-
-  //   await waitFor(() => {
-  //     expect(screen.getByText(/Polkaroo/gi)).toBeInTheDocument();
-  //   });
-
-  //   await waitFor(() => {
-  //     expect(screen.getByText(/Juno/gi)).toBeInTheDocument();
-  //   });
-  // });
-
-  // it("renders the tab component with placeholder text if no components are added tab", async () => {
-  //   render(<TabsMain layoutState={testLayout} />);
-
-  //   await waitFor(() => {
-  //     expect(screen.getByText(/add a component here/gi)).toBeInTheDocument();
-  //   });
-  // });
 });
