@@ -2,8 +2,8 @@ import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import TabsMain from '../components/Tabs/TabsMain'
-
+import TabsMain from '../components/Tabs/TabsMain';
+import {layoutReducer} from '../components/Tabs/TabContext'
 
 let container = null;
 beforeEach(() => {
@@ -32,6 +32,7 @@ const testLayout = [
   },
 ];
 
+
 describe("Tabs", () => {
    it('Renders Tab Component with default 2 tabs', async () => {
     render(<TabsMain layoutState={testLayout}/>)
@@ -57,15 +58,11 @@ describe("Tabs", () => {
       expect(placeholder).not.toBeInTheDocument(); 
    })
 
-   it('On drop adds a component to the tab', async () => {
-    render(<TabsMain layoutState={testLayout}/>)
+   it('On drop adds a component to the tab', () => {
 
-    const dropZone = screen.getByTestId(/tab-drop-zone/i);
-    expect(dropZone).toBeInTheDocument();
+    const newState = layoutReducer({func: "ADD_COMPONENT"}, testLayout)
 
-    //TODO: mock a drag function in order for drop function to run.
-    //fireEvent.drop(dropZone);
-
+    
 
    })
 });
