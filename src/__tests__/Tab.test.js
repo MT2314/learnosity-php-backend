@@ -31,7 +31,7 @@ const testLayout = [
     type: "TAB",
     id: 1,
     title: "Juno",
-    components: [],
+    components: [{"componentName":"Text","componentProps":{"body":null}},{"componentName":"Text","componentProps":{"body":null}}]
   },
 ];
 
@@ -61,10 +61,14 @@ describe("Tabs", () => {
    it('On click activates tab', async () => {
     render(<TestTab/>)
       const tabLabel = screen.getByRole('tab', {name:/juno/ig});
+      const placeholder = screen.getByText(/accepted components/ig)
+      
       expect(tabLabel).toBeInTheDocument();
+      expect(placeholder).toBeInTheDocument();
 
       fireEvent.click(tabLabel);
-      
+      expect(placeholder).not.toBeInTheDocument();
+
       
       
    })
