@@ -1,24 +1,29 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
-import ReactQuill, { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import CustomToolBar from "./CustomToolBar";
-import "../styles/EditorComponent.scss";
-import { v4 as uuidv4 } from "uuid";
-import "quill-paste-smart";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import CustomToolBar from './CustomToolBar';
+import '../styles/EditorComponent.scss';
+import { v4 as uuidv4 } from 'uuid';
+import 'quill-paste-smart';
+import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
+import ExtendLinkFunctionality from './popupToolBar/ExtendLinkFunctionality';
 import {
   defaultAnchorState,
   ModifyAnchorText,
   ConvertLinks,
   AddLinkEvents,
   handleSelection,
-} from "../utils/HandleLinks";
-import CheckHighlights from "../utils/CheckHighlights";
-import { FormulaEvents } from "../utils/FormulaEvents";
+} from '../utils/HandleLinks';
+import CheckHighlights from '../utils/CheckHighlights';
+import { FormulaEvents } from '../utils/FormulaEvents';
 
-import MathPixMarkdown from "../blots/MathPixMarkdown";
-import { useSetQuill, useSetUniqueId, useShowMath } from "../Provider";
+import MathPixMarkdown from '../blots/MathPixMarkdown';
+import {
+  useSetQuill,
+  useSetUniqueId,
+  useShowMath,
+  useKeepEditor,
+} from '../Provider';
 
 import 'katex/dist/katex.css';
 
@@ -36,6 +41,7 @@ const EditorComponent = ({
   const setQuill = useSetQuill();
   const setUniqueId = useSetUniqueId();
   const showMath = useShowMath();
+  const keepEditor = useKeepEditor();
 
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
@@ -71,7 +77,7 @@ const EditorComponent = ({
   }, [editorIsFocus, setActiveComponent]);
 
   useOnClickOutside(textRef, () => {
-    if (!showMath) {
+    if (!showMath && !keepEditor) {
       setEditorIsFocus(false);
       setShowEditor(false);
     }
@@ -223,7 +229,7 @@ const EditorComponent = ({
 
   // focus to the bold
   const onKeyDropDown = (e) => {
-    if (e.shiftKey && e.key === "Tab") {
+    if (e.shiftKey && e.key === 'Tab') {
       e.preventDefault();
       boldRef.current.focus();
     }
@@ -292,12 +298,14 @@ const EditorComponent = ({
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
 
-        if (relatedTarget.tagName === "BODY") {
+        if (relatedTarget.tagName === 'BODY') {
           e.preventDefault();
           return;
         }
+
         if (
-          (!relatedTarget || !e.currentTarget.contains(relatedTarget)) &&
+          (!relatedTarget ||
+            (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
           !showMath
         ) {
           setEditorIsFocus(false);
@@ -339,7 +347,6 @@ const EditorComponent = ({
           )
         }
         onFocus={() => {
-          //check for formulas
           FormulaEvents(toolbarId);
         }}
         onKeyDown={(e) => {
