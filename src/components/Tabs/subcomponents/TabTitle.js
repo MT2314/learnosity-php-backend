@@ -41,14 +41,10 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           : `Untitled Tab ${tabIndex + 1}`
       }
       className={`tab-title ${activeTab === tabIndex ? "active-tab" : ""}`}
-      onClick={() => {
-        setActiveTab(tabIndex);
-        showToolbar(true);
-      }}
-      onFocus={() => {
-        setActiveTab(tabIndex);
-        showToolbar(true);
-      }}
+      // onFocus={() => {
+      //   setActiveTab(tabIndex);
+      //   showToolbar(true);
+      // }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           setActiveTab(tabIndex);
@@ -81,6 +77,10 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           role="tab"
           style={{
             WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
+          }}
+          onClick={() => {
+            setActiveTab(tabIndex);
+            showToolbar(true);
           }}
         >
           {state[tabIndex].title
