@@ -31,8 +31,8 @@
 
       &:focus,
       &:focus-visible {
-        border: 2px solid black;
-        outline: none;
+        outline: 2px solid black;
+        border: none;
       }
     }
 
@@ -91,6 +91,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      z-index: 1;
 
       .tab-title-input {
         width: 100%;
