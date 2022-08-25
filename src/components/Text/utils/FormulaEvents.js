@@ -3,20 +3,24 @@ export const FormulaEvents = (id) => {
     `mathpix-placeholder-${id}`
   );
 
-  [...document.querySelectorAll(".ql-mathpix")].forEach((item) => {
-    item.addEventListener("click", (e) => {
+  [...document.querySelectorAll('.ql-mathpix')].forEach((item) => {
+    const cords = item.getBoundingClientRect();
+    const left = cords.left;
+    const bottom = cords.bottom + 12;
+
+    item.addEventListener('click', (e) => {
       mathPixPlaceHolder.setAttribute(
-        "data-value",
-        item.getAttribute("data-value")
+        'data-value',
+        item.getAttribute('data-value')
       );
-      mathPixPlaceHolder.setAttribute("data-id", item.getAttribute("data-id"));
-      mathPixPlaceHolder.setAttribute("data-clientX", e.clientX);
-      mathPixPlaceHolder.setAttribute("data-clientY", e.clientY);
+      mathPixPlaceHolder.setAttribute('data-id', item.getAttribute('data-id'));
+      mathPixPlaceHolder.setAttribute('data-clientX', left);
+      mathPixPlaceHolder.setAttribute('data-clientY', bottom);
       mathPixPlaceHolder.click();
     });
 
-    item.addEventListener("mouseover", (e) => {
-      item.style.cursor = "default";
+    item.addEventListener('mouseover', (e) => {
+      item.style.cursor = 'default';
     });
   });
 };
