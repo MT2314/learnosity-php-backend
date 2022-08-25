@@ -1,10 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { LayoutProvider, ActiveTabProvider } from "../components/Tabs/TabContext";
+import { LayoutProvider, ActiveTabProvider, TabContext } from "../components/Tabs/TabContext";
 import Tabs from "../components/Tabs/subcomponents/Tabs";
 
 
@@ -35,9 +35,7 @@ const testLayout = [
   },
 ];
 
-describe("Tabs", () => {
-   it('Renders Tab Component', async () => {
-    render(
+const TestTab = () => (
       <DndProvider backend={HTML5Backend}>
       <LayoutProvider layoutState={testLayout} setProp={()=>{}}>
         <ActiveTabProvider>
@@ -45,9 +43,29 @@ describe("Tabs", () => {
         </ActiveTabProvider>
       </LayoutProvider>
     </DndProvider>
-    )
+)
+
+describe("Tabs", () => {
+   it('Renders Tab Component with default 2 tabs', async () => {
+    render(<TestTab/>)
 
       expect(screen.getByText(/polkaroo/ig)).toBeInTheDocument();
       expect(screen.getByText(/juno/ig)).toBeInTheDocument();
    }) 
+
+   it('Displays placeholder text', async () => {
+    render(<TestTab/>)
+    expect(screen.getByText(/accepted components/ig)).toBeInTheDocument();
+   })
+
+   it('On click activates tab', async () => {
+    render(<TestTab/>)
+      const tabLabel = screen.getByRole('tab', {name:/juno/ig});
+      expect(tabLabel).toBeInTheDocument();
+
+      fireEvent.click(tabLabel);
+      
+      
+      
+   })
 });
