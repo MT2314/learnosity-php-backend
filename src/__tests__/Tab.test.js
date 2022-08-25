@@ -1,11 +1,8 @@
-import React, {useContext} from "react";
+import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { LayoutProvider, ActiveTabProvider, TabContext } from "../components/Tabs/TabContext";
-import Tabs from "../components/Tabs/subcomponents/Tabs";
+import TabsMain from '../components/Tabs/TabsMain'
 
 
 let container = null;
@@ -35,41 +32,39 @@ const testLayout = [
   },
 ];
 
-const TestTab = () => (
-      <DndProvider backend={HTML5Backend}>
-      <LayoutProvider layoutState={testLayout} setProp={()=>{}}>
-        <ActiveTabProvider>
-          <Tabs />
-        </ActiveTabProvider>
-      </LayoutProvider>
-    </DndProvider>
-)
-
 describe("Tabs", () => {
    it('Renders Tab Component with default 2 tabs', async () => {
-    render(<TestTab/>)
+    render(<TabsMain layoutState={testLayout}/>)
 
-      expect(screen.getByText(/polkaroo/ig)).toBeInTheDocument();
-      expect(screen.getByText(/juno/ig)).toBeInTheDocument();
+      expect(screen.getByText(/polkaroo/i)).toBeInTheDocument();
+      expect(screen.getByText(/juno/i)).toBeInTheDocument();
    }) 
 
    it('Displays placeholder text', async () => {
-    render(<TestTab/>)
-    expect(screen.getByText(/accepted components/ig)).toBeInTheDocument();
+    render(<TabsMain layoutState={testLayout}/>)
+    expect(screen.getByText(/accepted components/i)).toBeInTheDocument();
    })
 
-   it('On click activates tab', async () => {
-    render(<TestTab/>)
-      const tabLabel = screen.getByRole('tab', {name:/juno/ig});
-      const placeholder = screen.getByText(/accepted components/ig)
+   it('On click displays active tab', async () => {
+    render(<TabsMain layoutState={testLayout}/>)
+      const tabLabel = screen.getByRole('tab', {name:/juno/i});
+      const placeholder = screen.getByText(/accepted components/i)
       
       expect(tabLabel).toBeInTheDocument();
       expect(placeholder).toBeInTheDocument();
 
       fireEvent.click(tabLabel);
-      expect(placeholder).not.toBeInTheDocument();
+      expect(placeholder).not.toBeInTheDocument(); 
+   })
 
-      
-      
+   it('On drop adds a component to the tab', async () => {
+    render(<TabsMain layoutState={testLayout}/>)
+
+    const dropZone = screen.getByTestId(/tab-drop-zone/i);
+    expect(dropZone).toBeInTheDocument();
+
+    // fireEvent.drop(dropZone);
+
+
    })
 });

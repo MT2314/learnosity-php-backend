@@ -34,6 +34,7 @@ const Tab = ({ tab, tabIndex }) => {
       ref={drop}
       className="tab-body"
       key={id}
+      data-testid='tab-drop-zone'
     >
       {activeTab === tabIndex && components.length === 0 ? (
         <Placeholder isOver={isOver}/>

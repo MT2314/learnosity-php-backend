@@ -41,6 +41,7 @@
     "json-loader": "^0.5.7",
     "postcss": "^8.2.1",
     "postcss-loader": "^4.1.0",
+    "react-dnd-test-backend": "^16.0.1",
     "sass-loader": "^12.6.0",
     "style-loader": "^3.3.0",
     "webpack": "^5.57.1",

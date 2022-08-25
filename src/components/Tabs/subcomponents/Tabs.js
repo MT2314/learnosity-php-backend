@@ -12,7 +12,7 @@ const Tabs = () => {
 
   return (
     <>
-      <div className="tab-container" test-id="tab-component">
+      <div className="tab-container" data-testid="tab-component">
         <div
           className="tab-title-wrapper"
           role="tablist"
