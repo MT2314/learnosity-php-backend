@@ -1,26 +1,42 @@
-# demo-component-library
-
-A remote app to test with module federation spike. This spike demonstrates how components can be shared with demo-lesson-builder through module-federation. With module-federation we were able to remove craftjs depencies from the widgets.  The widgets can now be viewed within demo-component-library and are not reliant on demo-lesson-builder. 
-
-
 # How to open repo locally
 
-Yarn is our chosen package manager for this project if you do not have yarn installed run the following commands otherwise skip to step 3. 
-
-Step 1 - install yarn
+Step 1 - install node-modules
 ```
-npm install --global yarn
+npm install 
 ```
 
-Step 2 - confirm yarn is installed
+Step 2 - open local server
 ```
-yarn --version
-```
-
-Step 3 - install node modules and open local server
-```
-yarn && yarn start
+npm run start
 ```
 
+# How to import MUI components
 
+In order to avoid overriding styles in the Authoring Application and to improve performance, destructure all import statements from "@mui/material".
 
+# Example 1 - importing components from MUI
+
+Do this...
+```
+import { AppBar } from '@mui/material';
+```
+
+Not this...
+```
+import AppBar from '@mui/material/AppBar';
+```
+
+# Example 2 - importing icons from MUI
+
+Do this...
+
+```
+import { AccessAlarm, ThreeDRotation } from '@mui/icons-material';
+```
+
+Not this...
+```
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import ThreeDRotation from '@mui/icons-material/ThreeDRotation';
+
+```

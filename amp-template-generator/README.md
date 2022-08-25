@@ -39,6 +39,7 @@ Make changes to the template files OUTSIDE amp-template-generator, within the sr
 folder of mf-component-library. These can be found in the templates folder. Once you are ready to see your changes, pointing at mf-component-library:
 
 ```
+cd mf-component-library
 npm run test-templates
 
 ```
@@ -46,7 +47,7 @@ npm run test-templates
 Npm package installs and updates
 
 ```
-# After npm installations or updates run the following command
+# After npm installations or updates run the following command ***POINTING AT amp-template-generator***
 npm run install-templates
 
 ```
