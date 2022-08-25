@@ -29,6 +29,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
     inputRef.current.focus();
     inputRef.current.scrollTo(state[i].title.length, state[i].title.length);
   };
+
   return (
     <div
       key={`tab-title-${tabIndex}`}
