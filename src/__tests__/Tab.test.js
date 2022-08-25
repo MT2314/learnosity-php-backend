@@ -2,7 +2,7 @@ import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import TabsMain from '../components/Tabs/TabsMain';
+import TabsMain, {} from '../components/Tabs/TabsMain';
 import {layoutReducer} from '../components/Tabs/TabContext'
 
 let container = null;
@@ -32,6 +32,23 @@ const testLayout = [
   },
 ];
 
+const defaultProps = {
+  layoutState: [
+    {
+      type: "TAB",
+      id: 0,
+      title: "",
+      components: [],
+    },
+    {
+      type: "TAB",
+      id: 1,
+      title: "",
+      components: [],
+    },
+  ],
+};
+
 
 describe("Tabs", () => {
    it('Renders Tab Component with default 2 tabs', async () => {
@@ -58,11 +75,17 @@ describe("Tabs", () => {
       expect(placeholder).not.toBeInTheDocument(); 
    })
 
-   it('On drop adds a component to the tab', () => {
+   it('On drop adds a component to the tab', async () => {
+    const { layoutState } = defaultProps
+    const newState = layoutReducer( layoutState , {
+      func: "ADD_COMPONENT",
+      tabIndex: 0,
+      component: {
+        componentName: 'testy mctesterson',
+      },
+    })
 
-    const newState = layoutReducer({func: "ADD_COMPONENT"}, testLayout)
-
-    
+    expect(newState[0].components).toHaveLength(1)
 
    })
 });

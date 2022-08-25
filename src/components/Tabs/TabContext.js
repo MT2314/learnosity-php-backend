@@ -4,7 +4,7 @@ import produce from "immer";
 //state of tabs data stored in LayoutContext
 export const LayoutContext = createContext();
 
-export const layoutReducer = produce((draft, action) => {
+export const layoutReducer = (draft, action) => {
     switch (action.func) {
       case "ADD_TAB":
         draft.push({
@@ -20,7 +20,7 @@ export const layoutReducer = produce((draft, action) => {
         draft[action.tabIndex].components.push({
           ...action.component,
         });
-        break;
+        return draft
       case "MOVE_TAB_LEFT":
         console.log(draft);
         const elementL = draft[action.tabIndex];
@@ -47,17 +47,17 @@ export const layoutReducer = produce((draft, action) => {
       default:
         break;
     }
-  });
-//layout provider wraps the tab component to access reducer
-export const LayoutProvider = ({ children, setProp, layoutState }) => {
-  const [state, dispatch] = useReducer(
-    layoutReducer,
-    layoutState
-  );
-  useEffect(() => {
-    setProp({ layoutState: state });
-  }, [state]);
-
+  };
+  //layout provider wraps the tab component to access reducer
+  export const LayoutProvider = ({ children, setProp, layoutState }) => {
+    const [state, dispatch] = useReducer(
+      produce(layoutReducer),
+      layoutState
+      );
+      
+      useEffect(() => {
+        setProp({ layoutState: state });
+      }, [state]);
   return (
     <LayoutContext.Provider value={[state, dispatch]}>
       {children}
