@@ -6,16 +6,8 @@ import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 import calloutOptions from "./utility/CalloutOptions";
 
 import { useTranslation, Trans } from "react-i18next";
-import "../../i18n/i18n";
 
 export const defaultProps = { heading: "", body: "" };
-
-const lngs = {
-  en: { nativeName: "English" },
-  fr: { nativeName: "French" },
-  cn: { nativeName: "Chinese" },
-  es: { nativeName: "Spanish" },
-};
 
 const Callout = ({
   calloutTypeSvg,
@@ -30,15 +22,8 @@ const Callout = ({
     ["bold", "italic", "underline", "strikethrough"]
   );
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [textEditorRef, setTextEditorRef] = useState();
-  const lngRef = useRef([]);
-
-  function lngFunction(lng) {
-    i18n.changeLanguage(lng);
-    textEditorRef?.focus({ preventScroll: true });
-    lngRef.current[lng].focus({ preventScroll: true });
-  }
 
   return (
     <Paper
@@ -49,20 +34,6 @@ const Callout = ({
     >
       <div className={styles.dropdownContainer}>
         <label id={`callout-${labelId}`} className={styles.Callout_label}>
-          <div>
-            {Object.keys(lngs).map((lng) => (
-              <button
-                ref={(el) => (lngRef.current[lng] = el)}
-                type="submit"
-                key={lng}
-                onClick={() => lngFunction(lng)}
-                disabled={i18n.resolvedLanguage === lng}
-                aria-label={lngs[lng].nativeName}
-              >
-                {lngs[lng].nativeName}
-              </button>
-            ))}
-          </div>
           {t("callout")}&nbsp;
           <NativeSelect
             role="listbox"
