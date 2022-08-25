@@ -32,7 +32,6 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
   return (
     <div
       key={`tab-title-${tabIndex}`}
-      role="tab"
       tabIndex="0"
       aria-label={
         state[tabIndex].title
@@ -90,5 +89,4 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
     </div>
   );
 };
-
 export default TabTitle;
