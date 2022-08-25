@@ -1,3 +1,4 @@
+
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import { WidgetContextProvider } from "./Utility/mockWrapper";
@@ -15,7 +16,9 @@ import Text from "./components/Text/Text";
 import "./index.css";
 
 const App = () => {
-  console.log(`Stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`)
+  console.log(
+    `Stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`
+  );
   return (
     <>
       <Suspense fallback="loading">

@@ -52,7 +52,9 @@
         </div>
     {% endif %}
    
-      {{content | safe}}
+      {% mathformulas %} 
+        {{content | safe}}
+      {% endmathformulas %}
       
     </main>
   </div>
