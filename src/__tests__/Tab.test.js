@@ -63,7 +63,8 @@ describe("Tabs", () => {
     const dropZone = screen.getByTestId(/tab-drop-zone/i);
     expect(dropZone).toBeInTheDocument();
 
-    // fireEvent.drop(dropZone);
+    //TODO: mock a drag function in order for drop function to run.
+    //fireEvent.drop(dropZone);
 
 
    })
