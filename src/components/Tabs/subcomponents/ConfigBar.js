@@ -61,11 +61,9 @@ const StyledIconButton = styled(IconButton)({
   borderRadius: "4px!important",
   "&:hover": {
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    color: "#1565C0",
   },
   "&:active": {
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    color: "#1565C0",
   },
 });
 

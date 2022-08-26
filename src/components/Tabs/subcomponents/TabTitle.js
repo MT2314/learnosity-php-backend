@@ -29,10 +29,10 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
     inputRef.current.focus();
     inputRef.current.scrollTo(state[i].title.length, state[i].title.length);
   };
+
   return (
     <div
       key={`tab-title-${tabIndex}`}
-      role="tab"
       tabIndex="0"
       aria-label={
         state[tabIndex].title
@@ -40,11 +40,10 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           : `Untitled Tab ${tabIndex + 1}`
       }
       className={`tab-title ${activeTab === tabIndex ? "active-tab" : ""}`}
-      onClick={() => {
-        setActiveTab(tabIndex);
+      onFocus={() => {
         showToolbar(true);
       }}
-      onFocus={() => {
+      onClick={() => {
         setActiveTab(tabIndex);
         showToolbar(true);
       }}
@@ -63,7 +62,6 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           aria-multiline="true"
           role={activeTab == tabIndex ? "textbox" : "tab"}
           disabled={activeTab == tabIndex ? false : true}
-          contentEditable
           minRows="1"
           maxRows="2"
           maxLength="200"
@@ -90,5 +88,4 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
     </div>
   );
 };
-
 export default TabTitle;
