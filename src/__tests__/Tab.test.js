@@ -2,8 +2,8 @@ import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import TabsMain, {} from '../components/Tabs/TabsMain';
-import {layoutReducer} from '../components/Tabs/TabContext'
+import TabsMain from "../components/Tabs/TabsMain";
+import { layoutConfig } from "../components/Tabs/TabContext";
 
 let container = null;
 beforeEach(() => {
@@ -28,64 +28,65 @@ const testLayout = [
     type: "TAB",
     id: 1,
     title: "Juno",
-    components: [{"componentName":"Text","componentProps":{"body":null}},{"componentName":"Text","componentProps":{"body":null}}]
+    components: [
+      { componentName: "Text", componentProps: { body: null } },
+      { componentName: "Text", componentProps: { body: null } },
+    ],
   },
 ];
 
-const defaultProps = {
-  layoutState: [
-    {
-      type: "TAB",
-      id: 0,
-      title: "",
-      components: [],
-    },
-    {
-      type: "TAB",
-      id: 1,
-      title: "",
-      components: [],
-    },
-  ],
-};
-
-
 describe("Tabs", () => {
-   it('Renders Tab Component with default 2 tabs', async () => {
-    render(<TabsMain layoutState={testLayout}/>)
+  it("Renders Tab Component with default 2 tabs", async () => {
+    render(<TabsMain layoutState={testLayout} />);
 
-      expect(screen.getByText(/polkaroo/i)).toBeInTheDocument();
-      expect(screen.getByText(/juno/i)).toBeInTheDocument();
-   }) 
+    expect(screen.getByText(/polkaroo/i)).toBeInTheDocument();
+    expect(screen.getByText(/juno/i)).toBeInTheDocument();
+  });
 
-   it('Displays placeholder text', async () => {
-    render(<TabsMain layoutState={testLayout}/>)
+  it("Displays placeholder text", async () => {
+    render(<TabsMain layoutState={testLayout} />);
     expect(screen.getByText(/accepted components/i)).toBeInTheDocument();
-   })
+  });
 
-   it('On click displays active tab', async () => {
-    render(<TabsMain layoutState={testLayout}/>)
-      const tabLabel = screen.getByRole('tab', {name:/juno/i});
-      const placeholder = screen.getByText(/accepted components/i)
-      
-      expect(tabLabel).toBeInTheDocument();
-      expect(placeholder).toBeInTheDocument();
+  it("On click displays active tab", async () => {
+    render(<TabsMain layoutState={testLayout} />);
+    const tabLabel = screen.getByRole("tab", { name: /juno/i });
+    const placeholder = screen.getByText(/accepted components/i);
 
-      fireEvent.click(tabLabel);
-      expect(placeholder).not.toBeInTheDocument(); 
-   })
+    expect(tabLabel).toBeInTheDocument();
+    expect(placeholder).toBeInTheDocument();
 
-   it('On drop adds a component to the tab', async () => {
-    const { layoutState } = defaultProps
-    const newState = layoutReducer( layoutState , {
+    fireEvent.click(tabLabel);
+    expect(placeholder).not.toBeInTheDocument();
+  });
+
+  it("adds a new tab", async () => {
+    const newState = layoutConfig(testLayout, {
+      func: "ADD_TAB",
+      id: 3,
+      title: 'I am a test! yay!',
+    });
+    expect(newState.length).toBeGreaterThan(2);
+    expect(newState).toHaveLength(3);
+  });
+  
+  it("removes a tab", async () => {
+    const newState = layoutConfig(testLayout, {
+      func: "REMOVE_TAB",
+      currentTab: 0,
+    });
+    expect(newState).toHaveLength(1)
+  })
+  
+  it("adds a component", async () => {
+    const newState = layoutConfig(testLayout, {
       func: "ADD_COMPONENT",
       tabIndex: 0,
       component: {
-        componentName: 'testy mctesterson',
+        componentName: "testy mctesterson",
       },
-    })
+    });
 
-    expect(newState[0].components).toHaveLength(1)
-
-   })
+    expect(newState[0].components).toHaveLength(1);
+  });
 });

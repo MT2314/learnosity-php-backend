@@ -4,7 +4,7 @@ import produce from "immer";
 //state of tabs data stored in LayoutContext
 export const LayoutContext = createContext();
 
-export const layoutReducer = (draft, action) => {
+export const layoutConfig = (draft, action) => {
     switch (action.func) {
       case "ADD_TAB":
         draft.push({
@@ -12,10 +12,10 @@ export const layoutReducer = (draft, action) => {
           id: action.id,
           components: [],
         });
-        break;
+        return draft
       case "REMOVE_TAB":
         draft.splice(action.currentTab, 1);
-        break;
+        return draft
       case "ADD_COMPONENT":
         draft[action.tabIndex].components.push({
           ...action.component,
@@ -26,32 +26,32 @@ export const layoutReducer = (draft, action) => {
         const elementL = draft[action.tabIndex];
         draft.splice(action.tabIndex, 1);
         draft.splice(action.tabIndex - 1, 0, elementL);
-        break;
+        return draft
       case "MOVE_TAB_RIGHT":
         const elementR = draft[action.tabIndex];
         draft.splice(action.tabIndex, 1);
         draft.splice(action.tabIndex + 1, 0, elementR);
-        break;
+        return draft
       case "UPDATE_COMPONENT":
         draft[action.tabIndex].components[action.compIndex].componentProps = {
           ...action.stateUpdate,
         };
-        break;
+        return draft
       case "DELETE_COMPONENT":
         draft[action.tabIndex].components.splice(action.componentIndex, 1);
-        break;
+        return draft
       case "CHANGE_TITLE":
         const tab = draft.find((tab) => tab.id == action.id);
         tab.title = action.title;
-        break;
+        return draft
       default:
-        break;
+        return draft
     }
   };
   //layout provider wraps the tab component to access reducer
   export const LayoutProvider = ({ children, setProp, layoutState }) => {
     const [state, dispatch] = useReducer(
-      produce(layoutReducer),
+      produce(layoutConfig),
       layoutState
       );
       
