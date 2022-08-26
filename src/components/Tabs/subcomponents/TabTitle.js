@@ -41,6 +41,9 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           : `Untitled Tab ${tabIndex + 1}`
       }
       className={`tab-title ${activeTab === tabIndex ? "active-tab" : ""}`}
+      onFocus={() => {
+        showToolbar(true);
+      }}
       onClick={() => {
         setActiveTab(tabIndex);
         showToolbar(true);
