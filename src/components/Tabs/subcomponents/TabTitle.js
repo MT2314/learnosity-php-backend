@@ -41,10 +41,6 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           : `Untitled Tab ${tabIndex + 1}`
       }
       className={`tab-title ${activeTab === tabIndex ? "active-tab" : ""}`}
-      // onFocus={() => {
-      //   setActiveTab(tabIndex);
-      //   showToolbar(true);
-      // }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
           setActiveTab(tabIndex);
