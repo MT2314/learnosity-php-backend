@@ -81,10 +81,6 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           style={{
             WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
           }}
-          onClick={() => {
-            setActiveTab(tabIndex);
-            showToolbar(true);
-          }}
         >
           {state[tabIndex].title
             ? state[tabIndex].title
