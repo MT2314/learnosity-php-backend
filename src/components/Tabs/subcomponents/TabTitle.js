@@ -62,7 +62,6 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           aria-multiline="true"
           role={activeTab == tabIndex ? "textbox" : "tab"}
           disabled={activeTab == tabIndex ? false : true}
-          contentEditable
           minRows="1"
           maxRows="2"
           maxLength="200"
