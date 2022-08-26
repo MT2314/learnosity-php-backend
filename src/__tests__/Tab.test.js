@@ -73,20 +73,20 @@ describe("Tabs", () => {
   it("removes a tab", async () => {
     const newState = layoutConfig(testLayout, {
       func: "REMOVE_TAB",
-      currentTab: 0,
+      currentTab: 2,
     });
-    expect(newState).toHaveLength(1)
+    expect(newState).toHaveLength(2);
   })
   
   it("adds a component", async () => {
     const newState = layoutConfig(testLayout, {
       func: "ADD_COMPONENT",
-      tabIndex: 0,
+      tabIndex: 1,
       component: {
         componentName: "testy mctesterson",
       },
     });
-
-    expect(newState[0].components).toHaveLength(1);
+    expect(newState[1].components).toHaveLength(3)
   });
+
 });
