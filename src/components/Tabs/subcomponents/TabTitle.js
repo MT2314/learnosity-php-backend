@@ -29,6 +29,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
     inputRef.current.focus();
     inputRef.current.scrollTo(state[i].title.length, state[i].title.length);
   };
+
   return (
     <div
       key={`tab-title-${tabIndex}`}
@@ -39,11 +40,10 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           : `Untitled Tab ${tabIndex + 1}`
       }
       className={`tab-title ${activeTab === tabIndex ? "active-tab" : ""}`}
-      onClick={() => {
-        setActiveTab(tabIndex);
+      onFocus={() => {
         showToolbar(true);
       }}
-      onFocus={() => {
+      onClick={() => {
         setActiveTab(tabIndex);
         showToolbar(true);
       }}
