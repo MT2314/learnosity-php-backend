@@ -35,30 +35,6 @@ const testLayout = [
   },
 ];
 
-const mockPropsMultipleTabs = [
-  {
-    type: "TAB",
-    id: 0,
-    title: "Tab 1",
-    components: [],
-  },
-  {
-    type: "TAB",
-    id: 1,
-    title: "Tab 2",
-    components: [
-      { componentName: "Text", componentProps: { body: null } },
-      { componentName: "Text", componentProps: { body: null } },
-    ],
-  },
-  {
-    type: "TAB",
-    id: 2,
-    title: "Tab 3",
-    components: [],
-  },
-];
-
 describe("Tabs", () => {
   it("Renders Tab Component with default 2 tabs", async () => {
     render(<TabsMain layoutState={testLayout} />);
@@ -95,24 +71,36 @@ describe("Tabs", () => {
   });
 
   it("removes a tab", async () => {
-    render(<TabsMain layoutState={mockPropsMultipleTabs} />);
-    layoutConfig(mockPropsMultipleTabs, {
+    render(<TabsMain layoutState={testLayout}/>)
+    layoutConfig(testLayout, {
       func: "REMOVE_TAB",
-      currentTab: 0,
+      currentTab: 2,
     });
-    expect(mockPropsMultipleTabs).toHaveLength(2);
-  });
-
-  it("adds a component", async () => {
-    render(<TabsMain layoutState={testLayout} />);
+    expect(testLayout).toHaveLength(2);
+  })
+  
+  it("adds a component", async () => {;
+    render(<TabsMain layoutState={testLayout}/>)
     layoutConfig(testLayout, {
       func: "ADD_COMPONENT",
-      tabIndex: 0,
+      tabIndex: 1,
       component: {
         componentName: "Text",
       },
     });
-
-    expect(testLayout[0].components).toHaveLength(1);
+    expect(testLayout[1].components).toHaveLength(3)
   });
+
+  it("updates the component state", async () => {
+    render(<TabsMain layoutState={testLayout}/>)
+    layoutConfig(testLayout, {
+      func: "UPDATE_COMPONENT",
+      compIndex: 0,
+      tabIndex: 1,
+      stateUpdate: { newValue: "I updated the state of a component!!!"}
+    })
+
+    expect(testLayout[1].components[0].componentProps.newValue).toBe("I updated the state of a component!!!");
+  })
+
 });

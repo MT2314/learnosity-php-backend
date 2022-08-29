@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { v4 as uuidv4 } from "uuid";
@@ -41,5 +42,10 @@ const TabsMain = ({
     </DndProvider>
   );
 };
+
+TabsMain.propTypes = {
+  layoutState: PropTypes.array.isRequired,
+  setProp: PropTypes.func.isRequired,
+}
 
 export default TabsMain;
