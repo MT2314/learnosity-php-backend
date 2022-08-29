@@ -11,4 +11,16 @@
   min-height: 72px;
   padding: 40px 104px;
   letter-spacing: 0.15px;
+  border: 1px solid transparent;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
 }

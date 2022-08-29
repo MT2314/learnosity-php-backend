@@ -2,79 +2,140 @@ import React from "react";
 import "react-quill/dist/quill.snow.css";
 import "../../styles/BoldDropdownButton.scss";
 import { Card } from "@mui/material";
-import { Tooltip } from "@material-ui/core/";
+import { Tooltip } from "@material-ui/core";
 import icons from "../../assets/icons";
-// Config styles of MUI components
-import { makeStyles } from "@material-ui/core/styles";
 
-// Classes for styling modification. (Tooltip class)
-const useStyles = makeStyles((theme) => ({
-  tooltip: {
-    backgroundColor: "rgba(97, 97, 97, 0.9)",
-  },
-}));
-const BoldDropdownButton = ({ show }) => {
-  // Allow the use of materialUI styled component classes
-  let classes = useStyles();
-
+const BoldDropdownButton = ({ show, onKeyDropDown }) => {
   return (
     <>
-      <Card className={show ? "bold-dropdown show" : "bold-dropdown hide"}>
+      <Card className={show ? "bold-dropdown show" : "bold-dropdown hide"} onKeyDown={onKeyDropDown}>
         <Tooltip
-          arrow
+          aria-label="bold"
           title="bold"
           placement="top"
-          classes={{ tooltip: classes.tooltip }}
+          arrow
+          PopperProps={{
+            disablePortal: true,
+            popperOptions: {
+              positionFixed: true,
+              modifiers: {
+                preventOverflow: {
+                  enabled: true,
+                  boundariesElement: "window", // where "window" is the boundary
+                },
+              },
+            },
+          }}
         >
           <button aria-label="bold" className="ql-bold">
             {icons["bold"]}
           </button>
         </Tooltip>
         <Tooltip
-          arrow
+          aria-label="italic"
           title="italic"
           placement="top"
-          classes={{ tooltip: classes.tooltip }}
+          arrow
+          PopperProps={{
+            disablePortal: true,
+            popperOptions: {
+              positionFixed: true,
+              modifiers: {
+                preventOverflow: {
+                  enabled: true,
+                  boundariesElement: "window", // where "window" is the boundary
+                },
+              },
+            },
+          }}
         >
           <button aria-label="italic" className="ql-italic">
             {icons["italic"]}
           </button>
         </Tooltip>
         <Tooltip
-          arrow
+          aria-label="underline"
           title="underline"
           placement="top"
-          classes={{ tooltip: classes.tooltip }}
+          arrow
+          PopperProps={{
+            disablePortal: true,
+            popperOptions: {
+              positionFixed: true,
+              modifiers: {
+                preventOverflow: {
+                  enabled: true,
+                  boundariesElement: "window", // where "window" is the boundary
+                },
+              },
+            },
+          }}
         >
           <button aria-label="underline" className="ql-underline">
             {icons["underline"]}
           </button>
         </Tooltip>
         <Tooltip
-          arrow
+          aria-label="strikethrough"
           title="strikethrough"
           placement="top"
-          classes={{ tooltip: classes.tooltip }}
+          arrow
+          PopperProps={{
+            disablePortal: true,
+            popperOptions: {
+              positionFixed: true,
+              modifiers: {
+                preventOverflow: {
+                  enabled: true,
+                  boundariesElement: "window", // where "window" is the boundary
+                },
+              },
+            },
+          }}
         >
           <button aria-label="strike" className="ql-strike">
             {icons["strike"]}
           </button>
         </Tooltip>
         <Tooltip
-          arrow
+          aria-label="subscript"
           title="subscript"
           placement="top"
-          classes={{ tooltip: classes.tooltip }}
+          arrow
+          PopperProps={{
+            disablePortal: true,
+            popperOptions: {
+              positionFixed: true,
+              modifiers: {
+                preventOverflow: {
+                  enabled: true,
+                  boundariesElement: "window", // where "window" is the boundary
+                },
+              },
+            },
+          }}
         >
           <button aria-label="sub script" className="ql-script" value="sub">
             {icons["script"]}
           </button>
         </Tooltip>
         <Tooltip
-          arrow
+          aria-label="superscript"
           title="superscript"
           placement="top"
-          classes={{ tooltip: classes.tooltip }}
+          arrow
+          PopperProps={{
+            disablePortal: true,
+            popperOptions: {
+              positionFixed: true,
+              modifiers: {
+                preventOverflow: {
+                  enabled: true,
+                  boundariesElement: "window", // where "window" is the boundary
+                },
+              },
+            },
+          }}
         >
           <button aria-label="super script" className="ql-script" value="super">
             {icons["super"]}

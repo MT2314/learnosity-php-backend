@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
+
+.tab-container {
+  box-sizing: border-box;
+
+  //TYPOGRAPHY
+  font-family: "Inter", sans-serif;
+  letter-spacing: 0.1px;
+  line-height: 25px;
+  color: #636363;
+
+  .tab-title-wrapper {
+    display: flex;
+    min-height: 40px;
+    max-height: 69px;
+
+    //tab title styles
+    .tab-title {
+      background-color: #f5f5f5;
+      border: 1px solid #bdbdbd;
+      border-radius: 10px 10px 0px 0px;
+      width: 100%;
+      max-width: 484px;
+      padding: 8px 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #636363;
+      font-weight: 500;
+      text-align: center;
+
+      &:focus,
+      &:focus-visible {
+        border: 1px solid black;
+        outline: 1px solid black;
+      }
+    }
+
+    .placeholder-title {
+      width: 100%;
+      max-width: 484px;
+      max-height: 50px;
+      padding: 0;
+      margin: 0;
+      font-size: 18px;
+      word-wrap: break-word;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+    }
+
+    .tab-title-input {
+      font-family: "Inter", sans-serif;
+      border: none;
+      padding: 0;
+      font-size: 18px;
+      font-weight: 500;
+      width: 100%;
+      min-height: 25px;
+      max-height: 50px;
+      text-align: center;
+      resize: none;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+
+      &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 7px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+        -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+      }
+
+      &:disabled {
+        background: #f5f5f5;
+      }
+    }
+
+    //on click active tab styles apply
+    .active-tab {
+      background-color: #fff;
+      color: #232323;
+      border-bottom: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+
+      .tab-title-input {
+        width: 100%;
+
+        &::placeholder {
+          color: #232323;
+        }
+
+        &:focus {
+          border: none;
+          outline: none;
+
+          &::placeholder {
+            color: rgba(0, 0, 0, 0.12);
+          }
+        }
+      }
+    }
+  }
+
+  //tab placeholder styles
+  .tab-body {
+    padding: 10px;
+    border: 1px solid #bdbdbd;
+    border-top: none;
+  }
+}
+
+.hide-tabtoolbar {
+  display: none !important;
+}
+
+.show-tabtoolbar {
+  display: block !important;
+  position: fixed !important;
+  top: 80px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000;
+  justify-content: center !important;
+  background-color: #fff !important;
+}

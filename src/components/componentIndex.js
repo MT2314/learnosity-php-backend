@@ -6,15 +6,14 @@ import QuoteBox, {
   defaultProps as quoteBoxDefaultProps,
 } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
-import Tab, { defaultProps as tabsDefaultProps } from "./Tab/Tab";
 import Video, { defaultProps as videoDefaultProps } from "./Video/Video";
 import VideoConfig from "./Video/VideoConfig";
 import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
 import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
+import TabsMain, { defaultProps as testTabDefaultProps } from "./Tabs/TabsMain";
 // Category Icons
 import interactiveCategoryIcon from "../Icons/categoriesIcons/interactive.png";
-import imageCategoryIcon from "../Icons/categoriesIcons/image.png";
 import mediaCategoryIcon from "../Icons/categoriesIcons/media.png";
 import textCategoryIcon from "../Icons/categoriesIcons/text.png";
 // DND Icons
@@ -40,10 +39,6 @@ export const categories = {
     readableName: "Media",
     icon: mediaCategoryIcon,
   },
-  image: {
-    readableName: "Image",
-    icon: imageCategoryIcon,
-  },
 };
 
 const componentIndex = {
@@ -52,7 +47,7 @@ const componentIndex = {
     readableName: "Callout",
     defaultProps: calloutDefaultProps,
     version: "0.0.1",
-    category: categories.interactive,
+    category: categories.text,
     dndLabel: calloutDndLabel, 
     componentIcon: defaultComponentIcon
   },
@@ -71,7 +66,7 @@ const componentIndex = {
     defaultProps: imageDefaultProps,
     version: "0.0.1",
     ConfigPanel: ImageConfig,
-    category: categories.image,
+    category: categories.media,
     dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon
   },
@@ -83,15 +78,6 @@ const componentIndex = {
     category: categories.text,
     dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon
-  },
-  Tab: {
-    Component: Tab,
-    readableName: "Tab",
-    defaultProps: tabsDefaultProps,
-    version: "0.0.1",
-    category: categories.interactive,
-    dndLabel: tabsDndLabel, 
-    componentIcon: tabsComponentIcon
   },
   Video: {
     Component: Video,
@@ -112,6 +98,15 @@ const componentIndex = {
     category: categories.media,
     dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon
+  },
+  Tab: {
+    Component: TabsMain,
+    readableName: "Tabs",
+    defaultProps: testTabDefaultProps,
+    version: "0.0.1",
+    category: categories.interactive,
+    dndLabel: tabsDndLabel, 
+    componentIcon: tabsComponentIcon
   },
 };
 

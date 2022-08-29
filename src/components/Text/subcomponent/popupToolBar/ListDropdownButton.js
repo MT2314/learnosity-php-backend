@@ -1,35 +1,37 @@
 import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
-import { Tooltip } from "@material-ui/core/";
+import { Tooltip } from "@material-ui/core";
+
 import "../../styles/ListDropdownButton.scss";
 import icons from "../../assets/icons";
-// Config styles of MUI components
-import { makeStyles } from "@material-ui/core/styles";
-
-// Classes for styling modification. (Tooltip class)
-const useStyles = makeStyles((theme) => ({
-  tooltip: {
-    backgroundColor: "rgba(97, 97, 97, 0.9)",
-  },
-}));
 
 const ListDropdownButton = ({
   show,
   activeDropDownItem,
   setActiveDropDownItem,
+  onKeyDropDown,
 }) => {
-  // Allow the use of materialUI styled component classes
-  let classes = useStyles();
-
   return (
     <>
-      <Card className={show ? "list-dropdown show" : "list-dropdown hide"}>
+      <Card className={show ? "list-dropdown show" : "list-dropdown hide"} onKeyDown={onKeyDropDown}>
         <Tooltip
-          arrow
+          aria-label="bullets"
           title="bullets"
           placement="top"
-          classes={{ tooltip: classes.tooltip }}
+          arrow
+          PopperProps={{
+            disablePortal: true,
+            popperOptions: {
+              positionFixed: true,
+              modifiers: {
+                preventOverflow: {
+                  enabled: true,
+                  boundariesElement: "window", // where "window" is the boundary
+                },
+              },
+            },
+          }}
         >
           <button
             aria-label="bullet list"
@@ -52,10 +54,22 @@ const ListDropdownButton = ({
         </Tooltip>
 
         <Tooltip
-          arrow
+          aria-label="numbering"
           title="numbering"
           placement="top"
-          classes={{ tooltip: classes.tooltip }}
+          arrow
+          PopperProps={{
+            disablePortal: true,
+            popperOptions: {
+              positionFixed: true,
+              modifiers: {
+                preventOverflow: {
+                  enabled: true,
+                  boundariesElement: "window", // where "window" is the boundary
+                },
+              },
+            },
+          }}
         >
           <button
             aria-label="numbered list"

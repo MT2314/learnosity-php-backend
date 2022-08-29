@@ -27,7 +27,7 @@ npm install
 ```
 Configure .env
 ```
-cd ilc-amp
+cd amp-template-generator
 # Add a .env file to the root directory by copying and renaming .env.local 
 cp .env.local .env
 # Update environment variables as needed
@@ -36,12 +36,13 @@ cp .env.local .env
 Make changes to the template files OUTSIDE amp-template-generator, within the src
 folder of mf-component-library. These can be found in the templates folder. Once you are ready to see your changes, pointing at mf-component-library:
 ```
+cd mf-component-library
 npm run test-templates
 
 ```
 Npm package installs and updates
 ```
-# After npm installations or updates run the following command
+# After npm installations or updates run the following command ***POINTING AT amp-template-generator***
 npm run install-templates
 
 ```

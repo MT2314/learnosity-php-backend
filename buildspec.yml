@@ -8,7 +8,7 @@ phases:
   pre_build:
     commands:
       - echo Installing dependencies...
-      - npm ci 
+      - npm ci
       - echo Running tests
       # - npm run test:$BUILD_ENV
 
@@ -41,4 +41,3 @@ artifacts:
 cache:
   paths:
     - "/node_modules/"
-

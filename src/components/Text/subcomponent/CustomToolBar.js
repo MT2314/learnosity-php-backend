@@ -1,23 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useSetShowMath, useShowMath } from "../Provider";
 import { Divider } from "@mui/material/";
-import { Tooltip } from "@material-ui/core/";
+import { Tooltip } from "@material-ui/core";
+
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
+
 import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
-// Config styles of MUI components
-import { makeStyles } from "@material-ui/core/styles";
 
-// Classes for styling modification. (Tooltip class)
-const useStyles = makeStyles((theme) => ({
-  tooltip: {
-    backgroundColor: "rgba(97, 97, 97, 0.9)",
-  },
-}));
-
-const CustomToolBar = ({ toolbarId, containerId }) => {
+const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
+  const setShowMath = useSetShowMath();
+  const showMath = useShowMath();
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
@@ -25,42 +21,81 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
-  // Allow the use of materialUI styled component classes
-  let classes = useStyles();
+
+  //focus to the list and align. Bold Ref is found in EditorComponent.js
+  const listRef = useRef(null);
+  const alignRef = useRef(null);
 
   const parentDiv = document.getElementById(containerId);
-  if (parentDiv) {
-    const QLformats = parentDiv.querySelector(`.ql-formats`);
-    const QLactive = QLformats.querySelector(`.ql-active`);
-    if (QLactive) {
-      const options = {
-        attributes: true,
-      };
+  const QLformats = parentDiv?.querySelector(`.ql-formats`);
+  const QLactive = QLformats?.querySelector(`.ql-active`);
+  if (QLactive) {
+    const options = {
+      attributes: true,
+    };
 
-      function callback(mutationList) {
-        mutationList.forEach(function (mutation) {
-          if (mutation.target.classList.contains(`ql-active`)) {
-            setVisibleAlignIcon(
-              icons[mutation.target.value ? mutation.target.value : "align"]
-            );
-          }
-        });
-      }
-      const observer = new MutationObserver(callback);
-      observer.observe(QLactive, options);
+    function callback(mutationList) {
+      mutationList.forEach(function (mutation) {
+        if (mutation.target.classList.contains(`ql-active`)) {
+          setVisibleAlignIcon(
+            icons[mutation.target.value ? mutation.target.value : "align"]
+          );
+        }
+      });
     }
+    const observer = new MutationObserver(callback);
+    observer.observe(QLactive, options);
   }
 
+  const onKeyDropDown = (e, currentRef) => {
+    if (e.key === "Escape") {
+      currentRef.current.focus();
+      setAlignVisibility(false);
+      setListVisibility(false);
+      setBoldVisibility(false);
+      setActiveTopMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTopMenu === "math") {
+      setShowMath(true);
+    }
+  }, [activeTopMenu]);
+
+  useEffect(() => {
+    if (activeTopMenu === "math" && !showMath) {
+      setActiveDropDownItem("");
+      setActiveTopMenu("");
+    }
+    if (activeTopMenu === "" && showMath) {
+      setActiveTopMenu("math");
+    }
+  }, [showMath]);
+
   return (
-    <div id={toolbarId} className="toolbarContainer">
+    <div id={toolbarId} className="toolbarContainer" onKeyDown={(e) => {onKeyTopMenu(e)}}>
       {/* bold dropdown starts */}
       <Tooltip
-        arrow
+        aria-label="font styles"
         title="font styles"
         placement="top"
-        classes={{ tooltip: classes.tooltip }}
+        arrow
+        PopperProps={{
+          disablePortal: true,
+          popperOptions: {
+            positionFixed: true,
+            modifiers: {
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "window", // where "window" is the boundary
+              },
+            },
+          },
+        }}
       >
         <button
+          ref={boldRef}
           onClick={() => {
             setBoldVisibility(!boldVisibility);
             setAlignVisibility(false);
@@ -71,6 +106,9 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
               setActiveTopMenu("bold");
             }
             setActiveDropDownItem("");
+          }}
+          onKeyDown={(e) => {
+            onKeyDropDown(e, boldRef);
           }}
           aria-label="formatting button dropdown"
           className={
@@ -86,14 +124,29 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         show={boldVisibility}
         aria-label="formatting options select dropdown"
         className="dropdown-content"
+        onKeyDropDown={(e) => {
+          onKeyDropDown(e, boldRef);
+        }}
       ></BoldDropdownButton>
 
       {/* formula btn */}
       <Tooltip
-        arrow
+        aria-label="equation"
         title="equation"
         placement="top"
-        classes={{ tooltip: classes.tooltip }}
+        arrow
+        PopperProps={{
+          disablePortal: true,
+          popperOptions: {
+            positionFixed: true,
+            modifiers: {
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "window", // where "window" is the boundary
+              },
+            },
+          },
+        }}
       >
         <button
           className={
@@ -118,14 +171,31 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         </button>
       </Tooltip>
 
+      {/* {activeTopMenu === "math" && (
+        <MathPopup toolbarId={toolbarId} closeMath={closeMath} />
+      )} */}
+
       {/* alignment dropdown */}
       <Tooltip
-        arrow
+        aria-label="alignment"
         title="alignment"
         placement="top"
-        classes={{ tooltip: classes.tooltip }}
+        arrow
+        PopperProps={{
+          disablePortal: true,
+          popperOptions: {
+            positionFixed: true,
+            modifiers: {
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "window", // where "window" is the boundary
+              },
+            },
+          },
+        }}
       >
         <button
+          ref={alignRef}
           onClick={() => {
             setAlignVisibility(!alignVisibility);
             setBoldVisibility(false);
@@ -145,6 +215,9 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
           aria-label="alignment buttons dropdown"
           value={visibleAlignIcon}
           id="alignment-dropdown"
+          onKeyDown={(e) => {
+            onKeyDropDown(e, alignRef);
+          }}
         >
           {visibleAlignIcon}
         </button>
@@ -156,16 +229,32 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
         setVisibleAlignIcon={setVisibleAlignIcon}
+        onKeyDropDown={(e) => {
+          onKeyDropDown(e, alignRef);
+        }}
       />
 
       {/* bullets drowdown starts */}
       <Tooltip
-        arrow
+        aria-label="add list"
         title="add list"
         placement="top"
-        classes={{ tooltip: classes.tooltip }}
+        arrow
+        PopperProps={{
+          disablePortal: true,
+          popperOptions: {
+            positionFixed: true,
+            modifiers: {
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "window", // where "window" is the boundary
+              },
+            },
+          },
+        }}
       >
         <button
+          ref={listRef}
           onClick={() => {
             setListVisibility(!listVisibility);
             setAlignVisibility(false);
@@ -180,6 +269,9 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
           className={activeTopMenu === "lists" ? "ql-selected ql-active" : null}
           value="bullet"
           aria-label="list options select group"
+          onKeyDown={(e) => {
+            onKeyDropDown(e, listRef);
+          }}
         >
           {icons["bullet"]}
         </button>
@@ -190,16 +282,31 @@ const CustomToolBar = ({ toolbarId, containerId }) => {
         aria-label="list buttons dropdown"
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
+        onKeyDropDown={(e) => {
+          onKeyDropDown(e, listRef);
+        }}
       ></ListDropdownButton>
 
       {/* link btn and divider */}
       <Divider orientation="vertical" />
       <HiddenQuillLinkButton />
       <Tooltip
-        arrow
-        title="insert link"
+        aria-label="link"
+        title="link"
         placement="top"
-        classes={{ tooltip: classes.tooltip }}
+        arrow
+        PopperProps={{
+          disablePortal: true,
+          popperOptions: {
+            positionFixed: true,
+            modifiers: {
+              preventOverflow: {
+                enabled: true,
+                boundariesElement: "window", // where "window" is the boundary
+              },
+            },
+          },
+        }}
       >
         <button
           aria-label="add link button"

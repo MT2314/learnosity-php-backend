@@ -1,0 +1,45 @@
+import React from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { v4 as uuidv4 } from "uuid";
+import { LayoutProvider, ActiveTabProvider } from "./TabContext";
+import Tabs from "./subcomponents/Tabs";
+
+import "./styles/Tab.scss";
+
+//tabs default props
+export const defaultProps = {
+  layoutState: [
+    {
+      type: "TAB",
+      id: uuidv4(),
+      title: "",
+      components: [],
+    },
+    {
+      type: "TAB",
+      id: uuidv4(),
+      title: "",
+      components: [],
+    },
+  ],
+};
+
+const TabsMain = ({
+  layoutState = [],
+  setProp = () => {},
+  setActiveComponent = () => {},
+  isActiveComponent = false,
+}) => {
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <LayoutProvider layoutState={layoutState} setProp={setProp}>
+        <ActiveTabProvider>
+          <Tabs />
+        </ActiveTabProvider>
+      </LayoutProvider>
+    </DndProvider>
+  );
+};
+
+export default TabsMain;

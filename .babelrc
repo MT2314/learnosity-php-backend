@@ -1,7 +1,11 @@
 // babel-plugin-import optimizes build
 {
-  "presets": ["@babel/preset-react", "@babel/preset-env"],
+  "presets": [
+    "@babel/preset-react", 
+    "@babel/preset-env",
+    "@emotion/babel-preset-css-prop"],
   "plugins": [
+    ["@emotion", { "labelFormat": "component-library"}],
     ["@babel/transform-runtime"],
     [
       "babel-plugin-import",

@@ -8,7 +8,7 @@ import {
 } from "./LinkCustomIcons";
 
 const linkValidityRegex =
-  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|[a-zA-Z0-9-]+[a-zA-Z0-9]?\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
 const ExtendLinkFunctionality = (id) => {
   let isEditing = false;
@@ -17,7 +17,6 @@ const ExtendLinkFunctionality = (id) => {
   let modifyingLink = null;
   let highlightColor = null;
   let defaultColor = null;
-  let targetSpan = null;
   let savedLink = "";
 
   const quillElement = document.getElementById(id);
@@ -31,7 +30,7 @@ const ExtendLinkFunctionality = (id) => {
   const quillActionBtn = quillElement.querySelector(".ql-action");
   const quillRemoveBtn = quillElement.querySelector(".ql-remove");
 
-  const linkTooltipInput = linkTooltipElement.querySelector(`input`);
+  const linkTooltipInput = linkTooltipElement.querySelector("input");
   const toolbarContainer = quillElement.querySelector(".toolbarContainer");
   const quillEditor = quillElement.querySelector(".ql-editor");
 
@@ -42,6 +41,7 @@ const ExtendLinkFunctionality = (id) => {
   const tooltipSaveBtnContainer = document.createElement("span");
   const tooltipRemoveButtonContainer = document.createElement("span");
   const tooltipEditorButtonContainer = document.createElement("span");
+  const customLinkInput = document.createElement("input");
 
   quillActionBtn.style.display = "none";
   quillRemoveBtn.style.display = "none";
@@ -50,10 +50,17 @@ const ExtendLinkFunctionality = (id) => {
   tooltipEditorButtonContainer.classList.add("pencil-icon");
   tooltipRemoveButtonContainer.classList.add("trash-icon");
 
+  linkTooltipInput.style.display = "none";
+  customLinkInput.setAttribute("data-link", "Paste a link");
+  customLinkInput.setAttribute("data-video", "Embed URL");
+  customLinkInput.setAttribute("data-formula", "e=mc^2");
+  customLinkInput.setAttribute("placeholder", "Paste a link");
+
   [
     { insert: tooltipSaveBtnContainer, sibling: quillActionBtn },
     { insert: tooltipRemoveButtonContainer, sibling: quillRemoveBtn },
     { insert: tooltipEditorButtonContainer, sibling: quillActionBtn },
+    { insert: customLinkInput, sibling: linkTooltipInput },
   ].map(({ insert, sibling }) => {
     return sibling.parentNode.insertBefore(insert, sibling.nextSibling);
   });
@@ -94,45 +101,111 @@ const ExtendLinkFunctionality = (id) => {
   };
 
   altQuillLink.addEventListener("click", (e) => {
-    altQuillLink.classList.add("ql-selected");
-    setBackgroundColor("highlight");
-    defaultQuillLink.click();
-    isTextHighlighted = true;
+    e.preventDefault();
+    e.stopPropagation();
+
+    linkTooltipElement.style.display = "";
+
+    const selection = window.getSelection();
+    if (selection.toString().length === 0) return;
+
+    const linkStart = selection.anchorNode.parentNode.tagName === "A";
+    const linkEnd = selection.focusNode.parentNode.tagName === "A";
+
+    if (linkStart && linkEnd) {
+      selection.anchorNode.parentNode.removeAttribute("href");
+      altQuillLink.classList.remove("ql-selected");
+      return;
+    } else {
+      altQuillLink.classList.add("ql-selected");
+
+      setBackgroundColor("highlight");
+      defaultQuillLink.click();
+      customLinkInput.value = "";
+      isTextHighlighted = true;
+    }
   });
 
-  linkTooltipInput.addEventListener("focus", (e) => {
-    linkTooltipInput.classList.contains("input-error")
-      ? (linkTooltipInput.value = e.target.value)
-      : !isEditing && (linkTooltipInput.value = "");
+  customLinkInput.addEventListener("focus", (e) => {
+    isRemoving && (customLinkInput.value = "");
+
+    customLinkInput.classList.contains("input-error")
+      ? (customLinkInput.value = e.target.value)
+      : !isEditing && (customLinkInput.value = "");
 
     !isEditing && Apply.classList.add("disabled");
-    linkTooltipInput.classList.remove("input-error");
+    customLinkInput.classList.remove("input-error");
 
     invalidLinkMessage.style.display = "none";
     quillActionBtn.style.display = "none";
     Apply.hidden = false;
   });
 
-  linkTooltipInput.addEventListener("input", (e) => {
+  customLinkInput.addEventListener("input", (e) => {
     e.target.value?.length === 0
       ? Apply.classList.add("disabled")
       : Apply.classList.remove("disabled");
+
+    customLinkInput.classList.contains("input-error") &&
+      customLinkInput.classList.remove("input-error");
+
+    invalidLinkMessage.style.display = "none";
+  });
+
+  customLinkInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
+
+      linkTooltipInput.value = customLinkInput.value;
+      Apply.click();
+    }
   });
 
   Apply.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
 
+    linkTooltipInput.value = customLinkInput.value;
     if (Apply.classList.contains("disabled")) return;
 
     if (linkTooltipElement.getAttribute("data-mode") === "link") {
       if (linkTooltipInput?.value.match(linkValidityRegex)) {
+        // If no http or https scheme is specified
+        if (
+          linkTooltipInput.value.indexOf("http://") === -1
+            ? linkTooltipInput.value.indexOf("https://") === -1
+            : linkTooltipInput.value.indexOf("https://") !== -1
+        ) {
+          // If www. is and isn't within url => http://www.
+          linkTooltipInput.value.indexOf("www.") !== -1
+            ? (linkTooltipInput.value = linkTooltipInput.value.replace(
+                "www.",
+                "http://www."
+              ))
+            : (linkTooltipInput.value = linkTooltipInput.value.replace(
+                /^/,
+                "http://www."
+              ));
+        }
+        if (
+          linkTooltipInput.value.indexOf("http://") !== -1 ||
+          linkTooltipInput.value.indexOf("https://") !== -1
+        ) {
+          if (linkTooltipInput.value.indexOf("www.") === -1) {
+            linkTooltipInput.value = linkTooltipInput.value.replace(
+              "://",
+              "://www."
+            );
+          }
+        }
+
         savedLink = linkTooltipInput.value;
         quillActionBtn.click();
         Apply.hidden = true;
       } else {
         invalidLinkMessage.style.display = "block";
-        linkTooltipInput.classList.add("input-error");
+        customLinkInput.classList.add("input-error");
       }
     } else {
       quillActionBtn.click();
@@ -174,7 +247,7 @@ const ExtendLinkFunctionality = (id) => {
         if (isRemoving) {
           isRemoving = false;
           linkTooltipElement.classList.remove("ql-hidden", "ql-editing");
-          linkTooltipInput.value = savedLink;
+          customLinkInput.value = savedLink;
 
           quillRemoveBtn.click();
         }
@@ -189,6 +262,9 @@ const ExtendLinkFunctionality = (id) => {
     Trashcan.style.display = modifyingLink ? "none" : "";
     Pencil.style.display = modifyingLink ? "none" : "";
     Apply.style.display = modifyingLink ? "" : "none";
+    customLinkInput.style.display = modifyingLink ? "" : "none";
+
+    modifyingLink && customLinkInput.select() && customLinkInput.focus();
 
     const closed =
       changes[0].target.classList.contains("ql-tooltip") &&
@@ -198,27 +274,13 @@ const ExtendLinkFunctionality = (id) => {
     if (closed) {
       quillEditor.querySelectorAll("p").forEach((p) => {
         const span = p.querySelector("span");
-        span && span.style.backgroundColor && (targetSpan = span);
+        span && span.style.backgroundColor && span.removeAttribute("style");
         p.querySelectorAll("a").forEach((anchor) => {
           anchor.removeAttribute("style");
         });
       });
 
-      if (isTextHighlighted && targetSpan) {
-        const range = document.createRange();
-        const selection = window.getSelection();
-
-        range.selectNode(targetSpan);
-
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        isTextHighlighted = false;
-        setBackgroundColor("default");
-        targetSpan = null;
-      }
       defaultQuillLink.classList.remove("ql-selected", "ql-active");
-      altQuillLink.classList.remove("ql-selected", "ql-active");
     }
   });
 

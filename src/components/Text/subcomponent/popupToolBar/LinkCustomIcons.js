@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
-import { Tooltip } from "@material-ui/core/";
-// Config styles of MUI components
-import { makeStyles } from "@material-ui/core/styles";
+import { Tooltip } from "@material-ui/core";
+
 import "../../styles/ListDropdownButton.scss";
 import icons from "../../assets/icons";
 
-// Classes for styling modification. (Tooltip class)
-const useStyles = makeStyles((theme) => ({
-  tooltip: {
-    backgroundColor: "rgba(97, 97, 97, 0.9)",
-  },
-}));
-
 export const TrashcanTooltip = () => {
-  // Allow the use of materialUI styled component classes
-  let classes = useStyles();
-
   return (
     <Tooltip
-      arrow
+      aria-label="delete link"
       title="delete link"
       placement="top"
-      classes={{ tooltip: classes.tooltip }}
+      arrow
+      PopperProps={{
+        disablePortal: true,
+        popperOptions: {
+          positionFixed: true,
+          modifiers: {
+            preventOverflow: {
+              enabled: true,
+              boundariesElement: "window", // where "window" is the boundary
+            },
+          },
+        },
+      }}
     >
       <button aria-label="delete link" className="trashcan">
         {icons["trashcan"]}
@@ -32,14 +33,8 @@ export const TrashcanTooltip = () => {
 };
 
 export const PencilTooltip = () => {
-  let classes = useStyles();
   return (
-    <Tooltip
-      arrow
-      title="edit link"
-      placement="top"
-      classes={{ tooltip: classes.tooltip }}
-    >
+    <Tooltip arrow title="edit link" placement="top">
       <button aria-label="edit link" className="pencil">
         {icons["pencil"]}
       </button>
@@ -49,8 +44,6 @@ export const PencilTooltip = () => {
 
 export const ApplyTooltip = ({ quill }) => {
   const [isDisabled, setIsDisabled] = useState(false);
-
-  let classes = useStyles();
 
   const props = {
     title: "apply link",
@@ -66,11 +59,7 @@ export const ApplyTooltip = ({ quill }) => {
       : setIsDisabled(false);
   };
   return (
-    <Tooltip
-      {...props}
-      onMouseEnter={handleMouseOver}
-      classes={{ tooltip: classes.tooltip }}
-    >
+    <Tooltip {...props} onMouseEnter={handleMouseOver}>
       <button aria-label="apply link" className="apply">
         Apply
       </button>

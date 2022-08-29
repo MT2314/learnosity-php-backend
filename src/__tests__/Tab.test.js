@@ -1,8 +1,9 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Tab from "../components/Tab/Tab";
+import TabsMain from "../components/Tabs/TabsMain";
+import { layoutConfig } from "../components/Tabs/TabContext";
 
 let container = null;
 beforeEach(() => {
@@ -16,93 +17,102 @@ afterEach(() => {
   container = null;
 });
 
-describe("Tab", () => {
-  const testTabs = {
-    tabs: [
-      { id: 1, name: "Math", content: [] },
-      {
-        id: 2,
-        name: "Geography",
-        content: [],
-      },
+const testLayout = [
+  {
+    type: "TAB",
+    id: 0,
+    title: "Polkaroo",
+    components: [],
+  },
+  {
+    type: "TAB",
+    id: 1,
+    title: "Juno",
+    components: [
+      { componentName: "Text", componentProps: { body: null } },
+      { componentName: "Text", componentProps: { body: null } },
     ],
-  };
-  
-  const numOfTabs = testTabs.tabs.filter(tab => tab.id).length
+  },
+];
 
-  xit("renders tabs with given data", () => {
-    render(<Tab tabs={testTabs.tabs}/>)
+const mockPropsMultipleTabs = [
+  {
+    type: "TAB",
+    id: 0,
+    title: "Tab 1",
+    components: [],
+  },
+  {
+    type: "TAB",
+    id: 1,
+    title: "Tab 2",
+    components: [
+      { componentName: "Text", componentProps: { body: null } },
+      { componentName: "Text", componentProps: { body: null } },
+    ],
+  },
+  {
+    type: "TAB",
+    id: 2,
+    title: "Tab 3",
+    components: [],
+  },
+];
 
-    expect(screen.getByTestId("tab")).toBeInTheDocument();
-    expect(screen.getByTestId("add-For")).toBeInTheDocument(); 
-    expect(screen.getByTestId("add-Ima")).toBeInTheDocument();
-  })
-  
-  xit("has a minimum of 2 tabs on render", () => {
-    render(<Tab tabs={testTabs.tabs}/>)
+describe("Tabs", () => {
+  it("Renders Tab Component with default 2 tabs", async () => {
+    render(<TabsMain layoutState={testLayout} />);
 
-    expect(testTabs.tabs).not.toHaveLength(3)
-    expect(testTabs.tabs).not.toHaveLength(1)
-    expect(testTabs.tabs).toHaveLength(numOfTabs)
-  })
+    expect(screen.getByText(/polkaroo/i)).toBeInTheDocument();
+    expect(screen.getByText(/juno/i)).toBeInTheDocument();
+  });
 
-  xit("renders add tab button", () => {
-    render(<Tab tabs={testTabs.tabs}/>)
-    
-    expect(screen.getByTestId("add-tab-btn")).toBeInTheDocument()
-  })
-  
-  xit("renders a new tab when add tab btn is pressed", () => { 
-    let addingTabArr = {
-      tabs: [
-        { id: 1, name: "Math", content: [] },
-        {
-          id: 2,
-          name: "Geography",
-          content: [],
-        },
-      ]
-    }
-    render(<Tab tabs={addingTabArr.tabs} setProp={(stateUpdate) => addingTabArr = {...addingTabArr, ...stateUpdate}}/>)
+  it("Displays placeholder text", async () => {
+    render(<TabsMain layoutState={testLayout} />);
+    expect(screen.getByText(/accepted components/i)).toBeInTheDocument();
+  });
 
-    const addTabBtn = screen.getByRole("button", {name: /add tab/i});
+  it("On click displays active tab", async () => {
+    render(<TabsMain layoutState={testLayout} />);
+    const tabLabel = screen.getByRole("tab", { name: /juno/i });
+    const placeholder = screen.getByText(/accepted components/i);
 
-    expect(addTabBtn).toBeInTheDocument()
+    expect(tabLabel).toBeInTheDocument();
+    expect(placeholder).toBeInTheDocument();
 
-    fireEvent.click(addTabBtn)
-    expect(addingTabArr.tabs).toHaveLength(3)    
-  })
+    fireEvent.click(tabLabel);
+    expect(placeholder).not.toBeInTheDocument();
+  });
 
-  xit("formatted text and image btns are in the document and fire add component function", () => { 
+  it("adds a new tab", async () => {
+    render(<TabsMain layoutState={testLayout} />);
+    layoutConfig(testLayout, {
+      func: "ADD_TAB",
+      id: 2,
+    });
+    expect(testLayout.length).toBeGreaterThan(2);
+    expect(testLayout).toHaveLength(3);
+  });
 
-    const mockFn = jest.fn()
+  it("removes a tab", async () => {
+    render(<TabsMain layoutState={mockPropsMultipleTabs} />);
+    layoutConfig(mockPropsMultipleTabs, {
+      func: "REMOVE_TAB",
+      currentTab: 0,
+    });
+    expect(mockPropsMultipleTabs).toHaveLength(2);
+  });
 
-    let addingTabArr = {
-      tabs: [
-        { id: 1, name: "Math", content: [] },
-        {
-          id: 2,
-          name: "Geography",
-          content: [],
-        },
-      ]
-    }
+  it("adds a component", async () => {
+    render(<TabsMain layoutState={testLayout} />);
+    layoutConfig(testLayout, {
+      func: "ADD_COMPONENT",
+      tabIndex: 0,
+      component: {
+        componentName: "Text",
+      },
+    });
 
-    render(<Tab tabs={addingTabArr.tabs} setProp={mockFn}/>)
-
-    const formattedTextBtn = screen.getByRole("button", {name: /add formatted text/i})
-    const imageBtn = screen.getByRole("button", {name: /add image/i})
-
-    expect(formattedTextBtn).toBeInTheDocument()
-    expect(imageBtn).toBeInTheDocument()
-    
-    fireEvent.click(formattedTextBtn)
-    expect(mockFn).toHaveBeenCalled()
-
-    fireEvent.click(imageBtn)
-    expect(mockFn).toHaveBeenCalled()
-
-  })
-})
-
-
+    expect(testLayout[0].components).toHaveLength(1);
+  });
+});
