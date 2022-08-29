@@ -35,30 +35,6 @@ const testLayout = [
   },
 ];
 
-const mockPropsMultipleTabs = [
-  {
-    type: "TAB",
-    id: 0,
-    title: "Tab 1",
-    components: [],
-  },
-  {
-    type: "TAB",
-    id: 1,
-    title: "Tab 2",
-    components: [
-      { componentName: "Text", componentProps: { body: null } },
-      { componentName: "Text", componentProps: { body: null } },
-    ],
-  },
-  {
-    type: "TAB",
-    id: 2,
-    title: "Tab 3",
-    components: [],
-  },
-];
-
 describe("Tabs", () => {
   it("Renders Tab Component with default 2 tabs", async () => {
     render(<TabsMain layoutState={testLayout} />);
