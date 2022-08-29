@@ -410,6 +410,7 @@ function _installBuild() {
   return new Promise(function (resolve, reject) {
     var p = cp.spawn("npm", ["install", "--production"], {
       cwd: "build/nodejs",
+      shell: true,
     });
     p.stdout.on("data", (data) => {
       log(`${data}`);
@@ -429,8 +430,9 @@ function _zipBuild() {
   return new Promise(function (resolve, reject) {
     var p = cp.spawn(
       "zip",
-      ["luke-ilc-amp-layer.zip", "-r", "./nodejs", "--symlinks"],
-      { cwd: "build" }
+      // ["luke-ilc-amp-layer.zip", "-r", "./nodejs", "--symlinks"],
+      ["luke-ilc-amp-layer.zip", "-r", "./nodejs"],
+      { cwd: "build", shell: true }
     );
     p.stdout.on("data", (data) => {
       log(`${data}`);
