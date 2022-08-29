@@ -95,16 +95,16 @@ describe("Tabs", () => {
   });
 
   it("removes a tab", async () => {
-    render(<TabsMain layoutState={mockPropsMultipleTabs} />);
-    layoutConfig(mockPropsMultipleTabs, {
+    render(<TabsMain layoutState={testLayout}/>)
+    layoutConfig(testLayout, {
       func: "REMOVE_TAB",
       currentTab: 2,
     });
-    expect(newState).toHaveLength(2);
+    expect(testLayout).toHaveLength(2);
   })
   
-  it("adds a component", async () => {
-    render(<TabsMain layoutState={testLayout} />);
+  it("adds a component", async () => {;
+    render(<TabsMain layoutState={testLayout}/>)
     layoutConfig(testLayout, {
       func: "ADD_COMPONENT",
       tabIndex: 1,
@@ -112,18 +112,19 @@ describe("Tabs", () => {
         componentName: "Text",
       },
     });
-    expect(newState[1].components).toHaveLength(3)
+    expect(testLayout[1].components).toHaveLength(3)
   });
 
   it("updates the component state", async () => {
-    const newState = layoutConfig(testLayout, {
+    render(<TabsMain layoutState={testLayout}/>)
+    layoutConfig(testLayout, {
       func: "UPDATE_COMPONENT",
       compIndex: 0,
       tabIndex: 1,
       stateUpdate: { newValue: "I updated the state of a component!!!"}
     })
 
-    expect(newState[1].components[0].componentProps.newValue).toBe("I updated the state of a component!!!");
+    expect(testLayout[1].components[0].componentProps.newValue).toBe("I updated the state of a component!!!");
   })
 
 });
