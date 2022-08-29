@@ -89,4 +89,15 @@ describe("Tabs", () => {
     expect(newState[1].components).toHaveLength(3)
   });
 
+  it("updates the component state", async () => {
+    const newState = layoutConfig(testLayout, {
+      func: "UPDATE_COMPONENT",
+      compIndex: 0,
+      tabIndex: 1,
+      stateUpdate: { newValue: "I updated the state of a component!!!"}
+    })
+
+    expect(newState[1].components[0].componentProps.newValue).toBe("I updated the state of a component!!!");
+  })
+
 });
