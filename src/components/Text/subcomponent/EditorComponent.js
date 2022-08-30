@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
@@ -15,19 +15,34 @@ import {
   handleSelection,
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
+import { FormulaEvents } from "../utils/FormulaEvents";
 
-import katex from "katex";
+import MathPixMarkdown from "../blots/MathPixMarkdown";
+import {
+  useSetQuill,
+  useSetUniqueId,
+  useShowMath,
+  useKeepEditor,
+} from "../Provider";
+
 import "katex/dist/katex.css";
+
+Quill.register("formats/mathpix", MathPixMarkdown);
 
 const EditorComponent = ({
   body,
   setProp,
   setShowEditor,
-  focusOutofText,
   showEditor,
   setActiveComponent,
   isActiveComponent,
 }) => {
+  //context hooks
+  const setQuill = useSetQuill();
+  const setUniqueId = useSetUniqueId();
+  const showMath = useShowMath();
+  const keepEditor = useKeepEditor();
+
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
@@ -62,14 +77,21 @@ const EditorComponent = ({
   }, [editorIsFocus, setActiveComponent]);
 
   useOnClickOutside(textRef, () => {
-    setEditorIsFocus(false);
-    setShowEditor(false);
+    if (!showMath && !keepEditor) {
+      setEditorIsFocus(false);
+      setShowEditor(false);
+    }
   });
 
   useEffect(() => {
-    window.katex = katex;
+    //set quill instance
+    setQuill(focusRef.current.getEditor());
+    //set unique id instance
+    setUniqueId(toolbarId);
     //extend default link functionality on mount
     ExtendLinkFunctionality(`toolbar-${toolbarId}`);
+    //check for formulas
+    FormulaEvents(toolbarId);
     // on render editor is focused
     showEditor && focusRef.current.focus();
     //on render toolbar appears
@@ -80,10 +102,9 @@ const EditorComponent = ({
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
 
-    console.log(focusRef.current.getEditor().root.innerHTML);
     //quill instance
     const quill = focusRef.current;
-    const quillText = quill.getEditor().getText();
+    const quillText = quill?.getEditor().getText();
 
     //check for links
     const linksChecked = checkForLinks(quill, quillText, editorContent);
@@ -93,6 +114,9 @@ const EditorComponent = ({
 
     //check for selection with highlights
     const noHighlights = CheckHighlights(editorContent);
+
+    //check for formulas
+    FormulaEvents(toolbarId);
 
     //edit ops on paste
     const onPaste =
@@ -203,14 +227,9 @@ const EditorComponent = ({
     return !changeFromAPI;
   };
 
-  // keyboard exit the text component
-  const onKeyDownExit = (e) => {
-    if (e.key === "Escape") {
-      setEditorIsFocus(false);
-      setShowEditor(false);
-      focusOutofText.focus();
-      textRef.current?.classList.add("fakeFocus");
-    } else if (e.shiftKey && e.key === "Tab") {
+  // focus to the bold
+  const onKeyDropDown = (e) => {
+    if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
       boldRef.current.focus();
     }
@@ -229,6 +248,7 @@ const EditorComponent = ({
     "bullet",
     "link",
     "background",
+    "mathpix",
   ];
 
   const modules = useMemo(
@@ -236,6 +256,7 @@ const EditorComponent = ({
       toolbar: {
         container: `#${toolbarId}`,
       },
+      keyboard: { bindings: { tab: false } },
       clipboard: {
         matchVisual: false,
         allowed: {
@@ -259,11 +280,6 @@ const EditorComponent = ({
         keepSelection: true,
         substituteBlockElements: false,
         magicPasteLinks: true,
-        hooks: {
-          uponSanitizeElement(node, data, config) {
-            console.log(node);
-          },
-        },
       },
     }),
     []
@@ -276,11 +292,17 @@ const EditorComponent = ({
       onFocus={() => setEditorIsFocus(true)}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
+
         if (relatedTarget.tagName === "BODY") {
           e.preventDefault();
           return;
         }
-        if (!relatedTarget || !e.currentTarget.contains(relatedTarget)) {
+
+        if (
+          (!relatedTarget ||
+            (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
+          !showMath
+        ) {
           setEditorIsFocus(false);
           setShowEditor(false);
         }
@@ -294,6 +316,7 @@ const EditorComponent = ({
           toolbarId={toolbarId}
           containerId={`toolbar-${toolbarId}`}
           boldRef={boldRef}
+          focusRef={focusRef}
         />
       </div>
 
@@ -318,8 +341,11 @@ const EditorComponent = ({
             focusRef.current
           )
         }
+        onFocus={() => {
+          FormulaEvents(toolbarId);
+        }}
         onKeyDown={(e) => {
-          onKeyDownExit(e);
+          onKeyDropDown(e);
         }}
       />
     </div>
@@ -327,5 +353,3 @@ const EditorComponent = ({
 };
 
 export default EditorComponent;
-
-/// \\

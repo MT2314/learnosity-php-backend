@@ -1,0 +1,31 @@
+.arrow.arrow-up {
+  top: -12px;
+  left: 20px;
+  margin-left: -11px;
+  border-top-width: 0;
+  border-bottom-color: rgba(0, 0, 0, 0.29);
+}
+
+.arrow.arrow-up::after {
+  top: 1px;
+  margin-left: -11px;
+  content: ' ';
+  border-top-width: 0;
+  border-bottom-color: #fff;
+}
+
+.arrow {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border: 11px solid transparent;
+}
+
+.arrow::after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border: 11px solid transparent;
+}

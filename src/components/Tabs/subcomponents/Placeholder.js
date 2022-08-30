@@ -1,12 +1,41 @@
 import React from "react";
+import styled from "@emotion/styled";
 
-const Placeholder = () => { 
+
+const PlaceholderContainer = styled("div")(({isOver}) => ({
+  backgroundColor: isOver ? "rgba(21, 101, 192, 0.04)" : "inherit",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "130px",
+  border: "3px dashed #1565c0",
+}))
+
+const Title = styled("h3")({
+  fontWeight: "400",
+  fontSize: "24px",
+  lineHeight: "32.02px",
+  margin: "0",
+})
+
+const Paragraph = styled("p")({
+  fontSize: "14px",
+  marginBottom: "0",
+  fontWeight: "500",
+})
+
+const SubParagraph = styled(Paragraph)({
+  marginTop: "0",
+  color: "#1565c0",
+})
+const Placeholder = ({isOver}) => { 
   return(
-    <div className="placeholder-container">
-      <h3>Add a component here!</h3>
-      <p>Drag and drop a component from the left panel or use your keyboard to insert a component.</p>
-      <p>Accepted components: text, image, chart, table, video, and audio. </p>
-    </div>
+    <PlaceholderContainer isOver={isOver}>
+      <Title>Add a component here!</Title>
+      <Paragraph>Drag and drop a component from the left panel or use your keyboard to insert a component.</Paragraph>
+      <SubParagraph>Accepted components: text, image, chart, table, video, and audio. </SubParagraph>
+    </PlaceholderContainer>
   )
 
 }  
