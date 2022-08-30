@@ -13,10 +13,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/*.test.js",
-        "**/*.test.jsx"
-      ],
+      "files": ["**/*.test.js", "**/*.test.jsx"],
       "env": {
         "jest": true
       }

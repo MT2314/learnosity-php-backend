@@ -17,7 +17,7 @@ const Container = styled("div")({
 // ? Styled Tooltip, differnet but most compact method for styling tooltip
 const StyledTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
+))(() => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: "rgba(97, 97, 97, 0.9)",
     border: "4px",
@@ -116,7 +116,7 @@ const ConfigBar = () => {
   };
 
   // ? Add Tab
-  const addTab = (state, activeTab) => {
+  const addTab = (state) => {
     dispatch({
       func: "ADD_TAB",
       id: uuidv4(),
@@ -129,8 +129,8 @@ const ConfigBar = () => {
     title: "Delete Tab?",
     message: [
       `Deleting "${state[activeTab].title}" will also delete ${state[activeTab].components.length} component(s).`,
-      <br />,
-      <br />,
+      <br key={1} />,
+      <br key={2} />,
       `You are able to undo this action.`,
     ],
     onConfirm: () => {

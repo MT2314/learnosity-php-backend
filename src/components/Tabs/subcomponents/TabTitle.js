@@ -2,7 +2,7 @@ import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
 import { TextareaAutosize } from "@material-ui/core";
 
-const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
+const TabTitle = ({ tabIndex, showToolbar }) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
