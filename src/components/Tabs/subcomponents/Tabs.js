@@ -1,13 +1,13 @@
-import React, { useState, useContext, useCallback, useRef } from 'react';
-import { TabContext, LayoutContext } from '../TabContext';
-import { TextareaAutosize } from '@material-ui/core';
-import Tab from './Tab';
-import ConfigBar from '../subcomponents/ConfigBar';
-import TabTitle from './TabTitle';
+import React, { useState, useContext } from "react";
+import { TabContext, LayoutContext } from "../TabContext";
+
+import Tab from "./Tab";
+import ConfigBar from "../subcomponents/ConfigBar";
+import TabTitle from "./TabTitle";
 
 const Tabs = () => {
-  const [activeTab, setActiveTab] = useContext(TabContext);
-  const [state, dispatch] = useContext(LayoutContext);
+  const [activeTab] = useContext(TabContext);
+  const [state] = useContext(LayoutContext);
   const [toolbar, showToolbar] = useState(false);
 
   return (
@@ -23,12 +23,17 @@ const Tabs = () => {
             }
           }}
         >
-          <div className={toolbar ? 'show-tabtoolbar' : 'hide-tabtoolbar'}>
+          <div className={toolbar ? "show-tabtoolbar" : "hide-tabtoolbar"}>
             <ConfigBar />
           </div>
-          {state.map((tabTitle, tabIndex) => {
+          {state.map((tabTitle, tabIndex, index) => {
             return (
-              <TabTitle tabTitle={tabTitle} tabIndex={tabIndex} showToolbar={showToolbar}/>
+              <TabTitle
+                key={index}
+                tabTitle={tabTitle}
+                tabIndex={tabIndex}
+                showToolbar={showToolbar}
+              />
             );
           })}
         </div>
