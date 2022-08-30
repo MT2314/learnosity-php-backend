@@ -44,21 +44,22 @@ const DialogProvider = ({
     [setShowDialog]
   );
 
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
+    dialogDetails.onCancel?.();
     setShowDialog(false);
-  }, []);
+  };
 
-  const onConfirm = useCallback(() => {
+  const onConfirm = () => {
     dialogDetails.onConfirm?.();
     setShowDialog(false);
     // setDialogDetails(initialDialogState);
-  }, [dialogDetails]);
+  };
 
-  const onCancel = useCallback(() => {
+  const onCancel = () => {
     dialogDetails.onCancel?.();
     setShowDialog(false);
     // setDialogDetails(initialDialogState);
-  }, [dialogDetails]);
+  };
 
   return (
     <DialogContext.Provider value={displayDialog}>
