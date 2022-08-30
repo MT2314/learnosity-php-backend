@@ -4,7 +4,7 @@ const del = require("del");
 const log = require("fancy-log");
 const gulp = require("gulp");
 const gulpReplaceImportant = require("gulp-replace-important");
-const sass = require('gulp-sass');
+const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 const cp = require("child_process");
 const argv = require("yargs").argv;
@@ -200,19 +200,19 @@ function _post11tyLocal() {
         extensionVersions: {
           "amp-carousel": "0.1",
         },
-        transformations: [
-          "AddMandatoryTags",
-          "AutoExtensionImporter",
-          "OptimizeImages",
-          //'PreloadHeroImage',
-          "ReorderHeadTransformer",
-          "RewriteAmpUrls",
-          "GoogleFontsPreconnect",
-          "PruneDuplicateResourceHints",
-          "SeparateKeyframes",
-          "RemoveCspNonce",
-          "MinifyHtml",
-        ],
+        // transformations: [
+        //   "AddMandatoryTags",
+        //   "AutoExtensionImporter",
+        //   "OptimizeImages",
+        //   //'PreloadHeroImage',
+        //   "ReorderHeadTransformer",
+        //   "RewriteAmpUrls",
+        //   "GoogleFontsPreconnect",
+        //   "PruneDuplicateResourceHints",
+        //   "SeparateKeyframes",
+        //   "RemoveCspNonce",
+        //   "MinifyHtml",
+        // ],
         minify: false,
       })
     )
@@ -410,6 +410,7 @@ function _installBuild() {
   return new Promise(function (resolve, reject) {
     var p = cp.spawn("npm", ["install", "--production"], {
       cwd: "build/nodejs",
+      shell: true,
     });
     p.stdout.on("data", (data) => {
       log(`${data}`);
@@ -429,8 +430,9 @@ function _zipBuild() {
   return new Promise(function (resolve, reject) {
     var p = cp.spawn(
       "zip",
-      ["luke-ilc-amp-layer.zip", "-r", "./nodejs", "--symlinks"],
-      { cwd: "build" }
+      // ["luke-ilc-amp-layer.zip", "-r", "./nodejs", "--symlinks"],
+      ["luke-ilc-amp-layer.zip", "-r", "./nodejs"],
+      { cwd: "build", shell: true }
     );
     p.stdout.on("data", (data) => {
       log(`${data}`);
