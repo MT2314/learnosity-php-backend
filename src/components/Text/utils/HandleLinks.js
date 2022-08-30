@@ -202,10 +202,10 @@ export const ConvertLinks = (editorContent, quillText) => {
 
 export const AddLinkEvents = (id) => {
   const quill = document.getElementById(id);
-  const qlEditor = quill.querySelector(".ql-editor");
-  const qlTooltip = quill.querySelector(".ql-tooltip");
+  const qlEditor = quill?.querySelector(".ql-editor");
+  const qlTooltip = quill?.querySelector(".ql-tooltip");
 
-  qlEditor.querySelectorAll("a").forEach((link) => {
+  qlEditor?.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", (e) => {
       const text = e.target.innerText;
       const linkHref = e.target.getAttribute("href");
@@ -229,8 +229,8 @@ export const AddLinkEvents = (id) => {
 
 export const handleSelection = (range, source, editor, id, quillRef) => {
   const quill = document.getElementById(id);
-  const quillTooltip = quill.querySelector(".ql-tooltip");
-  const linkBtn = quill.querySelector(".al-link");
+  const quillTooltip = quill?.querySelector(".ql-tooltip");
+  const linkBtn = quill?.querySelector(".al-link");
 
   if (range?.length) {
     const selection = window.getSelection();

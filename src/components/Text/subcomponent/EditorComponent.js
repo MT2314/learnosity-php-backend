@@ -98,6 +98,27 @@ const EditorComponent = ({
     showEditor && setEditorIsFocus(true);
   }, []);
 
+  useEffect(() => {
+    if (focusRef?.current) {
+      //quill instance
+      const quill = focusRef?.current?.getEditor();
+      //editor contents
+      const editorContent = quill?.getContents();
+      //check for highlights
+      const noHighlights = CheckHighlights(editorContent);
+      //get current range
+      const range = quill.getSelection(true);
+      //get current length
+      const length = quill.getLength();
+      //update quill value unless there is highlights
+      noHighlights && quill.setContents(body);
+      //set cursor to current position or the end
+      range.length === 0
+        ? quill.setSelection(length)
+        : quill.setSelection(range);
+    }
+  }, [body]);
+
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
@@ -124,7 +145,10 @@ const EditorComponent = ({
     onPaste && (editorContent.ops[0].insert = "");
 
     //update setProp with new editorContent
-    noHighlights && linksChecked && setProp({ body: editorContent });
+    noHighlights &&
+      linksChecked &&
+      source !== "api" &&
+      setProp({ body: editorContent });
   };
 
   //check and modify links
@@ -331,6 +355,7 @@ const EditorComponent = ({
           nisi ut aliquip ex ea commodo consequat."
         className="quillEditor"
         onChange={handleDataChange}
+        value={body}
         defaultValue={body}
         onChangeSelection={(range, source, editor) =>
           handleSelection(
@@ -352,4 +377,4 @@ const EditorComponent = ({
   );
 };
 
-export default EditorComponent;
+export default React.memo(EditorComponent);
