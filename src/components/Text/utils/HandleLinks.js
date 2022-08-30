@@ -1,6 +1,6 @@
 //regular expression that matches a url
 const urlRegExp =
-  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/i;
+  /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
 //default defaultAnchorState
 export const defaultAnchorState = {
@@ -10,6 +10,7 @@ export const defaultAnchorState = {
   anchorTextEqualToLink: null,
   removeFormat: null,
   placeSelectionRight: null,
+  firstInsert: null,
 };
 
 export const ModifyAnchorText = (editorContent, quillText) => {
@@ -25,6 +26,7 @@ export const ModifyAnchorText = (editorContent, quillText) => {
   let placeSelectionRight = false;
   let anchorTextEqualToLink = false;
   let breakLoop = false;
+  let firstInsert = false;
 
   let anchorText = "";
   let linkText = "";
@@ -58,6 +60,7 @@ export const ModifyAnchorText = (editorContent, quillText) => {
         !ops[i - 1]?.attributes?.link &&
         !breakLoop
       ) {
+        i - 1 === 0 && (firstInsert = true);
         insertIndex = removeIndex - 1;
         //add character added from the left
         const pre = ops[i - 1]?.insert?.slice(left - 1);
@@ -65,8 +68,8 @@ export const ModifyAnchorText = (editorContent, quillText) => {
 
         if (anchorTextEqualToLink) {
           //check if added character is still a valid link
-          if (urlRegExp.test(compare)) {
-            pre.concat(linkText);
+          if (urlRegExp.test(compare) && /^(http(s?)):\/\//i.test(compare)) {
+            insertIndex = insertIndex + 1;
             breakLoop = true;
           }
         } else {
@@ -89,7 +92,7 @@ export const ModifyAnchorText = (editorContent, quillText) => {
         const compare = linkText + append;
         if (anchorTextEqualToLink) {
           //check if added character is still a valid link
-          if (urlRegExp.test(compare)) {
+          if (urlRegExp.test(compare) && /^(http(s?)):\/\//i.test(compare)) {
             linkText.concat(append);
             placeSelectionRight = true;
             breakLoop = true;
@@ -141,6 +144,7 @@ export const ModifyAnchorText = (editorContent, quillText) => {
     anchorTextEqualToLink: update ? null : !anchorTextEqualToLink,
     removeFormat: update ? removeFormat : null,
     placeSelectionRight,
+    firstInsert,
   };
 };
 
@@ -155,13 +159,21 @@ export const ConvertLinks = (editorContent, quillText) => {
 
   for (const delta of ops) {
     //Check if delta does not have a link attribute but has a insert property
-    if (!delta?.attributes?.link && delta.insert) {
+    if (
+      !delta?.attributes?.link &&
+      delta.insert &&
+      !delta.insert.formula &&
+      !delta.insert.mathpix
+    ) {
       const deltaText = delta?.insert;
 
       //split text into an array by removing any empty strings
       const textArray = deltaText.split(/(\s+)/).filter((t) => t.length > 0);
       //find the index of the first link in the textArray
-      linkTextIndex = textArray.findIndex((t) => urlRegExp.test(t));
+      linkTextIndex = textArray.findIndex(
+        (t) => urlRegExp.test(t) && /^(http(s?)):\/\//i.test(t)
+      );
+
       //if linkTextIndex is not -1 set linkText to the link in the textArray
       linkTextIndex !== -1 && (linkText = textArray[linkTextIndex]);
 
@@ -186,4 +198,69 @@ export const ConvertLinks = (editorContent, quillText) => {
   }
 
   return { link: linkText, startLinkIndex, endLinkIndex };
+};
+
+export const AddLinkEvents = (id) => {
+  const quill = document.getElementById(id);
+  const qlEditor = quill.querySelector(".ql-editor");
+  const qlTooltip = quill.querySelector(".ql-tooltip");
+
+  qlEditor.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const text = e.target.innerText;
+      const linkHref = e.target.getAttribute("href");
+
+      if (text === linkHref) {
+        window.open(linkHref, "_blank");
+        !qlTooltip.classList.contains("ql-hidden") &&
+          qlTooltip.classList.add("ql-hidden");
+      }
+    });
+    link.addEventListener("mouseover", (e) => {
+      const href = link.getAttribute("href");
+      const text = link.innerText;
+
+      if (href === text) {
+        e.target.style.cursor = "pointer";
+      }
+    });
+  });
+};
+
+export const handleSelection = (range, source, editor, id, quillRef) => {
+  const quill = document.getElementById(id);
+  const quillTooltip = quill.querySelector(".ql-tooltip");
+  const linkBtn = quill.querySelector(".al-link");
+
+  if (range?.length) {
+    const selection = window.getSelection();
+
+    const startA = selection.anchorNode.parentNode.tagName === "A";
+    const endA = selection.focusNode.parentNode.tagName === "A";
+
+    if (startA && endA) {
+      linkBtn.classList.add("ql-selected");
+    } else {
+      linkBtn.classList.remove("ql-selected");
+    }
+  }
+  if (range?.length === 0) {
+    const [leaf, _] = quillRef.getEditor().getLeaf(range.index);
+
+    const LeafLink =
+      leaf?.parent?.domNode?.tagName === "A" ? leaf?.parent?.domNode : null;
+
+    const nextLeaf = leaf?.next?.domNode;
+    const isLink = nextLeaf?.tagName === "A";
+
+    let text = LeafLink?.innerText;
+    let link = LeafLink?.getAttribute("href");
+
+    if (text === link || isLink) {
+      linkBtn.classList.remove("ql-selected");
+      quillTooltip.style.display = "none";
+    } else {
+      quillTooltip.style.display = "";
+    }
+  }
 };

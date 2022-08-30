@@ -1,89 +1,48 @@
-import React, { useContext, useCallback } from "react";
-import { TabContext, LayoutContext } from "../TabsMain";
-import Tab from "./Tab";
+import React, { useState, useContext, useCallback, useRef } from 'react';
+import { TabContext, LayoutContext } from '../TabContext';
+import { TextareaAutosize } from '@material-ui/core';
+import Tab from './Tab';
+import ConfigBar from '../subcomponents/ConfigBar';
+import TabTitle from './TabTitle';
 
 const Tabs = () => {
-  
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
-
-  const enableTitleChange = (e) => {
-    e.stopPropagation();
-    if (e.target.dataset.id == activeTab) {
-      e.target.disabled = false;
-      e.target.style.overflow = "unset";
-      // e.target.style.WebkitLineClamp = "unset";
-    }
-  };
-
-  const handleTitleChange = useCallback((e) => {
-    dispatch({
-      func: "CHANGE_TITLE",
-      title: e.target.value,
-      id: e.target.dataset.id,
-    });
-  }, []);
-
-  const handleTitleBlur = (e) => {
-    console.log("blur", e.target);
-    e.target.style.overflow = "hidden";
-    e.target.scrollTo(0, 0);
-  };
+  const [toolbar, showToolbar] = useState(false);
 
   return (
-    <div className="tab-container">
-      {/* <button
-        onClick={() =>
-          dispatch({
-            func: "ADD_TAB",
-            id: state.length,
-            title: `Tab ${state.length + 1}`,
-          })
-        }
-      >
-        add tab
-      </button> */}
-
-      <div className="tab-title-wrapper">
-        {state.map((tabTitle, tabIndex) => {
+    <>
+      <div className="tab-container" data-testid="tab-component">
+        <div
+          className="tab-title-wrapper"
+          role="tablist"
+          onBlur={(e) => {
+            const relatedTarget = e.relatedTarget || document.activeElement;
+            if (!relatedTarget || !e.currentTarget.contains(relatedTarget)) {
+              showToolbar(false);
+            }
+          }}
+        >
+          <div className={toolbar ? 'show-tabtoolbar' : 'hide-tabtoolbar'}>
+            <ConfigBar />
+          </div>
+          {state.map((tabTitle, tabIndex) => {
+            return (
+              <TabTitle tabTitle={tabTitle} tabIndex={tabIndex} showToolbar={showToolbar}/>
+            );
+          })}
+        </div>
+        {state.map((tab, tabIndex) => {
           return (
-            <button key={`tab-title-${tabIndex}`}
-              className={`tab-title ${
-                activeTab === tabIndex ? "active-tab" : ""
-              }`}
-              onClick={() => setActiveTab(tabIndex)}
-            >
-              <textarea
-                className="tab-title-input"
-                placeholder={`Tab ${tabIndex + 1}`}
-                aria-label="tab title input"
-                maxLength="200"
-                disabled={activeTab == tabIndex ? false : true}
-                onClick={(e) => enableTitleChange(e)}
-                onChange={handleTitleChange}
-                data-id={tabIndex}
-                rows="2"
-                wrap="hard"
-                style={{
-                  WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
-                  // WebkitLineClamp: 2,
-                }}
-                onBlur={handleTitleBlur}
-              />
-            </button>
+            <>
+              {activeTab === tabIndex ? (
+                <Tab tabIndex={tabIndex} tab={tab} />
+              ) : null}
+            </>
           );
         })}
       </div>
-      {state.map((tab, tabIndex) => {
-        return (
-          <>
-            {activeTab === tabIndex ? (
-              <Tab tabIndex={tabIndex} tab={tab} />
-            ) : null}
-          </>
-        );
-      })}
-    </div>
+    </>
   );
 };
 

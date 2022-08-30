@@ -1,7 +1,7 @@
 import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
-import { Tooltip } from "@mui/material";
+import { Tooltip } from "@material-ui/core";
 
 import "../../styles/ListDropdownButton.scss";
 import icons from "../../assets/icons";
@@ -10,11 +10,29 @@ const ListDropdownButton = ({
   show,
   activeDropDownItem,
   setActiveDropDownItem,
+  onKeyDropDown,
 }) => {
   return (
     <>
-      <Card className={show ? "list-dropdown show" : "list-dropdown hide"}>
-        <Tooltip arrow title="bullets" placement="top">
+      <Card className={show ? "list-dropdown show" : "list-dropdown hide"} onKeyDown={onKeyDropDown}>
+        <Tooltip
+          aria-label="bullets"
+          title="bullets"
+          placement="top"
+          arrow
+          PopperProps={{
+            disablePortal: true,
+            popperOptions: {
+              positionFixed: true,
+              modifiers: {
+                preventOverflow: {
+                  enabled: true,
+                  boundariesElement: "window", // where "window" is the boundary
+                },
+              },
+            },
+          }}
+        >
           <button
             aria-label="bullet list"
             className={
@@ -35,7 +53,24 @@ const ListDropdownButton = ({
           </button>
         </Tooltip>
 
-        <Tooltip arrow title="numbering" placement="top">
+        <Tooltip
+          aria-label="numbering"
+          title="numbering"
+          placement="top"
+          arrow
+          PopperProps={{
+            disablePortal: true,
+            popperOptions: {
+              positionFixed: true,
+              modifiers: {
+                preventOverflow: {
+                  enabled: true,
+                  boundariesElement: "window", // where "window" is the boundary
+                },
+              },
+            },
+          }}
+        >
           <button
             aria-label="numbered list"
             className={
