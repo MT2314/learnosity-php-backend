@@ -63,7 +63,11 @@ const StyledIconButton = styled(IconButton)({
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
   },
   "&:active": {
+    cursor: "pointer",
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    "> svg": {
+      color: "#1565c0 !important",
+    },
   },
 });
 
@@ -143,10 +147,10 @@ const ConfigBar = () => {
     setShowDialog(false);
   }, []);
 
-  const onConfirm = useCallback(() => {
+  const onConfirm = () => {
     setShowDialog(false);
     removeTab(state, activeTab);
-  }, []);
+  };
 
   return (
     <Container>
