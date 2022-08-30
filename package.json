@@ -1,6 +1,10 @@
 {
   "name": "demo-component-library",
   "version": "1.0.0",
+  "engines": {
+    "npm": "6.14.17",
+    "node": "14.19.2"
+  },
   "scripts": {
     "build:qa": "webpack --mode production --env ENVIRONMENT=qa",
     "build:dev": "webpack --mode production --env ENVIRONMENT=dev",
