@@ -45,11 +45,6 @@ const EditorComponent = ({
   const showMath = useShowMath();
   const keepEditor = useKeepEditor();
 
-  //state to check if changes are from user
-  const [userChange, setUserChange] = useState(false);
-  //state to check if changes are from undo/redo
-  const [silentChange, setSilentChange] = useState(false);
-
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
@@ -115,29 +110,15 @@ const EditorComponent = ({
       const currentContents = quill.getContents();
       //check if currentContents is equal to deltaBody
       const diff = currentContents.diff(deltaBody);
-      //if not equal set contents to deltaBody
-      if (diff.ops.length > 0) {
-        //get current cursor position
-        const range = quill.getSelection();
-        //get current length
-        const length = new Delta(body?.ops).length();
-        //update quill value and set as silent update
-        quill.setContents(body, "silent");
-        //set cursor to current position if user change
-        userChange && range && quill.setSelection(range);
-        //set cursor to end if undo/redo
-        silentChange && length && quill.setSelection(length);
-      }
-      //reset states
-      setSilentChange(false);
-      setUserChange(false);
+      //if not equal set quill to body
+      diff.ops.length > 0 && quill.setContents(body, "silent");
     }
   }, [body]);
 
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
-    console.log("Source ", source);
+
     //quill instance
     const quill = focusRef?.current;
     const quillText = quill?.getEditor().getText();
@@ -158,9 +139,6 @@ const EditorComponent = ({
     const onPaste =
       editorContent.ops[0].insert === "\n" && editorContent.ops.length === 1;
     onPaste && (editorContent.ops[0].insert = "");
-
-    //set user change or undo/redo change state
-    source === "silent" ? setSilentChange(true) : setUserChange(true);
 
     //update setProp with new editorContent
     noHighlights &&
