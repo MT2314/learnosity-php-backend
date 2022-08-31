@@ -67,7 +67,7 @@ const InfoBoxToolbar = () => {
                // onClick={handleClick}
                startIcon={<ExpandMoreIcon/>}
             >
-               Select Icon
+               Select icon
             </StyledIconDropdownButton>
          </StyledIconToolbar>
          <StyledTextToolbar>
