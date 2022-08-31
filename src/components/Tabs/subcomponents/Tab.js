@@ -14,27 +14,38 @@ const Tab = ({ tab, tabIndex }) => {
   const [, dispatch] = useContext(LayoutContext);
 
   const [{ isOver, canDrop, isOverCurrent }, drop] = useDrop(() => ({
-    accept: ["Text", "Image", "Video", "Table", "Callout"],
-    drop: (item) => addItem(item),
-      // dispatch({
-      //   func: "ADD_COMPONENT",
-      //   tabIndex: tabIndex,
-      //   component: {
-      //     componentName: item.componentName,
-      //     componentProps: JSON.parse(item.componentProps),
-      //   },
-      // });
-    // },
+    accept: ["Text", "Image", "Video", "Table", "Callout", "Descriptive", "Learning", "Tabs", "Quote Box", "iFrame"],
+    // accept: ["Text", "Image", "Video", "Table"],
+    drop: (item) => {
+      if (item.componentName === 'Callout') {
+        alert("Reject Callout");
+      } else {
+        dispatch({
+          func: "ADD_COMPONENT",
+          tabIndex: tabIndex,
+          component: {
+            componentName: item.componentName,
+            componentProps: JSON.parse(item.componentProps),
+          }
+        });
+      }
+    },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
-      isOverCurrent: monitor.isOver({ shallow: true }),
     }),
+    canDrop: (item) => {
+      if (item.componentName === 'Text' |
+      item.componentName === 'Table' |
+      item.componentName === 'Video' |
+      item.componentName === 'Image' 
+      ) {
+        return true
+      } else {
+        console.log("Cannot add to tab");
+      }
+    }
   }));
-
-  const addItem = (item) => {
-    console.log(item);
-  }
 
   return (
     <div ref={drop} className="tab-body" key={id} data-testid="tab-drop-zone">
