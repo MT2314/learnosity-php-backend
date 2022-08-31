@@ -372,4 +372,4 @@ const EditorComponent = ({
   );
 };
 
-export default React.memo(EditorComponent);
+export default EditorComponent
