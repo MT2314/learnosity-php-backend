@@ -27,6 +27,8 @@ import {
 
 import "katex/dist/katex.css";
 
+const Delta = Quill.import("delta");
+
 Quill.register("formats/mathpix", MathPixMarkdown);
 
 const EditorComponent = ({
@@ -85,7 +87,7 @@ const EditorComponent = ({
 
   useEffect(() => {
     //set quill instance
-    setQuill(focusRef.current.getEditor());
+    setQuill(focusRef?.current?.getEditor());
     //set unique id instance
     setUniqueId(toolbarId);
     //extend default link functionality on mount
@@ -98,12 +100,27 @@ const EditorComponent = ({
     showEditor && setEditorIsFocus(true);
   }, []);
 
+  useEffect(() => {
+    if (focusRef?.current && body) {
+      //quill instance
+      const quill = focusRef?.current?.getEditor();
+      //convert body to delta
+      const deltaBody = new Delta(body);
+      //get currentContents
+      const currentContents = quill.getContents();
+      //check if currentContents is equal to deltaBody
+      const diff = currentContents.diff(deltaBody);
+      //if not equal set quill to body
+      diff.ops.length > 0 && quill.setContents(body, "silent");
+    }
+  }, [body]);
+
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
 
     //quill instance
-    const quill = focusRef.current;
+    const quill = focusRef?.current;
     const quillText = quill?.getEditor().getText();
 
     //check for links
@@ -124,7 +141,10 @@ const EditorComponent = ({
     onPaste && (editorContent.ops[0].insert = "");
 
     //update setProp with new editorContent
-    noHighlights && linksChecked && setProp({ body: editorContent });
+    noHighlights &&
+      linksChecked &&
+      source !== "silent" &&
+      setProp({ body: editorContent });
   };
 
   //check and modify links
@@ -352,4 +372,4 @@ const EditorComponent = ({
   );
 };
 
-export default EditorComponent;
+export default EditorComponent
