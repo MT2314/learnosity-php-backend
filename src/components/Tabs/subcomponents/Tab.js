@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useDrop } from "react-dnd";
 import { TabContext, LayoutContext } from "../TabContext";
 
@@ -13,22 +13,28 @@ const Tab = ({ tab, tabIndex }) => {
 
   const [, dispatch] = useContext(LayoutContext);
 
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["Text", "Image", "Video", "Table"],
-    drop: (item) => {
-      dispatch({
-        func: "ADD_COMPONENT",
-        tabIndex: tabIndex,
-        component: {
-          componentName: item.componentName,
-          componentProps: JSON.parse(item.componentProps),
-        },
-      });
-    },
+  const [{ isOver, canDrop, isOverCurrent }, drop] = useDrop(() => ({
+    accept: ["Text", "Image", "Video", "Table", "Callout"],
+    drop: (item) => addItem(item),
+      // dispatch({
+      //   func: "ADD_COMPONENT",
+      //   tabIndex: tabIndex,
+      //   component: {
+      //     componentName: item.componentName,
+      //     componentProps: JSON.parse(item.componentProps),
+      //   },
+      // });
+    // },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
+      canDrop: !!monitor.canDrop(),
+      isOverCurrent: monitor.isOver({ shallow: true }),
     }),
   }));
+
+  const addItem = (item) => {
+    console.log(item);
+  }
 
   return (
     <div ref={drop} className="tab-body" key={id} data-testid="tab-drop-zone">
