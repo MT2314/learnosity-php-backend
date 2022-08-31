@@ -43,7 +43,7 @@ export const ModifyAnchorText = (editorContent, quillText) => {
       anchorText = delta.insert;
 
       //find the index of the anchorText in the quillText
-      removeIndex = quillText.indexOf(anchorText);
+      removeIndex = quillText?.indexOf(anchorText);
       //if anchorText is in quillText set removeLength to the length of the anchorText
       removeIndex !== -1 && (removeLength = anchorText.length);
 
@@ -124,7 +124,7 @@ export const ModifyAnchorText = (editorContent, quillText) => {
       //replace anchorText instance in quillText with | to avoid duplicate conflicts
       removeIndex !== -1 &&
         !breakLoop &&
-        (quillText = quillText.replace(anchorText, "|".repeat(removeLength)));
+        (quillText = quillText?.replace(anchorText, "|".repeat(removeLength)));
     }
   }
 
@@ -189,11 +189,11 @@ export const ConvertLinks = (editorContent, quillText) => {
     //check if delta has a link attribute and a insert property
     if (delta?.attributes?.link && delta.insert) {
       const insert = delta.insert;
-      const index = quillText.indexOf(insert);
+      const index = quillText?.indexOf(insert);
       const length = insert.length;
       //replace anchorText instance in quillText with | to avoid duplicate conflicts
       index !== -1 &&
-        (quillText = quillText.replace(insert, "|".repeat(length)));
+        (quillText = quillText?.replace(insert, "|".repeat(length)));
     }
   }
 

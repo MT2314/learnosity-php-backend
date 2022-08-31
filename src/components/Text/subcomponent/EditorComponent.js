@@ -27,6 +27,8 @@ import {
 
 import "katex/dist/katex.css";
 
+const Delta = Quill.import("delta");
+
 Quill.register("formats/mathpix", MathPixMarkdown);
 
 const EditorComponent = ({
@@ -42,6 +44,11 @@ const EditorComponent = ({
   const setUniqueId = useSetUniqueId();
   const showMath = useShowMath();
   const keepEditor = useKeepEditor();
+
+  //state to check if changes are from user
+  const [userChange, setUserChange] = useState(false);
+  //state to check if changes are from undo/redo
+  const [silentChange, setSilentChange] = useState(false);
 
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
@@ -85,7 +92,7 @@ const EditorComponent = ({
 
   useEffect(() => {
     //set quill instance
-    setQuill(focusRef.current.getEditor());
+    setQuill(focusRef?.current?.getEditor());
     //set unique id instance
     setUniqueId(toolbarId);
     //extend default link functionality on mount
@@ -99,32 +106,40 @@ const EditorComponent = ({
   }, []);
 
   useEffect(() => {
-    if (focusRef?.current) {
+    if (focusRef?.current && body) {
       //quill instance
       const quill = focusRef?.current?.getEditor();
-      //editor contents
-      const editorContent = quill?.getContents();
-      //check for highlights
-      const noHighlights = CheckHighlights(editorContent);
-      //get current range
-      const range = quill.getSelection(true);
-      //get current length
-      const length = quill.getLength();
-      //update quill value unless there is highlights
-      noHighlights && quill.setContents(body);
-      //set cursor to current position or the end
-      range.length === 0
-        ? quill.setSelection(length)
-        : quill.setSelection(range);
+      //convert body to delta
+      const deltaBody = new Delta(body);
+      //get currentContents
+      const currentContents = quill.getContents();
+      //check if currentContents is equal to deltaBody
+      const diff = currentContents.diff(deltaBody);
+      //if not equal set contents to deltaBody
+      if (diff.ops.length > 0) {
+        //get current cursor position
+        const range = quill.getSelection();
+        //get current length
+        const length = new Delta(body?.ops).length();
+        //update quill value and set as silent update
+        quill.setContents(body, "silent");
+        //set cursor to current position if user change
+        userChange && range && quill.setSelection(range);
+        //set cursor to end if undo/redo
+        silentChange && length && quill.setSelection(length);
+      }
+      //reset states
+      setSilentChange(false);
+      setUserChange(false);
     }
   }, [body]);
 
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
-
+    console.log("Source ", source);
     //quill instance
-    const quill = focusRef.current;
+    const quill = focusRef?.current;
     const quillText = quill?.getEditor().getText();
 
     //check for links
@@ -144,10 +159,13 @@ const EditorComponent = ({
       editorContent.ops[0].insert === "\n" && editorContent.ops.length === 1;
     onPaste && (editorContent.ops[0].insert = "");
 
+    //set user change or undo/redo change state
+    source === "silent" ? setSilentChange(true) : setUserChange(true);
+
     //update setProp with new editorContent
     noHighlights &&
       linksChecked &&
-      source !== "api" &&
+      source !== "silent" &&
       setProp({ body: editorContent });
   };
 
@@ -355,7 +373,6 @@ const EditorComponent = ({
           nisi ut aliquip ex ea commodo consequat."
         className="quillEditor"
         onChange={handleDataChange}
-        value={body}
         defaultValue={body}
         onChangeSelection={(range, source, editor) =>
           handleSelection(
