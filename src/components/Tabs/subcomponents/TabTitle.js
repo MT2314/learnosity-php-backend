@@ -23,11 +23,11 @@ const TabTitle = ({ tabIndex, showToolbar }) => {
 
   const handleCursorFocus = (i) => {
     inputRef.current.setSelectionRange(
-      state[i].title.length,
-      state[i].title.length
+      state[i].title?.length,
+      state[i].title?.length
     );
     inputRef.current.focus();
-    inputRef.current.scrollTo(state[i].title.length, state[i].title.length);
+    inputRef.current.scrollTo(state[i].title?.length, state[i].title?.length);
   };
 
   return (
@@ -68,7 +68,7 @@ const TabTitle = ({ tabIndex, showToolbar }) => {
           onChange={handleTitleChange}
           onFocus={() => handleCursorFocus(tabIndex)}
           data-id={state[tabIndex].id}
-          value={state[tabIndex].title}
+          value={state[tabIndex].title || ""}
           onBlur={handleTitleBlur}
           ref={inputRef}
         />
