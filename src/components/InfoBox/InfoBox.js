@@ -8,7 +8,7 @@ import InfoBoxToolbar from "./toolbar/InfoBoxToolbar";
 // import { InfoBoxBody } from "./subcomponents/InfoBoxBody";
 // Hook/utilities imports
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
-// Icon import
+// Icon imports
 import { defaultIcon } from "./icons/infoBoxIcons";
 // Localization import
 import { useTranslation, Trans } from "react-i18next";
