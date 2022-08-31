@@ -9,11 +9,12 @@ import TabComponent from "./TabComponent";
 const Tab = ({ tab, tabIndex }) => {
   const { id, components } = tab;
 
-  const [activeTab, setActiveTab] = useContext(TabContext);
-  const [state, dispatch] = useContext(LayoutContext);
+  const [activeTab] = useContext(TabContext);
+
+  const [, dispatch] = useContext(LayoutContext);
 
   const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["Text","Image","Video","Table"],
+    accept: ["Text", "Image", "Video", "Table"],
     drop: (item) => {
       dispatch({
         func: "ADD_COMPONENT",
@@ -30,19 +31,15 @@ const Tab = ({ tab, tabIndex }) => {
   }));
 
   return (
-    <div
-      ref={drop}
-      className="tab-body"
-      key={id}
-      data-testid='tab-drop-zone'
-    >
+    <div ref={drop} className="tab-body" key={id} data-testid="tab-drop-zone">
       {activeTab === tabIndex && components.length === 0 ? (
-        <Placeholder isOver={isOver}/>
+        <Placeholder isOver={isOver} />
       ) : (
         <ul>
-          {components.map((component, compIndex) => {
+          {components.map((component, compIndex, index) => {
             return (
               <TabComponent
+                key={index}
                 component={component}
                 compIndex={compIndex}
                 tabIndex={tabIndex}

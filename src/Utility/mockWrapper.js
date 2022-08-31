@@ -133,8 +133,8 @@ export const ComponentSelector = () => {
           }))
         }
       >
-        {state.ROOT.map((componentId) => (
-          <option value={componentId}>{state[componentId].name}</option>
+        {state.ROOT.map((componentId, index) => (
+          <option key={index} value={componentId}>{state[componentId].name}</option>
         ))}
       </select>
     </div>
@@ -171,13 +171,13 @@ export const Canvas = ({ unwrappedComponents = null }) => {
       {state.ROOT.map((componentId) => {
         const { name, ...props } = state[componentId];
         return (
-          <ComponentStateWrapper id={componentId} name={name} {...props} />
+          <ComponentStateWrapper key={componentId} id={componentId} name={name} {...props} />
         );
       })}
       {unwrappedComponents}
-      {Object.keys(componentIndex).map((componentName) => {
+      {Object.keys(componentIndex).map((componentName, index) => {
         return (
-          <button onClick={addComponent(componentName)}>
+          <button key={index} onClick={addComponent(componentName)}>
             Add {componentIndex[componentName].readableName}
           </button>
         );

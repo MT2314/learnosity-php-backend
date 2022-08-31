@@ -8,7 +8,7 @@ export const FormulaEvents = (id) => {
     const left = cords.left;
     const bottom = cords.bottom + 12;
 
-    item.addEventListener('click', (e) => {
+    item.addEventListener('click', () => {
       mathPixPlaceHolder.setAttribute(
         'data-value',
         item.getAttribute('data-value')
@@ -19,7 +19,7 @@ export const FormulaEvents = (id) => {
       mathPixPlaceHolder.click();
     });
 
-    item.addEventListener('mouseover', (e) => {
+    item.addEventListener('mouseover', () => {
       item.style.cursor = 'default';
     });
   });
