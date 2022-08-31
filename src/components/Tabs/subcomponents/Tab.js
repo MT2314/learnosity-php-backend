@@ -36,10 +36,10 @@ const Tab = ({ tab, tabIndex }) => {
         <Placeholder isOver={isOver} />
       ) : (
         <ul>
-          {components.map((component, compIndex, index) => {
+          {components.map((component, compIndex) => {
             return (
               <TabComponent
-                key={index}
+                key={`key-component-${compIndex}`}
                 component={component}
                 compIndex={compIndex}
                 tabIndex={tabIndex}
