@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 // MUI/@emotion imports
 import { Paper, NativeSelect } from "@mui/material";
 import { TextareaAutosize } from "@material-ui/core";
 import styled from "@emotion/styled";
 // Component imports
+import InfoBoxToolbar from "./toolbar/InfoBoxToolbar";
 // import { InfoBoxBody } from "./subcomponents/InfoBoxBody";
+// Hook/utilities imports
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 // Icon import
 import { defaultIcon } from "./icons/infoBoxIcons";
 // Localization import
@@ -117,13 +120,56 @@ const InfoBox = ({
 //   setProp = () => {},
 }) => {
 
+  // Localization
   const { t } = useTranslation();
+
+  const [showToolbar, setShowToolbar] = useState(false);
+
+  const infoBoxRef = useRef();
+
+  const StyledToolbarContainer = styled("div")({
+    display: showToolbar ? "block" : "none",
+    position: "fixed !important",
+    top: "80px !important",
+    left: "50% !important",
+    transform: "translateX(-50%) !important",
+    zIndex: "1000",
+    justifyContent: "center !important",
+    backgroundColor: "#fff !important",
+  });
+
+  useOnClickOutside(infoBoxRef, () => {
+    setShowToolbar(false);
+  });
+
+  const handleOnFocus = (e) => {
+    const relatedTarget = e.relatedTarget || document.activeElement;
+    if (relatedTarget || e.currentTarget.contains(relatedTarget)) {
+      setShowToolbar(true);
+    };
+  };
+
+  const handleOnBlur = (e) => {
+    const relatedTarget = e.relatedTarget || document.activeElement;
+    if (!relatedTarget || !e.currentTarget.contains(relatedTarget)) {
+      setShowToolbar(false);
+    };
+  };
 
   return (
     <StyledPaper
       aria-label="Info Box"
       data-testid="infoBox-container"
+      ref={infoBoxRef}
+      onClick={() => {
+        setShowToolbar(true);
+      }}
+      onFocus={handleOnFocus}
+      onBlur={handleOnBlur}
     >
+      <StyledToolbarContainer>
+        <InfoBoxToolbar />
+      </StyledToolbarContainer>
       <div>
         {defaultIcon}
       </div>
