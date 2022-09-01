@@ -8,7 +8,8 @@ import ComponentWrapper from "./ComponentWrapper";
 //components
 import Placeholder from "./Placeholder";
 
-const StyleTabBody = styled("div")(({ theme, isDragging }) => ({
+// NOTE: We can use theme once it is set it up end to end
+const StyleTabBody = styled("div")(({ theme,  isDragging }) => ({
   padding: "10px",
   border: "1px solid #bdbdbd",
   borderTop: "none,",
@@ -62,6 +63,7 @@ const Tab = ({ tab, tabIndex }) => {
             return (
               <ComponentWrapper
                 key={`key-component-${compIndex}`}
+                numOfComponent={components.length}
                 component={component}
                 compIndex={compIndex}
                 tabIndex={tabIndex}
