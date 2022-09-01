@@ -60,11 +60,13 @@ const Tab = ({ tab, tabIndex }) => {
           isOver={isOver}
         >
           {components.map((component, compIndex) => {
+            console.log('====>',component)
             return (
               <ComponentWrapper
                 key={`key-component-${compIndex}`}
                 numOfComponent={components.length}
                 component={component}
+                componentProps={component.componentProps}
                 compIndex={compIndex}
                 tabIndex={tabIndex}
                 setIsDragging={setIsDragging}

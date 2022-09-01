@@ -16,6 +16,7 @@ import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
 import DropIndicator from "../../../Utility/DropIndicator";
 
 import TabComponent from "./TabComponent";
+import { resolveComponentProps } from "@mui/base";
 export const SmallIconButton = styled(IconButton)(() => ({
   color: "#FFF",
 }));
@@ -54,15 +55,20 @@ export const ComponentLabelContainer = styled("div")(
 const ComponentWrapper = ({
   component,
   compIndex,
+  componentProps,
   tabIndex,
   setIsDragging,
   numOfComponent
 }) => {
   const dropRef = useRef(null);
 
+  console.log(`componentProps:`, componentProps);
+
   const [, dispatch] = useContext(LayoutContext);
   const [showSelf, setShowSelf] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(0);
+  const [dragIndex, setDragIndex] = useState(null);
+  const [hoverIndex, setHoverIndex] = useState(null);
   const [active, setActive] = useState(false);
 
   const [{ isOver, canDrop, isOverCurrent }, drop] = useDrop({
@@ -107,17 +113,31 @@ const ComponentWrapper = ({
       if (hoverClientY > hoverMiddleY) {
         setDropIndexOffset(1);
       }
+
+      if (!ref.current) {
+        return;
+      }
+
+      if (item.compIndex !== undefined) {
+        setDragIndex(item?.compIndex);
+        setHoverIndex(compIndex);
+
+        if (dragIndex === hoverIndex) {
+          return;
+        }
+      }
     },
 
   });
 
   const [{ isDragging }, drag, dragPreview] = useDrag({
     type: component.componentName,
-    item: {
+    item: () => ({
       componentName: component.componentName,
       compIndex: compIndex,
+      ...componentProps,
       within: true,
-    },
+    }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
