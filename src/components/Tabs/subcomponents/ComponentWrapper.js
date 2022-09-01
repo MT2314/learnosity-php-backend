@@ -56,6 +56,7 @@ const ComponentWrapper = ({
   compIndex,
   tabIndex,
   setIsDragging,
+  numOfComponent
 }) => {
   const dropRef = useRef(null);
 
@@ -192,6 +193,23 @@ const ComponentWrapper = ({
                 <ArrowDropUpIcon fontSize="inherit" />
               </SmallIconButton>
             )}
+            {compIndex != numOfComponent - 1 && (
+              <SmallIconButton
+                onClick={() => {
+                  dispatch({
+                    func: "MOVE_COMPONENT_RIGHT",
+                    compIndex: compIndex,
+                    tabIndex: tabIndex,
+                  });
+                }}
+                data-testid="move-down-button"
+                aria-label={"Move Component Down"}
+                size="small"
+              >
+                <ArrowDropDownIcon fontSize="inherit" />
+              </SmallIconButton>
+            )}
+
             <SmallIconButton
               onClick={() => {
                 dispatch({
