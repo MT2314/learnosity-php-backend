@@ -116,4 +116,21 @@ describe("Tabs", () => {
     expect(testLayout[1].components[2].componentProps.newValue).toBe("I updated the state of a component!!!");
   })
 
+  it("duplicates a component within a tab", async () => {
+    render(<TabsMain layoutState={testLayout}/>)
+
+    // console.log("Before:", testLayout[1].components)
+
+    layoutConfig(testLayout, {
+      func: "DUPLICATE_COMPONENT",
+      tabIndex: 1,
+      compIndex: 2
+    })
+
+    // console.log("After:", testLayout[1].components)
+
+    expect(testLayout[1].components.length).toBe(4);
+    expect(testLayout[1].components[2]).toStrictEqual(testLayout[1].components[3]);
+  })
+
 });
