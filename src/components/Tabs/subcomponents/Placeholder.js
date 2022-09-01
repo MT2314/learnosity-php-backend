@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 
-const PlaceholderContainer = styled("div")({
+const PlaceholderContainer = styled("div")(({ isOver }) => ({
+  backgroundColor: isOver ? "rgba(21, 101, 192, 0.04)" : "inherit",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
   height: "130px",
   border: "3px dashed #1565c0",
-})
+}))
 
 const PlaceholderHover = styled(PlaceholderContainer)(({ isOver }) => ({
   backgroundColor: isOver ? "rgba(21, 101, 192, 0.04)" : "rgba(211, 47, 47, 0.04)",
@@ -38,7 +39,7 @@ const Placeholder = ({ isOver, getItem }) => {
   useEffect(() => {
     if (isOver && (getItem.componentName != 'Text' | 'Table' | 'Video' | 'Image')) {
       setStayHover(getItem.componentName);
-    } else if (isOver && (getItem.componentName === 'Text' | 'Table' | 'Video' | 'Image')) {
+    } else if (isOver) {
       setStayHover();
     }
   }, [isOver])
@@ -52,7 +53,7 @@ const Placeholder = ({ isOver, getItem }) => {
           <SubParagraph>Accepted components: text, image, chart, table, video, and audio. </SubParagraph>
         </PlaceholderHover>
         :
-        <PlaceholderContainer>
+        <PlaceholderContainer isOver={isOver}>
           <Title>Add a component here!</Title>
           <Paragraph>Drag and drop a component from the left panel or use your keyboard to insert a component.</Paragraph>
           <SubParagraph>Accepted components: text, image, chart, table, video, and audio. </SubParagraph>
