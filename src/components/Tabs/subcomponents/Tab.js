@@ -26,7 +26,7 @@ const Tab = ({ tab, tabIndex }) => {
   const [{ isOver, getItem }, drop] = useDrop(() => ({
     accept: ["Text", "Image", "Video", "Table", "Callout", "Tab", "QuoteBox", "IFrame"],
     drop: (item) => {
-      if (!item?.within) {
+      if (!item?.within && item.componentName === 'Text' | 'Table' | 'Video' | 'Image') {
         dispatch({
           func: "ADD_COMPONENT",
           tabIndex: tabIndex,
