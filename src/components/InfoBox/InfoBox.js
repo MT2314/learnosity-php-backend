@@ -129,6 +129,8 @@ const InfoBox = ({
 
   const StyledToolbarContainer = styled("div")({
     display: showToolbar ? "block" : "none",
+    minHeight: "2.5rem",
+    maxHeight: "2.5rem",
     position: "fixed !important",
     top: "80px !important",
     left: "50% !important",
