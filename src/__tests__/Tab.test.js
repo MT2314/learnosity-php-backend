@@ -130,18 +130,29 @@ describe("Tabs", () => {
 
   it("update the tab title", async () => {
     render(<TabsMain layoutState={testLayout}/>)
-
-    console.log("Before:", testLayout)
-
     layoutConfig(testLayout, {
       func: "CHANGE_TITLE",
       title: "Web Solutions Component Team",
       id: 0,
     })
 
-    console.log("After:", testLayout)
-
     expect(testLayout[0].title).toBe("Web Solutions Component Team");
   })
+
+  // it("update the tab title", async () => {
+  //   render(<TabsMain layoutState={testLayout}/>)
+
+  //   console.log("Before:", testLayout)
+
+  //   layoutConfig(testLayout, {
+  //     func: "CHANGE_TITLE",
+  //     title: "Web Solutions Component Team",
+  //     id: 0,
+  //   })
+
+  //   console.log("After:", testLayout)
+
+  //   expect(testLayout[0].title).toBe("Web Solutions Component Team");
+  // })
 
 });

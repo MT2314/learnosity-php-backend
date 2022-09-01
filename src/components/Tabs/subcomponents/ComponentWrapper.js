@@ -155,7 +155,7 @@ const ComponentWrapper = ({
               <SmallIconButton
                 onClick={() => {
                   dispatch({
-                    func: 'MOVE_COMPONENT_LEFT',
+                    func: 'MOVE_COMPONENT_UP',
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
@@ -171,7 +171,7 @@ const ComponentWrapper = ({
               <SmallIconButton
                 onClick={() => {
                   dispatch({
-                    func: 'MOVE_COMPONENT_RIGHT',
+                    func: 'MOVE_COMPONENT_DOWN',
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
