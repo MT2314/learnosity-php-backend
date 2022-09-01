@@ -13,13 +13,10 @@ const Tab = ({ tab, tabIndex }) => {
 
   const [, dispatch] = useContext(LayoutContext);
 
-  const [{ isOver, canDrop, isOverCurrent }, drop] = useDrop(() => ({
-    accept: ["Text", "Image", "Video", "Table", "Callout", "Descriptive", "Learning", "Tabs", "Quote Box", "iFrame"],
-    // accept: ["Text", "Image", "Video", "Table"],
+  const [{ isOver, getItem }, drop] = useDrop(() => ({
+    accept: ["Text", "Image", "Video", "Table", "Callout", "Tab", "QuoteBox", "IFrame"],
     drop: (item) => {
-      if (item.componentName === 'Callout') {
-        alert("Reject Callout");
-      } else {
+      if (item.componentName === 'Text' | 'Table' | 'Video' | 'Image') {
         dispatch({
           func: "ADD_COMPONENT",
           tabIndex: tabIndex,
@@ -32,25 +29,14 @@ const Tab = ({ tab, tabIndex }) => {
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
-      canDrop: !!monitor.canDrop(),
+      getItem: monitor.getItem()
     }),
-    canDrop: (item) => {
-      if (item.componentName === 'Text' |
-      item.componentName === 'Table' |
-      item.componentName === 'Video' |
-      item.componentName === 'Image' 
-      ) {
-        return true
-      } else {
-        console.log("Cannot add to tab");
-      }
-    }
   }));
 
   return (
     <div ref={drop} className="tab-body" key={id} data-testid="tab-drop-zone">
       {activeTab === tabIndex && components.length === 0 ? (
-        <Placeholder isOver={isOver} />
+        <Placeholder isOver={isOver} getItem={getItem} />
       ) : (
         <ul>
           {components.map((component, compIndex, index) => {
