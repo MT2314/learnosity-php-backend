@@ -29,23 +29,22 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
   const parentDiv = document.getElementById(containerId);
   const QLformats = parentDiv?.querySelector(`.ql-formats`);
   const QLactive = QLformats?.querySelector(`.ql-active`);
-  if (QLactive) {
-    const options = {
-      attributes: true,
-    };
+  
+  const callback = (mutationList) => {
+    mutationList.forEach(function (mutation) {
+      if (mutation.target.classList.contains(`ql-active`)) {
+        setVisibleAlignIcon(
+          icons[mutation.target.value ? mutation.target.value : "align"]
+        );
+      }
+    });
+  };
 
-    const callback = (mutationList) => {
-      mutationList.forEach(function (mutation) {
-        if (mutation.target.classList.contains(`ql-active`)) {
-          setVisibleAlignIcon(
-            icons[mutation.target.value ? mutation.target.value : "align"]
-          );
-        }
-      });
-    };
-    const observer = new MutationObserver(callback);
-    observer.observe(QLactive, options);
-  }
+  const observer = new MutationObserver(callback);
+
+  useEffect(() => {
+    QLactive ? observer.observe(QLactive, { attributes: true, }) : observer.disconnect();
+  }, [QLactive]);
 
   const onKeyDropDown = (e, currentRef) => {
     if (e.key === "Escape") {
