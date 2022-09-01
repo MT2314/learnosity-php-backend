@@ -40,10 +40,10 @@ const Label = () => {
 
   return (
     <StyledLabelInput
-      name="infoBoxHeader"
       type="text"
       placeholder="Type your label here"
       aria-label="InfoBox label"
+      autocomplete="false"
       maxLength={50}
       multiline={false}
       value={state.infoBoxLabel}
