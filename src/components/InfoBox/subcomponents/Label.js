@@ -5,17 +5,19 @@ import styled from '@emotion/styled';
 import { InfoBoxContext } from '../InfoBoxContext';
 
 const StyledLabelInput = styled('input')({
-  fontSize: '0.875rem',
+  fontSize: '14px',
   fontWeight: '400',
-  lineHeight: '1.25rem',
-  color: '#636363',
-  width: '100%',
+  lineHeight: '20.02px',
+  color: 'rgba(99, 99, 99, 1)',
+  width: '650px',
+  height: '20px',
   background: '#FAFAFA',
-  letterSpacing: '0.009375rem',
+  letterSpacing: '0.15px',
   border: 'none',
+  padding: 0,
 
   '&::placeholder': {
-    color: '#636363',
+    color: 'rgba(99, 99, 99, 1)',
   },
 
   '&:focus': {
@@ -38,11 +40,14 @@ const Label = () => {
 
   return (
     <StyledLabelInput
+      name="infoBoxHeader"
       type="text"
-      onChange={handleLabelChange}
-      value={state.infoBoxLabel}
       placeholder="Type your label here"
       aria-label="InfoBox label"
+      maxLength={50}
+      multiline={false}
+      value={state.infoBoxLabel}
+      onChange={handleLabelChange}
     />
   );
 };

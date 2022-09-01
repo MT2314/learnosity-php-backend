@@ -28,7 +28,6 @@ export const defaultProps = {
 // Styled components begin
 const StyledPaper = styled(Paper)({
   background: 'rgb(236, 236, 236)',
-  height: '227px',
   width: '968px',
   fontFamily: `"Inter", sans-serif`,
   padding: '40px 104px',
@@ -47,6 +46,7 @@ const StyledBodyTextArea = styled(TextareaAutosize)({
   fontFamily: `"Inter", sans-serif`,
   fontSize: '1rem',
   fontWeight: '400',
+  marginTop: '15px',
   lineHeight: '1.5rem',
   letterSpacing: '0.009375rem',
   color: '#232323',
