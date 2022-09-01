@@ -2,7 +2,7 @@ import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
 import { TextareaAutosize } from "@material-ui/core";
 
-const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
+const TabTitle = ({ tabIndex, showToolbar }) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -23,11 +23,11 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
 
   const handleCursorFocus = (i) => {
     inputRef.current.setSelectionRange(
-      state[i].title.length,
-      state[i].title.length
+      state[i].title?.length,
+      state[i].title?.length
     );
     inputRef.current.focus();
-    inputRef.current.scrollTo(state[i].title.length, state[i].title.length);
+    inputRef.current.scrollTo(state[i].title?.length, state[i].title?.length);
   };
 
   return (
@@ -68,7 +68,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           onChange={handleTitleChange}
           onFocus={() => handleCursorFocus(tabIndex)}
           data-id={state[tabIndex].id}
-          value={state[tabIndex].title}
+          value={state[tabIndex].title || ""}
           onBlur={handleTitleBlur}
           ref={inputRef}
         />

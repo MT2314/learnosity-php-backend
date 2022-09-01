@@ -34,7 +34,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
       attributes: true,
     };
 
-    function callback(mutationList) {
+    const callback = (mutationList) => {
       mutationList.forEach(function (mutation) {
         if (mutation.target.classList.contains(`ql-active`)) {
           setVisibleAlignIcon(
@@ -42,7 +42,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
           );
         }
       });
-    }
+    };
     const observer = new MutationObserver(callback);
     observer.observe(QLactive, options);
   }
@@ -74,7 +74,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
   }, [showMath]);
 
   return (
-    <div id={toolbarId} className="toolbarContainer" onKeyDown={(e) => {onKeyTopMenu(e)}}>
+    <div id={toolbarId} className="toolbarContainer">
       {/* bold dropdown starts */}
       <Tooltip
         aria-label="font styles"

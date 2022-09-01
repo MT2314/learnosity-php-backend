@@ -6,6 +6,8 @@ import userEvent from "@testing-library/user-event";
 
 import VideoConfig from "../components/Video/VideoConfig";
 
+// Note for Sam:- Commented out some og the object to avoid eslint error
+
 // Setup/teardown
 // https://reactjs.org/docs/testing-recipes.html#setup--teardown
 let container = null;
@@ -23,25 +25,25 @@ afterEach(() => {
 });
 
 // Mock data
-const mockDataYouTubeValid = {
-  type: "youTube",
-  videoId: "3m6d99GDARE",
-};
+// const mockDataYouTubeValid = {
+//   type: "youTube",
+//   videoId: "3m6d99GDARE",
+// };
 
-const mockDataYouTubeInvalid = {
-  type: "youTube",
-  videoId: "thisWontWork",
-};
+// const mockDataYouTubeInvalid = {
+//   type: "youTube",
+//   videoId: "thisWontWork",
+// };
 
 const mockDataBrightcoveValid = {
   type: "brightcove",
   videoId: "5967111782001",
 };
 
-const mockDataBrightcoveInvalid = {
-  type: "brightcove",
-  videoId: "thisShouldntEither",
-};
+// const mockDataBrightcoveInvalid = {
+//   type: "brightcove",
+//   videoId: "thisShouldntEither",
+// };
 
 // YOUTUBE
 describe("VideoConfig component renders with YouTube settings", () => {
@@ -78,9 +80,9 @@ describe("VideoConfig component renders with YouTube settings", () => {
     );
 
     // User clicks "Verify URL" button
-    const verifyYouTubeButton = screen.getByRole("button", {
-      name: "Verify URL",
-    });
+    // const verifyYouTubeButton = screen.getByRole("button", {
+    //   name: "Verify URL",
+    // });
     // await user.click(verifyYouTubeButton);
     // expect(screen.getByText("YouTube URL successful.")).toBeInTheDocument();
   });
