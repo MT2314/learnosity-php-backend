@@ -8,6 +8,7 @@ import { InfoBoxProvider } from './InfoBoxContext';
 // Component imports
 import InfoBoxToolbar from './toolbar/InfoBoxToolbar';
 import Label from './subcomponents/Label';
+import Header from './subcomponents/Header';
 // import { InfoBoxBody } from "./subcomponents/InfoBoxBody";
 // Hook/utilities imports
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
@@ -18,14 +19,10 @@ import { useTranslation, Trans } from 'react-i18next';
 
 // Default props
 export const defaultProps = {
-  infoBoxState: [
-    {
-      infoBoxIcon: '',
-      infoBoxLabel: 'Hello',
-      infoBoxHeader: '',
-      infoBoxBody: null,
-    },
-  ],
+  infoBoxIcon: '',
+  infoBoxLabel: '',
+  infoBoxHeader: '',
+  infoBoxBody: null,
 };
 
 // Styled components begin
@@ -44,28 +41,6 @@ const StyledTextContainer = styled('div')({
   flexDirection: 'column',
   width: '650px',
   marginLeft: '2.029rem',
-});
-
-const StyledHeaderInput = styled('input')({
-  fontSize: '2.125rem',
-  fontWeight: '500',
-  lineHeight: '2.5rem',
-  color: '#232323',
-  width: '100%',
-  background: '#FAFAFA',
-  border: 'none',
-
-  '&::placeholder': {
-    color: '#232323',
-  },
-
-  '&:focus': {
-    outline: 'none',
-
-    '&::placeholder': {
-      color: 'rgba(0, 0, 0, 0.12)',
-    },
-  },
 });
 
 const StyledBodyTextArea = styled(TextareaAutosize)({
@@ -96,7 +71,7 @@ const StyledBodyTextArea = styled(TextareaAutosize)({
 });
 
 // InfoBox component
-const InfoBox = ({ infoBoxState = [], setProp = () => {} }) => {
+const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
   // Localization
   const { t } = useTranslation();
 
@@ -153,11 +128,7 @@ const InfoBox = ({ infoBoxState = [], setProp = () => {} }) => {
         <div>{defaultIcon}</div>
         <StyledTextContainer>
           <Label />
-          <StyledHeaderInput
-            type="text"
-            placeholder="Type your header here"
-            aria-label="InfoBox header"
-          />
+          <Header />
           <StyledBodyTextArea
             name="infoBoxBody"
             aria-label="InfoBox body"

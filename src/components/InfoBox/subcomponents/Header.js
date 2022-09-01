@@ -4,18 +4,17 @@ import styled from '@emotion/styled';
 // ? Context
 import { InfoBoxContext } from '../InfoBoxContext';
 
-const StyledLabelInput = styled('input')({
-  fontSize: '0.875rem',
-  fontWeight: '400',
-  lineHeight: '1.25rem',
-  color: '#636363',
+const StyledHeaderInput = styled('input')({
+  fontSize: '2.125rem',
+  fontWeight: '500',
+  lineHeight: '2.5rem',
+  color: '#232323',
   width: '100%',
   background: '#FAFAFA',
-  letterSpacing: '0.009375rem',
   border: 'none',
 
   '&::placeholder': {
-    color: '#636363',
+    color: '#232323',
   },
 
   '&:focus': {
@@ -29,20 +28,20 @@ const StyledLabelInput = styled('input')({
 const Label = () => {
   const [state, dispatch] = useContext(InfoBoxContext);
 
-  const handleLabelChange = useCallback((e) => {
+  const handleHeaderChange = useCallback((e) => {
     dispatch({
-      func: 'CHANGE_LABEL',
-      label: e.target.value,
+      func: 'CHANGE_HEADER',
+      header: e.target.value,
     });
   }, []);
 
   return (
-    <StyledLabelInput
+    <StyledHeaderInput
       type="text"
-      onChange={handleLabelChange}
-      value={state.infoBoxLabel}
-      placeholder="Type your label here"
-      aria-label="InfoBox label"
+      value={state.infoBoxHeader}
+      onChange={handleHeaderChange}
+      placeholder="Type your header here"
+      aria-label="InfoBox header"
     />
   );
 };

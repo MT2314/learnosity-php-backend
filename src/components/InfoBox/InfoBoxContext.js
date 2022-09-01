@@ -7,12 +7,16 @@ export const InfoBoxContext = createContext();
 export const infoBoxConfig = (draft, action) => {
   switch (action.func) {
     case 'CHANGE_LABEL':
-      infoBoxLabel = action.label;
+      draft.infoBoxLabel = action.label;
+      return draft;
+    case 'CHANGE_HEADER':
+      draft.infoBoxHeader = action.header;
       return draft;
     default:
       return draft;
   }
 };
+
 //InfoBox provider wraps the tab component to access reducer
 export const InfoBoxProvider = ({ children, setProp, infoBoxState }) => {
   const [state, dispatch] = useReducer(produce(infoBoxConfig), infoBoxState);
