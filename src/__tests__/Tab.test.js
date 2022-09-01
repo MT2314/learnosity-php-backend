@@ -103,4 +103,17 @@ describe("Tabs", () => {
     expect(testLayout[1].components[0].componentProps.newValue).toBe("I updated the state of a component!!!");
   })
 
+  it("drags a component from index 0 to index 2 in the testLayout.components array", async () => {
+    render(<TabsMain layoutState={testLayout}/>)
+    layoutConfig(testLayout, {
+      func: "DRAG_COMPONENT",
+      tabIndex: 1,
+      dragIndex: 0,
+      hoverIndex: 2,      
+    })
+
+    expect(testLayout[1].components[0].componentProps).toStrictEqual({body: null});
+    expect(testLayout[1].components[2].componentProps.newValue).toBe("I updated the state of a component!!!");
+  })
+
 });
