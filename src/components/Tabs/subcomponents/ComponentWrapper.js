@@ -161,6 +161,13 @@ const ComponentWrapper = ({
         onMouseLeave={() => setShowSelf(false)}
       >
         <div>
+            <DropIndicator
+              data-test-id="drop-indicator"
+              offsetLine={dropIndexOffset}
+              showLine={isOver && canDrop && isOverCurrent}
+              offsetDown={0}
+              offsetUp={-1}
+            />
           <ComponentLabelContainer showSelf={showSelf}>
             <span
               ref={drag}
@@ -173,13 +180,6 @@ const ComponentWrapper = ({
                 paddingLeft: '5px',
               }}
             >
-              <DropIndicator
-                data-test-id="drop-indicator"
-                offsetLine={dropIndexOffset}
-                //showLine={isOver && canDrop && isOverCurrent}
-                offsetDown={0}
-                offsetUp={-1}
-              />
               <DragHandle />
             </span>
             <Typography

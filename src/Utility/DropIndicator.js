@@ -13,8 +13,8 @@ const DropIndicator = styled('div')(
       right: '2px',
       height: '0px',
       // Caution: Magic numbers
-      top: offsetLine === 0 ? `${offsetUp}px` : null,
-      bottom: offsetLine === 1 ? `${offsetDown}px` : null,
+      // top: offsetLine === 0 ? `${offsetUp}px` : null,
+      //bottom: offsetLine === 1 ? `${offsetDown}px` : null,
       overflow: 'visible',
       borderTop: '3px dashed #1565C0',
       transition: 'top 1s linear, bottom 1s linear, position 1s linear',
