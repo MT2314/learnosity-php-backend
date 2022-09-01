@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 
 const PlaceholderContainer = styled("div")(({ isOver, showError }) => ({
@@ -29,19 +29,11 @@ const SubParagraph = styled(Paragraph)({
   marginTop: "0",
   color: "#1565c0",
 })
-const Placeholder = ({ isOver, getItem }) => {
-  const [showError, setShowError] = useState()
-  useEffect(() => {
-    if (isOver && (getItem.componentName != 'Text' | 'Table' | 'Video' | 'Image')) {
-      setShowError(getItem.componentName);
-    } else if (isOver) {
-      setShowError();
-    }
-  }, [isOver])
 
+const Placeholder = ({ isOver, showError }) => {
   return (
     <PlaceholderContainer isOver={isOver} showError={showError}>
-      {showError ? <Title>{`Error: ${showError} not complatible!`}</Title> : <Title>Add a component here!</Title>}
+      <Title>{showError ? `Error: [${showError}] not complatible!` : `Add a component here!`}</Title>
       <Paragraph>Drag and drop a component from the left panel or use your keyboard to insert a component.</Paragraph>
       <SubParagraph>Accepted components: text, image, chart, table, video, and audio. </SubParagraph>
     </PlaceholderContainer>
