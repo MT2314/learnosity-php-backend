@@ -39,7 +39,46 @@ export const layoutConfig = (draft, action) => {
       };
       return draft;
     case "DELETE_COMPONENT":
-      draft[action.tabIndex].components.splice(action.componentIndex, 1);
+      draft[action.tabIndex].components = draft[
+        action.tabIndex
+      ].components.filter((component, index) => index !== action.compIndex);
+      return draft;
+    case "MOVE_COMPONENT_RIGHT":
+      // eslint-disable-next-line no-case-declarations
+      const elementCR = draft[action.tabIndex].components[action.compIndex];
+      draft[action.tabIndex].components.splice(action.compIndex, 1);
+      draft[action.tabIndex].components.splice(
+        action.compIndex + 1,
+        0,
+        elementCR
+      );
+      return draft;
+    case "MOVE_COMPONENT_LEFT":
+      // eslint-disable-next-line no-case-declarations
+      const elementCL = draft[action.tabIndex].components[action.compIndex];
+      draft[action.tabIndex].components.splice(action.compIndex, 1);
+      draft[action.tabIndex].components.splice(
+        action.compIndex - 1,
+        0,
+        elementCL
+      );
+      return draft;
+    case "DUPLICATE_COMPONENT":
+      draft[action.tabIndex].components.splice(
+        action.compIndex + 1,
+        0,
+        draft[action.tabIndex].components[action.compIndex]
+      );
+      return draft;
+    case "DRAG_COMPONENT":
+      // eslint-disable-next-line no-case-declarations
+      const dragElement = draft[action.tabIndex].components[action.dragIndex];
+      draft[action.tabIndex].components.splice(action.dragIndex, 1);
+      draft[action.tabIndex].components.splice(
+        action.hoverIndex,
+        0,
+        dragElement
+      );
       return draft;
     case "CHANGE_TITLE":
       // eslint-disable-next-line no-case-declarations

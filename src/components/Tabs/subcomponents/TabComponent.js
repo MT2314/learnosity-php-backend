@@ -7,6 +7,7 @@ const StyledListItem = styled("li")({
   listStyle: "none",
   padding: "0px",
 });
+
 const TabComponent = ({ component, compIndex }) => {
   const [, dispatch] = useContext(LayoutContext);
   const [activeTab] = useContext(TabContext);
