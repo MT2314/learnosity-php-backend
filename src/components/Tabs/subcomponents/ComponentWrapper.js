@@ -16,7 +16,7 @@ import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
 import DropIndicator from "../../../Utility/DropIndicator";
 
 import TabComponent from "./TabComponent";
-import { resolveComponentProps } from "@mui/base";
+
 export const SmallIconButton = styled(IconButton)(() => ({
   color: "#FFF",
 }));
@@ -61,8 +61,6 @@ const ComponentWrapper = ({
   numOfComponent
 }) => {
   const dropRef = useRef(null);
-
-  console.log(`componentProps:`, componentProps);
 
   const [, dispatch] = useContext(LayoutContext);
   const [showSelf, setShowSelf] = useState(false);
@@ -114,9 +112,9 @@ const ComponentWrapper = ({
         setDropIndexOffset(1);
       }
 
-      if (!ref.current) {
-        return;
-      }
+      // if (!dropRef.current) {
+      //   return;
+      // }
 
       if (item.compIndex !== undefined) {
         setDragIndex(item?.compIndex);
@@ -135,7 +133,7 @@ const ComponentWrapper = ({
     item: () => ({
       componentName: component.componentName,
       compIndex: compIndex,
-      ...componentProps,
+      componentProps: {...componentProps},
       within: true,
     }),
     collect: (monitor) => ({
@@ -157,18 +155,11 @@ const ComponentWrapper = ({
         src={component.componentName.includes('Text') ? textDnd : defaultDnd}
       />
       <div
-      data-test-id='div-before-drop-indicator'
+        data-test-id="div-before-drop-indicator"
         ref={dropRef}
         onMouseEnter={() => setShowSelf(true)}
         onMouseLeave={() => setShowSelf(false)}
       >
-        <DropIndicator
-          data-test-id='drop-indicator'
-          offsetLine={dropIndexOffset}
-          showLine={isOver && canDrop && isOverCurrent}
-          offsetDown={0}
-          offsetUp={-1}
-        />
         <div>
           <ComponentLabelContainer showSelf={showSelf}>
             <span
@@ -182,6 +173,13 @@ const ComponentWrapper = ({
                 paddingLeft: '5px',
               }}
             >
+              <DropIndicator
+                data-test-id="drop-indicator"
+                offsetLine={dropIndexOffset}
+                //showLine={isOver && canDrop && isOverCurrent}
+                offsetDown={0}
+                offsetUp={-1}
+              />
               <DragHandle />
             </span>
             <Typography
@@ -217,13 +215,13 @@ const ComponentWrapper = ({
               <SmallIconButton
                 onClick={() => {
                   dispatch({
-                    func: "MOVE_COMPONENT_RIGHT",
+                    func: 'MOVE_COMPONENT_RIGHT',
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
                 }}
                 data-testid="move-down-button"
-                aria-label={"Move Component Down"}
+                aria-label={'Move Component Down'}
                 size="small"
               >
                 <ArrowDropDownIcon fontSize="inherit" />
