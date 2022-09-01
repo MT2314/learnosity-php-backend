@@ -118,19 +118,30 @@ describe("Tabs", () => {
 
   it("duplicates a component within a tab", async () => {
     render(<TabsMain layoutState={testLayout}/>)
-
-    // console.log("Before:", testLayout[1].components)
-
     layoutConfig(testLayout, {
       func: "DUPLICATE_COMPONENT",
       tabIndex: 1,
       compIndex: 2
     })
 
-    // console.log("After:", testLayout[1].components)
-
     expect(testLayout[1].components.length).toBe(4);
     expect(testLayout[1].components[2]).toStrictEqual(testLayout[1].components[3]);
+  })
+
+  it("update the tab title", async () => {
+    render(<TabsMain layoutState={testLayout}/>)
+
+    console.log("Before:", testLayout)
+
+    layoutConfig(testLayout, {
+      func: "CHANGE_TITLE",
+      title: "Web Solutions Component Team",
+      id: 0,
+    })
+
+    console.log("After:", testLayout)
+
+    expect(testLayout[0].title).toBe("Web Solutions Component Team");
   })
 
 });
