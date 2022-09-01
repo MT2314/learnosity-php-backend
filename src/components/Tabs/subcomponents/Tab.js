@@ -23,10 +23,10 @@ const Tab = ({ tab, tabIndex }) => {
   const [, dispatch] = useContext(LayoutContext);
   const [isDragging, setIsDragging] = useState(false);
 
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["Text", "Image", "Video", "Table"],
+  const [{ isOver, getItem }, drop] = useDrop(() => ({
+    accept: ["Text", "Image", "Video", "Table", "Callout", "Tab", "QuoteBox", "IFrame"],
     drop: (item) => {
-      if (!item?.within) {
+      if (!item?.within && item.componentName === 'Text' | 'Table' | 'Video' | 'Image') {
         dispatch({
           func: "ADD_COMPONENT",
           tabIndex: tabIndex,
@@ -39,6 +39,7 @@ const Tab = ({ tab, tabIndex }) => {
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
+      getItem: monitor.getItem()
     }),
   }));
 
@@ -50,7 +51,7 @@ const Tab = ({ tab, tabIndex }) => {
       isDragging={isDragging}
     >
       {activeTab === tabIndex && components.length === 0 ? (
-        <Placeholder isOver={isOver} />
+        <Placeholder isOver={isOver} getItem={getItem} />
       ) : (
         <ul
           style={{
