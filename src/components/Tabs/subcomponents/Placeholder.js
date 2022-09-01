@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 
 const PlaceholderContainer = styled("div")({
@@ -34,11 +34,20 @@ const SubParagraph = styled(Paragraph)({
   color: "#1565c0",
 })
 const Placeholder = ({ isOver, getItem }) => {
+  const [stayHover, setStayHover] = useState()
+  useEffect(() => {
+    if (isOver && (getItem.componentName != 'Text' | 'Table' | 'Video' | 'Image')) {
+      setStayHover(getItem.componentName);
+    } else if (isOver && (getItem.componentName === 'Text' | 'Table' | 'Video' | 'Image')) {
+      setStayHover();
+    }
+  }, [isOver])
+
   return (
     <>
-      {isOver ?
-        <PlaceholderHover isOver={getItem.componentName === 'Text' | 'Table' | 'Video' | 'Image'}>
-          {getItem.componentName === 'Text' | 'Table' | 'Video' | 'Image' ? <Title>Add a component here!</Title> : <Title isOver={true}>{`Error: ${getItem.componentName} not complatible!`}</Title>}
+      {stayHover ?
+        <PlaceholderHover isOver={!stayHover}>
+          {!stayHover ? <Title>Add a component here!</Title> : <Title isOver={true}>{`Error: ${stayHover} not complatible!`}</Title>}
           <Paragraph>Drag and drop a component from the left panel or use your keyboard to insert a component.</Paragraph>
           <SubParagraph>Accepted components: text, image, chart, table, video, and audio. </SubParagraph>
         </PlaceholderHover>
