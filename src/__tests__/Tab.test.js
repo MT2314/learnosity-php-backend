@@ -139,20 +139,32 @@ describe("Tabs", () => {
     expect(testLayout[0].title).toBe("Web Solutions Component Team");
   })
 
-  // it("update the tab title", async () => {
-  //   render(<TabsMain layoutState={testLayout}/>)
+  it("move a compont up by 1 position and move it back down by 1", async () => {
+    render(<TabsMain layoutState={testLayout}/>)
 
-  //   console.log("Before:", testLayout)
+    console.log("Before:", testLayout[1].components)
 
-  //   layoutConfig(testLayout, {
-  //     func: "CHANGE_TITLE",
-  //     title: "Web Solutions Component Team",
-  //     id: 0,
-  //   })
+    const component = testLayout[1].components[1]
 
-  //   console.log("After:", testLayout)
+    layoutConfig(testLayout, {
+      func: 'MOVE_COMPONENT_UP',
+      tabIndex: 1,
+      compIndex: 1,
+    })
 
-  //   expect(testLayout[0].title).toBe("Web Solutions Component Team");
-  // })
+    console.log("After:", testLayout[1].components)
+
+    expect(testLayout[1].components[0]).toStrictEqual(component);
+
+    layoutConfig(testLayout, {
+      func: 'MOVE_COMPONENT_DOWN',
+      tabIndex: 1,
+      compIndex: 0,
+    })
+
+    console.log("After Again:", testLayout[1].components)
+
+    expect(testLayout[1].components[1]).toStrictEqual(component);
+  })
 
 });
