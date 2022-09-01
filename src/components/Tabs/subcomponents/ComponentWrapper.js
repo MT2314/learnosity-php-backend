@@ -1,26 +1,26 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
-import { useDrag, useDrop, DragPreviewImage } from "react-dnd";
+import React, { useContext, useRef, useState, useEffect } from 'react';
+import { useDrag, useDrop, DragPreviewImage } from 'react-dnd';
 
-import styled from "@emotion/styled";
-import { IconButton, Typography } from "@mui/material";
-import DragHandleIcon from "@mui/icons-material/DragHandle";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import styled from '@emotion/styled';
+import { IconButton, Typography } from '@mui/material';
+import DragHandleIcon from '@mui/icons-material/DragHandle';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-import { LayoutContext } from "../TabContext";
+import { LayoutContext } from '../TabContext';
 
-import textDnd from "../../../Icons/dndIcons/textDnd.png";
-import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
+import textDnd from '../../../Icons/dndIcons/textDnd.png';
+import defaultDnd from '../../../Icons/dndIcons/defaultDnd.png';
 
-import TabComponent from "./TabComponent";
+import TabComponent from './TabComponent';
 export const SmallIconButton = styled(IconButton)(() => ({
-  color: "#FFF",
+  color: '#FFF',
 }));
-const BlueBox = styled("div")(({ theme, draggingSelf, showSelf }) => ({
-  outline: showSelf ? `3px solid ${theme.palette.secondary.main}` : null,
-  borderRadius: "4px",
+const BlueBox = styled('div')(({ theme, draggingSelf, showSelf }) => ({
+  outline: showSelf ? `3px solid #1466C0` : null,
+  borderRadius: '4px',
   opacity: draggingSelf ? 0.4 : 1,
   '& [data-id="callout"]': {
     margin: 0,
@@ -28,20 +28,20 @@ const BlueBox = styled("div")(({ theme, draggingSelf, showSelf }) => ({
 }));
 
 const DragHandle = styled(DragHandleIcon)({
-  color: "inherit",
+  color: 'inherit',
 });
 
-export const ComponentLabelContainer = styled("div")(
+export const ComponentLabelContainer = styled('div')(
   ({ theme, draggingSelf, showSelf }) => {
     const style = {
-      background: theme.palette.secondary.main,
-      width: "fit-content",
-      marginLeft: "-3px",
-      color: "#FFF",
-      borderRadius: "4px 4px 0px 0px",
+      background: '#1466C0',
+      width: 'fit-content',
+      marginLeft: '-3px',
+      color: '#FFF',
+      borderRadius: '4px 4px 0px 0px',
       opacity: showSelf ? 1 : 0,
-      display: "flex",
-      alignItems: "center",
+      display: 'flex',
+      alignItems: 'center',
     };
 
     if (draggingSelf && !showSelf) style.opacity = 0.4;
@@ -55,7 +55,7 @@ const ComponentWrapper = ({
   compIndex,
   tabIndex,
   setIsDragging,
-  numOfComponent
+  numOfComponent,
 }) => {
   const ref = useRef(null);
 
@@ -64,7 +64,7 @@ const ComponentWrapper = ({
   const [active, setActive] = useState(false);
 
   const [{ isOver, canDrop, isOverCurrent }, drop] = useDrop({
-    accept: ["Text", "Image", "Video", "Table"],
+    accept: ['Text', 'Image', 'Video', 'Table'],
     hover(item) {
       if (!ref.current) {
         return;
@@ -79,7 +79,7 @@ const ComponentWrapper = ({
         }
 
         dispatch({
-          func: "DRAG_COMPONENT",
+          func: 'DRAG_COMPONENT',
           tabIndex: tabIndex,
           dragIndex: dragIndex,
           hoverIndex: hoverIndex,
@@ -116,7 +116,7 @@ const ComponentWrapper = ({
     <>
       <DragPreviewImage
         connect={dragPreview}
-        src={component.componentName.includes("Text") ? textDnd : defaultDnd}
+        src={component.componentName.includes('Text') ? textDnd : defaultDnd}
       />
       <div
         ref={ref}
@@ -129,11 +129,11 @@ const ComponentWrapper = ({
               ref={drag}
               data-testid="component-drag"
               style={{
-                display: "inline-flex",
-                justifyContent: "center",
-                cursor: "move",
-                padding: "3px  0",
-                paddingLeft: "5px",
+                display: 'inline-flex',
+                justifyContent: 'center',
+                cursor: 'move',
+                padding: '3px  0',
+                paddingLeft: '5px',
               }}
             >
               <DragHandle />
@@ -142,10 +142,10 @@ const ComponentWrapper = ({
               variant="body2"
               component="span"
               sx={{
-                borderRight: "0.5px solid #FFF",
-                paddingRight: "10px",
-                paddingLeft: "10px",
-                marginRight: "5px",
+                borderRight: '0.5px solid #FFF',
+                paddingRight: '10px',
+                paddingLeft: '10px',
+                marginRight: '5px',
               }}
               data-testid="component-label-name"
             >
@@ -155,13 +155,13 @@ const ComponentWrapper = ({
               <SmallIconButton
                 onClick={() => {
                   dispatch({
-                    func: "MOVE_COMPONENT_LEFT",
+                    func: 'MOVE_COMPONENT_LEFT',
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
                 }}
                 data-testid="move-up-button"
-                aria-label={"Move Component Up"}
+                aria-label={'Move Component Up'}
                 size="small"
               >
                 <ArrowDropUpIcon fontSize="inherit" />
@@ -171,13 +171,13 @@ const ComponentWrapper = ({
               <SmallIconButton
                 onClick={() => {
                   dispatch({
-                    func: "MOVE_COMPONENT_RIGHT",
+                    func: 'MOVE_COMPONENT_RIGHT',
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
                 }}
                 data-testid="move-down-button"
-                aria-label={"Move Component Down"}
+                aria-label={'Move Component Down'}
                 size="small"
               >
                 <ArrowDropDownIcon fontSize="inherit" />
@@ -187,28 +187,28 @@ const ComponentWrapper = ({
             <SmallIconButton
               onClick={() => {
                 dispatch({
-                  func: "DUPLICATE_COMPONENT",
+                  func: 'DUPLICATE_COMPONENT',
                   compIndex: compIndex,
                   tabIndex: tabIndex,
                 });
               }}
               data-testid="duplicate-component-button"
-              aria-label={"Duplicate Component AriaLabel"}
+              aria-label={'Duplicate Component AriaLabel'}
               size="small"
-              sx={{ fontSize: "0.9em" }}
+              sx={{ fontSize: '0.9em' }}
             >
               <ContentCopyIcon fontSize="inherit" />
             </SmallIconButton>
             <SmallIconButton
               onClick={() => {
                 dispatch({
-                  func: "DELETE_COMPONENT",
+                  func: 'DELETE_COMPONENT',
                   compIndex: compIndex,
                   tabIndex: tabIndex,
                 });
               }}
               data-testid="delete-component-button"
-              aria-label={"Delete Component AriaLabel"}
+              aria-label={'Delete Component AriaLabel'}
               size="small"
             >
               <DeleteOutlineIcon fontSize="inherit" />
