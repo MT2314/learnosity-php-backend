@@ -139,10 +139,8 @@ describe("Tabs", () => {
     expect(testLayout[0].title).toBe("Web Solutions Component Team");
   })
 
-  it("move a compont up by 1 position and move it back down by 1", async () => {
+  it("move a component up by 1 position and move it back down by 1", async () => {
     render(<TabsMain layoutState={testLayout}/>)
-
-    console.log("Before:", testLayout[1].components)
 
     const component = testLayout[1].components[1]
 
@@ -152,8 +150,6 @@ describe("Tabs", () => {
       compIndex: 1,
     })
 
-    console.log("After:", testLayout[1].components)
-
     expect(testLayout[1].components[0]).toStrictEqual(component);
 
     layoutConfig(testLayout, {
@@ -162,9 +158,27 @@ describe("Tabs", () => {
       compIndex: 0,
     })
 
-    console.log("After Again:", testLayout[1].components)
-
     expect(testLayout[1].components[1]).toStrictEqual(component);
+  })
+
+  it("move a tab right by 1 position and move it back left by 1", async () => {
+    render(<TabsMain layoutState={testLayout}/>)
+
+    const tab = testLayout[0]
+
+    layoutConfig(testLayout, {
+      func: "MOVE_TAB_RIGHT",
+      tabIndex: 0,
+    })
+
+    expect(testLayout[1]).toStrictEqual(tab);
+
+    layoutConfig(testLayout, {
+      func: "MOVE_TAB_LEFT",
+      tabIndex: 1,
+    })
+
+    expect(testLayout[0]).toStrictEqual(tab);
   })
 
 });
