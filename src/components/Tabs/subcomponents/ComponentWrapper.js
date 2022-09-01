@@ -13,6 +13,7 @@ import { LayoutContext } from "../TabContext";
 
 import textDnd from "../../../Icons/dndIcons/textDnd.png";
 import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
+import DropIndicator from "../../../Utility/DropIndicator";
 
 import TabComponent from "./TabComponent";
 export const SmallIconButton = styled(IconButton)(() => ({
@@ -56,41 +57,57 @@ const ComponentWrapper = ({
   tabIndex,
   setIsDragging,
 }) => {
-  const ref = useRef(null);
+  const dropRef = useRef(null);
 
   const [, dispatch] = useContext(LayoutContext);
   const [showSelf, setShowSelf] = useState(false);
+  const [dropIndexOffset, setDropIndexOffset] = useState(0);
   const [active, setActive] = useState(false);
 
   const [{ isOver, canDrop, isOverCurrent }, drop] = useDrop({
     accept: ["Text", "Image", "Video", "Table"],
-    hover(item, monitor) {
-      if (!ref.current) {
-        return;
-      }
-
-      if (item.compIndex !== undefined) {
-        const dragIndex = item?.compIndex;
-        const hoverIndex = compIndex;
-
-        if (dragIndex === hoverIndex) {
-          return;
-        }
-
-        dispatch({
-          func: "DRAG_COMPONENT",
-          tabIndex: tabIndex,
-          dragIndex: dragIndex,
-          hoverIndex: hoverIndex,
-        });
-        item.compIndex = hoverIndex;
-      }
-    },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       canDrop: !!monitor.canDrop(),
       isOverCurrent: monitor.isOver({ shallow: true }),
     }),
+    drop: async (item, monitor) => {
+      console.log('dropped:',item)
+      dispatch({
+        func: "DRAG_COMPONENT",
+        tabIndex: tabIndex,
+        dragIndex: dragIndex,
+        hoverIndex: hoverIndex,
+      });
+      item.compIndex = hoverIndex;
+    },
+
+    hover: (item, monitor) => {
+      // Only show highlights if it's a droppable region (not the item itself, not one of the regions that means the index won't change to prevent meaningless mutations)
+      if (!monitor.canDrop()) return;
+      // Determine rectangle on screen
+      const hoverBoundingRect = dropRef.current?.getBoundingClientRect();
+      // Get vertical middle
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      // Determine mouse position
+      const clientOffset = monitor.getClientOffset();
+      // Get pixels to the top
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      // Only perform the move when the mouse has crossed half of the items height
+      // When dragging downwards, only move when the cursor is below 50%
+      // When dragging upwards, only move when the cursor is above 50%
+      // Dragging downwards
+      if (hoverClientY < hoverMiddleY) {
+        setDropIndexOffset(0);
+        return;
+      }
+      // Dragging upwards
+      if (hoverClientY > hoverMiddleY) {
+        setDropIndexOffset(1);
+      }
+    },
+
   });
 
   const [{ isDragging }, drag, dragPreview] = useDrag({
@@ -105,34 +122,43 @@ const ComponentWrapper = ({
     }),
   });
 
+  dragPreview(drop(dropRef));
+
   useEffect(() => {
     setIsDragging(isDragging);
   }, [isDragging]);
 
-  drop(ref);
 
   return (
     <>
       <DragPreviewImage
         connect={dragPreview}
-        src={component.componentName.includes("Text") ? textDnd : defaultDnd}
+        src={component.componentName.includes('Text') ? textDnd : defaultDnd}
       />
       <div
-        ref={ref}
+      data-test-id='div-before-drop-indicator'
+        ref={dropRef}
         onMouseEnter={() => setShowSelf(true)}
         onMouseLeave={() => setShowSelf(false)}
       >
+        <DropIndicator
+          data-test-id='drop-indicator'
+          offsetLine={dropIndexOffset}
+          showLine={isOver && canDrop && isOverCurrent}
+          offsetDown={0}
+          offsetUp={-1}
+        />
         <div>
           <ComponentLabelContainer showSelf={showSelf}>
             <span
               ref={drag}
               data-testid="component-drag"
               style={{
-                display: "inline-flex",
-                justifyContent: "center",
-                cursor: "move",
-                padding: "3px  0",
-                paddingLeft: "5px",
+                display: 'inline-flex',
+                justifyContent: 'center',
+                cursor: 'move',
+                padding: '3px  0',
+                paddingLeft: '5px',
               }}
             >
               <DragHandle />
@@ -141,10 +167,10 @@ const ComponentWrapper = ({
               variant="body2"
               component="span"
               sx={{
-                borderRight: "0.5px solid #FFF",
-                paddingRight: "10px",
-                paddingLeft: "10px",
-                marginRight: "5px",
+                borderRight: '0.5px solid #FFF',
+                paddingRight: '10px',
+                paddingLeft: '10px',
+                marginRight: '5px',
               }}
               data-testid="component-label-name"
             >
@@ -154,13 +180,13 @@ const ComponentWrapper = ({
               <SmallIconButton
                 onClick={() => {
                   dispatch({
-                    func: "MOVE_COMPONENT_LEFT",
+                    func: 'MOVE_COMPONENT_LEFT',
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
                 }}
                 data-testid="move-up-button"
-                aria-label={"Move Component Up"}
+                aria-label={'Move Component Up'}
                 size="small"
               >
                 <ArrowDropUpIcon fontSize="inherit" />
@@ -169,13 +195,13 @@ const ComponentWrapper = ({
             <SmallIconButton
               onClick={() => {
                 dispatch({
-                  func: "MOVE_COMPONENT_RIGHT",
+                  func: 'MOVE_COMPONENT_RIGHT',
                   compIndex: compIndex,
                   tabIndex: tabIndex,
                 });
               }}
               data-testid="move-down-button"
-              aria-label={"Move Component Down"}
+              aria-label={'Move Component Down'}
               size="small"
             >
               <ArrowDropDownIcon fontSize="inherit" />
@@ -183,28 +209,28 @@ const ComponentWrapper = ({
             <SmallIconButton
               onClick={() => {
                 dispatch({
-                  func: "DUPLICATE_COMPONENT",
+                  func: 'DUPLICATE_COMPONENT',
                   compIndex: compIndex,
                   tabIndex: tabIndex,
                 });
               }}
               data-testid="duplicate-component-button"
-              aria-label={"Duplicate Component AriaLabel"}
+              aria-label={'Duplicate Component AriaLabel'}
               size="small"
-              sx={{ fontSize: "0.9em" }}
+              sx={{ fontSize: '0.9em' }}
             >
               <ContentCopyIcon fontSize="inherit" />
             </SmallIconButton>
             <SmallIconButton
               onClick={() => {
                 dispatch({
-                  func: "DELETE_COMPONENT",
+                  func: 'DELETE_COMPONENT',
                   compIndex: compIndex,
                   tabIndex: tabIndex,
                 });
               }}
               data-testid="delete-component-button"
-              aria-label={"Delete Component AriaLabel"}
+              aria-label={'Delete Component AriaLabel'}
               size="small"
             >
               <DeleteOutlineIcon fontSize="inherit" />
