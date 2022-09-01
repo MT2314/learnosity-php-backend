@@ -1,20 +1,16 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-const PlaceholderStyle = styled("div")({
+const PlaceholderContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
   height: "130px",
+  border: "3px dashed #1565c0",
 })
 
-const PlaceholderContainer = styled(PlaceholderStyle)(({ isOver }) => ({
-  backgroundColor: isOver ? "rgba(21, 101, 192, 0.04)" : "inherit",
-  border: "3px dashed #1565c0",
-}))
-
-const PlaceholderContainerIncorrect = styled(PlaceholderStyle)(({ isOver }) => ({
+const PlaceholderHover = styled(PlaceholderContainer)(({ isOver }) => ({
   backgroundColor: isOver ? "rgba(21, 101, 192, 0.04)" : "rgba(211, 47, 47, 0.04)",
   border: isOver ? "3px dashed #1565c0" : "3px dashed #D32F2F",
 }))
@@ -41,13 +37,13 @@ const Placeholder = ({ isOver, getItem }) => {
   return (
     <>
       {isOver ?
-        <PlaceholderContainerIncorrect isOver={getItem.componentName === 'Text' | 'Table' | 'Video' | 'Image'}>
+        <PlaceholderHover isOver={getItem.componentName === 'Text' | 'Table' | 'Video' | 'Image'}>
           {getItem.componentName === 'Text' | 'Table' | 'Video' | 'Image' ? <Title>Add a component here!</Title> : <Title isOver={true}>{`Error: ${getItem.componentName} not complatible!`}</Title>}
           <Paragraph>Drag and drop a component from the left panel or use your keyboard to insert a component.</Paragraph>
           <SubParagraph>Accepted components: text, image, chart, table, video, and audio. </SubParagraph>
-        </PlaceholderContainerIncorrect>
+        </PlaceholderHover>
         :
-        <PlaceholderContainer isOver={isOver}>
+        <PlaceholderContainer>
           <Title>Add a component here!</Title>
           <Paragraph>Drag and drop a component from the left panel or use your keyboard to insert a component.</Paragraph>
           <SubParagraph>Accepted components: text, image, chart, table, video, and audio. </SubParagraph>
