@@ -195,7 +195,7 @@ describe("Tabs", () => {
         componentName: "Callout",
       },
     })
-    expect(testLayout[1].components).toHaveLength(3)
+    expect(testLayout[1].components).toHaveLength(4)
   } else if (acceptListComp("Text")) {
     layoutConfig(testLayout, {
       func: "ADD_COMPONENT",
@@ -204,7 +204,7 @@ describe("Tabs", () => {
         componentName: "Text",
       },
     })
-    expect(testLayout[1].components).toHaveLength(4)
+    expect(testLayout[1].components).toHaveLength(5)
   };
   });
 
