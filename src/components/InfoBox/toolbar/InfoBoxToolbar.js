@@ -63,8 +63,16 @@ const StyledTextToolbar = styled(Toolbar)({
    borderRadius: "0.25rem",
 });
 
-const InfoBoxToolbar = () => {
+const InfoBoxToolbar = ({
+   infoBoxIcon,
+   infoBoxLabel,
+   infoBoxHeader,
+   infoBoxBody,
+   //   setProp = () => {},
+}) => {
+   // ref for infoBoxType dropdown
    const [anchorEl, setAnchorEl] = useState(null);
+
    const open = Boolean(anchorEl);
 
    const handleClick = (e) => {
@@ -114,7 +122,7 @@ const InfoBoxToolbar = () => {
             </StyledMenu>
          </StyledIconToolbar>
          <StyledTextToolbar>
-
+               {/* dummy toolbar here (for now) */}
          </StyledTextToolbar>
       </StyledInfoBoxToolbarContainer>
    );
