@@ -27,10 +27,15 @@ const Tab = ({ tab, tabIndex }) => {
   const [, dispatch] = useContext(LayoutContext);
   const [isDragging, setIsDragging] = useState(false);
 
+  //List of accepted into tab componenets
+  const acceptListComp = (item) => {
+    return ['Text', 'Table', 'Video', 'Image'].indexOf(item.componentName) >= 0
+  }
+
   const [{ isOver, getItem }, drop] = useDrop(() => ({
     accept: ["Text", "Image", "Video", "Table", "Callout", "Tab", "QuoteBox", "IFrame"],
     drop: (item) => {
-      if (!item?.within && item.componentName === 'Text' | 'Table' | 'Video' | 'Image') {
+      if (!item?.within && acceptListComp(item)) {
         dispatch({
           func: "ADD_COMPONENT",
           tabIndex: tabIndex,
@@ -55,7 +60,7 @@ const Tab = ({ tab, tabIndex }) => {
   // Error message stays. This gives the user time to read and learn.
   const [showError, setShowError] = useState()
   useEffect(() => {
-    if (isOver && (getItem.componentName != 'Text' | 'Table' | 'Video' | 'Image')) {
+    if (isOver && !acceptListComp(getItem)) {
       setShowError(trimCap(getItem.componentName));
     } else if (isOver) {
       setShowError();
