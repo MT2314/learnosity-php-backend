@@ -91,7 +91,7 @@ const Tab = ({ tab, tabIndex }) => {
       isDragging={isDragging}
     >
       {activeTab === tabIndex && components.length === 0 ? (
-        <Placeholder isOver={isOver} getItem={getItem} />
+        <Placeholder isOver={isOver} showError={showError} />
       ) : (
         <ul
           style={{
