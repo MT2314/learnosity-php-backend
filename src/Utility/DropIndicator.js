@@ -5,7 +5,21 @@ import styled from "@emotion/styled";
 const triangleSize = 9;
 
 const DropIndicator = styled("div")(
-  ({ offsetLine, showLine, centerLine, offsetDown = 4, offsetUp = -3 }) => {
+  ({
+    offsetLine,
+    showLine,
+    centerLine,
+    item,
+    offsetDown = 4,
+    offsetUp = -3,
+  }) => {
+    let dashColor = "#1565C0";
+    if (
+      ["Text", "Table", "Video", "Image"].indexOf(item?.componentName) === -1
+    ) {
+      dashColor = "#D32F2F";
+    }
+
     const style = {
       position: "relative",
       display: showLine ? "block" : "none",
@@ -16,7 +30,7 @@ const DropIndicator = styled("div")(
       top: offsetLine === 0 ? `${offsetUp}px` : null,
       bottom: offsetLine === 1 ? `${offsetDown}px` : null,
       overflow: "visible",
-      borderTop: "3px dashed #1565C0",
+      borderTop: `3px dashed ${dashColor}`,
       transition: "top 1s linear, bottom 1s linear, position 1s linear",
       "&::before": {
         content: "''",
@@ -25,7 +39,7 @@ const DropIndicator = styled("div")(
         borderRight: `${triangleSize}px solid transparent`,
         borderTop: `${triangleSize / 2}px solid transparent`,
         borderBottom: `${triangleSize / 2}px solid transparent`,
-        borderLeft: `${triangleSize}px solid #1565C0`,
+        borderLeft: `${triangleSize}px solid ${dashColor}`,
         display: "block",
         width: "10px",
         height: "10px",
@@ -40,7 +54,7 @@ const DropIndicator = styled("div")(
         borderLeft: `${triangleSize}px solid transparent`,
         borderTop: `${triangleSize / 2}px solid transparent`,
         borderBottom: `${triangleSize / 2}px solid transparent`,
-        borderRight: `${triangleSize}px solid #1565C0`,
+        borderRight: `${triangleSize}px solid ${dashColor}`,
         display: "block",
         width: "10px",
         height: "10px",

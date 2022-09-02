@@ -41,7 +41,7 @@ export const layoutConfig = (draft, action) => {
     case "DELETE_COMPONENT":
       draft[action.tabIndex].components.splice(action.compIndex, 1);
       return draft;
-    case "MOVE_COMPONENT_RIGHT":
+    case "MOVE_COMPONENT_DOWN":
       // eslint-disable-next-line no-case-declarations
       const elementCR = draft[action.tabIndex].components[action.compIndex];
       draft[action.tabIndex].components.splice(action.compIndex, 1);
@@ -51,7 +51,7 @@ export const layoutConfig = (draft, action) => {
         elementCR
       );
       return draft;
-    case "MOVE_COMPONENT_LEFT":
+    case "MOVE_COMPONENT_UP":
       // eslint-disable-next-line no-case-declarations
       const elementCL = draft[action.tabIndex].components[action.compIndex];
       draft[action.tabIndex].components.splice(action.compIndex, 1);

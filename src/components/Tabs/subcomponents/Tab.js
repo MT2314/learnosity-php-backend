@@ -1,9 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
 import styled from "@emotion/styled";
 
 import { TabContext, LayoutContext } from "../TabContext";
 import ComponentWrapper from "./ComponentWrapper";
+
+//error style message
+import "../styles/ErrorMsg.scss";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 //components
 import Placeholder from "./Placeholder";
@@ -23,28 +27,61 @@ const Tab = ({ tab, tabIndex }) => {
   const [, dispatch] = useContext(LayoutContext);
   const [isDragging, setIsDragging] = useState(false);
 
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: ["Text", "Image", "Video", "Table"],
+  //List of accepted into tab componenets
+  const acceptListComp = (item) => {
+    return ["Text", "Table", "Video", "Image"].indexOf(item.componentName) >= 0;
+  };
+
+  const [{ isOver, getItem }, drop] = useDrop(() => ({
+    accept: [
+      "Text",
+      "Image",
+      "Video",
+      "Table",
+      "Callout",
+      "Tab",
+      "QuoteBox",
+      "IFrame",
+    ],
     drop: async (item, monitor) => {
       if (monitor.didDrop()) return;
-      dispatch({
-        func: "ADD_COMPONENT",
-        tabIndex: tabIndex,
-        component: {
-          componentName: item.componentName,
-          componentProps: JSON.parse(item?.componentProps),
-        },
-      });
+      if (acceptListComp(item)) {
+        dispatch({
+          func: "ADD_COMPONENT",
+          tabIndex: tabIndex,
+          component: {
+            componentName: item.componentName,
+            componentProps: JSON.parse(item?.componentProps),
+          },
+        });
+      }
     },
     canDrop: (item) => {
       if (item.within) return false;
-      if (components.length > 0) return false;
       return true;
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
+      getItem: monitor.getItem(),
     }),
   }));
+
+  // Adding space between Cap except iFrame
+  const trimCap = (item) => {
+    return item === "IFrame"
+      ? "iFrame"
+      : item.replace(/([A-Z])/g, " $1").trim();
+  };
+
+  // Error message stays. This gives the user time to read and learn.
+  const [showError, setShowError] = useState();
+  useEffect(() => {
+    if (isOver && !acceptListComp(getItem)) {
+      setShowError(trimCap(getItem.componentName));
+    } else if (isOver) {
+      setShowError();
+    }
+  }, [isOver]);
 
   return (
     <StyleTabBody
@@ -54,13 +91,14 @@ const Tab = ({ tab, tabIndex }) => {
       isDragging={isDragging}
     >
       {activeTab === tabIndex && components.length === 0 ? (
-        <Placeholder isOver={isOver} />
+        <Placeholder isOver={isOver} getItem={getItem} />
       ) : (
         <ul
           style={{
             padding: 0,
             listStyleType: "none",
           }}
+          isOver={isOver}
         >
           {components.map((component, compIndex) => {
             return (
@@ -68,13 +106,19 @@ const Tab = ({ tab, tabIndex }) => {
                 key={`key-component-${compIndex}`}
                 numOfComponent={components.length}
                 component={component}
-                componentProps={component.componentProps}
                 compIndex={compIndex}
                 tabIndex={tabIndex}
                 setIsDragging={setIsDragging}
+                setShowError={setShowError}
               />
             );
           })}
+          {showError && (
+            <p className="tabErrorBg">
+              <ErrorOutlineIcon /> &nbsp; Error: component is not compatible.
+              Only text, image, chart, table, video, and audio.
+            </p>
+          )}
         </ul>
       )}
     </StyleTabBody>

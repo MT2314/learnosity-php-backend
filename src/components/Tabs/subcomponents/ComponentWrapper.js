@@ -37,7 +37,7 @@ const DragHandle = styled(DragHandleIcon)({
 export const ComponentLabelContainer = styled("div")(
   ({ theme, draggingSelf, showSelf }) => {
     const style = {
-      background: theme.palette.secondary.main,
+      background: "#1466C0",
       width: "fit-content",
       marginLeft: "-3px",
       color: "#FFF",
@@ -60,6 +60,7 @@ const ComponentWrapper = ({
   tabIndex,
   setIsDragging,
   numOfComponent,
+  setShowError,
 }) => {
   const dropRef = useRef(null);
 
@@ -70,27 +71,47 @@ const ComponentWrapper = ({
   // !WIP - needed to drag and drop outside of Tabs
   // const prevNumOfComponent = usePrevious(numOfComponent);
 
-  const [{ isOver, canDrop, isOverCurrent, droppedInContainer }, drop] =
-    useDrop({
-      accept: ["Text", "Image", "Video", "Table"],
-      collect: (monitor) => ({
-        isOver: !!monitor.isOver(),
-        canDrop: !!monitor.canDrop(),
-        isOverCurrent: monitor.isOver({ shallow: true }),
-        droppedInContainer: monitor.didDrop(),
-      }),
-      drop: async (item, monitor) => {
-        const hoverIndex =
-          dropIndexOffset === 0
-            ? item.compIndex < compIndex
-              ? compIndex
-              : compIndex + 1
-            : item.compIndex < compIndex
-            ? compIndex - 1
-            : compIndex;
+  //List of accepted into tab componenets
+  const acceptListComp = (item) => {
+    return (
+      ["Text", "Table", "Video", "Image"].indexOf(item?.componentName) >= 0
+    );
+  };
 
-        const dragIndex = item?.compIndex;
+  const [
+    { isOver, canDrop, isOverCurrent, droppedInContainer, getItem },
+    drop,
+  ] = useDrop({
+    accept: [
+      "Text",
+      "Image",
+      "Video",
+      "Table",
+      "Callout",
+      "Tab",
+      "QuoteBox",
+      "IFrame",
+    ],
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+      canDrop: !!monitor.canDrop(),
+      isOverCurrent: monitor.isOver({ shallow: true }),
+      droppedInContainer: monitor.didDrop(),
+      getItem: monitor.getItem(),
+    }),
+    drop: async (item, monitor) => {
+      const hoverIndex =
+        dropIndexOffset === 0
+          ? item.compIndex < compIndex
+            ? compIndex
+            : compIndex + 1
+          : item.compIndex < compIndex
+          ? compIndex - 1
+          : compIndex;
 
+      const dragIndex = item?.compIndex;
+
+      if (acceptListComp(item)) {
         dispatch({
           func:
             item.compIndex !== undefined
@@ -106,41 +127,43 @@ const ComponentWrapper = ({
             },
           }),
         });
-      },
-      canDrop: (item) => {
-        if (item.compIndex === compIndex) return false;
-        return true;
-      },
+      }
+    },
+    canDrop: (item) => {
+      if (item.compIndex === compIndex) return false;
 
-      hover: (item, monitor) => {
-        // Only show highlights if it's a droppable region (not the item itself, not one of the regions that means the index won't change to prevent meaningless mutations)
-        if (!monitor.canDrop()) return;
-        // Determine rectangle on screen
-        const hoverBoundingRect = dropRef.current?.getBoundingClientRect();
-        // Get vertical middle
-        const hoverMiddleY =
-          (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-        // Determine mouse position
-        const clientOffset = monitor.getClientOffset();
-        // Get pixels to the top
-        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-        // Only perform the move when the mouse has crossed half of the items height
-        // When dragging downwards, only move when the cursor is below 50%
-        // When dragging upwards, only move when the cursor is above 50%
-        // Dragging downwards
-        if (hoverClientY > hoverMiddleY) {
-          setDropIndexOffset(0);
-          return;
-        }
-        // Dragging upwards
-        if (hoverClientY < hoverMiddleY) {
-          setDropIndexOffset(1);
-          return;
-        }
+      return true;
+    },
 
-        setDropIndexOffset(null);
-      },
-    });
+    hover: (item, monitor) => {
+      // Only show highlights if it's a droppable region (not the item itself, not one of the regions that means the index won't change to prevent meaningless mutations)
+      if (!monitor.canDrop()) return;
+      // Determine rectangle on screen
+      const hoverBoundingRect = dropRef.current?.getBoundingClientRect();
+      // Get vertical middle
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      // Determine mouse position
+      const clientOffset = monitor.getClientOffset();
+      // Get pixels to the top
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      // Only perform the move when the mouse has crossed half of the items height
+      // When dragging downwards, only move when the cursor is below 50%
+      // When dragging upwards, only move when the cursor is above 50%
+      // Dragging downwards
+      if (hoverClientY > hoverMiddleY) {
+        setDropIndexOffset(0);
+        return;
+      }
+      // Dragging upwards
+      if (hoverClientY < hoverMiddleY) {
+        setDropIndexOffset(1);
+        return;
+      }
+
+      setDropIndexOffset(null);
+    },
+  });
 
   const [{ isDragging, didDrop, droppedItem }, drag, dragPreview] = useDrag({
     type: component.componentName,
@@ -161,6 +184,16 @@ const ComponentWrapper = ({
   useEffect(() => {
     setIsDragging(isDragging);
   }, [isDragging]);
+
+  useEffect(() => {
+    if (!acceptListComp(getItem)) {
+      if ((dropIndexOffset === 0 || dropIndexOffset === 1) && isOver) {
+        setShowError(true);
+      } else {
+        setShowError(false);
+      }
+    }
+  }, [isOver, dropIndexOffset]);
 
   drop(dropRef);
 
@@ -199,6 +232,7 @@ const ComponentWrapper = ({
             data-test-id="drop-indicator"
             offsetLine={dropIndexOffset}
             showLine={dropIndexOffset === 1 && isOver}
+            item={getItem}
             offsetDown={-15}
             offsetUp={-1}
           />
@@ -233,7 +267,7 @@ const ComponentWrapper = ({
               <SmallIconButton
                 onClick={() => {
                   dispatch({
-                    func: "MOVE_COMPONENT_LEFT",
+                    func: "MOVE_COMPONENT_UP",
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
@@ -249,7 +283,7 @@ const ComponentWrapper = ({
               <SmallIconButton
                 onClick={() => {
                   dispatch({
-                    func: "MOVE_COMPONENT_RIGHT",
+                    func: "MOVE_COMPONENT_DOWN",
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
@@ -304,6 +338,7 @@ const ComponentWrapper = ({
             data-test-id="drop-indicator"
             offsetLine={dropIndexOffset}
             showLine={dropIndexOffset === 0 && isOver}
+            item={getItem}
             offsetDown={0}
             offsetUp={15}
           />
