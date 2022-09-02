@@ -39,9 +39,7 @@ export const layoutConfig = (draft, action) => {
       };
       return draft;
     case "DELETE_COMPONENT":
-      draft[action.tabIndex].components = draft[
-        action.tabIndex
-      ].components.filter((component, index) => index !== action.compIndex);
+      draft[action.tabIndex].components.splice(action.compIndex, 1);
       return draft;
     case "MOVE_COMPONENT_DOWN":
       // eslint-disable-next-line no-case-declarations
@@ -80,6 +78,13 @@ export const layoutConfig = (draft, action) => {
         dragElement
       );
       return draft;
+    case "DRAG_ADD_NEW_COMPONENT":
+      draft[action.tabIndex].components.splice(
+        action.hoverIndex,
+        0,
+        action.component
+      );
+      return draft;
     case "CHANGE_TITLE":
       // eslint-disable-next-line no-case-declarations
       const tab = draft.find((tab) => tab.id == action.id);
@@ -108,7 +113,6 @@ export const TabContext = createContext();
 
 export const ActiveTabProvider = ({ children }) => {
   const [activeTab, setActiveTab] = useState(0);
-
   return (
     <TabContext.Provider value={[activeTab, setActiveTab]}>
       {children}
