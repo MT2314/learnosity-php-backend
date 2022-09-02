@@ -26,6 +26,7 @@ const StyledIconToolbar = styled(Toolbar)({
 
 const StyledIconDropdownButton = styled(Button)({
    backgroundColor: "#FFF",
+   color: "#232323",
    fontFamily: `"Inter", sans-serif`,
    fontSize: "1rem",
    fontWeight: "400",
@@ -38,6 +39,7 @@ const StyledIconDropdownButton = styled(Button)({
    flexDirection: "row",
    whiteSpace: "nowrap",
    textAlign: "center",
+   textTransform: "none",
 
    "&:hover": {
       background: "#FFF",
@@ -46,6 +48,10 @@ const StyledIconDropdownButton = styled(Button)({
 });
 
 const StyledMenu = styled(Menu)({
+   width: "6.8125rem",
+});
+
+const StyledMenuItem = styled(MenuItem)({
    width: "6.8125rem",
 });
 
@@ -58,12 +64,11 @@ const StyledTextToolbar = styled(Toolbar)({
 });
 
 const InfoBoxToolbar = () => {
-
    const [anchorEl, setAnchorEl] = useState(null);
    const open = Boolean(anchorEl);
 
    const handleClick = (e) => {
-      setAnchorEl(e.current.target);
+      setAnchorEl(e.currentTarget);
    };
 
    const handleClose = () => {
@@ -75,7 +80,7 @@ const InfoBoxToolbar = () => {
          <StyledIconToolbar>
             <StyledIconDropdownButton
                id="iconToolBar"
-               aria-controls={open ? 'InfoBox icon menu' : undefined}
+               aria-controls={open ? 'infoBox-icon-menu' : undefined}
                aria-expanded={open ? 'true' : undefined}
                variant="contained"
                fullWidth
@@ -88,19 +93,21 @@ const InfoBoxToolbar = () => {
                Select icon
             </StyledIconDropdownButton>
             <StyledMenu
+               id="infoBox-icon-menu"
                anchorEl={anchorEl}
                open={open}
                onClose={handleClose}
             >
                {
-                  iconDropdownOptions.map((infoBox, i) => {
+                  iconDropdownOptions.map((infoBox) => {
                      return (
-                        <MenuItem
+                        <StyledMenuItem
                            key={infoBox.id}
-                           onClick={handleClose}
+                           value={infoBox.type}
+                           onClick={handleClick}
                         >
                            {infoBox.type}
-                        </MenuItem>
+                        </StyledMenuItem>
                      )
                   })
                }
