@@ -26,7 +26,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
   const listRef = useRef(null);
   const alignRef = useRef(null);
 
-  const parentDiv = document.getElementById(containerId);
+  const parentDiv = document?.getElementById(containerId);
   const QLformats = parentDiv?.querySelector(`.ql-formats`);
   const QLactive = QLformats?.querySelector(`.ql-active`);
   if (QLactive) {
