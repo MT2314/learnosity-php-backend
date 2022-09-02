@@ -9,8 +9,8 @@ import ComponentWrapper from "./ComponentWrapper";
 import Placeholder from "./Placeholder";
 
 // NOTE: We can use theme once it is set it up end to end
-const StyleTabBody = styled("div")(({ theme,  isDragging }) => ({
-  padding: "10px",
+const StyleTabBody = styled("div")(({ theme, isDragging }) => ({
+  padding: "10px 10px 20px 10px",
   border: "1px solid #bdbdbd",
   borderTop: "none,",
   backgroundColor: isDragging ? "#E9EDF1" : "white",
@@ -25,17 +25,21 @@ const Tab = ({ tab, tabIndex }) => {
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ["Text", "Image", "Video", "Table"],
-    drop: (item) => {
-      if (!item?.within) {
-        dispatch({
-          func: "ADD_COMPONENT",
-          tabIndex: tabIndex,
-          component: {
-            componentName: item.componentName,
-            componentProps: JSON.parse(item?.componentProps),
-          },
-        });
-      }
+    drop: async (item, monitor) => {
+      if (monitor.didDrop()) return;
+      dispatch({
+        func: "ADD_COMPONENT",
+        tabIndex: tabIndex,
+        component: {
+          componentName: item.componentName,
+          componentProps: JSON.parse(item?.componentProps),
+        },
+      });
+    },
+    canDrop: (item) => {
+      if (item.within) return false;
+      if (components.length > 0) return false;
+      return true;
     },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -57,7 +61,6 @@ const Tab = ({ tab, tabIndex }) => {
             padding: 0,
             listStyleType: "none",
           }}
-          isOver={isOver}
         >
           {components.map((component, compIndex) => {
             return (
