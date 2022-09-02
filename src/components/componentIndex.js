@@ -26,6 +26,12 @@ import tabsComponentIcon from "../Icons/componentIcons/tabsIcon.png"
 import textComponentIcon from "../Icons/componentIcons/textIcon.png"
 import defaultComponentIcon from "../Icons/componentIcons/defaultIcon.png"
 
+import exposedVersion from "../../exposedStage"
+
+console.log(
+  `Stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`
+);
+
 export const categories = {
   interactive: {
     readableName: "Interactive",
