@@ -28,7 +28,7 @@ const StyledHeaderInput = styled(TextareaAutosize)({
     },
   },
 });
-const Label = () => {
+const Header = ({ setDisableToolbar }) => {
   const [state, dispatch] = useContext(InfoBoxContext);
 
   const handleHeaderChange = useCallback((e) => {
@@ -47,8 +47,14 @@ const Label = () => {
       aria-multiline="true"
       value={state.infoBoxHeader}
       onChange={handleHeaderChange}
+      onFocus={() => {
+        setDisableToolbar(true);
+      }}
+      onBlur={() => {
+        setDisableToolbar(false);
+      }}
     />
   );
 };
 
-export default Label;
+export default Header;

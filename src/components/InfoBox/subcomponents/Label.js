@@ -28,7 +28,7 @@ const StyledLabelInput = styled('input')({
     },
   },
 });
-const Label = () => {
+const Label = ({ setDisableToolbar }) => {
   const [state, dispatch] = useContext(InfoBoxContext);
 
   const handleLabelChange = useCallback((e) => {
@@ -40,6 +40,7 @@ const Label = () => {
 
   return (
     <StyledLabelInput
+      id="infoBox-label"
       type="text"
       placeholder="Type your label here"
       aria-label="InfoBox label"
@@ -48,6 +49,12 @@ const Label = () => {
       multiline={false}
       value={state.infoBoxLabel}
       onChange={handleLabelChange}
+      onFocus={() => {
+        setDisableToolbar(true);
+      }}
+      onBlur={() => {
+        setDisableToolbar(false);
+      }}
     />
   );
 };

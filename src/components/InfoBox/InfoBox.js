@@ -76,6 +76,7 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
   const { t } = useTranslation();
 
   const [showToolbar, setShowToolbar] = useState(false);
+  const [disableToolbar, setDisableToolbar] = useState(false);
 
   const infoBoxRef = useRef();
 
@@ -123,12 +124,12 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
         onBlur={handleOnBlur}
       >
         <StyledToolbarContainer>
-          <InfoBoxToolbar />
+          <InfoBoxToolbar disableToolbar={disableToolbar} />
         </StyledToolbarContainer>
         <div>{defaultIcon}</div>
         <StyledTextContainer>
-          <Label />
-          <Header />
+          <Label setDisableToolbar={setDisableToolbar} />
+          <Header setDisableToolbar={setDisableToolbar} />
           <StyledBodyTextArea
             name="infoBoxBody"
             aria-label="InfoBox body"

@@ -13,12 +13,16 @@ import styled from '@emotion/styled';
 // Component/utility imports
 import { iconDropdownOptions } from '../icons/infoBoxIcons';
 
+// ? Import Components
+import TempConfigBar from './TempTextConfig';
+
 // Styled components
 const StyledInfoBoxToolbarContainer = styled(AppBar)({
   display: 'flex',
   flexDirection: 'row',
   height: '2.5rem !important',
   minHeight: '32px !important',
+  gap: '10px',
 });
 
 const StyledIconToolbar = styled(Toolbar)({
@@ -72,6 +76,7 @@ const StyledTextToolbar = styled(Toolbar)({
 });
 
 const InfoBoxToolbar = ({
+  disableToolbar,
   infoBoxIcon,
   infoBoxLabel,
   infoBoxHeader,
@@ -127,9 +132,7 @@ const InfoBoxToolbar = ({
           })}
         </StyledMenu>
       </StyledIconToolbar>
-      <StyledTextToolbar>
-        {/* dummy toolbar here (for now) */}
-      </StyledTextToolbar>
+      <TempConfigBar disableToolbar={disableToolbar} />
     </StyledInfoBoxToolbarContainer>
   );
 };
