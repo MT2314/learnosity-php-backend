@@ -60,7 +60,7 @@ const ComponentWrapper = ({
   tabIndex,
   setIsDragging,
   numOfComponent,
-  setShowError,
+  // setShowError,
 }) => {
   const dropRef = useRef(null);
 
@@ -185,15 +185,15 @@ const ComponentWrapper = ({
     setIsDragging(isDragging);
   }, [isDragging]);
 
-  useEffect(() => {
-    if (!acceptListComp(getItem)) {
-      if ((dropIndexOffset === 0 || dropIndexOffset === 1) && isOver) {
-        setShowError(true);
-      } else {
-        setShowError(false);
-      }
-    }
-  }, [isOver, dropIndexOffset]);
+  // useEffect(() => {
+  //   if (!acceptListComp(getItem)) {
+  //     if ((dropIndexOffset === 0 || dropIndexOffset === 1) && isOver) {
+  //       setShowError(true);
+  //     } else {
+  //       setShowError(false);
+  //     }
+  //   }
+  // }, [isOver, dropIndexOffset]);
 
   drop(dropRef);
 
