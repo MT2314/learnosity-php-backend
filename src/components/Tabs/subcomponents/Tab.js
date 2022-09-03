@@ -110,7 +110,7 @@ const Tab = ({ tab, tabIndex }) => {
               />
             );
           })}
-          <PlaceholderError showError={showError} />
+          <PlaceholderError showError={showError} isOver={isOver}/>
         </ul>
       )}
     </StyleTabBody>
