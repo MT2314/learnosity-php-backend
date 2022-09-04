@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // MUI/@emotion imports
 import {
   Button,
@@ -7,72 +7,72 @@ import {
   Toolbar,
   AppBar,
   Tooltip,
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import styled from '@emotion/styled';
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import styled from "@emotion/styled";
 // Component/utility imports
-import { iconDropdownOptions } from '../icons/infoBoxIcons';
+import { iconDropdownOptions } from "../icons/infoBoxIcons";
 
 // ? Import Components
-import TempConfigBar from './TempTextConfig';
+import TempConfigBar from "./TempTextConfig";
 
 // Styled components
 const StyledInfoBoxToolbarContainer = styled(AppBar)({
-  display: 'flex',
-  flexDirection: 'row',
-  height: '2.5rem !important',
-  minHeight: '32px !important',
-  gap: '10px',
+  display: "flex",
+  flexDirection: "row",
+  height: "2.5rem !important",
+  minHeight: "32px !important",
+  gap: "10px",
 });
 
 const StyledIconToolbar = styled(Toolbar)({
-  width: '8.75rem',
-  height: '2.5rem !important',
-  padding: '0.5rem 1.3125rem !important',
-  backgroundColor: '#FFF',
-  boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-  borderLeft: '4px solid #1565C0',
-  borderRadius: '0.25rem',
-  minHeight: '2rem !important',
+  width: "8.75rem",
+  height: "2.5rem !important",
+  padding: "0.5rem 1.3125rem !important",
+  backgroundColor: "#FFF",
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  borderLeft: "4px solid #1565C0",
+  borderRadius: "0.25rem",
+  minHeight: "2rem !important",
 });
 
 const StyledIconDropdownButton = styled(Button)({
-  backgroundColor: '#FFF',
-  color: '#232323',
+  backgroundColor: "#FFF",
+  color: "#232323",
   fontFamily: `"Inter", sans-serif`,
-  fontSize: '1rem',
-  fontWeight: '400',
-  lineHeight: '1.5rem',
-  letterSpacing: '0.009375rem',
-  width: '100%',
-  height: '2.5rem !important',
-  padding: '0',
-  display: 'flex',
-  flexDirection: 'row',
-  whiteSpace: 'nowrap',
-  textAlign: 'center',
-  textTransform: 'none',
+  fontSize: "1rem",
+  fontWeight: "400",
+  lineHeight: "1.5rem",
+  letterSpacing: "0.009375rem",
+  width: "100%",
+  height: "2.5rem !important",
+  padding: "0",
+  display: "flex",
+  flexDirection: "row",
+  whiteSpace: "nowrap",
+  textAlign: "center",
+  textTransform: "none",
 
-  '&:hover': {
-    background: '#FFF',
-    color: '#1565C0',
+  "&:hover": {
+    background: "#FFF",
+    color: "#1565C0",
   },
 });
 
 const StyledMenu = styled(Menu)({
-  width: '6.8125rem',
+  width: "6.8125rem",
 });
 
 const StyledMenuItem = styled(MenuItem)({
-  width: '6.8125rem',
+  width: "6.8125rem",
 });
 
 const StyledTextToolbar = styled(Toolbar)({
-  width: '9.75rem',
-  height: '2.5rem',
-  backgroundColor: '#FFF',
-  boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-  borderRadius: '0.25rem',
+  width: "9.75rem",
+  height: "2.5rem",
+  backgroundColor: "#FFF",
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  borderRadius: "0.25rem",
 });
 
 const InfoBoxToolbar = ({
@@ -101,8 +101,8 @@ const InfoBoxToolbar = ({
       <StyledIconToolbar>
         <StyledIconDropdownButton
           id="iconToolBar"
-          aria-controls={open ? 'infoBox-icon-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
+          aria-controls={open ? "infoBox-icon-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
           variant="contained"
           fullWidth
           disableElevation
