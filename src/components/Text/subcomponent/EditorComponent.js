@@ -17,12 +17,15 @@ import {
 import CheckHighlights from "../utils/CheckHighlights";
 import { FormulaEvents } from "../utils/FormulaEvents";
 
+import setAlignmentBtn from "../utils/setAlignmentBtn";
+
 import MathPixMarkdown from "../blots/MathPixMarkdown";
 import {
   useSetQuill,
   useSetUniqueId,
   useShowMath,
   useKeepEditor,
+  useBoldRef,
 } from "../Provider";
 
 import "katex/dist/katex.css";
@@ -44,12 +47,16 @@ const EditorComponent = ({
   const setUniqueId = useSetUniqueId();
   const showMath = useShowMath();
   const keepEditor = useKeepEditor();
+  const boldRef = useBoldRef();
 
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
+
+  //alignment observer
+  const [alignmentObserver, setAlignmentObserver] = useState(null);
 
   //state to modify link text
   const [modifyAnchorText, setModifyAnchorText] = useState(defaultAnchorState);
@@ -59,9 +66,6 @@ const EditorComponent = ({
 
   //track clicks outside text div
   const textRef = useRef(null);
-
-  //focus to the bold
-  const boldRef = useRef(null);
 
   const ConfigBar = {
     display: !isActiveComponent ? (editorIsFocus ? "flex" : "none") : "flex",
@@ -80,6 +84,7 @@ const EditorComponent = ({
 
   useOnClickOutside(textRef, () => {
     if (!showMath && !keepEditor) {
+      alignmentObserver.disconnect();
       setEditorIsFocus(false);
       setShowEditor(false);
     }
@@ -251,7 +256,7 @@ const EditorComponent = ({
   const onKeyDropDown = (e) => {
     if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
-      boldRef.current.focus();
+      boldRef?.current.focus();
     }
   };
 
@@ -312,17 +317,16 @@ const EditorComponent = ({
       onFocus={() => setEditorIsFocus(true)}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
-
         if (relatedTarget.tagName === "BODY") {
           e.preventDefault();
           return;
         }
-
         if (
           (!relatedTarget ||
             (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
           !showMath
         ) {
+          alignmentObserver.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
         }
@@ -332,12 +336,7 @@ const EditorComponent = ({
       data-testid="text-editor-component"
     >
       <div style={ConfigBar}>
-        <CustomToolBar
-          toolbarId={toolbarId}
-          containerId={`toolbar-${toolbarId}`}
-          boldRef={boldRef}
-          focusRef={focusRef}
-        />
+        <CustomToolBar toolbarId={toolbarId} focusRef={focusRef} />
       </div>
 
       <ReactQuill
@@ -362,6 +361,7 @@ const EditorComponent = ({
           )
         }
         onFocus={() => {
+          setAlignmentObserver(new setAlignmentBtn(toolbarId));
           FormulaEvents(toolbarId);
         }}
         onKeyDown={(e) => {
@@ -372,4 +372,4 @@ const EditorComponent = ({
   );
 };
 
-export default EditorComponent
+export default EditorComponent;
