@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 // ? Context
 import { InfoBoxContext } from '../InfoBoxContext';
 import { TextareaAutosize } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 const StyledHeaderInput = styled(TextareaAutosize)({
   width: '650px',
@@ -19,7 +20,7 @@ const StyledHeaderInput = styled(TextareaAutosize)({
   fontWeight: '500',
   color: 'rgba(35, 35, 35, 1)',
   '&::placeholder': {
-    color: '#232323',
+    color: 'rgba(35, 35, 35, 1)',
   },
   '&:focus': {
     outline: 'none',
@@ -55,6 +56,10 @@ const Header = ({ setDisableToolbar }) => {
       }}
     />
   );
+};
+
+Header.propTypes = {
+  setDisableToolbar: PropTypes.func.isRequired,
 };
 
 export default Header;

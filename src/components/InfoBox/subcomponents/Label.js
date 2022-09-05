@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 // ? Context
 import { InfoBoxContext } from '../InfoBoxContext';
 
+import PropTypes from 'prop-types';
+
 const StyledLabelInput = styled('input')({
   fontSize: '14px',
   fontWeight: '400',
@@ -58,5 +60,7 @@ const Label = ({ setDisableToolbar }) => {
     />
   );
 };
-
+Label.propTypes = {
+  setDisableToolbar: PropTypes.func.isRequired,
+};
 export default Label;
