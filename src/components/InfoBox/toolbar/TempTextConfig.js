@@ -1,15 +1,38 @@
-import React, { useContext, useState, useCallback, useRef } from 'react';
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react';
 import styled from '@emotion/styled';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+
 import { tooltipClasses } from '@mui/material/Tooltip';
-import { IconButton, Toolbar, AppBar, Tooltip } from '@mui/material';
-import { ArrowBack, ArrowForward, Add, Remove } from '@mui/icons-material';
+import {
+  IconButton,
+  Toolbar,
+  AppBar,
+  Tooltip,
+  Button,
+  Grow,
+  Popper,
+  MenuItem,
+  MenuList,
+  Paper,
+} from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 // ? Icons
 import icons from '../icons/configIcons';
 
 // * Styled Components
 // ? Styled Container for configBar
 const Container = styled('div')({
-  display: 'absolute',
+  position: 'absolute',
+  display: 'flex',
+  flexDirection: 'row',
+  gap: '10px',
   color: 'white',
 });
 
@@ -32,6 +55,19 @@ const StyledTooltip = styled(({ className, ...props }) => (
   },
 }));
 
+// ? Styled Appbar
+const StyledAppbar = styled(AppBar)({
+  width: 'auto',
+  display: 'flex',
+  flexDirection: 'row',
+  height: '2.5rem !important',
+  minHeight: '32px !important',
+  gap: '10px',
+  '& .MuiPaper-root': {
+    backgroundColor: 'none',
+  },
+});
+
 // ? styled Toolbar
 const StyledToolbar = styled(Toolbar)({
   position: 'relative',
@@ -48,6 +84,17 @@ const StyledToolbar = styled(Toolbar)({
     paddingLeft: 0,
     paddingRight: 0,
   },
+});
+
+const StyledIconToolbar = styled(Toolbar)({
+  // width: '8.75rem',
+  height: '2.5rem !important',
+  padding: '0.5rem 1.3125rem !important',
+  backgroundColor: '#FFF !important',
+  // boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+  borderLeft: '4px solid #1565C0',
+  borderRadius: '0.25rem',
+  minHeight: '2rem !important',
 });
 
 const StyledIconButton = styled(IconButton)({
@@ -80,23 +127,126 @@ const StyledIconButton = styled(IconButton)({
     },
   },
 });
+const StyledIconDropdownButton = styled(Button)({
+  backgroundColor: '#FFF',
+  color: '#232323',
+  fontFamily: `"Inter", sans-serif`,
+  fontSize: '1rem',
+  fontWeight: '400',
+  lineHeight: '1.5rem',
+  letterSpacing: '0.009375rem',
+  width: '100%',
+  height: '2.5rem !important',
+  padding: '0',
+  display: 'flex',
+  flexDirection: 'row',
+  whiteSpace: 'nowrap',
+  textAlign: 'center',
+  textTransform: 'none',
 
+  '&:hover': {
+    background: '#FFF',
+    color: '#1565C0',
+  },
+});
 const TempConfigBar = ({ disableToolbar }) => {
-  console.log(disableToolbar);
+  const [open, setOpen] = useState(false);
+  const IconDropDown = useRef(null);
+
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (IconDropDown.current && IconDropDown.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    } else if (event.key === 'Escape') {
+      setOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = useRef(open);
+  useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      IconDropDown.current.focus();
+    }
+
+    prevOpen.current = open;
+  }, [open]);
+
   return (
     <Container>
-      <AppBar position="static">
-        <StyledToolbar variant="dense" disableGutters test-id="tab-toolbar">
-          <StyledTooltip title="move tab left" arrow placement="top">
+      <StyledAppbar position="static">
+        <StyledIconToolbar>
+          <StyledIconDropdownButton
+            ref={IconDropDown}
+            id="iconToolBar"
+            aria-controls={open ? 'infoBox-icon-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            variant="contained"
+            fullWidth
+            disableElevation
+            disableRipple
+            disableFocusRipple
+            onClick={handleToggle}
+            startIcon={<ExpandMoreIcon />}
+          >
+            <Popper
+              open={open}
+              anchorEl={IconDropDown.current}
+              role={undefined}
+              placement="bottom-start"
+              transition
+              disablePortal
+            >
+              {({ TransitionProps, placement }) => (
+                <Grow
+                  {...TransitionProps}
+                  style={{
+                    transformOrigin:
+                      placement === 'bottom-start' ? 'left top' : 'left bottom',
+                  }}
+                >
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleClose}>
+                      <MenuList
+                        autoFocusItem={open}
+                        id="composition-menu"
+                        aria-labelledby="composition-button"
+                        onKeyDown={handleListKeyDown}
+                      >
+                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                        <MenuItem onClick={handleClose}>My account</MenuItem>
+                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </StyledIconDropdownButton>
+        </StyledIconToolbar>
+        <StyledToolbar variant="dense" disableGutters test-id="infoBox-toolbar">
+          <StyledTooltip title="Bold" arrow placement="top">
             <StyledIconButton
               disableRipple
               color="inherit"
               disabled={disableToolbar}
+              onClick={() => console.log('works bold')}
             >
               {icons['bold']}
             </StyledIconButton>
           </StyledTooltip>
-          <StyledTooltip title="move tab right" arrow placement="top">
+          <StyledTooltip title="Align" arrow placement="top">
             <StyledIconButton
               disableRipple
               color="inherit"
@@ -105,7 +255,7 @@ const TempConfigBar = ({ disableToolbar }) => {
               {icons['align']}
             </StyledIconButton>
           </StyledTooltip>
-          <StyledTooltip title="add tab" arrow placement="top">
+          <StyledTooltip title="List" arrow placement="top">
             <StyledIconButton
               disableRipple
               color="inherit"
@@ -114,7 +264,7 @@ const TempConfigBar = ({ disableToolbar }) => {
               {icons['bullet']}
             </StyledIconButton>
           </StyledTooltip>
-          <StyledTooltip title="remove current tab" arrow placement="top">
+          <StyledTooltip title="Link" arrow placement="top">
             <StyledIconButton
               disableRipple
               color="inherit"
@@ -124,7 +274,7 @@ const TempConfigBar = ({ disableToolbar }) => {
             </StyledIconButton>
           </StyledTooltip>
         </StyledToolbar>
-      </AppBar>
+      </StyledAppbar>
     </Container>
   );
 };

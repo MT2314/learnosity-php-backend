@@ -71,10 +71,11 @@ const InfoBoxToolbar = ({ disableToolbar }) => {
   // ref for infoBoxType dropdown
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const open = Boolean(anchorEl);
+  // const open = Boolean(anchorEl);
 
   const handleClick = (e) => {
-    setAnchorEl(e.currentTarget);
+    console.log('hello');
+    // setAnchorEl(e.currentTarget);
   };
 
   const handleClose = () => {
@@ -101,7 +102,7 @@ const InfoBoxToolbar = ({ disableToolbar }) => {
         <StyledMenu
           id="infoBox-icon-menu"
           anchorEl={anchorEl}
-          open={open}
+          open={false}
           onClose={handleClose}
         >
           {iconDropdownOptions.map((infoBox) => {

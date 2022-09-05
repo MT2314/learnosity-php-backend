@@ -1,0 +1,14 @@
+.hide-tabtoolbar {
+  display: none !important;
+}
+
+.show-tabtoolbar {
+  display: block !important;
+  position: fixed !important;
+  top: 80px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000;
+  justify-content: center !important;
+  background-color: #fff !important;
+}

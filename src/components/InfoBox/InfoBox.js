@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import { InfoBoxProvider } from './InfoBoxContext';
 // Component imports
 import InfoBoxToolbar from './toolbar/InfoBoxToolbar';
+import TempTextConfig from './toolbar/TempTextConfig';
 import Label from './subcomponents/Label';
 import Header from './subcomponents/Header';
 // import { InfoBoxBody } from "./subcomponents/InfoBoxBody";
@@ -16,6 +17,8 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { defaultIcon } from './icons/infoBoxIcons';
 // Localization import
 import { useTranslation, Trans } from 'react-i18next';
+
+import './styles/infoBox.scss';
 
 // Default props
 export const defaultProps = {
@@ -81,14 +84,12 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
   const infoBoxRef = useRef();
 
   const StyledToolbarContainer = styled('div')({
-    display: showToolbar ? 'block' : 'none',
-    minHeight: '2.5rem',
-    maxHeight: '2.5rem',
-    position: 'fixed !important',
+    display: showToolbar ? 'block !important' : 'none',
+    // position: 'fixed !important',
     top: '80px !important',
     left: '50% !important',
     transform: 'translateX(-50%) !important',
-    zIndex: '1000',
+    zIndex: 1000,
     justifyContent: 'center !important',
     backgroundColor: '#fff !important',
   });
@@ -117,17 +118,23 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
         aria-label="Info Box"
         data-testid="infoBox-container"
         ref={infoBoxRef}
-        onClick={() => {
-          setShowToolbar(true);
-        }}
-        onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
+        // onBlur={handleOnBlur}
       >
-        <StyledToolbarContainer>
-          <InfoBoxToolbar disableToolbar={disableToolbar} />
-        </StyledToolbarContainer>
+        <div className={showToolbar ? 'show-tabtoolbar' : 'hide-tabtoolbar'}>
+          {/* <StyledToolbarContainer> */}
+          <TempTextConfig disableToolbar={disableToolbar} />
+          {/* <InfoBoxToolbar disableToolbar={disableToolbar} /> */}
+
+          {/* </StyledToolbarContainer> */}
+        </div>
+
         <div>{defaultIcon}</div>
-        <StyledTextContainer>
+        <StyledTextContainer
+          onClick={() => {
+            setShowToolbar(true);
+          }}
+          onFocus={() => setShowToolbar(true)}
+        >
           <Label setDisableToolbar={setDisableToolbar} />
           <Header setDisableToolbar={setDisableToolbar} />
           <StyledBodyTextArea
