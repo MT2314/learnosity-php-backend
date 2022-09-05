@@ -67,22 +67,7 @@ const StyledMenuItem = styled(MenuItem)({
   width: '6.8125rem',
 });
 
-const StyledTextToolbar = styled(Toolbar)({
-  width: '9.75rem',
-  height: '2.5rem',
-  backgroundColor: '#FFF',
-  boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-  borderRadius: '0.25rem',
-});
-
-const InfoBoxToolbar = ({
-  disableToolbar,
-  infoBoxIcon,
-  infoBoxLabel,
-  infoBoxHeader,
-  infoBoxBody,
-  //   setProp = () => {},
-}) => {
+const InfoBoxToolbar = ({ disableToolbar }) => {
   // ref for infoBoxType dropdown
   const [anchorEl, setAnchorEl] = useState(null);
 
