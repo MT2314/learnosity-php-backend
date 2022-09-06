@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from '@emotion/styled';
 import { v4 as uuidv4 } from 'uuid';
 import { LayoutContext, TabContext } from '../TabContext';
@@ -148,9 +148,9 @@ const ConfigBar = () => {
     cancelMessage: 'Cancel',
   };
 
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     setShowDialog(false);
-  }, []);
+  };
 
   const onConfirm = () => {
     setShowDialog(false);
