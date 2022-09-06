@@ -19,8 +19,6 @@ import { useTranslation, Trans } from 'react-i18next';
 // Icons
 import { iconDropdownOptions } from './icons/infoBoxIcons';
 
-import './styles/infoBox.scss';
-
 // Default props
 export const defaultProps = {
   infoBoxIcon: '',
@@ -74,19 +72,6 @@ const StyledBodyTextArea = styled(TextareaAutosize)({
   },
 });
 
-const StyledToolbarContainer = styled('div')({
-  display: 'flex',
-  minHeight: '2.5rem',
-  maxHeight: '2.5rem',
-  position: 'fixed',
-  top: '80px',
-  left: '41.5%',
-  transform: 'translateX(-50%)',
-  zIndex: 1000,
-  justifyContent: 'center',
-  backgroundColor: '#fff',
-});
-
 // InfoBox component
 const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
   // Localization
@@ -110,12 +95,12 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
         data-testid="infoBox-container"
         ref={infoBoxRef}
       >
-        <div className={showToolbar ? 'show-tabtoolbar' : 'hide-tabtoolbar'}>
+        {showToolbar && (
           <InfoBoxToolbar
             disableToolbar={disableToolbar}
             setSelectedIcon={setSelectedIcon}
           />
-        </div>
+        )}
 
         <div>
           {selectedIcon ? iconDropdownOptions[selectedIcon].icon : defaultIcon}

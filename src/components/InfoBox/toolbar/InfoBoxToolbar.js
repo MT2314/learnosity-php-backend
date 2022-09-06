@@ -28,7 +28,12 @@ import { iconDropdownOptions } from '../icons/infoBoxIcons';
 
 // ? Styled Container
 const Container = styled('div')({
-  position: 'absolute',
+  display: 'block !important',
+  position: 'fixed !important',
+  top: '80px !important',
+  left: '50% !important',
+  transform: 'translateX(-50%) !important',
+  zIndex: 1000,
   gap: '10px',
   '& .MuiPaper-root': {
     backgroundColor: 'transparent',
