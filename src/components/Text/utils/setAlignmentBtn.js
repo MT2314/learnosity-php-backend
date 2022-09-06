@@ -1,6 +1,5 @@
 class setAlignmentBtn {
   toolbar = null;
-  boldBtn = null;
   qlFormats = null;
   alignBtn = null;
 
