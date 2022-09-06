@@ -52,50 +52,55 @@ function _determineLessonPath(uuid, lessonPaths) {
 module.exports = async function() {
     var lessons = [];
     const queryVars = {
-        'uuid': process.env.ENTITY_ID
+        // 'uuid': process.env.ENTITY_ID,
+        'id': process.env.ID
     };
     const query = _getQuery(process.env.QUERY);
     
+console.log('process.env.QUERY', process.env.QUERY, 'queryVars', queryVars);
+
     await index.run(query, queryVars)
         .then(data => {
-            if (data.getCourse) {
+            const isEmpty = Object.keys(data).length === 0;
+            console.log('index.run result: ', data, isEmpty);
+            if (isEmpty) {
+                return false;
+            }
+
+            if (data?.getCourse) {
                 return data.getCourse;
-            } else {
-                if (!data.getLesson.lessonPaths.length) {
-                    data.getLesson.lessonPaths = _determineLessonPath(data.uuid, data.getLesson.lessonPaths);
-                }
-            
+            } 
+
+            if (data?.getLesson) {
                 return data.getLesson;
             }
+
+            return false;
         })
         .then(data => {
-            try {
-                switch (data.type) {
-                    case 'course':
-                        data.units.forEach(function(unit) {
-                            unit.lessons.forEach(function(lesson) {
-                                //lesson.title = 'COURSE TEST';
-                                lesson = headings.parse(lesson);
-                                lesson.lessonPaths = _determineLessonPath(data.uuid, data.getLesson.lessonPaths);
-                                lessons.push(lesson);
-                            });
-                        });
-                        break;
-
-                    case 'lesson':
-                        //data.title = 'LESSON TEST';
-                        data = headings.parse(data);
-                        lessons.push(data);
-                        break;
-
-                    default:
-                        throw new Error('Invalid type ' + data.type);
-                }
-            } catch (e) {
-                e.uuid = queryVars.uuid;
-                console.error(e);
-                lessons = [];
+            if (!data) {
+                // TODO: there was a problem retrieving the data
             }
+
+            if (data?.__typename === 'Course') {
+                var lesson = data.children[0].children[0];
+                // console.log('this is a course', data.__typename, data.courseCode);
+                // console.log('number of children ', data.children.length);
+                // console.log('first child is a ', data.children[0].type, ' named: ', data.children[0].name);
+                // console.log('first child has this many children ', data.children[0].children.length);
+                // console.log('first childs first child is a ', data.children[0].children[0].type, ' named: ', data.children[0].children[0].name);
+                // console.log('first childs first child has this many componentContainers ', data.children[0].children[0].componentContainers.length);
+                // console.log('first component ', data.children[0].children[0].componentContainers[0].sections[0].components[0].componentName);
+                // console.log('first component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[0].components[0].props).text);
+                // console.log('second component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[1].components[0].props).body);
+                lessons.push(lesson);
+                console.log('lessons: ', lessons);
+            } else {
+                // TODO: may need to check for type if __typename does not exist eg. getLesson
+            }
+
+            // TODO: handle promise rejection if something goes wrong
+
         });
 
     //console.log(JSON.stringify(lessons, null, 4));
