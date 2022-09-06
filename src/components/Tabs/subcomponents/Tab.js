@@ -106,7 +106,6 @@ const Tab = ({ tab, tabIndex }) => {
                 compIndex={compIndex}
                 tabIndex={tabIndex}
                 setIsDragging={setIsDragging}
-                // setShowError={setShowError}
               />
             );
           })}
