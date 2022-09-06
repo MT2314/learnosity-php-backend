@@ -225,7 +225,7 @@ const ComponentWrapper = ({
             offsetDown={-15}
             offsetUp={-1}
           />
-          <ComponentLabelContainer showSelf={showSelf}>
+          <ComponentLabelContainer showSelf={showSelf} data-testid='component-component-label-container'>
             <span
               ref={drag}
               data-testid="component-drag"
