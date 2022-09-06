@@ -124,7 +124,7 @@ const ComponentWrapper = ({
         onMouseLeave={() => setShowSelf(false)}
       >
         <div>
-          <ComponentLabelContainer showSelf={showSelf}>
+          <ComponentLabelContainer data-testid='component-component-label-container' showSelf={showSelf}>
             <span
               ref={drag}
               data-testid="component-drag"
