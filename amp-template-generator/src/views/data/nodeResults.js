@@ -95,6 +95,7 @@ console.log('process.env.QUERY', process.env.QUERY, 'queryVars', queryVars);
                 // console.log('second component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[1].components[0].props).body);
                 lessons.push(lesson);
                 console.log('lessons: ', lessons);
+                console.log("this is the data:", data)
             } else {
                 // TODO: may need to check for type if __typename does not exist eg. getLesson
             }

@@ -12,3 +12,8 @@ permalink: "theResult.html"
 {%- for section in result.componentContainers[0].sections -%} 
 {% include amp-section.html section:section %} 
 {%- endfor -%}
+
+<script type="text/javascript">
+  console.log("Dumping data object");
+  console.log({{ result | json }});
+ </script>
