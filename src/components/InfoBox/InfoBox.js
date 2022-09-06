@@ -6,8 +6,8 @@ import styled from '@emotion/styled';
 // ?Provider
 import { InfoBoxProvider } from './InfoBoxContext';
 // Component imports
-import InfoBoxToolbar from './toolbar/InfoBoxToolbar';
-import TempTextConfig from './toolbar/TempTextConfig';
+// import InfoBoxToolbar from './toolbar/InfoBoxToolbar';
+import InfoBoxToolbar from './toolbar/InfoBoxToolbar2';
 import Label from './subcomponents/Label';
 import Header from './subcomponents/Header';
 // import { InfoBoxBody } from "./subcomponents/InfoBoxBody";
@@ -17,6 +17,8 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { defaultIcon } from './icons/infoBoxIcons';
 // Localization import
 import { useTranslation, Trans } from 'react-i18next';
+// Icons
+import { iconDropdownOptions } from './icons/infoBoxIcons';
 
 import './styles/infoBox.scss';
 
@@ -81,36 +83,13 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
   const [showToolbar, setShowToolbar] = useState(false);
   const [disableToolbar, setDisableToolbar] = useState(false);
 
-  const infoBoxRef = useRef();
+  const [selectedIcon, setSelectedIcon] = useState(null);
 
-  const StyledToolbarContainer = styled('div')({
-    display: showToolbar ? 'block !important' : 'none',
-    // position: 'fixed !important',
-    top: '80px !important',
-    left: '50% !important',
-    transform: 'translateX(-50%) !important',
-    zIndex: 1000,
-    justifyContent: 'center !important',
-    backgroundColor: '#fff !important',
-  });
+  const infoBoxRef = useRef();
 
   useOnClickOutside(infoBoxRef, () => {
     setShowToolbar(false);
   });
-
-  const handleOnFocus = (e) => {
-    const relatedTarget = e.relatedTarget || document.activeElement;
-    if (relatedTarget || e.currentTarget.contains(relatedTarget)) {
-      setShowToolbar(true);
-    }
-  };
-
-  const handleOnBlur = (e) => {
-    const relatedTarget = e.relatedTarget || document.activeElement;
-    if (!relatedTarget || !e.currentTarget.contains(relatedTarget)) {
-      setShowToolbar(false);
-    }
-  };
 
   return (
     <InfoBoxProvider infoBoxState={infoBoxState} setProp={setProp}>
@@ -118,17 +97,17 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
         aria-label="Info Box"
         data-testid="infoBox-container"
         ref={infoBoxRef}
-        // onBlur={handleOnBlur}
       >
         <div className={showToolbar ? 'show-tabtoolbar' : 'hide-tabtoolbar'}>
-          {/* <StyledToolbarContainer> */}
-          <TempTextConfig disableToolbar={disableToolbar} />
-          {/* <InfoBoxToolbar disableToolbar={disableToolbar} /> */}
-
-          {/* </StyledToolbarContainer> */}
+          <InfoBoxToolbar
+            disableToolbar={disableToolbar}
+            setSelectedIcon={setSelectedIcon}
+          />
         </div>
 
-        <div>{defaultIcon}</div>
+        <div>
+          {selectedIcon ? iconDropdownOptions[selectedIcon].icon : defaultIcon}
+        </div>
         <StyledTextContainer
           onClick={() => {
             setShowToolbar(true);

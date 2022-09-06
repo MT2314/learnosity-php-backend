@@ -14,7 +14,7 @@ import styled from '@emotion/styled';
 import { iconDropdownOptions } from '../icons/infoBoxIcons';
 
 // ? Import Components
-import TempConfigBar from './TempTextConfig';
+import TempConfigBar from './InfoBoxToolbar2';
 
 // Styled components
 const StyledInfoBoxToolbarContainer = styled(AppBar)({

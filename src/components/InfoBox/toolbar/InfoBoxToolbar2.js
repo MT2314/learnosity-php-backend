@@ -153,9 +153,16 @@ const StyledMenuItem = styled(MenuItem)({
   width: '6.8125rem',
 });
 
-const TempConfigBar = ({ disableToolbar }) => {
+const InfoBoxToolbar = ({ disableToolbar, setSelectedIcon }) => {
   const [open, setOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = React.useState(null);
+
   const IconDropDown = useRef(null);
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    setSelectedIcon(index);
+  };
 
   //  ? Icon Select Dropdown
   const handleToggle = () => {
@@ -207,7 +214,9 @@ const TempConfigBar = ({ disableToolbar }) => {
             onClick={handleToggle}
             startIcon={<ExpandMoreIcon />}
           >
-            Select icon
+            {selectedIndex === null
+              ? 'Select icon'
+              : iconDropdownOptions[selectedIndex].type}
             <Popper
               open={open}
               anchorEl={IconDropDown.current}
@@ -226,12 +235,15 @@ const TempConfigBar = ({ disableToolbar }) => {
                         aria-labelledby="composition-button"
                         onKeyDown={handleListKeyDown}
                       >
-                        {iconDropdownOptions.map((infoBox) => {
+                        {iconDropdownOptions.map((infoBox, index) => {
                           return (
                             <StyledMenuItem
                               key={infoBox.id}
                               value={infoBox.type}
-                              onClick={handleClose}
+                              selected={index === selectedIndex}
+                              onClick={(event) =>
+                                handleMenuItemClick(event, index)
+                              }
                             >
                               {infoBox.type}
                             </StyledMenuItem>
@@ -289,4 +301,4 @@ const TempConfigBar = ({ disableToolbar }) => {
   );
 };
 
-export default TempConfigBar;
+export default InfoBoxToolbar;
