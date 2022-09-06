@@ -6,8 +6,7 @@ import styled from '@emotion/styled';
 // ?Provider
 import { InfoBoxProvider } from './InfoBoxContext';
 // Component imports
-// import InfoBoxToolbar from './toolbar/InfoBoxToolbar';
-import InfoBoxToolbar from './toolbar/InfoBoxToolbar2';
+import InfoBoxToolbar from './toolbar/InfoBoxToolbar';
 import Label from './subcomponents/Label';
 import Header from './subcomponents/Header';
 // import { InfoBoxBody } from "./subcomponents/InfoBoxBody";
@@ -73,6 +72,19 @@ const StyledBodyTextArea = styled(TextareaAutosize)({
       color: 'rgba(0, 0, 0, 0.12)',
     },
   },
+});
+
+const StyledToolbarContainer = styled('div')({
+  display: 'flex',
+  minHeight: '2.5rem',
+  maxHeight: '2.5rem',
+  position: 'fixed',
+  top: '80px',
+  left: '41.5%',
+  transform: 'translateX(-50%)',
+  zIndex: 1000,
+  justifyContent: 'center',
+  backgroundColor: '#fff',
 });
 
 // InfoBox component

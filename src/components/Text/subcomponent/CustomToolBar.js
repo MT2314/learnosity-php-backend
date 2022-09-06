@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useSetShowMath, useShowMath } from "../Provider";
+import { useSetShowMath, useShowMath, useBoldRef } from "../Provider";
 import { Divider } from "@mui/material/";
 import { Tooltip } from "@material-ui/core";
 
@@ -11,9 +11,10 @@ import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
 import "../styles/CustomToolBar.scss";
 
-const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
+const CustomToolBar = ({ toolbarId }) => {
   const setShowMath = useSetShowMath();
   const showMath = useShowMath();
+  const boldRef = useBoldRef();
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
@@ -25,27 +26,6 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
   //focus to the list and align. Bold Ref is found in EditorComponent.js
   const listRef = useRef(null);
   const alignRef = useRef(null);
-
-  const parentDiv = document?.getElementById(containerId);
-  const QLformats = parentDiv?.querySelector(`.ql-formats`);
-  const QLactive = QLformats?.querySelector(`.ql-active`);
-  if (QLactive) {
-    const options = {
-      attributes: true,
-    };
-
-    const callback = (mutationList) => {
-      mutationList.forEach(function (mutation) {
-        if (mutation.target.classList.contains(`ql-active`)) {
-          setVisibleAlignIcon(
-            icons[mutation.target.value ? mutation.target.value : "align"]
-          );
-        }
-      });
-    };
-    const observer = new MutationObserver(callback);
-    observer.observe(QLactive, options);
-  }
 
   const onKeyDropDown = (e, currentRef) => {
     if (e.key === "Escape") {
@@ -76,6 +56,19 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
   return (
     <div id={toolbarId} className="toolbarContainer">
       {/* bold dropdown starts */}
+      <button
+        style={{ display: "none" }}
+        onClick={(e) => {
+          setVisibleAlignIcon(
+            icons[
+              e.target.attributes.getNamedItem("data-align").value
+                ? e.target.attributes.getNamedItem("data-align").value
+                : "align"
+            ]
+          );
+        }}
+        className={`alignment-${toolbarId}`}
+      ></button>
       <Tooltip
         aria-label="font styles"
         title="font styles"
@@ -110,6 +103,7 @@ const CustomToolBar = ({ toolbarId, containerId, boldRef }) => {
           onKeyDown={(e) => {
             onKeyDropDown(e, boldRef);
           }}
+          id={`bold-${toolbarId}`}
           aria-label="formatting button dropdown"
           className={
             activeTopMenu === "bold"
