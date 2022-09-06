@@ -4,8 +4,9 @@ pagination:
   alias: result
   size: 1
 layout: amp-layout.njk
-permalink: "{{result.lessonPaths[0].courseCode | default: 'default' }}_u{{result.lessonPaths[0].unitNumber}}la{{result.lessonPaths[0].lessonNumber}}.html"
+<!-- permalink: "{{result.lessonPaths[0].courseCode | default: 'default' }}_u{{result.lessonPaths[0].unitNumber}}la{{result.lessonPaths[0].lessonNumber}}.html" -->
+permalink: "theResult.html"
 ---
-{%- for section in result.sections -%}
+{%- for section in result.componentContainers[0].sections -%}
   {% include amp-section.html section:section %}
 {%- endfor -%}
