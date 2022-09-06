@@ -71,7 +71,7 @@ describe("Tabs", () => {
   });
 
   it("removes a tab", async () => {
-    render(<TabsMain layoutState={testLayout}/>)
+    render(<TabsMain layoutState={testLayout} />)
     layoutConfig(testLayout, {
       func: "REMOVE_TAB",
       currentTab: 2,
@@ -80,7 +80,7 @@ describe("Tabs", () => {
   })
   
   it("adds a component", async () => {;
-    render(<TabsMain layoutState={testLayout}/>)
+    render(<TabsMain layoutState={testLayout} />)
     layoutConfig(testLayout, {
       func: "ADD_COMPONENT",
       tabIndex: 1,
@@ -92,7 +92,7 @@ describe("Tabs", () => {
   });
 
   it("updates the component state", async () => {
-    render(<TabsMain layoutState={testLayout}/>)
+    render(<TabsMain layoutState={testLayout} />)
     layoutConfig(testLayout, {
       func: "UPDATE_COMPONENT",
       compIndex: 0,
@@ -180,5 +180,32 @@ describe("Tabs", () => {
 
     expect(testLayout[0]).toStrictEqual(tab);
   })
+
+  const acceptListComp = (item) => {
+    return ['Text', 'Table', 'Video', 'Image'].indexOf(item) >= 0
+  }
+
+  it("adds an unacceptable component", async () => {
+    render(<TabsMain layoutState={testLayout} />)
+    if (acceptListComp("Callout")) {
+    layoutConfig(testLayout, {
+      func: "ADD_COMPONENT",
+      tabIndex: 1,
+      component: {
+        componentName: "Callout",
+      },
+    })
+    expect(testLayout[1].components).toHaveLength(4)
+  } else if (acceptListComp("Text")) {
+    layoutConfig(testLayout, {
+      func: "ADD_COMPONENT",
+      tabIndex: 1,
+      component: {
+        componentName: "Text",
+      },
+    })
+    expect(testLayout[1].components).toHaveLength(5)
+  };
+  });
 
 });

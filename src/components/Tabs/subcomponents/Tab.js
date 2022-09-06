@@ -5,12 +5,9 @@ import styled from "@emotion/styled";
 import { TabContext, LayoutContext } from "../TabContext";
 import ComponentWrapper from "./ComponentWrapper";
 
-//error style message
-import "../styles/ErrorMsg.scss";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-
 //components
 import Placeholder from "./Placeholder";
+import PlaceholderError from "./PlaceholderError";
 
 // NOTE: We can use theme once it is set it up end to end
 const StyleTabBody = styled("div")(({ theme, isDragging }) => ({
@@ -109,16 +106,10 @@ const Tab = ({ tab, tabIndex }) => {
                 compIndex={compIndex}
                 tabIndex={tabIndex}
                 setIsDragging={setIsDragging}
-                setShowError={setShowError}
               />
             );
           })}
-          {showError && (
-            <p className="tabErrorBg">
-              <ErrorOutlineIcon /> &nbsp; Error: component is not compatible.
-              Only text, image, chart, table, video, and audio.
-            </p>
-          )}
+          <PlaceholderError showError={showError} isOver={isOver}/>
         </ul>
       )}
     </StyleTabBody>
