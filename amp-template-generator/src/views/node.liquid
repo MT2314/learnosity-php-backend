@@ -6,7 +6,7 @@ pagination:
 layout: amp-layout.njk
 #ToDo fix the lesson filename
 #permalink: "{{result.lessonPaths[0].courseCode | default: 'default' }}_u{{result.lessonPaths[0].unitNumber}}la{{result.lessonPaths[0].lessonNumber}}.html"
-permalink: "theResult.html"
+permalink: "{{result.name}}.html"
 ---
 
 {%- for section in result.componentContainers[0].sections -%} 
@@ -16,4 +16,4 @@ permalink: "theResult.html"
 <script type="text/javascript">
   console.log("Dumping data object");
   console.log({{ result | json }});
- </script>
+</script>
