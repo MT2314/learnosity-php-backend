@@ -1,100 +1,73 @@
-import React, {
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-} from 'react';
-import styled from '@emotion/styled';
+import React, { useState, useEffect, useRef } from 'react';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-
 import { tooltipClasses } from '@mui/material/Tooltip';
+
+import styled from '@emotion/styled';
+
 import {
-  IconButton,
-  Toolbar,
-  AppBar,
-  Tooltip,
-  Button,
-  Grow,
   Popper,
+  Grow,
+  Paper,
+  AppBar,
+  Toolbar,
   MenuItem,
   MenuList,
-  Paper,
+  IconButton,
+  Button,
+  Tooltip,
 } from '@mui/material';
+
+// ? Expand Icon
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // ? Icons
 import icons from '../icons/configIcons';
+import { iconDropdownOptions } from '../icons/infoBoxIcons';
 
 // * Styled Components
-// ? Styled Container for configBar
+
+// ? Styled Container
 const Container = styled('div')({
   position: 'absolute',
-  display: 'flex',
-  flexDirection: 'row',
   gap: '10px',
-  color: 'white',
-});
-
-// ? Styled Tooltip, differnet but most compact method for styling tooltip
-const StyledTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(() => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: 'rgba(97, 97, 97, 0.9)',
-    border: '4px',
-    color: '#fff',
-    height: '22px',
-    padding: '4px, 8px, 4px, 8px',
-    fontSize: '10px',
-    lineHeight: '14px',
-    fontWeight: '500',
-    '& .MuiTooltip-arrow': {
-      color: 'rgba(97, 97, 97, 0.9)',
-    },
+  '& .MuiPaper-root': {
+    backgroundColor: 'transparent',
   },
-}));
+});
 
 // ? Styled Appbar
 const StyledAppbar = styled(AppBar)({
   width: 'auto',
   display: 'flex',
   flexDirection: 'row',
-  height: '2.5rem !important',
-  minHeight: '32px !important',
+  minHeight: '40px !important',
   gap: '10px',
-  '& .MuiPaper-root': {
-    backgroundColor: 'none',
-  },
 });
 
-// ? styled Toolbar
+// ? Styled Icon Select Toolbar
+const StyledIconToolbar = styled(Toolbar)({
+  minHeight: '40px !important',
+  width: '140px',
+  backgroundColor: '#FFF',
+  boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+  borderLeft: '4px solid #1565C0',
+  borderRadius: '4px',
+});
+
+// ? Styled Text Toolbar (Possibly Temp)
 const StyledToolbar = styled(Toolbar)({
-  position: 'relative',
   display: 'flex',
   justifyContent: 'space-evenly',
-  width: '146px',
-  height: '40px',
-  color: '#000',
-  boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-  backgroundColor: 'white',
+  minHeight: '40px !important',
+  width: '156px',
   margin: '10px, 8px',
-  minHeight: '32px !important',
+  backgroundColor: '#FFF',
+  boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+  borderRadius: '4px',
   '& .MuiToolbar-gutters': {
     paddingLeft: 0,
     paddingRight: 0,
   },
-});
-
-const StyledIconToolbar = styled(Toolbar)({
-  // width: '8.75rem',
-  height: '2.5rem !important',
-  padding: '0.5rem 1.3125rem !important',
-  backgroundColor: '#FFF !important',
-  // boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-  borderLeft: '4px solid #1565C0',
-  borderRadius: '0.25rem',
-  minHeight: '2rem !important',
 });
 
 const StyledIconButton = styled(IconButton)({
@@ -136,7 +109,6 @@ const StyledIconDropdownButton = styled(Button)({
   lineHeight: '1.5rem',
   letterSpacing: '0.009375rem',
   width: '100%',
-  height: '2.5rem !important',
   padding: '0',
   display: 'flex',
   flexDirection: 'row',
@@ -149,14 +121,48 @@ const StyledIconDropdownButton = styled(Button)({
     color: '#1565C0',
   },
 });
+
+// ? Styled Tooltip, differnet but most compact method for styling tooltip
+const StyledTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(() => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: 'rgba(97, 97, 97, 0.9)',
+    border: '4px',
+    color: '#fff',
+    height: '22px',
+    padding: '4px, 8px, 4px, 8px',
+    fontSize: '10px',
+    lineHeight: '14px',
+    fontWeight: '500',
+    '& .MuiTooltip-arrow': {
+      color: 'rgba(97, 97, 97, 0.9)',
+    },
+  },
+}));
+
+const StyledMenu = styled(MenuList)({
+  background: '#FFFFFF',
+  boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+  borderRadius: '4px',
+  marginLeft: '-12px',
+  marginTop: '12px',
+});
+
+const StyledMenuItem = styled(MenuItem)({
+  width: '6.8125rem',
+});
+
 const TempConfigBar = ({ disableToolbar }) => {
   const [open, setOpen] = useState(false);
   const IconDropDown = useRef(null);
 
+  //  ? Icon Select Dropdown
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
 
+  //  ? Icon Select Close Dropdown
   const handleClose = (event) => {
     if (IconDropDown.current && IconDropDown.current.contains(event.target)) {
       return;
@@ -164,6 +170,7 @@ const TempConfigBar = ({ disableToolbar }) => {
 
     setOpen(false);
   };
+
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();
@@ -200,6 +207,7 @@ const TempConfigBar = ({ disableToolbar }) => {
             onClick={handleToggle}
             startIcon={<ExpandMoreIcon />}
           >
+            Select icon
             <Popper
               open={open}
               anchorEl={IconDropDown.current}
@@ -208,26 +216,28 @@ const TempConfigBar = ({ disableToolbar }) => {
               transition
               disablePortal
             >
-              {({ TransitionProps, placement }) => (
-                <Grow
-                  {...TransitionProps}
-                  style={{
-                    transformOrigin:
-                      placement === 'bottom-start' ? 'left top' : 'left bottom',
-                  }}
-                >
+              {({ TransitionProps }) => (
+                <Grow {...TransitionProps}>
                   <Paper>
                     <ClickAwayListener onClickAway={handleClose}>
-                      <MenuList
+                      <StyledMenu
                         autoFocusItem={open}
                         id="composition-menu"
                         aria-labelledby="composition-button"
                         onKeyDown={handleListKeyDown}
                       >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
-                      </MenuList>
+                        {iconDropdownOptions.map((infoBox) => {
+                          return (
+                            <StyledMenuItem
+                              key={infoBox.id}
+                              value={infoBox.type}
+                              onClick={handleClose}
+                            >
+                              {infoBox.type}
+                            </StyledMenuItem>
+                          );
+                        })}
+                      </StyledMenu>
                     </ClickAwayListener>
                   </Paper>
                 </Grow>
