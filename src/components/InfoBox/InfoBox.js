@@ -1,10 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 // MUI/@emotion imports
 import { Paper, NativeSelect } from '@mui/material';
+
 import { TextareaAutosize } from '@material-ui/core';
 import styled from '@emotion/styled';
 // ?Provider
 import { InfoBoxProvider } from './InfoBoxContext';
+
 // Component imports
 import InfoBoxToolbar from './toolbar/InfoBoxToolbar';
 import Label from './subcomponents/Label';
@@ -21,7 +23,7 @@ import { iconDropdownOptions } from './icons/infoBoxIcons';
 
 // Default props
 export const defaultProps = {
-  infoBoxIcon: '',
+  infoBoxIcon: null,
   infoBoxLabel: '',
   infoBoxHeader: '',
   infoBoxBody: null,
@@ -88,6 +90,13 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
     setShowToolbar(false);
   });
 
+  useEffect(() => {
+    const iconImage = iconDropdownOptions.find((icon) => {
+      return icon.type == infoBoxState.infoBoxIcon;
+    });
+    iconImage && setSelectedIcon(iconImage.icon);
+  }, [infoBoxState]);
+
   return (
     <InfoBoxProvider infoBoxState={infoBoxState} setProp={setProp}>
       <StyledPaper
@@ -95,16 +104,8 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
         data-testid="infoBox-container"
         ref={infoBoxRef}
       >
-        {showToolbar && (
-          <InfoBoxToolbar
-            disableToolbar={disableToolbar}
-            setSelectedIcon={setSelectedIcon}
-          />
-        )}
-
-        <div>
-          {selectedIcon ? iconDropdownOptions[selectedIcon].icon : defaultIcon}
-        </div>
+        {showToolbar && <InfoBoxToolbar disableToolbar={disableToolbar} />}
+        {infoBoxState.infoBoxIcon !== null ? selectedIcon : defaultIcon}
         <StyledTextContainer
           onClick={() => {
             setShowToolbar(true);

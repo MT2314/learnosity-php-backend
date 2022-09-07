@@ -136,29 +136,29 @@ module.exports = (_, argv) => {
         template: "./src/index.html",
         inject: "body",
       }),
-      new ModuleFederationPlugin({
-        name: "saas",
-        filename: "remoteEntry.js",
-        remotes: {
-          saas: `saas_client@${fileEnv.WEBPACK_SAAS_REMOTE}`,
-        },
-        exposes: {},
-        shared: {
-          ...deps,
-          react: {
-            singleton: true,
-            requiredVersion: deps.react,
-          },
-          "react-dom": {
-            singleton: true,
-            requiredVersion: deps["react-dom"],
-          },
-          '@emotion/react': {
-            singleton: true,
-            requiredVersion: deps['@emotion/react'],
-          },
-        },
-      }),
+      // new ModuleFederationPlugin({
+      //   name: "saas",
+      //   filename: "remoteEntry.js",
+      //   remotes: {
+      //     saas: `saas_client@${fileEnv.WEBPACK_SAAS_REMOTE}`,
+      //   },
+      //   exposes: {},
+      //   shared: {
+      //     ...deps,
+      //     react: {
+      //       singleton: true,
+      //       requiredVersion: deps.react,
+      //     },
+      //     "react-dom": {
+      //       singleton: true,
+      //       requiredVersion: deps["react-dom"],
+      //     },
+      //     '@emotion/react': {
+      //       singleton: true,
+      //       requiredVersion: deps['@emotion/react'],
+      //     },
+      //   },
+      // }),
       new NodePolyfillPlugin(),
     ],
   };
