@@ -133,8 +133,9 @@ console.log('process.env.QUERY', process.env.QUERY, 'queryVars', queryVars);
                 lessons.push(lesson);
                 // lessons[0].name = data.name;
                 // console.log("lessons name:", lessons[0].name);
-                console.log('lessons: ', lessons[0].componentContainers[0].sections[0].components[0].props.body.ops);
+                // console.log('lessons: ', lessons[0].componentContainers[0].sections[0].components[0].props.body.ops);
                 // console.log("this is the data:", JSON.stringify(data, undefined, 2));
+                console.log("this is the data:", data);
             } else {
                 // TODO: may need to check for type if __typename does not exist eg. getLesson
             }

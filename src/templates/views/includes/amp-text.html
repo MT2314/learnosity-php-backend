@@ -1,3 +1,7 @@
 <div class="text">
-    <pre>{{ data.props.body }}</pre>
+    <!-- <pre>{{ data.props.body.ops }}</pre> -->
+
+    {%- for insert in data.props.body.ops -%}
+        <pre>{{ insert.insert }}</pre>
+    {%- endfor -%}
 </div>
