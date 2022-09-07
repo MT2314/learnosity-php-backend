@@ -34,11 +34,7 @@ const TabTitle = ({ tabIndex, showToolbar, tabTitle }) => {
     <div
       key={`tab-title-${tabIndex}`}
       tabIndex="0"
-      aria-label={
-        state[tabIndex].title
-          ? state[tabIndex].title
-          : `Untitled Tab ${tabIndex + 1}`
-      }
+      aria-label={tabTitle}
       className={`tab-title ${activeTab === tabIndex ? "active-tab" : ""}`}
       onFocus={() => {
         showToolbar(true);
@@ -57,7 +53,7 @@ const TabTitle = ({ tabIndex, showToolbar, tabTitle }) => {
       {activeTab == tabIndex ? (
         <TextareaAutosize
           className="tab-title-input"
-          placeholder={`Tab ${tabIndex + 1}`}
+          placeholder={tabTitle}
           aria-label="tab title input"
           aria-multiline="true"
           role={activeTab == tabIndex ? "textbox" : "tab"}
@@ -68,7 +64,7 @@ const TabTitle = ({ tabIndex, showToolbar, tabTitle }) => {
           onChange={handleTitleChange}
           onFocus={() => handleCursorFocus(tabIndex)}
           data-id={state[tabIndex].id}
-          value={state[tabIndex].title || ""}
+          value={tabTitle || ""}
           onBlur={handleTitleBlur}
           ref={inputRef}
         />
@@ -80,9 +76,6 @@ const TabTitle = ({ tabIndex, showToolbar, tabTitle }) => {
             WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
           }}
         >
-          {/* {state[tabIndex].title
-            ? state[tabIndex].title
-            : `Tab ${tabIndex + 1}`} */}
             {tabTitle}
         </p>
       )}
