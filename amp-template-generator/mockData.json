@@ -1,0 +1,33 @@
+[
+   {
+      "componentName": "Text",
+      "componentProps": {
+         "body": {"ops": [{"insert":"Bibble"}]}
+      }
+   },
+   {
+      "componentName": "Image",
+      "componentProps": {
+         "imgSize":"default",
+         "uploadedImg": "https://cdn.shopify.com/s/files/1/0023/1794/2820/files/Polkaroo_large.PNG?v=1556241987",
+         "imgLink": "",
+         "alt": "Polkaroo standing with crossed arms",
+         "longDesc": "",
+         "caption": {
+            "body": {"ops": [{"insert":"Bibble"}]}
+         },
+         "credit": null
+      }
+   },
+   {
+      "componentName": "InfoBox",
+      "componentProps": {
+         "infoBoxState": {
+            "infoBoxIcon": "",
+            "infoBoxLabel": "",
+            "infoBoxHeader": "",
+            "infoBoxBody": ""
+         }
+      }
+   }
+]
