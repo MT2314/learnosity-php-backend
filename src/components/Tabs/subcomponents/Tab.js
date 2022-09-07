@@ -1,20 +1,20 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useDrop } from 'react-dnd';
-import styled from '@emotion/styled';
+import React, { useContext, useState, useEffect } from "react";
+import { useDrop } from "react-dnd";
+import styled from "@emotion/styled";
 
-import { TabContext, LayoutContext } from '../TabContext';
-import ComponentWrapper from './ComponentWrapper';
+import { TabContext, LayoutContext } from "../TabContext";
+import ComponentWrapper from "./ComponentWrapper";
 
 //components
-import Placeholder from './Placeholder';
-import PlaceholderError from './PlaceholderError';
+import Placeholder from "./Placeholder";
+import PlaceholderError from "./PlaceholderError";
 
 // NOTE: We can use theme once it is set it up end to end
-const StyleTabBody = styled('div')(({ theme, isDragging }) => ({
-  padding: '10px 10px 20px 10px',
-  border: '1px solid #bdbdbd',
-  borderTop: 'none,',
-  backgroundColor: isDragging ? '#E9EDF1' : 'white',
+const StyleTabBody = styled("div")(({ theme, isDragging }) => ({
+  padding: "10px 10px 20px 10px",
+  border: "1px solid #bdbdbd",
+  borderTop: "none,",
+  backgroundColor: isDragging ? "#E9EDF1" : "white",
 }));
 
 const Tab = ({ tab, tabIndex }) => {
@@ -70,7 +70,7 @@ const Tab = ({ tab, tabIndex }) => {
       case "InfoBox":
         return "InfoBox";
       default:
-        return item.replace(/([A-Z])/g, ' $1').trim();
+        return item.replace(/([A-Z])/g, " $1").trim();
     }
   };
 
@@ -97,7 +97,7 @@ const Tab = ({ tab, tabIndex }) => {
         <ul
           style={{
             padding: 0,
-            listStyleType: 'none',
+            listStyleType: "none",
           }}
           isOver={isOver}
         >
