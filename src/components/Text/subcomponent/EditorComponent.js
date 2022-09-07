@@ -84,7 +84,7 @@ const EditorComponent = ({
 
   useOnClickOutside(textRef, () => {
     if (!showMath && !keepEditor) {
-      alignmentObserver.disconnect();
+      alignmentObserver?.disconnect();
       setEditorIsFocus(false);
       setShowEditor(false);
     }
@@ -326,7 +326,7 @@ const EditorComponent = ({
             (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
           !showMath
         ) {
-          alignmentObserver.disconnect();
+          alignmentObserver?.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
         }
