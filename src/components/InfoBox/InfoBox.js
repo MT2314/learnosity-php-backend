@@ -94,7 +94,7 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
     const iconImage = iconDropdownOptions.find((icon) => {
       return icon.type == infoBoxState.infoBoxIcon;
     });
-    setSelectedIcon(iconImage.icon);
+    iconImage && setSelectedIcon(iconImage.icon);
   }, [infoBoxState]);
 
   return (
