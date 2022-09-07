@@ -36,6 +36,7 @@ module.exports = (_, argv) => {
   console.log(envKeys);
   return {
     output: {
+      filename: 'assets/js/[name].[contenthash:8].js',
       publicPath:
         argv.mode === "development"
           ? `http://localhost:3001/`
