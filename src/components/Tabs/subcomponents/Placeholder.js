@@ -34,7 +34,7 @@ const SubParagraph = styled(Paragraph)({
 const Placeholder = ({ isOver, showError }) => {
   return (
     <PlaceholderContainer isOver={isOver} showError={showError}>
-      <Title>{showError ? `Error: [${showError}] not compatible!` : `Add a component here!`}</Title>
+      <Title>{showError ? `Error: ${showError} not compatible!` : `Add a component here!`}</Title>
       <Paragraph>Drag and drop a component from the left panel or use your keyboard to insert a component.</Paragraph>
       <SubParagraph>Accepted components: text, image, chart, table, video, and audio.</SubParagraph>
     </PlaceholderContainer>
