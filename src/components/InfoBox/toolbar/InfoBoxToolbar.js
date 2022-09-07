@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { tooltipClasses } from '@mui/material/Tooltip';
 
@@ -16,6 +16,9 @@ import {
   Button,
   Tooltip,
 } from '@mui/material';
+
+// ? Context
+import { InfoBoxContext } from '../InfoBoxContext';
 
 // ? Expand Icon
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -39,7 +42,6 @@ const Container = styled('div')({
     backgroundColor: 'transparent',
   },
 });
-
 // ? Styled Appbar
 const StyledAppbar = styled(AppBar)({
   width: 'auto',
@@ -48,17 +50,19 @@ const StyledAppbar = styled(AppBar)({
   minHeight: '40px !important',
   gap: '10px',
 });
-
 // ? Styled Icon Select Toolbar
 const StyledIconToolbar = styled(Toolbar)({
   minHeight: '40px !important',
   width: '140px',
   backgroundColor: '#FFF',
   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+  paddingLeft: '14.5px !important',
   borderLeft: '4px solid #1565C0',
   borderRadius: '4px',
+  '& .MuiButtonBase-root': {
+    justifyContent: 'flex-start !important',
+  },
 });
-
 // ? Styled Text Toolbar (Possibly Temp)
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
@@ -74,12 +78,12 @@ const StyledToolbar = styled(Toolbar)({
     paddingRight: 0,
   },
 });
-
 const StyledIconButton = styled(IconButton)({
+  justifyContent: 'flex-start !important',
   width: '30px',
   height: '30px',
   padding: '7px',
-  color: '#000',
+  color: '#232323',
   backgroundColor: 'none',
   borderRadius: '4px!important',
   '& svg': {
@@ -126,7 +130,6 @@ const StyledIconDropdownButton = styled(Button)({
     color: '#1565C0',
   },
 });
-
 // ? Styled Tooltip, differnet but most compact method for styling tooltip
 const StyledTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -145,7 +148,6 @@ const StyledTooltip = styled(({ className, ...props }) => (
     },
   },
 }));
-
 const StyledMenu = styled(MenuList)({
   background: '#FFFFFF',
   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
@@ -153,20 +155,31 @@ const StyledMenu = styled(MenuList)({
   marginLeft: '-12px',
   marginTop: '12px',
 });
-
 const StyledMenuItem = styled(MenuItem)({
-  width: '6.8125rem',
+  width: '109px',
+  padding: '6px 16px',
+  height: '36px',
+  '&:hover': {
+    backgroundColor: ' rgba(0, 0, 0, 0.04);!important',
+  },
+  '&:active': {
+    backgroundColor: ' rgba(0, 0, 0, 0.04);!important',
+  },
 });
 
-const InfoBoxToolbar = ({ disableToolbar, setSelectedIcon }) => {
+const InfoBoxToolbar = ({ disableToolbar }) => {
+  const [state, dispatch] = useContext(InfoBoxContext);
   const [open, setOpen] = useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
   const IconDropDown = useRef(null);
 
-  const handleMenuItemClick = (event, index) => {
+  const handleMenuItemClick = (e, index) => {
     setSelectedIndex(index);
-    setSelectedIcon(index);
+    dispatch({
+      func: 'CHANGE_ICON',
+      icon: iconDropdownOptions[index].type,
+    });
   };
 
   //  ? Icon Select Dropdown
@@ -217,11 +230,19 @@ const InfoBoxToolbar = ({ disableToolbar, setSelectedIcon }) => {
             disableRipple
             disableFocusRipple
             onClick={handleToggle}
-            startIcon={<ExpandMoreIcon />}
+            startIcon={
+              open ? (
+                <ExpandMoreIcon
+                  sx={{
+                    transform: 'rotate(180deg)',
+                  }}
+                />
+              ) : (
+                <ExpandMoreIcon />
+              )
+            }
           >
-            {selectedIndex === null
-              ? 'Select icon'
-              : iconDropdownOptions[selectedIndex].type}
+            {state.infoBoxIcon === null ? 'Select icon' : state.infoBoxIcon}
             <Popper
               open={open}
               anchorEl={IconDropDown.current}
@@ -236,8 +257,8 @@ const InfoBoxToolbar = ({ disableToolbar, setSelectedIcon }) => {
                     <ClickAwayListener onClickAway={handleClose}>
                       <StyledMenu
                         autoFocusItem={open}
-                        id="composition-menu"
-                        aria-labelledby="composition-button"
+                        data-testid="icon-select-dropdown"
+                        aria-labelledby="icon-dropdown"
                         onKeyDown={handleListKeyDown}
                       >
                         {iconDropdownOptions.map((infoBox, index) => {
@@ -246,9 +267,9 @@ const InfoBoxToolbar = ({ disableToolbar, setSelectedIcon }) => {
                               key={infoBox.id}
                               value={infoBox.type}
                               selected={index === selectedIndex}
-                              onClick={(event) =>
-                                handleMenuItemClick(event, index)
-                              }
+                              onClick={(e) => handleMenuItemClick(e, index)}
+                              data-testid={`${infoBox.type} icon`}
+                              aria-labelledby={`${infoBox.type} icon`}
                             >
                               {infoBox.type}
                             </StyledMenuItem>
