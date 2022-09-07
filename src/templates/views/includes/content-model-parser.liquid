@@ -4,9 +4,10 @@
         <p class="demo-wrapper-title">{{item.type}}</p>
 {%- endif -%}
 
-
 {%comment%} Main Content Model Parser block {%endcomment%}
-{%- case item.type -%}
+{%- case item.componentName -%}
+    {%- when "Text" -%}
+        {% include amp-text.html data:item %}
     {%- when "formatted_text_no_heading" -%}
         {% include amp-formatted-text.html data:item %}
     {%- when "formatted_text" -%}
