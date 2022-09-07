@@ -35,7 +35,13 @@
    {
       "componentName": "iFrame",
       "componentProps": {
-         
+         "title": "Example ILO",
+         "titleDisplay": true,
+         "src": "https://dcc.ilc.org/bbb4m/02/business_types/index.html",
+         "height": "500",
+         "width": "900",
+         "heightType": "px",
+         "widthType": "px"
       }
    }
 ]
