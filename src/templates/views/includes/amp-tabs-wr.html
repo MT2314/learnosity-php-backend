@@ -1,0 +1,36 @@
+<div class="tabs wrapper bottom-margin">
+    {%- assign tab.id = 'tablist' | append: data.uuidClean -%}
+    <amp-selector class="tabs"
+        role="tablist"
+        keyboard-select-mode="focus"
+        id="{{tab.id}}">
+
+    {%- for tab in data.props.layoutState -%}
+        <div id="{{tab.id}}_tab{{forloop.index}}"
+            role="tab"
+            aria-controls="{{tab.id}}_tabpanel{{forloop.index}}"
+            class="p1"
+            option
+        {% if forloop.index == 1 -%}
+            selected
+        {%- endif -%}
+        >
+            {{tab.title}}
+        </div>
+
+        <div id="{{tab.id}}_tabpanel{{forloop.index}}"
+            role="tabpanel"
+            aria-labelledby="{{tab.id}}_tab{{forloop.index}}"
+            class="border-left border-right border-bottom px3 pt3">
+
+            {%- for c in tab.components -%}
+                {% include content-model-parser.liquid item:c %}
+            {%- endfor -%}
+        </div>
+    {%- endfor -%}
+
+    </amp-selector>
+</div>
+<div class="tabs">
+    <pre>{{ data.props.layoutState }}</pre>
+</div>

@@ -38,6 +38,8 @@
         {% include amp-quiz.html data:item %}        
     {%- when "tabs" -%}
         {% include amp-tabs.html data:item %}
+    {%- when "Tab" -%}
+        {% include amp-tabs-wr.html data:item %}
 {%- endcase -%}
 {%comment%} End Main Content Model Parser block {%endcomment%}
 
