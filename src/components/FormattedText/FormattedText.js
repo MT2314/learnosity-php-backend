@@ -41,9 +41,6 @@ const FormattedText = ({
       <Editor
         editorState={_editorState}
         spellCheck="true"
-        handlePastedText={(text, html, editorState) =>
-          console.log(text, html, editorState)
-        }
         onEditorStateChange={(newState) => {
           setProp({ body: convertToRaw(newState.getCurrentContent()) });
           setEditorState(newState);
