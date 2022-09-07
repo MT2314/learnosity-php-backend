@@ -29,18 +29,19 @@ const Tab = ({ tab, tabIndex }) => {
     return ["Text", "Table", "Video", "Image"].indexOf(item.componentName) >= 0;
   };
 
+  const [showDropError, setShowDropError] = useState();
   const [{ isOver, getItem }, drop] = useDrop(() => ({
     accept: [
       "Text",
       "Image",
       "Video",
       "Table",
-      "Callout",
-      "Tab",
+      "InfoBox",
       "QuoteBox",
       "IFrame",
     ],
     drop: async (item, monitor) => {
+      if (!acceptListComp(item)) setShowDropError(true);
       if (monitor.didDrop()) return;
       if (acceptListComp(item)) {
         dispatch({
@@ -65,9 +66,14 @@ const Tab = ({ tab, tabIndex }) => {
 
   // Adding space between Cap except iFrame
   const trimCap = (item) => {
-    return item === "IFrame"
-      ? "iFrame"
-      : item.replace(/([A-Z])/g, " $1").trim();
+    switch (item) {
+      case "IFrame":
+        return "iFrame";
+      case "InfoBox":
+        return "InfoBox";
+      default:
+        return item.replace(/([A-Z])/g, " $1").trim();
+    }
   };
 
   // Error message stays. This gives the user time to read and learn.
@@ -77,6 +83,7 @@ const Tab = ({ tab, tabIndex }) => {
       setShowError(trimCap(getItem.componentName));
     } else if (isOver) {
       setShowError();
+      setShowDropError(false);
     }
   }, [isOver]);
 
@@ -109,7 +116,7 @@ const Tab = ({ tab, tabIndex }) => {
               />
             );
           })}
-          <PlaceholderError showError={showError} isOver={isOver}/>
+          <PlaceholderError showError={showDropError} />
         </ul>
       )}
     </StyleTabBody>
