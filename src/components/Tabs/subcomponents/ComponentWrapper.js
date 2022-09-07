@@ -86,7 +86,7 @@ const ComponentWrapper = ({
       "Image",
       "Video",
       "Table",
-      "Callout",
+      "InfoBox",
       "Tab",
       "QuoteBox",
       "IFrame",

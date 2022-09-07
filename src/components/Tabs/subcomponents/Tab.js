@@ -29,6 +29,7 @@ const Tab = ({ tab, tabIndex }) => {
     return ["Text", "Table", "Video", "Image"].indexOf(item.componentName) >= 0;
   };
 
+  const [showDropError, setShowDropError] = useState();
   const [{ isOver, getItem }, drop] = useDrop(() => ({
     accept: [
       "Text",
@@ -40,6 +41,7 @@ const Tab = ({ tab, tabIndex }) => {
       "IFrame",
     ],
     drop: async (item, monitor) => {
+      if (!acceptListComp(item)) setShowDropError(true);
       if (monitor.didDrop()) return;
       if (acceptListComp(item)) {
         dispatch({
@@ -81,6 +83,7 @@ const Tab = ({ tab, tabIndex }) => {
       setShowError(trimCap(getItem.componentName));
     } else if (isOver) {
       setShowError();
+      setShowDropError(false);
     }
   }, [isOver]);
 
@@ -113,7 +116,7 @@ const Tab = ({ tab, tabIndex }) => {
               />
             );
           })}
-          <PlaceholderError showError={showError} isOver={isOver} />
+          <PlaceholderError showError={showDropError} />
         </ul>
       )}
     </StyleTabBody>
