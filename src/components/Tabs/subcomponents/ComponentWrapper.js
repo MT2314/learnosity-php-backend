@@ -22,7 +22,7 @@ export const SmallIconButton = styled(IconButton)(() => ({
 }));
 
 const BlueBox = styled("div")(({ theme, draggingSelf, showSelf }) => ({
-  outline: showSelf ? `3px solid ${theme.palette.secondary.main}` : null,
+  outline: showSelf ? `3px solid #1466C0` : null,
   borderRadius: "4px",
   opacity: draggingSelf ? 0.4 : 1,
   '& [data-id="callout"]': {
