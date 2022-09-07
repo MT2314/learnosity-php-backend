@@ -10,6 +10,7 @@ export const layoutConfig = (draft, action) => {
       draft.push({
         type: 'TAB',
         id: action.id,
+        title: action.title,
         components: [],
       });
       return draft;

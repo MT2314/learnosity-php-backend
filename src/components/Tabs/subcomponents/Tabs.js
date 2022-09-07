@@ -29,7 +29,7 @@ const Tabs = () => {
             return (
               <TabTitle
                 key={`tab-title-${tabIndex}`}
-                tabTitle={tabTitle}
+                tabTitle={tabTitle.title}
                 tabIndex={tabIndex}
                 showToolbar={showToolbar}
               />
