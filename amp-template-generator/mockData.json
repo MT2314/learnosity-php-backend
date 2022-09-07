@@ -23,11 +23,19 @@
       "componentName": "InfoBox",
       "componentProps": {
          "infoBoxState": {
-            "infoBoxIcon": "",
-            "infoBoxLabel": "",
-            "infoBoxHeader": "",
-            "infoBoxBody": ""
+            "infoBoxIcon": "Notebook",
+            "infoBoxLabel": "This is an InfoBox label",
+            "infoBoxHeader": "This is an InfoBox header",
+            "infoBoxBody": {
+               "body": {"ops": [{"insert":"This is a body for InfoBox"}]}
+            }
          }
+      }
+   },
+   {
+      "componentName": "iFrame",
+      "componentProps": {
+         
       }
    }
 ]
