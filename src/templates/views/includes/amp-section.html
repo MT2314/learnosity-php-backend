@@ -1,4 +1,4 @@
-{%- case section.sectionType -%}
+<!-- {%- case section.sectionType -%}
     {%- when "Minds On" -%}
         {%- assign url = "https://dcc-upload.s3.ca-central-1.amazonaws.com/mpm1d/assets/img/bg_header_mindsOn.png" -%}
         {%- assign sectionId = "mindsOn" -%}
@@ -8,22 +8,23 @@
     {%- when "Consolidation" -%}
         {%- assign url = "https://dcc-upload.s3.ca-central-1.amazonaws.com/mpm1d/assets/img/bg_header_consolidation.png" -%}
         {%- assign sectionId = "consolidation" -%}
-{%- endcase -%}
-<section id="{{sectionId}}">
-  <div class="tgt-{{sectionId}}">
-    <a class="tgt-anchor" id="{{sectionId}}Anchor"></a>
-  </div>
-    <h1 class="max-width-4 mx-auto mb4">
-        <span class="sr-only">{{section.sectionType}}</span>
-        <amp-img 
-            src="{{url}}" 
-            alt="" 
-            layout="responsive" 
-            width="1170"
-            height="377"
-        /></amp-img></h1>
-
-{%- for topic in section.topics -%}
-    {% include amp-topic.html topic:topic %}
-{%- endfor -%}
-</section>
+{%- endcase -%} -->
+<section id="{{section.id}}">
+    <div class="tgt-{{section.id}}">
+      <a class="tgt-anchor" id="{{section.id}}Anchor"></a>
+    </div>
+      <h1 class="max-width-4 mx-auto mb4">
+          <span class="sr-only">{{section.type}}</span>
+          <!-- <amp-img 
+              src="{{url}}" 
+              alt="" 
+              layout="responsive" 
+              width="1170"
+              height="377"
+          /></amp-img> -->
+      </h1>
+  
+      {%- for component in section.components -%}
+          {% include content-model-parser.liquid item:component %}
+      {%- endfor -%}
+  </section>

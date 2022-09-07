@@ -82,8 +82,45 @@ console.log('process.env.QUERY', process.env.QUERY, 'queryVars', queryVars);
                 // TODO: there was a problem retrieving the data
             }
 
-            if (data?.__typename === 'Course') {
+            if (data?.__typename === 'Course') {            
+                // var name = data.name;
+                
+                
+                const transformComponentPropsRecusive = (container) => {
+                    if (container.children) {
+                      for (let index = 0; index < container.children.length; index++) {
+                        const child = container.children[index];
+                        transformComponentPropsRecusive(child);
+                      }
+                    }
+                
+                
+                
+                   if (container.componentContainers) {
+                      for (let ccIndex = 0; ccIndex < container.componentContainers.length; ccIndex++) {
+                        const componentContainer = container.componentContainers[ccIndex];
+                        componentContainer.sections = componentContainer.sections.sort((a, b) => (a.position < b.position ? -1 : 1));
+                        for (let sectionIndex = 0; sectionIndex < componentContainer.sections.length; sectionIndex++) {
+                          const section = componentContainer.sections[sectionIndex];
+                          section.components = section.components.sort((a, b) => (a.position < b.position ? -1 : 1));
+                          for (let componentIndex = 0; componentIndex < section.components.length; componentIndex++) {
+                            const component = section.components[componentIndex];
+                            try {
+                              component.props = JSON.parse(component.props);
+                            } catch (err) {
+                              console.error(err);
+                            }
+                          }
+                        }
+                      }
+                    }
+                  };
+
+
+                transformComponentPropsRecusive(data);
+
                 var lesson = data.children[0].children[0];
+
                 // console.log('this is a course', data.__typename, data.courseCode);
                 // console.log('number of children ', data.children.length);
                 // console.log('first child is a ', data.children[0].type, ' named: ', data.children[0].name);
@@ -94,7 +131,11 @@ console.log('process.env.QUERY', process.env.QUERY, 'queryVars', queryVars);
                 // console.log('first component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[0].components[0].props).text);
                 // console.log('second component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[1].components[0].props).body);
                 lessons.push(lesson);
-                console.log('lessons: ', lessons);
+                // lessons[0].name = data.name;
+                // console.log("lessons name:", lessons[0].name);
+                // console.log('lessons: ', lessons[0].componentContainers[0].sections[0].components[0].props.body.ops);
+                // console.log("this is the data:", JSON.stringify(data, undefined, 2));
+                console.log("this is the data:", data);
             } else {
                 // TODO: may need to check for type if __typename does not exist eg. getLesson
             }
