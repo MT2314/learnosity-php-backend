@@ -12,6 +12,9 @@ export const infoBoxConfig = (draft, action) => {
     case 'CHANGE_HEADER':
       draft.infoBoxHeader = action.header;
       return draft;
+      case 'CHANGE_ICON':
+        draft.infoBoxIcon = action.icon;
+        return draft;
     default:
       return draft;
   }
