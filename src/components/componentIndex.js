@@ -1,6 +1,6 @@
-import Callout, {
-  defaultProps as calloutDefaultProps,
-} from "./Callout/Callout";
+import InfoBox, {
+  defaultProps as infoBoxDefaultProps,
+} from "./InfoBox/InfoBox";
 import Image, { defaultProps as imageDefaultProps } from "./Image/Image";
 import QuoteBox, {
   defaultProps as quoteBoxDefaultProps,
@@ -48,13 +48,13 @@ export const categories = {
 };
 
 const componentIndex = {
-  Callout: {
-    Component: Callout,
-    readableName: "Callout",
-    defaultProps: calloutDefaultProps,
+  InfoBox: {
+    Component: InfoBox,
+    readableName: "InfoBox",
+    defaultProps: infoBoxDefaultProps,
     version: "0.0.1",
     category: categories.text,
-    dndLabel: calloutDndLabel, 
+    dndLabel: calloutDndLabel,
     componentIcon: defaultComponentIcon
   },
   Text: {

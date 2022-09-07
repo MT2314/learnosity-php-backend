@@ -1,15 +1,14 @@
-import React, { useState, useContext } from "react";
-import { TabContext, LayoutContext } from "../TabContext";
+import React, { useState, useContext } from 'react';
+import { TabContext, LayoutContext } from '../TabContext';
 
-import Tab from "./Tab";
-import ConfigBar from "../subcomponents/ConfigBar";
-import TabTitle from "./TabTitle";
+import Tab from './Tab';
+import ConfigBar from '../subcomponents/ConfigBar';
+import TabTitle from './TabTitle';
 
 const Tabs = () => {
   const [activeTab] = useContext(TabContext);
   const [state] = useContext(LayoutContext);
   const [toolbar, showToolbar] = useState(false);
-
   return (
     <>
       <div className="tab-container" data-testid="tab-component">
@@ -23,7 +22,7 @@ const Tabs = () => {
             }
           }}
         >
-          <div className={toolbar ? "show-tabtoolbar" : "hide-tabtoolbar"}>
+          <div className={toolbar ? 'show-tabtoolbar' : 'hide-tabtoolbar'}>
             <ConfigBar />
           </div>
           {state.map((tabTitle, tabIndex) => {

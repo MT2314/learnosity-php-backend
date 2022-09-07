@@ -1,40 +1,35 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
-import ReactQuill, { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import CustomToolBar from "./CustomToolBar";
-import "../styles/EditorComponent.scss";
-import { v4 as uuidv4 } from "uuid";
-import "quill-paste-smart";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+// import CustomToolBar from './CustomToolBar';
+import '../../Text/styles/EditorComponent.scss';
+import { v4 as uuid } from 'uuid';
+import 'quill-paste-smart';
+import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
+import ExtendLinkFunctionality from '../../Text/subcomponent/popupToolBar/ExtendLinkFunctionality';
 import {
   defaultAnchorState,
   ModifyAnchorText,
   ConvertLinks,
   AddLinkEvents,
   handleSelection,
-} from "../utils/HandleLinks";
-import CheckHighlights from "../utils/CheckHighlights";
-import { FormulaEvents } from "../utils/FormulaEvents";
+} from '../../Text/utils/HandleLinks';
+import CheckHighlights from '../../Text/utils/CheckHighlights';
+import { FormulaEvents } from '../../Text/utils/FormulaEvents';
 
-import setAlignmentBtn from "../utils/setAlignmentBtn";
-
-import MathPixMarkdown from "../blots/MathPixMarkdown";
+import MathPixMarkdown from '../../Text/blots/MathPixMarkdown';
 import {
   useSetQuill,
   useSetUniqueId,
   useShowMath,
   useKeepEditor,
-  useBoldRef,
-} from "../Provider";
+} from '../../Text/Provider';
 
-import "katex/dist/katex.css";
+import 'katex/dist/katex.css';
 
-const Delta = Quill.import("delta");
+Quill.register('formats/mathpix', MathPixMarkdown);
 
-Quill.register("formats/mathpix", MathPixMarkdown);
-
-const EditorComponent = ({
+export const InfoBoxBody = ({
   body,
   setProp,
   setShowEditor,
@@ -47,16 +42,12 @@ const EditorComponent = ({
   const setUniqueId = useSetUniqueId();
   const showMath = useShowMath();
   const keepEditor = useKeepEditor();
-  const boldRef = useBoldRef();
 
   //generate a unique id for toolbar and keep it from changing with useMemo
-  const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
+  const toolbarId = useMemo(() => `unique-id-${uuid()}`, []);
 
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
-
-  //alignment observer
-  const [alignmentObserver, setAlignmentObserver] = useState(null);
 
   //state to modify link text
   const [modifyAnchorText, setModifyAnchorText] = useState(defaultAnchorState);
@@ -67,15 +58,18 @@ const EditorComponent = ({
   //track clicks outside text div
   const textRef = useRef(null);
 
+  //focus to the bold
+  const boldRef = useRef(null);
+
   const ConfigBar = {
-    display: !isActiveComponent ? (editorIsFocus ? "flex" : "none") : "flex",
-    position: "fixed",
-    top: "80px",
-    left: "50%",
-    transform: "translateX(-50%)",
+    display: !isActiveComponent ? (editorIsFocus ? 'flex' : 'none') : 'flex',
+    position: 'fixed',
+    top: '80px',
+    left: '50%',
+    transform: 'translateX(-50%)',
     zIndex: 1000,
-    justifyContent: "center",
-    backgroundColor: "#fff",
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   };
 
   useEffect(() => {
@@ -84,7 +78,6 @@ const EditorComponent = ({
 
   useOnClickOutside(textRef, () => {
     if (!showMath && !keepEditor) {
-      alignmentObserver?.disconnect();
       setEditorIsFocus(false);
       setShowEditor(false);
     }
@@ -92,7 +85,7 @@ const EditorComponent = ({
 
   useEffect(() => {
     //set quill instance
-    setQuill(focusRef?.current?.getEditor());
+    setQuill(focusRef.current.getEditor());
     //set unique id instance
     setUniqueId(toolbarId);
     //extend default link functionality on mount
@@ -105,27 +98,12 @@ const EditorComponent = ({
     showEditor && setEditorIsFocus(true);
   }, []);
 
-  useEffect(() => {
-    if (focusRef?.current && body) {
-      //quill instance
-      const quill = focusRef?.current?.getEditor();
-      //convert body to delta
-      const deltaBody = new Delta(body);
-      //get currentContents
-      const currentContents = quill.getContents();
-      //check if currentContents is equal to deltaBody
-      const diff = currentContents.diff(deltaBody);
-      //if not equal set quill to body
-      diff.ops.length > 0 && quill.setContents(body, "silent");
-    }
-  }, [body]);
-
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
 
     //quill instance
-    const quill = focusRef?.current;
+    const quill = focusRef.current;
     const quillText = quill?.getEditor().getText();
 
     //check for links
@@ -142,14 +120,11 @@ const EditorComponent = ({
 
     //edit ops on paste
     const onPaste =
-      editorContent.ops[0].insert === "\n" && editorContent.ops.length === 1;
-    onPaste && (editorContent.ops[0].insert = "");
+      editorContent.ops[0].insert === '\n' && editorContent.ops.length === 1;
+    onPaste && (editorContent.ops[0].insert = '');
 
     //update setProp with new editorContent
-    noHighlights &&
-      linksChecked &&
-      source !== "silent" &&
-      setProp({ body: editorContent });
+    noHighlights && linksChecked && setProp({ body: editorContent });
   };
 
   //check and modify links
@@ -187,7 +162,7 @@ const EditorComponent = ({
       // format text to link
       quill
         .getEditor()
-        .formatText(index - (firstInsert ? 1 : 0), length, "link", linkText);
+        .formatText(index - (firstInsert ? 1 : 0), length, 'link', linkText);
     }
 
     //check if anchor text and link text are not the same
@@ -212,7 +187,7 @@ const EditorComponent = ({
         //format the text to be a link
         quill
           .getEditor()
-          .formatText(startLinkIndex, endLinkIndex, "link", link);
+          .formatText(startLinkIndex, endLinkIndex, 'link', link);
       }
 
       //destructuring modifyAnchorText state
@@ -254,26 +229,26 @@ const EditorComponent = ({
 
   // focus to the bold
   const onKeyDropDown = (e) => {
-    if (e.shiftKey && e.key === "Tab") {
+    if (e.shiftKey && e.key === 'Tab') {
       e.preventDefault();
-      boldRef?.current.focus();
+      boldRef.current.focus();
     }
   };
 
   //customization settings for toolbar
   const formats = [
-    "bold",
-    "italic",
-    "underline",
-    "script",
-    "strike",
-    "formula",
-    "align",
-    "list",
-    "bullet",
-    "link",
-    "background",
-    "mathpix",
+    'bold',
+    'italic',
+    'underline',
+    'script',
+    'strike',
+    'formula',
+    'align',
+    'list',
+    'bullet',
+    'link',
+    'background',
+    'mathpix',
   ];
 
   const modules = useMemo(
@@ -286,25 +261,30 @@ const EditorComponent = ({
         matchVisual: false,
         allowed: {
           tags: [
-            "a",
-            "strong",
-            "u",
-            "s",
-            "i",
-            "p",
-            "br",
-            "ul",
-            "ol",
-            "li",
-            "b",
-            "sub",
-            "sup",
+            'a',
+            'strong',
+            'u',
+            's',
+            'i',
+            'p',
+            'br',
+            'ul',
+            'ol',
+            'li',
+            'b',
+            'sub',
+            'sup',
           ],
-          attributes: ["href", "rel", "target", "class"],
+          attributes: ['href', 'rel', 'target', 'class'],
         },
         keepSelection: true,
         substituteBlockElements: false,
         magicPasteLinks: true,
+        hooks: {
+          uponSanitizeElement(node, data, config) {
+            console.log(node);
+          },
+        },
       },
     }),
     []
@@ -317,16 +297,17 @@ const EditorComponent = ({
       onFocus={() => setEditorIsFocus(true)}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
-        if (relatedTarget.tagName === "BODY") {
+
+        if (relatedTarget.tagName === 'BODY') {
           e.preventDefault();
           return;
         }
+
         if (
           (!relatedTarget ||
             (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
           !showMath
         ) {
-          alignmentObserver?.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
         }
@@ -336,7 +317,12 @@ const EditorComponent = ({
       data-testid="text-editor-component"
     >
       <div style={ConfigBar}>
-        <CustomToolBar toolbarId={toolbarId} focusRef={focusRef} />
+        {/* <CustomToolBar
+          toolbarId={toolbarId}
+          containerId={`toolbar-${toolbarId}`}
+          boldRef={boldRef}
+          focusRef={focusRef}
+        /> */}
       </div>
 
       <ReactQuill
@@ -361,7 +347,6 @@ const EditorComponent = ({
           )
         }
         onFocus={() => {
-          setAlignmentObserver(new setAlignmentBtn(toolbarId));
           FormulaEvents(toolbarId);
         }}
         onKeyDown={(e) => {
@@ -371,5 +356,3 @@ const EditorComponent = ({
     </div>
   );
 };
-
-export default EditorComponent;
