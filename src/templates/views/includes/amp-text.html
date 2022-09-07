@@ -1,7 +1,54 @@
 <div class="text">
     <!-- <pre>{{ data.props.body.ops }}</pre> -->
 
-    {%- for insert in data.props.body.ops -%}
-        <pre>{{ insert.insert }}</pre>
-    {%- endfor -%}
+
+    <p>
+        {%- for insert in data.props.body.ops -%}
+
+        {% assign my_variable = insert.insert %}
+       
+        <!-- {% if my_variable == "" %}
+          This statement is valid.
+        {% endif %} -->
+            <span>{{insert.attributes}}</span>
+
+            {%- for attr in insert.attributes -%}
+                <!-- {{attr}} -->
+                <span> for loop {{attr}}</span>
+                <span>testing: {{attr[0]}}</span>
+                <!-- {% if attr.bold == true %}
+                    {{ "<strong>" | prepend: my_variable }} 
+                    {{ "</strong>" | append: my_variable }} 
+                    <span>
+                        {{attr}}
+                    </span>
+                {% endif %}       -->
+            {%- endfor -%}
+
+            <!-- {% if insert.attributes.bold == true %} -->
+                <!-- <strong>{{insert.insert}}</strong> -->
+
+                <!-- {{ "test1" | prepend: my_variable,  }} 
+                {{ "test2" | append: my_variable }}  -->
+
+                <!-- {{my_variable}} -->
+
+            <!-- {% elsif insert.attributes.italic == true %}
+                <em>{{insert.insert}}</em> -->
+            
+                <!-- {% else %}     -->
+                <!-- {{ insert.insert | remove: "\n"}} -->
+                <!-- {{ my_variable }} -->
+            <!-- {% endif %} -->
+
+            <!-- rendering my variable -->
+            <!-- {{my_variable}} -->
+
+            <!-- check to see if attributes exist -->
+            <!-- {% if insert.attributes %}
+                <span>attributes: {{insert.attributes}}</span>
+            {% endif %} -->
+            
+        {%- endfor -%}
+    </p>
 </div>
