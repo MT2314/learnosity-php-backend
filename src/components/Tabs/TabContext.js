@@ -10,6 +10,7 @@ export const layoutConfig = (draft, action) => {
       draft.push({
         type: "TAB",
         id: action.id,
+        title: action.title,
         components: [],
       });
       return draft;
@@ -22,6 +23,7 @@ export const layoutConfig = (draft, action) => {
       });
       return draft;
     case "MOVE_TAB_LEFT":
+      console.log('=====>', action.titleUpdate)
       // eslint-disable-next-line no-case-declarations
       const elementL = draft[action.tabIndex];
       draft.splice(action.tabIndex, 1);

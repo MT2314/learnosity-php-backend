@@ -2,7 +2,7 @@ import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
 import { TextareaAutosize } from "@material-ui/core";
 
-const TabTitle = ({ tabIndex, showToolbar }) => {
+const TabTitle = ({ tabIndex, showToolbar, tabTitle }) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -80,9 +80,10 @@ const TabTitle = ({ tabIndex, showToolbar }) => {
             WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
           }}
         >
-          {state[tabIndex].title
+          {/* {state[tabIndex].title
             ? state[tabIndex].title
-            : `Tab ${tabIndex + 1}`}
+            : `Tab ${tabIndex + 1}`} */}
+            {tabTitle}
         </p>
       )}
     </div>
