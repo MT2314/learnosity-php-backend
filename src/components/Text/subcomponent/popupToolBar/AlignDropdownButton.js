@@ -56,8 +56,8 @@ const AlignDropdownButton = ({
             </button>
           </Tooltip>
           <Tooltip
-            aria-label="center text"
-            title="center text"
+            aria-label="centre text"
+            title="centre text"
             placement="top"
             arrow
             PopperProps={{
