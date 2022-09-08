@@ -1,10 +1,10 @@
-import React from "react";
-import "react-quill/dist/quill.snow.css";
-import { Card } from "@mui/material";
-import { Tooltip } from "@material-ui/core";
+import React from 'react';
+import 'react-quill/dist/quill.snow.css';
+import { Card } from '@mui/material';
+import { Tooltip } from '@material-ui/core';
 
-import "../../styles/AlignDropdownButton.scss";
-import icons from "../../assets/icons";
+import '../../styles/AlignDropdownButton.scss';
+import icons from '../../assets/icons';
 
 const AlignDropdownButton = ({
   show,
@@ -17,7 +17,7 @@ const AlignDropdownButton = ({
   return (
     <>
       <Card
-        className={show ? "align-dropdown show" : "align-dropdown hide"}
+        className={show ? 'align-dropdown show' : 'align-dropdown hide'}
         onKeyDown={onKeyDropDown}
       >
         <span className="ql-formats">
@@ -33,7 +33,7 @@ const AlignDropdownButton = ({
                 modifiers: {
                   preventOverflow: {
                     enabled: true,
-                    boundariesElement: "window", // where "window" is the boundary
+                    boundariesElement: 'window', // where "window" is the boundary
                   },
                 },
               },
@@ -42,17 +42,17 @@ const AlignDropdownButton = ({
             <button
               aria-label="left align"
               onClick={() => {
-                setActiveDropDownItem("left");
-                setVisibleAlignIcon(icons["align"]);
+                setActiveDropDownItem('left');
+                setVisibleAlignIcon(icons['align']);
               }}
               className={
-                activeDropDownItem === "left"
-                  ? "ql-align ql-selected ql-active"
-                  : "ql-align"
+                activeDropDownItem === 'left'
+                  ? 'ql-align ql-selected ql-active'
+                  : 'ql-align'
               }
               value=""
             >
-              {icons["align"]}
+              {icons['align']}
             </button>
           </Tooltip>
           <Tooltip
@@ -67,7 +67,7 @@ const AlignDropdownButton = ({
                 modifiers: {
                   preventOverflow: {
                     enabled: true,
-                    boundariesElement: "window", // where "window" is the boundary
+                    boundariesElement: 'window', // where "window" is the boundary
                   },
                 },
               },
@@ -76,25 +76,24 @@ const AlignDropdownButton = ({
             <button
               aria-label="align center"
               className={
-                activeDropDownItem === "center"
-                  ? "ql-align ql-selected ql-active"
-                  : "ql-align"
+                activeDropDownItem === 'center'
+                  ? 'ql-align ql-selected ql-active'
+                  : 'ql-align'
               }
               value="center"
               onClick={() => {
                 if (
-                  activeDropDownItem === "center" ||
-                  activeDirection !== "center"
+                  activeDropDownItem === 'center' ||
+                  activeDirection !== 'center'
                 ) {
-                  setActiveDropDownItem("left");
-                  setVisibleAlignIcon(icons["align"]);
+                  setVisibleAlignIcon(icons['align']);
                 } else {
-                  setActiveDropDownItem("center");
-                  setVisibleAlignIcon(icons["center"]);
+                  setActiveDropDownItem('center');
+                  setVisibleAlignIcon(icons['center']);
                 }
               }}
             >
-              {icons["center"]}
+              {icons['center']}
             </button>
           </Tooltip>
           <Tooltip
@@ -109,7 +108,7 @@ const AlignDropdownButton = ({
                 modifiers: {
                   preventOverflow: {
                     enabled: true,
-                    boundariesElement: "window", // where "window" is the boundary
+                    boundariesElement: 'window', // where "window" is the boundary
                   },
                 },
               },
@@ -118,25 +117,24 @@ const AlignDropdownButton = ({
             <button
               aria-label="right align"
               className={
-                activeDropDownItem === "right"
-                  ? "ql-align ql-selected ql-active"
-                  : "ql-align"
+                activeDropDownItem === 'right'
+                  ? 'ql-align ql-selected ql-active'
+                  : 'ql-align'
               }
               value="right"
               onClick={() => {
                 if (
-                  activeDropDownItem === "right" ||
-                  activeDirection !== "right"
+                  activeDropDownItem === 'right' ||
+                  activeDirection !== 'right'
                 ) {
-                  setActiveDropDownItem("left");
-                  setVisibleAlignIcon(icons["align"]);
+                  setVisibleAlignIcon(icons['align']);
                 } else {
-                  setActiveDropDownItem("right");
-                  setVisibleAlignIcon(icons["right"]);
+                  setActiveDropDownItem('right');
+                  setVisibleAlignIcon(icons['right']);
                 }
               }}
             >
-              {icons["right"]}
+              {icons['right']}
             </button>
           </Tooltip>
         </span>
