@@ -1,61 +1,25 @@
 <div class="text">
-    <!-- <pre>{{ data.props.body.ops }}</pre> -->
+    {% for insert in data.componentProps.body.ops %}
+        <pre>{{ insert.insert }}</pre>
+    {% endfor %}
+    
+    {% for insert in data.props.body.ops %}
 
+        {% assign insertWord = insert.insert %}
 
-    <p>
-        {%- for insert in data.props.body.ops -%}
+        {% if insert.attributes %}
+            {% if insert.attributes.bold %}
+                {% assign insertWord = insertWord | prepend: "<strong>" | append: "</strong>" %}
+            {% endif %}
+            {% if insert.attributes.underline %}
+                {% assign insertWord = insertWord | prepend: "<u>" | append: "</u>"%}
+            {% endif %}
+            {% if insert.attributes.italic %}
+                {% assign insertWord = insertWord | prepend: "<em>" | append: "</em>" %}
+            {% endif %}
+        {% endif %}
 
-            {% assign my_variable = insert.insert %}
-       
-            <!-- logging out the attributes -->
-            <!-- <span>{{insert.attributes}}</span> -->
-
-            <!-- trying to run a for loop over the attributes -->
-            <!-- works but turns each attribute into an array -->
-            <!-- {%- for attr in insert.attributes -%} -->
-
-                <!-- logs out the attribute -->
-                <!-- <span> for loop {{attr}}</span> -->
-
-                <!-- logs a attribute at pos 1 -->
-                <!-- <span>testing: {{attr[0]}}</span> -->
-
-                <!-- running an if statement to see if I can append/prepend html tags -->
-                <!-- {% if attr.bold == true %}
-                    {{ "<strong>" | prepend: my_variable }} 
-                    {{ "</strong>" | append: my_variable }} 
-                    <span>
-                        {{attr}}
-                    </span>
-                {% endif %}       -->
-
-            <!-- {%- endfor -%} -->
-
-            
-            {% if insert.attributes.bold == true %}
-                <!-- <strong>{{insert.insert}}</strong> -->
-
-                <!-- {{ " test1" | prepend: my_variable,  }}  -->
-                <!-- {{ "test2" | append: my_variable }}  -->
-
-                <!-- {{my_variable}} -->
-
-            <!-- {% elsif insert.attributes.italic == true %}
-                <em>{{insert.insert}}</em> -->
-            
-                <!-- {% else %}     -->
-                <!-- {{ insert.insert | remove: "\n"}} -->
-                <!-- {{ my_variable }} -->
-            <!-- {% endif %} -->
-
-            <!-- rendering my variable -->
-            <!-- {{my_variable}} -->
-
-            <!-- check to see if attributes exist -->
-            <!-- {% if insert.attributes %}
-                <span>attributes: {{insert.attributes}}</span> -->
-            {% endif %} 
-            
-        {%- endfor -%}
-    </p>
+        {{ insertWord }}
+        
+    {% endfor %}
 </div>
