@@ -2,9 +2,11 @@ import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
 import { TextareaAutosize } from "@material-ui/core";
 
-const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
+const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
+
+  console.log("=====>", placeholderTitle)
 
   const handleTitleChange = useCallback((e) => {
     dispatch({
@@ -57,7 +59,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
       {activeTab == tabIndex ? (
         <TextareaAutosize
           className="tab-title-input"
-          placeholder={`Tab ${tabIndex + 1}`}
+          placeholder={placeholderTitle}
           aria-label="tab title input"
           aria-multiline="true"
           role={activeTab == tabIndex ? "textbox" : "tab"}
@@ -82,7 +84,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
         >
           {state[tabIndex].title
             ? state[tabIndex].title
-            : `Tab ${tabIndex + 1}`}
+            : placeholderTitle}
         </p>
       )}
     </div>
