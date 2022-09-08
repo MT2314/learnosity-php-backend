@@ -6,8 +6,6 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
-  console.log("=====>", placeholderTitle)
-
   const handleTitleChange = useCallback((e) => {
     dispatch({
       func: "CHANGE_TITLE",
@@ -39,7 +37,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
       aria-label={
         state[tabIndex].title
           ? state[tabIndex].title
-          : `Untitled Tab ${tabIndex + 1}`
+          : `Untitled ${placeholderTitle}`
       }
       className={`tab-title ${activeTab === tabIndex ? "active-tab" : ""}`}
       onFocus={() => {
