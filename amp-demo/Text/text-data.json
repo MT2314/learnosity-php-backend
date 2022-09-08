@@ -1,9 +1,0 @@
-{
-  "data": [
-    {
-      "op": "replace",
-      "path": ["sections", 0, "components", 0, "props"],
-      "value": "{\"body\":{\"ops\":[{\"attributes\":{\"strike\":true},\"insert\":\"This\"},{\"insert\":\" is a \"},{\"attributes\":{\"underline\":true},\"insert\":\"paragraph\"},{\"insert\":\" with \"},{\"attributes\":{\"italic\":true},\"insert\":\"different\"},{\"insert\":\" \"},{\"attributes\":{\"bold\":true},\"insert\":\"formatting\"},{\"insert\":\"\\n\"}]},\"text\":\"default text\"}"
-    }
-  ]
-}
