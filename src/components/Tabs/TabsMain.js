@@ -12,15 +12,15 @@ import "./styles/Tab.scss";
 export const defaultProps = {
   layoutState: [
     {
-      type: "TAB",
       id: uuidv4(),
-      title: `Tab 1`,
+      title: "",
+      placeholderTitle:"Tab 1",
       components: [],
     },
     {
-      type: "TAB",
       id: uuidv4(),
-      title: "Tab 2",
+      title: "",
+      placeholderTitle:"Tab 2",
       components: [],
     },
   ],

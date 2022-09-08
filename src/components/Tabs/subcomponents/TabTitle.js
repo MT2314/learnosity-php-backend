@@ -2,7 +2,7 @@ import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
 import { TextareaAutosize } from "@material-ui/core";
 
-const TabTitle = ({ tabIndex, showToolbar, tabTitle }) => {
+const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -23,18 +23,22 @@ const TabTitle = ({ tabIndex, showToolbar, tabTitle }) => {
 
   const handleCursorFocus = (i) => {
     inputRef.current.setSelectionRange(
-      state[i].title?.length,
-      state[i].title?.length
+      state[i].title.length,
+      state[i].title.length
     );
     inputRef.current.focus();
-    inputRef.current.scrollTo(state[i].title?.length, state[i].title?.length);
+    inputRef.current.scrollTo(state[i].title.length, state[i].title.length);
   };
 
   return (
     <div
       key={`tab-title-${tabIndex}`}
       tabIndex="0"
-      aria-label={tabTitle}
+      aria-label={
+        tabTitle
+          ? tabTitle
+          : `Untitled ${placeholderTitle}`
+      }
       className={`tab-title ${activeTab === tabIndex ? "active-tab" : ""}`}
       onFocus={() => {
         showToolbar(true);
@@ -53,7 +57,7 @@ const TabTitle = ({ tabIndex, showToolbar, tabTitle }) => {
       {activeTab == tabIndex ? (
         <TextareaAutosize
           className="tab-title-input"
-          placeholder={tabTitle}
+          placeholder={placeholderTitle}
           aria-label="tab title input"
           aria-multiline="true"
           role={activeTab == tabIndex ? "textbox" : "tab"}
@@ -64,7 +68,7 @@ const TabTitle = ({ tabIndex, showToolbar, tabTitle }) => {
           onChange={handleTitleChange}
           onFocus={() => handleCursorFocus(tabIndex)}
           data-id={state[tabIndex].id}
-          value={tabTitle || ""}
+          value={tabTitle}
           onBlur={handleTitleBlur}
           ref={inputRef}
         />
@@ -76,7 +80,9 @@ const TabTitle = ({ tabIndex, showToolbar, tabTitle }) => {
             WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
           }}
         >
-            {tabTitle}
+          {tabTitle
+            ? tabTitle
+            : placeholderTitle}
         </p>
       )}
     </div>

@@ -12,8 +12,9 @@ import PlaceholderError from "./PlaceholderError";
 // NOTE: We can use theme once it is set it up end to end
 const StyleTabBody = styled("div")(({ theme, isDragging }) => ({
   padding: "10px 10px 20px 10px",
-  border: "1px solid #bdbdbd",
-  borderTop: "none,",
+  borderColor: '#bdbdbd',
+  borderStyle: 'solid',
+  borderWidth:'0 1px 1px 1px',
   backgroundColor: isDragging ? "#E9EDF1" : "white",
 }));
 

@@ -25,11 +25,13 @@ const Tabs = () => {
           <div className={toolbar ? 'show-tabtoolbar' : 'hide-tabtoolbar'}>
             <ConfigBar />
           </div>
-          {state.map((tabTitle, tabIndex) => {
+          {state.map((tab, tabIndex) => {
             return (
               <TabTitle
                 key={`tab-title-${tabIndex}`}
-                tabTitle={tabTitle.title}
+                tabTitle={tab.title}
+                tab={tab}
+                placeholderTitle={tab.placeholderTitle}
                 tabIndex={tabIndex}
                 showToolbar={showToolbar}
               />
