@@ -6,7 +6,10 @@
         {% assign loopData = data.componentProps.body.ops %}
     {% endif %}
     
+    <!-- <span>{{data.props.body.ops | remove_last: "\n"}}</span> -->
+
     {% for insert in loopData %}
+
 
         {% assign insertWord = insert.insert %}
 
