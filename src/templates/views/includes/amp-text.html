@@ -5,17 +5,22 @@
     <p>
         {%- for insert in data.props.body.ops -%}
 
-        {% assign my_variable = insert.insert %}
+            {% assign my_variable = insert.insert %}
        
-        <!-- {% if my_variable == "" %}
-          This statement is valid.
-        {% endif %} -->
-            <span>{{insert.attributes}}</span>
+            <!-- logging out the attributes -->
+            <!-- <span>{{insert.attributes}}</span> -->
 
-            {%- for attr in insert.attributes -%}
-                <!-- {{attr}} -->
-                <span> for loop {{attr}}</span>
-                <span>testing: {{attr[0]}}</span>
+            <!-- trying to run a for loop over the attributes -->
+            <!-- works but turns each attribute into an array -->
+            <!-- {%- for attr in insert.attributes -%} -->
+
+                <!-- logs out the attribute -->
+                <!-- <span> for loop {{attr}}</span> -->
+
+                <!-- logs a attribute at pos 1 -->
+                <!-- <span>testing: {{attr[0]}}</span> -->
+
+                <!-- running an if statement to see if I can append/prepend html tags -->
                 <!-- {% if attr.bold == true %}
                     {{ "<strong>" | prepend: my_variable }} 
                     {{ "</strong>" | append: my_variable }} 
@@ -23,13 +28,15 @@
                         {{attr}}
                     </span>
                 {% endif %}       -->
-            {%- endfor -%}
 
-            <!-- {% if insert.attributes.bold == true %} -->
+            <!-- {%- endfor -%} -->
+
+            
+            {% if insert.attributes.bold == true %}
                 <!-- <strong>{{insert.insert}}</strong> -->
 
-                <!-- {{ "test1" | prepend: my_variable,  }} 
-                {{ "test2" | append: my_variable }}  -->
+                <!-- {{ " test1" | prepend: my_variable,  }}  -->
+                <!-- {{ "test2" | append: my_variable }}  -->
 
                 <!-- {{my_variable}} -->
 
@@ -46,8 +53,8 @@
 
             <!-- check to see if attributes exist -->
             <!-- {% if insert.attributes %}
-                <span>attributes: {{insert.attributes}}</span>
-            {% endif %} -->
+                <span>attributes: {{insert.attributes}}</span> -->
+            {% endif %} 
             
         {%- endfor -%}
     </p>
