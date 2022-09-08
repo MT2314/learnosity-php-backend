@@ -12,10 +12,14 @@ const AlignDropdownButton = ({
   setActiveDropDownItem,
   setVisibleAlignIcon,
   onKeyDropDown,
+  activeDirection,
 }) => {
   return (
     <>
-      <Card className={show ? "align-dropdown show" : "align-dropdown hide"} onKeyDown={onKeyDropDown}>
+      <Card
+        className={show ? "align-dropdown show" : "align-dropdown hide"}
+        onKeyDown={onKeyDropDown}
+      >
         <span className="ql-formats">
           <Tooltip
             aria-label="align left"
@@ -38,12 +42,8 @@ const AlignDropdownButton = ({
             <button
               aria-label="left align"
               onClick={() => {
-                if (activeDropDownItem === "left") {
-                  setActiveDropDownItem("");
-                } else {
-                  setActiveDropDownItem("left");
-                  setVisibleAlignIcon(icons["align"]);
-                }
+                setActiveDropDownItem("left");
+                setVisibleAlignIcon(icons["align"]);
               }}
               className={
                 activeDropDownItem === "left"
@@ -56,8 +56,8 @@ const AlignDropdownButton = ({
             </button>
           </Tooltip>
           <Tooltip
-            aria-label="center text"
-            title="center text"
+            aria-label="centre text"
+            title="centre text"
             placement="top"
             arrow
             PopperProps={{
@@ -82,8 +82,11 @@ const AlignDropdownButton = ({
               }
               value="center"
               onClick={() => {
-                if (activeDropDownItem === "center") {
-                  setActiveDropDownItem("");
+                if (
+                  activeDropDownItem === "center" ||
+                  activeDirection !== "center"
+                ) {
+                  setActiveDropDownItem("left");
                   setVisibleAlignIcon(icons["align"]);
                 } else {
                   setActiveDropDownItem("center");
@@ -121,8 +124,11 @@ const AlignDropdownButton = ({
               }
               value="right"
               onClick={() => {
-                if (activeDropDownItem === "right") {
-                  setActiveDropDownItem("");
+                if (
+                  activeDropDownItem === "right" ||
+                  activeDirection !== "right"
+                ) {
+                  setActiveDropDownItem("left");
                   setVisibleAlignIcon(icons["align"]);
                 } else {
                   setActiveDropDownItem("right");

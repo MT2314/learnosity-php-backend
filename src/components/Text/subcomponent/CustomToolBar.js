@@ -23,6 +23,8 @@ const CustomToolBar = ({ toolbarId }) => {
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
+  const [activeDirection, setActiveDirection] = useState("left");
+
   //focus to the list and align. Bold Ref is found in EditorComponent.js
   const listRef = useRef(null);
   const alignRef = useRef(null);
@@ -59,13 +61,11 @@ const CustomToolBar = ({ toolbarId }) => {
       <button
         style={{ display: "none" }}
         onClick={(e) => {
-          setVisibleAlignIcon(
-            icons[
-              e.target.attributes.getNamedItem("data-align").value
-                ? e.target.attributes.getNamedItem("data-align").value
-                : "align"
-            ]
-          );
+          const align = e.target.attributes.getNamedItem("data-align").value
+            ? e.target.attributes.getNamedItem("data-align").value
+            : "align";
+          setVisibleAlignIcon(icons[align]);
+          setActiveDirection(align === "align" ? "left" : align);
         }}
         className={`alignment-${toolbarId}`}
       ></button>
@@ -223,6 +223,7 @@ const CustomToolBar = ({ toolbarId }) => {
         activeDropDownItem={activeDropDownItem}
         setActiveDropDownItem={setActiveDropDownItem}
         setVisibleAlignIcon={setVisibleAlignIcon}
+        activeDirection={activeDirection}
         onKeyDropDown={(e) => {
           onKeyDropDown(e, alignRef);
         }}

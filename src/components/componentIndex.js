@@ -29,7 +29,7 @@ import defaultComponentIcon from "../Icons/componentIcons/defaultIcon.png"
 import exposedVersion from "../../exposedStage"
 
 console.log(
-  `Stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`
+  `Component Library stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`
 );
 
 export const categories = {

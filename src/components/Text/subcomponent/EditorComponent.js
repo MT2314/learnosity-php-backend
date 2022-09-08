@@ -17,7 +17,7 @@ import {
 import CheckHighlights from "../utils/CheckHighlights";
 import { FormulaEvents } from "../utils/FormulaEvents";
 
-import setAlignmentBtn from "../utils/setAlignmentBtn";
+import setAlignment from "../utils/setAlignment";
 
 import MathPixMarkdown from "../blots/MathPixMarkdown";
 import {
@@ -116,7 +116,17 @@ const EditorComponent = ({
       //check if currentContents is equal to deltaBody
       const diff = currentContents.diff(deltaBody);
       //if not equal set quill to body
-      diff.ops.length > 0 && quill.setContents(body, "silent");
+      //check if deltas first insert is empty and attributes is align
+      const alignment =
+        deltaBody.ops[0]?.attributes?.align && deltaBody?.ops[0]?.insert === "";
+      //check if deltas first insert is empty and attributes is list
+      const list =
+        deltaBody.ops[0]?.attributes?.list && deltaBody?.ops[0]?.insert === "";
+      //if difference and not alignment or list set quill to body
+      diff.ops.length > 0 &&
+        !alignment &&
+        !list &&
+        quill.setContents(body, "silent");
     }
   }, [body]);
 
@@ -361,7 +371,7 @@ const EditorComponent = ({
           )
         }
         onFocus={() => {
-          setAlignmentObserver(new setAlignmentBtn(toolbarId));
+          setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
         }}
         onKeyDown={(e) => {

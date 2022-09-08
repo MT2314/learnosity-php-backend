@@ -15,11 +15,10 @@ const Paragraph = styled("p")({
 });
 
 
-const PlaceholderError = ({ showError, isOver }) => {
+const PlaceholderError = ({ showError }) => {
   return (
     <>
       {showError &&
-        isOver &&
         <Paragraph>
           <ErrorOutlineIcon /> &nbsp; Error: component is not compatible.
           Only text, image, chart, table, video, and audio.
