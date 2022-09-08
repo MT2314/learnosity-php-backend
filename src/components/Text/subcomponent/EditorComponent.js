@@ -1,38 +1,38 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
-import ReactQuill, { Quill } from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import CustomToolBar from "./CustomToolBar";
-import "../styles/EditorComponent.scss";
-import { v4 as uuidv4 } from "uuid";
-import "quill-paste-smart";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import CustomToolBar from './CustomToolBar';
+import '../styles/EditorComponent.scss';
+import { v4 as uuidv4 } from 'uuid';
+import 'quill-paste-smart';
+import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
+import ExtendLinkFunctionality from './popupToolBar/ExtendLinkFunctionality';
 import {
   defaultAnchorState,
   ModifyAnchorText,
   ConvertLinks,
   AddLinkEvents,
   handleSelection,
-} from "../utils/HandleLinks";
-import CheckHighlights from "../utils/CheckHighlights";
-import { FormulaEvents } from "../utils/FormulaEvents";
+} from '../utils/HandleLinks';
+import CheckHighlights from '../utils/CheckHighlights';
+import { FormulaEvents } from '../utils/FormulaEvents';
 
-import setAlignment from "../utils/setAlignment";
+import setAlignment from '../utils/setAlignment';
 
-import MathPixMarkdown from "../blots/MathPixMarkdown";
+import MathPixMarkdown from '../blots/MathPixMarkdown';
 import {
   useSetQuill,
   useSetUniqueId,
   useShowMath,
   useKeepEditor,
   useBoldRef,
-} from "../Provider";
+} from '../Provider';
 
-import "katex/dist/katex.css";
+import 'katex/dist/katex.css';
 
-const Delta = Quill.import("delta");
+const Delta = Quill.import('delta');
 
-Quill.register("formats/mathpix", MathPixMarkdown);
+Quill.register('formats/mathpix', MathPixMarkdown);
 
 const EditorComponent = ({
   body,
@@ -67,15 +67,19 @@ const EditorComponent = ({
   //track clicks outside text div
   const textRef = useRef(null);
 
+  // state for Align & List toolbar selection
+  const [activeDropDownAlignItem, setActiveDropDownAlignItem] = useState('');
+  const [activeDropDownListItem, setActiveDropDownListItem] = useState('');
+
   const ConfigBar = {
-    display: !isActiveComponent ? (editorIsFocus ? "flex" : "none") : "flex",
-    position: "fixed",
-    top: "80px",
-    left: "50%",
-    transform: "translateX(-50%)",
+    display: !isActiveComponent ? (editorIsFocus ? 'flex' : 'none') : 'flex',
+    position: 'fixed',
+    top: '80px',
+    left: '50%',
+    transform: 'translateX(-50%)',
     zIndex: 1000,
-    justifyContent: "center",
-    backgroundColor: "#fff",
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   };
 
   useEffect(() => {
@@ -118,17 +122,33 @@ const EditorComponent = ({
       //if not equal set quill to body
       //check if deltas first insert is empty and attributes is align
       const alignment =
-        deltaBody.ops[0]?.attributes?.align && deltaBody?.ops[0]?.insert === "";
+        deltaBody.ops[0]?.attributes?.align && deltaBody?.ops[0]?.insert === '';
       //check if deltas first insert is empty and attributes is list
       const list =
-        deltaBody.ops[0]?.attributes?.list && deltaBody?.ops[0]?.insert === "";
+        deltaBody.ops[0]?.attributes?.list && deltaBody?.ops[0]?.insert === '';
       //if difference and not alignment or list set quill to body
       diff.ops.length > 0 &&
         !alignment &&
         !list &&
-        quill.setContents(body, "silent");
+        quill.setContents(body, 'silent');
     }
   }, [body]);
+
+  // Set formating - align & list  @ current focus
+  const formatSelection = (quillRef) => {
+    if (quillRef !== null && editorIsFocus) {
+      const quill = quillRef.getEditor();
+      const currentFormat = quill.getFormat();
+      currentFormat?.list
+        ? setActiveDropDownListItem(currentFormat.list)
+        : setActiveDropDownListItem('');
+      currentFormat?.align
+        ? setActiveDropDownAlignItem(currentFormat.align) &&
+          setVisibleAlignIcon(icons[currentFormat.align])
+        : setActiveDropDownAlignItem('left') &&
+          setVisibleAlignIcon(icons['align']);
+    }
+  };
 
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
@@ -152,13 +172,13 @@ const EditorComponent = ({
 
     //edit ops on paste
     const onPaste =
-      editorContent.ops[0].insert === "\n" && editorContent.ops.length === 1;
-    onPaste && (editorContent.ops[0].insert = "");
+      editorContent.ops[0].insert === '\n' && editorContent.ops.length === 1;
+    onPaste && (editorContent.ops[0].insert = '');
 
     //update setProp with new editorContent
     noHighlights &&
       linksChecked &&
-      source !== "silent" &&
+      source !== 'silent' &&
       setProp({ body: editorContent });
   };
 
@@ -197,7 +217,7 @@ const EditorComponent = ({
       // format text to link
       quill
         .getEditor()
-        .formatText(index - (firstInsert ? 1 : 0), length, "link", linkText);
+        .formatText(index - (firstInsert ? 1 : 0), length, 'link', linkText);
     }
 
     //check if anchor text and link text are not the same
@@ -222,7 +242,7 @@ const EditorComponent = ({
         //format the text to be a link
         quill
           .getEditor()
-          .formatText(startLinkIndex, endLinkIndex, "link", link);
+          .formatText(startLinkIndex, endLinkIndex, 'link', link);
       }
 
       //destructuring modifyAnchorText state
@@ -264,7 +284,7 @@ const EditorComponent = ({
 
   // focus to the bold
   const onKeyDropDown = (e) => {
-    if (e.shiftKey && e.key === "Tab") {
+    if (e.shiftKey && e.key === 'Tab') {
       e.preventDefault();
       boldRef?.current.focus();
     }
@@ -272,18 +292,18 @@ const EditorComponent = ({
 
   //customization settings for toolbar
   const formats = [
-    "bold",
-    "italic",
-    "underline",
-    "script",
-    "strike",
-    "formula",
-    "align",
-    "list",
-    "bullet",
-    "link",
-    "background",
-    "mathpix",
+    'bold',
+    'italic',
+    'underline',
+    'script',
+    'strike',
+    'formula',
+    'align',
+    'list',
+    'bullet',
+    'link',
+    'background',
+    'mathpix',
   ];
 
   const modules = useMemo(
@@ -296,21 +316,21 @@ const EditorComponent = ({
         matchVisual: false,
         allowed: {
           tags: [
-            "a",
-            "strong",
-            "u",
-            "s",
-            "i",
-            "p",
-            "br",
-            "ul",
-            "ol",
-            "li",
-            "b",
-            "sub",
-            "sup",
+            'a',
+            'strong',
+            'u',
+            's',
+            'i',
+            'p',
+            'br',
+            'ul',
+            'ol',
+            'li',
+            'b',
+            'sub',
+            'sup',
           ],
-          attributes: ["href", "rel", "target", "class"],
+          attributes: ['href', 'rel', 'target', 'class'],
         },
         keepSelection: true,
         substituteBlockElements: false,
@@ -327,7 +347,7 @@ const EditorComponent = ({
       onFocus={() => setEditorIsFocus(true)}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
-        if (relatedTarget.tagName === "BODY") {
+        if (relatedTarget.tagName === 'BODY') {
           e.preventDefault();
           return;
         }
@@ -346,7 +366,14 @@ const EditorComponent = ({
       data-testid="text-editor-component"
     >
       <div style={ConfigBar}>
-        <CustomToolBar toolbarId={toolbarId} focusRef={focusRef} />
+        <CustomToolBar
+          toolbarId={toolbarId}
+          focusRef={focusRef}
+          activeDropDownListItem={activeDropDownListItem}
+          setActiveDropDownListItem={setActiveDropDownListItem}
+          activeDropDownAlignItem={activeDropDownAlignItem}
+          setActiveDropDownAlignItem={setActiveDropDownAlignItem}
+        />
       </div>
 
       <ReactQuill
@@ -361,15 +388,16 @@ const EditorComponent = ({
         className="quillEditor"
         onChange={handleDataChange}
         defaultValue={body}
-        onChangeSelection={(range, source, editor) =>
+        onChangeSelection={(range, source, editor) => {
           handleSelection(
             range,
             source,
             editor,
             `toolbar-${toolbarId}`,
             focusRef.current
-          )
-        }
+          );
+          formatSelection(focusRef.current);
+        }}
         onFocus={() => {
           setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
