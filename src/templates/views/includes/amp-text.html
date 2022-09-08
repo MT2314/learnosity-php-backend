@@ -1,9 +1,12 @@
 <div class="text">
-    {% for insert in data.componentProps.body.ops %}
-        <pre>{{ insert.insert }}</pre>
-    {% endfor %}
+
+    {% if data.props.body.ops %}
+        {% assign loopData = data.props.body.ops %}
+    {% elsif data.componentProps.body.ops %}
+        {% assign loopData = data.componentProps.body.ops %}
+    {% endif %}
     
-    {% for insert in data.props.body.ops %}
+    {% for insert in loopData %}
 
         {% assign insertWord = insert.insert %}
 
@@ -19,7 +22,7 @@
             {% endif %}
         {% endif %}
 
-        {{ insertWord }}
+        {{insertWord}}
         
     {% endfor %}
 </div>
