@@ -10,6 +10,8 @@
 
         {% assign insertWord = insert.insert %}
 
+
+
         {% if insert.attributes %}
             {% if insert.attributes.bold %}
                 {% assign insertWord = insertWord | prepend: "<strong>" | append: "</strong>" %}
@@ -22,7 +24,7 @@
             {% endif %}
         {% endif %}
 
-        {{insertWord}}
+        {{insertWord | remove_last: "\n" | newline_to_br}}
         
     {% endfor %}
 </div>
