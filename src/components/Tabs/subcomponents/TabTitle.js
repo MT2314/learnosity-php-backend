@@ -35,8 +35,8 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
       key={`tab-title-${tabIndex}`}
       tabIndex="0"
       aria-label={
-        state[tabIndex].title
-          ? state[tabIndex].title
+        tabTitle
+          ? tabTitle
           : `Untitled ${placeholderTitle}`
       }
       className={`tab-title ${activeTab === tabIndex ? "active-tab" : ""}`}
@@ -68,7 +68,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
           onChange={handleTitleChange}
           onFocus={() => handleCursorFocus(tabIndex)}
           data-id={state[tabIndex].id}
-          value={state[tabIndex].title}
+          value={tabTitle}
           onBlur={handleTitleBlur}
           ref={inputRef}
         />
@@ -80,8 +80,8 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
             WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
           }}
         >
-          {state[tabIndex].title
-            ? state[tabIndex].title
+          {tabTitle
+            ? tabTitle
             : placeholderTitle}
         </p>
       )}

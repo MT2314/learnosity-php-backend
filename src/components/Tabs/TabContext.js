@@ -8,7 +8,6 @@ export const layoutConfig = (draft, action) => {
   switch (action.func) {
     case 'ADD_TAB':
       draft.push({
-        type: 'TAB',
         id: action.id,
         title: "",
         placeholderTitle: action.title,
