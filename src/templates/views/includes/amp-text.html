@@ -2,7 +2,24 @@
     {% for insert in data.componentProps.body.ops %}
         <pre>{{ insert.insert }}</pre>
     {% endfor %}
+    
     {% for insert in data.props.body.ops %}
-        <pre>{{ insert.insert }}</pre>
+
+        {% assign insertWord = insert.insert %}
+
+        {% if insert.attributes %}
+            {% if insert.attributes.bold %}
+                {% assign insertWord = insertWord | prepend: "<strong>" | append: "</strong>" %}
+            {% endif %}
+            {% if insert.attributes.underline %}
+                {% assign insertWord = insertWord | prepend: "<u>" | append: "</u>"%}
+            {% endif %}
+            {% if insert.attributes.italic %}
+                {% assign insertWord = insertWord | prepend: "<em>" | append: "</em>" %}
+            {% endif %}
+        {% endif %}
+
+        {{ insertWord }}
+        
     {% endfor %}
 </div>
