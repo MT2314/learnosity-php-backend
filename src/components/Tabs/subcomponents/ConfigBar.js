@@ -132,7 +132,7 @@ const ConfigBar = () => {
     title: 'Delete Tab?',
     message: [
       `Deleting "${
-        state[activeTab].title || `Tab ${activeTab + 1}`
+        state[activeTab].title || state[activeTab].placeholderTitle
       }" will also delete ${state[activeTab].components.length} component(s).`,
       <br key={1} />,
       <br key={2} />,
