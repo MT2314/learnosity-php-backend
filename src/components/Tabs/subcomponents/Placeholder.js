@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const PlaceholderContainer = styled("div")(({ isOver, showError }) => ({
-  backgroundColor: isOver ? (showError ? "rgba(211, 47, 47, 0.04)" : "rgba(21, 101, 192, 0.04)") : "inherit",
+  backgroundColor: isOver ? (showError ? "rgba(211, 47, 47, 0.04)" : "rgba(21, 101, 192, 0.04)") : (showError ? "rgba(211, 47, 47, 0.04)" : "inherit"),
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -12,8 +12,8 @@ const PlaceholderContainer = styled("div")(({ isOver, showError }) => ({
 }))
 
 
-const Title = styled("h3")(({ isOver }) => ({
-  color: isOver ? "#D32F2F" : "inherit",
+const Title = styled("h3")(({ showError }) => ({
+  color: showError ? "#D32F2F" : "inherit",
   fontWeight: "400",
   fontSize: "24px",
   lineHeight: "32.02px",
@@ -34,7 +34,7 @@ const SubParagraph = styled(Paragraph)({
 const Placeholder = ({ isOver, showError }) => {
   return (
     <PlaceholderContainer isOver={isOver} showError={showError}>
-      <Title>{showError ? `Error: ${showError} not compatible!` : `Add a component here!`}</Title>
+      <Title showError={showError}>{showError ? `Error: ${showError} not compatible!` : `Add a component here!`}</Title>
       <Paragraph>Drag and drop a component from the left panel or use your keyboard to insert a component.</Paragraph>
       <SubParagraph>Accepted components: text, image, chart, table, video, and audio.</SubParagraph>
     </PlaceholderContainer>
