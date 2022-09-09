@@ -29,6 +29,10 @@ log(JSON.stringify(dirs, null, 2));
  * @private
  * @returns {Promise}
  */
+ function _deleteDistLiquid() {
+  return del([".tmp/11ty/liquid", "dist/liquid"]);
+}
+
 function _cleanStyles() {
   return del([dirs.cssStaging + "*", dirs.webserverRoot + "*.css*"]);
 }
@@ -333,6 +337,7 @@ function _11ty() {
  * @returns {TaskFunction}
  */
 var buildLocal = gulp.series(
+  _deleteDistLiquid,
   _setUserId,
   __isDevMode() ? buildCssDebug : buildCss,
   _11ty,

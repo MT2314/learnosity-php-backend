@@ -7,3 +7,6 @@ npm run buildd --prefix ./amp-template-generator
 
 # run the ilc-amp build of showcase page
 npm run builds --prefix ./amp-template-generator
+
+# run the ilc-amp build of showcase page
+npm run buildn --prefix ./amp-template-generator
