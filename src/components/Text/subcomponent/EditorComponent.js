@@ -67,7 +67,8 @@ const EditorComponent = ({
   //track clicks outside text div
   const textRef = useRef(null);
 
-  // state for List toolbar selection
+  // state for Align & List toolbar selection
+  const [activeDropDownAlignItem, setActiveDropDownAlignItem] = useState('');
   const [activeDropDownListItem, setActiveDropDownListItem] = useState('');
 
   const ConfigBar = {
@@ -141,6 +142,9 @@ const EditorComponent = ({
       currentFormat?.list
         ? setActiveDropDownListItem(currentFormat.list)
         : setActiveDropDownListItem('');
+      currentFormat?.align
+        ? setActiveDropDownAlignItem(currentFormat.align)
+        : setActiveDropDownAlignItem('left');
     }
   };
 
@@ -365,6 +369,8 @@ const EditorComponent = ({
           focusRef={focusRef}
           activeDropDownListItem={activeDropDownListItem}
           setActiveDropDownListItem={setActiveDropDownListItem}
+          activeDropDownAlignItem={activeDropDownAlignItem}
+          setActiveDropDownAlignItem={setActiveDropDownAlignItem}
         />
       </div>
 

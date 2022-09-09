@@ -15,6 +15,8 @@ const CustomToolBar = ({
   toolbarId,
   activeDropDownListItem,
   setActiveDropDownListItem,
+  activeDropDownAlignItem,
+  setActiveDropDownAlignItem,
 }) => {
   const setShowMath = useSetShowMath();
   const showMath = useShowMath();
@@ -28,9 +30,6 @@ const CustomToolBar = ({
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons['align']);
 
   const [activeDirection, setActiveDirection] = useState('left');
-
-  // state for Align toolbar selection
-  const [activeDropDownAlignItem, setActiveDropDownAlignItem] = useState('');
 
   //focus to the list and align. Bold Ref is found in EditorComponent.js
   const listRef = useRef(null);

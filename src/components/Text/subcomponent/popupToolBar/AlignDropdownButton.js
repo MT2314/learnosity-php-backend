@@ -43,6 +43,7 @@ const AlignDropdownButton = ({
               aria-label="left align"
               onClick={() => {
                 setActiveDropDownItem('left');
+                setVisibleAlignIcon(icons['align']);
               }}
               className={
                 activeDropDownItem === 'left'
@@ -85,7 +86,11 @@ const AlignDropdownButton = ({
                   activeDropDownItem === 'center' ||
                   activeDirection !== 'center'
                 ) {
+                  setActiveDropDownItem('left');
+                  setVisibleAlignIcon(icons['align']);
+                } else {
                   setActiveDropDownItem('center');
+                  setVisibleAlignIcon(icons['center']);
                 }
               }}
             >
@@ -123,7 +128,11 @@ const AlignDropdownButton = ({
                   activeDropDownItem === 'right' ||
                   activeDirection !== 'right'
                 ) {
+                  setActiveDropDownItem('left');
+                  setVisibleAlignIcon(icons['align']);
+                } else {
                   setActiveDropDownItem('right');
+                  setVisibleAlignIcon(icons['right']);
                 }
               }}
             >
