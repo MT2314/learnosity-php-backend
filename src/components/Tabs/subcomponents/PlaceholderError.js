@@ -19,7 +19,7 @@ const PlaceholderError = ({ showError }) => {
     <>
       {showError && (
         <Paragraph>
-          <ErrorOutlineIcon /> &nbsp; Error: component is not compatible. Only
+          <ErrorOutlineIcon /> &nbsp; Error: component not compatible. Only
           text, image, chart, table, video, and audio are allowed.
         </Paragraph>
       )}
