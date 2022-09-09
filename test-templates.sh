@@ -3,10 +3,10 @@
 npm run install-templates --prefix ./amp-template-generator
 
 # run the ilc-amp build of demo files
-npm run buildd --prefix ./amp-template-generator
+#npm run buildd --prefix ./amp-template-generator
 
 # run the ilc-amp build of showcase page
-npm run builds --prefix ./amp-template-generator
+#npm run builds --prefix ./amp-template-generator
 
 # run the ilc-amp build of showcase page
 npm run buildn --prefix ./amp-template-generator
