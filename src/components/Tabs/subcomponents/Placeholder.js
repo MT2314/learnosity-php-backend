@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const PlaceholderContainer = styled("div")(({ isOver, showError }) => ({
-  backgroundColor: isOver ? (showError ? "rgba(211, 47, 47, 0.04)" : "rgba(21, 101, 192, 0.04)") : "inherit",
+  backgroundColor: isOver ? (showError ? "rgba(211, 47, 47, 0.04)" : "rgba(21, 101, 192, 0.04)") : (showError ? "rgba(211, 47, 47, 0.04)" : "inherit"),
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
