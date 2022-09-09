@@ -66,13 +66,13 @@ const CustomToolBar = ({
       {/* bold dropdown starts */}
       <button
         style={{ display: 'none' }}
-        // onClick={(e) => {
-        //   const align = e.target.attributes.getNamedItem('data-align').value
-        //     ? e.target.attributes.getNamedItem('data-align').value
-        //     : 'align';
-        //   setVisibleAlignIcon(icons[align]);
-        //   setActiveDirection(align === 'align' ? 'left' : align);
-        // }}
+        onClick={(e) => {
+          const align = e.target.attributes.getNamedItem('data-align').value
+            ? e.target.attributes.getNamedItem('data-align').value
+            : 'align';
+          setVisibleAlignIcon(icons[align]);
+          setActiveDirection(align === 'align' ? 'left' : align);
+        }}
         className={`alignment-${toolbarId}`}
       ></button>
       <Tooltip
