@@ -2,7 +2,7 @@ import React, { useContext, useCallback, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
 import { TextareaAutosize } from "@material-ui/core";
 
-const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
+const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -34,11 +34,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
     <div
       key={`tab-title-${tabIndex}`}
       tabIndex="0"
-      aria-label={
-        tabTitle
-          ? tabTitle
-          : `Untitled ${placeholderTitle}`
-      }
+      aria-label={tabTitle ? tabTitle : `Untitled ${placeholderTitle}`}
       className={`tab-title ${activeTab === tabIndex ? "active-tab" : ""}`}
       onFocus={() => {
         showToolbar(true);
@@ -46,6 +42,9 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
       onClick={() => {
         setActiveTab(tabIndex);
         showToolbar(true);
+      }}
+      onDragEnter={(e) => {
+        setActiveTab(tabIndex);
       }}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
@@ -80,9 +79,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle}) => {
             WebkitLineClamp: activeTab == tabIndex ? "unset" : 2,
           }}
         >
-          {tabTitle
-            ? tabTitle
-            : placeholderTitle}
+          {tabTitle ? tabTitle : placeholderTitle}
         </p>
       )}
     </div>

@@ -1,20 +1,23 @@
-import React from "react";
-import "react-quill/dist/quill.snow.css";
-import { Card } from "@mui/material";
-import { Tooltip } from "@material-ui/core";
+import React from 'react';
+import 'react-quill/dist/quill.snow.css';
+import { Card } from '@mui/material';
+import { Tooltip } from '@material-ui/core';
 
-import "../../styles/ListDropdownButton.scss";
-import icons from "../../assets/icons";
+import '../../styles/ListDropdownButton.scss';
+import icons from '../../assets/icons';
 
 const ListDropdownButton = ({
   show,
   activeDropDownItem,
-  setActiveDropDownItem,
+  setActiveDropDownListItem,
   onKeyDropDown,
 }) => {
   return (
     <>
-      <Card className={show ? "list-dropdown show" : "list-dropdown hide"} onKeyDown={onKeyDropDown}>
+      <Card
+        className={show ? 'list-dropdown show' : 'list-dropdown hide'}
+        onKeyDown={onKeyDropDown}
+      >
         <Tooltip
           aria-label="bullets"
           title="bullets"
@@ -27,7 +30,7 @@ const ListDropdownButton = ({
               modifiers: {
                 preventOverflow: {
                   enabled: true,
-                  boundariesElement: "window", // where "window" is the boundary
+                  boundariesElement: 'window', // where "window" is the boundary
                 },
               },
             },
@@ -36,20 +39,20 @@ const ListDropdownButton = ({
           <button
             aria-label="bullet list"
             className={
-              activeDropDownItem === "bullet"
-                ? "ql-list ql-selected ql-active"
-                : "ql-list"
+              activeDropDownItem === 'bullet'
+                ? 'ql-list ql-selected ql-active'
+                : 'ql-list'
             }
             value="bullet"
             onClick={() => {
-              if (activeDropDownItem === "bullet") {
-                setActiveDropDownItem("");
+              if (activeDropDownItem === 'bullet') {
+                setActiveDropDownListItem('');
               } else {
-                setActiveDropDownItem("bullet");
+                setActiveDropDownListItem('bullet');
               }
             }}
           >
-            {icons["bullet"]}
+            {icons['bullet']}
           </button>
         </Tooltip>
 
@@ -65,7 +68,7 @@ const ListDropdownButton = ({
               modifiers: {
                 preventOverflow: {
                   enabled: true,
-                  boundariesElement: "window", // where "window" is the boundary
+                  boundariesElement: 'window', // where "window" is the boundary
                 },
               },
             },
@@ -74,20 +77,20 @@ const ListDropdownButton = ({
           <button
             aria-label="numbered list"
             className={
-              activeDropDownItem === "ordered"
-                ? "ql-list ql-selected ql-active"
-                : "ql-list"
+              activeDropDownItem === 'ordered'
+                ? 'ql-list ql-selected ql-active'
+                : 'ql-list'
             }
             value="ordered"
             onClick={() => {
-              if (activeDropDownItem === "ordered") {
-                setActiveDropDownItem("");
+              if (activeDropDownItem === 'ordered') {
+                setActiveDropDownListItem('');
               } else {
-                setActiveDropDownItem("ordered");
+                setActiveDropDownListItem('ordered');
               }
             }}
           >
-            {icons["ordered"]}
+            {icons['ordered']}
           </button>
         </Tooltip>
       </Card>
