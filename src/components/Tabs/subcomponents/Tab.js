@@ -45,7 +45,7 @@ const Tab = ({ tab, tabIndex }) => {
     ],
     drop: async (item, monitor) => {
       if (!acceptListComp(item)) setShowDropError(true);
-      if (item.within) return;
+      if (item.within && components.length !== 0) return;
       if (monitor.didDrop()) return;
       if (acceptListComp(item)) {
         dispatch({
@@ -56,6 +56,7 @@ const Tab = ({ tab, tabIndex }) => {
             componentProps: JSON.parse(item?.componentProps),
           },
         });
+        item?.delete && item?.delete(item.tabIndex, item.compIndex);
       }
     },
 

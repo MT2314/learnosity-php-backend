@@ -111,26 +111,39 @@ const ComponentWrapper = ({
 
       const dragIndex = item?.compIndex;
 
+      const currentTab = item?.tabIndex === tabIndex;
+
       if (acceptListComp(item)) {
         dispatch({
           func:
-            item.compIndex !== undefined
+            item.compIndex !== undefined && currentTab
               ? "DRAG_COMPONENT"
               : "DRAG_ADD_NEW_COMPONENT",
           tabIndex: tabIndex,
-          ...(item.compIndex !== undefined && { dragIndex: dragIndex }),
+          ...((item.compIndex !== undefined || !currentTab) && {
+            dragIndex: dragIndex,
+          }),
           hoverIndex: hoverIndex,
-          ...(item.compIndex === undefined && {
+          ...((item.compIndex === undefined || !currentTab) && {
             component: {
               componentName: item.componentName,
               componentProps: JSON.parse(item?.componentProps),
             },
           }),
         });
+        if (!currentTab && item?.delete) {
+          item?.delete(item.tabIndex, item.compIndex);
+        }
       }
     },
     canDrop: (item) => {
-      if (item.compIndex === compIndex && item?.within) return false;
+      if (
+        item.compIndex === compIndex &&
+        item?.within &&
+        item.tabIndex === tabIndex
+      ) {
+        return false;
+      }
 
       return true;
     },
@@ -173,6 +186,14 @@ const ComponentWrapper = ({
       componentName: component.componentName,
       componentProps: JSON.stringify(componentProps),
       compIndex: compIndex,
+      tabIndex: tabIndex,
+      delete: (tabIndex, compIndex) => {
+        dispatch({
+          func: "DELETE_COMPONENT",
+          tabIndex: tabIndex,
+          compIndex: compIndex,
+        });
+      },
       within: true,
       new: true,
     }),
