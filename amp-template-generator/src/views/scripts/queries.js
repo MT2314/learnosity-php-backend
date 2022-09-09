@@ -10,6 +10,7 @@ const F_COMPONENT_CONTAINERS =
     components {
       componentName
       props
+      position
     }
   }
 }`
