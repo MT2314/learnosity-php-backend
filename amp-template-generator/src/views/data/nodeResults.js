@@ -2,8 +2,6 @@ const index = require('../utils/index');
 const headings = require('../utils/headings');
 const queries = require('../scripts/queries');
 const { convertDeltaToHtml } = require('node-quill-converter-improved');
-// var QuillDeltaToHtmlConverter = require('quill-delta-to-html').QuillDeltaToHtmlConverter;
-// const { convertDeltaToHtml } = require('node-quill-mention-converter');
 
 /**
  * Returns a graphql query string based on the name of the query requested.
@@ -115,20 +113,13 @@ console.log('process.env.QUERY', process.env.QUERY, 'queryVars', queryVars);
                     }
                   };
 
-
                 transformComponentPropsRecusive(data);
-
-
-                // let html = convertDeltaToHtml(data.children[0].children[0].componentContainers[0].sections[1].components[0].props.body);
-
-                // console.log(html) ; 
-                // console.log("sections:", data.children[0].children[0].componentContainers[0].sections);
 
                 const components = data.children[0].children[0].componentContainers[0].sections[1].components;
 
                 for (let i = 0; i < components.length; i++) {
                     let convertedQuillText = convertDeltaToHtml(components[i].props.body)
-                    // console.log("these are the components:", components[i].props.body);
+                    // console.log("these are the text values:", components[i].props.body);
                     console.log("this is the converted html:", convertedQuillText);
                 }
 
@@ -144,11 +135,6 @@ console.log('process.env.QUERY', process.env.QUERY, 'queryVars', queryVars);
                 // console.log('first component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[0].components[0].props).text);
                 // console.log('second component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[1].components[0].props).body);
                 lessons.push(lesson);
-                // lessons[0].name = data.name;
-                // console.log("lessons name:", lessons[0].name);
-                // console.log('lessons: ', lessons[0].componentContainers[0].sections[0].components[0].props.body.ops);
-                // console.log("this is the data:", JSON.stringify(data, undefined, 2));
-                // console.log("this is the data:", data);
             } else {
                 // TODO: may need to check for type if __typename does not exist eg. getLesson
             }
