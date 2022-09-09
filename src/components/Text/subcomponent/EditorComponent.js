@@ -145,6 +145,8 @@ const EditorComponent = ({
       currentFormat?.align
         ? setActiveDropDownAlignItem(currentFormat.align)
         : setActiveDropDownAlignItem('left');
+
+      console.log(currentFormat.align);
     }
   };
 
