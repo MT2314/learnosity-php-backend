@@ -8,5 +8,5 @@ npm run install-templates --prefix ./amp-template-generator
 # run the ilc-amp build of showcase page
 #npm run builds --prefix ./amp-template-generator
 
-# run the ilc-amp build of showcase page
+# run the ilc-amp build of node.liquid
 npm run buildn --prefix ./amp-template-generator
