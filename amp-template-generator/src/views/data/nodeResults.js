@@ -2,7 +2,7 @@ const index = require("../utils/index");
 // const headings = require('../utils/headings');
 const quillConverter = require("../utils/quillConverter");
 const queries = require("../scripts/queries");
-const { convertDeltaToHtml } = require("node-quill-converter-improved");
+// const { convertDeltaToHtml } = require("node-quill-converter-improved");
 
 /**
  * Returns a graphql query string based on the name of the query requested.
@@ -13,6 +13,7 @@ const { convertDeltaToHtml } = require("node-quill-converter-improved");
 function _getQuery(q) {
   switch (q) {
     case "course":
+      console.log("queries course:", queries.course);
       return queries.course;
     case "lesson":
     default:
@@ -134,19 +135,28 @@ module.exports = async function () {
 
         transformComponentPropsRecusive(data);
 
-        const components =
-          data.children[0].children[0].componentContainers[0].sections[1]
-            .components;
+        // const components =
+        //   data.children[0].children[0].componentContainers[0].sections[1]
+        //     .components;
 
-        for (let i = 0; i < components.length; i++) {
-          let convertedQuillText = convertDeltaToHtml(components[i].props.body);
-          // console.log("these are the text values:", components[i].props.body);
-          console.log("this is the converted html:", convertedQuillText);
-        }
+        // for (let i = 0; i < components.length; i++) {
+        //   let convertedQuillText = convertDeltaToHtml(components[i].props.body);
+        //   // console.log("these are the text values:", components[i].props.body);
+        //   console.log("this is the converted html:", convertedQuillText);
+        // }
 
-        var lesson = data.children[0].children[0];
-        console.log("this is the data in lesson:", lesson);
-        // var lesson = quillConverter.parse(data.children[0].children[0]);
+        // var lesson = data.children[0].children[0];
+        // console.log("this is the data in lesson:", lesson);
+
+        // var lesson = quillConverter.parse(
+        //   data.children[0].children[0].componentContainers[0].sections
+        // );
+        var lesson = quillConverter.parse(data.children[0].children[0]);
+
+        console.log(
+          "component name log from nodeResults:",
+          JSON.stringify(data.children[0].children[0], null, 2)
+        );
 
         // console.log('this is a course', data.__typename, data.courseCode);
         // console.log('number of children ', data.children.length);

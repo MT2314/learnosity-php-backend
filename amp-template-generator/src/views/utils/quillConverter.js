@@ -1,3 +1,4 @@
+const { convertDeltaToHtml } = require("node-quill-converter-improved");
 /**
  * Recursively parses an Object's children to set a "heading.headingLevel"
  * property. Returns a new version of the Object. Throws an error if level is
@@ -22,38 +23,24 @@ function parse(entity) {
     return (element = parse(element));
   }
 
-  // set heading levels of entities that are "underneath" this one
-  switch (entity.type) {
-    case "lesson":
-      entity.sections.forEach(__parseElement);
-      break;
-    case "section":
-      entity.topics.forEach(__parseElement);
-      break;
-    case "topic":
-    case "tab":
-      entity.components.forEach(__parseElement);
-      break;
-    case "accordion":
-      entity.accordionPanes.forEach((item) => {
-        _setHtml(item.heading);
-      });
-      break;
-    case "carousel":
-      entity.slides.forEach(__parseElement);
-      break;
-    case "tabs":
-      // parse() each tab
-      entity.tabs.forEach((tab) => {
-        parse(tab);
-      });
-      break;
-    default:
-    // nothing to do here, because anything else doesn't have a fancy heading.
-  }
+  // I am passing over the course
+  // I have access to componentContainers
+  // Inside componentContainers there is sections
+  // Sections hold non-learning and learning sections
+  // Within the sections are the components
+  // Inside of the components array is the { componentName: 'Text', props: { body: { ops: [Array] } } }
+  // I need access to props.body to be able to convert it to a html element
 
-  // set this entity's heading level
-  _setHtml(entity.heading);
+  // set heading levels of entities that are "underneath" this one
+  if (entity.__typename === "CourseStructureContainer") {
+    entity.componentContainers.forEach(__parseElement);
+  } else if (entity.__typename === "ComponentContainer") {
+    entity.sections.forEach(__parseElement);
+  } else if (entity.type === "NONLEARNING" || entity.type === "LEARNING") {
+    entity.components.forEach(__parseElement);
+  } else if (entity.componentName === "Text") {
+    entity.props.body = _setHtml(entity.props.body);
+  }
 
   return entity;
 }
@@ -66,10 +53,8 @@ function parse(entity) {
  * @param {Integer} level
  * @throws {Error}
  */
-function _setHtml(heading) {
-  if (heading) {
-    heading.headingLevel = "h" + level;
-  }
+function _setHtml(quill) {
+  return convertDeltaToHtml(quill);
 }
 
 module.exports = {
