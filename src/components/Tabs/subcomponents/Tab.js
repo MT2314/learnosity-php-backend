@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { useDrop } from "react-dnd";
 import styled from "@emotion/styled";
 
@@ -12,18 +12,20 @@ import PlaceholderError from "./PlaceholderError";
 // NOTE: We can use theme once it is set it up end to end
 const StyleTabBody = styled("div")(({ theme, isDragging }) => ({
   padding: "10px 10px 20px 10px",
-  borderColor: '#bdbdbd',
-  borderStyle: 'solid',
-  borderWidth:'0 1px 1px 1px',
+  borderColor: "#bdbdbd",
+  borderStyle: "solid",
+  borderWidth: "0 1px 1px 1px",
   backgroundColor: isDragging ? "#E9EDF1" : "white",
 }));
 
 const Tab = ({ tab, tabIndex }) => {
   const { id, components } = tab;
+  const dropRef = useRef(null);
 
   const [activeTab] = useContext(TabContext);
   const [, dispatch] = useContext(LayoutContext);
   const [isDragging, setIsDragging] = useState(false);
+  const [inContainer, setInContainer] = useState(null);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -43,6 +45,7 @@ const Tab = ({ tab, tabIndex }) => {
     ],
     drop: async (item, monitor) => {
       if (!acceptListComp(item)) setShowDropError(true);
+      if (item.within && components.length !== 0) return;
       if (monitor.didDrop()) return;
       if (acceptListComp(item)) {
         dispatch({
@@ -53,12 +56,10 @@ const Tab = ({ tab, tabIndex }) => {
             componentProps: JSON.parse(item?.componentProps),
           },
         });
+        item?.delete && item?.delete(item.tabIndex, item.compIndex);
       }
     },
-    canDrop: (item) => {
-      if (item.within) return false;
-      return true;
-    },
+
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       getItem: monitor.getItem(),
@@ -88,39 +89,47 @@ const Tab = ({ tab, tabIndex }) => {
     }
   }, [isOver]);
 
+  drop(dropRef);
+
   return (
-    <StyleTabBody
-      ref={drop}
-      key={id}
-      data-testid="tab-drop-zone"
-      isDragging={isDragging}
-    >
-      {activeTab === tabIndex && components.length === 0 ? (
-        <Placeholder isOver={isOver} showError={showError} />
-      ) : (
-        <ul
-          style={{
-            padding: 0,
-            listStyleType: "none",
-          }}
-          isOver={isOver}
-        >
-          {components.map((component, compIndex) => {
-            return (
-              <ComponentWrapper
-                key={`key-component-${compIndex}`}
-                numOfComponent={components.length}
-                component={component}
-                compIndex={compIndex}
-                tabIndex={tabIndex}
-                setIsDragging={setIsDragging}
-              />
-            );
-          })}
-          <PlaceholderError showError={showDropError} />
-        </ul>
-      )}
-    </StyleTabBody>
+    <>
+      <StyleTabBody
+        onDragLeave={() => setInContainer(false)}
+        onDragOver={() => setInContainer(true)}
+        ref={dropRef}
+        key={id}
+        data-testid="tab-drop-zone"
+        isDragging={isDragging}
+      >
+        {activeTab === tabIndex && components.length === 0 ? (
+          <Placeholder isOver={isOver} showError={showError} />
+        ) : (
+          <ul
+            style={{
+              padding: 0,
+              listStyleType: "none",
+            }}
+            isOver={isOver}
+          >
+            {components.map((component, compIndex) => {
+              return (
+                <ComponentWrapper
+                  key={`key-component-${compIndex}`}
+                  numOfComponent={components.length}
+                  componentProps={component.componentProps}
+                  component={component}
+                  compIndex={compIndex}
+                  tabIndex={tabIndex}
+                  setIsDragging={setIsDragging}
+                  inContainer={inContainer}
+                />
+              );
+            })}
+            <PlaceholderError showError={showDropError} />
+          </ul>
+        )}
+      </StyleTabBody>
+    </>
   );
 };
 export default Tab;

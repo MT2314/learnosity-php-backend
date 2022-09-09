@@ -60,6 +60,7 @@ const ComponentWrapper = ({
   tabIndex,
   setIsDragging,
   numOfComponent,
+  inContainer,
 }) => {
   const dropRef = useRef(null);
 
@@ -68,7 +69,7 @@ const ComponentWrapper = ({
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
 
   // !WIP - needed to drag and drop outside of Tabs
-  // const prevNumOfComponent = usePrevious(numOfComponent);
+  const prevNumOfComponent = usePrevious(numOfComponent);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -110,26 +111,39 @@ const ComponentWrapper = ({
 
       const dragIndex = item?.compIndex;
 
+      const currentTab = item?.tabIndex === tabIndex;
+
       if (acceptListComp(item)) {
         dispatch({
           func:
-            item.compIndex !== undefined
+            item.compIndex !== undefined && currentTab
               ? "DRAG_COMPONENT"
               : "DRAG_ADD_NEW_COMPONENT",
           tabIndex: tabIndex,
-          ...(item.compIndex !== undefined && { dragIndex: dragIndex }),
+          ...((item.compIndex !== undefined || !currentTab) && {
+            dragIndex: dragIndex,
+          }),
           hoverIndex: hoverIndex,
-          ...(item.compIndex === undefined && {
+          ...((item.compIndex === undefined || !currentTab) && {
             component: {
               componentName: item.componentName,
               componentProps: JSON.parse(item?.componentProps),
             },
           }),
         });
+        if (!currentTab && item?.delete) {
+          item?.delete(item.tabIndex, item.compIndex);
+        }
       }
     },
     canDrop: (item) => {
-      if (item.compIndex === compIndex) return false;
+      if (
+        item.compIndex === compIndex &&
+        item?.within &&
+        item.tabIndex === tabIndex
+      ) {
+        return false;
+      }
 
       return true;
     },
@@ -152,11 +166,13 @@ const ComponentWrapper = ({
       // Dragging downwards
       if (hoverClientY > hoverMiddleY) {
         setDropIndexOffset(0);
+
         return;
       }
       // Dragging upwards
       if (hoverClientY < hoverMiddleY) {
         setDropIndexOffset(1);
+
         return;
       }
 
@@ -170,8 +186,16 @@ const ComponentWrapper = ({
       componentName: component.componentName,
       componentProps: JSON.stringify(componentProps),
       compIndex: compIndex,
+      tabIndex: tabIndex,
+      delete: (tabIndex, compIndex) => {
+        dispatch({
+          func: "DELETE_COMPONENT",
+          tabIndex: tabIndex,
+          compIndex: compIndex,
+        });
+      },
       within: true,
-      //new: true, - !!WIP - Allow components to be dragged and dropped outside Tabs
+      new: true,
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -186,23 +210,16 @@ const ComponentWrapper = ({
 
   drop(dropRef);
 
-  /* !!WIP - Remove the component if it was dropped outside of the container 
-   useEffect(() => {
-     if (
-       didDrop &&
-       prevNumOfComponent === numOfComponent &&
-       droppedItem?.within &&
-       !droppedInContainer
-     ) {
-       console.log("Running");
-       dispatch({
-         func: "DELETE_COMPONENT",
-         tabIndex: tabIndex,
-         compIndex: compIndex,
-       });
-     }
-   }, [didDrop]);
-  */
+  useEffect(() => {
+    if (didDrop && prevNumOfComponent === numOfComponent && !inContainer) {
+      dispatch({
+        func: "DELETE_COMPONENT",
+        tabIndex: tabIndex,
+        compIndex: compIndex,
+      });
+      setIsDragging(false);
+    }
+  }, [didDrop]);
 
   return (
     <>
@@ -225,7 +242,10 @@ const ComponentWrapper = ({
             offsetDown={-15}
             offsetUp={-1}
           />
-          <ComponentLabelContainer showSelf={showSelf} data-testid='component-component-label-container'>
+          <ComponentLabelContainer
+            showSelf={showSelf}
+            data-testid="component-component-label-container"
+          >
             <span
               ref={drag}
               data-testid="component-drag"
@@ -337,7 +357,6 @@ const ComponentWrapper = ({
   );
 };
 
-/* WIP - Needed for Drag and Drop outside of Tabs
 const usePrevious = (value) => {
   const ref = useRef();
   useEffect(() => {
@@ -345,6 +364,5 @@ const usePrevious = (value) => {
   });
   return ref.current;
 };
-*/
 
 export default ComponentWrapper;
