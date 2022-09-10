@@ -13,7 +13,6 @@ const queries = require("../scripts/queries");
 function _getQuery(q) {
   switch (q) {
     case "course":
-      console.log("queries course:", queries.course);
       return queries.course;
     case "lesson":
     default:
@@ -153,10 +152,10 @@ module.exports = async function () {
         // );
         var lesson = quillConverter.parse(data.children[0].children[0]);
 
-        console.log(
-          "component name log from nodeResults:",
-          JSON.stringify(data.children[0].children[0], null, 2)
-        );
+        // console.log(
+        //   "component name log from nodeResults:",
+        //   JSON.stringify(data.children[0].children[0], null, 2)
+        // );
 
         // console.log('this is a course', data.__typename, data.courseCode);
         // console.log('number of children ', data.children.length);

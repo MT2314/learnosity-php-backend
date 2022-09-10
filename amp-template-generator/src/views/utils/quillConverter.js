@@ -39,7 +39,19 @@ function parse(entity) {
   } else if (entity.type === "NONLEARNING" || entity.type === "LEARNING") {
     entity.components.forEach(__parseElement);
   } else if (entity.componentName === "Text") {
-    entity.props.body = _setHtml(entity.props.body);
+    if (entity.props.body) {
+      console.log("converted text:", entity.props.body);
+      entity.props.body = _setHtml(entity.props.body);
+    }
+  } else if (entity.componentName === "Tab") {
+    for (let i = 0; i < entity.props.layoutState.length; i++) {
+      for (let j = 0; j < entity.props.layoutState[i].components.length; j++) {
+        entity.props.layoutState[i].components[j].componentProps.body =
+          _setHtml(
+            entity.props.layoutState[i].components[j].componentProps.body
+          );
+      }
+    }
   }
 
   return entity;
