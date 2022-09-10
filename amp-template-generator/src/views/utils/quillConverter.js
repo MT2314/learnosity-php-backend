@@ -1,14 +1,5 @@
 const { convertDeltaToHtml } = require("node-quill-converter-improved");
-/**
- * Recursively parses an Object's children to set a "heading.headingLevel"
- * property. Returns a new version of the Object. Throws an error if level is
- * ever > 6.
- *
- * @param {Object} entity
- * @param {Integer} level (default 0)
- * @returns {Object}
- * @throws {Error}
- */
+
 function parse(entity) {
   /**
    * Internal callback to recursively call self at the next level. Called by
@@ -31,7 +22,7 @@ function parse(entity) {
   // Inside of the components array is the { componentName: 'Text', props: { body: { ops: [Array] } } }
   // I need access to props.body to be able to convert it to a html element
 
-  // set heading levels of entities that are "underneath" this one
+  // set html levels of entities that are "underneath" this one
   if (entity.__typename === "CourseStructureContainer") {
     entity.componentContainers.forEach(__parseElement);
   } else if (entity.__typename === "ComponentContainer") {
@@ -40,7 +31,6 @@ function parse(entity) {
     entity.components.forEach(__parseElement);
   } else if (entity.componentName === "Text") {
     if (entity.props.body) {
-      console.log("converted text:", entity.props.body);
       entity.props.body = _setHtml(entity.props.body);
     }
   } else if (entity.componentName === "Tab") {
@@ -57,14 +47,7 @@ function parse(entity) {
   return entity;
 }
 
-/**
- * Sets "heading.headingLevel" to level. Throws an error if level > 6.
- *
- * @private
- * @param {Object} heading
- * @param {Integer} level
- * @throws {Error}
- */
+// Converts the quill data into a html element
 function _setHtml(quill) {
   return convertDeltaToHtml(quill);
 }
