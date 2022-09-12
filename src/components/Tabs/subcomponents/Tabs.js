@@ -9,7 +9,7 @@ const Tabs = () => {
   const [activeTab] = useContext(TabContext);
   const [state] = useContext(LayoutContext);
   const [toolbar, showToolbar] = useState(false);
-
+  const [removeError, setRemoveError] = useState(false);
   return (
     <>
       <div className="tab-container" data-testid="tab-component">
@@ -24,13 +24,15 @@ const Tabs = () => {
           }}
         >
           <div className={toolbar ? "show-tabtoolbar" : "hide-tabtoolbar"}>
-            <ConfigBar />
+            <ConfigBar setRemoveError={setRemoveError} />
           </div>
-          {state.map((tabTitle, tabIndex, index) => {
+          {state.map((tab, tabIndex) => {
             return (
               <TabTitle
-                key={index}
-                tabTitle={tabTitle}
+                key={`tab-title-${tabIndex}`}
+                tabTitle={tab.title}
+                tab={tab}
+                placeholderTitle={tab.placeholderTitle}
                 tabIndex={tabIndex}
                 showToolbar={showToolbar}
               />
@@ -41,7 +43,12 @@ const Tabs = () => {
           return (
             <>
               {activeTab === tabIndex ? (
-                <Tab tabIndex={tabIndex} tab={tab} />
+                <Tab
+                  tabIndex={tabIndex}
+                  tab={tab}
+                  removeError={removeError}
+                  setRemoveError={setRemoveError}
+                />
               ) : null}
             </>
           );

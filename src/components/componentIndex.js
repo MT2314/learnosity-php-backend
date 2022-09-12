@@ -1,6 +1,6 @@
-import Callout, {
-  defaultProps as calloutDefaultProps,
-} from "./Callout/Callout";
+import InfoBox, {
+  defaultProps as infoBoxDefaultProps,
+} from "./InfoBox/InfoBox";
 import Image, { defaultProps as imageDefaultProps } from "./Image/Image";
 import QuoteBox, {
   defaultProps as quoteBoxDefaultProps,
@@ -26,6 +26,12 @@ import tabsComponentIcon from "../Icons/componentIcons/tabsIcon.png"
 import textComponentIcon from "../Icons/componentIcons/textIcon.png"
 import defaultComponentIcon from "../Icons/componentIcons/defaultIcon.png"
 
+import exposedVersion from "../../exposedStage"
+
+console.log(
+  `Component Library stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`
+);
+
 export const categories = {
   interactive: {
     readableName: "Interactive",
@@ -42,13 +48,13 @@ export const categories = {
 };
 
 const componentIndex = {
-  Callout: {
-    Component: Callout,
-    readableName: "Callout",
-    defaultProps: calloutDefaultProps,
+  InfoBox: {
+    Component: InfoBox,
+    readableName: "InfoBox",
+    defaultProps: infoBoxDefaultProps,
     version: "0.0.1",
     category: categories.text,
-    dndLabel: calloutDndLabel, 
+    dndLabel: calloutDndLabel,
     componentIcon: defaultComponentIcon
   },
   Text: {

@@ -1,45 +1,90 @@
-import React, { createContext, useReducer, useEffect, useState } from "react";
-import produce from "immer";
+import React, { createContext, useReducer, useEffect, useState } from 'react';
+import produce from 'immer';
 
 //state of tabs data stored in LayoutContext
 export const LayoutContext = createContext();
 
 export const layoutConfig = (draft, action) => {
   switch (action.func) {
-    case "ADD_TAB":
+    case 'ADD_TAB':
       draft.push({
-        type: "TAB",
         id: action.id,
+        title: "",
+        placeholderTitle: action.title,
         components: [],
       });
       return draft;
-    case "REMOVE_TAB":
+    case 'REMOVE_TAB':
       draft.splice(action.currentTab, 1);
       return draft;
-    case "ADD_COMPONENT":
+    case 'ADD_COMPONENT':
       draft[action.tabIndex].components.push({
         ...action.component,
       });
       return draft;
-    case "MOVE_TAB_LEFT":
+    case 'MOVE_TAB_LEFT':
       // eslint-disable-next-line no-case-declarations
       const elementL = draft[action.tabIndex];
       draft.splice(action.tabIndex, 1);
       draft.splice(action.tabIndex - 1, 0, elementL);
       return draft;
-    case "MOVE_TAB_RIGHT":
+    case 'MOVE_TAB_RIGHT':
       // eslint-disable-next-line no-case-declarations
       const elementR = draft[action.tabIndex];
       draft.splice(action.tabIndex, 1);
       draft.splice(action.tabIndex + 1, 0, elementR);
       return draft;
-    case "UPDATE_COMPONENT":
+    case 'UPDATE_COMPONENT':
       draft[action.tabIndex].components[action.compIndex].componentProps = {
         ...action.stateUpdate,
       };
       return draft;
     case "DELETE_COMPONENT":
-      draft[action.tabIndex].components.splice(action.componentIndex, 1);
+      draft[action.tabIndex].components.splice(action.compIndex, 1);
+      return draft;
+    case "MOVE_COMPONENT_DOWN":
+      // eslint-disable-next-line no-case-declarations
+      const elementCR = draft[action.tabIndex].components[action.compIndex];
+      draft[action.tabIndex].components.splice(action.compIndex, 1);
+      draft[action.tabIndex].components.splice(
+        action.compIndex + 1,
+        0,
+        elementCR
+      );
+      return draft;
+    case "MOVE_COMPONENT_UP":
+      // eslint-disable-next-line no-case-declarations
+      const elementCL = draft[action.tabIndex].components[action.compIndex];
+      draft[action.tabIndex].components.splice(action.compIndex, 1);
+      draft[action.tabIndex].components.splice(
+        action.compIndex - 1,
+        0,
+        elementCL
+      );
+      return draft;
+    case "DUPLICATE_COMPONENT":
+      draft[action.tabIndex].components.splice(
+        action.compIndex + 1,
+        0,
+        draft[action.tabIndex].components[action.compIndex]
+      );
+      return draft;
+    case "DRAG_COMPONENT":
+      // eslint-disable-next-line no-case-declarations
+      const dragElement = draft[action.tabIndex].components[action.dragIndex];
+      draft[action.tabIndex].components.splice(action.dragIndex, 1);
+      draft[action.tabIndex].components.splice(
+        action.hoverIndex,
+        0,
+        dragElement
+      );
+      return draft;
+    case "DRAG_ADD_NEW_COMPONENT":
+      draft[action.tabIndex].components.splice(
+        action.hoverIndex,
+        0,
+        action.component
+      );
       return draft;
     case "CHANGE_TITLE":
       // eslint-disable-next-line no-case-declarations
@@ -69,7 +114,6 @@ export const TabContext = createContext();
 
 export const ActiveTabProvider = ({ children }) => {
   const [activeTab, setActiveTab] = useState(0);
-
   return (
     <TabContext.Provider value={[activeTab, setActiveTab]}>
       {children}

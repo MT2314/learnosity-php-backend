@@ -1,40 +1,35 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import CustomToolBar from './CustomToolBar';
-import '../styles/EditorComponent.scss';
-import { v4 as uuidv4 } from 'uuid';
+// import CustomToolBar from './CustomToolBar';
+import '../../Text/styles/EditorComponent.scss';
+import { v4 as uuid } from 'uuid';
 import 'quill-paste-smart';
 import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
-import ExtendLinkFunctionality from './popupToolBar/ExtendLinkFunctionality';
+import ExtendLinkFunctionality from '../../Text/subcomponent/popupToolBar/ExtendLinkFunctionality';
 import {
   defaultAnchorState,
   ModifyAnchorText,
   ConvertLinks,
   AddLinkEvents,
   handleSelection,
-} from '../utils/HandleLinks';
-import CheckHighlights from '../utils/CheckHighlights';
-import { FormulaEvents } from '../utils/FormulaEvents';
+} from '../../Text/utils/HandleLinks';
+import CheckHighlights from '../../Text/utils/CheckHighlights';
+import { FormulaEvents } from '../../Text/utils/FormulaEvents';
 
-import setAlignment from '../utils/setAlignment';
-
-import MathPixMarkdown from '../blots/MathPixMarkdown';
+import MathPixMarkdown from '../../Text/blots/MathPixMarkdown';
 import {
   useSetQuill,
   useSetUniqueId,
   useShowMath,
   useKeepEditor,
-  useBoldRef,
-} from '../Provider';
+} from '../../Text/Provider';
 
 import 'katex/dist/katex.css';
 
-const Delta = Quill.import('delta');
-
 Quill.register('formats/mathpix', MathPixMarkdown);
 
-const EditorComponent = ({
+export const InfoBoxBody = ({
   body,
   setProp,
   setShowEditor,
@@ -47,16 +42,12 @@ const EditorComponent = ({
   const setUniqueId = useSetUniqueId();
   const showMath = useShowMath();
   const keepEditor = useKeepEditor();
-  const boldRef = useBoldRef();
 
   //generate a unique id for toolbar and keep it from changing with useMemo
-  const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
+  const toolbarId = useMemo(() => `unique-id-${uuid()}`, []);
 
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
-
-  //alignment observer
-  const [alignmentObserver, setAlignmentObserver] = useState(null);
 
   //state to modify link text
   const [modifyAnchorText, setModifyAnchorText] = useState(defaultAnchorState);
@@ -67,9 +58,8 @@ const EditorComponent = ({
   //track clicks outside text div
   const textRef = useRef(null);
 
-  // state for Align & List toolbar selection
-  const [activeDropDownAlignItem, setActiveDropDownAlignItem] = useState('');
-  const [activeDropDownListItem, setActiveDropDownListItem] = useState('');
+  //focus to the bold
+  const boldRef = useRef(null);
 
   const ConfigBar = {
     display: !isActiveComponent ? (editorIsFocus ? 'flex' : 'none') : 'flex',
@@ -88,7 +78,6 @@ const EditorComponent = ({
 
   useOnClickOutside(textRef, () => {
     if (!showMath && !keepEditor) {
-      alignmentObserver?.disconnect();
       setEditorIsFocus(false);
       setShowEditor(false);
     }
@@ -96,7 +85,7 @@ const EditorComponent = ({
 
   useEffect(() => {
     //set quill instance
-    setQuill(focusRef?.current?.getEditor());
+    setQuill(focusRef.current.getEditor());
     //set unique id instance
     setUniqueId(toolbarId);
     //extend default link functionality on mount
@@ -109,53 +98,12 @@ const EditorComponent = ({
     showEditor && setEditorIsFocus(true);
   }, []);
 
-  useEffect(() => {
-    if (focusRef?.current && body) {
-      //quill instance
-      const quill = focusRef?.current?.getEditor();
-      //convert body to delta
-      const deltaBody = new Delta(body);
-      //get currentContents
-      const currentContents = quill.getContents();
-      //check if currentContents is equal to deltaBody
-      const diff = currentContents.diff(deltaBody);
-      //if not equal set quill to body
-      //check if deltas first insert is empty and attributes is align
-      const alignment =
-        deltaBody.ops[0]?.attributes?.align && deltaBody?.ops[0]?.insert === '';
-      //check if deltas first insert is empty and attributes is list
-      const list =
-        deltaBody.ops[0]?.attributes?.list && deltaBody?.ops[0]?.insert === '';
-      //if difference and not alignment or list set quill to body
-      diff.ops.length > 0 &&
-        !alignment &&
-        !list &&
-        quill.setContents(body, 'silent');
-    }
-  }, [body]);
-
-  // Set formating - align & list  @ current focus
-  const formatSelection = (quillRef) => {
-    if (quillRef !== null && editorIsFocus) {
-      const quill = quillRef.getEditor();
-      const currentFormat = quill.getFormat();
-      currentFormat?.list
-        ? setActiveDropDownListItem(currentFormat.list)
-        : setActiveDropDownListItem('');
-      currentFormat?.align
-        ? setActiveDropDownAlignItem(currentFormat.align)
-        : setActiveDropDownAlignItem('left');
-
-      console.log(currentFormat.align);
-    }
-  };
-
   //set the data when the editor content changes
   const handleDataChange = (content, delta, source, editor) => {
     let editorContent = editor.getContents();
 
     //quill instance
-    const quill = focusRef?.current;
+    const quill = focusRef.current;
     const quillText = quill?.getEditor().getText();
 
     //check for links
@@ -176,10 +124,7 @@ const EditorComponent = ({
     onPaste && (editorContent.ops[0].insert = '');
 
     //update setProp with new editorContent
-    noHighlights &&
-      linksChecked &&
-      source !== 'silent' &&
-      setProp({ body: editorContent });
+    noHighlights && linksChecked && setProp({ body: editorContent });
   };
 
   //check and modify links
@@ -286,7 +231,7 @@ const EditorComponent = ({
   const onKeyDropDown = (e) => {
     if (e.shiftKey && e.key === 'Tab') {
       e.preventDefault();
-      boldRef?.current.focus();
+      boldRef.current.focus();
     }
   };
 
@@ -335,6 +280,11 @@ const EditorComponent = ({
         keepSelection: true,
         substituteBlockElements: false,
         magicPasteLinks: true,
+        hooks: {
+          uponSanitizeElement(node, data, config) {
+            console.log(node);
+          },
+        },
       },
     }),
     []
@@ -347,16 +297,17 @@ const EditorComponent = ({
       onFocus={() => setEditorIsFocus(true)}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
+
         if (relatedTarget.tagName === 'BODY') {
           e.preventDefault();
           return;
         }
+
         if (
           (!relatedTarget ||
             (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
           !showMath
         ) {
-          alignmentObserver?.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
         }
@@ -366,14 +317,12 @@ const EditorComponent = ({
       data-testid="text-editor-component"
     >
       <div style={ConfigBar}>
-        <CustomToolBar
+        {/* <CustomToolBar
           toolbarId={toolbarId}
+          containerId={`toolbar-${toolbarId}`}
+          boldRef={boldRef}
           focusRef={focusRef}
-          activeDropDownListItem={activeDropDownListItem}
-          setActiveDropDownListItem={setActiveDropDownListItem}
-          activeDropDownAlignItem={activeDropDownAlignItem}
-          setActiveDropDownAlignItem={setActiveDropDownAlignItem}
-        />
+        /> */}
       </div>
 
       <ReactQuill
@@ -388,18 +337,16 @@ const EditorComponent = ({
         className="quillEditor"
         onChange={handleDataChange}
         defaultValue={body}
-        onChangeSelection={(range, source, editor) => {
+        onChangeSelection={(range, source, editor) =>
           handleSelection(
             range,
             source,
             editor,
             `toolbar-${toolbarId}`,
             focusRef.current
-          );
-          formatSelection(focusRef.current);
-        }}
+          )
+        }
         onFocus={() => {
-          setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
         }}
         onKeyDown={(e) => {
@@ -409,5 +356,3 @@ const EditorComponent = ({
     </div>
   );
 };
-
-export default EditorComponent;
