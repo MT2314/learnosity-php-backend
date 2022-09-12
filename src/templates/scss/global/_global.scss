@@ -1,9 +1,5 @@
 html {
-    font: 16px/20px Arial, sans-serif;
-
-    @media(min-width: 832px) {
-        font: 18px/22.5px Arial, sans-serif;
-    }
+    font: 16px/20px Inter, sans-serif;
 }
 
 body {
@@ -64,6 +60,10 @@ h6, .h6, .font-smallest {
 
 p {
     margin: 0 0 1.25rem 0;
+    font-weight: 400;
+    line-height: 1.5rem;
+    letter-spacing: 0.009375rem;
+    color: #232323;
 }
 
 a {

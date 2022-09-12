@@ -1,3 +1,7 @@
+amp-selector [option][selected] {
+    outline: none;
+}
+
 .wrapper.tabs {
     // Brightcove videos inside tabs are too wide to fit on small
     // viewports with the default padding. This reduces the outer
@@ -5,6 +9,19 @@
     // alleviate the problem.
     @media(max-width: 380px) {
         padding: 0 5px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 7px;
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.5);
     }
 
     .tabs {
@@ -16,10 +33,23 @@
             & [role=tab] {
                 flex-grow: 1;
                 text-align: center;
-                border: 1px solid $border-color;
+                border: 1px solid #bdbdbd;
                 border-left-width: 0;
+                background-color: #f5f5f5;
+                border-radius: 10px 10px 0px 0px;
+                min-height: 25px;
+                max-height: 36px;
+                word-wrap: break-word;
+                overflow: hidden;
+                font-family: "Inter", sans-serif;
+                font-size: 18px;
                 font-weight: 600;
-                background-color: $tab-default-bg;
+                color: #636363;
+                resize: none;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
 
                 &:first-child {
                     border-left-width: 1px;
@@ -27,22 +57,28 @@
 
                 &:hover {
                     color: inherit;
-                    text-decoration: underline;
+                }
+
+                &:focus {
+                    outline: 2px solid #000;
+                    outline-offset: 0px;
+                    z-index: 1
                 }
 
                 &[selected] {
                     background-color: $tab-active-bg;
                     border-bottom: none;
-                    border-top: 5px solid $tab-active-border-top;
-                    padding-top: 4px; // to account for the larger border shifting the text down
-                    color: $tab-active-text;
-                    text-decoration: underline;
                 }
 
                 // AMP's CSS diminishes the focus outline, so this 
                 // re-applies our focus rule
                 &[selected]:focus {
                     @include outline-focus;
+                    overflow-y: visible;
+                    -webkit-line-clamp: unset;
+                    outline: 2px solid #000;
+                    outline-offset: 0px;
+                    z-index: 1
                 }
             }
 

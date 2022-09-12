@@ -29,6 +29,10 @@ log(JSON.stringify(dirs, null, 2));
  * @private
  * @returns {Promise}
  */
+ function _deleteDistLiquid() {
+  return del([".tmp/11ty/liquid", "dist/liquid"]);
+}
+
 function _cleanStyles() {
   return del([dirs.cssStaging + "*", dirs.webserverRoot + "*.css*"]);
 }
@@ -200,19 +204,19 @@ function _post11tyLocal() {
         extensionVersions: {
           "amp-carousel": "0.1",
         },
-        transformations: [
-          "AddMandatoryTags",
-          "AutoExtensionImporter",
-          "OptimizeImages",
-          //'PreloadHeroImage',
-          "ReorderHeadTransformer",
-          "RewriteAmpUrls",
-          "GoogleFontsPreconnect",
-          "PruneDuplicateResourceHints",
-          "SeparateKeyframes",
-          "RemoveCspNonce",
-          "MinifyHtml",
-        ],
+        // transformations: [
+        //   "AddMandatoryTags",
+        //   "AutoExtensionImporter",
+        //   "OptimizeImages",
+        //   //'PreloadHeroImage',
+        //   "ReorderHeadTransformer",
+        //   "RewriteAmpUrls",
+        //   "GoogleFontsPreconnect",
+        //   "PruneDuplicateResourceHints",
+        //   "SeparateKeyframes",
+        //   "RemoveCspNonce",
+        //   "MinifyHtml",
+        // ],
         minify: false,
       })
     )
@@ -306,11 +310,11 @@ function _11ty() {
   process.env.DEV_MODE = __isDevMode();
 
   return new Promise(function (resolve, reject) {
-    var p = cp.spawn("npx", [
-      "eleventy",
-      `--input=${input}`,
-      `--output=${output}`,
-    ]);
+    var p = cp.spawn(
+      "npx",
+      ["eleventy", `--input=${input}`, `--output=${output}`],
+      { shell: true }
+    );
     p.stdout.on("data", (data) => {
       log(`${data}`);
     });
@@ -333,6 +337,7 @@ function _11ty() {
  * @returns {TaskFunction}
  */
 var buildLocal = gulp.series(
+  _deleteDistLiquid,
   _setUserId,
   __isDevMode() ? buildCssDebug : buildCss,
   _11ty,
@@ -353,7 +358,8 @@ var createViewsFolder = gulp.series(_deleteViewsFolder, function () {
       // "node_modules/@publishing-platform/component-library/dist/templates/views/**/*",
       "../src/templates/views/**/*",
       "src/views/**/*",
-      "!src/views/data/nodeResults.js",
+      // Commented out for now to get the application working locally
+      // "!src/views/data/nodeResults.js",
     ])
     .pipe(gulp.dest("views"));
 });
@@ -410,6 +416,7 @@ function _installBuild() {
   return new Promise(function (resolve, reject) {
     var p = cp.spawn("npm", ["install", "--production"], {
       cwd: "build/nodejs",
+      shell: true,
     });
     p.stdout.on("data", (data) => {
       log(`${data}`);
@@ -429,8 +436,9 @@ function _zipBuild() {
   return new Promise(function (resolve, reject) {
     var p = cp.spawn(
       "zip",
-      ["luke-ilc-amp-layer.zip", "-r", "./nodejs", "--symlinks"],
-      { cwd: "build" }
+      // ["luke-ilc-amp-layer.zip", "-r", "./nodejs", "--symlinks"],
+      ["luke-ilc-amp-layer.zip", "-r", "./nodejs"],
+      { cwd: "build", shell: true }
     );
     p.stdout.on("data", (data) => {
       log(`${data}`);
