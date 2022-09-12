@@ -1,20 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap");
 
-.tab-container {
-  box-sizing: border-box;
-
-  //TYPOGRAPHY
-  font-family: "Inter", sans-serif;
-  letter-spacing: 0.1px;
-  line-height: 25px;
-  color: #636363;
-
-  .tab-title-wrapper {
-    display: flex;
-    min-height: 40px;
-    max-height: 69px;
-
-    //tab title styles
     .tab-title {
       background-color: #f5f5f5;
       border: 1px solid #bdbdbd;
@@ -110,7 +95,7 @@
         }
       }
     }
-  }
+  // }
 
   //tab placeholder styles
   .tab-body {
@@ -118,7 +103,7 @@
     border: 1px solid #bdbdbd;
     border-top: none;
   }
-}
+// }
 
 .hide-tabtoolbar {
   display: none !important;

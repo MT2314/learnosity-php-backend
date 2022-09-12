@@ -1,9 +1,28 @@
 import React, { useState, useContext } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
+import styled from "@emotion/styled";
 
 import Tab from "./Tab";
 import ConfigBar from "../subcomponents/ConfigBar";
 import TabTitle from "./TabTitle";
+
+const StyledTabContainer = styled("div")(({ theme }) => (
+  {
+  boxSizing:'border-box',
+  //TODO: import the font-family from Saas with theme?  or import from google fonts. 
+  //fontFamily: '"Inter", sans-serif',
+  letterSpacing: '0.1px',
+  lineHeight: '25px',
+  color: '#636363',
+}));
+
+const StyledTabTitleWrapper = styled("div")(({ theme }) => (
+  {
+    display: 'flex',
+    minHeight: '40px',
+    maxHeight: '69px',
+
+  }));
 
 const Tabs = () => {
   const [activeTab] = useContext(TabContext);
@@ -12,9 +31,8 @@ const Tabs = () => {
   const [removeError, setRemoveError] = useState(false);
   return (
     <>
-      <div className="tab-container" data-testid="tab-component">
-        <div
-          className="tab-title-wrapper"
+      <StyledTabContainer data-testid="tab-component">
+        <StyledTabTitleWrapper
           role="tablist"
           onBlur={(e) => {
             const relatedTarget = e.relatedTarget || document.activeElement;
@@ -38,7 +56,7 @@ const Tabs = () => {
               />
             );
           })}
-        </div>
+        </StyledTabTitleWrapper>
         {state.map((tab, tabIndex) => {
           return (
             <>
@@ -53,7 +71,7 @@ const Tabs = () => {
             </>
           );
         })}
-      </div>
+      </StyledTabContainer>
     </>
   );
 };
