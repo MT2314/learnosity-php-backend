@@ -71,7 +71,7 @@ const StyledIconButton = styled(IconButton)({
   },
 });
 
-const ConfigBar = () => {
+const ConfigBar = ({ setRemoveError }) => {
   // ? State of tab component
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -103,6 +103,7 @@ const ConfigBar = () => {
 
   // ? Remove Tab
   const removeTab = async (state, activeTab) => {
+    setRemoveError(true);
     dispatch({
       func: 'REMOVE_TAB',
       currentTab: activeTab,

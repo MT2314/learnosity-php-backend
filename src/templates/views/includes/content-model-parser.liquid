@@ -4,9 +4,10 @@
         <p class="demo-wrapper-title">{{item.type}}</p>
 {%- endif -%}
 
-
 {%comment%} Main Content Model Parser block {%endcomment%}
-{%- case item.type -%}
+{%- case item.componentName -%}
+    {%- when "Text" -%}
+        {% include amp-text.html data:item %}
     {%- when "formatted_text_no_heading" -%}
         {% include amp-formatted-text.html data:item %}
     {%- when "formatted_text" -%}
@@ -37,6 +38,8 @@
         {% include amp-quiz.html data:item %}        
     {%- when "tabs" -%}
         {% include amp-tabs.html data:item %}
+    {%- when "Tab" -%}
+        {% include amp-tabs-node.html data:item %}
 {%- endcase -%}
 {%comment%} End Main Content Model Parser block {%endcomment%}
 

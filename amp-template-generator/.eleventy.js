@@ -33,6 +33,10 @@ module.exports = function(eleventyConfig) {
         });
     });
 
+    eleventyConfig.setLiquidOptions({
+        dynamicPartials: false,
+    });
+    
     // Opt-out of using .gitignore with 11ty:
     // https://www.11ty.dev/docs/ignores/
     eleventyConfig.setUseGitIgnore(false);

@@ -1,13 +1,16 @@
 <div class="image wrapper {{wrapperStyles | default: "bottom-margin"}}">
+{% if data.imgLink %}
+<a href="{{data.imgLink}}" >
+{% endif %}
 {% if data.caption %}
 <figure class="figure">
 {% endif %}
 <amp-img
     width="{{data.width}}"
     height="{{data.height}}"
-    alt="{{data.altText}}"
+    alt="{{data.alt}}"
     layout="responsive"
-    src="{{data.url}}"
+    src="{{data.uploadedImg}}"
 {%comment%}
 Removing this until Distribution can fix it...
     srcset="
@@ -85,5 +88,8 @@ Removing this until Distribution can fix it...
     {{data.caption}}
   </figcaption>
 </figure>
+{% endif %}
+{% if data.imgLink %}
+</a>
 {% endif %}
 </div>
