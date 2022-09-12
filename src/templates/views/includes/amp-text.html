@@ -1,31 +1,3 @@
-<!-- <div class="text">
-
-    {% if data.props.body.ops %}
-        {% assign loopData = data.props.body.ops %}
-    {% elsif data.componentProps.body.ops %}
-        {% assign loopData = data.componentProps.body.ops %}
-    {% endif %}
-    
-    {% for insert in loopData %}
-
-        {% assign insertWord = insert.insert %}
-
-        {% if insert.attributes %}
-            {% if insert.attributes.bold %}
-                {% assign insertWord = insertWord | prepend: "<strong>" | append: "</strong>" %}
-            {% endif %}
-            {% if insert.attributes.underline %}
-                {% assign insertWord = insertWord | prepend: "<u>" | append: "</u>"%}
-            {% endif %}
-            {% if insert.attributes.italic %}
-                {% assign insertWord = insertWord | prepend: "<em>" | append: "</em>" %}
-            {% endif %}
-        {% endif %}
-
-        {{insertWord}}
-        
-    {% endfor %}
-</div> -->
 {% if data.props.body %} {% assign loopData = data.props.body %} {% elsif
 data.componentProps.body %} {% assign loopData = data.componentProps.body %} {%
 endif %}

@@ -8,6 +8,8 @@
  * @returns {Object}
  * @throws {Error}
  */
+
+// lesson level
 function parse(entity, level=0) {
     /**
      * Internal callback to recursively call self at the next level. Called by
@@ -25,6 +27,9 @@ function parse(entity, level=0) {
     // set heading levels of entities that are "underneath" this one
     switch (entity.type) {
         case 'lesson':
+            // entity is a lesson
+            // inside lesson is an array of sections
+            // for each sections inside the lesson we are going to call the __parseElement
             entity.sections.forEach(__parseElement);
             break;
         case 'section':
@@ -55,6 +60,7 @@ function parse(entity, level=0) {
     // set this entity's heading level
     _setHeading(entity.heading, level);
     
+    // This return bubbles up a level once you have scanned through that levels components
     return entity;
 }
 
