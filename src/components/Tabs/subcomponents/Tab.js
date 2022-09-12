@@ -18,7 +18,7 @@ const StyleTabBody = styled("div")(({ theme, isDragging }) => ({
   backgroundColor: isDragging ? "#E9EDF1" : "white",
 }));
 
-const Tab = ({ tab, tabIndex }) => {
+const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
   const { id, components } = tab;
   const dropRef = useRef(null);
 
@@ -88,6 +88,11 @@ const Tab = ({ tab, tabIndex }) => {
       setShowDropError(false);
     }
   }, [isOver]);
+
+  useEffect(() => {
+    setShowError();
+    setRemoveError(false);
+  }, [removeError])
 
   drop(dropRef);
 
