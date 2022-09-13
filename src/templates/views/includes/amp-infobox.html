@@ -1,4 +1,4 @@
-{%- case data.calloutType -%}
+{%- case data.props.infoBoxState.infoBoxIcon -%}
   {%- when "Definition" -%}
     {%- assign className = "definition" -%}
     
@@ -35,7 +35,7 @@
       <div class="co-row">
         <div class="co-cell"></div>
         <div class="co-cell">
-          {{ data.body }}
+          {{ data.props.body }}
         </div>
       </div>
     </div>

@@ -1,0 +1,76 @@
+{% if data.props.type == "brightcove" -%}
+    
+    <div class="brightcove wrapper bottom-margin">
+        <amp-brightcove
+            data-account="23648095001"
+
+        {%comment%}
+            The player id originally was pulled out of the CMS. For now we are pointing
+            at a "test player" built by distribution
+            data-player="{{data.props.videoId}}"
+        {%endcomment%}
+
+            data-player="Kl2Y7HovlM"
+            data-video-id="{{data.props.videoId}}"
+            layout="responsive"
+            width="900"
+            height="500"
+            noloading
+        >
+        </amp-brightcove>
+
+    </div>
+
+    {%comment%}
+        TODO: find out if these are needed 
+        
+        "caption": null,
+        "credit": null,
+        "transcript": {
+            "blocks": [
+                {
+                    "key": "7m3m2",
+                    "text": "",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [],
+                    "data": {}
+                }
+            ],
+            "entityMap": {}
+        }
+    {%endcomment%}
+
+    {% elsif data.props.type == "youTube" %}
+    
+    {%- assign videoId = data.props.videoId | split: '=' | last -%}
+    
+        <div class="youtube wrapper bottom-margin">
+
+        {%comment%}
+            The player will always be 16x9 (widescreen) and take up the "full width" of it's parent.
+            The Youtube player itself will determine the height/width of the video source, and letterbox
+            as needed.
+            The Placeholder image will be stretched to "full width" regardless of thumbnail dimensions.
+        {%endcomment%}
+
+            <amp-youtube
+                width="16"
+                height="9"
+                layout="responsive"
+                data-param-modestbranding="1"
+                data-param-rel="1"
+                data-videoid="{{ videoId }}"
+            >
+            {%comment%} TODO: Find placeholder {%endcomment%}
+                <!-- <amp-img
+                    src="{{data.thumbnailUrl}}"
+                    placeholder
+                    layout="fill"
+                ></amp-img> -->
+            </amp-youtube>
+        </div>
+
+    {%- endif -%}
+

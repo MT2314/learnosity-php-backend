@@ -10,6 +10,15 @@
         {% include amp-text.html data:item %}
     {%- when "Image" -%}
         {% include amp-image.html data:item %}
+    {%- when "Video" -%}
+        {% include amp-video.html data:item %}
+    {%- when "Tab" -%}
+        {% include amp-tabs.html data:item %}
+    {%- when "IFrame" -%}
+        {% include amp-iframe.html data:item %}
+    {%- when "InfoBox" -%}
+        {% include amp-infobox.html data:item %}
+    {%comment%} Not using below. {%endcomment%}
     {%- when "formatted_text_no_heading" -%}
         {% include amp-formatted-text.html data:item %}
     {%- when "formatted_text" -%}
@@ -20,14 +29,8 @@
         {% include amp-accordion.html data:item %}
     {%- when "audio" -%}
         {% include amp-audio.html data:item %}
-    {%- when "brightcove_video" -%}
-        {% include amp-brightcove-video.html data:item %}
-    {%- when "iframe" -%}
-        {% include amp-iframe.html data:item %}
     {%- when "image" -%}
         {% include amp-image.html data:item %}
-    {%- when "callout" -%}
-        {% include amp-callout.html data:item %}
     {%- when "youtube_video" -%}
         {% include amp-youtube-video.html data:item %}
     {%- when "question_and_answer" -%}
@@ -37,11 +40,7 @@
     {%- when "carousel" -%}
         {% include amp-carousel.html data:item %} 
     {%- when "quiz" -%}
-        {% include amp-quiz.html data:item %}        
-    {%- when "tabs" -%}
-        {% include amp-tabs.html data:item %}
-    {%- when "Tab" -%}
-        {% include amp-tabs-node.html data:item %}
+        {% include amp-quiz.html data:item %}
 {%- endcase -%}
 {%comment%} End Main Content Model Parser block {%endcomment%}
 
