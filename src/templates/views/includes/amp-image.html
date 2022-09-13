@@ -85,24 +85,24 @@ Removing this until Distribution can fix it...
 
   </amp-img>
 
+  {% if data.props.imgLink %}
+    <a href="{{data.props.imgLink}}" target="_blank">{{data.props.alt}}</a>
+  {% endif %}
+  
   {% if data.props.caption %}
-    <figure>
+    <figure class="figure">
       <figcaption class="caption center pt2 italic">
         {{data.props.caption}}
       </figcaption>
     </figure>
   {% endif %}
 
-  {% if data.props.imgLink %}
-    <a href="{{data.props.imgLink}}" target="_blank">{{data.props.alt}}</a>
-  {% endif %}
+  <!-- {% if data.props.longDesc %}
+    ToDo: create a long description
+  {% endif %} -->
 
-  {% if data.props.caption %}
-    <figure class="figure">
-  {% endif %}
+  <!-- {% if data.props.credit %}
+    ToDo: create a credit section
+  {% endif %} -->
 
-  <script type="text/javascript">
-    console.log("data");
-    console.log({{ data }});
-  </script>
 </div>
