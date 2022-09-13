@@ -47,7 +47,7 @@ const StyledPlaceholder = styled('div')(({ theme, activeTab, tabIndexProp }) => 
   }
 ))
 
-const StyledInput = styled('TextareaAutosize')(({ theme, activeTab, tabIndexProp }) => (
+const StyledInput = styled(TextareaAutosize)(({ theme, activeTab, tabIndexProp }) => (
   {
     fontFamily: '"Inter", sans-serif',
     border: 'none',
