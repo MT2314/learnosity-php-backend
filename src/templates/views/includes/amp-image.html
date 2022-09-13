@@ -1,16 +1,16 @@
 <div class="image wrapper {{wrapperStyles | default: "bottom-margin"}}">
-{% if data.imgLink %}
-<a href="{{data.imgLink}}" >
-{% endif %}
-{% if data.caption %}
-<figure class="figure">
-{% endif %}
-<amp-img
-    width="{{data.width}}"
-    height="{{data.height}}"
-    alt="{{data.alt}}"
-    layout="responsive"
-    src="{{data.uploadedImg}}"
+
+  <amp-img
+      {%comment%}    
+      width="{{data.width}}" 
+      height="{{data.height}}"
+      {%endcomment%}
+      width="100" 
+      height="100"
+      alt="{{data.props.alt}}"
+      layout="responsive"
+      src="{{data.props.uploadedImg}}">
+
 {%comment%}
 Removing this until Distribution can fix it...
     srcset="
@@ -80,16 +80,29 @@ Removing this until Distribution can fix it...
     After all the responsive image styles, include the original image in srcset. That way,
     if any of the above were excluded, there is something here to use as the "largest image"
         
-        {{data.image.entity.thumbnail.url}} {{data.image.entity.thumbnail.width}}w"
-{%endcomment%}>
-</amp-img>
-{% if data.caption %}
-  <figcaption class="caption center pt2 italic">
-    {{data.caption}}
-  </figcaption>
-</figure>
-{% endif %}
-{% if data.imgLink %}
-</a>
-{% endif %}
+        {{data.image.entity.thumbnail.url}} {{data.image.entity.thumbnail.width}}w">
+{%endcomment%}
+
+  </amp-img>
+
+  {% if data.props.caption %}
+    <figure>
+      <figcaption class="caption center pt2 italic">
+        {{data.props.caption}}
+      </figcaption>
+    </figure>
+  {% endif %}
+
+  {% if data.props.imgLink %}
+    <a href="{{data.props.imgLink}}" target="_blank">{{data.props.alt}}</a>
+  {% endif %}
+
+  {% if data.props.caption %}
+    <figure class="figure">
+  {% endif %}
+
+  <script type="text/javascript">
+    console.log("data");
+    console.log({{ data }});
+  </script>
 </div>

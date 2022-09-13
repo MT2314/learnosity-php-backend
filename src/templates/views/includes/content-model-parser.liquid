@@ -8,6 +8,8 @@
 {%- case item.componentName -%}
     {%- when "Text" -%}
         {% include amp-text.html data:item %}
+    {%- when "Image" -%}
+        {% include amp-image.html data:item %}
     {%- when "formatted_text_no_heading" -%}
         {% include amp-formatted-text.html data:item %}
     {%- when "formatted_text" -%}
