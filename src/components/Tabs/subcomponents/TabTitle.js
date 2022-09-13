@@ -96,8 +96,8 @@ const StyledInput = styled(TextareaAutosize)(({ theme, activeTab, tabIndexProp }
       color: activeTab === tabIndexProp && 'rgba(35,35,35,1)'
     },
     '&:focus': {
-      border: none,
-      outline: none,
+      border: 'none',
+      outline: 'none',
       '&:: placeholder': {
       color: 'rgba(35, 35, 35, 0.12)',
       },

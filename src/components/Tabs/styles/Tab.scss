@@ -49,22 +49,22 @@
 
 
     //if active tab-title-input
-      .tab-title-input {
-        width: 100%;
+      // .tab-title-input {
+      //   width: 100%;
 
-        &::placeholder {
-          color: #232323;
-        }
+      //   &::placeholder {
+      //     color: #232323;
+      //   }
 
-        &:focus {
-          border: none;
-          outline: none;
+      //   &:focus {
+      //     border: none;
+      //     outline: none;
 
-          &::placeholder {
-            color: rgba(0, 0, 0, 0.12);
-          }
-        }
-      }
+      //     &::placeholder {
+      //       color: rgba(0, 0, 0, 0.12);
+      //     }
+      //   }
+      // }
 
   //tab placeholder styles
   .tab-body {
