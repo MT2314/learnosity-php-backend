@@ -10,7 +10,7 @@ permalink: "{{result.name}}.html"
 ---
 
 {%- for section in result.componentContainers[0].sections -%} 
-{% include amp-section.html section:section %} 
+  {% include amp-section.html section:section %} 
 {%- endfor -%}
 
 <script type="text/javascript">

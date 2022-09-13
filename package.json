@@ -20,7 +20,10 @@
     "test:qa": "CI=true react-scripts test --ci --watchAll=false",
     "test:stage": "CI=true react-scripts test --ci --watchAll=false",
     "test:dev": "CI=true react-scripts test --ci --watchAll=false",
-    "test-templates": "sh ./test-templates.sh",
+    "test-templates": "sh ./amp-scripts/test-templates.sh",
+    "buildd": "sh ./amp-scripts/buildd.sh",
+    "builds": "sh ./amp-scripts/builds.sh",
+    "buildn": "sh ./amp-scripts/buildn.sh",
     "lint": "eslint src/**/*.js",
     "lint-fix": "eslint --fix"
   },
