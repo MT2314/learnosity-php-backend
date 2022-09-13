@@ -47,6 +47,23 @@ const StyledPlaceholder = styled('div')(({ theme, activeTab, tabIndexProp }) => 
   }
 ))
 
+// .tab-title-input {
+//   width: 100%;
+
+//   &::placeholder {
+//     color: #232323;
+//   }
+
+//   &:focus {
+//     border: none;
+//     outline: none;
+
+//     &::placeholder {
+//       color: rgba(0, 0, 0, 0.12);
+//     }
+//   }
+// }
+
 const StyledInput = styled(TextareaAutosize)(({ theme, activeTab, tabIndexProp }) => (
   {
     fontFamily: '"Inter", sans-serif',
@@ -74,6 +91,9 @@ const StyledInput = styled(TextareaAutosize)(({ theme, activeTab, tabIndexProp }
     },
     '&:disabled': {
       background: '#f5f5f5',
+    },
+    '&::placeholder':{
+      color: activeTab === tabIndexProp && 'rgba(35,35,35,1)'
     }
   }
 ))
@@ -132,7 +152,8 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
     >
       {activeTab == tabIndex ? (
         <StyledInput
-          //className="tab-title-input"
+          activeTab={activeTab}
+          tabIndexProp={tabIndex}
           placeholder={placeholderTitle}
           aria-label="tab title input"
           aria-multiline="true"
