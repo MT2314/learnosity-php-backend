@@ -18,8 +18,6 @@
         {% include amp-accordion.html data:item %}
     {%- when "audio" -%}
         {% include amp-audio.html data:item %}
-    {%- when "brightcove_video" -%}
-        {% include amp-brightcove-video.html data:item %}
     {%- when "iframe" -%}
         {% include amp-iframe.html data:item %}
     {%- when "image" -%}
@@ -36,10 +34,10 @@
         {% include amp-carousel.html data:item %} 
     {%- when "quiz" -%}
         {% include amp-quiz.html data:item %}        
-    {%- when "tabs" -%}
-        {% include amp-tabs.html data:item %}
+    {%- when "Video" -%}
+        {% include amp-brightcove-video.html data:item %}
     {%- when "Tab" -%}
-        {% include amp-tabs-node.html data:item %}
+        {% include amp-tabs.html data:item %}
 {%- endcase -%}
 {%comment%} End Main Content Model Parser block {%endcomment%}
 
