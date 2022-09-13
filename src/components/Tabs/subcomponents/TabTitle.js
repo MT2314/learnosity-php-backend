@@ -3,10 +3,6 @@ import { TabContext, LayoutContext } from "../TabContext";
 import { TextareaAutosize } from "@material-ui/core";
 import styled from "@emotion/styled";
 
-//TODO: add styles to active tab
-// border-bottom: 0px;
-// z-index: 1;
-
 const StyledTitle = styled('div')(({ theme, activeTab, tabIndexProp }) => (
   {
     backgroundColor: activeTab === tabIndexProp ? '#fff' : '#f5f5f5',
