@@ -15,7 +15,7 @@ const StyledTitle = styled('div')(({ theme, activeTab, tabIndexProp }) => (
     width: '100%',
     maxWidth: '484px',
     padding: '8px 10px',
-    color: activeTab === tabIndexProp ? '#232323' :'#636363',
+    color: activeTab === tabIndexProp ? '#232323' : '#636363',
     fontWeight: '500',
     textAlign: 'center',
     '&:focus': {
@@ -44,6 +44,37 @@ const StyledPlaceholder = styled('div')(({ theme, activeTab, tabIndexProp }) => 
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: activeTab == tabIndexProp ? "unset" : 2,
+  }
+))
+
+const StyledInput = styled('TextareaAutosize')(({ theme, activeTab, tabIndexProp }) => (
+  {
+    fontFamily: '"Inter", sans-serif',
+    border: 'none',
+    padding: '0',
+    fontSize: '18px',
+    fontWeight: 500,
+    width: '100%',
+    minHeight: '25px',
+    maxHeight: '50px',
+    textAlign: 'center',
+    resize: 'none',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    WebkitBoxOrient: 'vertical',
+    '&::-webkit-scrollbar': {
+      WebkitAppearance: 'none',
+      width: '7px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      borderRadius: '4px',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      boxShadow: '0 0 1px rgba(255, 255, 255, 0.5)',
+      WebkitBoxShadow: '0 0 1px rgba(255, 255, 255, 0.5)',
+    },
+    '&:disabled': {
+      background: '#f5f5f5',
+    }
   }
 ))
 
@@ -100,8 +131,8 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
       }}
     >
       {activeTab == tabIndex ? (
-        <TextareaAutosize
-          className="tab-title-input"
+        <StyledInput
+          //className="tab-title-input"
           placeholder={placeholderTitle}
           aria-label="tab title input"
           aria-multiline="true"
