@@ -99,6 +99,8 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
   return (
     <>
       <StyleTabBody
+        activeTab={activeTab}
+        tabIndex={tabIndex}
         onDragLeave={() => setInContainer(false)}
         onDragOver={() => setInContainer(true)}
         ref={dropRef}

@@ -10,7 +10,9 @@ import styled from "@emotion/styled";
 const StyledTitle = styled('div')(({ theme, activeTab, tabIndexProp }) => (
   {
     backgroundColor: activeTab === tabIndexProp ? '#fff' : '#f5f5f5',
-    border: '1px solid #bdbdbd',
+    borderStyle:'solid',
+    borderColor:'#bdbdbd',
+    borderWidth: activeTab === tabIndexProp ? '1px 1px 0 1px': '1px',
     borderRadius: '10px 10px 0px 0px',
     width: '100%',
     maxWidth: '484px',
@@ -46,23 +48,6 @@ const StyledPlaceholder = styled('div')(({ theme, activeTab, tabIndexProp }) => 
     WebkitLineClamp: activeTab == tabIndexProp ? "unset" : 2,
   }
 ))
-
-// .tab-title-input {
-//   width: 100%;
-
-//   &::placeholder {
-//     color: #232323;
-//   }
-
-//   &:focus {
-//     border: none;
-//     outline: none;
-
-//     &::placeholder {
-//       color: rgba(0, 0, 0, 0.12);
-//     }
-//   }
-// }
 
 const StyledInput = styled(TextareaAutosize)(({ theme, activeTab, tabIndexProp }) => (
   {
