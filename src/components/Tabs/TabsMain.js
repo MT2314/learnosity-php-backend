@@ -6,8 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 import { LayoutProvider, ActiveTabProvider } from "./TabContext";
 import Tabs from "./subcomponents/Tabs";
 
-import "./styles/Tab.scss";
-
 //tabs default props
 export const defaultProps = {
   layoutState: [
