@@ -4,14 +4,20 @@
         <p class="demo-wrapper-title">{{item.type}}</p>
 {%- endif -%}
 
+{% if item.props %} 
+    {% assign propName == item.props %} 
+{% elsif item.componentProps %} 
+    {% assign propName == item.componentProps %} 
+{% endif %}
+
 {%comment%} Main Content Model Parser block {%endcomment%}
 {%- case item.componentName -%}
     {%- when "Text" -%}
-        {% include amp-text.html data:item %}
+        {% include amp-text.html data:propName %}
     {%- when "Image" -%}
-        {% include amp-image.html data:item %}
+        {% include amp-image.html data:propName %}
     {%- when "Video" -%}
-        {% include amp-video.html data:item %}
+        {% include amp-video.html data:propName %}
     {%- when "Tab" -%}
         {% include amp-tabs.html data:item %}
     {%- when "IFrame" -%}

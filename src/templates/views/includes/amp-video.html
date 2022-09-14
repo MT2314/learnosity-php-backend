@@ -1,4 +1,4 @@
-{% if data.props.type == "brightcove" -%}
+{% if data.type == "brightcove" -%}
     
     <div class="brightcove wrapper bottom-margin">
         <amp-brightcove
@@ -7,11 +7,11 @@
         {%comment%}
             The player id originally was pulled out of the CMS. For now we are pointing
             at a "test player" built by distribution
-            data-player="{{data.props.videoId}}"
+            data-player="{{data.videoId}}"
         {%endcomment%}
 
             data-player="Kl2Y7HovlM"
-            data-video-id="{{data.props.videoId}}"
+            data-video-id="{{ data.videoId }}"
             layout="responsive"
             width="900"
             height="500"
@@ -42,9 +42,9 @@
         }
     {%endcomment%}
 
-    {% elsif data.props.type == "youTube" %}
+    {% elsif data.type == "youTube" %}
     
-    {%- assign videoId = data.props.videoId | split: '=' | last -%}
+    {%- assign videoId = data.videoId | split: '=' | last -%}
     
         <div class="youtube wrapper bottom-margin">
 
@@ -63,12 +63,11 @@
                 data-param-rel="1"
                 data-videoid="{{ videoId }}"
             >
-            {%comment%} TODO: Find placeholder {%endcomment%}
-                <!-- <amp-img
-                    src="{{data.thumbnailUrl}}"
+                <amp-img
+                    src="http://i3.ytimg.com/vi/mM5_T-F1Yn4/hqdefault.jpg"
                     placeholder
                     layout="fill"
-                ></amp-img> -->
+                ></amp-img>
             </amp-youtube>
         </div>
 

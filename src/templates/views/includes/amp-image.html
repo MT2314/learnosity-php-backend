@@ -7,9 +7,9 @@
       {%endcomment%}
       width="100" 
       height="100"
-      alt="{{data.props.alt}}"
+      alt="{{data.alt}}"
       layout="responsive"
-      src="{{data.props.uploadedImg}}">
+      src="{{data.uploadedImg}}">
 
 {%comment%}
 Removing this until Distribution can fix it...
@@ -85,23 +85,23 @@ Removing this until Distribution can fix it...
 
   </amp-img>
 
-  {% if data.props.imgLink %}
-    <a href="{{data.props.imgLink}}" target="_blank">{{data.props.alt}}</a>
+  {% if data.imgLink %}
+    <a href="{{data.imgLink}}" target="_blank">{{data.alt}}</a>
   {% endif %}
   
-  {% if data.props.caption %}
+  {% if data.caption %}
     <figure class="figure">
       <figcaption class="caption center pt2 italic">
-        {{data.props.caption}}
+        {{data.caption}}
       </figcaption>
     </figure>
   {% endif %}
 
-  <!-- {% if data.props.longDesc %}
+  <!-- {% if data.longDesc %}
     ToDo: create a long description
   {% endif %} -->
 
-  <!-- {% if data.props.credit %}
+  <!-- {% if data.credit %}
     ToDo: create a credit section
   {% endif %} -->
 
