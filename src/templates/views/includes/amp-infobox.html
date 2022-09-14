@@ -1,4 +1,4 @@
-{%- case data.props.infoBoxState.infoBoxIcon -%}
+{%- case data.infoBoxIcon -%}
   {%- when "Definition" -%}
     {%- assign className = "definition" -%}
     
@@ -13,30 +13,29 @@
    
 {%- endcase -%}
 <div class="callout wrapper bottom-margin">
-  <div class="max-width-1 mx-auto">
-    <div class="co-table max-content box-shadow pt2 px2">
-      <div class="co-row">
-        <div class="co-cell">
-          <amp-img
-            width="36"
-            height="36"
-            alt=""
-            layout="responsive"
-            aria-hidden="true"
-            class="icon pr1"
-            src="https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/{{ className }}_icon.svg"
-          >
-          </amp-img>
-        </div>
-        <div class="co-cell">
-          {%- include amp-heading.html data:data headingClass:'h3 inline' -%}
-        </div>
+  <div class="co-table max-content box-shadow pt2 px2">
+    <div class="co-row">
+      <div class="co-cell">
+        <amp-img
+          width="36"
+          height="36"
+          alt=""
+          layout="responsive"
+          aria-hidden="true"
+          class="icon pr1"
+          src="https://s3.ca-central-1.amazonaws.com/ilc.tvo.org/ets4u/assets/img/{{ className }}_icon.svg"
+        >
+        </amp-img>
       </div>
-      <div class="co-row">
-        <div class="co-cell"></div>
-        <div class="co-cell">
-          {{ data.props.body }}
-        </div>
+      <div class="co-cell">
+        <p>{{ data.infoBoxLabel }}</p>
+        {%- include amp-heading.html data:data.infoBoxHeader headingClass:'h3 inline' -%}
+      </div>
+    </div>
+    <div class="co-row">
+      <div class="co-cell"></div>
+      <div class="co-cell">
+        <p>{{ data.infoBoxBody }}</p>
       </div>
     </div>
   </div>

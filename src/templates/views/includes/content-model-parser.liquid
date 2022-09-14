@@ -23,7 +23,7 @@
     {%- when "IFrame" -%}
         {% include amp-iframe.html data:item %}
     {%- when "InfoBox" -%}
-        {% include amp-infobox.html data:item %}
+        {% include amp-infobox.html data:item.props.infoBoxState %}
     {%comment%} Not using below. {%endcomment%}
     {%- when "formatted_text_no_heading" -%}
         {% include amp-formatted-text.html data:item %}
