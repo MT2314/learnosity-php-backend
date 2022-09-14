@@ -6,17 +6,16 @@ import Tab from "./Tab";
 import ConfigBar from "../subcomponents/ConfigBar";
 import TabTitle from "./TabTitle";
 
-const StyledTabContainer = styled("div")(({ theme }) => (
+//Styled components for Tabs.js
+const StyledTabContainer = styled("div")(() => (
   {
-  boxSizing:'border-box',
-  //TODO: import the font-family from Saas with theme?  or import from google fonts. 
-  //fontFamily: '"Inter", sans-serif',
-  letterSpacing: '0.1px',
-  lineHeight: '25px',
-  color: '#636363',
-}));
+    boxSizing: 'border-box',
+    letterSpacing: '0.1px',
+    lineHeight: '25px',
+    color: '#636363',
+  }));
 
-const StyledTabTitleWrapper = styled("div")(({ theme }) => (
+const StyledTabTitleWrapper = styled("div")(() => (
   {
     display: 'flex',
     minHeight: '40px',
@@ -24,18 +23,19 @@ const StyledTabTitleWrapper = styled("div")(({ theme }) => (
 
   }));
 
-  const StyledToolBar = styled('div')(({theme, toolbar }) => (
-    {
-      display: toolbar ? 'block ' : 'none',
-      position: 'fixed ',
-      top: '80px ',
-      left: '50% ',
-      transform: 'translateX(-50%) ',
-      zIndex: '1000',
-      justifyContent: 'center ',
-      backgroundColor: '#fff ',
-    }
-  ))
+const StyledToolBar = styled('div')(({ toolbar }) => (
+  {
+    display: toolbar ? 'block ' : 'none',
+    position: 'fixed ',
+    top: '80px ',
+    left: '50% ',
+    transform: 'translateX(-50%) ',
+    zIndex: '1000',
+    justifyContent: 'center ',
+    backgroundColor: '#fff ',
+  }
+))
+//Styled component end. 
 
 const Tabs = () => {
   const [activeTab] = useContext(TabContext);

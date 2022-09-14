@@ -10,7 +10,7 @@ import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
 
 // NOTE: We can use theme once it is set it up end to end
-const StyleTabBody = styled("div")(({ theme, isDragging }) => ({
+const StyleTabBody = styled("section")(({isDragging }) => ({
   padding: "10px 10px 20px 10px",
   borderColor: "#bdbdbd",
   borderStyle: "solid",
@@ -111,13 +111,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         {activeTab === tabIndex && components.length === 0 ? (
           <Placeholder isOver={isOver} showError={showError} />
         ) : (
-          <ul
-            style={{
-              padding: 0,
-              listStyleType: "none",
-            }}
-            isOver={isOver}
-          >
+          <div role="list" isOver={isOver}>
             {components.map((component, compIndex) => {
               return (
                 <ComponentWrapper
@@ -132,8 +126,8 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
                 />
               );
             })}
-            <PlaceholderError showError={showDropError} />
-          </ul>
+           <PlaceholderError showError={showDropError} />
+          </div>
         )}
       </StyleTabBody>
     </>

@@ -3,7 +3,9 @@ import { TabContext, LayoutContext } from "../TabContext";
 import { TextareaAutosize } from "@material-ui/core";
 import styled from "@emotion/styled";
 
-const StyledTitle = styled('div')(({ theme, activeTab, tabIndexProp }) => (
+
+//Styled components for TabTitle.js
+const StyledTitle = styled('div')(({ activeTab, tabIndexProp }) => (
   {
     backgroundColor: activeTab === tabIndexProp ? '#fff' : '#f5f5f5',
     borderStyle:'solid',
@@ -27,7 +29,7 @@ const StyledTitle = styled('div')(({ theme, activeTab, tabIndexProp }) => (
   }
 ))
 
-const StyledPlaceholder = styled('div')(({ theme, activeTab, tabIndexProp }) => (
+const StyledPlaceholder = styled('div')(({ activeTab, tabIndexProp }) => (
   {
     width: '100%',
     maxWidth: '484px',
@@ -45,7 +47,7 @@ const StyledPlaceholder = styled('div')(({ theme, activeTab, tabIndexProp }) => 
   }
 ))
 
-const StyledInput = styled(TextareaAutosize)(({ theme, activeTab, tabIndexProp }) => (
+const StyledInput = styled(TextareaAutosize)(({activeTab, tabIndexProp }) => (
   {
     fontFamily: '"Inter", sans-serif',
     border: 'none',
@@ -85,6 +87,7 @@ const StyledInput = styled(TextareaAutosize)(({ theme, activeTab, tabIndexProp }
     },
   }
 ))
+//Styled components end
 
 const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
@@ -118,6 +121,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
     <StyledTitle
       activeTab={activeTab}
       tabIndexProp={tabIndex}
+      role="tab"
       key={`tab-title-${tabIndex}`}
       tabIndex="0"
       aria-label={tabTitle ? tabTitle : `Untitled ${placeholderTitle}`}
