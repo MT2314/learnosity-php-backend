@@ -1,4 +1,10 @@
-{% if data.props.type == "brightcove" -%}
+{% if data.props %} 
+{% assign propsName = data.props %} 
+{% elsif data.componentProps %} 
+  {% assign propsName = data.componentProps %} 
+{% endif %}
+
+{% if propsName.type == "brightcove" -%}
     
     <div class="brightcove wrapper bottom-margin">
         <amp-brightcove
@@ -7,11 +13,11 @@
         {%comment%}
             The player id originally was pulled out of the CMS. For now we are pointing
             at a "test player" built by distribution
-            data-player="{{data.props.videoId}}"
+            data-player="{{propsName.videoId}}"
         {%endcomment%}
 
             data-player="Kl2Y7HovlM"
-            data-video-id="{{ data.props.videoId }}"
+            data-video-id="{{ propsName.videoId }}"
             layout="responsive"
             width="900"
             height="500"
@@ -42,9 +48,9 @@
         }
     {%endcomment%}
 
-    {% elsif data.props.type == "youTube" %}
+    {% elsif propsName.type == "youTube" %}
     
-    {%- assign videoId = data.props.videoId | split: '=' | last -%}
+    {%- assign videoId = propsName.videoId | split: '=' | last -%}
     
         <div class="youtube wrapper bottom-margin">
 
