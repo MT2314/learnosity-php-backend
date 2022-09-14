@@ -1,10 +1,14 @@
 import React, { useContext, useState } from 'react'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionSummary, AccordionDetails  } from '@mui/material';
-
+import styled from '@emotion/styled';
 import { LayoutContext } from "../../Tabs/TabContext";
 import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
+
+const StyledAccordionPane = styled(AccordionSummary)(() => ({
+    height:'40px'
+}))
 
 const Accordions = () => {
     const [state] = useContext(LayoutContext)
@@ -16,7 +20,6 @@ const Accordions = () => {
                     <Accordion
                         disableGutters={true}
                         sx={{
-                            //height: '40px',
                             backgroundColor:'#FFFFFF',
                             borderWidth: state.length - 1 === accordionIndex ? '1px':'1px 1px 0px 1px',
                             borderStyle: 'solid',
@@ -24,15 +27,14 @@ const Accordions = () => {
                         }}
                         >
                         <div className="accordion-title-wrapper" role="accordionlist">
-                            <AccordionSummary
+                            <StyledAccordionPane
                                 expandIcon={<ExpandMoreIcon
                                     sx={{
-                                        pointerEvents: "auto"
+                                        pointerEvents: "auto",
                                     }}
                                 />}
                                 aria-controls="panel1a-content"
                                 id="panel1a-header"
-                                sx={{ pointerEvents: "none" }}
                             >
                                 <AccordionTitle
                                     key={`accordion-title-${accordionIndex}`}
@@ -40,7 +42,7 @@ const Accordions = () => {
                                     accordionIndex={accordionIndex}
                                     accordionTitle={accordion.title}
                                 />
-                            </AccordionSummary>
+                            </StyledAccordionPane>
                         </div>
                         <AccordionDetails>
                             <AccordionItem accordionIndex={accordionIndex} accordion={accordion} />
