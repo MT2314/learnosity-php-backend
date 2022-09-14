@@ -13,7 +13,7 @@ import IFrameConfig from "./IFrame/IFrameConfig";
 import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
 import TabsMain, { defaultProps as testTabDefaultProps } from "./Tabs/TabsMain";
 //Accordion
-import AccordionMain from "./Accordion/AccordionMain";
+import AccordionMain, { defaultProps as testAccordionDefaultProps } from "./Accordion/AccordionMain";
 // Category Icons
 import interactiveCategoryIcon from "../Icons/categoriesIcons/interactive.png";
 import mediaCategoryIcon from "../Icons/categoriesIcons/media.png";
@@ -113,16 +113,16 @@ const componentIndex = {
     defaultProps: testTabDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
-    dndLabel: tabsDndLabel, 
+    dndLabel: tabsDndLabel,
     componentIcon: tabsComponentIcon
   },
   Accordion: {
     Component: AccordionMain,
     readableName: "Accordion",
-    // defaultProps: testTabDefaultProps,
+    defaultProps: testAccordionDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
-    dndLabel: defaultDndLabel, 
+    dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon
   },
 };
