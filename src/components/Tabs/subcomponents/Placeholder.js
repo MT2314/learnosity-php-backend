@@ -13,7 +13,7 @@ const PlaceholderContainer = styled("div")(({ isOver, showError }) => ({
 
 
 const Title = styled("h3")(({ showError }) => ({
-  color: showError ? "#D32F2F" : "inherit",
+  color: showError ? "#D32F2F" : "#636363",
   fontWeight: "400",
   fontSize: "24px",
   lineHeight: "32.02px",

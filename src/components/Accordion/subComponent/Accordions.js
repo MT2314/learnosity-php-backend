@@ -6,28 +6,35 @@ import { LayoutContext } from "../../Tabs/TabContext";
 import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
 
-const StyledAccordionPane = styled(AccordionSummary)(() => ({
-    height:'40px'
+//styled components for Accordion styles
+const StyledAccordion = styled(Accordion)(({accordionIndex}) => ({
+    backgroundColor:'#FFFFFF',
+    borderWidth: accordionIndex === 0 ? '1px 1px 0px 1px': '0px 1px 1px 1px' ,
+    borderStyle: 'solid',
+    borderColor:'#BDBDBD',
 }))
+const StyledAccordionPane = styled(AccordionSummary)(() => ({
+    height:'40px',
+    fontSize:'18px',
+    color: '#232323',
+    letterSpacing:'0.15px'
+    //TODO: on expand add border to the panes
+}))
+//Styled components end
 
 const Accordions = () => {
     const [state] = useContext(LayoutContext)
-    console.log('state:',state.length - 1)
     return (
         <div className="accordion-container" data-testid="accordion-component">
             {state.map((accordion, accordionIndex) => {
                 return (
-                    <Accordion
+                    <StyledAccordion
+                        accordionIndex={accordionIndex}
                         disableGutters={true}
-                        sx={{
-                            backgroundColor:'#FFFFFF',
-                            borderWidth: state.length - 1 === accordionIndex ? '1px':'1px 1px 0px 1px',
-                            borderStyle: 'solid',
-                            borderColor:'#BDBDBD',
-                        }}
                         >
                         <div className="accordion-title-wrapper" role="accordionlist">
                             <StyledAccordionPane
+                                accordionIndex={accordionIndex}
                                 expandIcon={<ExpandMoreIcon
                                     sx={{
                                         pointerEvents: "auto",
@@ -47,7 +54,7 @@ const Accordions = () => {
                         <AccordionDetails>
                             <AccordionItem accordionIndex={accordionIndex} accordion={accordion} />
                         </AccordionDetails>
-                    </Accordion>
+                    </StyledAccordion>
                 )
             })}
         </div >
