@@ -12,31 +12,27 @@ const Accordions = () => {
     const [state] = useContext(LayoutContext)
     return (
         <div className="accordion-container" data-testid="accordion-component">
-            <Accordion>
-                <div className="accordion-title-wrapper" role="accordionlist">
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="panel1a-header">
-                        {state.map((accordion, accordionIndex) => {
-                            return (
+            {state.map((accordion, accordionIndex) => {
+                return (
+                    <Accordion>
+                        <div className="accordion-title-wrapper" role="accordionlist">
+                            <AccordionSummary expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header">
                                 <AccordionTitle
                                     key={`accordion-title-${accordionIndex}`}
                                     placeholderTitle={accordion.placeholderTitle}
                                     accordionIndex={accordionIndex}
                                     accordionTitle={accordion.title}
                                 />
-                            )
-                        })}
-                    </AccordionSummary>
-                </div>
-                <AccordionDetails>
-                    {state.map((accordion, accordionIndex) => {
-                        return (
+                            </AccordionSummary>
+                        </div>
+                        <AccordionDetails>
                             <AccordionItem accordionIndex={accordionIndex} accordion={accordion} />
-                        )
-                    })}
-                </AccordionDetails>
-            </Accordion>
+                        </AccordionDetails>
+                    </Accordion>
+                )
+            })}
         </div>
     )
 }
