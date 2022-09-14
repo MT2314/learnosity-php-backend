@@ -14,6 +14,7 @@
 ### When Applicable
 
 - [ ] Written relevant unit tests
+- [ ] MUI imports and icons-material are destructured
 - [ ] Added/updated examples or documentation as needed
 - [ ] Included bug ticket number in branch title
 - [ ] 2 reviewers required
