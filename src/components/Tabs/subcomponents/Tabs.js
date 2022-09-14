@@ -24,6 +24,19 @@ const StyledTabTitleWrapper = styled("div")(({ theme }) => (
 
   }));
 
+  const StyledToolBar = styled('div')(({theme, toolbar }) => (
+    {
+      display: toolbar ? 'block ' : 'none',
+      position: 'fixed ',
+      top: '80px ',
+      left: '50% ',
+      transform: 'translateX(-50%) ',
+      zIndex: '1000',
+      justifyContent: 'center ',
+      backgroundColor: '#fff ',
+    }
+  ))
+
 const Tabs = () => {
   const [activeTab] = useContext(TabContext);
   const [state] = useContext(LayoutContext);
@@ -41,9 +54,10 @@ const Tabs = () => {
             }
           }}
         >
-          <div className={toolbar ? "show-tabtoolbar" : "hide-tabtoolbar"}>
+          <StyledToolBar
+            toolbar={toolbar}>
             <ConfigBar setRemoveError={setRemoveError} />
-          </div>
+          </StyledToolBar>
           {state.map((tab, tabIndex) => {
             return (
               <TabTitle
