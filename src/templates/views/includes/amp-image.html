@@ -1,11 +1,5 @@
 <div class="image wrapper {{wrapperStyles | default: "bottom-margin"}}">
 
-  {% if data.props %} 
-    {% assign propsName = data.props %} 
-  {% elsif data.componentProps %} 
-      {% assign propsName = data.componentProps %} 
-  {% endif %}
-
   <amp-img
       {%comment%}    
       width="{{data.width}}" 
@@ -13,9 +7,9 @@
       {%endcomment%}
       width="100" 
       height="100"
-      alt="{{propsName.alt}}"
+      alt="{{data.alt}}"
       layout="responsive"
-      src="{{propsName.uploadedImg}}">
+      src="{{data.uploadedImg}}">
 
 {%comment%}
 Removing this until Distribution can fix it...
@@ -91,23 +85,23 @@ Removing this until Distribution can fix it...
 
   </amp-img>
 
-  {% if propsName.imgLink %}
-    <a href="{{propsName.imgLink}}" target="_blank">{{propsName.alt}}</a>
+  {% if data.imgLink %}
+    <a href="{{data.imgLink}}" target="_blank">{{data.alt}}</a>
   {% endif %}
   
-  {% if propsName.caption %}
+  {% if data.caption %}
     <figure class="figure">
       <figcaption class="caption center pt2 italic">
-        {{propsName.caption}}
+        {{data.caption}}
       </figcaption>
     </figure>
   {% endif %}
 
-  <!-- {% if propsName.longDesc %}
+  <!-- {% if data.longDesc %}
     ToDo: create a long description
   {% endif %} -->
 
-  <!-- {% if propsName.credit %}
+  <!-- {% if data.credit %}
     ToDo: create a credit section
   {% endif %} -->
 
