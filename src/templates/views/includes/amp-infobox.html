@@ -1,4 +1,4 @@
-{%- case data.props.infoBoxState.infoBoxIcon -%}
+{%- case data.infoBoxIcon -%}
   {%- when "Definition" -%}
     {%- assign className = "definition" -%}
     
@@ -13,7 +13,8 @@
    
 {%- endcase -%}
 <div class="callout wrapper bottom-margin">
-  <div class="max-width-1 mx-auto">
+  <!-- <div class="max-width-1 mx-auto"> -->
+  <!-- <div class="max-width-1 fit"> -->
     <div class="co-table max-content box-shadow pt2 px2">
       <div class="co-row">
         <div class="co-cell">
@@ -29,15 +30,18 @@
           </amp-img>
         </div>
         <div class="co-cell">
-          {%- include amp-heading.html data:data headingClass:'h3 inline' -%}
+          <p>{{ data.infoBoxLabel }}</p>
+          {%- include amp-heading.html data:data.infoBoxHeader headingClass:'h3 inline' -%}
         </div>
       </div>
       <div class="co-row">
         <div class="co-cell"></div>
         <div class="co-cell">
-          {{ data.props.body }}
+          <p>{{ data.infoBoxBody }}</p>
+          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> -->
+
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 </div>

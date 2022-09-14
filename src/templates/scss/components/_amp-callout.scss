@@ -7,13 +7,15 @@
     }
 
     .max-content {
-        @include max-width-1;
+        // Setting max-width to 2 allows the infobox to fill the wrapper width
+        @include max-width-2;
         background-color: $callout-bg;
     }
 
-    .co-table {
-        display: table;
-    }
+    // Display: table doesn't allow the infobox to stretch across inside the wrapper class
+    // .co-table {
+    //     display: table;
+    // }
 
     .co-row {
         display: table-row;
