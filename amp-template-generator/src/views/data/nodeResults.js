@@ -1,5 +1,5 @@
 const index = require("../utils/index");
-// const headings = require('../utils/headings');
+const headings = require("../utils/headings");
 const quillConverter = require("../utils/quillConverter");
 const queries = require("../scripts/queries");
 
@@ -133,7 +133,16 @@ module.exports = async function () {
 
         transformComponentPropsRecusive(data);
 
-        var lesson = quillConverter.parse(data.children[0].children[0]);
+        // console.log(
+        //   "component name log from nodeResults:",
+        //   JSON.stringify(data.children[0].children[0], null, 4)
+        // );
+
+        // Converting the Text components quill json data into html elements
+        let lesson = quillConverter.parse(data.children[0].children[0]);
+
+        // Adding headings
+        lesson = headings.parse(lesson);
 
         console.log(
           "component name log from nodeResults:",
