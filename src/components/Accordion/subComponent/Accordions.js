@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { ExpandMore } from '@mui/icons-material';
 import { Accordion, AccordionSummary, AccordionDetails  } from '@mui/material';
 import styled from '@emotion/styled';
 import { LayoutContext } from "../../Tabs/TabContext";
@@ -18,7 +18,6 @@ const StyledAccordionPane = styled(AccordionSummary)(() => ({
     fontSize:'18px',
     color: '#232323',
     letterSpacing:'0.15px'
-    //TODO: on expand add border to the panes
 }))
 //Styled components end
 
@@ -32,16 +31,15 @@ const Accordions = () => {
                         accordionIndex={accordionIndex}
                         disableGutters={true}
                         >
-                        <div className="accordion-title-wrapper" role="accordionlist">
+                        <div className="accordion-title-wrapper">
                             <StyledAccordionPane
                                 accordionIndex={accordionIndex}
-                                expandIcon={<ExpandMoreIcon
+                                expandIcon={<ExpandMore
                                     sx={{
                                         pointerEvents: "auto",
                                     }}
                                 />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
+                                id={`panel${accordionIndex}-header`}
                             >
                                 <AccordionTitle
                                     key={`accordion-title-${accordionIndex}`}
@@ -51,7 +49,12 @@ const Accordions = () => {
                                 />
                             </StyledAccordionPane>
                         </div>
-                        <AccordionDetails>
+                        <AccordionDetails
+                            sx={{
+                                borderWidth:'1px 0px',
+                                borderStyle: 'solid',
+                                borderColor: '#BDBDBD'
+                            }}>
                             <AccordionItem accordionIndex={accordionIndex} accordion={accordion} />
                         </AccordionDetails>
                     </StyledAccordion>
