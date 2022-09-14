@@ -1,11 +1,10 @@
 import React from "react"
-import PlaceHolder from "./PlaceHolder"
+import PlaceHolder from "../../Tabs/subcomponents/Placeholder"
 
 const AccordionItem = ({accordion, accordionIndex}) => {
-    console.log(accordion, accordionIndex)
     return (
         <>
-            <PlaceHolder />
+            <PlaceHolder/>
         </>
     )
 }
