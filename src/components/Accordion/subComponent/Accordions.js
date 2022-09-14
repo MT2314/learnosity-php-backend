@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -16,9 +16,16 @@ const Accordions = () => {
                 return (
                     <Accordion>
                         <div className="accordion-title-wrapper" role="accordionlist">
-                            <AccordionSummary expandIcon={<ExpandMoreIcon />}
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon
+                                    sx={{
+                                        pointerEvents: "auto"
+                                    }}
+                                />}
                                 aria-controls="panel1a-content"
-                                id="panel1a-header">
+                                id="panel1a-header"
+                                sx={{ pointerEvents: "none" }}
+                            >
                                 <AccordionTitle
                                     key={`accordion-title-${accordionIndex}`}
                                     placeholderTitle={accordion.placeholderTitle}
@@ -33,7 +40,7 @@ const Accordions = () => {
                     </Accordion>
                 )
             })}
-        </div>
+        </div >
     )
 }
 
