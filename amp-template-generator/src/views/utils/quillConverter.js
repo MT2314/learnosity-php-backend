@@ -34,7 +34,9 @@ function parse(entity) {
       entity.props.body = _setHtml(entity.props.body);
     }
   } else if (entity.componentName === "Tab") {
+    // Running a for loop through the first array we hit, which is the layoutState
     for (let i = 0; i < entity.props.layoutState.length; i++) {
+      // Running another for loop to then iterate through the components in the tab and convert anything with componentProps.body
       for (let j = 0; j < entity.props.layoutState[i].components.length; j++) {
         entity.props.layoutState[i].components[j].componentProps.body =
           _setHtml(
@@ -42,6 +44,8 @@ function parse(entity) {
           );
       }
     }
+  } else if (entity.componentName === "InfoBox") {
+    entity.props.infoBoxState.body = _setHtml(entity.props.infoBoxState.body);
   }
 
   return entity;

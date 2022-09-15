@@ -28,14 +28,14 @@
         </amp-img>
       </div>
       <div class="co-cell">
-        <p>{{ data.infoBoxLabel }}</p>
+        <p class="wrapper">{{ data.infoBoxLabel }}</p>
         {%- include amp-heading.html data:data.infoBoxHeader headingClass:'h3 inline' -%}
       </div>
     </div>
     <div class="co-row">
       <div class="co-cell"></div>
       <div class="co-cell">
-        <p>{{ data.infoBoxBody }}</p>
+        {% include amp-text.html data:data %}
       </div>
     </div>
   </div>
