@@ -1,20 +1,23 @@
-import React, { createContext, useReducer, useEffect } from 'react';
-import produce from 'immer';
+import React, { createContext, useReducer, useEffect } from "react";
+import produce from "immer";
 
 //state of infoBox data stored in InfoBoxContext
 export const InfoBoxContext = createContext();
 
 export const infoBoxConfig = (draft, action) => {
   switch (action.func) {
-    case 'CHANGE_LABEL':
+    case "CHANGE_BODY":
+      draft.body = action.body;
+      return draft;
+    case "CHANGE_LABEL":
       draft.infoBoxLabel = action.label;
       return draft;
-    case 'CHANGE_HEADER':
-      draft.infoBoxHeader = action.header;
+    case "CHANGE_HEADER":
+      draft.infoBoxHeader = { heading: action.header, headingLevel: "3" };
       return draft;
-      case 'CHANGE_ICON':
-        draft.infoBoxIcon = action.icon;
-        return draft;
+    case "CHANGE_ICON":
+      draft.infoBoxIcon = action.icon;
+      return draft;
     default:
       return draft;
   }
