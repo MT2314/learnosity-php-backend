@@ -1,10 +1,12 @@
-import React, { useContext, useCallback } from 'react'
+import React, { useContext } from 'react'
 import { ExpandMore } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import styled from '@emotion/styled';
 import { LayoutContext } from "../../Tabs/TabContext";
 import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
+import { fontWeight } from '@mui/system';
 
 //styled components for Accordion styles
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
@@ -17,7 +19,15 @@ const StyledAccordionPane = styled(AccordionSummary)(() => ({
     height: '40px',
     fontSize: '18px',
     color: '#232323',
-    letterSpacing: '0.15px'
+    letterSpacing: '0.15px',
+}))
+
+const StyledExpandCollapseButton = styled(Button)(() => ({
+    fontWeight: '400',
+    fontSize: '16px',
+    color: '#232323',
+    letterSpacing: '0.15px',
+    lineHeight: '24px'
 }))
 //Styled components end
 
@@ -26,7 +36,7 @@ const Accordions = () => {
 
     return (
         <div className="accordion-container" data-testid="accordion-component">
-            <button
+            <StyledExpandCollapseButton
                 onClick={() => {
                     dispatch({
                         func: "EXPAND_ALL_PANE"
@@ -35,15 +45,16 @@ const Accordions = () => {
                 disabled={state.every(s => s.expanded === true)}
             >
                 Expand All
-            </button>
-            <br />
-            <button
+            </StyledExpandCollapseButton>
+            <StyledExpandCollapseButton
                 onClick={() => {
                     dispatch({
                         func: "COLLAPSE_ALL_PANE"
                     });
                 }}
-                disabled={state.every(s => s.expanded === false)}>Collapse All</button>
+                disabled={state.every(s => s.expanded === false)}>
+                Collapse All
+            </StyledExpandCollapseButton>
             {state.map((accordion, accordionIndex) => {
                 return (
                     <StyledAccordion
