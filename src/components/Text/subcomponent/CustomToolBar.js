@@ -244,8 +244,7 @@ const CustomToolBar = ({
   return (
     <Container>
       <StyledAppbar position="static">
-        {/* bold dropdown starts */}
-
+        {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
         {isInfoBox && (
           <StyledIconDropdownButton
             ref={IconDropDown}
