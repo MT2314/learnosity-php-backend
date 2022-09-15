@@ -2,7 +2,7 @@ import React, { useContext, useCallback } from 'react'
 import { ExpandMore } from '@mui/icons-material';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import styled from '@emotion/styled';
-import { LayoutContext } from "../../../Context/InteactivesContext";
+import { LayoutContext } from "../../../Context/InteractivesContext";
 import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
 

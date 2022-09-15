@@ -87,9 +87,7 @@ export const layoutConfig = (draft, action) => {
       );
       return draft;
     case "CHANGE_TITLE":
-      // eslint-disable-next-line no-case-declarations
-      const tab = draft.find((tab) => tab.id == action.id);
-      tab.title = action.title;
+      draft[action.layerIndex].title = action.title
       return draft;
     case "TOGGLE_PANE":
       draft[action.paneIndex].expanded === true ? draft[action.paneIndex].expanded = false : draft[action.paneIndex].expanded = true

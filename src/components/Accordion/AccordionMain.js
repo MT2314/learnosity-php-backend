@@ -2,7 +2,7 @@ import React from 'react'
 import { v4 as uuidv4 } from "uuid";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { LayoutProvider } from "../../Context/InteactivesContext";
+import { LayoutProvider } from "../../Context/InteractivesContext";
 import Accordions from "./subComponent/Accordions"
 
 //Accordion default props
