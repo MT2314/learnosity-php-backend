@@ -14,7 +14,6 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle }) =>
         >
             <p
                 className="placeholder-title"
-                role="accordion"
             >
                 {accordionTitle ? accordionTitle : placeholderTitle}
             </p>
