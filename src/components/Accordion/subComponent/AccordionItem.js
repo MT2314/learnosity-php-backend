@@ -40,9 +40,9 @@ const AccordionItem = ({accordion, accordionIndex}) => {
       }));
 
     return (
-        <div ref={drop} style={{ background: isOver && 'green'}}>
+        <div data-testid="accordion-dropzone" ref={drop} style={{ background: isOver && 'green'}}>
             {
-            components ?
+            components.length !== 0 ?
              components.map((component, compIndex) => (
                 <p>{component}</p>
              )

@@ -16,14 +16,14 @@ export const defaultProps = {
             id: uuidv4(),
             title: "",
             placeholderTitle: "Pane 1",
-            components:['component1'],
+            components:[],
             expanded: false
         }, 
         {
             id: uuidv4(),
             title: "",
             placeholderTitle: "Pane 2",
-            components:['compoent2', 'component3'],
+            components:[],
             expanded: true
         }
     ],
