@@ -44,9 +44,11 @@ const Label = ({ setInfoHasFocus }) => {
       type="text"
       placeholder="Type your label here"
       aria-label="InfoBox label"
+      role="textbox"
       autocomplete="false"
       maxLength={50}
       multiline={false}
+      aria-multiline={false}
       value={state.infoBoxLabel}
       onChange={handleLabelChange}
       onFocus={() => {

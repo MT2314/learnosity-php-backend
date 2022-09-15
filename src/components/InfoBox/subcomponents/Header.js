@@ -41,7 +41,7 @@ const Header = ({ setInfoHasFocus }) => {
   return (
     <StyledHeaderInput
       name="infoBoxHeader"
-      role={"header-textbox"}
+      role="textbox"
       aria-label="info box header input"
       placeholder="Type your header here"
       aria-multiline="true"
