@@ -1,10 +1,12 @@
 # Amp-template-generator
 
-This is a minirepo within the mf-component-library which generates AMP-valid HTML files using [Eleventy Static Site Generator (11ty)](https://www.11ty.dev/docs/).
+## Overview
+
+This is a minirepo within the Component-Application which generates AMP-valid HTML files using [Eleventy Static Site Generator (11ty)](https://www.11ty.dev/docs/).
 
 This provides the ability to see the output of the work in progress, file compilation and build/packaging of the ready-for-use amp templates
 
-ilc-amp
+## ilc-amp
 
 Initially called 'ilc-amp', this template _(luke)_ layer includes templates for building 20+ components (many of them interactive) custom-tailored for ILC courseware.
 
@@ -16,6 +18,26 @@ This project can be found in use as a layer on AWS [here](https://ca-central-1.c
 
 See original codebase [project wiki](https://gitlab.tvo.org/content-solutions/courseware-graphql-output/wikis/) for other documentation.
 
+## Windows users
+
+In order to run the "npm run build" command, you need to do the following:
+
+Go to http://stahlworks.com/dev/index.php?tool=zipunzip and download "zip.exe"
+
+Move "zip.exe" into the following directory:
+
+```
+"C:\Users\YOUR_USERNAME\AppData\Roaming\npm"
+```
+
+From here you need to search for "edit the system environment variables" on you Windows machine. From here, click on "Environment Variables.." under the "Advanced" tab. Under the "User variables for YOUR_USERNAME" you should see "Path". Click on it and then click on "edit".
+
+A new modal will pop up and from here you need to click on "New". For the path name, you need to set it as the following:
+
+```
+C:\Users\YOUR_USERNAME\AppData\Roaming\npm\zip.exe
+```
+
 ## Working with this repo
 
 When you first start working with the subrepo:
@@ -23,7 +45,6 @@ When you first start working with the subrepo:
 ```
 cd amp-template-generator
 npm install
-
 ```
 
 Configure .env
@@ -32,27 +53,39 @@ Configure .env
 cd amp-template-generator
 # Add a .env file to the root directory by copying and renaming .env.local
 cp .env.local .env
+
 # Update environment variables as needed
+# Current the following variables are being used:
+
+GQL_ENDPOINT=
+QUERY=
+ID=
+USER_ID=
+STAGING=
+ELEVENTY_STAGING=
 ```
 
-Make changes to the template files OUTSIDE amp-template-generator, within the src
-folder of mf-component-library. These can be found in the templates folder. Once you are ready to see your changes, pointing at mf-component-library:
+Make changes to the template files OUTSIDE "amp-template-generator", within the src
+folder of "component-application". These can be found in the templates folder. Once you are ready to see your changes, pointing at "component-application":
 
 ```
-cd mf-component-library
+cd component-application
+
+# To generate the demo, showcase and nodeResults html file, run the following:
 npm run test-templates
 
+# To generate only the nodeResults file:
+npm run buildn
+
+# To generate only the demo files:
+npm run buildd
+
+# To generate only the showcase file:
+npm run builds
+
 ```
 
-Npm package installs and updates
-
-```
-# After npm installations or updates run the following command ***POINTING AT amp-template-generator***
-npm run install-templates
-
-```
-
-This copies the scss, test and views folders and contents from the mf-component-library into the node_modules of amp-template-generator, installs the templates on the mini-repo, and runs demo builds for you to view from /dist/demo and /dist/showcase.
+This copies the scss, test and views folders and contents from the component-application into the node_modules of amp-template-generator, installs the templates on the mini-repo, and runs demo builds for you to view from /dist/demo and /dist/showcase.
 
 When you are ready to do a proper build of the amp templates, pointing at amp-template-generator:
 
@@ -60,7 +93,7 @@ When you are ready to do a proper build of the amp templates, pointing at amp-te
 npm run build
 ```
 
-This compiles the templates, generatates the files needed by the transcompiler Lambda and outputs them to the /build folder. Currently this is a manual process but we're working toward automation. This build folder contains both the required output as both loose files and a zipped folder.
+This compiles the templates, generates the files needed by the transcompiler Lambda and outputs them to the /build folder. Currently this is a manual process but we're working toward automation. This build folder contains both the required output as both loose files and a zipped folder.
 
 ## Brightcove Stylesheet
 
