@@ -12,20 +12,12 @@
     {% assign $breakpoint = 900 %}
 {% endif %}
 
-<!--TODO: check the width  -->
-
-{% if data.props.width <= 760 %}
-    {% assign iframeWidth = data.props.width %}
-{% else %}
-    {% assign iframeWidth = 760 %}
-{% endif %}
-
     <div class="visible-{{$breakpoint}}">
         <amp-iframe
             src="{{data.props.src}}"
             layout="fixed"
             sandbox="allow-scripts allow-same-origin"
-            width="{{iframeWidth}}"
+            width="{{data.props.width}}"
             height="{{data.props.height}}"
             title="{{data.props.title}}"
             class="mx-auto block"
