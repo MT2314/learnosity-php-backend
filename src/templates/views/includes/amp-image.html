@@ -85,21 +85,21 @@ Removing this until Distribution can fix it...
 
   </amp-img>
 
-  {% if data.imgLink %}
-    <a href="{{data.imgLink}}" target="_blank">{{data.alt}}</a>
-  {% endif %}
-  
   {% if data.caption %}
-    <figure class="figure">
-      <figcaption class="caption center pt2 italic">
-        {{data.caption}}
-      </figcaption>
-    </figure>
-  {% endif %}
+  <figure class="figure">
+    <figcaption class="caption center pt2 italic">
+      {{data.caption}}
+    </figcaption>
+  </figure>
+{% endif %}
 
   <!-- {% if data.longDesc %}
     ToDo: create a long description
   {% endif %} -->
+
+  {% if data.imgLink %}
+    <a href="{{data.imgLink}}" target="_blank">{{data.alt}}</a>
+  {% endif %}
 
   <!-- {% if data.credit %}
     ToDo: create a credit section
