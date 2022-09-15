@@ -86,6 +86,7 @@ module.exports = async function () {
         // TODO: there was a problem retrieving the data
       }
 
+      // Move this function out into a new file?
       if (data?.__typename === "Course") {
         const transformComponentPropsRecusive = (container) => {
           if (container.children) {
@@ -133,6 +134,8 @@ module.exports = async function () {
 
         transformComponentPropsRecusive(data);
 
+        console.log(JSON.stringify(data, null, 4));
+
         // Looping through each lesson and running the converter functions on them
         // Once the conversion has taken place, the lesson will be pushed into the "lessons" array
         for (let i = 0; i < data.children[0].children.length; i++) {
@@ -161,7 +164,7 @@ module.exports = async function () {
       // TODO: handle promise rejection if something goes wrong
     });
 
-  console.log(JSON.stringify(lessons, null, 4));
-  console.log("lessons length:", lessons.length);
+  // console.log(JSON.stringify(lessons, null, 4));
+  // console.log("lessons length:", lessons.length);
   return lessons;
 };
