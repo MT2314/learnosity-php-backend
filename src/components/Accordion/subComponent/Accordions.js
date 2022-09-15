@@ -29,8 +29,7 @@ const Accordions = () => {
             <button
                 onClick={() => {
                     dispatch({
-                        func: "EXPAND_ALL_PANE",
-                        array: state
+                        func: "EXPAND_ALL_PANE"
                     });
                 }}
                 disabled={state.every(s => s.expanded === true)}
@@ -38,7 +37,13 @@ const Accordions = () => {
                 Expand All
             </button>
             <br />
-            <button disabled={state.every(s => s.expanded === false)}>Collapse All</button>
+            <button
+                onClick={() => {
+                    dispatch({
+                        func: "COLLAPSE_ALL_PANE"
+                    });
+                }}
+                disabled={state.every(s => s.expanded === false)}>Collapse All</button>
             {state.map((accordion, accordionIndex) => {
                 return (
                     <StyledAccordion
