@@ -1,25 +1,27 @@
-{% if data.type == "brightcove" -%}
+<div class="wrapper bottom-margin">
     
-    <div class="brightcove wrapper bottom-margin">
-        <amp-brightcove
-            data-account="23648095001"
+    {% if data.type == "brightcove" -%}
+    
+        <div class="brightcove">
+            <amp-brightcove
+                data-account="23648095001"
 
-        {%comment%}
-            The player id originally was pulled out of the CMS. For now we are pointing
-            at a "test player" built by distribution
-            data-player="{{data.videoId}}"
-        {%endcomment%}
+            {%comment%}
+                The player id originally was pulled out of the CMS. For now we are pointing
+                at a "test player" built by distribution
+                data-player="{{data.videoId}}"
+            {%endcomment%}
 
-            data-player="Kl2Y7HovlM"
-            data-video-id="{{ data.videoId }}"
-            layout="responsive"
-            width="900"
-            height="500"
-            noloading
-        >
-        </amp-brightcove>
+                data-player="Kl2Y7HovlM"
+                data-video-id="{{ data.videoId }}"
+                layout="responsive"
+                width="900"
+                height="500"
+                noloading
+            >
+            </amp-brightcove>
 
-    </div>
+        </div>
 
     {%comment%}
         TODO: find out if these are needed 
@@ -46,7 +48,7 @@
     
     {%- assign videoId = data.videoId | split: '=' | last -%}
     
-        <div class="youtube wrapper bottom-margin">
+        <div class="youtube">
 
         {%comment%}
             The player will always be 16x9 (widescreen) and take up the "full width" of it's parent.
@@ -69,7 +71,18 @@
                     layout="fill"
                 ></amp-img>
             </amp-youtube>
-        </div>
 
+        </div>
     {%- endif -%}
 
+    {% if data.caption %}
+
+        <figure class="figure">
+            <figcaption class="caption center pt2 italic">
+                {{data.caption}}
+            </figcaption>
+        </figure>
+    
+    {% endif %}
+
+</div>
