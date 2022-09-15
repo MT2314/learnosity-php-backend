@@ -25,20 +25,25 @@ function parse(entity, level = 0) {
   }
 
   // set heading levels of entities that are "underneath" this one
-  // switch (entity.type) {
-  //     case 'lesson':
-  //         // entity is a lesson
-  //         // inside lesson is an array of sections
-  //         // for each sections inside the lesson we are going to call the __parseElement
+  // switch (entity.__typename) {
+  //     case 'CourseStructureContainer':
+  //         entity.componentContainers.forEach(__parseElement);
+  //         break;
+  //     case 'ComponentContainer':
   //         entity.sections.forEach(__parseElement);
   //         break;
-  //     case 'section':
-  //         entity.topics.forEach(__parseElement);
-  //         break;
-  //     case 'topic':
-  //     case 'tab':
+  //     case 'NONLEARNING':
+  //     case 'LEARNING':
   //         entity.components.forEach(__parseElement);
   //         break;
+  //     case 'InfoBox':
+  //         entity.props.infoBoxState.infoBoxHeader = _setHeading(
+  //         entity.props.infoBoxState.infoBoxHeader,
+  //         level
+  //       );
+  //         break;
+
+  // ToDo:
   //     case 'accordion':
   //         entity.accordionPanes.forEach(item => {
   //             _setHeading(item.heading, level + 1);
@@ -53,6 +58,7 @@ function parse(entity, level = 0) {
   //             parse(tab, level - 1);
   //         });
   //         break;
+
   //     default:
   // nothing to do here, because anything else doesn't have a fancy heading.
   // }
@@ -64,11 +70,6 @@ function parse(entity, level = 0) {
   } else if (entity.type === "NONLEARNING" || entity.type === "LEARNING") {
     entity.components.forEach(__parseElement);
   } else if (entity.componentName === "InfoBox") {
-    console.log(
-      "this is infobox entity:",
-      entity.props.infoBoxState.infoBoxHeader
-    );
-
     entity.props.infoBoxState.infoBoxHeader = _setHeading(
       entity.props.infoBoxState.infoBoxHeader,
       level
