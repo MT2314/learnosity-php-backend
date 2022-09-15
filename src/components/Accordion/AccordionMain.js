@@ -2,12 +2,8 @@ import React from 'react'
 import { v4 as uuidv4 } from "uuid";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { LayoutProvider } from "../Tabs/TabContext";
+import { LayoutProvider } from "../../Context/InteactivesContext";
 import Accordions from "./subComponent/Accordions"
-
-// import styles
-import "./styles/Accordion.scss"
-
 
 //Accordion default props
 export const defaultProps = {
@@ -21,7 +17,7 @@ export const defaultProps = {
         }, 
         {
             id: uuidv4(),
-            title: "",
+            title: "testy",
             placeholderTitle: "Pane 2",
             components: [],
             expanded: true
