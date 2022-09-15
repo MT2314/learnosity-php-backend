@@ -91,6 +91,10 @@ export const layoutConfig = (draft, action) => {
       const tab = draft.find((tab) => tab.id == action.id);
       tab.title = action.title;
       return draft;
+    case "TOGGLE_PANE":
+      draft[action.paneIndex].expanded === true ? draft[action.paneIndex].expanded = false : draft[action.paneIndex].expanded = true
+      console.log(draft[action.paneIndex])
+      return draft
     default:
       return draft;
   }
