@@ -1,77 +1,50 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from "react";
 // MUI/@emotion imports
-import { Paper, NativeSelect } from '@mui/material';
+import { Paper } from "@mui/material";
 
-import { TextareaAutosize } from '@material-ui/core';
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
 // ?Provider
-import { InfoBoxProvider } from './InfoBoxContext';
+import { InfoBoxProvider } from "./InfoBoxContext";
 
 // Component imports
-import InfoBoxToolbar from './toolbar/InfoBoxToolbar';
-import Label from './subcomponents/Label';
-import Header from './subcomponents/Header';
-// import { InfoBoxBody } from "./subcomponents/InfoBoxBody";
+
+import Label from "./subcomponents/Label";
+import Header from "./subcomponents/Header";
+import Body from "./subcomponents/Body";
+
 // Hook/utilities imports
-import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 // Icon imports
-import { defaultIcon } from './icons/infoBoxIcons';
+import { defaultIcon } from "./icons/infoBoxIcons";
 // Localization import
-import { useTranslation, Trans } from 'react-i18next';
-// Icons
-import { iconDropdownOptions } from './icons/infoBoxIcons';
+import { useTranslation, Trans } from "react-i18next";
 
 // Default props
 export const defaultProps = {
   infoBoxIcon: null,
-  infoBoxLabel: '',
-  infoBoxHeader: '',
-  infoBoxBody: null,
+  infoBoxLabel: "",
+  infoBoxHeader: {
+    heading: "",
+    headingLevel: "3",
+  },
+  body: null,
 };
 
 // Styled components begin
 const StyledPaper = styled(Paper)({
-  background: 'rgb(236, 236, 236)',
-  width: '968px',
+  background: "rgb(236, 236, 236)",
+  width: "968px",
   fontFamily: `"Inter", sans-serif`,
-  padding: '40px 104px',
-  display: 'flex',
-  background: '#FAFAFA',
+  padding: "40px 104px",
+  display: "flex",
+  background: "#FAFAFA",
 });
 
-const StyledTextContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'column',
-  width: '650px',
-  marginLeft: '2.029rem',
-});
-
-const StyledBodyTextArea = styled(TextareaAutosize)({
-  fontFamily: `"Inter", sans-serif`,
-  fontSize: '1rem',
-  fontWeight: '400',
-  marginTop: '15px',
-  lineHeight: '1.5rem',
-  letterSpacing: '0.009375rem',
-  color: '#232323',
-  width: '100%',
-  minHeight: '72px',
-  marginTop: '0.9375rem',
-  background: '#FAFAFA',
-  border: 'none',
-  resize: 'none',
-
-  '&::placeholder': {
-    color: '#232323',
-  },
-
-  '&:focus': {
-    outline: 'none',
-
-    '&::placeholder': {
-      color: 'rgba(0, 0, 0, 0.12)',
-    },
-  },
+const StyledTextContainer = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  width: "650px",
+  marginLeft: "2.029rem",
 });
 
 // InfoBox component
@@ -79,23 +52,16 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
   // Localization
   const { t } = useTranslation();
 
-  const [showToolbar, setShowToolbar] = useState(false);
-  const [disableToolbar, setDisableToolbar] = useState(false);
-
   const [selectedIcon, setSelectedIcon] = useState(null);
+  const [closeToolbar, setCloseToolbar] = useState(false);
+  const [infoHasFocus, setInfoHasFocus] = useState(false);
 
   const infoBoxRef = useRef();
 
   useOnClickOutside(infoBoxRef, () => {
-    setShowToolbar(false);
+    setCloseToolbar(true);
+    setInfoHasFocus(false);
   });
-
-  useEffect(() => {
-    const iconImage = iconDropdownOptions.find((icon) => {
-      return icon.type == infoBoxState.infoBoxIcon;
-    });
-    iconImage && setSelectedIcon(iconImage.icon);
-  }, [infoBoxState]);
 
   return (
     <InfoBoxProvider infoBoxState={infoBoxState} setProp={setProp}>
@@ -104,21 +70,17 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
         data-testid="infoBox-container"
         ref={infoBoxRef}
       >
-        {showToolbar && <InfoBoxToolbar disableToolbar={disableToolbar} />}
-        {infoBoxState.infoBoxIcon !== null ? selectedIcon : defaultIcon}
-        <StyledTextContainer
-          onClick={() => {
-            setShowToolbar(true);
-          }}
-          onFocus={() => setShowToolbar(true)}
-        >
-          <Label setDisableToolbar={setDisableToolbar} />
-          <Header setDisableToolbar={setDisableToolbar} />
-          <StyledBodyTextArea
-            name="infoBoxBody"
-            aria-label="InfoBox body"
-            aria-multiline="true"
-            placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        {selectedIcon !== null ? selectedIcon.icon : defaultIcon}
+        <StyledTextContainer>
+          <Label setInfoHasFocus={setInfoHasFocus} />
+          <Header setInfoHasFocus={setInfoHasFocus} />
+          <Body
+            closeToolbar={closeToolbar}
+            infoHasFocus={infoHasFocus}
+            selectedIcon={selectedIcon}
+            setCloseToolbar={setCloseToolbar}
+            setSelectedIcon={setSelectedIcon}
+            setInfoHasFocus={setInfoHasFocus}
           />
         </StyledTextContainer>
       </StyledPaper>
