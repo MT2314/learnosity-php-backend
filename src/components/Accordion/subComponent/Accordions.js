@@ -76,7 +76,7 @@ const Accordions = () => {
                                 borderStyle: 'solid',
                                 borderColor: '#BDBDBD'
                             }}>
-                            <AccordionItem accordionIndex={accordionIndex} accordion={accordion} />
+                             <AccordionItem accordionIndex={accordionIndex} accordion={accordion}/>
                         </AccordionDetails>
                     </StyledAccordion>
                 )

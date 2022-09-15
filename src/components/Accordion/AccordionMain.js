@@ -16,14 +16,14 @@ export const defaultProps = {
             id: uuidv4(),
             title: "",
             placeholderTitle: "Pane 1",
-            components: [],
+            components:['component1'],
             expanded: false
         }, 
         {
             id: uuidv4(),
             title: "",
             placeholderTitle: "Pane 2",
-            components: [],
+            components:['compoent2', 'component3'],
             expanded: true
         }
     ],
@@ -31,11 +31,11 @@ export const defaultProps = {
 
 const AccordionMain = ({ layoutState = [], setProp = () => { } }) => {
     return (
-        // <DndProvider backend={HTML5Backend}>
+        <DndProvider backend={HTML5Backend}>
             <LayoutProvider layoutState={layoutState} setProp={setProp}>
                 <Accordions />
             </LayoutProvider>
-        // </DndProvider>
+        </DndProvider>
     );
 }
 
