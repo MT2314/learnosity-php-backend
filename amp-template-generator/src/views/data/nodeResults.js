@@ -86,6 +86,7 @@ module.exports = async function () {
         // TODO: there was a problem retrieving the data
       }
 
+      // Move this function out into a new file?
       if (data?.__typename === "Course") {
         const transformComponentPropsRecusive = (container) => {
           if (container.children) {
@@ -133,21 +134,19 @@ module.exports = async function () {
 
         transformComponentPropsRecusive(data);
 
-        // console.log(
-        //   "component name log from nodeResults:",
-        //   JSON.stringify(data.children[0].children[0], null, 4)
-        // );
+        console.log(JSON.stringify(data, null, 4));
 
-        // Converting the Text components quill json data into html elements
-        let lesson = quillConverter.parse(data.children[0].children[0]);
+        // Looping through each lesson and running the converter functions on them
+        // Once the conversion has taken place, the lesson will be pushed into the "lessons" array
+        for (let i = 0; i < data.children[0].children.length; i++) {
+          let lesson = data.children[0].children[i];
 
-        // Adding headings
-        lesson = headings.parse(lesson);
+          lesson = quillConverter.parse(lesson);
 
-        console.log(
-          "component name log from nodeResults:",
-          JSON.stringify(data.children[0].children[0], null, 4)
-        );
+          lesson = headings.parse(lesson);
+
+          lessons.push(lesson);
+        }
 
         // console.log('this is a course', data.__typename, data.courseCode);
         // console.log('number of children ', data.children.length);
@@ -158,7 +157,6 @@ module.exports = async function () {
         // console.log('first component ', data.children[0].children[0].componentContainers[0].sections[0].components[0].componentName);
         // console.log('first component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[0].components[0].props).text);
         // console.log('second component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[1].components[0].props).body);
-        lessons.push(lesson);
       } else {
         // TODO: may need to check for type if __typename does not exist eg. getLesson
       }
@@ -166,6 +164,7 @@ module.exports = async function () {
       // TODO: handle promise rejection if something goes wrong
     });
 
-  //console.log(JSON.stringify(lessons, null, 4));
+  // console.log(JSON.stringify(lessons, null, 4));
+  // console.log("lessons length:", lessons.length);
   return lessons;
 };

@@ -98,9 +98,7 @@ function _setHeading(heading, level) {
   }
 
   if (heading) {
-    console.log("this is the heading:", heading);
     heading.headingLevel = "h" + level;
-    console.log("this is the heading level:", heading.headingLevel);
   }
 
   return heading;
