@@ -134,7 +134,7 @@ module.exports = async function () {
 
         transformComponentPropsRecusive(data);
 
-        console.log(JSON.stringify(data, null, 4));
+        // console.log(JSON.stringify(data, null, 4));
 
         // Looping through each lesson and running the converter functions on them
         // Once the conversion has taken place, the lesson will be pushed into the "lessons" array
@@ -147,6 +147,8 @@ module.exports = async function () {
 
           lessons.push(lesson);
         }
+
+        console.log(JSON.stringify(data, null, 4));
 
         // console.log('this is a course', data.__typename, data.courseCode);
         // console.log('number of children ', data.children.length);
