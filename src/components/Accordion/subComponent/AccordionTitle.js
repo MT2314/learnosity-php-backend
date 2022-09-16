@@ -3,11 +3,8 @@ import { LayoutContext } from '../../../Context/InteractivesContext'
 import { TextField } from "@material-ui/core";
 import styled from '@emotion/styled';
 
-const StyledAccordionTitle = styled(TextField)(({theme}) => ({
-
-    '.MuiInputLabel-root':{
-    },
-
+const StyledAccordionTitle = styled(TextField)(({theme, accordionTitle}) => ({
+    
 }))
 
 const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle }) => {
@@ -25,13 +22,15 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle }) =>
     return (
             <StyledAccordionTitle
                 key={`accordion-title-${accordionIndex}`}
+                accordionTitle={accordionTitle}
                 aria-label={accordionTitle ? accordionTitle : `Untitled ${placeholderTitle}`}
                 fullWidth={true}
-                label={placeholderTitle}
+                label={placeholderTitle || ''}
                 id={`textfield-${accordionIndex}`}
                 placeholder={placeholderTitle}
-                value={accordionTitle}
+                value={accordionTitle || ''}
                 InputProps={{ disableUnderline: true }}
+                //InputLabelProps={{disableAnimation: true, shrink: false}}
                 onChange={handleTitleChange}
              />
     )
