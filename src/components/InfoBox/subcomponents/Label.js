@@ -28,7 +28,7 @@ const StyledLabelInput = styled("input")({
     },
   },
 });
-const Label = ({ setInfoHasFocus }) => {
+const Label = () => {
   const [state, dispatch] = useContext(InfoBoxContext);
 
   const handleLabelChange = useCallback((e) => {
@@ -51,9 +51,6 @@ const Label = ({ setInfoHasFocus }) => {
       aria-multiline={false}
       value={state.infoBoxLabel}
       onChange={handleLabelChange}
-      onFocus={() => {
-        setInfoHasFocus(true);
-      }}
     />
   );
 };

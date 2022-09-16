@@ -242,7 +242,10 @@ const CustomToolBar = ({
   }, [infoHasFocus]);
 
   return (
-    <Container>
+    <Container
+    onClick={(e) => e.stopPropagation()}
+    onFocus={(e) => e.stopPropagation()}
+    >
       <StyledAppbar position="static">
         {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
         {isInfoBox && (
@@ -321,7 +324,8 @@ const CustomToolBar = ({
           >
             <button
               style={{ display: "none" }}
-              ariaHidden="true"
+              aria-hidden="true"
+              id="alignmentObserver"
               onClick={(e) => {
                 const align = e.target.attributes.getNamedItem("data-align")
                   .value

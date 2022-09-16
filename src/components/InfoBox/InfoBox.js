@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useMemo } from "react";
 // MUI/@emotion imports
 import { Paper } from "@mui/material";
 
@@ -11,11 +11,12 @@ import { InfoBoxProvider } from "./InfoBoxContext";
 import Label from "./subcomponents/Label";
 import Header from "./subcomponents/Header";
 import Body from "./subcomponents/Body";
+import Icon from "./subcomponents/Icon";
 
 // Hook/utilities imports
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 // Icon imports
-import { defaultIcon } from "./icons/infoBoxIcons";
+import { iconDropdownOptions, defaultIcon } from "./icons/infoBoxIcons";
 // Localization import
 import { useTranslation, Trans } from "react-i18next";
 
@@ -53,15 +54,27 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
   const { t } = useTranslation();
 
   const [selectedIcon, setSelectedIcon] = useState(null);
-  const [closeToolbar, setCloseToolbar] = useState(false);
-  const [infoHasFocus, setInfoHasFocus] = useState(false);
 
+  const [infoHasFocus, setInfoHasFocus] = useState(false);
+  const [infoAreaFocused, setInfoAreaFocused] = useState(false);
+
+  const [infoBoxBody, setInfoBoxBody] = useState(null);
+  const [placeHolder, setPlaceHolder] = useState(null);
+
+  const isInfoBox = useMemo(() => true, []);
   const infoBoxRef = useRef();
 
   useOnClickOutside(infoBoxRef, () => {
-    setCloseToolbar(true);
     setInfoHasFocus(false);
+    setInfoAreaFocused(false);
   });
+
+  const infoBoxFocused = (e) => {
+    setInfoAreaFocused(true);
+    if (!infoBoxBody.contains(e.target) && e.target !== placeHolder) {
+      setInfoHasFocus(true);
+    }
+  };
 
   return (
     <InfoBoxProvider infoBoxState={infoBoxState} setProp={setProp}>
@@ -69,18 +82,22 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
         aria-label="Info Box"
         data-testid="infoBox-container"
         ref={infoBoxRef}
+        onClick={(e) => infoBoxFocused(e)}
+        onFocus={(e) => infoBoxFocused(e)}
       >
-        {selectedIcon !== null ? selectedIcon.icon : defaultIcon}
+        <Icon setSelectedIcon={setSelectedIcon} selectedIcon={selectedIcon} />
         <StyledTextContainer>
-          <Label setInfoHasFocus={setInfoHasFocus} />
-          <Header setInfoHasFocus={setInfoHasFocus} />
+          <Label />
+          <Header />
           <Body
-            closeToolbar={closeToolbar}
+            isInfoBox={isInfoBox}
             infoHasFocus={infoHasFocus}
             selectedIcon={selectedIcon}
-            setCloseToolbar={setCloseToolbar}
+            infoAreaFocused={infoAreaFocused}
             setSelectedIcon={setSelectedIcon}
             setInfoHasFocus={setInfoHasFocus}
+            setInfoBoxBody={setInfoBoxBody}
+            setPlaceHolder={setPlaceHolder}
           />
         </StyledTextContainer>
       </StyledPaper>
