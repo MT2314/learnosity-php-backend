@@ -56,7 +56,7 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox }) => ({
   justifyContent: "space-between",
   ...(isInfoBox && { borderLeft: "none !important" }),
   minHeight: "40px !important",
-  width: "184px !important",
+  width: isInfoBox ? "160px" : "184px !important",
   margin: "10px, 8px",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -243,8 +243,8 @@ const CustomToolBar = ({
 
   return (
     <Container
-    onClick={(e) => e.stopPropagation()}
-    onFocus={(e) => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()}
+      onFocus={(e) => e.stopPropagation()}
     >
       <StyledAppbar position="static">
         {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
@@ -394,51 +394,52 @@ const CustomToolBar = ({
               }}
             ></BoldDropdownButton>
 
-            {/* formula btn */}
-            <Tooltip
-              aria-label="equation"
-              title="equation"
-              placement="top"
-              arrow
-              PopperProps={{
-                disablePortal: true,
-                popperOptions: {
-                  positionFixed: true,
-                  modifiers: {
-                    preventOverflow: {
-                      enabled: true,
-                      boundariesElement: "window", // where "window" is the boundary
+            {!isInfoBox && (
+              <Tooltip
+                aria-label="equation"
+                title="equation"
+                placement="top"
+                arrow
+                PopperProps={{
+                  disablePortal: true,
+                  popperOptions: {
+                    positionFixed: true,
+                    modifiers: {
+                      preventOverflow: {
+                        enabled: true,
+                        boundariesElement: "window", // where "window" is the boundary
+                      },
                     },
                   },
-                },
-              }}
-            >
-              <StyledIconButton
-                className={
-                  activeTopMenu === "math"
-                    ? "ql-formula ql-selected ql-active"
-                    : "ql-formula"
-                }
-                // style={{ display: isInfoBox ? "none" : "block" }}
-                aria-label="math equation button"
-                disableRipple
-                color="inherit"
-                disabled={infoHasFocus}
-                onClick={() => {
-                  setAlignVisibility(false);
-                  setBoldVisibility(false);
-                  setListVisibility(false);
-                  if (activeTopMenu === "math") {
-                    setActiveTopMenu("");
-                  } else {
-                    setActiveTopMenu("math");
-                  }
-                  setActiveDropDownItem("");
                 }}
               >
-                {icons["formula"]}
-              </StyledIconButton>
-            </Tooltip>
+                <StyledIconButton
+                  className={
+                    activeTopMenu === "math"
+                      ? "ql-formula ql-selected ql-active"
+                      : "ql-formula"
+                  }
+                  // style={{ display: isInfoBox ? "none" : "block" }}
+                  aria-label="math equation button"
+                  disableRipple
+                  color="inherit"
+                  disabled={infoHasFocus}
+                  onClick={() => {
+                    setAlignVisibility(false);
+                    setBoldVisibility(false);
+                    setListVisibility(false);
+                    if (activeTopMenu === "math") {
+                      setActiveTopMenu("");
+                    } else {
+                      setActiveTopMenu("math");
+                    }
+                    setActiveDropDownItem("");
+                  }}
+                >
+                  {icons["formula"]}
+                </StyledIconButton>
+              </Tooltip>
+            )}
 
             {/* alignment dropdown */}
             <Tooltip
@@ -492,6 +493,7 @@ const CustomToolBar = ({
             </Tooltip>
             <AlignDropdownButton
               show={alignVisibility}
+              isInfoBox={isInfoBox}
               className="dropdown-content"
               aria-label="alignment buttons options"
               activeDropDownItem={activeDropDownAlignItem}
@@ -551,6 +553,7 @@ const CustomToolBar = ({
             </Tooltip>
             <ListDropdownButton
               show={listVisibility}
+              isInfoBox={isInfoBox}
               className="dropdown-content"
               aria-label="list buttons dropdown"
               activeDropDownItem={activeDropDownListItem}
