@@ -1,12 +1,16 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
+
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import "quill-paste-smart";
+
+import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
+
 import { v4 as uuidv4 } from "uuid";
-import "quill-paste-smart";
+
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 import {
   defaultAnchorState,
   ModifyAnchorText,
@@ -16,10 +20,10 @@ import {
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 import { FormulaEvents } from "../utils/FormulaEvents";
-
 import setAlignment from "../utils/setAlignment";
 
 import MathPixMarkdown from "../blots/MathPixMarkdown";
+
 import {
   useSetQuill,
   useSetUniqueId,
@@ -30,9 +34,35 @@ import {
 
 import "katex/dist/katex.css";
 
+import styled from "@emotion/styled";
+
 const Delta = Quill.import("delta");
 
 Quill.register("formats/mathpix", MathPixMarkdown);
+
+const StyledConfigBar = styled("div")(
+  ({ editorIsFocus, isInfoBox, infoAreaFocused }) => {
+    const display = isInfoBox
+      ? infoAreaFocused
+        ? "flex"
+        : "none"
+      : editorIsFocus
+      ? "flex"
+      : "none";
+
+    const configBarStyles = {
+      display: display,
+      position: "fixed",
+      top: "80px",
+      left: "50%",
+      transform: "translateX(-50%)",
+      zIndex: 1000,
+      justifyContent: "center",
+      backgroundColor: "#fff",
+    };
+    return configBarStyles;
+  }
+);
 
 const EditorComponent = ({
   body,
@@ -42,12 +72,12 @@ const EditorComponent = ({
   setActiveComponent,
   isActiveComponent,
   isInfoBox,
-  closeToolbar,
-  setCloseToolbar,
+  infoAreaFocused,
   infoHasFocus,
   selectedIcon,
   setSelectedIcon,
   setInfoHasFocus,
+  setTextRef,
 }) => {
   //context hooks
   const setQuill = useSetQuill();
@@ -78,17 +108,6 @@ const EditorComponent = ({
   const [activeDropDownAlignItem, setActiveDropDownAlignItem] = useState("");
   const [activeDropDownListItem, setActiveDropDownListItem] = useState("");
 
-  const ConfigBar = {
-    display: !isActiveComponent ? (editorIsFocus ? "flex" : "none") : "flex",
-    position: "fixed",
-    top: "80px",
-    left: "50%",
-    transform: "translateX(-50%)",
-    zIndex: 1000,
-    justifyContent: "center",
-    backgroundColor: "#fff",
-  };
-
   useEffect(() => {
     editorIsFocus ? setActiveComponent(true) : setActiveComponent(false);
   }, [editorIsFocus, setActiveComponent]);
@@ -100,21 +119,6 @@ const EditorComponent = ({
       setShowEditor(false);
     }
   });
-
-  useEffect(() => {
-    if (closeToolbar) {
-      setEditorIsFocus(false);
-      setShowEditor(false);
-    }
-  }, [closeToolbar]);
-
-  useEffect(() => {
-    if (infoHasFocus) {
-      setEditorIsFocus(true);
-      setShowEditor(true);
-    }
-    !infoHasFocus && isInfoBox && setEditorIsFocus(false);
-  }, [infoHasFocus]);
 
   useEffect(() => {
     //set quill instance
@@ -129,6 +133,9 @@ const EditorComponent = ({
     showEditor && !isInfoBox && focusRef.current.focus();
     //on render toolbar appears
     showEditor && !isInfoBox && setEditorIsFocus(true);
+    //on mount pass back focusRef
+    isInfoBox &&
+      setTextRef({ text: textRef.current, quill: focusRef?.current });
   }, []);
 
   useEffect(() => {
@@ -365,15 +372,11 @@ const EditorComponent = ({
   return (
     <div
       ref={textRef}
-      onClick={() => {
+      onClick={(e) => {
         setEditorIsFocus(true);
-        isInfoBox && setCloseToolbar(false);
-        // isInfoBox && setInfoHasFocus(false);
       }}
-      onFocus={() => {
+      onFocus={(e) => {
         setEditorIsFocus(true);
-        isInfoBox && setCloseToolbar(false);
-        // isInfoBox && setInfoHasFocus(false);
       }}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
@@ -396,7 +399,11 @@ const EditorComponent = ({
       id={`toolbar-${toolbarId}`}
       data-testid="text-editor-component"
     >
-      <div style={ConfigBar}>
+      <StyledConfigBar
+        editorIsFocus={editorIsFocus}
+        isInfoBox={isInfoBox}
+        infoAreaFocused={infoAreaFocused}
+      >
         <CustomToolBar
           toolbarId={toolbarId}
           focusRef={focusRef}
@@ -409,7 +416,7 @@ const EditorComponent = ({
           selectedIcon={selectedIcon}
           setSelectedIcon={setSelectedIcon}
         />
-      </div>
+      </StyledConfigBar>
 
       <ReactQuill
         ref={focusRef}
@@ -436,7 +443,7 @@ const EditorComponent = ({
         onFocus={() => {
           setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
-          setInfoHasFocus(false);
+          infoHasFocus && setInfoHasFocus(false);
         }}
         onKeyDown={(e) => {
           onKeyDropDown(e);
