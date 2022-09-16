@@ -21,12 +21,12 @@ const Text = ({
   setActiveComponent = () => {},
   isActiveComponent = false,
   isInfoBox = false,
-  closeToolbar = false,
-  setCloseToolbar = () => {},
+  infoAreaFocused = false,
   infoHasFocus = false,
   selectedIcon = null,
   setSelectedIcon = () => {},
   setInfoHasFocus = () => {},
+  setTextRef = () => {},
 }) => {
   const [showEditor, setShowEditor] = useState(false);
 
@@ -72,12 +72,12 @@ const Text = ({
               setActiveComponent={setActiveComponent}
               isActiveComponent={isActiveComponent}
               isInfoBox={isInfoBox}
-              closeToolbar={closeToolbar}
+              infoAreaFocused={infoAreaFocused}
               selectedIcon={selectedIcon}
               infoHasFocus={infoHasFocus}
-              setCloseToolbar={setCloseToolbar}
               setInfoHasFocus={setInfoHasFocus}
               setSelectedIcon={setSelectedIcon}
+              setTextRef={setTextRef}
             />
           </Provider>
         )}

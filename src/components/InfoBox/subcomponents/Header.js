@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from "react";
-// MUI/@emotion imports
+
 import styled from "@emotion/styled";
-// ? Context
+
 import { InfoBoxContext } from "../InfoBoxContext";
 import { TextareaAutosize } from "@material-ui/core";
 
@@ -28,7 +28,7 @@ const StyledHeaderInput = styled(TextareaAutosize)({
     },
   },
 });
-const Header = ({ setInfoHasFocus }) => {
+const Header = () => {
   const [state, dispatch] = useContext(InfoBoxContext);
 
   const handleHeaderChange = useCallback((e) => {
@@ -47,9 +47,6 @@ const Header = ({ setInfoHasFocus }) => {
       aria-multiline="true"
       value={state.infoBoxHeader.heading}
       onChange={handleHeaderChange}
-      onFocus={() => {
-        setInfoHasFocus(true);
-      }}
     />
   );
 };
