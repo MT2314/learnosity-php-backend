@@ -6,6 +6,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
+
   const handleTitleChange = useCallback((e) => {
     dispatch({
       func: "CHANGE_TITLE",
