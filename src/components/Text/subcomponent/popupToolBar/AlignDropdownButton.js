@@ -1,12 +1,28 @@
-import React from 'react';
-import 'react-quill/dist/quill.snow.css';
-import { Card } from '@mui/material';
-import { Tooltip } from '@material-ui/core';
+import React from "react";
+import "react-quill/dist/quill.snow.css";
+import { Card } from "@mui/material";
+import { Tooltip } from "@material-ui/core";
 
-import '../../styles/AlignDropdownButton.scss';
-import icons from '../../assets/icons';
+import "../../styles/AlignDropdownButton.scss";
+import icons from "../../assets/icons";
+
+import styled from "@emotion/styled";
+
+const StyleCard = styled(Card)(({ show, isInfoBox }) => ({
+  position: "absolute",
+  left: isInfoBox ? "40px" : "70px",
+  zIndex: 25,
+  bottom: "-32px",
+  padding: "3px",
+  display: show ? "block" : "none",
+  ".ql-active": {
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    svg: { ".svg-fill": { fill: "#1565c0" } },
+  },
+}));
 
 const AlignDropdownButton = ({
+  isInfoBox,
   show,
   activeDropDownItem,
   setActiveDropDownItem,
@@ -16,10 +32,7 @@ const AlignDropdownButton = ({
 }) => {
   return (
     <>
-      <Card
-        className={show ? 'align-dropdown show' : 'align-dropdown hide'}
-        onKeyDown={onKeyDropDown}
-      >
+      <StyleCard show={show} isInfoBox={isInfoBox} onKeyDown={onKeyDropDown}>
         <span className="ql-formats">
           <Tooltip
             aria-label="align left"
@@ -33,7 +46,7 @@ const AlignDropdownButton = ({
                 modifiers: {
                   preventOverflow: {
                     enabled: true,
-                    boundariesElement: 'window', // where "window" is the boundary
+                    boundariesElement: "window", // where "window" is the boundary
                   },
                 },
               },
@@ -42,17 +55,17 @@ const AlignDropdownButton = ({
             <button
               aria-label="left align"
               onClick={() => {
-                setActiveDropDownItem('left');
-                setVisibleAlignIcon(icons['align']);
+                setActiveDropDownItem("left");
+                setVisibleAlignIcon(icons["align"]);
               }}
               className={
-                activeDropDownItem === 'left'
-                  ? 'ql-align ql-selected ql-active'
-                  : 'ql-align'
+                activeDropDownItem === "left"
+                  ? "ql-align ql-selected ql-active"
+                  : "ql-align"
               }
               value=""
             >
-              {icons['align']}
+              {icons["align"]}
             </button>
           </Tooltip>
           <Tooltip
@@ -67,7 +80,7 @@ const AlignDropdownButton = ({
                 modifiers: {
                   preventOverflow: {
                     enabled: true,
-                    boundariesElement: 'window', // where "window" is the boundary
+                    boundariesElement: "window", // where "window" is the boundary
                   },
                 },
               },
@@ -76,25 +89,25 @@ const AlignDropdownButton = ({
             <button
               aria-label="align center"
               className={
-                activeDropDownItem === 'center'
-                  ? 'ql-align ql-selected ql-active'
-                  : 'ql-align'
+                activeDropDownItem === "center"
+                  ? "ql-align ql-selected ql-active"
+                  : "ql-align"
               }
               value="center"
               onClick={() => {
                 if (
-                  activeDropDownItem === 'center' ||
-                  activeDirection !== 'center'
+                  activeDropDownItem === "center" ||
+                  activeDirection !== "center"
                 ) {
-                  setActiveDropDownItem('left');
-                  setVisibleAlignIcon(icons['align']);
+                  setActiveDropDownItem("left");
+                  setVisibleAlignIcon(icons["align"]);
                 } else {
-                  setActiveDropDownItem('center');
-                  setVisibleAlignIcon(icons['center']);
+                  setActiveDropDownItem("center");
+                  setVisibleAlignIcon(icons["center"]);
                 }
               }}
             >
-              {icons['center']}
+              {icons["center"]}
             </button>
           </Tooltip>
           <Tooltip
@@ -109,7 +122,7 @@ const AlignDropdownButton = ({
                 modifiers: {
                   preventOverflow: {
                     enabled: true,
-                    boundariesElement: 'window', // where "window" is the boundary
+                    boundariesElement: "window", // where "window" is the boundary
                   },
                 },
               },
@@ -118,29 +131,29 @@ const AlignDropdownButton = ({
             <button
               aria-label="right align"
               className={
-                activeDropDownItem === 'right'
-                  ? 'ql-align ql-selected ql-active'
-                  : 'ql-align'
+                activeDropDownItem === "right"
+                  ? "ql-align ql-selected ql-active"
+                  : "ql-align"
               }
               value="right"
               onClick={() => {
                 if (
-                  activeDropDownItem === 'right' ||
-                  activeDirection !== 'right'
+                  activeDropDownItem === "right" ||
+                  activeDirection !== "right"
                 ) {
-                  setActiveDropDownItem('left');
-                  setVisibleAlignIcon(icons['align']);
+                  setActiveDropDownItem("left");
+                  setVisibleAlignIcon(icons["align"]);
                 } else {
-                  setActiveDropDownItem('right');
-                  setVisibleAlignIcon(icons['right']);
+                  setActiveDropDownItem("right");
+                  setVisibleAlignIcon(icons["right"]);
                 }
               }}
             >
-              {icons['right']}
+              {icons["right"]}
             </button>
           </Tooltip>
         </span>
-      </Card>
+      </StyleCard>
     </>
   );
 };
