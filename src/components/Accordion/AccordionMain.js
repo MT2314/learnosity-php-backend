@@ -2,12 +2,8 @@ import React from 'react'
 import { v4 as uuidv4 } from "uuid";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { LayoutProvider } from "../Tabs/TabContext";
+import { LayoutProvider } from "../../Context/InteractivesContext";
 import Accordions from "./subComponent/Accordions"
-
-// import styles
-import "./styles/Accordion.scss"
-
 
 //Accordion default props
 export const defaultProps = {

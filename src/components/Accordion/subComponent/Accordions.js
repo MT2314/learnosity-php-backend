@@ -3,7 +3,7 @@ import { ExpandMore } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import styled from '@emotion/styled';
-import { LayoutContext } from "../../Tabs/TabContext";
+import { LayoutContext } from "../../../Context/InteractivesContext";
 import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
 

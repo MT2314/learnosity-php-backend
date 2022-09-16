@@ -1,5 +1,5 @@
 import React from 'react';
-
+//TODO this component is not longer needed. Please delete asap. It still has conflicts with Image and Video
 const EditPanelIcon = ({title, icon}) => {
    const styles = {     
       container: {
