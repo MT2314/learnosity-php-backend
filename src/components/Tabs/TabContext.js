@@ -93,7 +93,6 @@ export const layoutConfig = (draft, action) => {
       return draft;
     case "TOGGLE_PANE":
       draft[action.paneIndex].expanded === true ? draft[action.paneIndex].expanded = false : draft[action.paneIndex].expanded = true
-      console.log(draft[action.paneIndex])
       return draft
     case "EXPAND_ALL_PANE":
       draft.forEach((item) => item.expanded = true)
