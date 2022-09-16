@@ -1,12 +1,12 @@
 import React, { createContext, useReducer, useEffect, useState } from 'react';
 import produce from 'immer';
 
-//state of tabs data stored in LayoutContext
+//state of tabs & accordion data stored in LayoutContext
 export const LayoutContext = createContext();
 
 export const layoutConfig = (draft, action) => {
   switch (action.func) {
-    case 'ADD_TAB':
+    case 'ADD_LAYER':
       draft.push({
         id: action.id,
         title: "",
@@ -14,7 +14,7 @@ export const layoutConfig = (draft, action) => {
         components: [],
       });
       return draft;
-    case 'REMOVE_TAB':
+    case 'REMOVE_LAYER':
       draft.splice(action.currentTab, 1);
       return draft;
     case 'ADD_COMPONENT':
@@ -87,18 +87,22 @@ export const layoutConfig = (draft, action) => {
       );
       return draft;
     case "CHANGE_TITLE":
-      // eslint-disable-next-line no-case-declarations
-      const tab = draft.find((tab) => tab.id == action.id);
-      tab.title = action.title;
+      draft[action.layerIndex].title = action.title
       return draft;
     case "TOGGLE_PANE":
       draft[action.paneIndex].expanded === true ? draft[action.paneIndex].expanded = false : draft[action.paneIndex].expanded = true
+      return draft
+    case "EXPAND_ALL_PANE":
+      draft.forEach((item) => item.expanded = true)
+      return draft
+    case "COLLAPSE_ALL_PANE":
+      draft.forEach((item) => item.expanded = false)
       return draft
     default:
       return draft;
   }
 };
-//layout provider wraps the tab component to access reducer
+//layout provider wraps the tab & accordion component to access reducer
 export const LayoutProvider = ({ children, setProp, layoutState }) => {
   const [state, dispatch] = useReducer(produce(layoutConfig), layoutState);
 
@@ -112,7 +116,7 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   );
 };
 
-//state of the active tab
+//state of the active tab in tab interactive
 export const TabContext = createContext();
 
 export const ActiveTabProvider = ({ children }) => {
