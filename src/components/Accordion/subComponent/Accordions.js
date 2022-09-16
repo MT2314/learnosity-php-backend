@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 import { LayoutContext } from "../../Tabs/TabContext";
 import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
-import { fontWeight } from '@mui/system';
 
 //styled components for Accordion styles
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
@@ -20,14 +19,22 @@ const StyledAccordionPane = styled(AccordionSummary)(() => ({
     fontSize: '18px',
     color: '#232323',
     letterSpacing: '0.15px',
+    fontcolor: "#232323"
 }))
 
-const StyledExpandCollapseButton = styled(Button)(() => ({
+const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
     fontWeight: '400',
     fontSize: '16px',
-    color: '#232323',
+    color: disabled ? "#000000" : "#232323",
     letterSpacing: '0.15px',
-    lineHeight: '24px'
+    lineHeight: '24px',
+    textTransform: "capitalize"
+}))
+
+const StyledButtonsDiv = styled("div")(() => ({
+    display: "flex",
+    justifyContent: "flex-end",
+    gap: "16px"
 }))
 //Styled components end
 
@@ -36,25 +43,27 @@ const Accordions = () => {
 
     return (
         <div className="accordion-container" data-testid="accordion-component">
-            <StyledExpandCollapseButton
-                onClick={() => {
-                    dispatch({
-                        func: "EXPAND_ALL_PANE"
-                    });
-                }}
-                disabled={state.every(s => s.expanded === true)}
-            >
-                Expand All
-            </StyledExpandCollapseButton>
-            <StyledExpandCollapseButton
-                onClick={() => {
-                    dispatch({
-                        func: "COLLAPSE_ALL_PANE"
-                    });
-                }}
-                disabled={state.every(s => s.expanded === false)}>
-                Collapse All
-            </StyledExpandCollapseButton>
+            <StyledButtonsDiv>
+                <StyledExpandCollapseButton
+                    onClick={() => {
+                        dispatch({
+                            func: "EXPAND_ALL_PANE"
+                        });
+                    }}
+                    disabled={state.every(s => s.expanded === true)}
+                >
+                    Expand All
+                </StyledExpandCollapseButton>
+                <StyledExpandCollapseButton
+                    onClick={() => {
+                        dispatch({
+                            func: "COLLAPSE_ALL_PANE"
+                        });
+                    }}
+                    disabled={state.every(s => s.expanded === false)}>
+                    Collapse All
+                </StyledExpandCollapseButton>
+            </StyledButtonsDiv>
             {state.map((accordion, accordionIndex) => {
                 return (
                     <StyledAccordion
