@@ -1,12 +1,6 @@
 import React, { useContext } from "react";
 import componentIndex from "../../../components/componentIndex";
-import styled from "@emotion/styled";
 import { LayoutContext, TabContext } from "../TabContext";
-
-const StyledListItem = styled("li")({
-  listStyle: "none",
-  padding: "0px",
-});
 
 const TabComponent = ({ component, compIndex }) => {
   const [, dispatch] = useContext(LayoutContext);
@@ -20,8 +14,9 @@ const TabComponent = ({ component, compIndex }) => {
   const { Component } = componentDetails;
 
   return (
-    <StyledListItem key={`comp-${compIndex}`}>
       <Component
+        key={`comp-${compIndex}`}
+        role="listitem"
         setProp={(stateUpdate) => {
           dispatch({
             func: "UPDATE_COMPONENT",
@@ -32,7 +27,6 @@ const TabComponent = ({ component, compIndex }) => {
         }}
         {...componentProps}
       />
-    </StyledListItem>
   );
 };
 export default TabComponent;
