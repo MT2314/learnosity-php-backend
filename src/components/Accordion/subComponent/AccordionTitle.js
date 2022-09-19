@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react'
+import React, { useContext, useCallback, useState } from 'react'
 import { LayoutContext } from '../../../Context/InteractivesContext'
 import { TextField} from "@material-ui/core";
 import styled from '@emotion/styled';
@@ -12,7 +12,11 @@ const StyledAccordionTitle = styled(TextField)(({theme}) => ({
     },
     '.MuiFormLabel-root':{
         color:'#232323'
-    }
+    },
+    '.MuiInputBase-input': {
+        overflow: "hidden",
+        textOverflow: "ellipsis"
+      }
 
 }))
 
