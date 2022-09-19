@@ -7,11 +7,9 @@
       </h1>
   
       {%- for component in section.topics -%}
-          {% include content-model-parser.liquid item:component.components[0] %}
-          <script type="text/javascript">
-            console.log("section.topic");
-            console.log({{ component.components | json }});
-          </script>
+        {%- for componentProps in component.components -%}
+            {% include content-model-parser.liquid item:componentProps %}
+          {%- endfor -%}
       {%- endfor -%}
 
   </section>
