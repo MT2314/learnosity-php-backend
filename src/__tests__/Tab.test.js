@@ -50,7 +50,7 @@ describe("Tabs", () => {
 
   it("On click displays active tab", async () => {
     render(<TabsMain layoutState={testLayout} />);
-    const tabLabel = screen.getByRole("tab", { name: /juno/i });
+    const tabLabel = screen.getByText(/juno/i);
     const placeholder = screen.getByText(/accepted components/i);
 
     expect(tabLabel).toBeInTheDocument();
