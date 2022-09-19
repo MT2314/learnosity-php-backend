@@ -15,7 +15,7 @@ const StyledAccordionTitle = styled(TextareaAutosize)(({activePane, accordionInd
       minHeight: '25px',
       maxHeight: '50px',
       resize: 'none',
-      textOverflow: 'ellipsis',
+      textOverflow: 'hidden',
       display: '-webkit-box',
       WebkitBoxOrient: 'vertical',
       '&::-webkit-scrollbar': {
@@ -44,43 +44,6 @@ const StyledAccordionTitle = styled(TextareaAutosize)(({activePane, accordionInd
     }
   ))
 
-// const StyledAccordionTitle = styled(TextField)(({ theme, accordionIndexProp }) => ({
-//     '.MuiFormLabel-root':{
-//         'fontFamily': 'Inter',
-//         'fontWeight': 500,
-//         'fontSize': '18px',
-//         'lineHeight': '25px',
-//         'letterSpacing': '0.15px',
-//     },
-
-//     '.MuiInputLabel-root.Mui-focused': {
-//         visibility: 'hidden'
-//     },
-//     '.MuiInputLabel-shrink': {
-//         visibility: 'hidden'
-//     },
-//     '.MuiFormLabel-root': {
-//         color: '#232323'
-//     },
-//     '.MuiInputBase-input': {
-//         overflow: "hidden",
-//         textOverflow: "ellipsis"
-//     },
-//     // '.MuiInputBase-root': {
-//     // },
-//     '.MuiInputBase-inputMultiline': {
-//         padding: 'none'
-//     },
-//     'label + .MuiInput-formControl':{
-//         marginTop:"0px"
-//     },
-//     '.MuiInputLabel-formControl':{
-//         position: 'static',
-//         transform:'none'
-//     }
-
-// }))
-
 const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle, activePane }) => {
 
     const [, dispatch] = useContext(LayoutContext)
@@ -108,21 +71,14 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle, acti
                 aria-label="accordion title input"
                 aria-multiline="true"
                 disabled={activePane == accordionIndex ? false : true}
-                minRows="1"
                 maxRows="2"
-                maxLength="200"
                 onChange={handleTitleChange}
-                //onFocus={() => handleCursorFocus(tabIndex)}
-                //data-id={state[accordionIndex].id}
                 value={accordionTitle || ""}
-                //onBlur={handleTitleBlur}
-                //ref={inputRef}
+                
               />
-                    :
-                    <p>{accordionTitle ? accordionTitle : placeholderTitle}</p>
+                :<p>{accordionTitle ? accordionTitle : placeholderTitle}</p>
             }
         </>
-        // textfield renders for each pane and will display label it title is <emptystring>
     )
 
 

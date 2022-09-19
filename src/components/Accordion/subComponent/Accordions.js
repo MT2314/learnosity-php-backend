@@ -21,8 +21,8 @@ const StyledAccordionPane = styled(AccordionSummary)(({accordionIndex,activePane
     letterSpacing: '0.15px',
     fontcolor: "#232323",
     backgroundColor: accordionIndex === activePane ? 'rgba(21, 101, 192, 0.12)' : '#fff',
-    '&:focus':{
-        backgroundColor: 'rgba(21, 101, 192, 0.12)'
+    '&:focusVisible':{
+        backgroundColor:'red'
     }
 }))
 
