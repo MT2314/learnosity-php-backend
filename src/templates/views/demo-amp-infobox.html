@@ -107,9 +107,4 @@
 
 {% for infobox in components %}
     {% include amp-infobox.html data:infobox.props.infoBoxState -%}
-
-    <script type="text/javascript">
-        console.log("Dumping data object");
-        console.log({{ infobox.props.infoBoxState | json }});
-      </script>
 {% endfor %}
