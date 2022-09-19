@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { ExpandMore } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
@@ -14,12 +14,13 @@ const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
     borderStyle: 'solid',
     borderColor: '#BDBDBD',
 }))
-const StyledAccordionPane = styled(AccordionSummary)(() => ({
+const StyledAccordionPane = styled(AccordionSummary)(({accordionIndex,activePane}) => ({
     height: '40px',
     fontSize: '18px',
     color: '#232323',
     letterSpacing: '0.15px',
-    fontcolor: "#232323"
+    fontcolor: "#232323",
+    backgroundColor: accordionIndex === activePane ? 'rgba(21, 101, 192, 0.12)' : '#fff'
 }))
 
 const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
@@ -40,6 +41,7 @@ const StyledButtonsDiv = styled("div")(() => ({
 
 const Accordions = () => {
     const [state, dispatch] = useContext(LayoutContext)
+    const [ activePane, setActivePane ] = useState(null)
 
     return (
         <div className="accordion-container" data-testid="accordion-component">
@@ -71,30 +73,32 @@ const Accordions = () => {
                         disableGutters={true}
                         expanded={accordion.expanded}
                     >
-                        <div className="accordion-title-wrapper">
-                            <StyledAccordionPane
+                        <StyledAccordionPane
+                            onClick={() => setActivePane(accordionIndex)}
+                            accordionIndex={accordionIndex}
+                            activePane={activePane}
+                            expandIcon={<ExpandMore
+                                onClick={() => {
+                                    dispatch({
+                                        func: "TOGGLE_PANE",
+                                        paneIndex: accordionIndex
+                                    });
+                                }}
+                                sx={{
+                                    pointerEvents: "auto",
+                                }}
+                            />}
+                            id={`panel${accordionIndex}-header`}
+                        >
+                            <AccordionTitle
+                                key={`accordion-title-${accordionIndex}`}
+                                placeholderTitle={accordion.placeholderTitle}
                                 accordionIndex={accordionIndex}
-                                expandIcon={<ExpandMore
-                                    onClick={() => {
-                                        dispatch({
-                                            func: "TOGGLE_PANE",
-                                            paneIndex: accordionIndex
-                                        });
-                                    }}
-                                    sx={{
-                                        pointerEvents: "auto",
-                                    }}
-                                />}
-                                id={`panel${accordionIndex}-header`}
-                            >
-                                <AccordionTitle
-                                    key={`accordion-title-${accordionIndex}`}
-                                    placeholderTitle={accordion.placeholderTitle}
-                                    accordionIndex={accordionIndex}
-                                    accordionTitle={accordion.title}
-                                />
-                            </StyledAccordionPane>
-                        </div>
+                                accordionTitle={accordion.title}
+                                activePane={activePane}
+                            />
+                        </StyledAccordionPane>
+
                         <AccordionDetails
                             sx={{
                                 borderWidth: '1px 0px',
