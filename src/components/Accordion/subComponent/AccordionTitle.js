@@ -5,10 +5,13 @@ import styled from '@emotion/styled';
 
 const StyledAccordionTitle = styled(TextField)(({theme}) => ({
     '.MuiInputLabel-root.Mui-focused':{
-        color:'transparent'
+        visibility:'hidden'
     },
     '.MuiInputLabel-shrink':{
         visibility:'hidden'
+    },
+    '.MuiFormLabel-root':{
+        color:'#232323'
     }
 
 }))
@@ -46,7 +49,7 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle }) =>
                 disableUnderline: true
             }}
             InputLabelProps={{
-                disableAnimation: true
+                disableAnimation: true,
             }}
             onChange={handleTitleChange}
         />
