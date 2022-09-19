@@ -20,7 +20,10 @@ const StyledAccordionPane = styled(AccordionSummary)(({accordionIndex,activePane
     color: '#232323',
     letterSpacing: '0.15px',
     fontcolor: "#232323",
-    backgroundColor: accordionIndex === activePane ? 'rgba(21, 101, 192, 0.12)' : '#fff'
+    backgroundColor: accordionIndex === activePane ? 'rgba(21, 101, 192, 0.12)' : '#fff',
+    '&:focus':{
+        backgroundColor: 'rgba(21, 101, 192, 0.12)'
+    }
 }))
 
 const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({

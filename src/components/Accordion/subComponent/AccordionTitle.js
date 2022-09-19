@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 const StyledAccordionTitle = styled(TextareaAutosize)(({activePane, accordionIndexProp }) => (
     {
       fontFamily: '"Inter", sans-serif',
-      backgroundColor: 'rgba(21, 101, 192, 0.12)',
+      backgroundColor: 'rgba(21, 101, 192, 0)',
       border: 'none',
       padding: '0',
       fontSize: '18px',
