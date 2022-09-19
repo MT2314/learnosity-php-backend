@@ -1,6 +1,14 @@
 import React, { useContext, useCallback } from 'react'
 import { LayoutContext } from '../../../Context/InteractivesContext'
 import { TextField} from "@material-ui/core";
+import styled from '@emotion/styled';
+
+const StyledAccordionTitle = styled(TextField)(({theme}) => ({
+    '.MuiInputLabel-root.Mui-focused':{
+        color:'transparent'
+    },
+
+}))
 
 const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle }) => {
 
@@ -20,10 +28,9 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle }) =>
 
     return (
         //textfield renders for each pane and will display placeholder text if title is <emptystring>
-        <TextField
+        <StyledAccordionTitle
             key={`accordion-title-${accordionIndex}`}
             name='pane-title'
-            accordionTitle={accordionTitle}
             aria-label={accordionTitle ? accordionTitle : `Untitled ${placeholderTitle}`}
             fullWidth={true}
             id={`textfield-${accordionIndex}`}
