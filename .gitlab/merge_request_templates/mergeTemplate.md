@@ -6,20 +6,19 @@
 - [ ] Checked for spelling error and removed unused code
 - [ ] Reviewed User Story/Bug ticket
 - [ ] Removed/commented out unnecessary console.logs
-- [ ] Changes are compatible with Safari and Chrome
+- [ ] Changes are compatible with Safari(N/A) and Chrome
 - [ ] Added descriptive comments
 - [ ] Access Assistant tests pass
 - [ ] Refactored for readability
-
+- [ ] Updated build version number
 ### When Applicable
 
 - [ ] Written relevant unit tests
 - [ ] MUI imports and icons-material are destructured
 - [ ] Added/updated examples or documentation as needed
-- [ ] Included bug ticket number in branch title
-- [ ] 2 reviewers required
-
-
+- [ ] Two reviewers required
+- [ ] Bug ticket(s): 
+ 
 ### Reviewer Check List
 
 - [ ] Pulled down branch locally to check if working as expected

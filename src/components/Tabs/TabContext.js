@@ -1,12 +1,14 @@
-import React, { createContext, useReducer, useEffect, useState } from 'react';
-import produce from 'immer';
+import React, { createContext, useReducer, useEffect, useState } from "react";
+import produce from "immer";
 
 //state of tabs data stored in LayoutContext
 export const LayoutContext = createContext();
 
 export const layoutConfig = (draft, action) => {
   switch (action.func) {
-    case 'ADD_TAB':
+    case "UPDATE_STATE":
+      return action.data;
+    case "ADD_TAB":
       draft.push({
         id: action.id,
         title: "",
@@ -14,27 +16,27 @@ export const layoutConfig = (draft, action) => {
         components: [],
       });
       return draft;
-    case 'REMOVE_TAB':
+    case "REMOVE_TAB":
       draft.splice(action.currentTab, 1);
       return draft;
-    case 'ADD_COMPONENT':
+    case "ADD_COMPONENT":
       draft[action.tabIndex].components.push({
         ...action.component,
       });
       return draft;
-    case 'MOVE_TAB_LEFT':
+    case "MOVE_TAB_LEFT":
       // eslint-disable-next-line no-case-declarations
       const elementL = draft[action.tabIndex];
       draft.splice(action.tabIndex, 1);
       draft.splice(action.tabIndex - 1, 0, elementL);
       return draft;
-    case 'MOVE_TAB_RIGHT':
+    case "MOVE_TAB_RIGHT":
       // eslint-disable-next-line no-case-declarations
       const elementR = draft[action.tabIndex];
       draft.splice(action.tabIndex, 1);
       draft.splice(action.tabIndex + 1, 0, elementR);
       return draft;
-    case 'UPDATE_COMPONENT':
+    case "UPDATE_COMPONENT":
       draft[action.tabIndex].components[action.compIndex].componentProps = {
         ...action.stateUpdate,
       };
@@ -92,8 +94,10 @@ export const layoutConfig = (draft, action) => {
       tab.title = action.title;
       return draft;
     case "TOGGLE_PANE":
-      draft[action.paneIndex].expanded === true ? draft[action.paneIndex].expanded = false : draft[action.paneIndex].expanded = true
-      return draft
+      draft[action.paneIndex].expanded === true
+        ? (draft[action.paneIndex].expanded = false)
+        : (draft[action.paneIndex].expanded = true);
+      return draft;
     default:
       return draft;
   }
@@ -102,9 +106,16 @@ export const layoutConfig = (draft, action) => {
 export const LayoutProvider = ({ children, setProp, layoutState }) => {
   const [state, dispatch] = useReducer(produce(layoutConfig), layoutState);
 
+  const diff = JSON.stringify(state) !== JSON.stringify(layoutState);
+
   useEffect(() => {
-    setProp({ layoutState: state });
+    diff && setProp({ layoutState: state });
   }, [state]);
+
+  useEffect(() => {
+    diff && dispatch({ func: "UPDATE_STATE", data: layoutState });
+  }, [layoutState]);
+
   return (
     <LayoutContext.Provider value={[state, dispatch]}>
       {children}

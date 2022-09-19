@@ -61,15 +61,15 @@ const ComponentWrapper = ({
   setIsDragging,
   numOfComponent,
   inContainer,
+  droppedIndex,
+  setDroppedIndex,
+  draggingOver,
 }) => {
   const dropRef = useRef(null);
 
   const [, dispatch] = useContext(LayoutContext);
   const [showSelf, setShowSelf] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
-
-  // !WIP - needed to drag and drop outside of Tabs
-  const prevNumOfComponent = usePrevious(numOfComponent);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -100,20 +100,26 @@ const ComponentWrapper = ({
       getItem: monitor.getItem(),
     }),
     drop: async (item, monitor) => {
-      const hoverIndex =
-        dropIndexOffset === 0
+      const currentTab = item?.tabIndex === tabIndex;
+
+      const hoverIndex = currentTab
+        ? dropIndexOffset === 0
           ? item.compIndex < compIndex
             ? compIndex
             : compIndex + 1
           : item.compIndex < compIndex
           ? compIndex - 1
-          : compIndex;
+          : compIndex
+        : dropIndexOffset === 0
+        ? compIndex + 1
+        : compIndex;
 
-      const dragIndex = item?.compIndex;
-
-      const currentTab = item?.tabIndex === tabIndex;
+      const dragIndex = currentTab ? item?.compIndex : undefined;
 
       if (acceptListComp(item)) {
+        setDroppedIndex(hoverIndex);
+        setDropIndexOffset(null);
+
         dispatch({
           func:
             item.compIndex !== undefined && currentTab
@@ -204,14 +210,10 @@ const ComponentWrapper = ({
     }),
   });
 
-  useEffect(() => {
-    setIsDragging(isDragging);
-  }, [isDragging]);
-
   drop(dropRef);
 
   useEffect(() => {
-    if (didDrop && prevNumOfComponent === numOfComponent && !inContainer) {
+    if (didDrop && !inContainer) {
       dispatch({
         func: "DELETE_COMPONENT",
         tabIndex: tabIndex,
@@ -220,6 +222,10 @@ const ComponentWrapper = ({
       setIsDragging(false);
     }
   }, [didDrop]);
+
+  useEffect(() => {
+    droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
+  }, [droppedIndex]);
 
   return (
     <>
@@ -230,8 +236,10 @@ const ComponentWrapper = ({
       <div
         data-test-id="div-before-drop-indicator"
         ref={dropRef}
-        onMouseEnter={() => setShowSelf(true)}
+        onMouseEnter={() => !draggingOver && setShowSelf(true)}
         onMouseLeave={() => setShowSelf(false)}
+        onFocus={() => setShowSelf(true)}
+        onBlur={() => setShowSelf(false)}
       >
         <div>
           <DropIndicator
@@ -355,14 +363,6 @@ const ComponentWrapper = ({
       </div>
     </>
   );
-};
-
-const usePrevious = (value) => {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
 };
 
 export default ComponentWrapper;
