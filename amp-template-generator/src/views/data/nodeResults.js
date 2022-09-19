@@ -88,6 +88,8 @@ module.exports = async function () {
 
       // Move this function out into a new file?
       if (data?.__typename === "Course") {
+        console.log(JSON.stringify(data, null, 4));
+
         const transformComponentPropsRecusive = (container) => {
           if (container.children) {
             for (let index = 0; index < container.children.length; index++) {
@@ -148,7 +150,7 @@ module.exports = async function () {
           lessons.push(lesson);
         }
 
-        console.log(JSON.stringify(data, null, 4));
+        // console.log(JSON.stringify(data, null, 4));
 
         // console.log('this is a course', data.__typename, data.courseCode);
         // console.log('number of children ', data.children.length);
