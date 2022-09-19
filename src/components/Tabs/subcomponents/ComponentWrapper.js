@@ -71,9 +71,6 @@ const ComponentWrapper = ({
   const [showSelf, setShowSelf] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
 
-  // !WIP - needed to drag and drop outside of Tabs
-  const prevNumOfComponent = usePrevious(numOfComponent);
-
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
     return (
@@ -366,14 +363,6 @@ const ComponentWrapper = ({
       </div>
     </>
   );
-};
-
-const usePrevious = (value) => {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
 };
 
 export default ComponentWrapper;
