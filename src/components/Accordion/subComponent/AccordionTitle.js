@@ -7,6 +7,9 @@ const StyledAccordionTitle = styled(TextField)(({theme}) => ({
     '.MuiInputLabel-root.Mui-focused':{
         color:'transparent'
     },
+    '.MuiInputLabel-shrink':{
+        visibility:'hidden'
+    }
 
 }))
 
@@ -31,6 +34,7 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle }) =>
         <StyledAccordionTitle
             key={`accordion-title-${accordionIndex}`}
             name='pane-title'
+            label={placeholderTitle}
             aria-label={accordionTitle ? accordionTitle : `Untitled ${placeholderTitle}`}
             fullWidth={true}
             id={`textfield-${accordionIndex}`}
@@ -40,7 +44,9 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle }) =>
             maxRows={2}
             InputProps={{ 
                 disableUnderline: true
-
+            }}
+            InputLabelProps={{
+                disableAnimation: true
             }}
             onChange={handleTitleChange}
         />
