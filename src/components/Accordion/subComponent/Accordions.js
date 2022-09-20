@@ -14,7 +14,7 @@ const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
     borderStyle: 'solid',
     borderColor: '#BDBDBD',
 }))
-const StyledAccordionPane = styled(AccordionSummary)(({accordionIndex,activePane}) => ({
+const StyledAccordionPane = styled('div')(({accordionIndex,activePane}) => ({
     height: '40px',
     fontSize: '18px',
     color: '#232323',
