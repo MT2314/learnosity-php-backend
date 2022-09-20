@@ -61,7 +61,7 @@ const StyledAccorPlaceholder = styled('div')(({ activePane, accordionIndexProp }
   }
 ))
 
-const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle, activePane }) => {
+const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle, activePane, isActive }) => {
 
   const [, dispatch] = useContext(LayoutContext)
 
@@ -87,7 +87,7 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle, acti
             placeholder={placeholderTitle}
             aria-label="accordion title input"
             aria-multiline="true"
-            disabled={activePane == accordionIndex ? false : true}
+            disabled={activePane === accordionIndex ? false : true}
             maxRows="2"
             minRow="1"
             onChange={handleTitleChange}

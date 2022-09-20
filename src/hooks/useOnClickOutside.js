@@ -1,3 +1,5 @@
+//refer to the follow link for instructions on how to implement the useOnClickOutside hook. https://usehooks.com/useOnClickOutside/
+
 import {useEffect} from "react";
 
 export function useOnClickOutside(ref, handler) {

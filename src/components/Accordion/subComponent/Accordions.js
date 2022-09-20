@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import { ExpandMore } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
@@ -7,6 +7,7 @@ import { LayoutContext } from "../../../Context/InteractivesContext";
 import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
 import { v4 as uuidv4 } from "uuid";
+import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
 
 //styled components for Accordion styles
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
@@ -43,6 +44,11 @@ const StyledButtonsDiv = styled("div")(() => ({
 const Accordions = () => {
     const [state, dispatch] = useContext(LayoutContext)
     const [ activePane, setActivePane ] = useState(null)
+    const [ isActive, setIsActive ] = useState(false)
+
+    //click outside hook sets active pane to null when user clicks outside the accordion pane
+    const paneRef = useRef()
+    useOnClickOutside( paneRef, () => setIsActive(false))
 
     return (
         <div className="accordion-container" data-testid="accordion-component">
@@ -73,11 +79,16 @@ const Accordions = () => {
                         accordionIndex={accordionIndex}
                         disableGutters={true}
                         expanded={accordion.expanded}
+                        ref={paneRef}
                     >
                         <StyledAccordionPane
                         //id attribute below creates an "aria-labelledby" and is REQUIRED for accessibilty.
                             id={`panel-${accordionIndex + 1}-add-components-${uuidv4()}`}
-                            onClick={() => setActivePane(accordionIndex)}
+                            onClick={() => {
+                                setActivePane(accordionIndex)
+                                setIsActive(true)
+                            } 
+                        }
                             accordionIndex={accordionIndex}
                             activePane={activePane}
                             expandIcon={<ExpandMore
@@ -98,6 +109,7 @@ const Accordions = () => {
                                 accordionIndex={accordionIndex}
                                 accordionTitle={accordion.title}
                                 activePane={activePane}
+                                isActive={isActive}
                             />
                         </StyledAccordionPane>
 
