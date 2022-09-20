@@ -8,12 +8,9 @@ const StyledAccordionTitle = styled(TextareaAutosize)(({activePane, accordionInd
       fontFamily: '"Inter", sans-serif',
       backgroundColor: 'rgba(21, 101, 192, 0)',
       border: 'none',
-      padding: '0',
       fontSize: '18px',
       fontWeight: 500,
       width: '100%',
-      minHeight: '25px',
-      maxHeight: '50px',
       resize: 'none',
       textOverflow: 'hidden',
       display: '-webkit-box',
@@ -27,20 +24,31 @@ const StyledAccordionTitle = styled(TextareaAutosize)(({activePane, accordionInd
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         boxShadow: '0 0 1px rgba(255, 255, 255, 0.5)',
         WebkitBoxShadow: '0 0 1px rgba(255, 255, 255, 0.5)',
-      },
-      '&:disabled': {
-        background: '#f5f5f5',
-      },
+     },
       '&::placeholder': {
-        color: activePane === accordionIndexProp && 'rgba(35,35,35,1)'
+        color: activePane === accordionIndexProp && '#232323'
       },
       '&:focus': {
         border: 'none',
         outline: 'none',
         '&:: placeholder': {
-        color: 'rgba(35, 35, 35, 0.12)',
+        color: '#232323',
         },
       },
+    }
+  ))
+
+  const StyledAccorPlaceholder = styled('div')(({ activePane, accordionIndexProp }) => (
+    {
+      width: '100%',
+      fontSize: '18px',
+      wordWrap: 'break-word',
+      overflowX: 'hidden',
+      overflowY: 'hidden',
+      textOverflow: 'ellipsis',
+      display: '-webkit-box',
+      WebkitBoxOrient: 'vertical',
+      WebkitLineClamp: activePane == accordionIndexProp ? "unset" : 2,
     }
   ))
 
@@ -72,11 +80,15 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle, acti
                 aria-multiline="true"
                 disabled={activePane == accordionIndex ? false : true}
                 maxRows="2"
+                minRow="1"
                 onChange={handleTitleChange}
                 value={accordionTitle || ""}
                 
               />
-                :<p>{accordionTitle ? accordionTitle : placeholderTitle}</p>
+                :<StyledAccorPlaceholder
+                    accordionIndexProp={accordionIndex}
+                    activePane={activePane}
+                >{accordionTitle ? accordionTitle : placeholderTitle}</StyledAccorPlaceholder>
             }
         </>
     )
