@@ -203,7 +203,9 @@ module.exports = async function () {
             ) {
               const component = section.components[componentIndex];
               try {
-                component.props = JSON.parse(component.props);
+                if (component.props instanceof String) {
+                  component.props = JSON.parse(component.props);
+                }
               } catch (err) {
                 console.error(err);
               }
