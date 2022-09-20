@@ -28,7 +28,7 @@ const StyledHeaderInput = styled(TextareaAutosize)({
     },
   },
 });
-const Header = () => {
+const Header = ({ t }) => {
   const [state, dispatch] = useContext(InfoBoxContext);
 
   const handleHeaderChange = useCallback((e) => {
@@ -42,8 +42,8 @@ const Header = () => {
     <StyledHeaderInput
       name="infoBoxHeader"
       role="textbox"
-      aria-label="info box header input"
-      placeholder="Type your header here"
+      aria-label={t("Info Box Header Aria")}
+      placeholder={t("Info Box Header Placeholder")}
       aria-multiline="true"
       value={state.infoBoxHeader.heading}
       onChange={handleHeaderChange}

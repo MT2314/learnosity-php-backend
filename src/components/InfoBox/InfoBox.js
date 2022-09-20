@@ -87,8 +87,8 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
       >
         <Icon setSelectedIcon={setSelectedIcon} selectedIcon={selectedIcon} />
         <StyledTextContainer>
-          <Label />
-          <Header />
+          <Label t={t} />
+          <Header t={t} />
           <Body
             isInfoBox={isInfoBox}
             infoHasFocus={infoHasFocus}
