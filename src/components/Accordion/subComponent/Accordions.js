@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import { LayoutContext } from "../../../Context/InteractivesContext";
 import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
+import uuid from 'uuid';
 
 //styled components for Accordion styles
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
@@ -77,6 +78,7 @@ const Accordions = () => {
                         expanded={accordion.expanded}
                     >
                         <StyledAccordionPane
+                            id={`panel-${accordionIndex + 1}-add-components-${uuid.v4()}`}
                             onClick={() => setActivePane(accordionIndex)}
                             accordionIndex={accordionIndex}
                             activePane={activePane}
@@ -90,8 +92,7 @@ const Accordions = () => {
                                 sx={{
                                     pointerEvents: "auto",
                                 }}
-                            />}
-                            data-header-id={`panel${accordionIndex}-header`}
+                            />}    
                         >
                             <AccordionTitle
                                 key={`accordion-title-${accordionIndex}`}
