@@ -1,6 +1,7 @@
 const index = require("../utils/index");
-const headings = require("../utils/headings");
+const parseprops = require("../utils/parse-props");
 const quillConverter = require("../utils/quillConverter");
+const headings = require("../utils/headings");
 const queries = require("../scripts/queries");
 
 /**
@@ -72,6 +73,7 @@ module.exports = async function () {
       }
 
       if (data?.getCourse) {
+        parseprops.transformComponentPropsRecusive(data.getCourse);
         return data.getCourse;
       }
 
@@ -88,54 +90,7 @@ module.exports = async function () {
 
       // Move this function out into a new file?
       if (data?.__typename === "Course") {
-        console.log(JSON.stringify(data, null, 4));
-
-        const transformComponentPropsRecusive = (container) => {
-          if (container.children) {
-            for (let index = 0; index < container.children.length; index++) {
-              const child = container.children[index];
-              transformComponentPropsRecusive(child);
-            }
-          }
-
-          if (container.componentContainers) {
-            for (
-              let ccIndex = 0;
-              ccIndex < container.componentContainers.length;
-              ccIndex++
-            ) {
-              const componentContainer = container.componentContainers[ccIndex];
-              componentContainer.sections = componentContainer.sections.sort(
-                (a, b) => (a.position < b.position ? -1 : 1)
-              );
-              for (
-                let sectionIndex = 0;
-                sectionIndex < componentContainer.sections.length;
-                sectionIndex++
-              ) {
-                const section = componentContainer.sections[sectionIndex];
-                section.components = section.components.sort((a, b) =>
-                  a.position < b.position ? -1 : 1
-                );
-                for (
-                  let componentIndex = 0;
-                  componentIndex < section.components.length;
-                  componentIndex++
-                ) {
-                  const component = section.components[componentIndex];
-                  try {
-                    component.props = JSON.parse(component.props);
-                  } catch (err) {
-                    console.error(err);
-                  }
-                }
-              }
-            }
-          }
-        };
-
-        transformComponentPropsRecusive(data);
-
+        // Data before conversions
         // console.log(JSON.stringify(data, null, 4));
 
         // Looping through each lesson and running the converter functions on them
@@ -150,17 +105,8 @@ module.exports = async function () {
           lessons.push(lesson);
         }
 
+        // Data after conversions
         // console.log(JSON.stringify(data, null, 4));
-
-        // console.log('this is a course', data.__typename, data.courseCode);
-        // console.log('number of children ', data.children.length);
-        // console.log('first child is a ', data.children[0].type, ' named: ', data.children[0].name);
-        // console.log('first child has this many children ', data.children[0].children.length);
-        // console.log('first childs first child is a ', data.children[0].children[0].type, ' named: ', data.children[0].children[0].name);
-        // console.log('first childs first child has this many componentContainers ', data.children[0].children[0].componentContainers.length);
-        // console.log('first component ', data.children[0].children[0].componentContainers[0].sections[0].components[0].componentName);
-        // console.log('first component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[0].components[0].props).text);
-        // console.log('second component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[1].components[0].props).body);
       } else {
         // TODO: may need to check for type if __typename does not exist eg. getLesson
       }
