@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import AccordionTitle from "./AccordionTitle";
 import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
-import { AccordionSummary } from "@material-ui/core";
+import { AccordionSummary } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import styled from '@emotion/styled';
+import AccordionTitle from "./AccordionTitle";
 
-const StyledAccordionPane = styled(AccordionSummary)(({accordionIndex,activePane, isActive}) => ({
+const StyledAccordionPane = styled(AccordionSummary)(({isActive}) => ({
   height: '40px',
   fontSize: '18px',
   color: '#232323',
@@ -17,13 +17,13 @@ const StyledAccordionPane = styled(AccordionSummary)(({accordionIndex,activePane
 
 const Pane = ({ accordionIndex, accordion}) => { 
 
-  const [ activePane, setActivePane ] = useState(null)
+  const { title, placeholderTitle } = accordion
+
   const [ isActive, setIsActive ] = useState(false)
   //click outside hook sets active pane to null when user clicks outside the accordion pane
   const paneRef = useRef()
   useOnClickOutside( paneRef, () => setIsActive(false))
 
-  console.log(isActive)
   return (
   <div key={`pane-${accordionIndex}`} ref={paneRef}>
     <StyledAccordionPane
@@ -31,7 +31,6 @@ const Pane = ({ accordionIndex, accordion}) => {
         id={`panel-${accordionIndex + 1}-add-components-${uuidv4()}`}
         onClick={() => {setIsActive(true)}}
         accordionIndex={accordionIndex}
-        activePane={activePane}
         isActive={isActive}
         expandIcon={<ExpandMore
             onClick={() => {
@@ -47,10 +46,9 @@ const Pane = ({ accordionIndex, accordion}) => {
     >
         <AccordionTitle
             key={`accordion-title-${accordionIndex}`}
-            placeholderTitle={accordion.placeholderTitle}
+            placeholderTitle={placeholderTitle}
             accordionIndex={accordionIndex}
-            accordionTitle={accordion.title}
-            activePane={activePane}
+            accordionTitle={title}
             isActive={isActive}
         />
     </StyledAccordionPane>

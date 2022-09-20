@@ -1,9 +1,8 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useContext } from 'react'
 import { Button } from '@mui/material';
-import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Accordion, AccordionDetails } from '@mui/material';
 import styled from '@emotion/styled';
 import { LayoutContext } from "../../../Context/InteractivesContext";
-import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
 import Pane from './Pane';
 
@@ -34,8 +33,6 @@ const StyledButtonsDiv = styled("div")(() => ({
 const Accordions = () => {
     const [state, dispatch] = useContext(LayoutContext)
 
-
-
     return (
         <div className="accordion-container" data-testid="accordion-component">
             <StyledButtonsDiv>
@@ -60,7 +57,6 @@ const Accordions = () => {
                 </StyledExpandCollapseButton>
             </StyledButtonsDiv>
             {state.map((accordion, accordionIndex) => {
-                
                 return (
                     <StyledAccordion
                         accordionIndex={accordionIndex}
