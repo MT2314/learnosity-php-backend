@@ -1,8 +1,6 @@
 const index = require("../utils/index");
-const parseprops = require("../utils/parse-props");
-const quillConverter = require("../utils/quillConverter");
-const headings = require("../utils/headings");
 const queries = require("../scripts/queries");
+const convertData = require("../utils/convertData");
 
 /**
  * Returns a graphql query string based on the name of the query requested.
@@ -54,7 +52,6 @@ function _determineLessonPath(uuid, lessonPaths) {
  * @returns {Array}
  */
 module.exports = async function () {
-  var lessons = [];
   const queryVars = {
     // 'uuid': process.env.ENTITY_ID,
     id: process.env.ID,
@@ -73,7 +70,6 @@ module.exports = async function () {
       }
 
       if (data?.getCourse) {
-        parseprops.transformComponentPropsRecusive(data.getCourse);
         return data.getCourse;
       }
 
@@ -87,34 +83,14 @@ module.exports = async function () {
       if (!data) {
         // TODO: there was a problem retrieving the data
       }
-
-      // Move this function out into a new file?
       if (data?.__typename === "Course") {
-        // Data before conversions
-        // console.log(JSON.stringify(data, null, 4));
-
-        // Looping through each lesson and running the converter functions on them
-        // Once the conversion has taken place, the lesson will be pushed into the "lessons" array
-        for (let i = 0; i < data.children[0].children.length; i++) {
-          let lesson = data.children[0].children[i];
-
-          lesson = quillConverter.parse(lesson);
-
-          lesson = headings.parse(lesson);
-
-          lessons.push(lesson);
-        }
-
-        // Data after conversions
-        // console.log(JSON.stringify(data, null, 4));
+        convertData.dataConversionFunction(data);
       } else {
         // TODO: may need to check for type if __typename does not exist eg. getLesson
       }
 
       // TODO: handle promise rejection if something goes wrong
     });
-
-  // console.log(JSON.stringify(lessons, null, 4));
-  // console.log("lessons length:", lessons.length);
-  return lessons;
+  // Returning the array that we set in convertData.js
+  return convertData.lessons;
 };
