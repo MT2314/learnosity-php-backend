@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
 import { AccordionSummary } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import styled from '@emotion/styled';
 import AccordionTitle from "./AccordionTitle";
+import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
 
 const StyledAccordionPane = styled(AccordionSummary)(({isActive}) => ({
   height: '40px',
@@ -12,7 +12,16 @@ const StyledAccordionPane = styled(AccordionSummary)(({isActive}) => ({
   color: '#232323',
   letterSpacing: '0.15px',
   fontcolor: "#232323",
-  backgroundColor: isActive ? 'rgba(21, 101, 192, 0.12) !important' : '#fff !important', //!important overrides the MUI grey background. 
+  backgroundColor: isActive ? 'rgba(21, 101, 192, 0.12) !important' : '#fff !important', //!important overrides the MUI grey background.
+  borderWidth: isActive && '1px 1px 3px 1px',
+  borderStyle: isActive && 'solid',
+  borderColor: isActive && '#232323',
+  '&:focus':{
+    backgroundColor: 'rgba(21, 101, 192, 0.12) !important' 
+  },
+  '&:hover':{
+    backgroundColor: 'rgba(21, 101, 192, 0.12) !important' 
+  },
 }))
 
 const Pane = ({ accordionIndex, accordion}) => { 

@@ -88,8 +88,8 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle, acti
             aria-label="accordion title input"
             aria-multiline="true"
             disabled={isActive ? false : true}
-            maxRows="2"
-            minRow="1"
+            maxRows={2}
+            minRows={1}
             onChange={handleTitleChange}
             value={accordionTitle || ""}
 
