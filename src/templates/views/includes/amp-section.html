@@ -1,11 +1,11 @@
-<section id="{{section.id}}">
-  <div class="tgt-{{section.id}}">
-    <a class="tgt-anchor" id="{{section.id}}Anchor"></a>
+<section id="{{section.sectionType}}">
+  <div class="tgt-{{section.sectionType}}">
+    <a class="tgt-anchor" id="{{section.sectionType}}Anchor"></a>
   </div>
   <h1 class="max-width-4 mx-auto mb4">
-    <span class="sr-only">{{section.sectionType}}</span>
+    <span class="sr-only">{{section.sectionName}}</span>
     <amp-img
-      src="https://dcc-upload.s3.ca-central-1.amazonaws.com/mpm1d/assets/img/bg_header_{{section.id}}.png"
+      src="https://dcc-upload.s3.ca-central-1.amazonaws.com/mpm1d/assets/img/bg_header_{{section.sectionType}}.png"
       alt=""
       layout="responsive"
       width="1170"
@@ -16,6 +16,7 @@
       ></amp-img>
   </h1>
 
-  {%- for topic in section.topics -%} {% include amp-topic.html topic:topic %}
+  {%- for topic in section.topics -%} 
+    {% include amp-topic.html topic:topic %}
   {%- endfor -%}
 </section>

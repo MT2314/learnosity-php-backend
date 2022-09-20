@@ -66,7 +66,7 @@ module.exports = async function () {
     .run(query, queryVars)
     .then((data) => {
       const isEmpty = Object.keys(data).length === 0;
-      console.log("index.run result: ", data, isEmpty);
+      // console.log("index.run result: ", data, isEmpty);
       if (isEmpty) {
         return false;
       }
@@ -148,7 +148,7 @@ module.exports = async function () {
           lessons.push(lesson);
         }
 
-        console.log(JSON.stringify(data, null, 4));
+        // console.log(JSON.stringify(data, null, 4));
 
         // console.log('this is a course', data.__typename, data.courseCode);
         // console.log('number of children ', data.children.length);
