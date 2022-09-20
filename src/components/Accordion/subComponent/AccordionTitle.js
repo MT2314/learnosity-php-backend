@@ -26,13 +26,15 @@ const StyledAccordionTitle = styled(TextareaAutosize)(({activePane, accordionInd
         WebkitBoxShadow: '0 0 1px rgba(255, 255, 255, 0.5)',
      },
       '&::placeholder': {
-        color: activePane === accordionIndexProp && '#232323'
+        color: activePane === accordionIndexProp && '#232323',
+        opacity: 1,
       },
       '&:focus': {
         border: 'none',
         outline: 'none',
         '&:: placeholder': {
-        color: '#232323',
+        color: '#232323 ',
+        opacity: 0.6,
         },
       },
     }
