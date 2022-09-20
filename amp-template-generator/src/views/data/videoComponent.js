@@ -42,108 +42,15 @@ module.exports = async function () {
                     components: [
                       {
                         componentName: "Video",
-                        props: {
-                          type: "youTube",
-                          videoId: "3m6d99GDARE",
-                          caption: null,
-                          credit: null,
-                          transcript: null,
-                          body: "<p><br></p>",
-                        },
+                        props:
+                          '{"type":"youTube", "videoId": "3m6d99GDARE", "caption":"I am a caption", "credit": null, "transcript": null}',
+                        position: "w",
                       },
                       {
                         componentName: "Video",
-                        props: {
-                          type: "youTube",
-                          videoId: "iCABig-a3PE",
-                          caption: null,
-                          credit: null,
-                          transcript: null,
-                          body: "<p><br></p>",
-                        },
-                      },
-                      {
-                        componentName: "Video",
-                        props: {
-                          type: "youTube",
-                          videoId: "wieKORf0dH4",
-                          caption: null,
-                          credit: null,
-                          transcript: null,
-                          body: "<p><br></p>",
-                        },
-                      },
-                      {
-                        componentName: "Video",
-                        props: {
-                          type: "brightcove",
-                          videoId: "5967111782001",
-                          caption: null,
-                          credit: null,
-                          transcript: {
-                            blocks: [
-                              {
-                                key: "7m3m2",
-                                text: "",
-                                type: "unstyled",
-                                depth: 0,
-                                inlineStyleRanges: [],
-                                entityRanges: [],
-                                data: {},
-                              },
-                            ],
-                            entityMap: {},
-                          },
-                          body: "<p><br></p>",
-                        },
-                      },
-                      {
-                        componentName: "Video",
-                        props: {
-                          type: "brightcove",
-                          videoId: "5967111782001",
-                          caption: null,
-                          credit: null,
-                          transcript: {
-                            blocks: [
-                              {
-                                key: "7m3m2",
-                                text: "",
-                                type: "unstyled",
-                                depth: 0,
-                                inlineStyleRanges: [],
-                                entityRanges: [],
-                                data: {},
-                              },
-                            ],
-                            entityMap: {},
-                          },
-                          body: "<p><br></p>",
-                        },
-                      },
-                      {
-                        componentName: "Video",
-                        props: {
-                          type: "brightcove",
-                          videoId: "5967111782001",
-                          caption: null,
-                          credit: null,
-                          transcript: {
-                            blocks: [
-                              {
-                                key: "7m3m2",
-                                text: "",
-                                type: "unstyled",
-                                depth: 0,
-                                inlineStyleRanges: [],
-                                entityRanges: [],
-                                data: {},
-                              },
-                            ],
-                            entityMap: {},
-                          },
-                          body: "<p><br></p>",
-                        },
+                        props:
+                          '{"type":"brightcove","videoId":"5967111782001","caption":"I am a caption","credit":null,"transcript":{"blocks":[{"key":"7m3m2","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}}',
+                        position: "wU",
                       },
                     ],
                   },
