@@ -91,7 +91,7 @@ const Accordions = () => {
                                     pointerEvents: "auto",
                                 }}
                             />}
-                            id={`panel${accordionIndex}-header`}
+                            data-header-id={`panel${accordionIndex}-header`}
                         >
                             <AccordionTitle
                                 key={`accordion-title-${accordionIndex}`}
