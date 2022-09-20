@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer, useEffect, useState } from "react";
 import produce from "immer";
 
 //state of infoBox data stored in InfoBoxContext
@@ -6,6 +6,8 @@ export const InfoBoxContext = createContext();
 
 export const infoBoxConfig = (draft, action) => {
   switch (action.func) {
+    case "UPDATE_STATE":
+      return action.data;
     case "CHANGE_BODY":
       draft.body = action.body;
       return draft;
@@ -26,9 +28,22 @@ export const infoBoxConfig = (draft, action) => {
 //InfoBox provider wraps the tab component to access reducer
 export const InfoBoxProvider = ({ children, setProp, infoBoxState }) => {
   const [state, dispatch] = useReducer(produce(infoBoxConfig), infoBoxState);
+
+  const diff = JSON.stringify(state) !== JSON.stringify(infoBoxState);
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
-    setProp({ infoBoxState: state });
+    dispatch({ func: "UPDATE_STATE", data: infoBoxState });
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    diff && mounted && setProp({ infoBoxState: state });
   }, [state]);
+
+  useEffect(() => {
+    diff && mounted && dispatch({ func: "UPDATE_STATE", data: infoBoxState });
+  }, [infoBoxState]);
 
   return (
     <InfoBoxContext.Provider value={[state, dispatch]}>

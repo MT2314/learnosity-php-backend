@@ -107,13 +107,19 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   const [state, dispatch] = useReducer(produce(layoutConfig), layoutState);
 
   const diff = JSON.stringify(state) !== JSON.stringify(layoutState);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    diff && setProp({ layoutState: state });
+    dispatch({ func: "UPDATE_STATE", data: layoutState });
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    diff && mounted && setProp({ layoutState: state });
   }, [state]);
 
   useEffect(() => {
-    diff && dispatch({ func: "UPDATE_STATE", data: layoutState });
+    diff && mounted && dispatch({ func: "UPDATE_STATE", data: layoutState });
   }, [layoutState]);
 
   return (
