@@ -38,7 +38,7 @@ const Pane = ({ accordionIndex, accordion}) => {
     <StyledAccordionPane
     //id attribute below creates an "aria-labelledby" and is REQUIRED for accessibilty.
         id={`panel-${accordionIndex + 1}-add-components-${uuidv4()}`}
-        onClick={() => {setIsActive(true)}}
+        onClick={() => setIsActive(true)}
         accordionIndex={accordionIndex}
         isActive={isActive}
         expandIcon={<ExpandMore
@@ -59,6 +59,7 @@ const Pane = ({ accordionIndex, accordion}) => {
             accordionIndex={accordionIndex}
             accordionTitle={title}
             isActive={isActive}
+            setIsActive={setIsActive}
         />
     </StyledAccordionPane>
     </div>

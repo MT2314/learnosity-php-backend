@@ -3,7 +3,7 @@ import { LayoutContext } from '../../../Context/InteractivesContext'
 import { TextareaAutosize } from "@material-ui/core";
 import styled from '@emotion/styled';
 
-const StyledAccordionTitle = styled(TextareaAutosize)(({ activePane, accordionIndexProp, isActive }) => (
+const StyledAccordionTitle = styled(TextareaAutosize)(({ isActive }) => (
   {
     fontFamily: '"Inter", sans-serif',
     backgroundColor: 'rgba(21, 101, 192, 0)',
@@ -42,12 +42,12 @@ const StyledAccordionTitle = styled(TextareaAutosize)(({ activePane, accordionIn
     },
 
     '::-ms-input-placeholder': { /* Microsoft Edge */
-      color: isActive === accordionIndexProp && '#232323',
+      color: isActive && '#232323',
     }
   }
 ))
 
-const StyledAccorPlaceholder = styled('div')(({ activePane, accordionIndexProp }) => (
+const StyledAccorPlaceholder = styled('div')(({ isActive }) => (
   {
     width: '100%',
     fontSize: '18px',
@@ -57,11 +57,11 @@ const StyledAccorPlaceholder = styled('div')(({ activePane, accordionIndexProp }
     textOverflow: 'ellipsis',
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
-    WebkitLineClamp: activePane == accordionIndexProp ? "unset" : 2,
+    WebkitLineClamp: isActive ? "unset" : 2,
   }
 ))
 
-const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle, activePane, isActive }) => {
+const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle, activePane, isActive, setIsActive }) => {
 
   const [, dispatch] = useContext(LayoutContext)
 
@@ -82,17 +82,14 @@ const AccordionTitle = ({ accordionTitle, accordionIndex, placeholderTitle, acti
       {
         isActive ?
           <StyledAccordionTitle
-            activePane={activePane}
-            accordionindexprop={accordionIndex}
             placeholder={placeholderTitle}
             aria-label="accordion title input"
             aria-multiline="true"
-            disabled={isActive ? false : true}
-            maxRows={2}
-            minRows={1}
+            //disabled={isActive ? false : true}
+            minRows="1"
+            maxRows="2"
             onChange={handleTitleChange}
             value={accordionTitle || ""}
-
           />
           : <StyledAccorPlaceholder
             accordionIndexProp={accordionIndex}

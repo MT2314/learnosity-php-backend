@@ -15,10 +15,14 @@ export function useOnClickOutside(ref, handler) {
 
     document.addEventListener("mousedown", listener);
     document.addEventListener("touchstart", listener);
+    document.addEventListener("focusin", listener);
+
 
     return () => {
       document.removeEventListener("mousedown", listener);
       document.removeEventListener("touchstart", listener);
+      document.addEventListener('focusin', listener);
+
     };
   }, [ref, handler]);
 
