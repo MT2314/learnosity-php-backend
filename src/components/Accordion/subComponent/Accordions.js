@@ -1,13 +1,11 @@
 import React, { useContext, useState, useRef } from 'react'
-import { ExpandMore } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
 import styled from '@emotion/styled';
 import { LayoutContext } from "../../../Context/InteractivesContext";
 import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
-import { v4 as uuidv4 } from "uuid";
-import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
+import Pane from './Pane';
 
 //styled components for Accordion styles
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
@@ -15,14 +13,6 @@ const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
     borderWidth: accordionIndex === 0 ? '1px 1px 0px 1px' : '0px 1px 1px 1px',
     borderStyle: 'solid',
     borderColor: '#BDBDBD',
-}))
-const StyledAccordionPane = styled(AccordionSummary)(({accordionIndex,activePane}) => ({
-    height: '40px',
-    fontSize: '18px',
-    color: '#232323',
-    letterSpacing: '0.15px',
-    fontcolor: "#232323",
-    backgroundColor: accordionIndex === activePane ? 'rgba(21, 101, 192, 0.12) !important' : '#fff !important', //!important overrides the MUI grey background. 
 }))
 
 const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
@@ -43,12 +33,8 @@ const StyledButtonsDiv = styled("div")(() => ({
 
 const Accordions = () => {
     const [state, dispatch] = useContext(LayoutContext)
-    const [ activePane, setActivePane ] = useState(null)
-    const [ isActive, setIsActive ] = useState(false)
 
-    //click outside hook sets active pane to null when user clicks outside the accordion pane
-    const paneRef = useRef()
-    useOnClickOutside( paneRef, () => setIsActive(false))
+
 
     return (
         <div className="accordion-container" data-testid="accordion-component">
@@ -74,45 +60,16 @@ const Accordions = () => {
                 </StyledExpandCollapseButton>
             </StyledButtonsDiv>
             {state.map((accordion, accordionIndex) => {
+                
                 return (
                     <StyledAccordion
                         accordionIndex={accordionIndex}
                         disableGutters={true}
                         expanded={accordion.expanded}
-                        ref={paneRef}
                     >
-                        <StyledAccordionPane
-                        //id attribute below creates an "aria-labelledby" and is REQUIRED for accessibilty.
-                            id={`panel-${accordionIndex + 1}-add-components-${uuidv4()}`}
-                            onClick={() => {
-                                setActivePane(accordionIndex)
-                                setIsActive(true)
-                            } 
-                        }
+                       <Pane 
                             accordionIndex={accordionIndex}
-                            activePane={activePane}
-                            expandIcon={<ExpandMore
-                                onClick={() => {
-                                    dispatch({
-                                        func: "TOGGLE_PANE",
-                                        paneIndex: accordionIndex
-                                    });
-                                }}
-                                sx={{
-                                    pointerEvents: "auto",
-                                }}
-                            />}    
-                        >
-                            <AccordionTitle
-                                key={`accordion-title-${accordionIndex}`}
-                                placeholderTitle={accordion.placeholderTitle}
-                                accordionIndex={accordionIndex}
-                                accordionTitle={accordion.title}
-                                activePane={activePane}
-                                isActive={isActive}
-                            />
-                        </StyledAccordionPane>
-
+                            accordion={accordion}/>
                         <AccordionDetails
                             sx={{
                                 borderWidth: '1px 0px',
