@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 import { LayoutContext } from "../../../Context/InteractivesContext";
 import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 //styled components for Accordion styles
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
@@ -21,10 +21,7 @@ const StyledAccordionPane = styled(AccordionSummary)(({accordionIndex,activePane
     color: '#232323',
     letterSpacing: '0.15px',
     fontcolor: "#232323",
-    backgroundColor: accordionIndex === activePane ? 'rgba(21, 101, 192, 0.12) !important' : '#fff !important',
-    '&:focusVisible':{
-        backgroundColor:'red'
-    }
+    backgroundColor: accordionIndex === activePane ? 'rgba(21, 101, 192, 0.12) !important' : '#fff !important', //!important overrides the MUI grey background. 
 }))
 
 const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
@@ -78,7 +75,8 @@ const Accordions = () => {
                         expanded={accordion.expanded}
                     >
                         <StyledAccordionPane
-                            id={`panel-${accordionIndex + 1}-add-components-${uuid.v4()}`}
+                        //id attribute below creates an "aria-labelledby" and is REQUIRED for accessibilty.
+                            id={`panel-${accordionIndex + 1}-add-components-${uuidv4()}`}
                             onClick={() => setActivePane(accordionIndex)}
                             accordionIndex={accordionIndex}
                             activePane={activePane}
