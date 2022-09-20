@@ -14,13 +14,13 @@ const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
     borderStyle: 'solid',
     borderColor: '#BDBDBD',
 }))
-const StyledAccordionPane = styled('div')(({accordionIndex,activePane}) => ({
+const StyledAccordionPane = styled(AccordionSummary)(({accordionIndex,activePane}) => ({
     height: '40px',
     fontSize: '18px',
     color: '#232323',
     letterSpacing: '0.15px',
     fontcolor: "#232323",
-    backgroundColor: accordionIndex === activePane ? 'rgba(21, 101, 192, 0.12)' : '#fff',
+    backgroundColor: accordionIndex === activePane ? 'rgba(21, 101, 192, 0.12) !important' : '#fff !important',
     '&:focusVisible':{
         backgroundColor:'red'
     }
