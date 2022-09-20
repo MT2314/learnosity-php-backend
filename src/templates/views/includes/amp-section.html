@@ -1,16 +1,21 @@
 <section id="{{section.id}}">
-    <div class="tgt-{{section.id}}">
-      <a class="tgt-anchor" id="{{section.id}}Anchor"></a>
-    </div>
-      <h1 class="max-width-4 mx-auto mb4">
-          <span class="sr-only">{{section.sectionType}}</span>
-      </h1>
-  
-      {%- for component in section.topics -%}
-        {%- for componentProps in component.components -%}
-            {% include content-model-parser.liquid item:componentProps %}
-          {%- endfor -%}
-      {%- endfor -%}
+  <div class="tgt-{{section.id}}">
+    <a class="tgt-anchor" id="{{section.id}}Anchor"></a>
+  </div>
+  <h1 class="max-width-4 mx-auto mb4">
+    <span class="sr-only">{{section.sectionType}}</span>
+    <amp-img
+      src="https://dcc-upload.s3.ca-central-1.amazonaws.com/mpm1d/assets/img/bg_header_{{section.id}}.png"
+      alt=""
+      layout="responsive"
+      width="1170"
+      height="377"
+      class="i-amphtml-element i-amphtml-layout-responsive i-amphtml-layout-size-defined i-amphtml-built i-amphtml-layout"
+      i-amphtml-layout="responsive"
+      style="--loader-delay-offset: 393ms !important"
+      ></amp-img>
+  </h1>
 
-  </section>
-
+  {%- for topic in section.topics -%} {% include amp-topic.html topic:topic %}
+  {%- endfor -%}
+</section>
