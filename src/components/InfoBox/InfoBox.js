@@ -79,7 +79,7 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
   return (
     <InfoBoxProvider infoBoxState={infoBoxState} setProp={setProp}>
       <StyledPaper
-        aria-label="Info Box"
+        aria-label={t("Info Box")}
         data-testid="infoBox-container"
         ref={infoBoxRef}
         onClick={(e) => infoBoxFocused(e)}
@@ -98,6 +98,7 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
             setInfoHasFocus={setInfoHasFocus}
             setInfoBoxBody={setInfoBoxBody}
             setPlaceHolder={setPlaceHolder}
+            t={t}
           />
         </StyledTextContainer>
       </StyledPaper>
