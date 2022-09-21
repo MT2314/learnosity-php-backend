@@ -7,6 +7,7 @@ import AccordionTitle from "./AccordionTitle";
 import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
 import { LayoutContext } from "../../../Context/InteractivesContext";
 
+//styles for accordion
 const StyledAccordionPane = styled(AccordionSummary)(({isActive}) => ({
   height: '40px',
   fontSize: '18px',
@@ -24,6 +25,7 @@ const StyledAccordionPane = styled(AccordionSummary)(({isActive}) => ({
     backgroundColor: 'rgba(21, 101, 192, 0.12) !important' 
   },
 }))
+//styles end. 
 
 const Pane = ({ accordionIndex, accordion}) => { 
 

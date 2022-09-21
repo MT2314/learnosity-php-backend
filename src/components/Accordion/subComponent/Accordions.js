@@ -9,7 +9,7 @@ import Pane from './Pane';
 //styled components for Accordion styles
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
     backgroundColor: '#FFFFFF',
-    borderWidth: accordionIndex === 0 ? '1px 1px 0px 1px' : '0px 1px 1px 1px',
+    borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: '#BDBDBD',
 }))
@@ -35,7 +35,8 @@ const Accordions = () => {
 
     return (
         <div className="accordion-container" data-testid="accordion-component">
-            <StyledButtonsDiv>
+            {/* TODO: Add Expand all and collapse all btns when a second pane is added */}
+            {/* <StyledButtonsDiv>
                 <StyledExpandCollapseButton
                     onClick={() => {
                         dispatch({
@@ -55,7 +56,7 @@ const Accordions = () => {
                     disabled={state.every(s => s.expanded === false)}>
                     Collapse All
                 </StyledExpandCollapseButton>
-            </StyledButtonsDiv>
+            </StyledButtonsDiv> */}
             {state.map((accordion, accordionIndex) => {
                 return (
                     <StyledAccordion
