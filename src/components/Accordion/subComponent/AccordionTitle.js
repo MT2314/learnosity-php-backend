@@ -14,6 +14,7 @@ const StyledAccordionTitle = styled(TextareaAutosize)(({ isActive }) => (
     resize: 'none',
     textOverflow: 'hidden',
     display: '-webkit-box',
+    wordBreak: 'break-word',
     WebkitBoxOrient: 'vertical',
     '&::-webkit-scrollbar': {
       WebkitAppearance: 'none',
