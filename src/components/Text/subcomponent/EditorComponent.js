@@ -364,7 +364,7 @@ const EditorComponent = ({
           ],
           attributes: ["href", "rel", "target", "class"],
         },
-        keepSelection: true,
+        keepSelection: false,
         substituteBlockElements: false,
         magicPasteLinks: true,
       },
