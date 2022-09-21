@@ -234,7 +234,6 @@ export const handleSelection = (range, id, quillRef) => {
 
   if (range?.length) {
     const format = quillRef.getEditor().getFormat();
-
     if (format.hasOwnProperty("link")) {
       linkBtn.classList.add("ql-selected");
     } else {
@@ -242,22 +241,25 @@ export const handleSelection = (range, id, quillRef) => {
     }
   }
   if (range?.length === 0) {
-    const [leaf, _] = quillRef.getEditor().getLeaf(range.index);
+    const format = quillRef.getEditor().getFormat();
 
-    const LeafLink =
-      leaf?.parent?.domNode?.tagName === "A" ? leaf?.parent?.domNode : null;
+    if (format.hasOwnProperty("link")) {
+      const linkRange = quillRef.getEditor().getSelection();
+      const [leaf, _] = quillRef.getEditor().getLeaf(linkRange.index);
+      const index = quillRef.getEditor().getIndex(leaf);
+      const delta = quillRef
+        .getEditor()
+        .getContents(index, leaf.domNode.length);
 
-    const nextLeaf = leaf?.next?.domNode;
-    const isLink = nextLeaf?.tagName === "A";
-
-    let text = LeafLink?.innerText;
-    let link = LeafLink?.getAttribute("href");
-
-    if (text === link || isLink) {
-      linkBtn.classList.remove("ql-selected");
-      quillTooltip.style.display = "none";
-    } else {
-      quillTooltip.style.display = "";
+      if (delta) {
+        const text = delta?.ops[0]?.insert;
+        const link = delta?.ops[0]?.attributes?.link;
+        if (text === link) {
+          quillTooltip.classList.remove("ql-hidden");
+        } else {
+          quillTooltip.style.display = "";
+        }
+      }
     }
   }
 };
