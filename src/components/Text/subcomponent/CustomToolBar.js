@@ -3,6 +3,7 @@ import { useSetShowMath, useShowMath, useBoldRef } from "../Provider";
 import styled from "@emotion/styled";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useTranslation } from "react-i18next";
 
 import { iconDropdownOptions } from "../../InfoBox/icons/infoBoxIcons";
 
@@ -158,6 +159,8 @@ const CustomToolBar = ({
   selectedIcon,
   setSelectedIcon,
 }) => {
+  const { t } = useTranslation();
+
   const setShowMath = useSetShowMath();
   const showMath = useShowMath();
   const boldRef = useBoldRef();
@@ -252,7 +255,7 @@ const CustomToolBar = ({
           <StyledIconDropdownButton
             ref={IconDropDown}
             id="iconToolBar"
-            aria-controls={open ? "infoBox-icon-menu" : undefined}
+            aria-controls={open ? t("Info Box Select Icon") : undefined}
             aria-expanded={open ? "true" : undefined}
             variant="contained"
             fullWidth
@@ -272,7 +275,9 @@ const CustomToolBar = ({
               )
             }
           >
-            {selectedIcon === null ? "Select icon" : selectedIcon.type}
+            {selectedIcon === null
+              ? t("Info Box Select Icon")
+              : t(`"${selectedIcon.type}"`)}
             <Popper
               open={open}
               anchorEl={IconDropDown.current}
@@ -287,7 +292,7 @@ const CustomToolBar = ({
                       <StyledMenu
                         autoFocusItem={open}
                         data-testid="icon-select-dropdown"
-                        aria-labelledby="icon-dropdown"
+                        aria-labelledby={t("Info Box Icon Drop Down")}
                         onKeyDown={handleListKeyDown}
                       >
                         {iconDropdownOptions.map((infoBox, index) => {
@@ -298,9 +303,11 @@ const CustomToolBar = ({
                               selected={index === selectedIndex}
                               onClick={(e) => handleMenuItemClick(e, index)}
                               data-testid={`${infoBox.type} icon`}
-                              aria-labelledby={`${infoBox.type} icon`}
+                              aria-labelledby={`${t(infoBox.type)} ${t(
+                                "Icon"
+                              )}`}
                             >
-                              {infoBox.type}
+                              {t(infoBox.type)}
                             </StyledMenuItem>
                           );
                         })}
