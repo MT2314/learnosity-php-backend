@@ -85,10 +85,14 @@ function parse(entity) {
   return entity;
 }
 
+function replaceAll(string, search, replace) {
+  return string.split(search).join(replace);
+}
+
 // Converts the quill data into a html element
 function _setHtml(quill) {
   if (/<\/a>/.test(convertDeltaToHtml(quill))) {
-    return convertDeltaToHtml(quill).replace('</a>', '<span class="sr-only">(Opens in a new window)</span></a>');
+    return replaceAll(convertDeltaToHtml(quill), '</a>', '<span class="sr-only">(Opens in a new window)</span></a>');
   }
   return convertDeltaToHtml(quill);
 }
