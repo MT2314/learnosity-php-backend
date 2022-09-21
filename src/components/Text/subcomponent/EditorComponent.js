@@ -109,14 +109,15 @@ const EditorComponent = ({
   const [activeDropDownListItem, setActiveDropDownListItem] = useState("");
 
   useEffect(() => {
-    editorIsFocus ? setActiveComponent(true) : setActiveComponent(false);
-  }, [editorIsFocus, setActiveComponent]);
+    editorIsFocus && setActiveComponent(true);
+  }, [editorIsFocus]);
 
   useOnClickOutside(textRef, () => {
     if (!showMath && !keepEditor && !isInfoBox) {
       alignmentObserver?.disconnect();
       setEditorIsFocus(false);
       setShowEditor(false);
+      setActiveComponent(false);
     }
   });
 
@@ -396,6 +397,7 @@ const EditorComponent = ({
           alignmentObserver?.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
+          setActiveComponent(false);
         }
       }}
       className="text-editor"
