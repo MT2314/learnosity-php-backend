@@ -5,11 +5,11 @@
  * @param {Object} container
  */
 
-const transformComponentPropsRecusive = (container) => {
+const transformComponentPropsRecursive = (container) => {
   if (container.children) {
     for (let index = 0; index < container.children.length; index++) {
       const child = container.children[index];
-      transformComponentPropsRecusive(child);
+      transformComponentPropsRecursive(child);
     }
   }
 
@@ -50,5 +50,5 @@ const transformComponentPropsRecusive = (container) => {
 };
 
 module.exports = {
-  transformComponentPropsRecusive: transformComponentPropsRecusive,
+  transformComponentPropsRecursive: transformComponentPropsRecursive,
 };
