@@ -1,7 +1,6 @@
 const index = require("../utils/index");
-const headings = require("../utils/headings");
-const quillConverter = require("../utils/quillConverter");
 const queries = require("../scripts/queries");
+const convertData = require("../utils/convertData");
 
 /**
  * Returns a graphql query string based on the name of the query requested.
@@ -53,7 +52,6 @@ function _determineLessonPath(uuid, lessonPaths) {
  * @returns {Array}
  */
 module.exports = async function () {
-  var lessons = [];
   const queryVars = {
     // 'uuid': process.env.ENTITY_ID,
     id: process.env.ID,
@@ -85,90 +83,15 @@ module.exports = async function () {
       if (!data) {
         // TODO: there was a problem retrieving the data
       }
-
-      // Move this function out into a new file?
       if (data?.__typename === "Course") {
-        console.log(JSON.stringify(data, null, 4));
-
-        const transformComponentPropsRecusive = (container) => {
-          if (container.children) {
-            for (let index = 0; index < container.children.length; index++) {
-              const child = container.children[index];
-              transformComponentPropsRecusive(child);
-            }
-          }
-
-          if (container.componentContainers) {
-            for (
-              let ccIndex = 0;
-              ccIndex < container.componentContainers.length;
-              ccIndex++
-            ) {
-              const componentContainer = container.componentContainers[ccIndex];
-              componentContainer.sections = componentContainer.sections.sort(
-                (a, b) => (a.position < b.position ? -1 : 1)
-              );
-              for (
-                let sectionIndex = 0;
-                sectionIndex < componentContainer.sections.length;
-                sectionIndex++
-              ) {
-                const section = componentContainer.sections[sectionIndex];
-                section.components = section.components.sort((a, b) =>
-                  a.position < b.position ? -1 : 1
-                );
-                for (
-                  let componentIndex = 0;
-                  componentIndex < section.components.length;
-                  componentIndex++
-                ) {
-                  const component = section.components[componentIndex];
-                  try {
-                    component.props = JSON.parse(component.props);
-                  } catch (err) {
-                    console.error(err);
-                  }
-                }
-              }
-            }
-          }
-        };
-
-        transformComponentPropsRecusive(data);
-
-        // console.log(JSON.stringify(data, null, 4));
-
-        // Looping through each lesson and running the converter functions on them
-        // Once the conversion has taken place, the lesson will be pushed into the "lessons" array
-        for (let i = 0; i < data.children[0].children.length; i++) {
-          let lesson = data.children[0].children[i];
-
-          lesson = quillConverter.parse(lesson);
-
-          lesson = headings.parse(lesson);
-
-          lessons.push(lesson);
-        }
-
-        // console.log(JSON.stringify(data, null, 4));
-
-        // console.log('this is a course', data.__typename, data.courseCode);
-        // console.log('number of children ', data.children.length);
-        // console.log('first child is a ', data.children[0].type, ' named: ', data.children[0].name);
-        // console.log('first child has this many children ', data.children[0].children.length);
-        // console.log('first childs first child is a ', data.children[0].children[0].type, ' named: ', data.children[0].children[0].name);
-        // console.log('first childs first child has this many componentContainers ', data.children[0].children[0].componentContainers.length);
-        // console.log('first component ', data.children[0].children[0].componentContainers[0].sections[0].components[0].componentName);
-        // console.log('first component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[0].components[0].props).text);
-        // console.log('second component value: ', JSON.parse(data.children[0].children[0].componentContainers[0].sections[1].components[0].props).body);
+        convertData.dataConversionFunction(data);
+        // console.log("data", JSON.stringify(data, null, 4));
       } else {
         // TODO: may need to check for type if __typename does not exist eg. getLesson
       }
 
       // TODO: handle promise rejection if something goes wrong
     });
-
-  // console.log(JSON.stringify(lessons, null, 4));
-  // console.log("lessons length:", lessons.length);
-  return lessons;
+  // Returning the array that we set in convertData.js
+  return convertData.lessons;
 };
