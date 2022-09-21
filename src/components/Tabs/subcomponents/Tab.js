@@ -10,7 +10,7 @@ import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
 
 // NOTE: We can use theme once it is set it up end to end
-const StyleTabBody = styled("section")(({isDragging }) => ({
+const StyleTabBody = styled("section")(({ isDragging }) => ({
   padding: "10px 10px 20px 10px",
   borderColor: "#bdbdbd",
   borderStyle: "solid",
@@ -26,6 +26,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
   const [, dispatch] = useContext(LayoutContext);
   const [isDragging, setIsDragging] = useState(false);
   const [inContainer, setInContainer] = useState(null);
+  const [droppedIndex, setDroppedIndex] = useState(null);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -87,12 +88,13 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       setShowError();
       setShowDropError(false);
     }
+    setIsDragging(isOver);
   }, [isOver]);
 
   useEffect(() => {
     setShowError();
     setRemoveError(false);
-  }, [removeError])
+  }, [removeError]);
 
   drop(dropRef);
 
@@ -123,10 +125,13 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
                   tabIndex={tabIndex}
                   setIsDragging={setIsDragging}
                   inContainer={inContainer}
+                  draggingOver={isOver}
+                  setDroppedIndex={setDroppedIndex}
+                  droppedIndex={droppedIndex}
                 />
               );
             })}
-           <PlaceholderError showError={showDropError} />
+            <PlaceholderError showError={showDropError} />
           </div>
         )}
       </StyleTabBody>
