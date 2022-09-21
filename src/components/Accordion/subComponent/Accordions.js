@@ -1,11 +1,10 @@
 import React, { useContext } from 'react'
-import { ExpandMore } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import { Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Accordion, AccordionDetails } from '@mui/material';
 import styled from '@emotion/styled';
 import { LayoutContext } from "../../../Context/InteractivesContext";
-import AccordionTitle from "./AccordionTitle"
 import AccordionItem from './AccordionItem';
+import Pane from './Pane';
 
 //styled components for Accordion styles
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
@@ -13,13 +12,6 @@ const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
     borderWidth: accordionIndex === 0 ? '1px 1px 0px 1px' : '0px 1px 1px 1px',
     borderStyle: 'solid',
     borderColor: '#BDBDBD',
-}))
-const StyledAccordionPane = styled(AccordionSummary)(() => ({
-    height: '40px',
-    fontSize: '18px',
-    color: '#232323',
-    letterSpacing: '0.15px',
-    fontcolor: "#232323"
 }))
 
 const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
@@ -71,30 +63,9 @@ const Accordions = () => {
                         disableGutters={true}
                         expanded={accordion.expanded}
                     >
-                        <div className="accordion-title-wrapper">
-                            <StyledAccordionPane
-                                accordionIndex={accordionIndex}
-                                expandIcon={<ExpandMore
-                                    onClick={() => {
-                                        dispatch({
-                                            func: "TOGGLE_PANE",
-                                            paneIndex: accordionIndex
-                                        });
-                                    }}
-                                    sx={{
-                                        pointerEvents: "auto",
-                                    }}
-                                />}
-                                id={`panel${accordionIndex}-header`}
-                            >
-                                <AccordionTitle
-                                    key={`accordion-title-${accordionIndex}`}
-                                    placeholderTitle={accordion.placeholderTitle}
-                                    accordionIndex={accordionIndex}
-                                    accordionTitle={accordion.title}
-                                />
-                            </StyledAccordionPane>
-                        </div>
+                       <Pane 
+                            accordionIndex={accordionIndex}
+                            accordion={accordion}/>
                         <AccordionDetails
                             sx={{
                                 borderWidth: '1px 0px',
