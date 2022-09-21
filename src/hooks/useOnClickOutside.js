@@ -1,5 +1,6 @@
 //refer to the follow link for instructions on how to implement the useOnClickOutside hook. https://usehooks.com/useOnClickOutside/
 
+
 import {useEffect} from "react";
 
 export function useOnClickOutside(ref, handler) {
@@ -15,13 +16,14 @@ export function useOnClickOutside(ref, handler) {
 
     document.addEventListener("mousedown", listener);
     document.addEventListener("touchstart", listener);
+    //focusin event captures if focus is outside the ref
     document.addEventListener("focusin", listener);
 
 
     return () => {
       document.removeEventListener("mousedown", listener);
       document.removeEventListener("touchstart", listener);
-      document.removeaddEventListener('focusin', listener);
+      document.removeEventListener('focusin', listener);
 
     };
   }, [ref, handler]);
