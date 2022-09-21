@@ -87,6 +87,9 @@ function parse(entity) {
 
 // Converts the quill data into a html element
 function _setHtml(quill) {
+  if (/<\/a>/.test(convertDeltaToHtml(quill))) {
+    return convertDeltaToHtml(quill).replace('</a>', '<span class="sr-only">(Opens in a new window)</span></a>');
+  }
   return convertDeltaToHtml(quill);
 }
 
