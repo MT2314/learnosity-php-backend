@@ -10,7 +10,7 @@ import {
 const linkValidityRegex =
   /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|[a-zA-Z0-9-]+[a-zA-Z0-9]?\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
-const ExtendLinkFunctionality = (id) => {
+const ExtendLinkFunctionality = (id, quill) => {
   let isEditing = false;
   let isRemoving = false;
   let isTextHighlighted = false;
@@ -109,11 +109,11 @@ const ExtendLinkFunctionality = (id) => {
     const selection = window.getSelection();
     if (selection.toString().length === 0) return;
 
-    const linkStart = selection.anchorNode.parentNode.tagName === "A";
-    const linkEnd = selection.focusNode.parentNode.tagName === "A";
+    const format = quill.getFormat();
 
-    if (linkStart && linkEnd) {
-      selection.anchorNode.parentNode.removeAttribute("href");
+    if (format.hasOwnProperty("link")) {
+      const range = quill.getSelection();
+      quill.formatText(range.index, range.length, "link", false);
       altQuillLink.classList.remove("ql-selected");
       return;
     } else {

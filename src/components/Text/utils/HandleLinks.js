@@ -227,18 +227,15 @@ export const AddLinkEvents = (id) => {
   });
 };
 
-export const handleSelection = (range, source, editor, id, quillRef) => {
+export const handleSelection = (range, id, quillRef) => {
   const quill = document.getElementById(id);
   const quillTooltip = quill?.querySelector(".ql-tooltip");
   const linkBtn = quill?.querySelector(".al-link");
 
   if (range?.length) {
-    const selection = window.getSelection();
+    const format = quillRef.getEditor().getFormat();
 
-    const startA = selection.anchorNode.parentNode.tagName === "A";
-    const endA = selection.focusNode.parentNode.tagName === "A";
-
-    if (startA && endA) {
+    if (format.hasOwnProperty("link")) {
       linkBtn.classList.add("ql-selected");
     } else {
       linkBtn.classList.remove("ql-selected");
