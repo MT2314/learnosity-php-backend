@@ -23,12 +23,14 @@ const testLayout = [
     title: "",
     placeholderTitle: "TVO",
     components: [],
+    expanded:true
   },
   {
     id: 1,
     title: "",
     placeholderTitle: "Polkaroo",
     components: [],
+    expanded:false
   },
 ];
 
@@ -49,5 +51,23 @@ describe("Accordion", () => {
     })
 
     expect(testLayout[0].title).toBe("Polkaroo Forever")
+  })
+
+  it('expand all btn opens all panes', async () => {
+    render(<AccordionMain layoutState={testLayout}/>)
+    layoutConfig(testLayout, {
+      func: "EXPAND_ALL_PANE"
+    })
+
+    testLayout.forEach((item) => expect(item.expanded).toBeTruthy())
+
+  })
+
+  it('collapse all btn closes all panes', async () => {
+    render(<AccordionMain layoutState={testLayout}/>)
+    layoutConfig(testLayout, {
+      func: "COLLAPSE_ALL_PANE"
+    })
+    testLayout.forEach((item) => expect(item.expanded).toBeFalsy())
   })
 })
