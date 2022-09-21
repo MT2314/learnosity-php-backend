@@ -24,23 +24,21 @@ const testLayout = [
     placeholderTitle: "TVO",
     components: [],
     expanded:true
-  },
-  {
-    id: 1,
-    title: "",
-    placeholderTitle: "Polkaroo",
-    components: [],
-    expanded:false
-  },
+  }
 ];
 
 describe("Accordion", () => {
-  it("Renders Accordion Component with default 2 panes", async () => {
+  it("Renders Accordion Component with default 1 pane", async () => {
     render(<AccordionMain layoutState={testLayout} />);
 
-    expect(screen.getByText(/polkaroo/i)).toBeInTheDocument();
     expect(screen.getByText(/tvo/i)).toBeInTheDocument();
   });
+
+  it("displays placeholder when added to lesson", async () => {
+    render(<AccordionMain layoutState={testLayout}/>)
+
+    expect(screen.getByText(/add a component/i)).toBeInTheDocument();
+  })
 
   it('updates the titles', async () => {
     render(<AccordionMain layoutState={testLayout}/>)
