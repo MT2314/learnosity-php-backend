@@ -126,7 +126,10 @@ const EditorComponent = ({
     //set unique id instance
     setUniqueId(toolbarId);
     //extend default link functionality on mount
-    ExtendLinkFunctionality(`toolbar-${toolbarId}`);
+    ExtendLinkFunctionality(
+      `toolbar-${toolbarId}`,
+      focusRef?.current?.getEditor()
+    );
     //check for formulas
     FormulaEvents(toolbarId);
     // on render editor is focused
@@ -431,13 +434,7 @@ const EditorComponent = ({
         onChange={handleDataChange}
         defaultValue={body}
         onChangeSelection={(range, source, editor) => {
-          handleSelection(
-            range,
-            source,
-            editor,
-            `toolbar-${toolbarId}`,
-            focusRef.current
-          );
+          handleSelection(range, `toolbar-${toolbarId}`, focusRef.current);
           formatSelection(focusRef.current);
         }}
         onFocus={() => {
