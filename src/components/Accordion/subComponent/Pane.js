@@ -33,7 +33,7 @@ const Pane = ({ accordionIndex, accordion}) => {
   const [ isActive, setIsActive ] = useState(false)
   //click outside hook sets active pane to null when user clicks outside the accordion pane
   const paneRef = useRef()
-  useOnClickOutside( paneRef, () => setIsActive(false))
+  useOnClickOutside( paneRef, () => setIsActive(false), true)
 
   return (
   <div key={`pane-${accordionIndex}`} ref={paneRef}>
