@@ -84,7 +84,10 @@ module.exports = async function () {
         // TODO: there was a problem retrieving the data
       }
       if (data?.__typename === "Course") {
+        // Before converting log
+        // console.log("data", JSON.stringify(data, null, 4));
         convertData.dataConversionFunction(data);
+        // Afer conversion log
         // console.log("data", JSON.stringify(data, null, 4));
       } else {
         // TODO: may need to check for type if __typename does not exist eg. getLesson
