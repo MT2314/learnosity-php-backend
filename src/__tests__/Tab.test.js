@@ -49,7 +49,7 @@ describe("Tabs", () => {
   });
 
   it("On click displays active tab", async () => {
-    render(<TabsMain layoutState={testLayout} />);
+    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>);
     const tabLabel = screen.getByText(/juno/i);
     const placeholder = screen.getByText(/accepted components/i);
 
@@ -61,7 +61,7 @@ describe("Tabs", () => {
   });
 
   it("adds a new tab", async () => {
-    render(<TabsMain layoutState={testLayout} />);
+    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>);
     layoutConfig(testLayout, {
       func: "ADD_TAB",
       id: 2,
@@ -71,7 +71,7 @@ describe("Tabs", () => {
   });
 
   it("removes a tab", async () => {
-    render(<TabsMain layoutState={testLayout} />)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
     layoutConfig(testLayout, {
       func: "REMOVE_TAB",
       currentTab: 2,
@@ -80,7 +80,7 @@ describe("Tabs", () => {
   })
   
   it("adds a component", async () => {;
-    render(<TabsMain layoutState={testLayout} />)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
     layoutConfig(testLayout, {
       func: "ADD_COMPONENT",
       tabIndex: 1,
@@ -92,7 +92,7 @@ describe("Tabs", () => {
   });
 
   it("updates the component state", async () => {
-    render(<TabsMain layoutState={testLayout} />)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
     layoutConfig(testLayout, {
       func: "UPDATE_COMPONENT",
       compIndex: 0,
@@ -104,7 +104,7 @@ describe("Tabs", () => {
   })
 
   it("drags a component from index 0 to index 2 in the testLayout.components array", async () => {
-    render(<TabsMain layoutState={testLayout}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
     layoutConfig(testLayout, {
       func: "DRAG_COMPONENT",
       tabIndex: 1,
@@ -117,7 +117,7 @@ describe("Tabs", () => {
   })
 
   it("duplicates a component within a tab", async () => {
-    render(<TabsMain layoutState={testLayout}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
     layoutConfig(testLayout, {
       func: "DUPLICATE_COMPONENT",
       tabIndex: 1,
@@ -129,7 +129,7 @@ describe("Tabs", () => {
   })
 
   it("update the tab title", async () => {
-    render(<TabsMain layoutState={testLayout}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
     layoutConfig(testLayout, {
       func: "CHANGE_TITLE",
       title: "Web Solutions Component Team",
@@ -140,7 +140,7 @@ describe("Tabs", () => {
   })
 
   it("move a component up by 1 position and move it back down by 1", async () => {
-    render(<TabsMain layoutState={testLayout}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
 
     const component = testLayout[1].components[1]
 
@@ -162,7 +162,7 @@ describe("Tabs", () => {
   })
 
   it("move a tab right by 1 position and move it back left by 1", async () => {
-    render(<TabsMain layoutState={testLayout}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
 
     const tab = testLayout[0]
 
@@ -186,7 +186,7 @@ describe("Tabs", () => {
   }
 
   it("adds an unacceptable component", async () => {
-    render(<TabsMain layoutState={testLayout} />)
+    render(<TabsMain layoutState={testLayout}  setProp={() => {}}/>)
     if (acceptListComp("Callout")) {
     layoutConfig(testLayout, {
       func: "ADD_COMPONENT",
