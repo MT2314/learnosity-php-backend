@@ -55,7 +55,7 @@ const StyledAccorPlaceholder = styled('div')(({ isActive }) => (
     overflowX: 'hidden',
     overflowY: 'hidden',
     textOverflow: 'ellipsis',
-    wordBbreak: 'break-word',
+    wordBreak: 'break-word',
     display: '-webkit-box',
     WebkitBoxOrient: 'vertical',
     WebkitLineClamp: isActive ? "unset" : 2,
