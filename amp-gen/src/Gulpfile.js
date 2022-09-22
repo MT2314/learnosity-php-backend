@@ -42,9 +42,9 @@ function _deleteBuildFolder() {
   return del(["build"]);
 }
 
-function _deleteViewsFolder() {
-  return del(["views"]);
-}
+// function _deleteViewsFolder() {
+//   return del(["views"]);
+// }
 
 /**
  * Public gulp task.
@@ -415,8 +415,8 @@ function _installBuild() {
 
 function _zipBuild() {
   return new Promise(function (resolve, reject) {
-    var p = cp.spawn("zip", ["nodejs.zip", "-r", "./nodejs", "--symlinks"], {
-      // var p = cp.spawn("zip", ["nodejs.zip", "-r", "./nodejs"], {
+    // var p = cp.spawn("zip", ["nodejs.zip", "-r", "./nodejs", "--symlinks"], {
+    var p = cp.spawn("zip", ["nodejs.zip", "-r", "./nodejs"], {
       cwd: "build",
       shell: true,
     });

@@ -14,7 +14,7 @@
     "sass:local": "gulp build-css",
     "lint": "gulp lint",
     "reset": "gulp reset",
-    "buildzip": "gulp build"
+    "buildz": "gulp build"
   },
   "repository": {
     "type": "git",
