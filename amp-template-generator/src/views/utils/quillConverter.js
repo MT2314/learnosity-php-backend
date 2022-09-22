@@ -91,10 +91,21 @@ function replaceAll(string, search, replace) {
 
 // Converts the quill data into a html element
 function _setHtml(quill) {
-  if (/<\/a>/.test(convertDeltaToHtml(quill))) {
-    return replaceAll(convertDeltaToHtml(quill), '</a>', '<span class="sr-only">(Opens in a new window)</span></a>');
-  }
-  return convertDeltaToHtml(quill);
+  // Converting and storing the quill data for easy access
+  let converted = convertDeltaToHtml(quill);
+
+  // Adding sr-only text to links after quill conversion
+  converted = converted.replace(
+    /<\/a>/g,
+    "<span class='sr-only'>(Opens in a new window)</span></a>"
+  );
+
+  // Replacing nest <br> tags
+  converted = converted.replace(/<p><br><\/p>/g, "<br>");
+
+  // console.log("converted:", converted);
+
+  return converted;
 }
 
 module.exports = {
