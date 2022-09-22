@@ -1,0 +1,11 @@
+.wrapper.image {
+    @include max-width-2;
+
+    .figure {
+        margin: 0;
+        
+        .caption {
+            @include font-small;
+        }
+    }
+}

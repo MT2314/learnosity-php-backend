@@ -1,0 +1,23 @@
+---
+{
+  "result": {
+    "title": "Iframe",
+    "components": [
+      {
+        "uuid": "00ef1a53-b7ec-4c11-9554-43bbd6d44db2",
+        "uuidClean": "00ef1a53_b7ec_4c11_9554_43bbd6d44db2",
+        "type": "iframe",
+        "height": 500,
+        "width": 900,
+        "url": "https://dcc.ilc.org/sch3u_f/02/stoichiometry_example_1/index.html",
+        "title": "Notation to English - Interactive Learning Object"
+      }
+    ]
+  },
+  "layout": "amp-layout.njk",
+  "permalink": "demo-amp-iframe.html"
+}
+---
+<h1>{{result.title}} {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+{% include amp-iframe.html data:result.components[0] -%}

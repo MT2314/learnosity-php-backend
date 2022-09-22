@@ -1,0 +1,83 @@
+.wrapper.carousel {
+    @include max-width-2;
+    
+    .caption {
+        color: $text-body;
+        background-color: $page-background;
+        z-index: 30;
+        padding: 8px 7px 8px 8px;
+        font-style: normal;
+    }
+    .slide-text {
+        height: 70%;
+        @media only screen and (max-width : 600px) {
+            font-size: 4vw;
+        }
+    }
+    .dots {
+        text-align: center;
+        color: $carousel-dots-default-bg;
+        font-size: 0.5rem;
+    }
+    .dots span:before {
+        display: inline-block;
+        content: "\f111";//"\f10c"; 
+        font-family: FontAwesome;
+        margin: 0 4px;
+    }
+    .dots span.current:before {
+        content: "\f111";//"\f192"; 
+        color: $carousel-dots-current-bg;
+        font-family: FontAwesome;
+        font-size: 1rem;
+        vertical-align: bottom;
+    }   
+    & amp-img img {
+        object-fit: contain;
+    }
+    .dots-wrapper {
+        @media only screen and (min-width : 641px) {
+            margin-top:-90px;
+        }
+    }
+}
+/*! purgecss start ignore */
+.wrapper.carousel .amp-carousel-button { 
+    @include font-large;
+    border-radius: $btn-goto-rad;
+    width: $btn-goto-size;
+    height: $btn-goto-size;
+    top: -1rem;
+    padding: 0.45rem;
+    background-color: $btn-default-bg;
+    text-align: center;
+    color: $btn-default-text;
+    border: none;
+    box-shadow: none;
+    cursor: pointer;
+    &:hover {
+        background-color: $btn-default-bg-hover;
+    }
+}   
+.wrapper.carousel .amp-carousel-button-next { 
+    right: 3px;
+    margin-right: 0;
+    background-image: none;
+    padding: 6px;
+    &:before {
+        content: "\f054"; 
+        font-family: FontAwesome;
+        padding-left: 2px;
+    }
+}
+.wrapper.carousel .amp-carousel-button-prev { 
+    left: 3px;
+    margin-left: 0;
+    background-image: none;
+    padding: 6px;
+    &:before {
+        content: "\f053"; 
+        font-family: FontAwesome;
+        padding-right: 2px;
+    }
+}

@@ -1,0 +1,39 @@
+<div class="quote callout wrapper bottom-margin">
+  <div class="max-width-1 mx-auto">
+    <div class="max-content box-shadow co-table pt2 px2">
+      <div class="co-row">
+        <div class="co-cell">
+          <amp-img
+            width="30"
+            height="21"
+            alt=""
+            layout="responsive"
+            class="icon-quote pr1"
+            src="https://dcc.ilc.org/jw-rnd-days/cs-amp-templates/images/quote.svg"
+          >
+          </amp-img> 
+        </div>
+        <div class="co-cell"></div>
+      </div>
+      <div class="co-row">
+        <div class="co-cell"></div>
+        <div class="co-cell">
+          <blockquote class="italic">{{data.body}}<em>&nbsp;</em></blockquote>
+          <div class="right-align">
+            <cite>
+            {% if data.url %}
+              <p>
+                <a href="{{data.url}}" target="_blank">
+                  {{data.citation | default: 'Unknown'}}<i class="fa fa-external-link left-space" aria-label="Opens in a new window"></i>
+                </a>
+              </p>
+            {% else %}
+              <p>{{data.citation | default: ''}}</p>
+            {% endif %}
+            </cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

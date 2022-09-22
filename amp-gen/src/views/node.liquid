@@ -1,0 +1,11 @@
+---
+pagination:
+  data: queryResults
+  alias: result
+  size: 1
+layout: amp-layout.njk
+permalink: "theresult.html"
+---
+{%- for section in result.componentContainers[0].sections -%}
+  {% include amp-section.html section:section %}
+{%- endfor -%}

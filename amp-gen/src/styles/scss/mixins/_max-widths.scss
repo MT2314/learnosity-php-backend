@@ -1,0 +1,23 @@
+// These are mixins to match the convention for the basscss .max-width classes
+// In some cases, appending a max-width class may not work, so using these
+// mixins ensures that if our --width variables were to change, each component
+// will change with it as appropriate
+@mixin fit {
+    max-width: 100%;
+}
+
+@mixin max-width-1 {
+    max-width: var(--width-1);
+}
+
+@mixin max-width-2 {
+    max-width: var(--width-2);
+}
+
+@mixin max-width-3 {
+    max-width: var(--width-3);
+}
+
+@mixin max-width-4 {
+    max-width: var(--width-4);
+}
