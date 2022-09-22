@@ -6,6 +6,7 @@
         id="{{tab.id}}">
 
     {%- for tab in data.props.layoutState -%}
+
         <div id="{{tab.id}}_tab{{forloop.index}}"
             role="tab"
             aria-controls="{{tab.id}}_tabpanel{{forloop.index}}"
@@ -15,8 +16,12 @@
             selected
         {%- endif -%}
         >
+        <div class="hoverToolTip">
             {{tab.title}}
         </div>
+            {{tab.title}}
+        </div>
+
 
         <div id="{{tab.id}}_tabpanel{{forloop.index}}"
             role="tabpanel"
