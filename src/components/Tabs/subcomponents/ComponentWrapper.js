@@ -21,9 +21,12 @@ export const SmallIconButton = styled(IconButton)(() => ({
   color: "#FFF",
 }));
 
-const BlueBox = styled("div")(({ theme, draggingSelf, showSelf }) => ({
-  //outline: showSelf ? `3px solid #1466C0` : null,
-  outline: `3px solid red`,
+const BlueBox = styled("div")(({ theme, draggingSelf, showSelf, hoverActive }) => ({
+  outline: showSelf 
+   ? `3px solid #1466C0`
+   : hoverActive
+   ? `3px solid #DAE3EE`
+   : null,
   borderRadius: "4px",
   opacity: draggingSelf ? 0.4 : 1,
   '& [data-id="callout"]': {
@@ -35,15 +38,26 @@ const DragHandle = styled(DragHandleIcon)({
   color: "inherit",
 });
 
+const StaticLabel = styled('span')(({ theme, isHoverActive, isDragging }) => ({
+  background: isHoverActive ? '#DAE3EE' : '#1466C0',
+  width: 'fit-content',
+  height: '100%',
+  borderRadius: '4px 4px 0px 0px',
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'row',
+  //opacity: isDragging ? 0 : 1,
+}));
+
 export const ComponentLabelContainer = styled("div")(
-  ({ theme, draggingSelf, showSelf }) => {
+  ({ theme, draggingSelf, showSelf, hoverActive }) => {
     const style = {
-      background: "#1466C0",
+      background: showSelf && "#1466C0",
       width: "fit-content",
       marginLeft: "-3px",
-      color: "#FFF",
+      color: showSelf ? "#FFF" : "#1466C0",
       borderRadius: "4px 4px 0px 0px",
-      opacity: showSelf ? 1 : 0,
+      opacity: showSelf || hoverActive ? 1 : 0,
       display: "flex",
       alignItems: "center",
     };
@@ -70,6 +84,7 @@ const ComponentWrapper = ({
 
   const [, dispatch] = useContext(LayoutContext);
   const [showSelf, setShowSelf] = useState(false);
+  const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
 
   //remove active border and label if you click outside component
@@ -231,6 +246,12 @@ const ComponentWrapper = ({
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
 
+  //show blue border and dark component label when user clicks inside component
+  const handleActiveComponent = (e) => {
+    console.log('====>', e.target)
+
+  }
+
   return (
     <>
       <DragPreviewImage
@@ -240,8 +261,8 @@ const ComponentWrapper = ({
       <div
         data-test-id="div-before-drop-indicator"
         ref={dropRef}
-        // onMouseEnter={() => !draggingOver && setShowSelf(true)}
-        // onMouseLeave={() => setShowSelf(false)}
+        onMouseEnter={() => !draggingOver && setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
         // onFocus={() => setShowSelf(true)}
         // onBlur={() => setShowSelf(false)}
         onClick={() => setShowSelf(true)}
@@ -257,8 +278,14 @@ const ComponentWrapper = ({
           />
           <ComponentLabelContainer
             showSelf={showSelf}
+            hoverActive={isHover}
             data-testid="component-component-label-container"
           >
+            <StaticLabel
+              data-testid='static-label'
+              isHoverActive={isHover}
+              isDragging={isDragging}>
+
             <span
               ref={drag}
               data-testid="component-drag"
@@ -269,7 +296,7 @@ const ComponentWrapper = ({
                 padding: "3px  0",
                 paddingLeft: "5px",
               }}
-            >
+              >
               <DragHandle />
             </span>
             <Typography
@@ -282,9 +309,10 @@ const ComponentWrapper = ({
                 marginRight: "5px",
               }}
               data-testid="component-label-name"
-            >
+              >
               {component.componentName}
             </Typography>
+            </StaticLabel>
             {compIndex !== 0 && (
               <SmallIconButton
                 onClick={() => {
@@ -348,7 +376,9 @@ const ComponentWrapper = ({
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
-          <BlueBox showSelf={showSelf}>
+          <BlueBox 
+            showSelf={showSelf}
+            hoverActive={isHover}>
             <TabComponent
               key={`key-component-${compIndex}`}
               component={component}
