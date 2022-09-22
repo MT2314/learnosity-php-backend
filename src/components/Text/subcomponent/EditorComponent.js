@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "quill-paste-smart";
 
 import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 import CustomToolBar from "./CustomToolBar";
@@ -31,6 +30,9 @@ import {
   useKeepEditor,
   useBoldRef,
 } from "../Provider";
+
+import { matchMsWordList, maybeMatchMsWordList } from "../matchers/pasteLists";
+import { matchSpan } from "../matchers/pasteSpan";
 
 import "katex/dist/katex.css";
 
@@ -347,27 +349,15 @@ const EditorComponent = ({
       keyboard: { bindings: { tab: false } },
       clipboard: {
         matchVisual: false,
-        allowed: {
-          tags: [
-            "a",
-            "strong",
-            "u",
-            "s",
-            "i",
-            "p",
-            "br",
-            "ul",
-            "ol",
-            "li",
-            "b",
-            "sub",
-            "sup",
-          ],
-          attributes: ["href", "rel", "target", "class"],
-        },
-        keepSelection: false,
-        substituteBlockElements: false,
-        magicPasteLinks: true,
+        matchers: [
+          ["p.MsoListParagraphCxSpFirst", matchMsWordList],
+          ["p.MsoListParagraphCxSpMiddle", matchMsWordList],
+          ["p.MsoListParagraphCxSpLast", matchMsWordList],
+          ["p.MsoListParagraph", matchMsWordList],
+          ["p.msolistparagraph", matchMsWordList],
+          ["p.MsoNormal", maybeMatchMsWordList],
+          ["SPAN", matchSpan],
+        ],
       },
     }),
     []
