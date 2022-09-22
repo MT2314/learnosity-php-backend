@@ -42,8 +42,8 @@ const Label = ({ t }) => {
     <StyledLabelInput
       id="infoBox-label"
       type="text"
-      aria-label={t("Info Box Label Aria")}
-      placeholder={t("Info Box Label Placeholder")}
+      aria-label={t("Infobox Label Aria")}
+      placeholder={t("Infobox Label Placeholder")}
       role="textbox"
       autocomplete="false"
       maxLength={50}

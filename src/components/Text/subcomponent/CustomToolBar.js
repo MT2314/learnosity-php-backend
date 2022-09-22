@@ -255,7 +255,7 @@ const CustomToolBar = ({
           <StyledIconDropdownButton
             ref={IconDropDown}
             id="iconToolBar"
-            aria-controls={open ? t("Info Box Select Icon") : undefined}
+            aria-controls={open ? t("Infobox Select Icon") : undefined}
             aria-expanded={open ? "true" : undefined}
             variant="contained"
             fullWidth
@@ -276,7 +276,7 @@ const CustomToolBar = ({
             }
           >
             {selectedIcon === null
-              ? t("Info Box Select Icon")
+              ? t("Infobox Select Icon")
               : t(`"${selectedIcon.type}"`)}
             <Popper
               open={open}
@@ -292,7 +292,7 @@ const CustomToolBar = ({
                       <StyledMenu
                         autoFocusItem={open}
                         data-testid="icon-select-dropdown"
-                        aria-labelledby={t("Info Box Icon Drop Down")}
+                        aria-labelledby={t("Infobox Icon Drop Down")}
                         onKeyDown={handleListKeyDown}
                       >
                         {iconDropdownOptions.map((infoBox, index) => {

@@ -42,8 +42,8 @@ const Header = ({ t }) => {
     <StyledHeaderInput
       name="infoBoxHeader"
       role="textbox"
-      aria-label={t("Info Box Header Aria")}
-      placeholder={t("Info Box Header Placeholder")}
+      aria-label={t("Infobox Header Aria")}
+      placeholder={t("Infobox Header Placeholder")}
       aria-multiline="true"
       value={state.infoBoxHeader.heading}
       onChange={handleHeaderChange}
