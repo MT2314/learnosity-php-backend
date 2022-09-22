@@ -14,7 +14,7 @@ import { LayoutContext } from "../TabContext";
 import textDnd from "../../../Icons/dndIcons/textDnd.png";
 import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
 import DropIndicator from "../../../Utility/DropIndicator";
-
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import TabComponent from "./TabComponent";
 
 export const SmallIconButton = styled(IconButton)(() => ({
@@ -22,7 +22,8 @@ export const SmallIconButton = styled(IconButton)(() => ({
 }));
 
 const BlueBox = styled("div")(({ theme, draggingSelf, showSelf }) => ({
-  outline: showSelf ? `3px solid #1466C0` : null,
+  //outline: showSelf ? `3px solid #1466C0` : null,
+  outline: `3px solid red`,
   borderRadius: "4px",
   opacity: draggingSelf ? 0.4 : 1,
   '& [data-id="callout"]': {
@@ -70,6 +71,9 @@ const ComponentWrapper = ({
   const [, dispatch] = useContext(LayoutContext);
   const [showSelf, setShowSelf] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
+
+  //remove active border and label if you click outside component
+  useOnClickOutside( dropRef, () => setShowSelf(false))
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -236,10 +240,11 @@ const ComponentWrapper = ({
       <div
         data-test-id="div-before-drop-indicator"
         ref={dropRef}
-        onMouseEnter={() => !draggingOver && setShowSelf(true)}
-        onMouseLeave={() => setShowSelf(false)}
-        onFocus={() => setShowSelf(true)}
-        onBlur={() => setShowSelf(false)}
+        // onMouseEnter={() => !draggingOver && setShowSelf(true)}
+        // onMouseLeave={() => setShowSelf(false)}
+        // onFocus={() => setShowSelf(true)}
+        // onBlur={() => setShowSelf(false)}
+        onClick={() => setShowSelf(true)}
       >
         <div>
           <DropIndicator
