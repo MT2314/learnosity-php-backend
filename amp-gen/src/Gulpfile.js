@@ -31,7 +31,7 @@ log(JSON.stringify(dirs, null, 2));
  * @returns {Promise}
  */
 function _deleteDistLiquid() {
-  return del([".tmp/11ty/liquid", "dist/liquid"]);
+  return del([".tmp/11ty/*", "dist/*"]);
 }
 
 function _cleanStyles() {
@@ -75,7 +75,7 @@ exports.reset = reset;
 function _sass() {
   return (
     gulp
-      .src("../src/templates/scss/styles.scss")
+      .src("../../src/templates/scss/styles.scss")
       .pipe(
         sass({
           includePaths: ["node_modules"],
