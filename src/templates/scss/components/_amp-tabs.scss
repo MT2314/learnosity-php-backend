@@ -1,11 +1,3 @@
-.hoverToolTip {
-    position: absolute;
-    max-width: 365px;
-    background: #404040;
-    border-radius: 6px;
-    color: white;
-    padding: 0 5px;
-}
 .wrapper.tabs {
     // Brightcove videos inside tabs are too wide to fit on small
     // viewports with the default padding. This reduces the outer
@@ -41,9 +33,24 @@
                     border-left-width: 1px;
                 }
 
+                .hoverTabText {
+                    position: absolute;
+                    display: none;
+                    max-width: 365px;
+                    background: #404040;
+                    border-radius: 6px;
+                    color: white;
+                    padding: 0 5px;
+                    top: 55px;
+                    left: 2px;
+                }
+
                 &:hover {
                     color: inherit;
                     text-decoration: underline;
+                    .hoverTabText {
+                        display: block;
+                    }
                 }
 
                 &[selected] {

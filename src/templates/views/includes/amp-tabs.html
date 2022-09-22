@@ -16,9 +16,11 @@
             selected
         {%- endif -%}
         >
-        <div class="hoverToolTip">
-            {{tab.title}}
-        </div>
+            {% if tab.title.length > 84 -%}
+                <div class="hoverTabText">
+                    {{tab.title}}
+                </div>
+            {%- endif -%}
             {{tab.title}}
         </div>
 
