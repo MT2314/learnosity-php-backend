@@ -29,7 +29,7 @@ log(JSON.stringify(dirs, null, 2));
  * @private
  * @returns {Promise}
  */
- function _deleteDistLiquid() {
+function _deleteDistLiquid() {
   return del([".tmp/11ty/liquid", "dist/liquid"]);
 }
 
@@ -217,7 +217,7 @@ function _post11tyLocal() {
         //   "RemoveCspNonce",
         //   "MinifyHtml",
         // ],
-        minify: false,
+        minify: true,
       })
     )
     .pipe(gulp.dest(outputPath));
