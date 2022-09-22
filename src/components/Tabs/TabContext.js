@@ -23,6 +23,11 @@ export const layoutConfig = (draft, action) => {
       draft[action.tabIndex].components.push({
         ...action.component,
       });
+      draft.map((tab, index) => {
+        index == action.tabIndex
+          ? (tab.activeTab = true)
+          : (tab.activeTab = false);
+      });
       return draft;
     case "MOVE_TAB_LEFT":
       // eslint-disable-next-line no-case-declarations
@@ -87,6 +92,11 @@ export const layoutConfig = (draft, action) => {
         0,
         action.component
       );
+      draft.map((tab, index) => {
+        index == action.tabIndex
+          ? (tab.activeTab = true)
+          : (tab.activeTab = false);
+      });
       return draft;
     case "CHANGE_TITLE":
       // eslint-disable-next-line no-case-declarations
