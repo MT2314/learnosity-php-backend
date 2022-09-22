@@ -85,10 +85,6 @@ function parse(entity) {
   return entity;
 }
 
-function replaceAll(string, search, replace) {
-  return string.split(search).join(replace);
-}
-
 // Converts the quill data into a html element
 function _setHtml(quill) {
   // Converting and storing the quill data for easy access
@@ -102,8 +98,6 @@ function _setHtml(quill) {
 
   // Replacing nest <br> tags
   converted = converted.replace(/<p><br><\/p>/g, "<br>");
-
-  // console.log("converted:", converted);
 
   return converted;
 }
