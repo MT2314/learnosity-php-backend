@@ -305,7 +305,7 @@ const ComponentWrapper = ({
               variant="body2"
               component="span"
               sx={{
-                borderRight: "0.5px solid #FFF",
+                borderRight: showSelf && "0.5px solid #FFF",
                 paddingRight: "10px",
                 paddingLeft: "10px",
                 marginRight: "5px",
