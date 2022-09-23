@@ -1,0 +1,58 @@
+{
+  "_from": "node-quill-converter-improved",
+  "_id": "node-quill-converter-improved@0.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-1p97B4I6+wGFzoLchJvn8ywCNOm49/X/ilsJc6jyxifBgir+k6FLxmAugdQTnSHVGyvRX2jX5uqZ69ipGy8+Pw==",
+  "_location": "/node-quill-converter-improved",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "node-quill-converter-improved",
+    "name": "node-quill-converter-improved",
+    "escapedName": "node-quill-converter-improved",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/node-quill-converter-improved/-/node-quill-converter-improved-0.1.0.tgz",
+  "_shasum": "6c031a3dc3a373f8369f5fa44c835507d9a8332c",
+  "_spec": "node-quill-converter-improved",
+  "_where": "C:\\xampp\\htdocs\\component-application\\amp-template-generator",
+  "author": {
+    "name": "Joel Colucci"
+  },
+  "bugs": {
+    "url": "https://github.com/natan-morar/node-quill-converter-improved/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "jsdom": "^11.8.0",
+    "quill": "^1.3.6"
+  },
+  "deprecated": false,
+  "description": "Convert HTML to Delta or Delta to HTML",
+  "devDependencies": {
+    "jest": "^23.5.0"
+  },
+  "homepage": "https://github.com/natan-morar/node-quill-converter-improved",
+  "keywords": [
+    "node",
+    "quill",
+    "delta",
+    "convert",
+    "html"
+  ],
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "name": "node-quill-converter-improved",
+  "private": false,
+  "scripts": {
+    "test": "jest"
+  },
+  "version": "0.1.0"
+}
