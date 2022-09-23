@@ -109,13 +109,12 @@ export const layoutConfig = (draft, action) => {
     case "CHANGE_TITLE":
       const tab = draft.find((tab) => tab.id == action.id);
       tab.title = action.title;
+      draft.map((tab, index) => {
+        index == action.tabIndex
+          ? (tab.activeTab = true)
+          : (tab.activeTab = false);
+      });
       return draft;
-    // case "ACTIVE_TAB":
-    //   draft.map((tab, index) => {
-    //     index == action.tabIndex
-    //       ? (tab.activeTab = true)
-    //       : (tab.activeTab = false);
-    //   });
     case "TOGGLE_PANE":
       draft[action.paneIndex].expanded === true
         ? (draft[action.paneIndex].expanded = false)
@@ -136,9 +135,9 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
 
   useEffect(() => {
     dispatch({ func: "UPDATE_STATE", data: layoutState });
-    // state.forEach(
-    //   (tab, index) => tab.activeTab === true && setActiveTab(index)
-    // );
+    state.forEach(
+      (tab, index) => tab.activeTab === true && setActiveTab(index)
+    );
     setMounted(true);
   }, []);
 
@@ -151,9 +150,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
 
   useEffect(() => {
     diff && mounted && dispatch({ func: "UPDATE_STATE", data: layoutState });
-    // state.forEach(
-    //   (tab, index) => tab.activeTab === true && setActiveTab(index)
-    // );
   }, [layoutState]);
 
   return (
