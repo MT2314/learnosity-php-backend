@@ -38,15 +38,15 @@ const DragHandle = styled(DragHandleIcon)({
   color: "inherit",
 });
 
-const StaticLabel = styled('span')(({ theme, isHoverActive, isDragging }) => ({
-  background: isHoverActive ? '#DAE3EE' : '#1466C0',
+const StaticLabel = styled('span')(({ theme, isHoverActive, isDragging,showSelf }) => ({
+  background: isHoverActive && !showSelf ? '#DAE3EE' : '#1466C0',
   width: 'fit-content',
   height: '100%',
   borderRadius: '4px 4px 0px 0px',
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'row',
-  //opacity: isDragging ? 0 : 1,
+  opacity: isDragging ? 0 : 1,
 }));
 
 export const ComponentLabelContainer = styled("div")(
@@ -55,6 +55,7 @@ export const ComponentLabelContainer = styled("div")(
       background: showSelf && "#1466C0",
       width: "fit-content",
       marginLeft: "-3px",
+      padding: '0 1px',
       color: showSelf ? "#FFF" : "#1466C0",
       borderRadius: "4px 4px 0px 0px",
       opacity: showSelf || hoverActive ? 1 : 0,
@@ -284,6 +285,7 @@ const ComponentWrapper = ({
             <StaticLabel
               data-testid='static-label'
               isHoverActive={isHover}
+              showSelf={showSelf}
               isDragging={isDragging}>
 
             <span
