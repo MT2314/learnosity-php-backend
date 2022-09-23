@@ -8,7 +8,6 @@ const lessons = [];
 const dataConversionFunction = (data) => {
   // Parsing the original data object to convert parts of it that we received as strings into JSON format
   parseData.transformComponentPropsRecursive(data);
-  console.log("Parsing Data: ", JSON.stringify(data, null, 4))
 
   //   Looping over each lesson and convering the raw quill data and headings
   for (let i = 0; i < data.children[0].children.length; i++) {
