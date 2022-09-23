@@ -30,9 +30,7 @@ const TabsMain = ({ layoutState = [], setProp = () => {} }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <LayoutProvider layoutState={layoutState} setProp={setProp}>
-        <ActiveTabProvider>
-          <Tabs />
-        </ActiveTabProvider>
+        <Tabs />
       </LayoutProvider>
     </DndProvider>
   );
