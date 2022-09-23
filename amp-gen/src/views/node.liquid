@@ -9,9 +9,15 @@ layout: amp-layout.njk
 permalink: "{{result.name}}.html"
 ---
 
-{%- for section in result.componentContainers[0].sections -%} 
-  {% include amp-section.html section:section %} 
-{%- endfor -%}
+{%- if result.componentContainers %}
+  {%- for section in result.componentContainers[0].sections -%} 
+    {% include amp-section.html section:section %} 
+  {%- endfor -%}
+{%- else %}
+  {%- for section in result.componentContainer.sections -%} 
+    {% include amp-section.html section:section %} 
+  {%- endfor -%}
+{%- endif %}
 
 <script type="text/javascript">
   console.log("Dumping data object here");

@@ -34,8 +34,10 @@ module.exports = async function () {
 
   console.log("process.env.QUERY", process.env.QUERY, "queryVars", queryVars);
 
+  // if (!process.env.QUERY) throw new Error("Query not present");
+
   await index
-    .run(queries[process.env.QUERY], queryVars)
+    .run(queries[process.env.QUERY || "lesson"], queryVars)
     .then((data) => {
       const isEmpty = Object.keys(data).length === 0;
       console.log("index.run result: ", data, isEmpty);

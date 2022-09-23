@@ -4,9 +4,11 @@ const F_COMPONENT_CONTAINERS = `fragment componentContainers on ComponentContain
   __typename
   id
   sections {
+    __typename
     id
     type
     components {
+      __typename
       componentName
       props
     }
