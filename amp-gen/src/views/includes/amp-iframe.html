@@ -1,25 +1,25 @@
 <div class="iframe wrapper bottom-margin clearfix">
 
-{% if data.width <= 360 %}
-    {% assign breakpoint = 360 %}
-{% elsif data.width <= 475 %}
-    {% assign breakpoint = 475 %}
-{% elsif data.width <= 640 %}
-    {% assign breakpoint = 640 %}
-{% elsif data.width <= 832 %}
-    {% assign breakpoint = 832 %}
+{% if data.props.width <= 360 %}
+    {% assign $breakpoint = 360 %}
+{% elsif data.props.width <= 475 %}
+    {% assign $breakpoint = 475 %}
+{% elsif data.props.width <= 640 %}
+    {% assign $breakpoint = 640 %}
+{% elsif data.props.width <= 832 %}
+    {% assign $breakpoint = 832 %}
 {% else %}
-    {% assign breakpoint = 900 %}
+    {% assign $breakpoint = 900 %}
 {% endif %}
 
-    <div class="visible-{{breakpoint}}">
+    <div class="visible-{{$breakpoint}}">
         <amp-iframe
-            src="{{data.url}}"
+            src="{{data.props.src}}"
             layout="fixed"
             sandbox="allow-scripts allow-same-origin"
-            width="{{data.width}}"
-            height="{{data.height}}"
-            title="{{data.title}}"
+            width="{{data.props.width}}"
+            height="{{data.props.height}}"
+            title="{{data.props.title}}"
             class="mx-auto block"
             >
             <!-- TODO: Get a better Loading... placeholder image for iFrames -->
@@ -33,15 +33,15 @@
         </amp-iframe>
     </div>
 
-    <!-- When viewed at < {{breakpoint}}px, launch the ILO into a new tab via link -->
-    <div class="box-shadow-darker std-radius py4 px3 center hidden-{{breakpoint}}">
+    <!-- When viewed at < {{$breakpoint}}px, launch the ILO into a new tab via link -->
+    <div class="box-shadow-darker std-radius py4 px3 center hidden-{{$breakpoint}}">
         <div class="font-larger bold mt4 pb2 border-bottom" aria-hidden="true">
-            {{data.title}}
+            {{data.props.title}}
         </div>
 
         <div class="my4">
-            <a href='{{data.url}}' target='_blank' class="btn btn-primary-sm btn-launch-start font-normal">
-                Launch Interactive  <span class="sr-only">{{data.title}} (Opens in a new window)</span><i class="fa fa-external-link" aria-hidden="true"></i>
+            <a href='{{data.props.src}}' target='_blank' class="btn btn-primary-sm btn-launch-start font-normal">
+                Launch Interactive  <span class="sr-only">{{data.props.title}} (Opens in a new window)</span><i class="fa fa-external-link" aria-hidden="true"></i>
             </a>
         </div>
     </div>

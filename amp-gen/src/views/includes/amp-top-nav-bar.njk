@@ -154,7 +154,7 @@
           <amp-state id="activeTopic">
             <script type="application/json">
               {
-                "id": "{{ result.sections[0].topics[0].uuidClean }}"
+                "id": "{{ result.sections[0].topics[0]._id }}"
               }
             </script>
           </amp-state>
@@ -170,13 +170,13 @@
               <ul class="sections">
                 {% for topic in section.topics %}
 
-                <li><a href="#" [class]="activeTopic.id == '{{topic.uuidClean}}' ? 'active' : 'inactive'"
+                <li><a href="#" [class]="activeTopic.id == '{{topic._id}}' ? 'active' : 'inactive'"
                     on="tap:AMP.setState({ twobtns: {
                  bluron: 'no-blur',
                  listbtn: 'not-active',
-                 bullbtn: 'not-active'}, activeTopic: {id: '{{topic.uuidClean}}'}}), side-bar-main.close, topic{{topic.uuidClean}}.scrollTo(duration=200,position=center), topic{{topic.uuidClean}}.focus "><span class="circle"><i class="fa fa-circle"
+                 bullbtn: 'not-active'}, activeTopic: {id: '{{topic._id}}'}}), side-bar-main.close, topic{{topic._id}}.scrollTo(duration=200,position=center), topic{{topic._id}}.focus "><span class="circle"><i class="fa fa-circle"
                         class="circle" aria-hidden="true"></i></span><span
-                      class="topic">{{topic.heading.processed}}</span></a>
+                      class="topic">{{topic.heading.heading}}</span></a>
                 </li>
 
                 {%- endfor -%}

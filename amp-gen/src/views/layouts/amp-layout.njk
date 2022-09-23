@@ -51,11 +51,11 @@
           <span class="h1 block lsn-title">{{result.title}}</span>
         </div>
     {% endif %}
-    {% mathformulas %}
-      {{content | safe}}
+   
+      {% mathformulas %} 
+        {{content | safe}}
+      {% endmathformulas %}
       
-    {% endmathformulas %}
-    
     </main>
   </div>
 </div>

@@ -1,13 +1,16 @@
 <div class="image wrapper {{wrapperStyles | default: "bottom-margin"}}">
-{% if data.caption %}
-<figure class="figure">
-{% endif %}
-<amp-img
-    width="{{data.width}}"
-    height="{{data.height}}"
-    alt="{{data.altText}}"
-    layout="responsive"
-    src="{{data.url}}"
+
+  <amp-img
+      {%comment%}    
+      width="{{data.width}}" 
+      height="{{data.height}}"
+      {%endcomment%}
+      width="100" 
+      height="100"
+      alt="{{data.alt}}"
+      layout="responsive"
+      src="{{data.uploadedImg}}">
+
 {%comment%}
 Removing this until Distribution can fix it...
     srcset="
@@ -77,13 +80,29 @@ Removing this until Distribution can fix it...
     After all the responsive image styles, include the original image in srcset. That way,
     if any of the above were excluded, there is something here to use as the "largest image"
         
-        {{data.image.entity.thumbnail.url}} {{data.image.entity.thumbnail.width}}w"
-{%endcomment%}>
-</amp-img>
-{% if data.caption %}
-  <figcaption class="caption center pt2 italic">
-    {{data.caption}}
-  </figcaption>
-</figure>
+        {{data.image.entity.thumbnail.url}} {{data.image.entity.thumbnail.width}}w">
+{%endcomment%}
+
+  </amp-img>
+
+  {% if data.caption %}
+  <figure class="figure">
+    <figcaption class="caption center pt2 italic">
+      {{data.caption}}
+    </figcaption>
+  </figure>
 {% endif %}
+
+  <!-- {% if data.longDesc %}
+    ToDo: create a long description
+  {% endif %} -->
+
+  {% if data.imgLink %}
+    <a href="{{data.imgLink}}" target="_blank">{{data.alt}}</a>
+  {% endif %}
+
+  <!-- {% if data.credit %}
+    ToDo: create a credit section
+  {% endif %} -->
+
 </div>

@@ -4,8 +4,16 @@ pagination:
   alias: result
   size: 1
 layout: amp-layout.njk
+#ToDo fix the lesson filename
+#permalink: "{{result.lessonPaths[0].courseCode | default: 'default' }}_u{{result.lessonPaths[0].unitNumber}}la{{result.lessonPaths[0].lessonNumber}}.html"
 permalink: "{{result.name}}.html"
 ---
-{%- for section in result.componentContainers[0].sections -%}
-  {% include amp-section.html section:section %}
+
+{%- for section in result.componentContainers[0].sections -%} 
+  {% include amp-section.html section:section %} 
 {%- endfor -%}
+
+<script type="text/javascript">
+  console.log("Dumping data object here");
+  console.log({{ result | json }});
+</script>

@@ -1,6 +1,6 @@
 {% assign questions = data.questions %}
 {% assign count = 0 %}
-{% assign quizId = data.uuidClean %}
+{% assign quizId = {{data.uuidClean %}
 {% assign prevFocusable = "" %}
 {% assign firstFocusable = "" %}
 <div class="quiz wrapper bottom-margin" id="quizTop{{quizId}}">
@@ -35,7 +35,7 @@
              (quizPage{{quizId}}  > {{ count }} ? 'page previous' : 'page active-page')">
       <div class="max-width-1 mx-auto center">   
         <div class="final-page">
-          {% assign count2 = count | times:0.5 %}
+          {% assign count2 = count | times:.5 %}
           <p class="h1">Done!</p>
           <p><span [text]="countCorrect{{quizId}}">0</span>/{{count}} correct.</p>
           <amp-img width="341" height="222" class="mt3 mb4" alt="" layout="responsive" src="https://dcc.ilc.org/jw-rnd-days/cs-amp-templates/images/quizFinish2.svg"></amp-img>
