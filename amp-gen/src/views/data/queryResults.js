@@ -30,12 +30,12 @@ module.exports = async function () {
     // 'uuid': process.env.ENTITY_ID,
     id: process.env.ID,
   };
-  const query = _getQuery(process.env.QUERY);
+  // const query = _getQuery(process.env.QUERY);
 
   console.log("process.env.QUERY", process.env.QUERY, "queryVars", queryVars);
 
   await index
-    .run(query, queryVars)
+    .run(queries[process.env.QUERY], queryVars)
     .then((data) => {
       const isEmpty = Object.keys(data).length === 0;
       console.log("index.run result: ", data, isEmpty);
@@ -51,6 +51,8 @@ module.exports = async function () {
         return data.getLesson;
       }
 
+      if (data?.getLessons) return data.getLessons;
+
       return false;
     })
     .then((data) => {
@@ -63,6 +65,12 @@ module.exports = async function () {
         convertData.dataConversionFunction(data);
         // Afer conversion log
         // console.log("after conversion data", JSON.stringify(data, null, 4));
+      } else if (
+        // If the returns is an array of LessonStructureContainers (getLessons)
+        Array.isArray(data) &&
+        data[0]?.__typename === "LessonStructureContainer"
+      ) {
+        convertData.dataConversionFlatArray(data);
       } else {
         // TODO: may need to check for type if __typename does not exist eg. getLesson
       }
