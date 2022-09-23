@@ -17,7 +17,7 @@
                 flex-grow: 1;
                 text-align: center;
                 border: 1px solid $border-color;
-                max-width: 365px;
+                width: min-content;
                 min-height: 25px;
                 max-height: 36px;
                 overflow: hidden;
@@ -36,13 +36,11 @@
                 .hoverTabText {
                     position: absolute;
                     display: none;
-                    max-width: 365px;
                     background: #404040;
                     border-radius: 6px;
                     color: white;
                     padding: 0 5px;
                     top: 55px;
-                    left: 2px;
                 }
 
                 &:hover {
