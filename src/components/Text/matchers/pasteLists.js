@@ -26,17 +26,27 @@ export const matchMsWordList = (node, delta) => {
 
   // Determine the list indent
   let style = node?.getAttribute("style")?.replace(/\n+/g, "");
-  let levelMatch = style?.match(/level(\d+)/);
-  let indent = levelMatch ? levelMatch[1] - 1 : 0;
+  const margin = style.split(";")[0].split(" ").pop().replace("pt", "");
+  const indent = Math.round(margin / 36);
 
   // Add the list attribute
-  ops.push({ insert: "\n", attributes: { list: listType, indent } });
+  ops.push({
+    insert: "\n",
+    attributes: { list: listType, indent: indent - 1 },
+  });
 
   return new Delta(ops);
 };
 
 export const maybeMatchMsWordList = (node, delta) => {
-  if (delta.ops[0].insert.trimLeft()[0] === "·") {
+  if (
+    delta.ops[0]?.insert?.trimLeft()[0] === "·" ||
+    delta.ops[0]?.insert?.trimLeft()[0] === "o" ||
+    delta.ops[0]?.insert
+      ?.trimLeft()
+      ?.substring(0, 3)
+      ?.match(/^(\d+\.\s)/)
+  ) {
     return matchMsWordList(node, delta);
   }
 
