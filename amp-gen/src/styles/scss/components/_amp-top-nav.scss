@@ -1,0 +1,537 @@
+.wrapper.main-nav {
+  max-width: none;
+
+  .text {
+    @media (max-width: 750px) {
+      display: none;
+    }
+  }
+
+  .active {
+    background-color: $navbar-btn-active-bg;
+    color: $page-background;
+
+    .text {
+      color: $navbar-btn-active-text;
+    }
+
+    @media (max-width: 750px) {
+      margin-left: 2px;
+    }
+
+    @media (min-width: 751px) {
+      margin-left: 5px;
+    }
+  }
+
+  .not-active {
+    background-color: $page-background;
+    color: $navbar-btn-inactive-icon;
+
+    .text {
+      color: $text-body;
+    }
+
+    @media (max-width: 750px) {
+      margin-left: 2px;
+    }
+
+    @media (min-width: 751px) {
+      margin-left: 5px;
+    }
+  }
+
+  #side-bar-main {
+    background-color: rgba($color: $navbar-main-page-blur-effect, $alpha: .2);
+  }
+
+  #two-navs {
+    position: relative;
+  }
+
+  .goal-bar {
+    max-width: none;
+  }
+
+  .topic-bar {
+    max-width: none;
+    min-width: 100%;
+  }
+
+  .goal-bar-on {
+    .goal-bar {
+      visibility: visible;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .circle {
+      opacity: 0;
+    }
+
+    .topic-bar {
+      visibility: hidden;
+    }
+  }
+
+  .topic-bar-on {
+    .topic-bar {
+      visibility: visible;
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .goal-bar {
+      visibility: hidden;
+    }
+  }
+
+  #goal-btn,
+  #content-btn {
+    border: none;
+    position: absolute;
+    cursor: pointer;
+  }
+
+  #goal-btn {
+    width: 42px;
+    height: 52px;
+    right: 73px;
+
+    @media (min-width: 751px) {
+      height: 65px;
+      width: 111px;
+      right: 157px;
+
+      @media (min-width: 835px) {
+        right: 190px;
+      }
+
+      @supports (-webkit-touch-callout: none) {
+        width: 115px;
+        right: 170px;
+        .text {
+          float: left;
+          margin-top: 8px;
+          margin-right: 5px;
+          .fa {
+            float: left;
+          }
+        }
+      }
+    }
+  }
+
+  #content-btn {
+    width: 44px;
+    height: 52px;
+    right: 24px;
+    margin-left: 2px;
+
+    @media (min-width: 751px) {
+      height: 65px;
+      width: 125px;
+      right: 37px;
+      margin-left: 12px;
+
+      @media (min-width: 835px) {
+        right: 65px;
+      }
+
+      @supports (-webkit-touch-callout: none) {
+        width: 136px;
+        right: 38px;
+        .text {
+          float: left;
+          margin-top: 8px;
+          margin-right: 6px;
+          .fa {
+            float: left;
+          }
+        }
+      }
+    }
+  }
+
+  .fa {
+    vertical-align: middle;
+// The code below was added after discovering a known issue with fa icons rendering strangely in apple products
+// The first link below is from Mozilla where they shared their fix
+// This fix did not work for me, so I continued my search for what might work and found a bunch of people struggling with the
+// exact same issue (link two) where it was unresolved
+// Finally on the third link I found the below snippet which worked beautifully
+// https://developer.mozilla.org/en-US/docs/Web/CSS/appearance
+// https://github.com/FortAwesome/Font-Awesome/issues/12339
+// https://stackoverflow.com/questions/53153063/iphone-safari-does-not-centering-fontawesome-icons
+
+    @supports (-webkit-touch-callout: none) {
+    display: flex;
+    justify-content: space-around;
+    }
+  }
+
+  .larger {
+    transform: scale(1.1);
+    display: none;
+  }
+
+  #goal-btn:hover .larger {
+    display: block;
+  }
+
+  #goal-btn:hover .original {
+    display: none;
+  }
+
+  #content-btn:hover .larger {
+    display: block;
+  }
+
+  #content-btn:hover .original {
+    display: none;
+  }
+
+  button {
+    border: none;
+    background-color: $page-background;
+  }
+
+  .ilc-icon {
+    position: absolute;
+    margin-left: 24px;
+    margin-top: 10px;
+    margin-bottom: 9.78px;
+    margin-right: 12.77px;
+  }
+
+  .ilc-icon-lg {
+    position: absolute;
+    margin-left: 37px;
+    margin-top: 13.14px;
+    margin-bottom: 13.08px;
+    margin-right: 36px;
+
+    @media (min-width: 832px) {
+      margin-left: 60px;
+    }
+  }
+
+
+  /* Side navbar begins */
+  .nav-side {
+    padding-left: 40px;
+    padding-right: 40px;
+    list-style: none;
+    margin-bottom: 59.67px;
+
+    .main-sections {
+      margin-top: 32px;
+
+      @media (min-width: 640px) {
+        margin-top: 54px;
+      }
+    }
+
+    ul {
+      padding-left: 21px;
+    }
+
+    a,
+    a.inactive
+
+    /*, & li:first-of-type li:first-child a.inactive*/
+      {
+      color: $text-body;
+      display: block;
+      margin-left: 6px;
+      max-width: 256px;
+      text-decoration: none;
+      background: none;
+      font-weight: normal;
+
+      & .circle {
+        visibility: hidden;
+      }
+    }
+
+    a.active {
+      font-weight: bold;
+      background-color: $navbar-sidebar-link-bg;
+      padding: 2px;
+
+      & .circle {
+        visibility: visible;
+        color: $navbar-sidebar-circle;
+        font-size: 19px;
+        position: absolute;
+        top: 0;
+      }
+    }
+
+    a:hover {
+      text-align: left;
+      border: none;
+      text-decoration: underline;
+      max-width: 256px;
+      color: $navbar-sidebar-link-hover;
+
+      .circle {
+        visibility: visible;
+        color: $navbar-sidebar-circle-hover;
+        font-size: 17px;
+        position: absolute;
+        top: 0;
+      }
+    }
+
+    li {
+      margin-top: 32px;
+    }
+  }
+  /* Side navbar ends */
+
+  .left-nav {
+    opacity: 0;
+    width: 100%;
+  }
+
+  /* Right nav begins */
+  .right-nav {
+
+    @media (max-width: 640px) {
+      min-width: 100%;
+    }
+
+    @media (max-width: 750px) {
+      height: 100%;
+    }
+
+    @media (min-height: 751px) {
+      height: 100vh;
+    }
+
+    @media (min-width: 641px) and (max-width: 832px) {
+      min-width: 475px;
+      max-width: 480px;
+
+      .goals {
+        margin: 90px 37px 20px 37px;
+      }
+
+      .success {
+        margin-right: 37px;
+        margin-left: 37px;
+      }
+    }
+
+    @media (min-width: 833px) {
+      max-width: 527px;
+      min-width: 480px;
+     
+
+      .goals {
+        margin: 107px 60px 24px 60px;
+      }
+
+      .success {
+        margin-right: 60px;
+        margin-left: 60px;
+      }
+    }
+
+    padding-bottom: 25px;
+    background-color: $page-background;
+    box-shadow: 0px 3px 80px $navbar-box-shadow;
+  }
+
+  /* Right nav ends */
+
+  .close-nav-side {
+    font-size: 29px;
+    color: $navbar-sidebar-close-icon;
+    display: block;
+    cursor: pointer;
+  }
+
+  .close-nav-side:hover {
+    color: $navbar-sidebar-close-btn-hover;
+    cursor: pointer;
+  }
+
+  .nav-header {
+    min-height: 52px;
+    position: fixed;
+    z-index: 1001;
+    top: 0;
+    width: 100%;
+    background-color: $page-background;
+    border-radius: 0px 0px 20px 25px;
+    box-shadow: 0px 3px 6px $navbar-box-shadow;
+    opacity: 1;
+
+    @media (min-width: 751px) {
+      height: 65px;
+      border-radius: 0px 0px 40px 30px;
+    }
+  }
+
+  .lsn-number {
+    position: absolute;
+    top: 24px;
+    left: 65px;
+    margin-top: 0px;
+    @include font-normal;
+
+    @media (min-width: 751px) {
+      @include font-larger;
+      position: absolute;
+      left: 223px;
+      top: 19px;
+      margin-bottom: 18px;
+    }
+
+    @media (min-width: 832px) {
+      @include font-larger;
+      position: absolute;
+      left: 263px;
+    }
+  }
+
+  .course-code {
+    @include font-small;
+    position: absolute;
+    left: 65px;
+    margin-top: 7px;
+    margin-bottom: .25px;
+
+    @media (min-width: 751px) {
+      @include font-large;
+      left: 133px;
+      top: 15px;
+    }
+    
+    @media (min-width: 832px) {
+      left: 173px;
+    }
+  }
+
+  .title-div {
+    max-width: none;
+    height: auto;
+    background-color: $navbar-lesson-title-bg;
+    border-radius: 0px 0px 20px 25px;
+    padding-top: 70px;
+    padding-right: 24px;
+    padding-left: 24px;
+    padding-bottom: .25px;
+
+    @media (min-width: 751px) {
+      border-radius: 0px 0px 40px 30px;
+      margin-top: 25px;
+    }
+  }
+
+  .line {
+    max-width: 280.5px;
+    border-color: $heading-underline;
+  }
+
+  .goals {
+    margin-top: 76px;
+    margin-right: 24px;
+    margin-left: 24px;
+    background-color: $navbar-sidebar-goals-bg;
+  }
+
+  .success {
+    margin: 16px 24px 15.67px 24px;
+    background-color: $nabvar-sidebar-success-bg;
+  }
+
+  .goals, .success {
+    padding: 24px 16px 3px 19px;
+    border-radius: 6px;
+
+    ul {
+      padding-left: 19px;
+      li {
+        padding-bottom: 3%;
+      }
+    }
+  }
+
+  .sections {
+    list-style: none;
+
+    li {
+      position: relative;
+      margin-top: 0px;
+      margin-bottom: 5px;
+
+      .circle {
+        visibility: hidden;
+        color: $navbar-sidebar-circle;
+        font-size: 22pt;
+        position: absolute;
+        top: 10px;
+        left: -20px;
+      }
+    }
+
+    .topic {
+      padding: 6px 7px 5px 7px;
+    }
+  }
+
+  .toc-lsn-title {
+    line-height: normal;
+    margin-block-end: 0.83em; // this is now a span so add block margin so it feels like an h1
+  }
+
+  #progress-bar {
+    position: fixed;
+    width: 100%;
+    height: 3px;
+    top: 0;
+    left: -5px;
+    z-index: 10002;
+    transform: translateX(-100%);
+    background-color: $navbar-progress-bar;
+  }
+}
+
+.main-title-div {
+  max-width: none;
+  height: auto;
+  background-color: $navbar-lesson-title-bg;
+  border-radius: 0px 0px 20px 25px;
+  padding-top: 38px;
+  padding-right: 37px;
+  padding-left: 37px;
+
+  @media (min-width: 751px) {
+    padding-top: 50px;
+    padding-left: 65px;
+    padding-right: 65px;
+    border-radius: 0px 0px 40px 40px;
+
+    @media (min-width: 834px) {
+      padding-left: 128px;
+      padding-right: 128px;
+    }
+  }
+
+  .lsn-title {
+    line-height: normal;
+    padding-bottom: 16px;
+  }
+}
+
+.main-blur {
+  filter: blur(4px);
+  filter: brightness(-8);
+  fill-opacity: 5%;
+  
+}

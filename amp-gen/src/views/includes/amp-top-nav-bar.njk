@@ -1,0 +1,199 @@
+<div class="main-nav wrapper bottom-margin inner">
+  <amp-animation id="progress-animation" layout="nodisplay">
+    <script type="application/json">
+      {
+        "duration": "1s",
+        "fill": "both",
+        "iterations": "1",
+        "direction": "alternate",
+        "animations": [{
+          "selector": "#progress-bar",
+          "keyframes": [{
+            "transform": "translateX(0)"
+          }]
+        }]
+      }
+    </script>
+  </amp-animation>
+
+
+  <div id="progress-bar"></div>
+  <header class="nav-header">
+
+    <amp-img alt="ILC icon" media="(max-width: 750px)" width="32.23px" height="32.22px"
+      src="https://dcc-upload.s3.ca-central-1.amazonaws.com/jw-rnd-days/karen_ampImgs/ilcCircle.svg" class="ilc-icon">
+    </amp-img>
+    <amp-img alt="ILC icon" media="(min-width: 751px)" width="77px" height="38.79px"
+      src="https://dcc-upload.s3.ca-central-1.amazonaws.com/jw-rnd-days/karen_ampImgs/ilc-org-logo-tablet.svg"
+      class="ilc-icon-lg"></amp-img>
+
+{#
+  In order to make screen readers and dom-flow work better, the "lesson title"
+  is read out in SR only text as part of the navbar "Learning Activity x.x" 
+  content. The second span is what is visually presented, but ignored by screen
+  readers. The grey lesson title below the navbar is visually styled, but hidden
+  from screen readers. See the layout page.
+#}
+    <div class="course-code">{{result.lessonPaths[0].courseCode}}</div>
+    <h1 class="sr-only">
+      Learning Activity {{result.lessonPaths[0].unitNumber}}.{{result.lessonPaths[0].lessonNumber}} {{result.title}}
+    </h1>
+    <span class="h2 block lsn-number" aria-hidden="true">
+      Learning Activity {{result.lessonPaths[0].unitNumber}}.{{result.lessonPaths[0].lessonNumber}}
+    </span>
+
+    {% set setter = "not-active" %}
+
+    <amp-state id="twobtns">
+      <script type="application/json">
+          {
+            "bullbtn": "not-active",
+            "listbtn": "not-active",
+            "bluron": "no-blur"
+          }
+      </script>
+    </amp-state>
+
+
+    <button id="goal-btn" aria-label="open sidebar learning goals and success criteria"
+      class="{{setter}}" [class]="[twobtns.bullbtn]" on="tap:AMP.setState({twobtns: {
+                 bullbtn: 'active',
+                 listbtn: 'not-active',
+                 sidetoggle: 'goal-bar-on',
+                 bluron: 'main-blur'
+                 }}), side-bar-main">
+      <span class="original">
+        <span class="text">Goals</span>
+        <i class="fa fa-bullseye fa-2x" aria-hidden="true"></i>
+      </span>
+      <span class="larger">
+        <span class="text">Goals</span>
+        <i class="fa fa-bullseye fa-2x" aria-hidden="true"></i>
+      </span>
+    </button>
+
+
+    <button id="content-btn" aria-label="open course navigation list" class="{{setter}}" [class]="[twobtns.listbtn]" on="tap:AMP.setState({twobtns: {
+                 bullbtn: 'not-active',
+                 listbtn: 'active',
+                 sidetoggle: 'topic-bar-on',
+                 bluron: 'main-blur'}}), side-bar-main">
+      <span class="original">
+        <span class="text">Content</span>
+        <i class="fa fa-list-ul fa-2x" aria-hidden="true"></i>
+      </span>
+      <span class="larger">
+        <span class="text">Content</span>
+        <i class="fa fa-list-ul fa-2x" aria-hidden="true"></i>
+      </span>
+    </button>
+
+  </header>
+
+  <amp-lightbox id="side-bar-main" on="tap:AMP.setState({  
+                 twobtns: {
+                 bluron: 'no-blur',
+                 listbtn: 'not-active',
+                 bullbtn: 'not-active'}}), side-bar-main.close; lightboxClose:AMP.setState({  
+                 twobtns: {
+                 bluron: 'no-blur',
+                 listbtn: 'not-active',
+                 bullbtn: 'not-active'}}); lightboxOpen:two-navs.focus" tabindex="0" layout="nodisplay"
+    scrollable="true">
+
+    <div id="two-navs" [class]="[twobtns.sidetoggle]" tabindex="0">
+      <div class="goal-bar" aria-label="goals and success criteria sidebar expanded">
+        <div class="left-nav left">
+        </div>
+
+        <div class="right-nav right">
+
+          <div class="goals">
+            <h2 class="h3">Learning Goals</h2>
+            <ul>
+              {%- for point in result.learningGoals -%}
+              {% if point %}
+              <li>{{point}}</li>
+              {% endif %}
+              {%- endfor -%}
+            </ul>
+
+          </div>
+
+          <div class="success">
+            <h2 class="h3">Success Criteria</h2>
+
+            <ul>
+              {%- for point in result.successCriteria -%}
+              {% if point %}
+              <li>{{point}}</li>
+              {% endif %}
+              {%- endfor -%}
+            </ul>
+          </div>
+
+            <button aria-label="close sidebar" on="tap:AMP.setState({ twobtns: {
+                 bluron: 'no-blur',
+                 bullbtn: 'not-active'}}), side-bar-main.close" class="mx-auto close-nav-side"><i class="fa fa-times closing-x"
+                aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+
+      <div class="topic-bar" aria-label="course sidebar expanded">
+        <div class="left-nav left md-col-6">
+        </div>
+
+        <div class="right-nav right md-col-6">
+
+          <div class="title-div">
+            <span class="h1 block toc-lsn-title" aria-hidden="true">{{result.title}}</span>
+            <h2 class="sr-only">Table of Contents</h2>
+          </div>
+
+          <amp-state id="activeTopic">
+            <script type="application/json">
+              {
+                "id": "{{ result.sections[0].topics[0]._id }}"
+              }
+            </script>
+          </amp-state>
+
+          <ul class="nav-side">
+            {%- for section in result.sections -%}
+
+            <li class="main-sections">
+              {% if section.sectionType %}
+
+              <span class="h2 block border-bottom line">{{section.sectionType }}</span>
+
+              <ul class="sections">
+                {% for topic in section.topics %}
+
+                <li><a href="#" [class]="activeTopic.id == '{{topic._id}}' ? 'active' : 'inactive'"
+                    on="tap:AMP.setState({ twobtns: {
+                 bluron: 'no-blur',
+                 listbtn: 'not-active',
+                 bullbtn: 'not-active'}, activeTopic: {id: '{{topic._id}}'}}), side-bar-main.close, topic{{topic._id}}.scrollTo(duration=200,position=center), topic{{topic._id}}.focus "><span class="circle"><i class="fa fa-circle"
+                        class="circle" aria-hidden="true"></i></span><span
+                      class="topic">{{topic.heading.heading}}</span></a>
+                </li>
+
+                {%- endfor -%}
+              </ul>
+              {% endif %}
+            </li>
+            {%- endfor -%}
+          </ul>
+          <button aria-label="close sidebar" on="tap:AMP.setState({twobtns: {
+                 bluron: 'no-blur',
+                 listbtn: 'not-active'}}), side-bar-main.close" class="mx-auto close-nav-side"><i class="fa fa-times closing-x"
+              aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </amp-lightbox>
+
+</div>

@@ -1,0 +1,88 @@
+---
+{
+  "result":
+    {
+      "__typename": "Course",
+      "id": "631b4a1cca8eeadaf4ee7406",
+      "name": "Component AMP Test Course",
+      "courseCode": "SAM123",
+      "language": null,
+      "children":
+        [
+          {
+            "__typename": "CourseStructureContainer",
+            "id": "631b4a1cca8eeadaf4ee7407",
+            "name": "Fake Unit",
+            "type": "unit",
+            "componentContainers": [],
+            "children":
+              [
+                {
+                  "__typename": "CourseStructureContainer",
+                  "id": "631b4a1cca8eeadaf4ee7408",
+                  "name": "Component AMP Test Lesson",
+                  "type": "lesson",
+                  "componentContainers":
+                    [
+                      {
+                        "__typename": "ComponentContainer",
+                        "id": "631b4a1cca8eeadaf4ee7409",
+                        "sections":
+                          [
+                            {
+                              "id": "631b4a1cca8eeadaf4ee740a",
+                              "type": "NONLEARNING",
+                              "components":
+                                [
+                                  {
+                                    "componentName": "Text",
+                                    "props":
+                                      {
+                                        "text": "default text",
+                                        "body": "<p><br></p>",
+                                      },
+                                    "position": "b",
+                                  },
+                                ],
+                            },
+                            {
+                              "id": "631b4a1cca8eeadaf4ee740c",
+                              "type": "LEARNING",
+                              "components":
+                                [
+                                  {
+                                    "componentName": "IFrame",
+                                    "props":
+                                      {
+                                        "title": "Pretend iFrame Title",
+                                        "titleDisplay": true,
+                                        "src": "https://dcc.ilc.org/bbi2o/10/income_statement_1/index.html",
+                                        "height": "500",
+                                        "width": "900",
+                                        "heightType": "px",
+                                        "widthType": "px",
+                                      },
+                                  },
+                                ],
+                            },
+                          ],
+                      },
+                    ],
+                  "children": [],
+                },
+              ],
+          },
+        ],
+    },
+  "layout": "amp-layout.njk",
+  "permalink": "demo-amp-iframe.html",
+}
+---
+
+<h1>Iframe Component {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+{%- assign components = result.children[0].children[0].componentContainers[0].sections[1].components -%}
+
+{% for itemIframe in components %} 
+	{% include amp-iframe.html data:itemIframe -%} 
+{% endfor %}

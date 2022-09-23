@@ -8,11 +8,12 @@ const sass = require("gulp-sass");
 const sourcemaps = require("gulp-sourcemaps");
 const cp = require("child_process");
 const argv = require("yargs").argv;
-const csPurgeCss = require("@content-solutions/gulp-purge-css");
-const csAmpOptimizer = require("@content-solutions/gulp-amp-optimizer");
+const csPurgeCss = require("./utils/gulp-purge-css");
+const csAmpOptimizer = require("./utils/gulp-amp-optimizer");
 const gulpif = require("gulp-if");
 const gulpAmpValidator = require("gulp-amphtml-validator");
 const rename = require("gulp-rename");
+const path = require("path");
 
 const dirs = {
   root: process.env.STAGING,
@@ -30,7 +31,7 @@ log(JSON.stringify(dirs, null, 2));
  * @returns {Promise}
  */
 function _deleteDistLiquid() {
-  return del([".tmp/11ty/liquid", "dist/liquid"]);
+  return del([".tmp/11ty/*", "dist/*"]);
 }
 
 function _cleanStyles() {
@@ -41,9 +42,9 @@ function _deleteBuildFolder() {
   return del(["build"]);
 }
 
-function _deleteViewsFolder() {
-  return del(["views"]);
-}
+// function _deleteViewsFolder() {
+//   return del(["views"]);
+// }
 
 /**
  * Public gulp task.
@@ -74,7 +75,7 @@ exports.reset = reset;
 function _sass() {
   return (
     gulp
-      .src("../src/templates/scss/styles.scss")
+      .src("../../src/templates/scss/styles.scss")
       .pipe(
         sass({
           includePaths: ["node_modules"],
@@ -194,7 +195,8 @@ exports.livereload = livereload;
 function _post11tyLocal() {
   const inputGlob = dirs.eleventy + process.env.USER_ID + "/*.html";
   const outputPath = dirs.webserverRoot + process.env.USER_ID + "/";
-
+  console.log("outputPath", outputPath);
+  // const dirPath = path.join(__dirname, outputPath);
   return gulp
     .src(inputGlob, { buffer: false })
     .pipe(gulpif(!__isDevMode(), csPurgeCss([dirs.cssStaging + "styles.css"])))
@@ -208,7 +210,7 @@ function _post11tyLocal() {
         //   "AddMandatoryTags",
         //   "AutoExtensionImporter",
         //   "OptimizeImages",
-        //   //'PreloadHeroImage',
+        //   'PreloadHeroImage',
         //   "ReorderHeadTransformer",
         //   "RewriteAmpUrls",
         //   "GoogleFontsPreconnect",
@@ -217,7 +219,7 @@ function _post11tyLocal() {
         //   "RemoveCspNonce",
         //   "MinifyHtml",
         // ],
-        minify: true,
+        minify: false,
       })
     )
     .pipe(gulp.dest(outputPath));
@@ -271,7 +273,7 @@ function _setUserId(cb) {
       process.env.USER_ID = mode;
       break;
     case "node":
-      process.env.USER_ID = "liquid";
+      process.env.USER_ID = "queryResult";
       break;
     default:
       throw new Error("Invalid mode");
@@ -352,22 +354,6 @@ buildLocal.flags = {
 };
 exports.buildLocal = buildLocal;
 
-var createViewsFolder = gulp.series(_deleteViewsFolder, function () {
-  return gulp
-    .src([
-      // "node_modules/@publishing-platform/component-library/dist/templates/views/**/*",
-      "../src/templates/views/**/*",
-      "src/views/**/*",
-      // Commented out for now to get the application working locally
-      // "!src/views/data/nodeResults.js",
-    ])
-    .pipe(gulp.dest("views"));
-});
-createViewsFolder.description =
-  "generates views folder from node_modules and src/views, for use with transcompiler";
-createViewsFolder.displayName = "create-views-folder";
-exports.createViewsFolder = createViewsFolder;
-
 var lint = function () {
   return gulp
     .src([
@@ -384,25 +370,19 @@ exports.lint = lint;
 
 function _copyFiles() {
   return gulp
-    .src(["views/**/*", "package*.json", ".eleventy.js"], { base: "./" })
-    .pipe(gulp.dest("build/nodejs"));
-}
-
-function _copyNodeResults() {
-  return gulp
-    .src("src/views/data/*")
-    .pipe(gulp.dest("build/nodejs/views/data"));
+    .src(
+      ["views/**/*", "utils/**/*", "package*.json", ".eleventy.js", "index.js"],
+      {
+        base: "./",
+      }
+    )
+    .pipe(gulp.dest("build/nodejs/luke"));
 }
 
 function _copyStyles() {
-  return gulp.src(".tmp/styles/*.css").pipe(gulp.dest("build/nodejs/styles"));
-}
-
-function _copyGulpfile() {
   return gulp
-    .src("Gulpfile.lambda.js")
-    .pipe(rename("Gulpfile.js"))
-    .pipe(gulp.dest("build/nodejs"));
+    .src(".tmp/styles/*.css")
+    .pipe(gulp.dest("build/nodejs/luke/styles"));
 }
 
 /**
@@ -412,10 +392,11 @@ function _copyGulpfile() {
  * @private
  * @returns {Promise}
  */
+// TODO: this task will be deprecated once the pipeline is updated to run npm install in the lambda layerx
 function _installBuild() {
   return new Promise(function (resolve, reject) {
     var p = cp.spawn("npm", ["install", "--production"], {
-      cwd: "build/nodejs",
+      cwd: "build/nodejs/luke",
       shell: true,
     });
     p.stdout.on("data", (data) => {
@@ -434,12 +415,11 @@ function _installBuild() {
 
 function _zipBuild() {
   return new Promise(function (resolve, reject) {
-    var p = cp.spawn(
-      "zip",
-      // ["luke-ilc-amp-layer.zip", "-r", "./nodejs", "--symlinks"],
-      ["luke-ilc-amp-layer.zip", "-r", "./nodejs"],
-      { cwd: "build", shell: true }
-    );
+    // var p = cp.spawn("zip", ["nodejs.zip", "-r", "./nodejs", "--symlinks"], {
+    var p = cp.spawn("zip", ["nodejs.zip", "-r", "./nodejs"], {
+      cwd: "build",
+      shell: true,
+    });
     p.stdout.on("data", (data) => {
       log(`${data}`);
     });
@@ -457,7 +437,7 @@ function _zipBuild() {
 var build = gulp.series(
   _deleteBuildFolder,
   buildCss,
-  gulp.parallel(_copyFiles, _copyNodeResults, _copyStyles, _copyGulpfile),
+  gulp.parallel(_copyFiles, _copyStyles),
   _installBuild,
   _zipBuild
 );
