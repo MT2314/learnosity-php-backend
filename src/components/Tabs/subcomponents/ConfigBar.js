@@ -104,9 +104,17 @@ const ConfigBar = ({ setRemoveError }) => {
   // ? Remove Tab
   const removeTab = async (state, activeTab) => {
     setRemoveError(true);
+    let active;
+    activeTab === state.length - 1
+      ? (active = activeTab - 1)
+      : activeTab === 0
+      ? (active = 0)
+      : (active = activeTab);
+
     dispatch({
       func: "REMOVE_TAB",
       currentTab: activeTab,
+      nextTab: active,
       updateTabFunc: setActiveTab(),
     });
     activeTab === state.length - 1
