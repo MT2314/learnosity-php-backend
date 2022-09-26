@@ -182,7 +182,7 @@ const CustomToolBar = ({
 
   const handleMenuItemClick = (e, index) => {
     setSelectedIndex(index);
-    setSelectedIcon(iconDropdownOptions[index]);
+    setSelectedIcon(iconDropdownOptions[index].type);
   };
 
   const handleToggle = () => {
@@ -272,7 +272,7 @@ const CustomToolBar = ({
               )
             }
           >
-            {selectedIcon === null ? "Select icon" : selectedIcon.type}
+            {selectedIcon === null ? "Select icon" : selectedIcon}
             <Popper
               open={open}
               anchorEl={IconDropDown.current}
