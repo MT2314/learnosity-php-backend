@@ -21,6 +21,11 @@ export const layoutConfig = (draft, action) => {
       return draft;
     case "REMOVE_TAB":
       draft.splice(action.currentTab, 1);
+      draft.map((tab, index) => {
+        index == action.nextTab
+          ? (tab.activeTab = true)
+          : (tab.activeTab = false);
+      });
       return draft;
     case "ADD_COMPONENT":
       draft[action.tabIndex].components.push({
