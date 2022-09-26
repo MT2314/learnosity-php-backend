@@ -17,7 +17,7 @@
         {%- endif -%}
         >
             {% if tab.title.length > 84 -%}
-                <div class="hoverTabText">
+                <div class="hoverTabText hoverTabText{{data.props.layoutState.length}}">
                     {{tab.title}}
                 </div>
             {%- endif -%}
