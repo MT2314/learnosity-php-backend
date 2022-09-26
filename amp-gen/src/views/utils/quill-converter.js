@@ -1,4 +1,7 @@
-const { convertDeltaToHtml } = require("node-quill-converter-improved");
+// const { convertDeltaToHtml } = require("node-quill-converter-improved");
+const {
+  convertDeltaToHtml,
+} = require("../../utils/node-quill-converter-improved");
 
 function parse(entity) {
   /**
@@ -61,9 +64,11 @@ function parse(entity) {
   // set html levels of entities that are "underneath" this one
   if (entity.__typename === "CourseStructureContainer") {
     entity.componentContainers.forEach(__parseElement);
+  } else if (entity.__typename === "LessonStructureContainer") {
+    __parseElement(entity.componentContainer);
   } else if (entity.__typename === "ComponentContainer") {
     entity.sections.forEach(__parseElement);
-  } else if (entity.type === "NONLEARNING" || entity.type === "LEARNING") {
+  } else if (entity.__typename === "Section") {
     entity.components.forEach(__parseElement);
   } else if (entity.componentName === "Text") {
     entity.props.body = _setHtml(entity.props.body);

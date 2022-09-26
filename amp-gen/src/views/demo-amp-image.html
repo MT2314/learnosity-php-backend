@@ -1,0 +1,106 @@
+---
+{
+	"result": {
+			"__typename": "Course",
+			"id": "631b4a1cca8eeadaf4ee7406",
+			"name": "Component AMP Test Course",
+			"courseCode": "SAM123",
+			"language": null,
+			"children": [
+				{
+					"__typename": "CourseStructureContainer",
+					"id": "631b4a1cca8eeadaf4ee7407",
+					"name": "Fake Unit",
+					"type": "unit",
+					"componentContainers": [],
+					"children": [
+						{
+							"__typename": "CourseStructureContainer",
+							"id": "631b4a1cca8eeadaf4ee7408",
+							"name": "Component AMP Test Lesson",
+							"type": "lesson",
+							"componentContainers": [
+								{
+									"__typename": "ComponentContainer",
+									"id": "631b4a1cca8eeadaf4ee7409",
+									"sections": [
+										{
+											"id": "631b4a1cca8eeadaf4ee740a",
+											"type": "NONLEARNING",
+											"components": [
+												{
+													"componentName": "Text",
+													"props": {
+														"text": "default text",
+														"body": "<p><br></p>"
+													},
+													"position": "b"
+												}
+											]
+										},
+										{
+											"id": "631b4a1cca8eeadaf4ee740c",
+											"type": "LEARNING",
+											"components": [
+												{
+													"componentName": "Image",
+													"props": {
+														"imgSize": "default",
+														"uploadedImg": "https://cdn.shopify.com/s/files/1/0023/1794/2820/files/Polkaroo_large.PNG?v=1556241987",
+														"imgLink": "https://www.tvo.org",
+														"alt": "Polkaroo standing with crossed arms",
+														"longDesc": "",
+														"caption": "I am a caption",
+														"credit": null
+													},
+													"position": "g"
+												},												
+												{
+													"componentName": "Image",
+													"props": {
+														"imgSize": "default",
+														"uploadedImg": "https://assets.contenta.tvo.org/prod/public/2020-06/04.20.09_retrodriving.png",
+														"imgLink": "https://www.tvo.org",
+														"alt": "Woman driving a car",
+														"longDesc": "",
+														"caption": "This is a woman driving a nice car.",
+														"credit": null
+													},
+													"position": "h"
+												},												
+												{
+													"componentName": "Image",
+													"props": {
+														"imgSize": "default",
+														"uploadedImg": "https://assets.contenta.tvo.org/prod/public/2020-07/05.29.01_dumbbells.jpg",
+														"imgLink": "https://www.tvo.org",
+														"alt": "Man doing weight training",
+														"longDesc": "",
+														"caption": "Weight training is a good way to exercise.",
+														"credit": null
+													},
+													"position": "i"
+												}												
+											]
+										}
+									]
+								}
+							],
+							"children": []
+						}
+					]
+				}
+			]
+	},
+	"layout": "amp-layout.njk",
+	"permalink": "demo-amp-image.html"
+}
+---
+<h1>Image Component {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+{%- assign components = result.children[0].children[0].componentContainers[0].sections[1].components -%}
+
+{% for image in components %}
+    {% include amp-image.html data:image.props -%}
+{% endfor %}
+

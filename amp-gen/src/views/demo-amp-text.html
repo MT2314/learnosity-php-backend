@@ -1,0 +1,87 @@
+---
+{
+    "result": {
+        "__typename": "Course",
+        "id": "6318a3c78f3a72b1dc77a9ee",
+        "name": "AMP Testing",
+        "courseCode": null,
+        "language": null,
+        "children": [
+            {
+                "__typename": "CourseStructureContainer",
+                "id": "6318a3c78f3a72b1dc77a9ef",
+                "name": "",
+                "type": "unit",
+                "componentContainers": [],
+                "children": [
+                    {
+                        "__typename": "CourseStructureContainer",
+                        "id": "6318a3c78f3a72b1dc77a9f0",
+                        "name": "AMP Lesson",
+                        "type": "lesson",
+                        "componentContainers": [
+                            {
+                                "__typename": "ComponentContainer",
+                                "id": "6318a3c78f3a72b1dc77a9f1",
+                                "sections": [
+                                    {
+                                        "id": "6318a3c78f3a72b1dc77a9f2",
+                                        "type": "NONLEARNING",
+                                        "components": [
+                                            {
+                                                "componentName": "Text",
+                                                "props": {
+                                                    "text": "default text"
+                                                },
+                                                "position": "b"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "6318a3c78f3a72b1dc77a9f4",
+                                        "type": "LEARNING",
+                                        "components": [
+                                            {
+                                                "componentName": "Text",
+                                                "props": {
+                                                    "body": "<p>If we compare the number of adults to the number of children, we would say the ratio of adults to children is <strong>two to three</strong> or 2 adults for every 3 children (word form).</p>\n<p>We can also write this as adults : children = \\(2:3\\) (colon form) or it can be written \\(\\frac{2}{3}\\) (fraction form).</p>\n<p>The order in which we write the numbers depends on the order in which we are describing the quantities.</p>\n"
+                                                },
+                                                "position": "U"
+                                            },
+                                            {
+                                                "componentName": "Text",
+                                                "props": {
+                                                    "body": "<p>This Formatted Text box does not have a heading.</p><p>If we compare the number of adults to the number of children, we would say the ratio of adults to children is <strong>two to three</strong> or 2 adults for every 3 children (word form).</p>\n<p>We can also write this as adults : children = \\(2:3\\) (colon form) or it can be written \\(\\frac{2}{3}\\) (fraction form).</p>\n<p>The order in which we write the numbers depends on the order in which we are describing the quantities.</p>\n"
+                                                },
+                                                "position": "g"
+                                            },
+                                            {
+                                                "componentName": "Text",
+                                                "props": {
+                                                    "body": "<p>If we compare the number of adults to the number of children, we would say the ratio of adults to children is <strong>two to three</strong> or 2 adults for every 3 children (word form).</p>\n<p>We can also write this as adults : children = \\(2:3\\) (colon form) or it can be written \\(\\frac{2}{3}\\) (fraction form).</p>\n<p>The order in which we write the numbers depends on the order in which we are describing the quantities.</p>\n"
+                                                },
+                                                "position": "p"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ],
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    }, "layout": "amp-layout.njk", "permalink": "demo-amp-text.html"
+
+}
+---
+
+<h1>Text Component {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+{%- assign components = result.children[0].children[0].componentContainers[0].sections[1].components -%}
+
+{% for text in components %}
+    {% include amp-text.html data:text.props -%}
+{% endfor %}
+  

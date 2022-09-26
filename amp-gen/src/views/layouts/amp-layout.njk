@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ⚡ lang="en" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="title" content="{{result.title}}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="amp-script-src" content="sha384-PhGNtk99XobWL40o6ao4VYWQ-Qozkpt2eJ6gBHuR4B9XW4H24JwDghZ6D2F0lgZu">
+  <title>{{result.title | default(result.type.targetId) }}</title>
+  <!-- Font Awesome -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+{% if projectConfig.devMode == 'true' %}
+  <!-- Link to unminified, un amp-ified version of stylesheet, for local debugging and development -->
+  <link href="../styles.css" rel="stylesheet" type="text/css">
+{% else %}
+  <style amp-custom></style>
+{% endif %}
+</head>
+<body>
+  <a class="btn skip-to-content px2 py1 font-small" href="#main">
+    Skip to content
+  </a>
+  
+  <noscript>
+    <div class="alert alert-warning clearfix" role="alert">
+        <p class="center">
+            <strong>Warning!</strong> To ensure the greatest educational experience, this learning activity contians aspects that require Javascript to be enabled.
+        </p>
+    </div>
+  </noscript>
+
+{% if result.sections.length > 0 %} 
+  {% include 'amp-top-nav-bar.njk' %}
+{% endif %}
+
+<div>
+  <div class="clearfix">
+    <main id="main" [class]="[twobtns.bluron]" role="main">
+    
+      {% if result.sections.length > 0 %} 
+        <amp-position-observer intersection-ratios="0" viewport-margins="100vh" on="scroll:progress-animation.seekTo(percent=event.percent)" layout="nodisplay"></amp-position-observer>
+{#
+  The following is the grey lesson title that appears under the navbar, and 
+  above the minds on section. In order to make screen readers and dom-flow work
+  better, this is just a span, styled as an h1, and hidden from screen readers.
+
+  Instead, for screen readers, the "lesson title" is read out in SR only text 
+  as part of the navbar "Learning Activity x.x" content. See the navbar include.
+#}
+        <div class="main-title-div" aria-hidden="true">
+          <span class="h1 block lsn-title">{{result.title}}</span>
+        </div>
+    {% endif %}
+   
+      {% mathformulas %} 
+        {{content | safe}}
+      {% endmathformulas %}
+      
+    </main>
+  </div>
+</div>
+
+</body>
+</html>
