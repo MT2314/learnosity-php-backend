@@ -16,12 +16,12 @@
             selected
         {%- endif -%}
         >
-            {% if tab.title.length > 84 -%}
-                <div class="hoverTabText hoverTabText{{data.props.layoutState.length}}">
-                    {{tab.title}}
-                </div>
-            {%- endif -%}
             {{tab.title}}
+        {% if tab.title.length > 84 -%}
+            <div class="hoverTabText hoverTabText{{data.props.layoutState.length}}">
+                {{tab.title}}
+            </div>
+        {%- endif -%}
         </div>
 
 
