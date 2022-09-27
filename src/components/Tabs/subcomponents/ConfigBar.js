@@ -87,6 +87,7 @@ const ConfigBar = ({ setRemoveError }) => {
       func: "MOVE_TAB_LEFT",
       title: `Tab at position ${activeTab} is now at position ${activeTab - 1}`,
       tabIndex: activeTab,
+      nextTab: activeTab - 1,
     });
     setActiveTab(activeTab - 1);
   };
@@ -97,6 +98,7 @@ const ConfigBar = ({ setRemoveError }) => {
       func: "MOVE_TAB_RIGHT",
       title: `Tab at position ${activeTab} is now at position ${activeTab + 1}`,
       tabIndex: activeTab,
+      nextTab: activeTab + 1,
     });
     setActiveTab(activeTab + 1);
   };
@@ -113,15 +115,10 @@ const ConfigBar = ({ setRemoveError }) => {
 
     dispatch({
       func: "REMOVE_TAB",
-      currentTab: activeTab,
+      tabIndex: activeTab,
       nextTab: active,
-      updateTabFunc: setActiveTab(),
     });
-    activeTab === state.length - 1
-      ? setActiveTab(activeTab - 1)
-      : activeTab === 0
-      ? setActiveTab(0)
-      : setActiveTab(activeTab);
+    setActiveTab(active);
   };
 
   // ? Add Tab
@@ -130,12 +127,9 @@ const ConfigBar = ({ setRemoveError }) => {
       func: "ADD_TAB",
       id: uuidv4(),
       title: `Tab ${state.length + 1}`,
+      activeTab: activeTab,
     });
   };
-
-  // {
-  //   state[activeTab].title;
-  // }
 
   // ? Props for removeTab Dialog
   const removeTabDialog = state[activeTab]?.title && {

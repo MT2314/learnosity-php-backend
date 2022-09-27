@@ -18,9 +18,36 @@ export const layoutConfig = (draft, action) => {
         components: [],
         activeTab: false,
       });
+      draft.map((tab, index) => {
+        index == action.activeTab
+          ? (tab.activeTab = true)
+          : (tab.activeTab = false);
+      });
       return draft;
     case "REMOVE_TAB":
-      draft.splice(action.currentTab, 1);
+      draft.splice(action.tabIndex, 1);
+      draft.map((tab, index) => {
+        index == action.nextTab
+          ? (tab.activeTab = true)
+          : (tab.activeTab = false);
+      });
+      return draft;
+    case "MOVE_TAB_LEFT":
+      // eslint-disable-next-line no-case-declarations
+      const elementL = draft[action.tabIndex];
+      draft.splice(action.tabIndex, 1);
+      draft.splice(action.tabIndex - 1, 0, elementL);
+      draft.map((tab, index) => {
+        index == action.nextTab
+          ? (tab.activeTab = true)
+          : (tab.activeTab = false);
+      });
+      return draft;
+    case "MOVE_TAB_RIGHT":
+      // eslint-disable-next-line no-case-declarations
+      const elementR = draft[action.tabIndex];
+      draft.splice(action.tabIndex, 1);
+      draft.splice(action.tabIndex + 1, 0, elementR);
       draft.map((tab, index) => {
         index == action.nextTab
           ? (tab.activeTab = true)
@@ -37,17 +64,8 @@ export const layoutConfig = (draft, action) => {
           : (tab.activeTab = false);
       });
       return draft;
-    case "MOVE_TAB_LEFT":
-      // eslint-disable-next-line no-case-declarations
-      const elementL = draft[action.tabIndex];
-      draft.splice(action.tabIndex, 1);
-      draft.splice(action.tabIndex - 1, 0, elementL);
-      return draft;
-    case "MOVE_TAB_RIGHT":
-      // eslint-disable-next-line no-case-declarations
-      const elementR = draft[action.tabIndex];
-      draft.splice(action.tabIndex, 1);
-      draft.splice(action.tabIndex + 1, 0, elementR);
+    case "DELETE_COMPONENT":
+      draft[action.tabIndex].components.splice(action.compIndex, 1);
       return draft;
     case "UPDATE_COMPONENT":
       draft[action.tabIndex].components[action.compIndex].componentProps = {
@@ -59,9 +77,7 @@ export const layoutConfig = (draft, action) => {
           : (tab.activeTab = false);
       });
       return draft;
-    case "DELETE_COMPONENT":
-      draft[action.tabIndex].components.splice(action.compIndex, 1);
-      return draft;
+
     case "MOVE_COMPONENT_DOWN":
       // eslint-disable-next-line no-case-declarations
       const elementCR = draft[action.tabIndex].components[action.compIndex];
