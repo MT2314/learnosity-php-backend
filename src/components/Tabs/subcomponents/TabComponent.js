@@ -2,7 +2,7 @@ import React, { useContext, useState} from "react";
 import componentIndex from "../../../components/componentIndex";
 import { LayoutContext, TabContext } from "../TabContext";
 
-const TabComponent = ({ component, compIndex }) => {
+const TabComponent = ({ component, compIndex, setTabActive }) => {
   const [, dispatch] = useContext(LayoutContext);
   const [activeTab] = useContext(TabContext);
 
@@ -13,13 +13,11 @@ const TabComponent = ({ component, compIndex }) => {
 
   const { Component } = componentDetails;
 
-  const [tabactive, setTabActive] = useState(false)
-
   return (
       <Component
         key={`comp-${compIndex}`}
         role="listitem"
-        ...(componentName === 'Text' && { setTabActive })
+        setTabActive={setTabActive} 
         setProp={(stateUpdate) => {
           dispatch({
             func: "UPDATE_COMPONENT",

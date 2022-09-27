@@ -87,9 +87,15 @@ const ComponentWrapper = ({
   const [showSelf, setShowSelf] = useState(false);
   const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
+  const [tabActive, setTabActive] = useState(false)
 
   //remove active border and label if you click outside component
   useOnClickOutside( dropRef, () => setShowSelf(false))
+
+  useEffect(() => {
+    console.log(`i switch to showshelf`);
+    tabActive && setShowSelf(true)
+  }, [tabActive])
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -386,6 +392,7 @@ const ComponentWrapper = ({
               component={component}
               compIndex={compIndex}
               tabIndex={tabIndex}
+              setTabActive={setTabActive}
             />
           </BlueBox>
           <DropIndicator
