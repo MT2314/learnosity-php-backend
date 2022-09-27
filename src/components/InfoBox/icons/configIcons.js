@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactQuill from 'react-quill';
+import React from "react";
+import ReactQuill from "react-quill";
 
-const icons = ReactQuill.Quill.import('ui/icons');
+const icons = ReactQuill.Quill.import("ui/icons");
 
 // Custom bold with underline symbol from design
-icons['customBold'] = (
+icons["customBold"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -21,7 +21,7 @@ icons['customBold'] = (
 );
 
 // Inline configuration icons (bold, italic, underline, strike, sub, super)
-icons['bold'] = (
+icons["bold"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="12"
@@ -37,7 +37,7 @@ icons['bold'] = (
   </svg>
 );
 
-icons['italic'] = (
+icons["italic"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="14"
@@ -52,7 +52,7 @@ icons['italic'] = (
   </svg>
 );
 
-icons['underline'] = (
+icons["underline"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="14"
@@ -67,7 +67,7 @@ icons['underline'] = (
   </svg>
 );
 
-icons['strike'] = (
+icons["strike"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="19"
@@ -83,7 +83,7 @@ icons['strike'] = (
 );
 
 // "script" is used for subscript/"super" for superscript
-icons['script'] = (
+icons["script"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="18"
@@ -98,7 +98,7 @@ icons['script'] = (
   </svg>
 );
 
-icons['super'] = (
+icons["super"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="18"
@@ -114,7 +114,7 @@ icons['super'] = (
 );
 
 // Formula
-icons['formula'] = (
+icons["formula"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="18"
@@ -131,7 +131,7 @@ icons['formula'] = (
 );
 
 // Alignment ("align" is default for left-alignment)
-icons['align'] = (
+icons["align"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -147,7 +147,7 @@ icons['align'] = (
   </svg>
 );
 
-icons['center'] = (
+icons["center"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -162,7 +162,7 @@ icons['center'] = (
   </svg>
 );
 
-icons['right'] = (
+icons["right"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -178,7 +178,7 @@ icons['right'] = (
 );
 
 // Lists
-icons['bullet'] = (
+icons["bullet"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="19"
@@ -193,7 +193,7 @@ icons['bullet'] = (
   </svg>
 );
 
-icons['ordered'] = (
+icons["ordered"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="19"
@@ -209,7 +209,7 @@ icons['ordered'] = (
 );
 
 // Link
-icons['link'] = (
+icons["link"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="20"
@@ -225,7 +225,7 @@ icons['link'] = (
 );
 
 // Edit pencil
-icons['edit'] = (
+icons["edit"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="19"
@@ -241,7 +241,7 @@ icons['edit'] = (
 );
 
 // Delete garbage icon
-icons['delete'] = (
+icons["delete"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="14"
@@ -256,7 +256,7 @@ icons['delete'] = (
   </svg>
 );
 
-icons['trashcan'] = (
+icons["trashcan"] = (
   <svg
     width="14"
     height="18"
@@ -271,7 +271,7 @@ icons['trashcan'] = (
   </svg>
 );
 
-icons['pencil'] = (
+icons["pencil"] = (
   <svg
     width="19"
     height="18"

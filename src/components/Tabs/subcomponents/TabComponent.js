@@ -14,19 +14,19 @@ const TabComponent = ({ component, compIndex }) => {
   const { Component } = componentDetails;
 
   return (
-      <Component
-        key={`comp-${compIndex}`}
-        role="listitem"
-        setProp={(stateUpdate) => {
-          dispatch({
-            func: "UPDATE_COMPONENT",
-            compIndex: compIndex,
-            tabIndex: activeTab,
-            stateUpdate: stateUpdate,
-          });
-        }}
-        {...componentProps}
-      />
+    <Component
+      key={`comp-${compIndex}`}
+      role="listitem"
+      setProp={(stateUpdate) => {
+        dispatch({
+          func: "UPDATE_COMPONENT",
+          compIndex: compIndex,
+          tabIndex: activeTab,
+          stateUpdate: stateUpdate,
+        });
+      }}
+      {...componentProps}
+    />
   );
 };
 export default TabComponent;
