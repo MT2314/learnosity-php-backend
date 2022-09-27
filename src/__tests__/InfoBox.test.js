@@ -1,9 +1,9 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
+import produce from "immer";
 import "@testing-library/jest-dom";
 import InfoBox from "../components/InfoBox/InfoBox";
-import produce from "immer";
 
 let container = null;
 beforeEach(() => {
