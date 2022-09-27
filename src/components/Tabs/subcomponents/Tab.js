@@ -10,7 +10,7 @@ import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
 
 // NOTE: We can use theme once it is set it up end to end
-const StyleTabBody = styled("section")(({ isDragging }) => ({
+const StyleTabBody = styled("div")(({ isDragging }) => ({
   padding: "10px 10px 20px 10px",
   borderColor: "#bdbdbd",
   borderStyle: "solid",

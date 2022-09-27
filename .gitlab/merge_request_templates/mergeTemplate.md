@@ -10,13 +10,14 @@
 - [ ] Added descriptive comments
 - [ ] Access Assistant tests pass
 - [ ] Refactored for readability
-- [ ] Updated build version number
+
 ### When Applicable
 
 - [ ] Written relevant unit tests
 - [ ] MUI imports and icons-material are destructured
 - [ ] Added/updated examples or documentation as needed
 - [ ] Two reviewers required
+- [ ] Updated build version number
 - [ ] Bug ticket(s): 
  
 ### Reviewer Check List

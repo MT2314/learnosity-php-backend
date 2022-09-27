@@ -12,13 +12,6 @@ export const defaultProps = {
             placeholderTitle: "Pane 1",
             components: [],
             expanded: true
-        }, 
-        {
-            id: uuidv4(),
-            title: "",
-            placeholderTitle: "Pane 2",
-            components: [],
-            expanded: false
         }
     ],
 };

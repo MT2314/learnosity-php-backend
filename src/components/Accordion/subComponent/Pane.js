@@ -7,6 +7,7 @@ import AccordionTitle from "./AccordionTitle";
 import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
 import { LayoutContext } from "../../../Context/InteractivesContext";
 
+//styles for accordion
 const StyledAccordionPane = styled(AccordionSummary)(({isActive}) => ({
   height: '40px',
   fontSize: '18px',
@@ -24,6 +25,7 @@ const StyledAccordionPane = styled(AccordionSummary)(({isActive}) => ({
     backgroundColor: 'rgba(21, 101, 192, 0.12) !important' 
   },
 }))
+//styles end. 
 
 const Pane = ({ accordionIndex, accordion}) => { 
 
@@ -33,7 +35,7 @@ const Pane = ({ accordionIndex, accordion}) => {
   const [ isActive, setIsActive ] = useState(false)
   //click outside hook sets active pane to null when user clicks outside the accordion pane
   const paneRef = useRef()
-  useOnClickOutside( paneRef, () => setIsActive(false))
+  useOnClickOutside( paneRef, () => setIsActive(false), true)
 
   return (
   <div key={`pane-${accordionIndex}`} ref={paneRef}>

@@ -42,7 +42,6 @@ const StyledBodyTextArea = styled(TextareaAutosize)({
 
 const Body = (props) => {
   const [state, dispatch] = useContext(InfoBoxContext);
-
   const stateBody = useMemo(() => state?.body, [state?.body]);
   const [refs, setTextRef] = useState({ text: null, quill: null });
   const [textFocused, setTextFocused] = useState(false);
@@ -51,7 +50,7 @@ const Body = (props) => {
   const placeholderRef = useRef();
 
   useEffect(() => {
-    dispatch({ func: "CHANGE_ICON", icon: props.selectedIcon });
+    dispatch({ func: "CHANGE_ICON", icon: props?.selectedIcon });
   }, [props.selectedIcon]);
 
   const updateBody = useCallback((body) => {

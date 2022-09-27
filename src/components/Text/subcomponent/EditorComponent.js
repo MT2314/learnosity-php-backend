@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import "quill-paste-smart";
 
 import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 import CustomToolBar from "./CustomToolBar";
@@ -12,11 +11,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import {
-  defaultAnchorState,
-  ModifyAnchorText,
-  ConvertLinks,
   AddLinkEvents,
   handleSelection,
+  checkTextForUrl,
 } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 import { FormulaEvents } from "../utils/FormulaEvents";
@@ -31,6 +28,10 @@ import {
   useKeepEditor,
   useBoldRef,
 } from "../Provider";
+
+import { matchMsWordList, maybeMatchMsWordList } from "../matchers/pasteLists";
+import { matchSpan } from "../matchers/pasteSpan";
+import { matchText } from "../matchers/pasteText";
 
 import "katex/dist/katex.css";
 
@@ -95,9 +96,6 @@ const EditorComponent = ({
   //alignment observer
   const [alignmentObserver, setAlignmentObserver] = useState(null);
 
-  //state to modify link text
-  const [modifyAnchorText, setModifyAnchorText] = useState(defaultAnchorState);
-
   //add focus to editor
   const focusRef = useRef(null);
 
@@ -109,14 +107,15 @@ const EditorComponent = ({
   const [activeDropDownListItem, setActiveDropDownListItem] = useState("");
 
   useEffect(() => {
-    editorIsFocus ? setActiveComponent(true) : setActiveComponent(false);
-  }, [editorIsFocus, setActiveComponent]);
+    editorIsFocus && setActiveComponent(true);
+  }, [editorIsFocus]);
 
   useOnClickOutside(textRef, () => {
     if (!showMath && !keepEditor && !isInfoBox) {
       alignmentObserver?.disconnect();
       setEditorIsFocus(false);
       setShowEditor(false);
+      setActiveComponent(false);
     }
   });
 
@@ -126,7 +125,10 @@ const EditorComponent = ({
     //set unique id instance
     setUniqueId(toolbarId);
     //extend default link functionality on mount
-    ExtendLinkFunctionality(`toolbar-${toolbarId}`);
+    ExtendLinkFunctionality(
+      `toolbar-${toolbarId}`,
+      focusRef?.current?.getEditor()
+    );
     //check for formulas
     FormulaEvents(toolbarId);
     // on render editor is focused
@@ -184,11 +186,19 @@ const EditorComponent = ({
     let editorContent = editor.getContents();
 
     //quill instance
-    const quill = focusRef?.current;
-    const quillText = quill?.getEditor().getText();
+    const quill = focusRef?.current?.getEditor();
 
     //check for links
-    const linksChecked = checkForLinks(quill, quillText, editorContent);
+    let checkLinks = null;
+    const ops = delta.ops;
+    const lastOp = ops[ops.length - 1];
+    if (
+      lastOp.insert &&
+      typeof lastOp.insert === "string" &&
+      lastOp.insert.match(/\s/)
+    ) {
+      checkLinks = checkTextForUrl(quill);
+    }
 
     // add eventListeners to editor
     AddLinkEvents(`toolbar-${toolbarId}`);
@@ -204,111 +214,13 @@ const EditorComponent = ({
       editorContent.ops[0].insert === "\n" && editorContent.ops.length === 1;
     onPaste && (editorContent.ops[0].insert = "");
 
+    checkLinks && quill.updateContents(checkLinks);
+
     //update setProp with new editorContent
     noHighlights &&
-      linksChecked &&
       source !== "silent" &&
+      !checkLinks &&
       setProp({ body: editorContent });
-  };
-
-  //check and modify links
-  const checkForLinks = (quill, quillText, editorContent) => {
-    //a flag to check if the change is coming from the API.
-    let changeFromAPI = false;
-
-    //destructuring modifyAnchorText state
-    const {
-      anchorTextEqualToLink,
-      insertRange,
-      linkText,
-      placeSelectionRight,
-      firstInsert,
-    } = modifyAnchorText;
-
-    //check to see if the link text is equal to the anchor text
-    if (anchorTextEqualToLink) {
-      //destructuring insertRange
-      const { index, length } = insertRange;
-
-      //resetting setModifyAnchorText with default state
-      setModifyAnchorText(defaultAnchorState);
-
-      //set cursor position at the end of the link
-      placeSelectionRight &&
-        quill.setEditorSelection(quill.editor, {
-          index: index + length,
-          length: 0,
-        });
-
-      //change coming from API
-      changeFromAPI = true;
-
-      // format text to link
-      quill
-        .getEditor()
-        .formatText(index - (firstInsert ? 1 : 0), length, "link", linkText);
-    }
-
-    //check if anchor text and link text are not the same
-    if (!anchorTextEqualToLink) {
-      //returns the link, the start index and the end index of the link
-      const { link, startLinkIndex, endLinkIndex } = ConvertLinks(
-        editorContent,
-        quillText
-      );
-
-      //if the link is valid format the text to be a link
-      if (link) {
-        //set cursor position to the end of the link
-        quill.setEditorSelection(quill.editor, {
-          index: startLinkIndex + endLinkIndex,
-          length: 0,
-        });
-
-        //change coming from API
-        changeFromAPI = true;
-
-        //format the text to be a link
-        quill
-          .getEditor()
-          .formatText(startLinkIndex, endLinkIndex, "link", link);
-      }
-
-      //destructuring modifyAnchorText state
-      const {
-        removeRange,
-        insertRange,
-        linkText,
-        anchorTextEqualToLink,
-        removeFormat,
-        placeSelectionRight,
-        firstInsert,
-      } = ModifyAnchorText(editorContent, quillText);
-
-      //check if link is valid, and if linkText or removeFormat is true
-      if (!link && (linkText || removeFormat)) {
-        //destructuring removeRange state
-        const { index, length } = removeRange;
-
-        //if removeFormat is false, then set setModifyAnchorText
-        !removeFormat &&
-          setModifyAnchorText({
-            anchorTextEqualToLink,
-            insertRange,
-            linkText,
-            placeSelectionRight,
-            firstInsert,
-          });
-
-        //removing link format from quill instance
-        quill.getEditor().removeFormat(index, length);
-
-        //change coming from API
-        changeFromAPI = true;
-      }
-    }
-    //return true if change is not from API
-    return !changeFromAPI;
   };
 
   // focus to the bold
@@ -330,6 +242,7 @@ const EditorComponent = ({
     "align",
     "list",
     "bullet",
+    "indent",
     "link",
     "background",
     "mathpix",
@@ -343,27 +256,16 @@ const EditorComponent = ({
       keyboard: { bindings: { tab: false } },
       clipboard: {
         matchVisual: false,
-        allowed: {
-          tags: [
-            "a",
-            "strong",
-            "u",
-            "s",
-            "i",
-            "p",
-            "br",
-            "ul",
-            "ol",
-            "li",
-            "b",
-            "sub",
-            "sup",
-          ],
-          attributes: ["href", "rel", "target", "class"],
-        },
-        keepSelection: true,
-        substituteBlockElements: false,
-        magicPasteLinks: true,
+        matchers: [
+          ["p.MsoListParagraphCxSpFirst", matchMsWordList],
+          ["p.MsoListParagraphCxSpMiddle", matchMsWordList],
+          ["p.MsoListParagraphCxSpLast", matchMsWordList],
+          ["p.MsoListParagraph", matchMsWordList],
+          ["p.msolistparagraph", matchMsWordList],
+          ["p.MsoNormal", maybeMatchMsWordList],
+          [Node.TEXT_NODE, matchText],
+          ["SPAN", matchSpan],
+        ],
       },
     }),
     []
@@ -393,6 +295,7 @@ const EditorComponent = ({
           alignmentObserver?.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
+          setActiveComponent(false);
         }
       }}
       className="text-editor"
@@ -421,6 +324,7 @@ const EditorComponent = ({
       <ReactQuill
         ref={focusRef}
         modules={modules}
+        scrollingContainer="html"
         formats={formats}
         theme="snow"
         placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -431,13 +335,7 @@ const EditorComponent = ({
         onChange={handleDataChange}
         defaultValue={body}
         onChangeSelection={(range, source, editor) => {
-          handleSelection(
-            range,
-            source,
-            editor,
-            `toolbar-${toolbarId}`,
-            focusRef.current
-          );
+          handleSelection(range, `toolbar-${toolbarId}`, focusRef.current);
           formatSelection(focusRef.current);
         }}
         onFocus={() => {
