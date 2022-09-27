@@ -1,11 +1,9 @@
-import React, { useReducer } from "react";
+import React from "react";
 import { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import InfoBox from "../components/InfoBox/InfoBox";
 import produce from "immer";
-
-import { infoBoxConfig } from "../components/InfoBox/InfoBoxContext";
 
 let container = null;
 beforeEach(() => {
