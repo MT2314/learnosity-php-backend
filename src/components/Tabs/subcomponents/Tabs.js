@@ -7,35 +7,30 @@ import ConfigBar from "../subcomponents/ConfigBar";
 import TabTitle from "./TabTitle";
 
 //Styled components for Tabs.js
-const StyledTabContainer = styled("div")(() => (
-  {
-    boxSizing: 'border-box',
-    letterSpacing: '0.1px',
-    lineHeight: '25px',
-    color: '#636363',
-  }));
+const StyledTabContainer = styled("div")(() => ({
+  boxSizing: "border-box",
+  letterSpacing: "0.1px",
+  lineHeight: "25px",
+  color: "#636363",
+}));
 
-const StyledTabTitleWrapper = styled("div")(() => (
-  {
-    display: 'flex',
-    minHeight: '40px',
-    maxHeight: '69px',
+const StyledTabTitleWrapper = styled("div")(() => ({
+  display: "flex",
+  minHeight: "40px",
+  maxHeight: "69px",
+}));
 
-  }));
-
-const StyledToolBar = styled('div')(({ toolbar }) => (
-  {
-    display: toolbar ? 'block ' : 'none',
-    position: 'fixed ',
-    top: '80px ',
-    left: '50% ',
-    transform: 'translateX(-50%) ',
-    zIndex: '1000',
-    justifyContent: 'center ',
-    backgroundColor: '#fff ',
-  }
-))
-//Styled component end. 
+const StyledToolBar = styled("div")(({ toolbar }) => ({
+  display: toolbar ? "block " : "none",
+  position: "fixed ",
+  top: "80px ",
+  left: "50% ",
+  transform: "translateX(-50%) ",
+  zIndex: "1000",
+  justifyContent: "center ",
+  backgroundColor: "#fff ",
+}));
+//Styled component end.
 
 const Tabs = () => {
   const [activeTab] = useContext(TabContext);
@@ -54,8 +49,7 @@ const Tabs = () => {
             }
           }}
         >
-          <StyledToolBar
-            toolbar={toolbar}>
+          <StyledToolBar toolbar={toolbar}>
             <ConfigBar setRemoveError={setRemoveError} />
           </StyledToolBar>
           {state.map((tab, tabIndex) => {

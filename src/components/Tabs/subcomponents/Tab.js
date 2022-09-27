@@ -51,7 +51,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       if (acceptListComp(item)) {
         dispatch({
           func: "ADD_COMPONENT",
-          tabIndex: tabIndex,
+          tabIndex: activeTab,
           component: {
             componentName: item.componentName,
             componentProps: JSON.parse(item?.componentProps),
