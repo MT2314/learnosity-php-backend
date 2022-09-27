@@ -13,7 +13,7 @@ const Icon = ({ setSelectedIcon, selectedIcon }) => {
   }, []);
 
   return (
-    <div data-icon={stateIcon ? stateIcon : ""}>
+    <div data-icon={stateIcon ? stateIcon : ""} data-testid="icon">
       {stateIcon !== null
         ? iconDropdownOptions.find((icon) => icon.type === stateIcon)?.icon
         : defaultIcon}
