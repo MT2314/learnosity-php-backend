@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import {
   useUniqueId,
   useSetEditState,
   useShowMath,
   useSetKeepEditor,
-} from '../Provider';
-import MathPopup from '../subcomponent/popupToolBar/math/MathPopup';
-import EditMath from './EditMath';
+} from "../Provider";
+import MathPopup from "../subcomponent/popupToolBar/math/MathPopup";
+import EditMath from "./EditMath";
 
 const PopupDialogs = () => {
   return (
@@ -26,10 +26,10 @@ const MathEditDialog = () => {
     e.stopPropagation();
 
     setEditState({
-      id: e.target.attributes.getNamedItem('data-id').value,
-      value: e.target.attributes.getNamedItem('data-value').value,
-      clientX: e.target.attributes.getNamedItem('data-clientX').value,
-      clientY: e.target.attributes.getNamedItem('data-clientY').value,
+      id: e.target.attributes.getNamedItem("data-id").value,
+      value: e.target.attributes.getNamedItem("data-value").value,
+      clientX: e.target.attributes.getNamedItem("data-clientX").value,
+      clientY: e.target.attributes.getNamedItem("data-clientY").value,
     });
     setKeepEditor(true);
   };

@@ -3,7 +3,7 @@ import { unmountComponentAtNode } from "react-dom";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import AccordionMain from "../components/Accordion/AccordionMain";
-import {layoutConfig} from "../Context/InteractivesContext"
+import { layoutConfig } from "../Context/InteractivesContext";
 
 let container = null;
 beforeEach(() => {
@@ -23,8 +23,8 @@ const testLayout = [
     title: "",
     placeholderTitle: "TVO",
     components: [],
-    expanded:true
-  }
+    expanded: true,
+  },
 ];
 
 describe("Accordion", () => {
@@ -35,37 +35,36 @@ describe("Accordion", () => {
   });
 
   it("displays placeholder when added to lesson", async () => {
-    render(<AccordionMain layoutState={testLayout}/>)
+    render(<AccordionMain layoutState={testLayout} />);
 
     expect(screen.getByText(/add a component/i)).toBeInTheDocument();
-  })
+  });
 
-  it('updates the titles', async () => {
-    render(<AccordionMain layoutState={testLayout}/>)
+  it("updates the titles", async () => {
+    render(<AccordionMain layoutState={testLayout} />);
     layoutConfig(testLayout, {
       func: "CHANGE_TITLE",
       title: "Polkaroo Forever",
-      layerIndex: 0
-    })
+      layerIndex: 0,
+    });
 
-    expect(testLayout[0].title).toBe("Polkaroo Forever")
-  })
+    expect(testLayout[0].title).toBe("Polkaroo Forever");
+  });
 
-  it('expand all btn opens all panes', async () => {
-    render(<AccordionMain layoutState={testLayout}/>)
+  it("expand all btn opens all panes", async () => {
+    render(<AccordionMain layoutState={testLayout} />);
     layoutConfig(testLayout, {
-      func: "EXPAND_ALL_PANE"
-    })
+      func: "EXPAND_ALL_PANE",
+    });
 
-    testLayout.forEach((item) => expect(item.expanded).toBeTruthy())
+    testLayout.forEach((item) => expect(item.expanded).toBeTruthy());
+  });
 
-  })
-
-  it('collapse all btn closes all panes', async () => {
-    render(<AccordionMain layoutState={testLayout}/>)
+  it("collapse all btn closes all panes", async () => {
+    render(<AccordionMain layoutState={testLayout} />);
     layoutConfig(testLayout, {
-      func: "COLLAPSE_ALL_PANE"
-    })
-    testLayout.forEach((item) => expect(item.expanded).toBeFalsy())
-  })
-})
+      func: "COLLAPSE_ALL_PANE",
+    });
+    testLayout.forEach((item) => expect(item.expanded).toBeFalsy());
+  });
+});
