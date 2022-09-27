@@ -22,7 +22,16 @@ const dataConversionFunction = (data) => {
   }
 };
 
+const dataConversionFlatArray = (data) => {
+  parseData.transformComponentPropsRecursive(data);
+  for (let lessonIndex = 0; lessonIndex < data.length; lessonIndex++) {
+    const lesson = data[lessonIndex];
+    lessons.push(headingsConverter.parse(quillConverter.parse(lesson)));
+  }
+};
+
 module.exports = {
   dataConversionFunction: dataConversionFunction,
   lessons: lessons,
+  dataConversionFlatArray,
 };

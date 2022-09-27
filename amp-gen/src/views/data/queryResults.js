@@ -3,22 +3,6 @@ const queries = require("../scripts/queries");
 const convertData = require("../utils/convert-data");
 
 /**
- * Returns a graphql query string based on the name of the query requested.
- *
- * @param {String} q query name
- * @returns {String} graphql query
- */
-function _getQuery(q) {
-  switch (q) {
-    case "course":
-      return queries.course;
-    case "lesson":
-    default:
-      return queries.lesson;
-  }
-}
-
-/**
  * Returns an array of lessons, based on the Node ID. Even if you are
  * requesting a singular lesson, it will be returned as an array of one
  * lesson. If an error is encountered, an empty Array will be returned.
@@ -30,12 +14,11 @@ module.exports = async function () {
     // 'uuid': process.env.ENTITY_ID,
     id: process.env.ID,
   };
-  const query = _getQuery(process.env.QUERY);
 
   console.log("process.env.QUERY", process.env.QUERY, "queryVars", queryVars);
 
   await index
-    .run(query, queryVars)
+    .run(queries[process.env.QUERY || "lesson"], queryVars)
     .then((data) => {
       const isEmpty = Object.keys(data).length === 0;
       console.log("index.run result: ", data, isEmpty);
@@ -51,6 +34,8 @@ module.exports = async function () {
         return data.getLesson;
       }
 
+      if (data?.getLessons) return data.getLessons;
+
       return false;
     })
     .then((data) => {
@@ -63,6 +48,12 @@ module.exports = async function () {
         convertData.dataConversionFunction(data);
         // Afer conversion log
         // console.log("after conversion data", JSON.stringify(data, null, 4));
+      } else if (
+        // If the returns is an array of LessonStructureContainers (getLessons)
+        Array.isArray(data) &&
+        data[0]?.__typename === "LessonStructureContainer"
+      ) {
+        convertData.dataConversionFlatArray(data);
       } else {
         // TODO: may need to check for type if __typename does not exist eg. getLesson
       }
