@@ -130,7 +130,9 @@ const ConfigBar = ({ setRemoveError }) => {
       activeTab: activeTab,
     });
   };
-
+  {
+    state[activeTab].title;
+  }
   // ? Props for removeTab Dialog
   const removeTabDialog = state[activeTab]?.title && {
     title: "Delete Tab?",

@@ -13,7 +13,7 @@ export const layoutConfig = (draft, action) => {
     case "ADD_TAB":
       draft.push({
         id: action.id,
-        title: "",
+        title: action.title,
         placeholderTitle: action.title,
         components: [],
         activeTab: false,
