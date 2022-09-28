@@ -118,7 +118,7 @@ const ConfigBar = ({ setRemoveError }) => {
       tabIndex: activeTab,
       nextTab: active,
     });
-    // setActiveTab(active);
+    setActiveTab(active);
   };
 
   // ? Add Tab
