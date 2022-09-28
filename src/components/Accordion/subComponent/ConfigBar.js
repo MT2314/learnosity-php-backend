@@ -72,7 +72,9 @@ const StyledIconButton = styled(IconButton)({
 });
 
 
-const ConfigBar = () => {
+const ConfigBar = ({ paneIndex }) => {
+
+    console.log(paneIndex)
 
     const [, dispatch] = useContext(LayoutContext)
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AccordionSummary } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
@@ -32,19 +32,15 @@ const StyledAccordionPane = styled(AccordionSummary)(({ isActive }) => ({
 }));
 //styles end.
 
-const Pane = ({ accordionIndex, accordion, activePaneIndex }) => {
+const Pane = ({ accordionIndex, accordion, isActive, setIsActive }) => {
   const { title, placeholderTitle } = accordion;
   const [, dispatch] = useContext(LayoutContext);
   const [, setActivePane] = useContext(ActivePaneContext);
 
-  const [isActive, setIsActive] = useState(false);
+
   //click outside hook sets active pane to null when user clicks outside the accordion pane
   const paneRef = useRef();
-  useOnClickOutside(paneRef, () => setIsActive(false), true);
-
-  const setPaneIndex = (index) => {
-    activePaneIndex(index)
-  }
+  useOnClickOutside(paneRef, () => setIsActive(null), true);
 
   return (
     <div key={`pane-${accordionIndex}`} ref={paneRef}>
@@ -52,11 +48,10 @@ const Pane = ({ accordionIndex, accordion, activePaneIndex }) => {
         //id attribute below creates an "aria-labelledby" and is REQUIRED for accessibilty.
         id={`panel-${accordionIndex + 1}-add-components-${uuidv4()}`}
         onClick={() => {
-          setIsActive(true)
-          setPaneIndex(accordionIndex)
+          setIsActive(accordionIndex)
         }}
         accordionIndex={accordionIndex}
-        isActive={isActive}
+        isActive={accordionIndex === isActive}
         expandIcon={
           <ExpandMore
             onClick={() => {

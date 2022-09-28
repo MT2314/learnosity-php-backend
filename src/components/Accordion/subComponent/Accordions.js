@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "@mui/material";
 import { Accordion, AccordionDetails } from "@mui/material";
 import styled from "@emotion/styled";
 import { LayoutContext } from "../../../Context/InteractivesContext";
 import AccordionItem from "./AccordionItem";
 import Pane from "./Pane";
+import ConfigBar from "./ConfigBar";
 
 //styled components for Accordion styles
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
@@ -28,42 +29,52 @@ const StyledButtonsDiv = styled("div")(() => ({
   justifyContent: "flex-end",
   gap: "16px",
 }));
+
+const StyledToolBar = styled("div")(({ toolbar }) => ({
+  display: toolbar ? "block " : "none",
+  position: "fixed ",
+  top: "80px ",
+  left: "50% ",
+  transform: "translateX(-50%) ",
+  zIndex: "1000",
+  justifyContent: "center ",
+  backgroundColor: "#fff ",
+}));
 //Styled components end
 
 const Accordions = () => {
   const [state, dispatch] = useContext(LayoutContext);
-  
-  const setActivePaneIndex = (index) => {
-    console.log("i am here", index)
-    return index
-  }
+  const [isActive, setIsActive] = useState(null);
 
   return (
     <div className="accordion-container" data-testid="accordion-component">
       {/* TODO: Add Expand all and collapse all btns when a second pane is added */}
+      <StyledToolBar toolbar={isActive === 0 ? true : isActive}>
+        <ConfigBar paneIndex={isActive} />
+      </StyledToolBar>
       {state.length > 1 && (
-          <StyledButtonsDiv>
-            <StyledExpandCollapseButton
-              onClick={() => {
-                dispatch({
-                  func: "EXPAND_ALL_PANE"
-                });
-              }}
-              disabled={state.every(s => s.expanded === true)}
-            >
-              Expand All
-            </StyledExpandCollapseButton>
-            <StyledExpandCollapseButton
-              onClick={() => {
-                dispatch({
-                  func: "COLLAPSE_ALL_PANE"
-                });
-              }}
-              disabled={state.every(s => s.expanded === false)}>
-              Collapse All
-            </StyledExpandCollapseButton>
-          </StyledButtonsDiv>
-        )
+        <StyledButtonsDiv>
+          <StyledExpandCollapseButton
+            onClick={() => {
+              dispatch({
+                func: "EXPAND_ALL_PANE"
+              });
+            }}
+            disabled={state.every(s => s.expanded === true)}
+          >
+            Expand All
+          </StyledExpandCollapseButton>
+          <StyledExpandCollapseButton
+            onClick={() => {
+              dispatch({
+                func: "COLLAPSE_ALL_PANE"
+              });
+            }}
+            disabled={state.every(s => s.expanded === false)}>
+            Collapse All
+          </StyledExpandCollapseButton>
+        </StyledButtonsDiv>
+      )
       }
       {state.map((accordion, accordionIndex) => {
         return (
@@ -72,7 +83,7 @@ const Accordions = () => {
             disableGutters={true}
             expanded={accordion.expanded}
           >
-            <Pane accordionIndex={accordionIndex} accordion={accordion} activePaneIndex={setActivePaneIndex}/>
+            <Pane accordionIndex={accordionIndex} accordion={accordion} isActive={isActive} setIsActive={setIsActive} />
             <AccordionDetails
               sx={{
                 borderWidth: "1px 0px",
