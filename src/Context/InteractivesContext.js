@@ -3,6 +3,7 @@ import produce from "immer";
 
 //state of tabs & accordion data stored in LayoutContext
 export const LayoutContext = createContext();
+export const ActivePaneContext = createContext();
 
 export const layoutConfig = (draft, action) => {
   switch (action.func) {
@@ -104,16 +105,47 @@ export const layoutConfig = (draft, action) => {
       return draft;
   }
 };
+
+export const paneConfig = (draft, action) => {
+  switch (action.func) {
+    case "TOGGLE_PANE":
+      draft[action.paneIndex].expanded === true
+        ? (draft[action.paneIndex].expanded = false)
+        : (draft[action.paneIndex].expanded = true);
+      return draft;
+    default:
+      return draft;
+  }
+};
+
 //layout provider wraps the tab & accordion component to access reducer
 export const LayoutProvider = ({ children, setProp, layoutState }) => {
   const [state, dispatch] = useReducer(produce(layoutConfig), layoutState);
+  const [activePane, setActivePane] = useReducer(
+    produce(paneConfig),
+    layoutState.map((item) => {
+      return { expanded: item.expanded };
+    })
+  );
 
   useEffect(() => {
-    setProp({ layoutState: state });
+    const copyState = state.map((item) => ({ expanded: item.expanded }));
+    const diff = JSON.stringify(copyState) !== JSON.stringify(activePane);
+
+    const updateState = diff
+      ? state.map((item, index) => ({
+          ...item,
+          expanded: activePane[index].expanded,
+        }))
+      : state;
+
+    setProp({ layoutState: updateState });
   }, [state]);
   return (
     <LayoutContext.Provider value={[state, dispatch]}>
-      {children}
+      <ActivePaneContext.Provider value={[activePane, setActivePane]}>
+        {children}
+      </ActivePaneContext.Provider>
     </LayoutContext.Provider>
   );
 };

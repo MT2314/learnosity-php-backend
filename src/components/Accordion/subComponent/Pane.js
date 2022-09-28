@@ -5,7 +5,10 @@ import { ExpandMore } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import AccordionTitle from "./AccordionTitle";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import { LayoutContext } from "../../../Context/InteractivesContext";
+import {
+  LayoutContext,
+  ActivePaneContext,
+} from "../../../Context/InteractivesContext";
 
 //styles for accordion
 const StyledAccordionPane = styled(AccordionSummary)(({ isActive }) => ({
@@ -32,6 +35,7 @@ const StyledAccordionPane = styled(AccordionSummary)(({ isActive }) => ({
 const Pane = ({ accordionIndex, accordion }) => {
   const { title, placeholderTitle } = accordion;
   const [, dispatch] = useContext(LayoutContext);
+  const [, setActivePane] = useContext(ActivePaneContext);
 
   const [isActive, setIsActive] = useState(false);
   //click outside hook sets active pane to null when user clicks outside the accordion pane
@@ -50,6 +54,10 @@ const Pane = ({ accordionIndex, accordion }) => {
           <ExpandMore
             onClick={() => {
               dispatch({
+                func: "TOGGLE_PANE",
+                paneIndex: accordionIndex,
+              });
+              setActivePane({
                 func: "TOGGLE_PANE",
                 paneIndex: accordionIndex,
               });
