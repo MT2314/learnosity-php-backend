@@ -3,10 +3,6 @@
     // viewports with the default padding. This reduces the outer
     // padding between the tab border and the viewport to 5px to
     // alleviate the problem.
-    @media(max-width: 380px) {
-        padding: 0 5px;
-    }
-
     .tabs {
         &[role=tablist] {
             /* Styles for the flex layout based tabs */
@@ -42,6 +38,7 @@
                     padding: 0 5px;
                     top: 55px;
                     margin-left: -10px;
+                    z-index: 99;
                 }
 
                 .hoverTabText2 {
@@ -97,5 +94,18 @@
         .wrapper {
             padding: 0;
         }
+    }
+}
+
+.hideAccordion {
+    display: none;
+}
+
+@media(max-width: 760px) {
+    .hideAccordion {
+        display: block;
+    }
+    .wrapper.tabs {
+        display: none;
     }
 }
