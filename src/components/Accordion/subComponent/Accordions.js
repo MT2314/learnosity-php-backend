@@ -14,8 +14,6 @@ const StyledAccordionContainer = styled("div")({
 
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
   backgroundColor: "#FFFFFF",
-  // border: "0.0625rem solid #BDBDBD",
-  // borderTop: "none",
 }));
 
 const StyledAccordionDetails = styled(AccordionDetails)({
