@@ -9,24 +9,25 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import { LayoutContext } from "../TabContext";
+import { LayoutContext, TabContext } from "../TabContext";
 
 import textDnd from "../../../Icons/dndIcons/textDnd.png";
 import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
 import DropIndicator from "../../../Utility/DropIndicator";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import TabComponent from "./TabComponent";
+import componentIndex from "../../../components/componentIndex";
 
 export const SmallIconButton = styled(IconButton)(() => ({
   color: "#FFF",
 }));
 
 const BlueBox = styled("div")(({ theme, draggingSelf, showSelf, hoverActive }) => ({
-  outline: showSelf 
-   ? `3px solid #1466C0`
-   : hoverActive
-   ? `3px solid #DAE3EE`
-   : null,
+  outline: showSelf
+    ? `3px solid #1466C0`
+    : hoverActive
+      ? `3px solid #DAE3EE`
+      : null,
   borderRadius: "4px",
   opacity: draggingSelf ? 0.4 : 1,
   '& [data-id="callout"]': {
@@ -38,7 +39,7 @@ const DragHandle = styled(DragHandleIcon)({
   color: "inherit",
 });
 
-const StaticLabel = styled('span')(({ theme, isHoverActive, isDragging,showSelf }) => ({
+const StaticLabel = styled('span')(({ theme, isHoverActive, isDragging, showSelf }) => ({
   background: isHoverActive && !showSelf ? '#DAE3EE' : '#1466C0',
   width: 'fit-content',
   height: '100%',
@@ -88,10 +89,17 @@ const ComponentWrapper = ({
   const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
   const [tabActive, setTabActive] = useState(false);
-  const [isActiveComponent, setIsActiveComponent] = useState(false);
+  const [activeComp, setActiveComp] = useState(null);
+
+  const [activeTab] = useContext(TabContext);
+
+  //get the matching component from the componentIndex
+  const componentDetails = componentIndex[component.componentName];
+
+  const { Component } = componentDetails;
 
   //remove active border and label if you click outside component
-  useOnClickOutside( dropRef, () => setShowSelf(false))
+  useOnClickOutside(dropRef, () => setShowSelf(false))
 
   //on first click of text component the active state wrapper shows
   useEffect(() => {
@@ -135,11 +143,11 @@ const ComponentWrapper = ({
             ? compIndex
             : compIndex + 1
           : item.compIndex < compIndex
-          ? compIndex - 1
-          : compIndex
+            ? compIndex - 1
+            : compIndex
         : dropIndexOffset === 0
-        ? compIndex + 1
-        : compIndex;
+          ? compIndex + 1
+          : compIndex;
 
       const dragIndex = currentTab ? item?.compIndex : undefined;
 
@@ -268,7 +276,7 @@ const ComponentWrapper = ({
         onMouseLeave={() => setIsHover(false)}
         onFocus={() => setShowSelf(true)}
         onBlur={() => setShowSelf(false)}
-        onClick={() => {setShowSelf(true)}}
+        onClick={() => setShowSelf(true)}
       >
         <div>
           <DropIndicator
@@ -290,36 +298,38 @@ const ComponentWrapper = ({
               showSelf={showSelf}
               isDragging={isDragging}>
 
-            <span
-              ref={drag}
-              data-testid="component-drag"
-              style={{
-                display: "inline-flex",
-                justifyContent: "center",
-                cursor: "move",
-                padding: "3px  0",
-                paddingLeft: "5px",
-              }}
+              <span
+                ref={drag}
+                data-testid="component-drag"
+                style={{
+                  display: "inline-flex",
+                  justifyContent: "center",
+                  cursor: "move",
+                  padding: "3px  0",
+                  paddingLeft: "5px",
+                }}
               >
-              <DragHandle />
-            </span>
-            <Typography
-              variant="body2"
-              component="span"
-              sx={{
-                borderRight: showSelf && "0.5px solid #FFF",
-                paddingRight: "10px",
-                paddingLeft: "10px",
-                marginRight: "5px",
-              }}
-              data-testid="component-label-name"
+                <DragHandle />
+              </span>
+              <Typography
+                variant="body2"
+                component="span"
+                sx={{
+                  borderRight: showSelf && "0.5px solid #FFF",
+                  paddingRight: "10px",
+                  paddingLeft: "10px",
+                  marginRight: "5px",
+                }}
+                data-testid="component-label-name"
               >
-              {component.componentName}
-            </Typography>
+                {component.componentName}
+              </Typography>
             </StaticLabel>
             {compIndex !== 0 && (
               <SmallIconButton
                 onClick={() => {
+                  setActiveComp(compIndex)
+                  console.log(activeComp - 1)
                   dispatch({
                     func: "MOVE_COMPONENT_UP",
                     compIndex: compIndex,
@@ -336,6 +346,8 @@ const ComponentWrapper = ({
             {compIndex != numOfComponent - 1 && (
               <SmallIconButton
                 onClick={() => {
+                  setActiveComp(compIndex + 1)
+                  console.log(activeComp)
                   dispatch({
                     func: "MOVE_COMPONENT_DOWN",
                     compIndex: compIndex,
@@ -380,17 +392,22 @@ const ComponentWrapper = ({
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
-          <BlueBox 
+          <BlueBox
             showSelf={showSelf}
             hoverActive={isHover}>
-            <TabComponent
-              key={`key-component-${compIndex}`}
-              component={component}
-              compIndex={compIndex}
-              tabIndex={tabIndex}
+            <Component
+              {...componentProps}
+              key={`comp-${compIndex}`}
+              role="listitem"
               setTabActive={setTabActive}
-              setIsActiveComponent={setIsActiveComponent}
-              activeComponent={isActiveComponent}
+              setProp={(stateUpdate) => {
+                dispatch({
+                  func: "UPDATE_COMPONENT",
+                  compIndex: compIndex,
+                  tabIndex: activeTab,
+                  stateUpdate: stateUpdate,
+                });
+              }}
             />
           </BlueBox>
           <DropIndicator

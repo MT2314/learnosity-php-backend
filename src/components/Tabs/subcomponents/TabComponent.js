@@ -2,7 +2,7 @@ import React, { useContext, useState} from "react";
 import componentIndex from "../../../components/componentIndex";
 import { LayoutContext, TabContext } from "../TabContext";
 
-const TabComponent = ({ component, compIndex, setTabActive, setIsActiveComponent, activeComponent }) => {
+const TabComponent = ({ component, compIndex, setTabActive }) => {
 
 
   const [, dispatch] = useContext(LayoutContext);
