@@ -130,14 +130,11 @@ const ConfigBar = ({ setRemoveError }) => {
       activeTab: activeTab,
     });
   };
-
   // ? Props for removeTab Dialog
   const removeTabDialog = state[activeTab]?.title && {
     title: "Delete Tab?",
     message: [
-      `Deleting "${
-        state[activeTab].title || state[activeTab].placeholderTitle
-      }" will also delete ${state[activeTab].components.length} component(s).`,
+      `Deleting "${state[activeTab].title}" will also delete ${state[activeTab].components.length} component(s).`,
       <br key={1} />,
       <br key={2} />,
       `You are able to undo this action.`,
