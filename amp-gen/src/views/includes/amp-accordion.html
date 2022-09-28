@@ -80,17 +80,15 @@
             {%comment%}Pane Body:{%endcomment%}
             <div class="section-content border-left border-right p2" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">
 
-                {%- for panes in data -%}
-                    {%- for component in panes.components -%}
+                {%- for component in pane.components -%}
 
-                        <script type="text/javascript">
-                            console.log("components");
-                            console.log({{ component | json }});
-                        </script>
-                        
-                            {% include content-model-parser.liquid item:component %}
+                    <script type="text/javascript">
+                        console.log("components");
+                        console.log({{ component | json }});
+                    </script>
+                    
+                    {% include content-model-parser.liquid item:component %}
 
-                    {%- endfor -%}
                 {%- endfor -%}
 
                 <span class="sr-only">End of section</span>
