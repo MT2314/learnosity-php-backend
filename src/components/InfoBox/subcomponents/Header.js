@@ -1,40 +1,39 @@
-import React, { useCallback, useContext } from 'react';
-// MUI/@emotion imports
-import styled from '@emotion/styled';
-// ? Context
-import { InfoBoxContext } from '../InfoBoxContext';
-import { TextareaAutosize } from '@material-ui/core';
-import PropTypes from 'prop-types';
+import React, { useCallback, useContext } from "react";
+
+import styled from "@emotion/styled";
+
+import { InfoBoxContext } from "../InfoBoxContext";
+import { TextareaAutosize } from "@material-ui/core";
 
 const StyledHeaderInput = styled(TextareaAutosize)({
-  width: '650px',
-  height: '40px',
+  width: "650px",
+  height: "40px",
   margin: 0,
   padding: 0,
-  border: 'none',
-  resize: 'none',
-  lineHeight: '40px',
-  background: '#FAFAFA',
+  border: "none",
+  resize: "none",
+  lineHeight: "40px",
+  background: "#FAFAFA",
   fontFamily: `"Inter", sans-serif`,
-  fontSize: '34px',
-  fontWeight: '500',
-  color: 'rgba(35, 35, 35, 1)',
-  '&::placeholder': {
-    color: 'rgba(35, 35, 35, 1)',
+  fontSize: "34px",
+  fontWeight: "500",
+  color: "rgba(35, 35, 35, 1)",
+  "&::placeholder": {
+    color: "rgba(35, 35, 35, 1)",
   },
-  '&:focus': {
-    outline: 'none',
-    '&::placeholder': {
-      color: 'rgba(0, 0, 0, 0.12)',
+  "&:focus": {
+    outline: "none",
+    "&::placeholder": {
+      color: "rgba(0, 0, 0, 0.12)",
     },
   },
 });
-const Header = ({ setDisableToolbar }) => {
+const Header = ({ t }) => {
   const [state, dispatch] = useContext(InfoBoxContext);
 
   const handleHeaderChange = useCallback((e) => {
     dispatch({
-      func: 'CHANGE_HEADER',
+      func: "CHANGE_HEADER",
       header: e.target.value,
     });
   }, []);
@@ -42,24 +41,14 @@ const Header = ({ setDisableToolbar }) => {
   return (
     <StyledHeaderInput
       name="infoBoxHeader"
-      role={'header-textbox'}
-      aria-label="info box header input"
-      placeholder="Type your header here"
+      role="textbox"
+      aria-label={t("Infobox Header Aria")}
+      placeholder={t("Infobox Header Placeholder")}
       aria-multiline="true"
-      value={state.infoBoxHeader}
+      value={state.infoBoxHeader.heading}
       onChange={handleHeaderChange}
-      onFocus={() => {
-        setDisableToolbar(true);
-      }}
-      onBlur={() => {
-        setDisableToolbar(false);
-      }}
     />
   );
-};
-
-Header.propTypes = {
-  setDisableToolbar: PropTypes.func.isRequired,
 };
 
 export default Header;

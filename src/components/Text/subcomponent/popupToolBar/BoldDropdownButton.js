@@ -8,7 +8,10 @@ import icons from "../../assets/icons";
 const BoldDropdownButton = ({ show, onKeyDropDown }) => {
   return (
     <>
-      <Card className={show ? "bold-dropdown show" : "bold-dropdown hide"} onKeyDown={onKeyDropDown}>
+      <Card
+        className={show ? "bold-dropdown show" : "bold-dropdown hide"}
+        onKeyDown={onKeyDropDown}
+      >
         <Tooltip
           aria-label="bold"
           title="bold"

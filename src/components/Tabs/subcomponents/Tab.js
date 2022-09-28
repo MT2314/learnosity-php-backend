@@ -10,7 +10,7 @@ import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
 
 // NOTE: We can use theme once it is set it up end to end
-const StyleTabBody = styled("div")(({ theme, isDragging }) => ({
+const StyleTabBody = styled("div")(({ isDragging }) => ({
   padding: "10px 10px 20px 10px",
   borderColor: "#bdbdbd",
   borderStyle: "solid",
@@ -26,6 +26,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
   const [, dispatch] = useContext(LayoutContext);
   const [isDragging, setIsDragging] = useState(false);
   const [inContainer, setInContainer] = useState(null);
+  const [droppedIndex, setDroppedIndex] = useState(null);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -50,7 +51,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       if (acceptListComp(item)) {
         dispatch({
           func: "ADD_COMPONENT",
-          tabIndex: tabIndex,
+          tabIndex: activeTab,
           component: {
             componentName: item.componentName,
             componentProps: JSON.parse(item?.componentProps),
@@ -87,18 +88,21 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       setShowError();
       setShowDropError(false);
     }
+    setIsDragging(isOver);
   }, [isOver]);
 
   useEffect(() => {
     setShowError();
     setRemoveError(false);
-  }, [removeError])
+  }, [removeError]);
 
   drop(dropRef);
 
   return (
     <>
       <StyleTabBody
+        activeTab={activeTab}
+        tabIndex={tabIndex}
         onDragLeave={() => setInContainer(false)}
         onDragOver={() => setInContainer(true)}
         ref={dropRef}
@@ -109,13 +113,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         {activeTab === tabIndex && components.length === 0 ? (
           <Placeholder isOver={isOver} showError={showError} />
         ) : (
-          <ul
-            style={{
-              padding: 0,
-              listStyleType: "none",
-            }}
-            isOver={isOver}
-          >
+          <div role="list" isOver={isOver}>
             {components.map((component, compIndex) => {
               return (
                 <ComponentWrapper
@@ -127,11 +125,14 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
                   tabIndex={tabIndex}
                   setIsDragging={setIsDragging}
                   inContainer={inContainer}
+                  draggingOver={isOver}
+                  setDroppedIndex={setDroppedIndex}
+                  droppedIndex={droppedIndex}
                 />
               );
             })}
             <PlaceholderError showError={showDropError} />
-          </ul>
+          </div>
         )}
       </StyleTabBody>
     </>

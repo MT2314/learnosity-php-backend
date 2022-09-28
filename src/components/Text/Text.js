@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
 import { Provider } from "./Provider";
@@ -20,20 +20,34 @@ const Text = ({
   setProp = () => {},
   setActiveComponent = () => {},
   isActiveComponent = false,
+  isInfoBox = false,
+  infoAreaFocused = false,
+  infoHasFocus = false,
+  selectedIcon = null,
+  setSelectedIcon = () => {},
+  setInfoHasFocus = () => {},
+  setTextRef = () => {},
 }) => {
   const [showEditor, setShowEditor] = useState(false);
 
   //* Creating theme
   // const textTheme = createMFTheme();
 
+  useEffect(() => {
+    if (isInfoBox) {
+      setShowEditor(true);
+    }
+  }, []);
+
   return (
     <>
       <CssBaseline />
       {/* <ThemeProvider theme={textTheme}> */}
-      <ReactQuillContainer>
-        {(!showEditor && body === null) ||
-        (!showEditor && !body.ops) ||
-        (!showEditor && body.ops[0].insert === "") ? (
+      <ReactQuillContainer isInfoBox={isInfoBox}>
+        {((!showEditor && body === null) ||
+          (!showEditor && !body.ops) ||
+          (!showEditor && body.ops[0].insert === "")) &&
+        !isInfoBox ? (
           <div
             onClick={() => {
               setShowEditor(true);
@@ -57,6 +71,13 @@ const Text = ({
               showEditor={showEditor}
               setActiveComponent={setActiveComponent}
               isActiveComponent={isActiveComponent}
+              isInfoBox={isInfoBox}
+              infoAreaFocused={infoAreaFocused}
+              selectedIcon={selectedIcon}
+              infoHasFocus={infoHasFocus}
+              setInfoHasFocus={setInfoHasFocus}
+              setSelectedIcon={setSelectedIcon}
+              setTextRef={setTextRef}
             />
           </Provider>
         )}

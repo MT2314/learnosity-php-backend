@@ -53,4 +53,4 @@ const AccordionItem = ({accordion, accordionIndex}) => {
     )
 }
 
-export default AccordionItem
+export default AccordionItem;

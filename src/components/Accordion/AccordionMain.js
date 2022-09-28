@@ -1,32 +1,19 @@
-import React from 'react'
+import React from "react";
 import { v4 as uuidv4 } from "uuid";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { LayoutProvider } from "../Tabs/TabContext";
-import Accordions from "./subComponent/Accordions"
-
-// import styles
-import "./styles/Accordion.scss"
-
+import { LayoutProvider } from "../../Context/InteractivesContext";
+import Accordions from "./subComponent/Accordions";
 
 //Accordion default props
 export const defaultProps = {
-    layoutState: [
-        {
-            id: uuidv4(),
-            title: "",
-            placeholderTitle: "Pane 1",
-            components:[],
-            expanded: false
-        }, 
-        {
-            id: uuidv4(),
-            title: "",
-            placeholderTitle: "Pane 2",
-            components:[],
-            expanded: true
-        }
-    ],
+  layoutState: [
+    {
+      id: uuidv4(),
+      title: "",
+      placeholderTitle: "Pane 1",
+      components: [],
+      expanded: true,
+    },
+  ],
 };
 
 const AccordionMain = ({ layoutState = [], setProp = () => { } }) => {
