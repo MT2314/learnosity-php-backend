@@ -117,15 +117,3 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
     </LayoutContext.Provider>
   );
 };
-
-//state of the active tab in tab interactive
-export const TabContext = createContext();
-
-export const ActiveTabProvider = ({ children }) => {
-  const [activeTab, setActiveTab] = useState(0);
-  return (
-    <TabContext.Provider value={[activeTab, setActiveTab]}>
-      {children}
-    </TabContext.Provider>
-  );
-};
