@@ -7,12 +7,22 @@ import AccordionItem from "./AccordionItem";
 import Pane from "./Pane";
 
 //styled components for Accordion styles
+const StyledAccordionContainer = styled("div")({
+  width: "100%",
+  maxWidth: "60.5rem",
+});
+
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
   backgroundColor: "#FFFFFF",
-  borderWidth: "1px",
+  // border: "0.0625rem solid #BDBDBD",
+  // borderTop: "none",
+}));
+
+const StyledAccordionDetails = styled(AccordionDetails)({
+  borderWidth: "0rem 0.0625rem 0.0625rem 0.0625rem",
   borderStyle: "solid",
   borderColor: "#BDBDBD",
-}));
+});
 
 const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
   fontWeight: "400",
@@ -34,7 +44,7 @@ const Accordions = () => {
   const [state, dispatch] = useContext(LayoutContext);
 
   return (
-    <div className="accordion-container" data-testid="accordion-component">
+    <StyledAccordionContainer data-testid="accordion-component">
       {/* TODO: Add Expand all and collapse all btns when a second pane is added */}
       {/* <StyledButtonsDiv>
                 <StyledExpandCollapseButton
@@ -65,22 +75,16 @@ const Accordions = () => {
             expanded={accordion.expanded}
           >
             <Pane accordionIndex={accordionIndex} accordion={accordion} />
-            <AccordionDetails
-              sx={{
-                borderWidth: "1px 0px",
-                borderStyle: "solid",
-                borderColor: "#BDBDBD",
-              }}
-            >
+            <StyledAccordionDetails>
               <AccordionItem
                 accordionIndex={accordionIndex}
                 accordion={accordion}
               />
-            </AccordionDetails>
+            </StyledAccordionDetails>
           </StyledAccordion>
         );
       })}
-    </div>
+    </StyledAccordionContainer>
   );
 };
 

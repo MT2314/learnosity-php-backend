@@ -18,9 +18,11 @@ const StyledAccordionPane = styled(AccordionSummary)(({ isActive }) => ({
   backgroundColor: isActive
     ? "rgba(21, 101, 192, 0.12) !important"
     : "#fff !important", //!important overrides the MUI grey background.
-  borderWidth: isActive && "1px 1px 3px 1px",
-  borderStyle: isActive && "solid",
-  borderColor: isActive && "#232323",
+  borderWidth: isActive ? "1px 1px 3px 1px" : "1px",
+  borderStyle: "solid",
+  borderColor: isActive ? "#232323" : "#BDBDBD",
+  borderRadius: "10px 10px 0px 0px",
+
   "&:focus": {
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
   },
