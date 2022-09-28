@@ -61,8 +61,8 @@
 
                 &[selected] {
                     background-color: $tab-active-bg;
-                    border-bottom: none;
-                    border-top: 5px solid $tab-active-border-top;
+                    border-top: none;
+                    border-bottom: 5px solid $tab-active-border-top;
                     padding-top: 4px; // to account for the larger border shifting the text down
                     color: $tab-active-text;
                     text-decoration: underline;

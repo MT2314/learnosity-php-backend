@@ -54,11 +54,6 @@
     {%- assign size = btnCollapseHidden | size | minus: 4 -%}
     {%- assign btnCollapseHidden = btnCollapseHidden | slice: 0, size -%}
     
-        {%comment%}Introduction:{%endcomment%}
-        <div>
-            {{ data.introduction | default: '' }}
-        </div>
-    
         {%comment%}
             Expand / Collapse Buttons:
             Both of these buttons are hidden from screen readers because of concerns about confusing non-sighted users.
