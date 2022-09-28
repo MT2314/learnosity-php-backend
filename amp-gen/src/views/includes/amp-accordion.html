@@ -62,7 +62,7 @@
             on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
 
             {%comment%}Pane Heading:{%endcomment%}
-            <div id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.accordionPanes.size }} {{ pane.heading.processed }}">
+            <h2 id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.accordionPanes.size }} {{ pane.heading.processed }}">
                 <span class="inline-block">
                     <!-- {{ pane.heading.processed }} -->
                     {{ pane.title }}
@@ -70,7 +70,7 @@
                 <i class="fa fa-chevron-down fa-pull-right m0" 
                    [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'fa fa-chevron-up fa-pull-right m0' : 'fa fa-chevron-down fa-pull-right m0'"
                    aria-hidden="true"></i>
-            </div>
+            </h2>
 
             {%comment%}Pane Body:{%endcomment%}
             <div class="section-content border-left border-right p2" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">
