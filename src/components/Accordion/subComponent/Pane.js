@@ -9,6 +9,7 @@ import { LayoutContext } from "../../../Context/InteractivesContext";
 
 //styles for accordion
 const StyledAccordionPane = styled(AccordionSummary)(({ isActive }) => ({
+  minHeight: "40px",
   height: "40px",
   fontSize: "18px",
   color: "#232323",
