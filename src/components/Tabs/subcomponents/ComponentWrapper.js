@@ -113,6 +113,8 @@ const ComponentWrapper = ({
     );
   };
 
+  console.log('activeComp',activeComp)
+
   const [
     { isOver, canDrop, isOverCurrent, droppedInContainer, getItem },
     drop,
@@ -262,9 +264,9 @@ const ComponentWrapper = ({
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
 
-  useEffect(() => {
-    activeComp === compIndex ? setShowSelf(true) : setShowSelf(false);
-  }, [activeComp]);
+  // useEffect(() => {
+  //   activeComp === compIndex ? setShowSelf(true) : setShowSelf(false);
+  // }, [activeComp]);
 
   return (
     <>
