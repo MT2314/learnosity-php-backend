@@ -87,13 +87,14 @@ const ComponentWrapper = ({
   const [showSelf, setShowSelf] = useState(false);
   const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
-  const [tabActive, setTabActive] = useState(false)
+  const [tabActive, setTabActive] = useState(false);
+  const [isActiveComponent, setIsActiveComponent] = useState(false);
 
   //remove active border and label if you click outside component
   useOnClickOutside( dropRef, () => setShowSelf(false))
 
+  //on first click of text component the active state wrapper shows
   useEffect(() => {
-    console.log(`i switch to showshelf`);
     tabActive && setShowSelf(true)
   }, [tabActive])
 
@@ -253,12 +254,6 @@ const ComponentWrapper = ({
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
 
-  //show blue border and dark component label when user clicks inside component
-  const handleActiveComponent = (e) => {
-    console.log('====>', e.target)
-
-  }
-
   return (
     <>
       <DragPreviewImage
@@ -267,12 +262,13 @@ const ComponentWrapper = ({
       />
       <div
         data-test-id="div-before-drop-indicator"
+        key={`nested-component-${compIndex}`}
         ref={dropRef}
         onMouseEnter={() => !draggingOver && setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
-        // onFocus={() => setShowSelf(true)}
-        // onBlur={() => setShowSelf(false)}
-        onClick={() => setShowSelf(true)}
+        onFocus={() => setShowSelf(true)}
+        onBlur={() => setShowSelf(false)}
+        onClick={() => {setShowSelf(true)}}
       >
         <div>
           <DropIndicator
@@ -393,6 +389,8 @@ const ComponentWrapper = ({
               compIndex={compIndex}
               tabIndex={tabIndex}
               setTabActive={setTabActive}
+              setIsActiveComponent={setIsActiveComponent}
+              activeComponent={isActiveComponent}
             />
           </BlueBox>
           <DropIndicator
