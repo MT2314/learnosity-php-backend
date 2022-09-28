@@ -36,27 +36,30 @@ const Accordions = () => {
   return (
     <div className="accordion-container" data-testid="accordion-component">
       {/* TODO: Add Expand all and collapse all btns when a second pane is added */}
-      {/* <StyledButtonsDiv>
-                <StyledExpandCollapseButton
-                    onClick={() => {
-                        dispatch({
-                            func: "EXPAND_ALL_PANE"
-                        });
-                    }}
-                    disabled={state.every(s => s.expanded === true)}
-                >
-                    Expand All
-                </StyledExpandCollapseButton>
-                <StyledExpandCollapseButton
-                    onClick={() => {
-                        dispatch({
-                            func: "COLLAPSE_ALL_PANE"
-                        });
-                    }}
-                    disabled={state.every(s => s.expanded === false)}>
-                    Collapse All
-                </StyledExpandCollapseButton>
-            </StyledButtonsDiv> */}
+      {state.length > 1 && (
+          <StyledButtonsDiv>
+            <StyledExpandCollapseButton
+              onClick={() => {
+                dispatch({
+                  func: "EXPAND_ALL_PANE"
+                });
+              }}
+              disabled={state.every(s => s.expanded === true)}
+            >
+              Expand All
+            </StyledExpandCollapseButton>
+            <StyledExpandCollapseButton
+              onClick={() => {
+                dispatch({
+                  func: "COLLAPSE_ALL_PANE"
+                });
+              }}
+              disabled={state.every(s => s.expanded === false)}>
+              Collapse All
+            </StyledExpandCollapseButton>
+          </StyledButtonsDiv>
+        )
+      }
       {state.map((accordion, accordionIndex) => {
         return (
           <StyledAccordion
