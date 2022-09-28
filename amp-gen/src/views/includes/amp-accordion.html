@@ -22,13 +22,12 @@
 {%- assign size = btnCollapseHidden | size | minus: 4 -%}
 {%- assign btnCollapseHidden = btnCollapseHidden | slice: 0, size -%}
 
-    {%comment%}Accordion Heading:{%endcomment%}
-    <!-- {%- include amp-heading.html data:data headingClass:'border-bottom' -%} -->
 
-    {%comment%}Introduction:{%endcomment%}
+    {%comment%}Introduction:
     <div>
         {{ data.introduction | default: '' }}
     </div>
+    {%endcomment%}
 
     {%comment%}
         Expand / Collapse Buttons:
@@ -68,7 +67,6 @@
             on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
 
             {%comment%}Pane Heading:{%endcomment%}
-            <!-- <{{ pane.heading.headingLevel }} id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.accordionPanes.size }} {{ pane.heading.processed }}"> -->
             <div id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.accordionPanes.size }} {{ pane.heading.processed }}">
                 <span class="inline-block">
                     <!-- {{ pane.heading.processed }} -->
@@ -78,12 +76,9 @@
                    [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'fa fa-chevron-up fa-pull-right m0' : 'fa fa-chevron-down fa-pull-right m0'"
                    aria-hidden="true"></i>
             </div>
-            <!-- </{{ pane.heading.headingLevel }}> -->
 
             {%comment%}Pane Body:{%endcomment%}
             <div class="section-content border-left border-right p2" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">
-
-                <!-- {{ pane.body | default: '' }} -->
 
                 {%- for panes in data -%}
                     {%- for component in panes.components -%}
@@ -92,8 +87,9 @@
                             console.log("components");
                             console.log({{ component | json }});
                         </script>
+                        
+                            {% include content-model-parser.liquid item:component %}
 
-                        {% include content-model-parser.liquid item:component %}
                     {%- endfor -%}
                 {%- endfor -%}
 

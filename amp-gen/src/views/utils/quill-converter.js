@@ -43,6 +43,7 @@ function parse(entity) {
   //         entity.props.infoBoxState.body = _setHtml(entity.props.infoBoxState.body);
   //         break;
   //     case 'Tab':
+  //     case 'Accordion':
   //        Running a for loop through the first array we hit, which is the layoutState
   //          for (let i = 0; i < entity.props.layoutState.length; i++) {
   //          Running another for loop to then iterate through the components in the tab and convert anything with componentProps.body
