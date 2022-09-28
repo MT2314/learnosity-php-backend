@@ -32,6 +32,11 @@ const StyledButtonsDiv = styled("div")(() => ({
 
 const Accordions = () => {
   const [state, dispatch] = useContext(LayoutContext);
+  
+  const setActivePaneIndex = (index) => {
+    console.log("i am here", index)
+    return index
+  }
 
   return (
     <div className="accordion-container" data-testid="accordion-component">
@@ -67,7 +72,7 @@ const Accordions = () => {
             disableGutters={true}
             expanded={accordion.expanded}
           >
-            <Pane accordionIndex={accordionIndex} accordion={accordion} />
+            <Pane accordionIndex={accordionIndex} accordion={accordion} activePaneIndex={setActivePaneIndex}/>
             <AccordionDetails
               sx={{
                 borderWidth: "1px 0px",

@@ -32,7 +32,7 @@ const StyledAccordionPane = styled(AccordionSummary)(({ isActive }) => ({
 }));
 //styles end.
 
-const Pane = ({ accordionIndex, accordion }) => {
+const Pane = ({ accordionIndex, accordion, activePaneIndex }) => {
   const { title, placeholderTitle } = accordion;
   const [, dispatch] = useContext(LayoutContext);
   const [, setActivePane] = useContext(ActivePaneContext);
@@ -42,12 +42,19 @@ const Pane = ({ accordionIndex, accordion }) => {
   const paneRef = useRef();
   useOnClickOutside(paneRef, () => setIsActive(false), true);
 
+  const setPaneIndex = (index) => {
+    activePaneIndex(index)
+  }
+
   return (
     <div key={`pane-${accordionIndex}`} ref={paneRef}>
       <StyledAccordionPane
         //id attribute below creates an "aria-labelledby" and is REQUIRED for accessibilty.
         id={`panel-${accordionIndex + 1}-add-components-${uuidv4()}`}
-        onClick={() => setIsActive(true)}
+        onClick={() => {
+          setIsActive(true)
+          setPaneIndex(accordionIndex)
+        }}
         accordionIndex={accordionIndex}
         isActive={isActive}
         expandIcon={
