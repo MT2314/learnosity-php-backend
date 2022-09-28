@@ -24,6 +24,8 @@
         {% include amp-iframe.html data:item %}
     {%- when "InfoBox" -%}
         {% include amp-infobox.html data:item.props.infoBoxState %}
+    {%- when "Accordion" -%}
+        {% include amp-accordion.html data:propName.layoutState %}        
     {%comment%} Not using below. {%endcomment%}
     {%- when "formatted_text_no_heading" -%}
         {% include amp-formatted-text.html data:item %}
@@ -31,8 +33,6 @@
         {% include amp-formatted-text.html data:item %}
     {%- when "quote_box" -%}
         {% include amp-quote.html data:item %}
-    {%- when "accordion" -%}
-        {% include amp-accordion.html data:item %}
     {%- when "audio" -%}
         {% include amp-audio.html data:item %}
     {%- when "image" -%}

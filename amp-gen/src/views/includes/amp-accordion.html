@@ -1,9 +1,18 @@
 <div class="accordion wrapper bottom-margin">
-{%- assign accordionId = 'accordion' | append: data.uuidClean -%}
+
+<script type="text/javascript">
+  console.log("Dumping data object here");
+  console.log({{ data | json }});
+</script>
+
+{%- for pane in data -%}
+    {%- assign accordionId = 'accordion' | append: data.id -%}
+{%- endfor -%}
+
 {%- assign ariaControls = '' -%}
 {%- assign btnExpandHidden = '' -%}
 {%- assign btnCollapseHidden = '' -%}
-{%- for pane in data.accordionPanes -%}
+{%- for pane in data -%}
     {%- assign ariaControls = ariaControls | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: ' ' -%}
     {%- assign btnExpandHidden = btnExpandHidden | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: '_expanded && ' -%}
     {%- assign btnCollapseHidden = btnCollapseHidden | append: '!' | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: '_expanded && ' -%}
@@ -14,7 +23,7 @@
 {%- assign btnCollapseHidden = btnCollapseHidden | slice: 0, size -%}
 
     {%comment%}Accordion Heading:{%endcomment%}
-    {%- include amp-heading.html data:data headingClass:'border-bottom' -%}
+    <!-- {%- include amp-heading.html data:data headingClass:'border-bottom' -%} -->
 
     {%comment%}Introduction:{%endcomment%}
     <div>
@@ -53,24 +62,40 @@
         class="accordion"
         aria-label="Accordion with {{ data.accordionPanes.size }} sections"
     >
-    {%- for pane in data.accordionPanes -%}
+    {%- for pane in data -%}
         {%comment%}Pane:{%endcomment%}
         <section
             on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
 
             {%comment%}Pane Heading:{%endcomment%}
-            <{{ pane.heading.headingLevel }} id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.accordionPanes.size }} {{ pane.heading.processed }}">
+            <!-- <{{ pane.heading.headingLevel }} id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.accordionPanes.size }} {{ pane.heading.processed }}"> -->
+            <div id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.accordionPanes.size }} {{ pane.heading.processed }}">
                 <span class="inline-block">
-                    {{ pane.heading.processed }}
+                    <!-- {{ pane.heading.processed }} -->
+                    {{ pane.title }}
                 </span>
                 <i class="fa fa-chevron-down fa-pull-right m0" 
                    [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'fa fa-chevron-up fa-pull-right m0' : 'fa fa-chevron-down fa-pull-right m0'"
                    aria-hidden="true"></i>
-            </{{ pane.heading.headingLevel }}>
+            </div>
+            <!-- </{{ pane.heading.headingLevel }}> -->
 
             {%comment%}Pane Body:{%endcomment%}
             <div class="section-content border-left border-right p2" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">
-                {{ pane.body | default: '' }}
+
+                <!-- {{ pane.body | default: '' }} -->
+
+                {%- for panes in data -%}
+                    {%- for component in panes.components -%}
+
+                        <script type="text/javascript">
+                            console.log("components");
+                            console.log({{ component | json }});
+                        </script>
+
+                        {% include content-model-parser.liquid item:component %}
+                    {%- endfor -%}
+                {%- endfor -%}
 
                 <span class="sr-only">End of section</span>
             </div>
