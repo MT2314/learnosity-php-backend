@@ -6,6 +6,11 @@ export const LayoutContext = createContext();
 //state of the active tab
 export const TabContext = createContext();
 
+const activeTabFunc = (draft, active) => {
+  draft.map((tab, index) => {
+    index == active ? (tab.activeTab = true) : (tab.activeTab = false);
+  });
+};
 export const layoutConfig = (draft, action) => {
   switch (action.func) {
     case "UPDATE_STATE":
@@ -14,55 +19,34 @@ export const layoutConfig = (draft, action) => {
       draft.push({
         id: action.id,
         title: action.title,
-        placeholderTitle: action.title,
         components: [],
         activeTab: false,
       });
-      draft.map((tab, index) => {
-        index == action.activeTab
-          ? (tab.activeTab = true)
-          : (tab.activeTab = false);
-      });
+      activeTabFunc(draft, action.activeTab);
       return draft;
     case "REMOVE_TAB":
       draft.splice(action.tabIndex, 1);
-      draft.map((tab, index) => {
-        index == action.nextTab
-          ? (tab.activeTab = true)
-          : (tab.activeTab = false);
-      });
+      activeTabFunc(draft, action.nextTab);
       return draft;
     case "MOVE_TAB_LEFT":
       // eslint-disable-next-line no-case-declarations
       const elementL = draft[action.tabIndex];
       draft.splice(action.tabIndex, 1);
       draft.splice(action.tabIndex - 1, 0, elementL);
-      draft.map((tab, index) => {
-        index == action.nextTab
-          ? (tab.activeTab = true)
-          : (tab.activeTab = false);
-      });
+      activeTabFunc(draft, action.nextTab);
       return draft;
     case "MOVE_TAB_RIGHT":
       // eslint-disable-next-line no-case-declarations
       const elementR = draft[action.tabIndex];
       draft.splice(action.tabIndex, 1);
       draft.splice(action.tabIndex + 1, 0, elementR);
-      draft.map((tab, index) => {
-        index == action.nextTab
-          ? (tab.activeTab = true)
-          : (tab.activeTab = false);
-      });
+      activeTabFunc(draft, action.nextTab);
       return draft;
     case "ADD_COMPONENT":
       draft[action.tabIndex].components.push({
         ...action.component,
       });
-      draft.map((tab, index) => {
-        index == action.tabIndex
-          ? (tab.activeTab = true)
-          : (tab.activeTab = false);
-      });
+      activeTabFunc(draft, action.tabIndex);
       return draft;
     case "DELETE_COMPONENT":
       draft[action.tabIndex].components.splice(action.compIndex, 1);
@@ -71,11 +55,7 @@ export const layoutConfig = (draft, action) => {
       draft[action.tabIndex].components[action.compIndex].componentProps = {
         ...action.stateUpdate,
       };
-      draft.map((tab, index) => {
-        index == action.tabIndex
-          ? (tab.activeTab = true)
-          : (tab.activeTab = false);
-      });
+      activeTabFunc(draft, action.tabIndex);
       return draft;
 
     case "MOVE_COMPONENT_DOWN":
@@ -87,6 +67,7 @@ export const layoutConfig = (draft, action) => {
         0,
         elementCR
       );
+      activeTabFunc(draft, action.tabIndex);
       return draft;
     case "MOVE_COMPONENT_UP":
       // eslint-disable-next-line no-case-declarations
@@ -97,6 +78,7 @@ export const layoutConfig = (draft, action) => {
         0,
         elementCL
       );
+      activeTabFunc(draft, action.tabIndex);
       return draft;
     case "DUPLICATE_COMPONENT":
       draft[action.tabIndex].components.splice(
@@ -104,6 +86,7 @@ export const layoutConfig = (draft, action) => {
         0,
         draft[action.tabIndex].components[action.compIndex]
       );
+      activeTabFunc(draft, action.tabIndex);
       return draft;
     case "DRAG_COMPONENT":
       // eslint-disable-next-line no-case-declarations
@@ -114,6 +97,7 @@ export const layoutConfig = (draft, action) => {
         0,
         dragElement
       );
+      activeTabFunc(draft, action.tabIndex);
       return draft;
     case "DRAG_ADD_NEW_COMPONENT":
       draft[action.tabIndex].components.splice(
@@ -121,20 +105,12 @@ export const layoutConfig = (draft, action) => {
         0,
         action.component
       );
-      draft.map((tab, index) => {
-        index == action.tabIndex
-          ? (tab.activeTab = true)
-          : (tab.activeTab = false);
-      });
+      activeTabFunc(draft, action.tabIndex);
       return draft;
     case "CHANGE_TITLE":
       const tab = draft.find((tab) => tab.id == action.id);
       tab.title = action.title;
-      draft.map((tab, index) => {
-        index == action.tabIndex
-          ? (tab.activeTab = true)
-          : (tab.activeTab = false);
-      });
+      activeTabFunc(draft, action.tabIndex);
       return draft;
     case "TOGGLE_PANE":
       draft[action.paneIndex].expanded === true

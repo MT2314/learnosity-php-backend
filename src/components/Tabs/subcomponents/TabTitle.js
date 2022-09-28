@@ -82,7 +82,7 @@ const StyledInput = styled(TextareaAutosize)(({ activeTab, tabIndexProp }) => ({
 }));
 //Styled components end
 
-const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
+const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -91,13 +91,6 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
       func: "CHANGE_TITLE",
       title: e.target.value,
       id: e.target.dataset.id,
-    });
-  }, []);
-
-  const handleActiveTabChange = useCallback((e) => {
-    dispatch({
-      func: "ACTIVE_TAB",
-      tabIndex: activeTab,
     });
   }, []);
 
@@ -124,7 +117,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
       role="tab"
       key={`tab-title-${tabIndex}`}
       tabIndex="0"
-      aria-label={tabTitle ? tabTitle : `Untitled ${placeholderTitle}`}
+      aria-label={tabTitle}
       onFocus={() => {
         showToolbar(true);
       }}
@@ -146,7 +139,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
         <StyledInput
           activeTab={activeTab}
           tabIndexProp={tabIndex}
-          placeholder={placeholderTitle}
+          placeholder={tabTitle}
           aria-label="tab title input"
           aria-multiline="true"
           role={activeTab == tabIndex ? "textbox" : "tab"}
@@ -167,7 +160,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar, placeholderTitle }) => {
           tabIndexProp={tabIndex}
           role="tab"
         >
-          {tabTitle ? tabTitle : placeholderTitle}
+          {tabTitle}
         </StyledPlaceholder>
       )}
     </StyledTitle>
