@@ -81,20 +81,8 @@
             <div class="section-content border-left border-right p2" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">
 
                 {% if pane.components.size > 0 %}
-                {%- for component in pane.components -%}
-
-                    <script type="text/javascript">
-                        console.log("components");
-                        console.log({{ component | json }});
-                    </script>
-
-                    
-                    {% include content-model-parser.liquid item:component %}
-
-                    {%comment%}
-                    {% break %}
-                    {%endcomment%}
-                    
+                    {%- for component in pane.components -%}            
+                        {% include content-model-parser.liquid item:component %}                    
                     {%- endfor -%}
                 {% endif %}
 
