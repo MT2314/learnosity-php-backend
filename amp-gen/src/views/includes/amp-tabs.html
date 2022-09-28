@@ -1,5 +1,5 @@
 <div class="tabs wrapper bottom-margin">
-    {%- assign tab.id = 'tablist' | append: data.uuidClean -%}
+    {%- assign tab.id = 'tablist' | append: data.id -%}
     <amp-selector class="tabs"
         role="tablist"
         keyboard-select-mode="focus"
@@ -40,11 +40,11 @@
 </div>
 
 <div class="accordion wrapper bottom-margin hideAccordion">
-    {%- assign accordionId = 'accordion' | append: data.uuidClean -%}
+    {%- assign accordionId = 'accordion' | append: data.id -%}
     {%- assign ariaControls = '' -%}
     {%- assign btnExpandHidden = '' -%}
     {%- assign btnCollapseHidden = '' -%}
-    {%- for pane in data.accordionPanes -%}
+    {%- for tab in data.props.layoutState -%}
         {%- assign ariaControls = ariaControls | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: ' ' -%}
         {%- assign btnExpandHidden = btnExpandHidden | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: '_expanded && ' -%}
         {%- assign btnCollapseHidden = btnCollapseHidden | append: '!' | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: '_expanded && ' -%}
@@ -89,7 +89,7 @@
             animate
             id="{{ accordionId }}"
             class="accordion"
-            aria-label="Accordion with {{ data.accordionPanes.size }} sections"
+            aria-label="Accordion with {{ data.props.layoutState.length }} sections"
         >
         {%- for tab in data.props.layoutState -%}
             {%comment%}Pane:{%endcomment%}
@@ -97,17 +97,17 @@
                 on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
     
                 {%comment%}Pane Heading:{%endcomment%}
-                <h2 id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.accordionPanes.size }} {{ pane.heading.processed }}">
+                <h4 id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.accordionPanes.size }} {{ pane.heading.processed }}">
                     <span class="inline-block">
                         {{ tab.title }}
                     </span>
                     <i class="fa fa-chevron-down fa-pull-right m0" 
                        [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'fa fa-chevron-up fa-pull-right m0' : 'fa fa-chevron-down fa-pull-right m0'"
                        aria-hidden="true"></i>
-                </h2>
+                </h4>
     
                 {%comment%}Pane Body:{%endcomment%}
-                <div class="section-content border-left border-right p2" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">
+                <div class="section-content border-left border-right px3 pt3" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">
                     {%- for c in tab.components -%}
                         {% include content-model-parser.liquid item:c %}
                     {%- endfor -%}
