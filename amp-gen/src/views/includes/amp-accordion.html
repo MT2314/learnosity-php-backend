@@ -1,10 +1,5 @@
 <div class="accordion wrapper bottom-margin">
 
-<script type="text/javascript">
-  console.log("Dumping data object here");
-  console.log({{ data | json }});
-</script>
-
 {%- for pane in data -%}
     {%- assign accordionId = 'accordion' | append: data.id -%}
 {%- endfor -%}
