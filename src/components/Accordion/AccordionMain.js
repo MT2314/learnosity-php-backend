@@ -1,5 +1,7 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { DndProvider } from 'react-dnd'
 import { LayoutProvider } from "../../Context/InteractivesContext";
 import Accordions from "./subComponent/Accordions";
 

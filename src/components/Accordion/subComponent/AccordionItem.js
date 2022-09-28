@@ -17,6 +17,7 @@ const AccordionItem = ({accordion, accordionIndex}) => {
         ],
         drop: async (item, monitor) => {
             console.log("DROPPED ITEM:", item)
+            //TODO: dispatch the add component function
         //   if (!acceptListComp(item)) setShowDropError(true);
         //   if (item.within && components.length !== 0) return;
         //   if (monitor.didDrop()) return;
