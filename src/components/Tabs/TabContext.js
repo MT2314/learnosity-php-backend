@@ -140,3 +140,15 @@ export const ActiveTabProvider = ({ children }) => {
     </TabContext.Provider>
   );
 };
+
+//state of the active component 
+export const ComponentContext = createContext();
+
+export const ActiveComponentProvider = ({children}) => {
+  const [activeComponent, setActiveComponent] = useState(null)
+  return(
+    <ComponentContext.Provider value={[activeComponent, setActiveComponent]}>
+      {children}
+    </ComponentContext.Provider>
+  )
+}

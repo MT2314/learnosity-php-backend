@@ -9,13 +9,12 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import { LayoutContext, TabContext } from "../TabContext";
+import { ComponentContext, LayoutContext, TabContext } from "../TabContext";
 
 import textDnd from "../../../Icons/dndIcons/textDnd.png";
 import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
 import DropIndicator from "../../../Utility/DropIndicator";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import TabComponent from "./TabComponent";
 import componentIndex from "../../../components/componentIndex";
 
 export const SmallIconButton = styled(IconButton)(() => ({
@@ -81,6 +80,8 @@ const ComponentWrapper = ({
   droppedIndex,
   setDroppedIndex,
   draggingOver,
+  setActiveComp,
+  activeComp
 }) => {
   const dropRef = useRef(null);
 
@@ -89,10 +90,9 @@ const ComponentWrapper = ({
   const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
   const [tabActive, setTabActive] = useState(false);
-  const [activeComp, setActiveComp] = useState(null);
 
   const [activeTab] = useContext(TabContext);
-
+ 
   //get the matching component from the componentIndex
   const componentDetails = componentIndex[component.componentName];
 
@@ -262,6 +262,10 @@ const ComponentWrapper = ({
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
 
+  useEffect(() => {
+    activeComp === compIndex ? setShowSelf(true) : setShowSelf(false);
+  }, [activeComp]);
+
   return (
     <>
       <DragPreviewImage
@@ -328,13 +332,12 @@ const ComponentWrapper = ({
             {compIndex !== 0 && (
               <SmallIconButton
                 onClick={() => {
-                  setActiveComp(compIndex)
-                  console.log(activeComp - 1)
                   dispatch({
                     func: "MOVE_COMPONENT_UP",
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
+                  setActiveComp(compIndex - 1)
                 }}
                 data-testid="move-up-button"
                 aria-label={"Move Component Up"}
@@ -346,13 +349,12 @@ const ComponentWrapper = ({
             {compIndex != numOfComponent - 1 && (
               <SmallIconButton
                 onClick={() => {
-                  setActiveComp(compIndex + 1)
-                  console.log(activeComp)
                   dispatch({
                     func: "MOVE_COMPONENT_DOWN",
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
+                  setActiveComp(compIndex + 1)
                 }}
                 data-testid="move-down-button"
                 aria-label={"Move Component Down"}
@@ -397,9 +399,9 @@ const ComponentWrapper = ({
             hoverActive={isHover}>
             <Component
               {...componentProps}
-              key={`comp-${compIndex}`}
               role="listitem"
               setTabActive={setTabActive}
+              setActiveComp={setActiveComp}
               setProp={(stateUpdate) => {
                 dispatch({
                   func: "UPDATE_COMPONENT",
