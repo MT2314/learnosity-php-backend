@@ -21,33 +21,37 @@ export const SmallIconButton = styled(IconButton)(() => ({
   color: "#FFF",
 }));
 
-const BlueBox = styled("div")(({ theme, draggingSelf, showSelf, hoverActive }) => ({
-  outline: showSelf
-    ? `3px solid #1466C0`
-    : hoverActive
+const BlueBox = styled("div")(
+  ({ theme, draggingSelf, showSelf, hoverActive }) => ({
+    outline: showSelf
+      ? `3px solid #1466C0`
+      : hoverActive
       ? `3px solid #DAE3EE`
       : null,
-  borderRadius: "4px",
-  opacity: draggingSelf ? 0.4 : 1,
-  '& [data-id="callout"]': {
-    margin: 0,
-  },
-}));
+    borderRadius: "4px",
+    opacity: draggingSelf ? 0.4 : 1,
+    '& [data-id="callout"]': {
+      margin: 0,
+    },
+  })
+);
 
 const DragHandle = styled(DragHandleIcon)({
   color: "inherit",
 });
 
-const StaticLabel = styled('span')(({ theme, isHoverActive, isDragging, showSelf }) => ({
-  background: isHoverActive && !showSelf ? '#DAE3EE' : '#1466C0',
-  width: 'fit-content',
-  height: '100%',
-  borderRadius: '4px 4px 0px 0px',
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'row',
-  opacity: isDragging ? 0 : 1,
-}));
+const StaticLabel = styled("span")(
+  ({ theme, isHoverActive, isDragging, showSelf }) => ({
+    background: isHoverActive && !showSelf ? "#DAE3EE" : "#1466C0",
+    width: "fit-content",
+    height: "100%",
+    borderRadius: "4px 4px 0px 0px",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    opacity: isDragging ? 0 : 1,
+  })
+);
 
 export const ComponentLabelContainer = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => {
@@ -55,7 +59,7 @@ export const ComponentLabelContainer = styled("div")(
       background: showSelf && "#1466C0",
       width: "fit-content",
       marginLeft: "-3px",
-      padding: '0 1px',
+      padding: "0 1px",
       color: showSelf ? "#FFF" : "#1466C0",
       borderRadius: "4px 4px 0px 0px",
       opacity: showSelf || hoverActive ? 1 : 0,
@@ -81,7 +85,7 @@ const ComponentWrapper = ({
   setDroppedIndex,
   draggingOver,
   setActiveComp,
-  activeComp
+  activeComp,
 }) => {
   const dropRef = useRef(null);
 
@@ -92,19 +96,19 @@ const ComponentWrapper = ({
   const [tabActive, setTabActive] = useState(false);
 
   const [activeTab] = useContext(TabContext);
- 
+
   //get the matching component from the componentIndex
   const componentDetails = componentIndex[component.componentName];
 
   const { Component } = componentDetails;
 
   //remove active border and label if you click outside component
-  useOnClickOutside(dropRef, () => setShowSelf(false))
+  useOnClickOutside(dropRef, () => setShowSelf(false));
 
   //on first click of text component the active state wrapper shows
   useEffect(() => {
-    tabActive && setShowSelf(true)
-  }, [tabActive])
+    tabActive && setShowSelf(true);
+  }, [tabActive]);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -113,7 +117,7 @@ const ComponentWrapper = ({
     );
   };
 
-  console.log('activeComp',activeComp)
+  // console.log("activeComp", activeComp);
 
   const [
     { isOver, canDrop, isOverCurrent, droppedInContainer, getItem },
@@ -145,11 +149,11 @@ const ComponentWrapper = ({
             ? compIndex
             : compIndex + 1
           : item.compIndex < compIndex
-            ? compIndex - 1
-            : compIndex
+          ? compIndex - 1
+          : compIndex
         : dropIndexOffset === 0
-          ? compIndex + 1
-          : compIndex;
+        ? compIndex + 1
+        : compIndex;
 
       const dragIndex = currentTab ? item?.compIndex : undefined;
 
@@ -265,7 +269,11 @@ const ComponentWrapper = ({
   }, [droppedIndex]);
 
   useEffect(() => {
-    activeComp === compIndex ? setShowSelf(true) : setShowSelf(false);
+    if (activeComp !== null) {
+      activeComp === compIndex
+        ? (setShowSelf(true), setActiveComp(null))
+        : setShowSelf(false);
+    }
   }, [activeComp]);
 
   return (
@@ -280,9 +288,9 @@ const ComponentWrapper = ({
         ref={dropRef}
         onMouseEnter={() => !draggingOver && setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
-        onFocus={() => setActiveComp(compIndex)}
+        onFocus={() => setShowSelf(true)}
         onBlur={() => setShowSelf(false)}
-        onClick={() => setActiveComp(compIndex)}
+        onClick={() => setShowSelf(true)}
       >
         <div>
           <DropIndicator
@@ -299,11 +307,11 @@ const ComponentWrapper = ({
             data-testid="component-component-label-container"
           >
             <StaticLabel
-              data-testid='static-label'
+              data-testid="static-label"
               isHoverActive={isHover}
               showSelf={showSelf}
-              isDragging={isDragging}>
-
+              isDragging={isDragging}
+            >
               <span
                 ref={drag}
                 data-testid="component-drag"
@@ -334,12 +342,13 @@ const ComponentWrapper = ({
             {compIndex !== 0 && (
               <SmallIconButton
                 onClick={() => {
+                  setShowSelf(false);
                   dispatch({
                     func: "MOVE_COMPONENT_UP",
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
-                  setActiveComp(compIndex - 1)
+                  setActiveComp(compIndex - 1);
                 }}
                 data-testid="move-up-button"
                 aria-label={"Move Component Up"}
@@ -351,12 +360,13 @@ const ComponentWrapper = ({
             {compIndex != numOfComponent - 1 && (
               <SmallIconButton
                 onClick={() => {
+                  setShowSelf(false);
                   dispatch({
                     func: "MOVE_COMPONENT_DOWN",
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
-                  setActiveComp(compIndex + 1)
+                  setActiveComp(compIndex + 1);
                 }}
                 data-testid="move-down-button"
                 aria-label={"Move Component Down"}
@@ -396,9 +406,7 @@ const ComponentWrapper = ({
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
-          <BlueBox
-            showSelf={showSelf}
-            hoverActive={isHover}>
+          <BlueBox showSelf={showSelf} hoverActive={isHover}>
             <Component
               {...componentProps}
               role="listitem"
