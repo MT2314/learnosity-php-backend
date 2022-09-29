@@ -7,26 +7,34 @@ import AccordionItem from "./AccordionItem";
 import Pane from "./Pane";
 
 //styled components for Accordion styles
+const StyledAccordionContainer = styled("div")({
+  width: "100%",
+  maxWidth: "60.5rem",
+});
+
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
   backgroundColor: "#FFFFFF",
-  borderWidth: "1px",
+}));
+
+const StyledAccordionDetails = styled(AccordionDetails)({
+  borderWidth: "0rem 0.0625rem 0.0625rem 0.0625rem",
   borderStyle: "solid",
   borderColor: "#BDBDBD",
-}));
+});
 
 const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
   fontWeight: "400",
-  fontSize: "16px",
+  fontSize: "1rem",
   color: disabled ? "#000000" : "#232323",
-  letterSpacing: "0.15px",
-  lineHeight: "24px",
+  letterSpacing: "0.009375rem",
+  lineHeight: "1.5rem",
   textTransform: "capitalize",
 }));
 
 const StyledButtonsDiv = styled("div")(() => ({
   display: "flex",
   justifyContent: "flex-end",
-  gap: "16px",
+  gap: "1rem",
 }));
 //Styled components end
 
@@ -34,7 +42,7 @@ const Accordions = () => {
   const [state, dispatch] = useContext(LayoutContext);
 
   return (
-    <div className="accordion-container" data-testid="accordion-component">
+    <StyledAccordionContainer data-testid="accordion-component">
       {/* TODO: Add Expand all and collapse all btns when a second pane is added */}
       {/* <StyledButtonsDiv>
                 <StyledExpandCollapseButton
@@ -65,22 +73,16 @@ const Accordions = () => {
             expanded={accordion.expanded}
           >
             <Pane accordionIndex={accordionIndex} accordion={accordion} />
-            <AccordionDetails
-              sx={{
-                borderWidth: "1px 0px",
-                borderStyle: "solid",
-                borderColor: "#BDBDBD",
-              }}
-            >
+            <StyledAccordionDetails>
               <AccordionItem
                 accordionIndex={accordionIndex}
                 accordion={accordion}
               />
-            </AccordionDetails>
+            </StyledAccordionDetails>
           </StyledAccordion>
         );
       })}
-    </div>
+    </StyledAccordionContainer>
   );
 };
 
