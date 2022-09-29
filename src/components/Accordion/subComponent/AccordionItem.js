@@ -1,57 +1,97 @@
-import React from "react"
-import PlaceHolder from '../subComponent/PlaceHolder'
+import React, { useContext, useState, useEffect, useRef } from "react";
+import PlaceHolder from "../subComponent/PlaceHolder";
 import { useDrop } from "react-dnd";
+import {
+  TabContext,
+  LayoutContext,
+} from "../../../Context/InteractivesContext";
+import AccordionComponent from "./AccordionComponent";
 
-const AccordionItem = ({accordion, accordionIndex}) => {
-    const {components} = accordion
+const AccordionItem = ({ accordion, accordionIndex }) => {
+  const { id, components } = accordion;
+  const [activeTab] = useContext(TabContext);
+  const [, dispatch] = useContext(LayoutContext);
 
-    const [{ isOver, getItem }, drop] = useDrop(() => ({
-        accept: [
-          "Text",
-          "Image",
-          "Video",
-          "Table",
-          "InfoBox",
-          "QuoteBox",
-          "IFrame",
-        ],
-        drop: async (item, monitor) => {
-            console.log("DROPPED ITEM:", item)
-            //TODO: dispatch the add component function
-        //   if (!acceptListComp(item)) setShowDropError(true);
-        //   if (item.within && components.length !== 0) return;
-        //   if (monitor.didDrop()) return;
-        //   if (acceptListComp(item)) {
-        //     dispatch({
-        //       func: "ADD_COMPONENT",
-        //       tabIndex: tabIndex,
-        //       component: {
-        //         componentName: item.componentName,
-        //         componentProps: JSON.parse(item?.componentProps),
-        //       },
-        //     });
-        //     item?.delete && item?.delete(item.tabIndex, item.compIndex);
-        //   }
-        },
-    
-        collect: (monitor) => ({
-          isOver: !!monitor.isOver(),
-          getItem: monitor.getItem(),
-        }),
-      }));
+  //List of accepted into tab componenets
+  const acceptListComp = (item) => {
+    return ["Text", "Table", "Video", "Image"].indexOf(item.componentName) >= 0;
+  };
 
-    return (
-        <div data-testid="accordion-dropzone" ref={drop} style={{ background: isOver && 'green'}}>
-            {
-            components.length !== 0 ?
-             components.map((component, compIndex) => (
-                <p>{component}</p>
-             )
-             )   
-             :<PlaceHolder/>
-            }
-        </div>
-    )
-}
+  const [showDropError, setShowDropError] = useState();
+  const [{ isOver, getItem }, drop] = useDrop(() => ({
+    accept: [
+      "Text",
+      "Image",
+      "Video",
+      "Table",
+      "InfoBox",
+      "QuoteBox",
+      "IFrame",
+    ],
+    drop: async (item, monitor) => {
+      if (!acceptListComp(item)) setShowDropError(true);
+      if (item.within && components.length !== 0) return;
+      if (monitor.didDrop()) return;
+      if (acceptListComp(item)) {
+        console.log("DROPPED ITEM:", item);
+
+        dispatch({
+          func: "ADD_COMPONENT",
+          tabIndex: activeTab,
+          component: {
+            componentName: item.componentName,
+            componentProps: JSON.parse(item?.componentProps),
+          },
+        });
+        item?.delete && item?.delete(item.tabIndex, item.compIndex);
+      }
+    },
+
+    //TODO: dispatch the add component function
+    //   if (!acceptListComp(item)) setShowDropError(true);
+    //   if (item.within && components.length !== 0) return;
+    //   if (monitor.didDrop()) return;
+    //   if (acceptListComp(item)) {
+    //     dispatch({
+    //       func: "ADD_COMPONENT",
+    //       tabIndex: tabIndex,
+    //       component: {
+    //         componentName: item.componentName,
+    //         componentProps: JSON.parse(item?.componentProps),
+    //       },
+    //     });
+    //     item?.delete && item?.delete(item.tabIndex, item.compIndex);
+    //   }
+
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+      getItem: monitor.getItem(),
+    }),
+  }));
+
+  return (
+    <div
+      data-testid="accordion-dropzone"
+      ref={drop}
+      style={{ background: isOver && "green" }}
+    >
+      {components.length !== 0 ? (
+        components.map((component, compIndex) => {
+          console.log(component);
+          return (
+            <AccordionComponent
+              key={`key-component-${compIndex}`}
+              component={component}
+              compIndex={compIndex}
+              tabIndex={activeTab}
+            />
+          );
+        })
+      ) : (
+        <PlaceHolder />
+      )}
+    </div>
+  );
+};
 
 export default AccordionItem;

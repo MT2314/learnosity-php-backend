@@ -115,6 +115,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         ) : (
           <div role="list" isOver={isOver}>
             {components.map((component, compIndex) => {
+              console.log(component);
               return (
                 <ComponentWrapper
                   key={`key-component-${compIndex}`}
