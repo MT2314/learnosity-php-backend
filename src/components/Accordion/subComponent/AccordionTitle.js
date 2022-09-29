@@ -51,7 +51,7 @@ const StyledAccordionTitle = styled(TextareaAutosize)(({ isActive }) => ({
 const StyledAccorPlaceholder = styled("div")(({ isActive }) => ({
   width: "100%",
   maxWidth: "57.125rem",
-  maxHeight: "50px3.125rem",
+  maxHeight: "3.125rem",
   fontSize: "1.125rem",
   wordWrap: "break-word",
   overflowX: "hidden",
