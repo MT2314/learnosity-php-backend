@@ -6,9 +6,9 @@ const PlaceholderContainer = styled("div")({
 });
 
 const PlaceholderOutline = styled("div")({
-  height: "130px",
+  height: "8.125rem",
   width: "100%",
-  border: "3px dashed #1565c0",
+  border: "0.1875rem dashed #1565c0",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -18,13 +18,13 @@ const PlaceholderOutline = styled("div")({
 const Title = styled("h3")(() => ({
   color: "#636363",
   fontWeight: "400",
-  fontSize: "24px",
-  lineHeight: "32.02px",
+  fontSize: "1.5rem",
+  lineHeight: "2.00125rem",
   margin: "0",
 }));
 
 const Paragraph = styled("p")({
-  fontSize: "14px",
+  fontSize: "0.875rem",
   marginBottom: "0",
   fontWeight: "500",
   color: "#636363",

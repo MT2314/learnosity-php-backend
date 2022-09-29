@@ -8,28 +8,44 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import { LayoutContext } from "../../../Context/InteractivesContext";
 
 //styles for accordion
-const StyledAccordionPane = styled(AccordionSummary)(({ isActive }) => ({
-  minHeight: "40px",
-  height: "40px",
-  fontSize: "18px",
+const StyledPaneContainer = styled("div")({
+  width: "100%",
+});
+
+const StyledAccordionSummary = styled(AccordionSummary)(({ isActive }) => ({
+  minHeight: "2.5rem",
+  maxHeight: "4.125rem",
+  width: "100%",
+  padding: "0.5rem 0.5rem 0.5rem 0.625rem",
+  fontSize: "1.125rem",
   color: "#232323",
-  letterSpacing: "0.15px",
+  letterSpacing: "0.009375rem",
   fontcolor: "#232323",
   backgroundColor: isActive
     ? "rgba(21, 101, 192, 0.12) !important"
     : "#fff !important", //!important overrides the MUI grey background.
-  borderWidth: isActive ? "1px 1px 3px 1px" : "1px",
+  borderWidth: isActive
+    ? "0.0625rem 0.0625rem 0.1875rem 0.0625rem"
+    : "0.0625rem",
   borderStyle: "solid",
   borderColor: isActive ? "#232323" : "#BDBDBD",
-  borderRadius: "10px 10px 0px 0px",
+  borderRadius: "0.625rem 0.625rem 0 0",
 
   "&:focus": {
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
   },
+
   "&:hover": {
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
   },
 }));
+
+const StyledAccordionSummaryContents = styled("div")({
+  width: "100%",
+  display: "flex",
+  justifyContent: "space-between",
+  margin: "-0.75rem -0.125rem -0.75rem 0",
+});
 //styles end.
 
 const Pane = ({ accordionIndex, accordion }) => {
@@ -42,14 +58,23 @@ const Pane = ({ accordionIndex, accordion }) => {
   useOnClickOutside(paneRef, () => setIsActive(false), true);
 
   return (
-    <div key={`pane-${accordionIndex}`} ref={paneRef}>
-      <StyledAccordionPane
+    <StyledPaneContainer ref={paneRef}>
+      <StyledAccordionSummary
         //id attribute below creates an "aria-labelledby" and is REQUIRED for accessibilty.
         id={`panel-${accordionIndex + 1}-add-components-${uuidv4()}`}
         onClick={() => setIsActive(true)}
         accordionIndex={accordionIndex}
         isActive={isActive}
-        expandIcon={
+      >
+        <StyledAccordionSummaryContents>
+          <AccordionTitle
+            key={`accordion-title-${accordionIndex}`}
+            placeholderTitle={placeholderTitle}
+            accordionIndex={accordionIndex}
+            accordionTitle={title}
+            isActive={isActive}
+            setIsActive={setIsActive}
+          />
           <ExpandMore
             onClick={() => {
               dispatch({
@@ -61,18 +86,9 @@ const Pane = ({ accordionIndex, accordion }) => {
               pointerEvents: "auto",
             }}
           />
-        }
-      >
-        <AccordionTitle
-          key={`accordion-title-${accordionIndex}`}
-          placeholderTitle={placeholderTitle}
-          accordionIndex={accordionIndex}
-          accordionTitle={title}
-          isActive={isActive}
-          setIsActive={setIsActive}
-        />
-      </StyledAccordionPane>
-    </div>
+        </StyledAccordionSummaryContents>
+      </StyledAccordionSummary>
+    </StyledPaneContainer>
   );
 };
 export default Pane;

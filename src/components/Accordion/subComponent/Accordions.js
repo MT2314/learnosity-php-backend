@@ -24,17 +24,17 @@ const StyledAccordionDetails = styled(AccordionDetails)({
 
 const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
   fontWeight: "400",
-  fontSize: "16px",
+  fontSize: "1rem",
   color: disabled ? "#000000" : "#232323",
-  letterSpacing: "0.15px",
-  lineHeight: "24px",
+  letterSpacing: "0.009375rem",
+  lineHeight: "1.5rem",
   textTransform: "capitalize",
 }));
 
 const StyledButtonsDiv = styled("div")(() => ({
   display: "flex",
   justifyContent: "flex-end",
-  gap: "16px",
+  gap: "1rem",
 }));
 //Styled components end
 
