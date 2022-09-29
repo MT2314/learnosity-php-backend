@@ -212,16 +212,16 @@ const ComponentWrapper = ({
 
   drop(dropRef);
 
-  useEffect(() => {
-    if (didDrop && !inContainer) {
-      dispatch({
-        func: "DELETE_COMPONENT",
-        tabIndex: tabIndex,
-        compIndex: compIndex,
-      });
-      setIsDragging(false);
-    }
-  }, [didDrop]);
+  // useEffect(() => {
+  //   if (didDrop && !inContainer) {
+  //     dispatch({
+  //       func: "DELETE_COMPONENT",
+  //       tabIndex: tabIndex,
+  //       compIndex: compIndex,
+  //     });
+  //     setIsDragging(false);
+  //   }
+  // }, [didDrop]);
 
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
