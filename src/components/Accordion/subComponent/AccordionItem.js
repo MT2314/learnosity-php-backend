@@ -47,22 +47,6 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
       }
     },
 
-    //TODO: dispatch the add component function
-    //   if (!acceptListComp(item)) setShowDropError(true);
-    //   if (item.within && components.length !== 0) return;
-    //   if (monitor.didDrop()) return;
-    //   if (acceptListComp(item)) {
-    //     dispatch({
-    //       func: "ADD_COMPONENT",
-    //       tabIndex: tabIndex,
-    //       component: {
-    //         componentName: item.componentName,
-    //         componentProps: JSON.parse(item?.componentProps),
-    //       },
-    //     });
-    //     item?.delete && item?.delete(item.tabIndex, item.compIndex);
-    //   }
-
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       getItem: monitor.getItem(),
@@ -77,7 +61,6 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
     >
       {components.length !== 0 ? (
         components.map((component, compIndex) => {
-          console.log(component);
           return (
             <AccordionComponent
               key={`key-component-${compIndex}`}
