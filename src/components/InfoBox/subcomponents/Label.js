@@ -28,7 +28,7 @@ const StyledLabelInput = styled("input")({
     },
   },
 });
-const Label = () => {
+const Label = ({ t }) => {
   const [state, dispatch] = useContext(InfoBoxContext);
 
   const handleLabelChange = useCallback((e) => {
@@ -42,8 +42,8 @@ const Label = () => {
     <StyledLabelInput
       id="infoBox-label"
       type="text"
-      placeholder="Type your label here"
-      aria-label="InfoBox label"
+      aria-label={t("Infobox Label Aria")}
+      placeholder={t("Infobox Label Placeholder")}
       role="textbox"
       autocomplete="false"
       maxLength={50}

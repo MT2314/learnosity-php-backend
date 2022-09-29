@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from "react";
+import React, { useState, useRef, useMemo } from "react";
 // MUI/@emotion imports
 import { Paper } from "@mui/material";
 
@@ -79,7 +79,7 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
   return (
     <InfoBoxProvider infoBoxState={infoBoxState} setProp={setProp}>
       <StyledPaper
-        aria-label="Info Box"
+        aria-label={t("InfoBox")}
         data-testid="infoBox-container"
         ref={infoBoxRef}
         onClick={(e) => infoBoxFocused(e)}
@@ -87,8 +87,8 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
       >
         <Icon setSelectedIcon={setSelectedIcon} selectedIcon={selectedIcon} />
         <StyledTextContainer>
-          <Label />
-          <Header />
+          <Label t={t} />
+          <Header t={t} />
           <Body
             isInfoBox={isInfoBox}
             infoHasFocus={infoHasFocus}
@@ -98,6 +98,7 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
             setInfoHasFocus={setInfoHasFocus}
             setInfoBoxBody={setInfoBoxBody}
             setPlaceHolder={setPlaceHolder}
+            t={t}
           />
         </StyledTextContainer>
       </StyledPaper>

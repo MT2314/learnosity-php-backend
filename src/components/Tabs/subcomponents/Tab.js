@@ -53,7 +53,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       if (acceptListComp(item)) {
         dispatch({
           func: "ADD_COMPONENT",
-          tabIndex: tabIndex,
+          tabIndex: activeTab,
           component: {
             componentName: item.componentName,
             componentProps: JSON.parse(item?.componentProps),
@@ -118,6 +118,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         ) : (
           <div role="list" isOver={isOver}>
             {components.map((component, compIndex) => {
+              console.log(component);
               return (
                 <ComponentWrapper
                   key={`key-component-${compIndex}`}

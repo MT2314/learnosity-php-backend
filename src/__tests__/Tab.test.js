@@ -49,7 +49,7 @@ describe("Tabs", () => {
   });
 
   it("On click displays active tab", async () => {
-    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>);
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     const tabLabel = screen.getByText(/juno/i);
     const placeholder = screen.getByText(/accepted components/i);
 
@@ -61,7 +61,7 @@ describe("Tabs", () => {
   });
 
   it("adds a new tab", async () => {
-    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>);
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     layoutConfig(testLayout, {
       func: "ADD_TAB",
       id: 2,
@@ -71,16 +71,16 @@ describe("Tabs", () => {
   });
 
   it("removes a tab", async () => {
-    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     layoutConfig(testLayout, {
       func: "REMOVE_TAB",
       currentTab: 2,
     });
     expect(testLayout).toHaveLength(2);
-  })
-  
-  it("adds a component", async () => {;
-    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
+  });
+
+  it("adds a component", async () => {
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     layoutConfig(testLayout, {
       func: "ADD_COMPONENT",
       tabIndex: 1,
@@ -88,124 +88,131 @@ describe("Tabs", () => {
         componentName: "Text",
       },
     });
-    expect(testLayout[1].components).toHaveLength(3)
+    expect(testLayout[1].components).toHaveLength(3);
   });
 
   it("updates the component state", async () => {
-    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     layoutConfig(testLayout, {
       func: "UPDATE_COMPONENT",
       compIndex: 0,
       tabIndex: 1,
-      stateUpdate: { newValue: "I updated the state of a component!!!"}
-    })
+      stateUpdate: { newValue: "I updated the state of a component!!!" },
+    });
 
-    expect(testLayout[1].components[0].componentProps.newValue).toBe("I updated the state of a component!!!");
-  })
+    expect(testLayout[1].components[0].componentProps.newValue).toBe(
+      "I updated the state of a component!!!"
+    );
+  });
 
   it("drags a component from index 0 to index 2 in the testLayout.components array", async () => {
-    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     layoutConfig(testLayout, {
       func: "DRAG_COMPONENT",
       tabIndex: 1,
       dragIndex: 0,
-      hoverIndex: 2,      
-    })
+      hoverIndex: 2,
+    });
 
-    expect(testLayout[1].components[0].componentProps).toStrictEqual({body: null});
-    expect(testLayout[1].components[2].componentProps.newValue).toBe("I updated the state of a component!!!");
-  })
+    expect(testLayout[1].components[0].componentProps).toStrictEqual({
+      body: null,
+    });
+    expect(testLayout[1].components[2].componentProps.newValue).toBe(
+      "I updated the state of a component!!!"
+    );
+  });
 
   it("duplicates a component within a tab", async () => {
-    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     layoutConfig(testLayout, {
       func: "DUPLICATE_COMPONENT",
       tabIndex: 1,
-      compIndex: 2
-    })
+      compIndex: 2,
+    });
 
     expect(testLayout[1].components.length).toBe(4);
-    expect(testLayout[1].components[2]).toStrictEqual(testLayout[1].components[3]);
-  })
+    expect(testLayout[1].components[2]).toStrictEqual(
+      testLayout[1].components[3]
+    );
+  });
 
   it("update the tab title", async () => {
-    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     layoutConfig(testLayout, {
       func: "CHANGE_TITLE",
       title: "Web Solutions Component Team",
       id: 0,
-    })
+    });
 
     expect(testLayout[0].title).toBe("Web Solutions Component Team");
-  })
+  });
 
   it("move a component up by 1 position and move it back down by 1", async () => {
-    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
 
-    const component = testLayout[1].components[1]
+    const component = testLayout[1].components[1];
 
     layoutConfig(testLayout, {
-      func: 'MOVE_COMPONENT_UP',
+      func: "MOVE_COMPONENT_UP",
       tabIndex: 1,
       compIndex: 1,
-    })
+    });
 
     expect(testLayout[1].components[0]).toStrictEqual(component);
 
     layoutConfig(testLayout, {
-      func: 'MOVE_COMPONENT_DOWN',
+      func: "MOVE_COMPONENT_DOWN",
       tabIndex: 1,
       compIndex: 0,
-    })
+    });
 
     expect(testLayout[1].components[1]).toStrictEqual(component);
-  })
+  });
 
   it("move a tab right by 1 position and move it back left by 1", async () => {
-    render(<TabsMain layoutState={testLayout} setProp={() => {}}/>)
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
 
-    const tab = testLayout[0]
+    const tab = testLayout[0];
 
     layoutConfig(testLayout, {
       func: "MOVE_TAB_RIGHT",
       tabIndex: 0,
-    })
+    });
 
     expect(testLayout[1]).toStrictEqual(tab);
 
     layoutConfig(testLayout, {
       func: "MOVE_TAB_LEFT",
       tabIndex: 1,
-    })
+    });
 
     expect(testLayout[0]).toStrictEqual(tab);
-  })
-
-  const acceptListComp = (item) => {
-    return ['Text', 'Table', 'Video', 'Image'].indexOf(item) >= 0
-  }
-
-  it("adds an unacceptable component", async () => {
-    render(<TabsMain layoutState={testLayout}  setProp={() => {}}/>)
-    if (acceptListComp("Callout")) {
-    layoutConfig(testLayout, {
-      func: "ADD_COMPONENT",
-      tabIndex: 1,
-      component: {
-        componentName: "Callout",
-      },
-    })
-    expect(testLayout[1].components).toHaveLength(4)
-  } else if (acceptListComp("Text")) {
-    layoutConfig(testLayout, {
-      func: "ADD_COMPONENT",
-      tabIndex: 1,
-      component: {
-        componentName: "Text",
-      },
-    })
-    expect(testLayout[1].components).toHaveLength(5)
-  };
   });
 
+  const acceptListComp = (item) => {
+    return ["Text", "Table", "Video", "Image"].indexOf(item) >= 0;
+  };
+
+  it("adds an unacceptable component", async () => {
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+    if (acceptListComp("Callout")) {
+      layoutConfig(testLayout, {
+        func: "ADD_COMPONENT",
+        tabIndex: 1,
+        component: {
+          componentName: "Callout",
+        },
+      });
+      expect(testLayout[1].components).toHaveLength(4);
+    } else if (acceptListComp("Text")) {
+      layoutConfig(testLayout, {
+        func: "ADD_COMPONENT",
+        tabIndex: 1,
+        component: {
+          componentName: "Text",
+        },
+      });
+      expect(testLayout[1].components).toHaveLength(5);
+    }
+  });
 });

@@ -1,17 +1,17 @@
-import React, { useContext, useState } from 'react';
-import styled from '@emotion/styled';
-import { v4 as uuidv4 } from 'uuid';
-import { LayoutContext, TabContext } from '../TabContext';
-import { tooltipClasses } from '@mui/material/Tooltip';
-import { IconButton, Toolbar, AppBar, Tooltip } from '@mui/material';
-import { ArrowBack, ArrowForward, Add, Remove } from '@mui/icons-material';
-import DialogProvider from '../../../Utility/DialogProvider';
+import React, { useContext, useState } from "react";
+import styled from "@emotion/styled";
+import { v4 as uuidv4 } from "uuid";
+import { LayoutContext, TabContext } from "../TabContext";
+import { tooltipClasses } from "@mui/material/Tooltip";
+import { IconButton, Toolbar, AppBar, Tooltip } from "@mui/material";
+import { ArrowBack, ArrowForward, Add, Remove } from "@mui/icons-material";
+import DialogProvider from "../../../Utility/DialogProvider";
 
 // * Styled Components
 // ? Styled Container for configBar
-const Container = styled('div')({
-  display: 'absolute',
-  color: 'white',
+const Container = styled("div")({
+  display: "absolute",
+  color: "white",
 });
 
 // ? Styled Tooltip, differnet but most compact method for styling tooltip
@@ -19,54 +19,54 @@ const StyledTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(() => ({
   [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: 'rgba(97, 97, 97, 0.9)',
-    border: '4px',
-    color: '#fff',
-    height: '22px',
-    padding: '4px, 8px, 4px, 8px',
-    fontSize: '10px',
-    lineHeight: '14px',
-    fontWeight: '500',
-    '& .MuiTooltip-arrow': {
-      color: 'rgba(97, 97, 97, 0.9)',
+    backgroundColor: "rgba(97, 97, 97, 0.9)",
+    border: "4px",
+    color: "#fff",
+    height: "22px",
+    padding: "4px, 8px, 4px, 8px",
+    fontSize: "10px",
+    lineHeight: "14px",
+    fontWeight: "500",
+    "& .MuiTooltip-arrow": {
+      color: "rgba(97, 97, 97, 0.9)",
     },
   },
 }));
 
 // ? styled Toolbar
 const StyledToolbar = styled(Toolbar)({
-  position: 'relative',
-  display: 'flex',
-  justifyContent: 'space-evenly',
-  width: '146px',
-  height: '40px',
-  color: '#000',
-  boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-  borderLeft: '4px solid #1565c0',
-  backgroundColor: 'white',
-  margin: '10px, 8px',
-  minHeight: '32px !important',
-  '& .MuiToolbar-gutters': {
+  position: "relative",
+  display: "flex",
+  justifyContent: "space-evenly",
+  width: "146px",
+  height: "40px",
+  color: "#000",
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  borderLeft: "4px solid #1565c0",
+  backgroundColor: "white",
+  margin: "10px, 8px",
+  minHeight: "32px !important",
+  "& .MuiToolbar-gutters": {
     paddingLeft: 0,
     paddingRight: 0,
   },
 });
 
 const StyledIconButton = styled(IconButton)({
-  width: '30px',
-  height: '30px',
-  padding: '7px',
-  color: '#000',
-  backgroundColor: 'none',
-  borderRadius: '4px!important',
-  '&:hover': {
-    backgroundColor: 'rgba(21, 101, 192, 0.12) !important',
+  width: "30px",
+  height: "30px",
+  padding: "7px",
+  color: "#000",
+  backgroundColor: "none",
+  borderRadius: "4px!important",
+  "&:hover": {
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
   },
-  '&:active': {
-    cursor: 'pointer',
-    backgroundColor: 'rgba(21, 101, 192, 0.12) !important',
-    '> svg': {
-      color: '#1565c0 !important',
+  "&:active": {
+    cursor: "pointer",
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    "> svg": {
+      color: "#1565c0 !important",
     },
   },
 });
@@ -84,9 +84,10 @@ const ConfigBar = ({ setRemoveError }) => {
   // ? Move Tab to the Left
   const moveTabLeft = (state, activeTab) => {
     dispatch({
-      func: 'MOVE_TAB_LEFT',
+      func: "MOVE_TAB_LEFT",
       title: `Tab at position ${activeTab} is now at position ${activeTab - 1}`,
       tabIndex: activeTab,
+      nextTab: activeTab - 1,
     });
     setActiveTab(activeTab - 1);
   };
@@ -94,9 +95,10 @@ const ConfigBar = ({ setRemoveError }) => {
   // ? Move Tab to the Right
   const moveTabRight = (state, activeTab) => {
     dispatch({
-      func: 'MOVE_TAB_RIGHT',
+      func: "MOVE_TAB_RIGHT",
       title: `Tab at position ${activeTab} is now at position ${activeTab + 1}`,
       tabIndex: activeTab,
+      nextTab: activeTab + 1,
     });
     setActiveTab(activeTab + 1);
   };
@@ -104,37 +106,35 @@ const ConfigBar = ({ setRemoveError }) => {
   // ? Remove Tab
   const removeTab = async (state, activeTab) => {
     setRemoveError(true);
-    dispatch({
-      func: 'REMOVE_TAB',
-      currentTab: activeTab,
-      updateTabFunc: setActiveTab(),
-    });
+    let active;
     activeTab === state.length - 1
-      ? setActiveTab(activeTab - 1)
+      ? (active = activeTab - 1)
       : activeTab === 0
-      ? setActiveTab(0)
-      : setActiveTab(activeTab);
+      ? (active = 0)
+      : (active = activeTab);
+
+    dispatch({
+      func: "REMOVE_TAB",
+      tabIndex: activeTab,
+      nextTab: active,
+    });
+    setActiveTab(active);
   };
 
   // ? Add Tab
   const addTab = (state) => {
     dispatch({
-      func: 'ADD_TAB',
+      func: "ADD_TAB",
       id: uuidv4(),
       title: `Tab ${state.length + 1}`,
+      activeTab: activeTab,
     });
   };
-
-  {
-    state[activeTab].title;
-  }
   // ? Props for removeTab Dialog
-  const removeTabDialog = {
-    title: 'Delete Tab?',
+  const removeTabDialog = state[activeTab]?.title && {
+    title: "Delete Tab?",
     message: [
-      `Deleting "${
-        state[activeTab].title || state[activeTab].placeholderTitle
-      }" will also delete ${state[activeTab].components.length} component(s).`,
+      `Deleting "${state[activeTab].title}" will also delete ${state[activeTab].components.length} component(s).`,
       <br key={1} />,
       <br key={2} />,
       `You are able to undo this action.`,
@@ -145,8 +145,8 @@ const ConfigBar = ({ setRemoveError }) => {
     onCancel: () => {
       handleClose();
     },
-    confirmMessage: 'Delete',
-    cancelMessage: 'Cancel',
+    confirmMessage: "Delete",
+    cancelMessage: "Cancel",
   };
 
   const handleClose = () => {

@@ -1,12 +1,12 @@
-import React, { createContext, useReducer, useEffect, useState } from 'react';
-import produce from 'immer';
+import React, { createContext, useReducer, useEffect, useState } from "react";
+import produce from "immer";
 
 //state of tabs & accordion data stored in LayoutContext
 export const LayoutContext = createContext();
 
 export const layoutConfig = (draft, action) => {
   switch (action.func) {
-    case 'ADD_LAYER':
+    case "ADD_LAYER":
       draft.push({
         id: action.id,
         title: "",
@@ -14,27 +14,27 @@ export const layoutConfig = (draft, action) => {
         components: [],
       });
       return draft;
-    case 'REMOVE_LAYER':
+    case "REMOVE_LAYER":
       draft.splice(action.currentTab, 1);
       return draft;
-    case 'ADD_COMPONENT':
+    case "ADD_COMPONENT":
       draft[action.tabIndex].components.push({
         ...action.component,
       });
       return draft;
-    case 'MOVE_TAB_LEFT':
+    case "MOVE_TAB_LEFT":
       // eslint-disable-next-line no-case-declarations
       const elementL = draft[action.tabIndex];
       draft.splice(action.tabIndex, 1);
       draft.splice(action.tabIndex - 1, 0, elementL);
       return draft;
-    case 'MOVE_TAB_RIGHT':
+    case "MOVE_TAB_RIGHT":
       // eslint-disable-next-line no-case-declarations
       const elementR = draft[action.tabIndex];
       draft.splice(action.tabIndex, 1);
       draft.splice(action.tabIndex + 1, 0, elementR);
       return draft;
-    case 'UPDATE_COMPONENT':
+    case "UPDATE_COMPONENT":
       draft[action.tabIndex].components[action.compIndex].componentProps = {
         ...action.stateUpdate,
       };
@@ -87,17 +87,19 @@ export const layoutConfig = (draft, action) => {
       );
       return draft;
     case "CHANGE_TITLE":
-      draft[action.layerIndex].title = action.title
+      draft[action.layerIndex].title = action.title;
       return draft;
     case "TOGGLE_PANE":
-      draft[action.paneIndex].expanded === true ? draft[action.paneIndex].expanded = false : draft[action.paneIndex].expanded = true
-      return draft
+      draft[action.paneIndex].expanded === true
+        ? (draft[action.paneIndex].expanded = false)
+        : (draft[action.paneIndex].expanded = true);
+      return draft;
     case "EXPAND_ALL_PANE":
-      draft.forEach((item) => item.expanded = true)
-      return draft
+      draft.forEach((item) => (item.expanded = true));
+      return draft;
     case "COLLAPSE_ALL_PANE":
-      draft.forEach((item) => item.expanded = false)
-      return draft
+      draft.forEach((item) => (item.expanded = false));
+      return draft;
     default:
       return draft;
   }
