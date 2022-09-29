@@ -8,7 +8,6 @@ import ComponentWrapper from "./ComponentWrapper";
 //components
 import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
-import { ActiveComponentProvider } from "../TabContext";
 
 // NOTE: We can use theme once it is set it up end to end
 const StyleTabBody = styled("div")(({ isDragging }) => ({

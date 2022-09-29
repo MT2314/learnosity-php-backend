@@ -87,7 +87,7 @@ const NestedComponentWrapper = ({
   setActiveComp,
   activeComp,
 }) => {
-  
+
   const dropRef = useRef(null);
 
   const [, dispatch] = useContext(LayoutContext);
@@ -271,7 +271,7 @@ const NestedComponentWrapper = ({
     if (activeComp !== null) {
       activeComp === compIndex
         ? (setShowSelf(true), setActiveComp(null))
-        : setShowSelf(false);
+        : (setShowSelf(false), setTabActive(false));
     }
   }, [activeComp]);
 

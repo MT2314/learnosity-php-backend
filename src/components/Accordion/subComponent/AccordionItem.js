@@ -72,7 +72,7 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
               tabIndex={activeTab}
               //setIsDragging={setIsDragging}
               //inContainer={inContainer}
-              draggingOver={isOver}
+              //draggingOver={isOver}
               //setDroppedIndex={setDroppedIndex}
               //droppedIndex={droppedIndex}
               setActiveComp={setActiveComp}

@@ -272,7 +272,7 @@ const ComponentWrapper = ({
     if (activeComp !== null) {
       activeComp === compIndex
         ? (setShowSelf(true), setActiveComp(null))
-        : setShowSelf(false);
+        : (setShowSelf(false), setTabActive(false));
     }
   }, [activeComp]);
 
