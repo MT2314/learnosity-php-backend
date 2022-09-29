@@ -1,8 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { Button } from "@mui/material";
 import { Accordion, AccordionDetails } from "@mui/material";
 import styled from "@emotion/styled";
 import { LayoutContext } from "../../../Context/InteractivesContext";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import AccordionItem from "./AccordionItem";
 import Pane from "./Pane";
 import ConfigBar from "./ConfigBar";
@@ -45,9 +46,13 @@ const StyledToolBar = styled("div")(({ toolbar }) => ({
 const Accordions = () => {
   const [state, dispatch] = useContext(LayoutContext);
   const [isActive, setIsActive] = useState(null);
+  
+  //click outside hook sets active pane to null when user clicks outside the accordion pane
+  const paneRef = useRef()
+  useOnClickOutside(paneRef, () => setIsActive(null), true);
 
   return (
-    <div className="accordion-container" data-testid="accordion-component">
+    <div className="accordion-container" data-testid="accordion-component" ref={paneRef}>
       {/* TODO: Add Expand all and collapse all btns when a second pane is added */}
       <StyledToolBar toolbar={isActive === 0 ? true : isActive}>
         <ConfigBar paneIndex={isActive} />

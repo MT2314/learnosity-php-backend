@@ -80,7 +80,7 @@ const ConfigBar = ({ paneIndex }) => {
 
     const addTab = () => {
         dispatch({
-            func: "ADD_ACCORDION",
+            func: "ADD_LAYER",
             id: uuidv4(),
             title: `New Accordion`
         });

@@ -4,7 +4,6 @@ import { AccordionSummary } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import AccordionTitle from "./AccordionTitle";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import {
   LayoutContext,
   ActivePaneContext,
@@ -37,13 +36,8 @@ const Pane = ({ accordionIndex, accordion, isActive, setIsActive }) => {
   const [, dispatch] = useContext(LayoutContext);
   const [, setActivePane] = useContext(ActivePaneContext);
 
-
-  //click outside hook sets active pane to null when user clicks outside the accordion pane
-  const paneRef = useRef();
-  useOnClickOutside(paneRef, () => setIsActive(null), true);
-
   return (
-    <div key={`pane-${accordionIndex}`} ref={paneRef}>
+    <div key={`pane-${accordionIndex}`}>
       <StyledAccordionPane
         //id attribute below creates an "aria-labelledby" and is REQUIRED for accessibilty.
         id={`panel-${accordionIndex + 1}-add-components-${uuidv4()}`}
