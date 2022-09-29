@@ -71,13 +71,13 @@ const AccordionTitle = ({
   //dispatches function from Context/InteractivesContext to change title and update data base.
   const handleTitleChange = useCallback((e) => {
     //this if statement gives the input field a character limit of 200ch
-    if (e.target.value.length < 200) {
-      dispatch({
-        func: "CHANGE_TITLE",
-        title: e.target.value,
-        layerIndex: accordionIndex,
-      });
-    }
+    const trimCharLimit = e.target.value.substring(0, 200);
+    console.log(trimCharLimit.length);
+    dispatch({
+      func: "CHANGE_TITLE",
+      title: trimCharLimit,
+      layerIndex: accordionIndex,
+    });
     return;
   }, []);
 
