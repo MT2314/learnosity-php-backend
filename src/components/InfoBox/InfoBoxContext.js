@@ -15,7 +15,7 @@ export const infoBoxConfig = (draft, action) => {
       draft.infoBoxLabel = action.label;
       return draft;
     case "CHANGE_HEADER":
-      draft.infoBoxHeader = { heading: action.header, headingLevel: "3" };
+      draft.infoBoxHeader = { heading: action.header, headingLevel: "H3" };
       return draft;
     case "CHANGE_ICON":
       draft.infoBoxIcon = action.icon;
