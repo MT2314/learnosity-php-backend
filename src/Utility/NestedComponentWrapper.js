@@ -9,7 +9,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import {LayoutContext, TabContext } from "../Context/InteractivesContext";
+import {LayoutContext, TabContext} from "../Context/InteractivesContext";
 
 import textDnd from "../Icons/dndIcons/textDnd.png";
 import defaultDnd from "../Icons/dndIcons/defaultDnd.png";
@@ -87,6 +87,7 @@ const NestedComponentWrapper = ({
   setActiveComp,
   activeComp,
 }) => {
+  
   const dropRef = useRef(null);
 
   const [, dispatch] = useContext(LayoutContext);

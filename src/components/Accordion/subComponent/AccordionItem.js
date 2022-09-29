@@ -9,6 +9,7 @@ import NestedComponentWrapper from '../../../Utility/NestedComponentWrapper'
 
 const AccordionItem = ({ accordion, accordionIndex }) => {
   const { id, components } = accordion;
+  const [ activeComp, setActiveComp] = useState(null);
   const [activeTab] = useContext(TabContext);
   const [, dispatch] = useContext(LayoutContext);
 
@@ -62,15 +63,21 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
       {components.length !== 0 ? (
         components.map((component, compIndex) => {
           return (
-            // <AccordionComponent
-            //   key={`key-component-${compIndex}`}
-            //   component={component}
-            //   compIndex={compIndex}
-            //   tabIndex={activeTab}
-            // />
             <NestedComponentWrapper
+              key={`key-component-${compIndex}`}
+              numOfComponent={components.length}
+              componentProps={component.componentProps}
               component={component}
-              compIndex={compIndex}/>
+              compIndex={compIndex}
+              tabIndex={activeTab}
+              //setIsDragging={setIsDragging}
+              //inContainer={inContainer}
+              draggingOver={isOver}
+              //setDroppedIndex={setDroppedIndex}
+              //droppedIndex={droppedIndex}
+              setActiveComp={setActiveComp}
+              activeComp={activeComp}
+              />
           );
         })
       ) : (
