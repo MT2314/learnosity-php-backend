@@ -5,7 +5,7 @@ import {
   TabContext,
   LayoutContext,
 } from "../../../Context/InteractivesContext";
-import AccordionComponent from "./AccordionComponent";
+import NestedComponentWrapper from '../../../Utility/NestedComponentWrapper'
 
 const AccordionItem = ({ accordion, accordionIndex }) => {
   const { id, components } = accordion;
@@ -62,12 +62,15 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
       {components.length !== 0 ? (
         components.map((component, compIndex) => {
           return (
-            <AccordionComponent
-              key={`key-component-${compIndex}`}
+            // <AccordionComponent
+            //   key={`key-component-${compIndex}`}
+            //   component={component}
+            //   compIndex={compIndex}
+            //   tabIndex={activeTab}
+            // />
+            <NestedComponentWrapper
               component={component}
-              compIndex={compIndex}
-              tabIndex={activeTab}
-            />
+              compIndex={compIndex}/>
           );
         })
       ) : (
