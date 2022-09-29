@@ -264,9 +264,9 @@ const ComponentWrapper = ({
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
 
-  // useEffect(() => {
-  //   activeComp === compIndex ? setShowSelf(true) : setShowSelf(false);
-  // }, [activeComp]);
+  useEffect(() => {
+    activeComp === compIndex ? setShowSelf(true) : setShowSelf(false);
+  }, [activeComp]);
 
   return (
     <>
@@ -280,9 +280,9 @@ const ComponentWrapper = ({
         ref={dropRef}
         onMouseEnter={() => !draggingOver && setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
-        onFocus={() => setShowSelf(true)}
+        onFocus={() => setActiveComp(compIndex)}
         onBlur={() => setShowSelf(false)}
-        onClick={() => setShowSelf(true)}
+        onClick={() => setActiveComp(compIndex)}
       >
         <div>
           <DropIndicator
