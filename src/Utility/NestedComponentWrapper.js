@@ -141,7 +141,6 @@ const NestedComponentWrapper = ({
     }),
     drop: async (item, monitor) => {
       const currentTab = item?.tabIndex === tabIndex;
-
       const hoverIndex = currentTab
         ? dropIndexOffset === 0
           ? item.compIndex < compIndex
@@ -259,7 +258,7 @@ const NestedComponentWrapper = ({
         tabIndex: tabIndex,
         compIndex: compIndex,
       });
-      setIsDragging(false);
+      //setIsDragging(false);
     }
   }, [didDrop]);
 

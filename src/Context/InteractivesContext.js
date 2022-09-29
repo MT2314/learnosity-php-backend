@@ -111,6 +111,7 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   useEffect(() => {
     setProp({ layoutState: state });
   }, [state]);
+
   return (
     <LayoutContext.Provider value={[state, dispatch]}>
       {children}
