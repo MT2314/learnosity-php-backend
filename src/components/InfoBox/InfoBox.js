@@ -22,13 +22,15 @@ import { useTranslation, Trans } from "react-i18next";
 
 // Default props
 export const defaultProps = {
-  infoBoxIcon: null,
-  infoBoxLabel: "",
-  infoBoxHeader: {
-    heading: "",
-    headingLevel: "3",
-  },
-  body: null,
+  infoBoxState: {
+    infoBoxIcon: null,
+    infoBoxLabel: "",
+    infoBoxHeader: {
+      heading: "",
+      headingLevel: "H3",
+    },
+    body: null,
+  }
 };
 
 // Styled components begin
