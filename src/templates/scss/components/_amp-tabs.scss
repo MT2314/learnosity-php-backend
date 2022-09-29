@@ -1,29 +1,8 @@
-amp-selector [option][selected] {
-    outline: none;
-}
-
 .wrapper.tabs {
     // Brightcove videos inside tabs are too wide to fit on small
     // viewports with the default padding. This reduces the outer
     // padding between the tab border and the viewport to 5px to
     // alleviate the problem.
-    @media(max-width: 380px) {
-        padding: 0 5px;
-    }
-
-    ::-webkit-scrollbar {
-        width: 7px;
-    }
-
-    ::-webkit-scrollbar-track {
-        border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        background: rgba(0, 0, 0, 0.5);
-    }
-
     .tabs {
         &[role=tablist] {
             /* Styles for the flex layout based tabs */
@@ -33,52 +12,66 @@ amp-selector [option][selected] {
             & [role=tab] {
                 flex-grow: 1;
                 text-align: center;
-                border: 1px solid #bdbdbd;
-                border-left-width: 0;
-                background-color: #f5f5f5;
-                border-radius: 10px 10px 0px 0px;
-                max-width: 365px;
+                border: 1px solid $border-color;
+                width: min-content;
                 min-height: 25px;
                 max-height: 36px;
-                word-wrap: break-word;
                 overflow: hidden;
-                font-family: "Inter", sans-serif;
-                font-size: 18px;
+                border-left-width: 0;
                 font-weight: 600;
-                color: #636363;
-                resize: none;
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                background-color: $tab-default-bg;
 
                 &:first-child {
                     border-left-width: 1px;
                 }
 
-                &:hover {
-                    color: inherit;
+                .hoverTabText {
+                    position: absolute;
+                    display: none;
+                    background: #404040;
+                    border-radius: 6px;
+                    color: white;
+                    padding: 0 5px;
+                    top: 55px;
+                    margin-left: -10px;
+                    z-index: 99;
                 }
 
-                &:focus {
-                    outline: 2px solid #000;
-                    outline-offset: 0px;
-                    z-index: 1
+                .hoverTabText2 {
+                    width: 49.5%;
+                }
+                .hoverTabText3 {
+                    width: 32%;
+                }
+                .hoverTabText4 {
+                    width: 24%;
+                }
+
+                &:hover {
+                    color: inherit;
+                    text-decoration: underline;
+                    .hoverTabText {
+                        display: block;
+                    }
                 }
 
                 &[selected] {
                     background-color: $tab-active-bg;
-                    border-bottom: none;
+                    border-top: none;
+                    border-bottom: 5px solid $tab-active-border-top;
+                    padding-top: 4px; // to account for the larger border shifting the text down
+                    color: $tab-active-text;
+                    text-decoration: underline;
                 }
 
                 // AMP's CSS diminishes the focus outline, so this 
                 // re-applies our focus rule
                 &[selected]:focus {
                     @include outline-focus;
-                    overflow-y: visible;
-                    -webkit-line-clamp: unset;
-                    outline: 2px solid #000;
-                    outline-offset: 0px;
-                    z-index: 1
                 }
             }
 
@@ -101,5 +94,18 @@ amp-selector [option][selected] {
         .wrapper {
             padding: 0;
         }
+    }
+}
+
+.hideAccordion {
+    display: none;
+}
+
+@media(max-width: 760px) {
+    .hideAccordion {
+        display: block;
+    }
+    .wrapper.tabs {
+        display: none;
     }
 }
