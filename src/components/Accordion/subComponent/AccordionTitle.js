@@ -72,7 +72,6 @@ const AccordionTitle = ({
   const handleTitleChange = useCallback((e) => {
     //this if statement gives the input field a character limit of 200ch
     const trimCharLimit = e.target.value.substring(0, 200);
-    console.log(trimCharLimit.length);
     dispatch({
       func: "CHANGE_TITLE",
       title: trimCharLimit,
