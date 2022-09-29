@@ -43,6 +43,7 @@ function parse(entity) {
   //         entity.props.infoBoxState.body = _setHtml(entity.props.infoBoxState.body);
   //         break;
   //     case 'Tab':
+  //     case 'Accordion':
   //        Running a for loop through the first array we hit, which is the layoutState
   //          for (let i = 0; i < entity.props.layoutState.length; i++) {
   //          Running another for loop to then iterate through the components in the tab and convert anything with componentProps.body
@@ -72,7 +73,10 @@ function parse(entity) {
     entity.components.forEach(__parseElement);
   } else if (entity.componentName === "Text") {
     entity.props.body = _setHtml(entity.props.body);
-  } else if (entity.componentName === "Tab") {
+  } else if (
+    entity.componentName === "Tab" ||
+    entity.componentName === "Accordion"
+  ) {
     // Running a for loop through the first array we hit, which is the layoutState
     for (let i = 0; i < entity.props.layoutState.length; i++) {
       // Running another for loop to then iterate through the components in the tab and convert anything with componentProps.body
@@ -94,6 +98,8 @@ function parse(entity) {
 function _setHtml(quill) {
   // Converting and storing the quill data for easy access
   let converted = convertDeltaToHtml(quill);
+
+  console.log("converted:", JSON.stringify(converted, null, 4));
 
   // Adding sr-only text to links after quill conversion
   converted = converted.replace(

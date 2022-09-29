@@ -43,7 +43,7 @@ module.exports = async function () {
         // TODO: there was a problem retrieving the data
       }
       if (data?.__typename === "Course") {
-        // Before converting log
+        // Before conversion log
         // console.log("before conversion data", JSON.stringify(data, null, 4));
         convertData.dataConversionFunction(data);
         // Afer conversion log
@@ -53,7 +53,11 @@ module.exports = async function () {
         Array.isArray(data) &&
         data[0]?.__typename === "LessonStructureContainer"
       ) {
+        // Before conversion log
+        console.log("before conversion data", JSON.stringify(data, null, 4));
         convertData.dataConversionFlatArray(data);
+        // Afer conversion log
+        // console.log("after conversion data", JSON.stringify(data, null, 4));
       } else {
         // TODO: may need to check for type if __typename does not exist eg. getLesson
       }

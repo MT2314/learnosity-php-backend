@@ -1,0 +1,51 @@
+---
+{
+# Even though this demo page renders a sole Topic, the "lesson" object is 
+# required in order for the layout to get the title tag and the script tags. 
+# To make this Mock a bit easier to read, I moved topics to its own property,
+# as it would be only rendered inside lesson.section, which is not in this demo
+    "result": {
+        "title": "Topic Layout",
+    },
+# As described above, topic is moved separate for testing purposes.
+    "topics": [
+        {
+            "uuid": "c2fc2507-39e3-47d9-a6c2-8d08bfe83353",
+            "uuidClean": "c2fc2507_39e3_47d9_a6c2_8d08bfe83353",
+            "type": "topic",
+            "heading": {
+                "processed": "What is a ratio?",
+                "headingLevel": "h1"
+            },
+            "components": [
+                {
+                    "uuid": "21ef1a53-b7ec-4c11-9554-43bbd6d44dz1",
+                    "uuidClean": "21ef1a53_b7ec_4c11_9554_43bbd6d44dz1",
+                    "type": "formatted_text",
+                    "heading": null,
+                    "body": "<p>The video examines rate, ratio, and proportion and shows how these math relationships play a role in photography.</p>"
+                },
+                {
+                    "uuid": "21ef1a53-b7ec-4c11-9554-43bbd6d44dz2",
+                    "uuidClean": "21ef1a53_b7ec_4c11_9554_43bbd6d44dz2",
+                    "type": "brightcove_video",
+                    "brightcoveDataPlayer": "mLPSmEWSk",
+                    "brightcoveDataVideoId": "ref:2531990"
+                },
+                {
+                    "uuid": "21ef1a53-b7ec-4c11-9554-43bbd6d44dz3",
+                    "uuidClean": "21ef1a53_b7ec_4c11_9554_43bbd6d44dz3",
+                    "type": "formatted_text",
+                    "heading": null,
+                    "body": "<p>A <strong>ratio</strong> is a comparison of two or more things with the same units. Consider this photo of children and adult skiers.</p>"
+                }
+            ]
+        }
+    ],
+    "layout": "amp-layout.njk",
+    "permalink": "demo-amp-topic.html"
+}
+---
+<strong>{{result.title}} {{projectConfig.version}} - {{projectConfig.date}}</strong>
+
+{% include amp-topic.html topic:topics[0] -%}
