@@ -22,10 +22,12 @@ export const SmallIconButton = styled(IconButton)(() => ({
 }));
 
 const BlueBox = styled("div")(
-  ({ theme, draggingSelf, showSelf, hoverActive }) => ({
-    outline: showSelf
+  ({ theme, draggingSelf, showSelf, hoverActive }) => { 
+    console.log(draggingSelf)
+    return ({
+    outline: showSelf && !draggingSelf
       ? `3px solid #1466C0`
-      : hoverActive
+      : hoverActive && !draggingSelf
       ? `3px solid #DAE3EE`
       : null,
     borderRadius: "4px",
@@ -33,8 +35,7 @@ const BlueBox = styled("div")(
     '& [data-id="callout"]': {
       margin: 0,
     },
-  })
-);
+  })});
 
 const DragHandle = styled(DragHandleIcon)({
   color: "inherit",
@@ -57,13 +58,13 @@ export const ComponentLabelContainer = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => {
     const style = {
       background: showSelf && "#1466C0",
+      display: draggingSelf ? "none" : "flex",
       width: "fit-content",
       marginLeft: "-3px",
       padding: "0 1px",
       color: showSelf ? "#FFF" : "#1466C0",
       borderRadius: "4px 4px 0px 0px",
       opacity: showSelf || hoverActive ? 1 : 0,
-      display: "flex",
       alignItems: "center",
     };
 
@@ -407,7 +408,10 @@ const NestedComponentWrapper = ({
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
-          <BlueBox showSelf={showSelf} hoverActive={isHover}>
+          <BlueBox 
+            showSelf={showSelf} 
+            hoverActive={isHover}
+            draggingSelf={isDragging}>
             <Component
               {...componentProps}
               role="listitem"
