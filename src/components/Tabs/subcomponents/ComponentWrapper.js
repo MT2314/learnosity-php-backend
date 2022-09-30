@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
-import { useDrag, useDrop, DragPreviewImage } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
+import { getEmptyImage } from 'react-dnd-html5-backend';
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
@@ -207,6 +208,10 @@ const ComponentWrapper = ({
       droppedItem: monitor.getItem(),
     }),
   });
+
+  useEffect(() => {
+    dragPreview(getEmptyImage(), { captureDraggingState: true });
+  }, []);
 
   drop(dropRef);
 
