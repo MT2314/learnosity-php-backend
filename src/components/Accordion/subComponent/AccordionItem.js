@@ -77,11 +77,8 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
               component={component}
               compIndex={compIndex}
               tabIndex={activeTab}
-              //setIsDragging={setIsDragging}
               inContainer={inContainer}
-              //draggingOver={isOver}
               setDroppedIndex={setDroppedIndex}
-              //droppedIndex={droppedIndex}
               setActiveComp={setActiveComp}
               activeComp={activeComp}
               />
