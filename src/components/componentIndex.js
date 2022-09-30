@@ -21,11 +21,6 @@ import interactiveCategoryIcon from "../Icons/categoriesIcons/interactive.png";
 import mediaCategoryIcon from "../Icons/categoriesIcons/media.png";
 import textCategoryIcon from "../Icons/categoriesIcons/text.png";
 
-// Text Component Icons
-import tabsComponentIcon from "../Icons/componentIcons/tabsIcon.png";
-import textComponentIcon from "../Icons/componentIcons/textIcon.png";
-import defaultComponentIcon from "../Icons/componentIcons/defaultIcon.png";
-
 import exposedVersion from "../../exposedStage";
 
 console.log(
