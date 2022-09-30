@@ -26,7 +26,18 @@ const dataConversionFlatArray = (data) => {
   parseData.transformComponentPropsRecursive(data);
   for (let lessonIndex = 0; lessonIndex < data.length; lessonIndex++) {
     const lesson = data[lessonIndex];
-    lessons.push(headingsConverter.parse(quillConverter.parse(lesson)));
+    const twoDigit = lesson.indexInParent < 9 ? "0" : "";
+    const lessonPath = [
+      ...lesson.path.map(
+        (container) =>
+          `${container.type.substring(0, 1)}${container.indexInParent + 1}`
+      ),
+      `la${twoDigit}${lesson.indexInParent + 1}`,
+    ].join("_");
+    lessons.push(
+      headingsConverter.parse(quillConverter.parse({ ...lesson, lessonPath }))
+    );
+    // lessons.push(headingsConverter.parse(quillConverter.parse(lesson)));
   }
 };
 
