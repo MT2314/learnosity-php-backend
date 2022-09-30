@@ -11,8 +11,6 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import { LayoutContext } from "../TabContext";
 
-import textDnd from "../../../Icons/dndIcons/textDnd.png";
-import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
 import DropIndicator from "../../../Utility/DropIndicator";
 
 import TabComponent from "./TabComponent";

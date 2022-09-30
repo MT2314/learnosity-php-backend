@@ -20,11 +20,7 @@ import AccordionMain, {
 import interactiveCategoryIcon from "../Icons/categoriesIcons/interactive.png";
 import mediaCategoryIcon from "../Icons/categoriesIcons/media.png";
 import textCategoryIcon from "../Icons/categoriesIcons/text.png";
-// DND Icons
-import textDndLabel from "../Icons/dndIcons/textDnd.png";
-import calloutDndLabel from "../Icons/dndIcons/calloutDnd.png";
-import tabsDndLabel from "../Icons/dndIcons/tabsDnd.png";
-import defaultDndLabel from "../Icons/dndIcons/defaultDnd.png";
+
 // Text Component Icons
 import tabsComponentIcon from "../Icons/componentIcons/tabsIcon.png";
 import textComponentIcon from "../Icons/componentIcons/textIcon.png";
@@ -58,7 +54,6 @@ const componentIndex = {
     defaultProps: infoBoxDefaultProps,
     version: "0.0.1",
     category: categories.text,
-    dndLabel: calloutDndLabel,
     componentIcon: defaultComponentIcon,
   },
   Text: {
@@ -67,7 +62,6 @@ const componentIndex = {
     defaultProps: quillDefaultProps,
     version: "0.0.1",
     category: categories.text,
-    dndLabel: textDndLabel,
     componentIcon: textComponentIcon,
   },
   Image: {
@@ -77,7 +71,6 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: ImageConfig,
     category: categories.media,
-    dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon,
   },
   QuoteBox: {
@@ -86,7 +79,6 @@ const componentIndex = {
     defaultProps: quoteBoxDefaultProps,
     version: "0.0.1",
     category: categories.text,
-    dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon,
   },
   Video: {
@@ -96,7 +88,6 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: VideoConfig,
     category: categories.media,
-    dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon,
   },
   IFrame: {
@@ -106,7 +97,6 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: IFrameConfig,
     category: categories.media,
-    dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon,
   },
   Tab: {
@@ -115,7 +105,6 @@ const componentIndex = {
     defaultProps: testTabDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
-    dndLabel: tabsDndLabel,
     componentIcon: tabsComponentIcon,
   },
   Accordion: {
@@ -124,7 +113,6 @@ const componentIndex = {
     defaultProps: testAccordionDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
-    dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon,
   },
 };
