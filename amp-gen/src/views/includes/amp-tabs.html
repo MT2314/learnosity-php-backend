@@ -17,11 +17,21 @@
         {%- endif -%}
         >
             {{tab.title}}
-        {% if tab.title.length > 84 -%}
-            <span class="hoverTabText hoverTabText{{data.props.layoutState.length}}">
+            
+        {% if tab.title.length > 84 and data.props.layoutState.length == 2 -%}
+            <span class="hoverTabText hoverTabText2">
+                {{tab.title}}
+            </span>
+        {% elsif tab.title.length > 46 and data.props.layoutState.length == 3 -%}
+            <span class="hoverTabText hoverTabText3">
+                {{tab.title}}
+            </span>
+        {% elsif  tab.title.length > 33 and data.props.layoutState.length == 4 -%}
+            <span class="hoverTabText hoverTabText4">
                 {{tab.title}}
             </span>
         {%- endif -%}
+        
         </div>
 
 
