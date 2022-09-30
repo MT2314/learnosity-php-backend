@@ -1,5 +1,6 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState } from "react";
 import { useDrop } from "react-dnd";
+import { AccordionDetails } from "@mui/material";
 import styled from "@emotion/styled";
 import {
   TabContext,
@@ -8,8 +9,11 @@ import {
 import PlaceHolder from "../subComponent/PlaceHolder";
 import NestedComponentWrapper from '../../../Utility/NestedComponentWrapper'
 
-const StyleAccordionBody = styled("div")(({ isOver }) => ({
-  backgroundColor: isOver ? "#E9EDF1" : "white",
+const StyledAccordionDetails = styled(AccordionDetails)(({ isOver }) => ({
+  backgroundColor: isOver ? 'rgba(21, 101, 192, 0.04)' : '#ffffff',
+  borderWidth: "1px 0px",
+  borderStyle: "solid",
+  borderColor: "#BDBDBD",
 }));
 
 const AccordionItem = ({ accordion, accordionIndex }) => {
@@ -60,34 +64,34 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
   }));
 
   return (
-    <StyleAccordionBody
-      data-testid="accordion-dropzone"
-      isOver={isOver}
-      ref={drop}
-      onDragLeave={() => setInContainer(false)}
-      onDragOver={() => setInContainer(true)}
-    >
+    <StyledAccordionDetails
+    data-testid="accordion-dropzone"
+    isOver={isOver}
+    ref={drop}
+    onDragLeave={() => setInContainer(false)}
+    onDragOver={() => setInContainer(true)}
+  >
       {components.length !== 0 ? (
         components.map((component, compIndex) => {
           return (
             <NestedComponentWrapper
-              key={`key-component-${compIndex}`}
-              numOfComponent={components.length}
-              componentProps={component.componentProps}
-              component={component}
-              compIndex={compIndex}
-              tabIndex={activeTab}
-              inContainer={inContainer}
-              setDroppedIndex={setDroppedIndex}
-              setActiveComp={setActiveComp}
-              activeComp={activeComp}
-              />
-          );
-        })
-      ) : (
-        <PlaceHolder />
-      )}
-    </StyleAccordionBody>
+            key={`key-component-${compIndex}`}
+            numOfComponent={components.length}
+            componentProps={component.componentProps}
+            component={component}
+            compIndex={compIndex}
+            tabIndex={activeTab}
+            inContainer={inContainer}
+            setDroppedIndex={setDroppedIndex}
+            setActiveComp={setActiveComp}
+            activeComp={activeComp}
+            />
+            );
+          })
+          ) : (
+            <PlaceHolder />
+            )}
+  </StyledAccordionDetails>
   );
 };
 

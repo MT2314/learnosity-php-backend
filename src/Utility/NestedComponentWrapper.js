@@ -17,15 +17,15 @@ import DropIndicator from "./DropIndicator";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
 import componentIndex from "../components/componentIndex";
 
-export const SmallIconButton = styled(IconButton)(() => ({
+export const SmallIconButton = styled(IconButton)(({draggingSelf}) => ({
   color: "#FFF",
 }));
 
 const BlueBox = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => ({
-    outline: showSelf
+    outline: showSelf && !draggingSelf
       ? `3px solid #1466C0`
-      : hoverActive
+      : hoverActive && !draggingSelf
       ? `3px solid #DAE3EE`
       : null,
     borderRadius: "4px",
@@ -33,8 +33,7 @@ const BlueBox = styled("div")(
     '& [data-id="callout"]': {
       margin: 0,
     },
-  })
-);
+  }));
 
 const DragHandle = styled(DragHandleIcon)({
   color: "inherit",
@@ -57,13 +56,13 @@ export const ComponentLabelContainer = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => {
     const style = {
       background: showSelf && "#1466C0",
+      display: draggingSelf ? "none" : "flex",
       width: "fit-content",
       marginLeft: "-3px",
       padding: "0 1px",
       color: showSelf ? "#FFF" : "#1466C0",
       borderRadius: "4px 4px 0px 0px",
       opacity: showSelf || hoverActive ? 1 : 0,
-      display: "flex",
       alignItems: "center",
     };
 
@@ -276,6 +275,8 @@ const NestedComponentWrapper = ({
 
   return (
     <>
+
+    {/* remove for localized drag label */}
       <DragPreviewImage
         connect={dragPreview}
         src={component.componentName.includes("Text") ? textDnd : defaultDnd}
@@ -301,6 +302,7 @@ const NestedComponentWrapper = ({
           />
           <ComponentLabelContainer
             showSelf={showSelf}
+            draggingSelf={isDragging}
             hoverActive={isHover}
             data-testid="component-component-label-container"
           >
@@ -351,6 +353,7 @@ const NestedComponentWrapper = ({
                 data-testid="move-up-button"
                 aria-label={"Move Component Up"}
                 size="small"
+                draggingSelf={isDragging}
               >
                 <ArrowDropUpIcon fontSize="inherit" />
               </SmallIconButton>
@@ -369,6 +372,7 @@ const NestedComponentWrapper = ({
                 data-testid="move-down-button"
                 aria-label={"Move Component Down"}
                 size="small"
+                draggingSelf={isDragging}
               >
                 <ArrowDropDownIcon fontSize="inherit" />
               </SmallIconButton>
@@ -386,6 +390,7 @@ const NestedComponentWrapper = ({
               aria-label={"Duplicate Component AriaLabel"}
               size="small"
               sx={{ fontSize: "0.9em" }}
+              draggingSelf={isDragging}
             >
               <ContentCopyIcon fontSize="inherit" />
             </SmallIconButton>
@@ -400,11 +405,15 @@ const NestedComponentWrapper = ({
               data-testid="delete-component-button"
               aria-label={"Delete Component AriaLabel"}
               size="small"
+              draggingSelf={isDragging}
             >
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
-          <BlueBox showSelf={showSelf} hoverActive={isHover}>
+          <BlueBox 
+            showSelf={showSelf} 
+            hoverActive={isHover}
+            draggingSelf={isDragging}>
             <Component
               {...componentProps}
               role="listitem"
