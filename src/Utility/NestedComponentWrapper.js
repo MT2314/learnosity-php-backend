@@ -17,8 +17,8 @@ import DropIndicator from "./DropIndicator";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
 import componentIndex from "../components/componentIndex";
 
-export const SmallIconButton = styled(IconButton)(({draggingSelf}) => ({
-  color: "#FFF",
+export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
+  color: draggingOver ? "transparent" : "#ffffff" ,
 }));
 
 const BlueBox = styled("div")(
@@ -40,15 +40,15 @@ const DragHandle = styled(DragHandleIcon)({
 });
 
 const StaticLabel = styled("span")(
-  ({ theme, isHoverActive, isDragging, showSelf }) => ({
-    background: isHoverActive && !showSelf ? "#DAE3EE" : "#1466C0",
+  ({ theme, hoverActive, draggingSelf, showSelf }) => ({
+    background: hoverActive && !showSelf ? "#DAE3EE" : "#1466C0",
     width: "fit-content",
     height: "100%",
     borderRadius: "4px 4px 0px 0px",
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
-    opacity: isDragging ? 0 : 1,
+    opacity: draggingSelf ? 0 : 1,
   })
 );
 
@@ -86,7 +86,7 @@ const NestedComponentWrapper = ({
   setActiveComp,
   activeComp,
 }) => {
-
+ 
   const dropRef = useRef(null);
 
   const [, dispatch] = useContext(LayoutContext);
@@ -308,9 +308,9 @@ const NestedComponentWrapper = ({
           >
             <StaticLabel
               data-testid="static-label"
-              isHoverActive={isHover}
+              hoverActive={isHover}
               showSelf={showSelf}
-              isDragging={isDragging}
+              draggingSelf={isDragging}
             >
               <span
                 ref={drag}
@@ -354,6 +354,7 @@ const NestedComponentWrapper = ({
                 aria-label={"Move Component Up"}
                 size="small"
                 draggingSelf={isDragging}
+                draggingOver={draggingOver}
               >
                 <ArrowDropUpIcon fontSize="inherit" />
               </SmallIconButton>
@@ -373,6 +374,7 @@ const NestedComponentWrapper = ({
                 aria-label={"Move Component Down"}
                 size="small"
                 draggingSelf={isDragging}
+                draggingOver={draggingOver}
               >
                 <ArrowDropDownIcon fontSize="inherit" />
               </SmallIconButton>
@@ -391,6 +393,7 @@ const NestedComponentWrapper = ({
               size="small"
               sx={{ fontSize: "0.9em" }}
               draggingSelf={isDragging}
+              draggingOver={draggingOver}
             >
               <ContentCopyIcon fontSize="inherit" />
             </SmallIconButton>
@@ -406,6 +409,7 @@ const NestedComponentWrapper = ({
               aria-label={"Delete Component AriaLabel"}
               size="small"
               draggingSelf={isDragging}
+              draggingOver={draggingOver}
             >
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
