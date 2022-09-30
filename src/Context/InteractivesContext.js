@@ -102,6 +102,7 @@ export const layoutConfig = (draft, action) => {
     case "COLLAPSE_ALL_PANE":
       draft.forEach((item) => (item.expanded = false));
       return draft;
+    
     default:
       return draft;
   }
@@ -114,6 +115,8 @@ export const paneConfig = (draft, action) => {
         ? (draft[action.paneIndex].expanded = false)
         : (draft[action.paneIndex].expanded = true);
       return draft;
+    case "UPDATE_STATE":
+        return action.state;
     default:
       return draft;
   }
@@ -132,15 +135,26 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   useEffect(() => {
     const copyState = state.map((item) => ({ expanded: item.expanded }));
     const diff = JSON.stringify(copyState) !== JSON.stringify(activePane);
+    const updatedLength = copyState.length && state.length
 
-    const updateState = diff
+    const updateState = diff & !updatedLength
       ? state.map((item, index) => ({
-          ...item,
-          expanded: activePane[index].expanded,
-        }))
+        ...item,
+        expanded: activePane[index].expanded
+      }))
       : state;
     setProp({ layoutState: updateState });
   }, [state]);
+
+  useEffect(() => {
+    setActivePane({
+      func: "UPDATE_STATE",
+      state: layoutState.map((item) => {
+        return { expanded: item.expanded }
+      })
+    })
+  }, [layoutState])
+
   return (
     <LayoutContext.Provider value={[state, dispatch]}>
       <ActivePaneContext.Provider value={[activePane, setActivePane]}>
