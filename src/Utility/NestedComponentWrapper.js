@@ -17,14 +17,12 @@ import DropIndicator from "./DropIndicator";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
 import componentIndex from "../components/componentIndex";
 
-export const SmallIconButton = styled(IconButton)(() => ({
+export const SmallIconButton = styled(IconButton)(({draggingSelf}) => ({
   color: "#FFF",
 }));
 
 const BlueBox = styled("div")(
-  ({ theme, draggingSelf, showSelf, hoverActive }) => { 
-    console.log(draggingSelf)
-    return ({
+  ({ theme, draggingSelf, showSelf, hoverActive }) => ({
     outline: showSelf && !draggingSelf
       ? `3px solid #1466C0`
       : hoverActive && !draggingSelf
@@ -35,7 +33,7 @@ const BlueBox = styled("div")(
     '& [data-id="callout"]': {
       margin: 0,
     },
-  })});
+  }));
 
 const DragHandle = styled(DragHandleIcon)({
   color: "inherit",
@@ -355,6 +353,7 @@ const NestedComponentWrapper = ({
                 data-testid="move-up-button"
                 aria-label={"Move Component Up"}
                 size="small"
+                draggingSelf={isDragging}
               >
                 <ArrowDropUpIcon fontSize="inherit" />
               </SmallIconButton>
@@ -373,6 +372,7 @@ const NestedComponentWrapper = ({
                 data-testid="move-down-button"
                 aria-label={"Move Component Down"}
                 size="small"
+                draggingSelf={isDragging}
               >
                 <ArrowDropDownIcon fontSize="inherit" />
               </SmallIconButton>
@@ -390,6 +390,7 @@ const NestedComponentWrapper = ({
               aria-label={"Duplicate Component AriaLabel"}
               size="small"
               sx={{ fontSize: "0.9em" }}
+              draggingSelf={isDragging}
             >
               <ContentCopyIcon fontSize="inherit" />
             </SmallIconButton>
@@ -404,6 +405,7 @@ const NestedComponentWrapper = ({
               data-testid="delete-component-button"
               aria-label={"Delete Component AriaLabel"}
               size="small"
+              draggingSelf={isDragging}
             >
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
