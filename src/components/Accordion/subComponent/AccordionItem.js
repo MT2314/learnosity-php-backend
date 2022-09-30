@@ -17,6 +17,8 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
   const [ activeComp, setActiveComp] = useState(null);
   const [activeTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
+  const [droppedIndex, setDroppedIndex] = useState(null);
+  const [inContainer, setInContainer] = useState(null);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -35,6 +37,7 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
       "IFrame",
     ],
     drop: async (item, monitor) => {
+      console.log(item)
       if (!acceptListComp(item)) setShowDropError(true);
       if (item.within && components.length !== 0) return;
       if (monitor.didDrop()) return;
@@ -61,6 +64,8 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
       data-testid="accordion-dropzone"
       isOver={isOver}
       ref={drop}
+      onDragLeave={() => setInContainer(false)}
+      onDragOver={() => setInContainer(true)}
     >
       {components.length !== 0 ? (
         components.map((component, compIndex) => {
@@ -73,9 +78,9 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
               compIndex={compIndex}
               tabIndex={activeTab}
               //setIsDragging={setIsDragging}
-              //inContainer={inContainer}
+              inContainer={inContainer}
               //draggingOver={isOver}
-              //setDroppedIndex={setDroppedIndex}
+              setDroppedIndex={setDroppedIndex}
               //droppedIndex={droppedIndex}
               setActiveComp={setActiveComp}
               activeComp={activeComp}
