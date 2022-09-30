@@ -6,5 +6,23 @@ export const matchSpan = (node, delta) => {
     return new Delta().insert(delta.ops[0].insert);
   }
 
+  if (node.style.top || node.style.bottom) {
+    let ops = [];
+
+    node.style.top &&
+      ops.push({
+        insert: delta.ops[0].insert,
+        attributes: { script: "super" },
+      });
+
+    node.style.bottom &&
+      ops.push({
+        insert: delta.ops[0].insert,
+        attributes: { script: "sub" },
+      });
+
+    return new Delta(ops);
+  }
+
   return delta;
 };
