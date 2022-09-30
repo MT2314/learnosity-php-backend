@@ -5,9 +5,9 @@
 {%- endif -%}
 
 {% if item.props %} 
-    {% assign propName == item.props %} 
+    {% assign propName = item.props %} 
 {% elsif item.componentProps %} 
-    {% assign propName == item.componentProps %} 
+    {% assign propName = item.componentProps %} 
 {% endif %}
 
 {%comment%} Main Content Model Parser block {%endcomment%}

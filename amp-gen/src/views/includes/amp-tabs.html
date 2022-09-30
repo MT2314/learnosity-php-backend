@@ -1,15 +1,15 @@
 <div class="tabs wrapper bottom-margin">
-    {%- assign tab.id = 'tablist' | append: data.id -%}
+    {%- assign tabListId = 'tablist' | append: data.id -%}
     <amp-selector class="tabs"
         role="tablist"
         keyboard-select-mode="focus"
-        id="{{tab.id}}">
+        id="{{tabListId}}">
 
     {%- for tab in data.props.layoutState -%}
 
-        <div id="{{tab.id}}_tab{{forloop.index}}"
+        <div id="{{tabListId}}_tab{{forloop.index}}"
             role="tab"
-            aria-controls="{{tab.id}}_tabpanel{{forloop.index}}"
+            aria-controls="{{tabListId}}_tabpanel{{forloop.index}}"
             class="p1"
             option
         {% if forloop.index == 1 -%}
@@ -26,7 +26,7 @@
             <span class="hoverTabText hoverTabText3">
                 {{tab.title}}
             </span>
-        {% elsif  tab.title.length > 33 and data.props.layoutState.length == 4 -%}
+        {% elsif tab.title.length > 33 and data.props.layoutState.length == 4 -%}
             <span class="hoverTabText hoverTabText4">
                 {{tab.title}}
             </span>
@@ -35,9 +35,9 @@
         </div>
 
 
-        <div id="{{tab.id}}_tabpanel{{forloop.index}}"
+        <div id="{{tabListId}}_tabpanel{{forloop.index}}"
             role="tabpanel"
-            aria-labelledby="{{tab.id}}_tab{{forloop.index}}"
+            aria-labelledby="{{tabListId}}_tab{{forloop.index}}"
             class="border-left border-right border-bottom px3 pt3">
 
             {%- for c in tab.components -%}

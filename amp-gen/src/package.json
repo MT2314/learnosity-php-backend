@@ -22,7 +22,7 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@11ty/eleventy": "^0.11.1",
+    "@11ty/eleventy": "^1.0.1",
     "@ampproject/toolbox-optimizer": "^2.9.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.4.0",
