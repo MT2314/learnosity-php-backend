@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Button } from "@mui/material";
-import { Accordion, AccordionDetails } from "@mui/material";
+import { Accordion } from "@mui/material";
 import styled from "@emotion/styled";
 import { LayoutContext } from "../../../Context/InteractivesContext";
 import AccordionItem from "./AccordionItem";
@@ -43,18 +43,10 @@ const Accordions = () => {
             expanded={accordion.expanded}
           >
             <Pane accordionIndex={accordionIndex} accordion={accordion} />
-            <AccordionDetails
-              sx={{
-                borderWidth: "1px 0px",
-                borderStyle: "solid",
-                borderColor: "#BDBDBD",
-              }}
-            >
-              <AccordionItem
-                accordionIndex={accordionIndex}
-                accordion={accordion}
-              />
-            </AccordionDetails>
+            <AccordionItem
+              accordionIndex={accordionIndex}
+              accordion={accordion}
+            />
           </StyledAccordion>
         );
       })}
