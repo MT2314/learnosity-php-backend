@@ -276,6 +276,8 @@ const NestedComponentWrapper = ({
 
   return (
     <>
+
+    {/* remove for localized drag label */}
       <DragPreviewImage
         connect={dragPreview}
         src={component.componentName.includes("Text") ? textDnd : defaultDnd}
@@ -301,6 +303,7 @@ const NestedComponentWrapper = ({
           />
           <ComponentLabelContainer
             showSelf={showSelf}
+            draggingSelf={isDragging}
             hoverActive={isHover}
             data-testid="component-component-label-container"
           >
