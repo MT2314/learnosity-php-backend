@@ -76,13 +76,14 @@ const ConfigBar = ({ paneIndex }) => {
 
     console.log(paneIndex)
 
-    const [, dispatch] = useContext(LayoutContext)
+    const [state, dispatch] = useContext(LayoutContext)
 
-    const addTab = () => {
+    const addTab = (state, activePane) => {
         dispatch({
             func: "ADD_LAYER",
             id: uuidv4(),
-            title: `New Accordion`
+            title: `Pane ${state.length + 1}`, 
+            expanded: false
         });
     };
     return (
@@ -111,7 +112,7 @@ const ConfigBar = ({ paneIndex }) => {
                             disableRipple
                             color="inherit"
                             onClick={() => {
-                                addTab();
+                                addTab(state, paneIndex);
                             }}
                         >
                             <Add />

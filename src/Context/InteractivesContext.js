@@ -13,6 +13,7 @@ export const layoutConfig = (draft, action) => {
         title: "",
         placeholderTitle: action.title,
         components: [],
+        expanded: action.expanded
       });
       return draft;
     case "REMOVE_LAYER":
@@ -138,7 +139,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
           expanded: activePane[index].expanded,
         }))
       : state;
-
     setProp({ layoutState: updateState });
   }, [state]);
   return (
