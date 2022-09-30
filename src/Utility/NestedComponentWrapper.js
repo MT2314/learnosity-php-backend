@@ -9,13 +9,13 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import { ComponentContext, LayoutContext, TabContext } from "../TabContext";
+import {LayoutContext, TabContext} from "../Context/InteractivesContext";
 
-import textDnd from "../../../Icons/dndIcons/textDnd.png";
-import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
-import DropIndicator from "../../../Utility/DropIndicator";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import componentIndex from "../../../components/componentIndex";
+import textDnd from "../Icons/dndIcons/textDnd.png";
+import defaultDnd from "../Icons/dndIcons/defaultDnd.png";
+import DropIndicator from "./DropIndicator";
+import { useOnClickOutside } from "../hooks/useOnClickOutside";
+import componentIndex from "../components/componentIndex";
 
 export const SmallIconButton = styled(IconButton)(() => ({
   color: "#FFF",
@@ -73,7 +73,7 @@ export const ComponentLabelContainer = styled("div")(
   }
 );
 
-const ComponentWrapper = ({
+const NestedComponentWrapper = ({
   component,
   compIndex,
   componentProps,
@@ -87,6 +87,7 @@ const ComponentWrapper = ({
   setActiveComp,
   activeComp,
 }) => {
+
   const dropRef = useRef(null);
 
   const [, dispatch] = useContext(LayoutContext);
@@ -117,8 +118,6 @@ const ComponentWrapper = ({
     );
   };
 
-  // console.log("activeComp", activeComp);
-
   const [
     { isOver, canDrop, isOverCurrent, droppedInContainer, getItem },
     drop,
@@ -142,7 +141,6 @@ const ComponentWrapper = ({
     }),
     drop: async (item, monitor) => {
       const currentTab = item?.tabIndex === tabIndex;
-
       const hoverIndex = currentTab
         ? dropIndexOffset === 0
           ? item.compIndex < compIndex
@@ -260,7 +258,7 @@ const ComponentWrapper = ({
         tabIndex: tabIndex,
         compIndex: compIndex,
       });
-      setIsDragging(false);
+      //setIsDragging(false);
     }
   }, [didDrop]);
 
@@ -436,4 +434,4 @@ const ComponentWrapper = ({
   );
 };
 
-export default ComponentWrapper;
+export default NestedComponentWrapper;

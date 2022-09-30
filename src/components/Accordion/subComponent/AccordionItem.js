@@ -1,16 +1,24 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import PlaceHolder from "../subComponent/PlaceHolder";
 import { useDrop } from "react-dnd";
+import styled from "@emotion/styled";
 import {
   TabContext,
   LayoutContext,
 } from "../../../Context/InteractivesContext";
-import AccordionComponent from "./AccordionComponent";
+import PlaceHolder from "../subComponent/PlaceHolder";
+import NestedComponentWrapper from '../../../Utility/NestedComponentWrapper'
+
+const StyleAccordionBody = styled("div")(({ isOver }) => ({
+  backgroundColor: isOver ? "#E9EDF1" : "white",
+}));
 
 const AccordionItem = ({ accordion, accordionIndex }) => {
   const { id, components } = accordion;
+  const [ activeComp, setActiveComp] = useState(null);
   const [activeTab] = useContext(TabContext);
-  const [, dispatch] = useContext(LayoutContext);
+  const [state, dispatch] = useContext(LayoutContext);
+  const [droppedIndex, setDroppedIndex] = useState(null);
+  const [inContainer, setInContainer] = useState(null);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -29,12 +37,11 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
       "IFrame",
     ],
     drop: async (item, monitor) => {
+      console.log(item)
       if (!acceptListComp(item)) setShowDropError(true);
       if (item.within && components.length !== 0) return;
       if (monitor.didDrop()) return;
       if (acceptListComp(item)) {
-        console.log("DROPPED ITEM:", item);
-
         dispatch({
           func: "ADD_COMPONENT",
           tabIndex: activeTab,
@@ -46,7 +53,6 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
         item?.delete && item?.delete(item.tabIndex, item.compIndex);
       }
     },
-
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
       getItem: monitor.getItem(),
@@ -54,26 +60,34 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
   }));
 
   return (
-    <div
+    <StyleAccordionBody
       data-testid="accordion-dropzone"
+      isOver={isOver}
       ref={drop}
-      style={{ background: isOver && "green" }}
+      onDragLeave={() => setInContainer(false)}
+      onDragOver={() => setInContainer(true)}
     >
       {components.length !== 0 ? (
         components.map((component, compIndex) => {
           return (
-            <AccordionComponent
+            <NestedComponentWrapper
               key={`key-component-${compIndex}`}
+              numOfComponent={components.length}
+              componentProps={component.componentProps}
               component={component}
               compIndex={compIndex}
               tabIndex={activeTab}
-            />
+              inContainer={inContainer}
+              setDroppedIndex={setDroppedIndex}
+              setActiveComp={setActiveComp}
+              activeComp={activeComp}
+              />
           );
         })
       ) : (
         <PlaceHolder />
       )}
-    </div>
+    </StyleAccordionBody>
   );
 };
 

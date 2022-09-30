@@ -27,6 +27,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [inContainer, setInContainer] = useState(null);
   const [droppedIndex, setDroppedIndex] = useState(null);
+  const [ activeComp, setActiveComp] = useState(null);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -98,6 +99,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
 
   drop(dropRef);
 
+
   return (
     <>
       <StyleTabBody
@@ -115,7 +117,6 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         ) : (
           <div role="list" isOver={isOver}>
             {components.map((component, compIndex) => {
-              console.log(component);
               return (
                 <ComponentWrapper
                   key={`key-component-${compIndex}`}
@@ -129,6 +130,8 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
                   draggingOver={isOver}
                   setDroppedIndex={setDroppedIndex}
                   droppedIndex={droppedIndex}
+                  setActiveComp={setActiveComp}
+                  activeComp={activeComp}
                 />
               );
             })}

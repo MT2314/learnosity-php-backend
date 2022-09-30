@@ -79,6 +79,7 @@ const EditorComponent = ({
   setSelectedIcon,
   setInfoHasFocus,
   setTextRef,
+  setTabActive,
 }) => {
   //context hooks
   const setQuill = useSetQuill();
@@ -116,6 +117,7 @@ const EditorComponent = ({
       setEditorIsFocus(false);
       setShowEditor(false);
       setActiveComponent(false);
+      setTabActive(false)
     }
   });
 
@@ -276,9 +278,11 @@ const EditorComponent = ({
       ref={textRef}
       onClick={(e) => {
         setEditorIsFocus(true);
+        setTabActive(true);
       }}
       onFocus={(e) => {
         setEditorIsFocus(true);
+        setTabActive(true);
       }}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
@@ -296,6 +300,7 @@ const EditorComponent = ({
           setEditorIsFocus(false);
           setShowEditor(false);
           setActiveComponent(false);
+          setTabActive(false)
         }
       }}
       className="text-editor"
