@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Menu } from '@mui/icons-material';
 import { useDragLayer } from "react-dnd";
+import { useTranslation, Trans } from "react-i18next";
 
 const StyledLabel = styled("div")(({ theme }) => ({
   display:'flex',
@@ -37,6 +38,7 @@ const StyledlayerStyles = styled('div')(() => ({
 
 
 const DragLabel = () => { 
+  
   const { 
     item,
     isDragging,
@@ -51,6 +53,8 @@ const DragLabel = () => {
       currentFileOffset: monitor.getSourceClientOffset(),
       isDragging: monitor.isDragging(),
     }))
+
+    const { t } = useTranslation();
 
   if (!isDragging) {
     return null;
@@ -68,7 +72,7 @@ const DragLabel = () => {
       <div>
       <StyledLabel>
         <Menu/>
-        <StyledTypography>{item.componentName}</StyledTypography>
+        <StyledTypography>{t(item.componentName)}</StyledTypography>
       </StyledLabel>
       </div>
       </div>
