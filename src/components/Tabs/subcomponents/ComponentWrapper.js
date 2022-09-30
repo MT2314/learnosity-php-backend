@@ -218,10 +218,10 @@ const ComponentWrapper = ({
 
   return (
     <>
-      <DragPreviewImage
+      {/* <DragPreviewImage
         connect={dragPreview}
         src={component.componentName.includes("Text") ? textDnd : defaultDnd}
-      />
+      /> */}
       <div
         data-test-id="div-before-drop-indicator"
         ref={dropRef}
