@@ -72,53 +72,75 @@ const StyledIconButton = styled(IconButton)({
 });
 
 
-const ConfigBar = ({ paneIndex }) => {
-
-    console.log(paneIndex)
+const ConfigBar = ({ paneIndex, setPaneIndex }) => {
 
     const [state, dispatch] = useContext(LayoutContext)
 
-    const addTab = (state, activePane) => {
+    const addTab = (state) => {
         dispatch({
             func: "ADD_LAYER",
             id: uuidv4(),
-            title: `Pane ${state.length + 1}`, 
+            title: `Pane ${state.length + 1}`,
             expanded: false
         });
     };
+
+    const moveAccordionDown = () => {
+        dispatch({
+            func: "MOVE_PANE_DOWN",
+            title: `Pane at position ${paneIndex} is now at position ${paneIndex + 1}`,
+            paneIndex: paneIndex,
+            nextPane: paneIndex + 1,
+        });
+        setPaneIndex(paneIndex + 1)
+    }
+
+    const moveAccordionUp = () => {
+        dispatch({
+            func: "MOVE_PANE_UP",
+            title: `Pane at position ${paneIndex} is now at position ${paneIndex + 1}`,
+            paneIndex: paneIndex,
+            nextPane: paneIndex + 1,
+        });
+        setPaneIndex(paneIndex - 1)
+    }
+
     return (
         <Container>
             <AppBar position="static">
-                <StyledToolbar variant="dense" disableGutters test-id="tab-toolbar">
-                    <StyledTooltip title="move tab left" arrow placement="top">
+                <StyledToolbar variant="dense" disableGutters test-id="accordion-toolbar">
+                    <StyledTooltip title="move pane down" arrow placement="top">
                         <StyledIconButton
                             disableRipple
                             color="inherit"
-                            onClick={() => moveAccordionDown()}
+                            onClick={() => moveAccordionDown(state)}
+                            disabled={paneIndex === state.length - 1}
                         >
                             <ArrowDownward />
                         </StyledIconButton>
                     </StyledTooltip>
-                    <StyledTooltip title="move tab right" arrow placement="top">
+                    <StyledTooltip title="move pane up" arrow placement="top">
                         <StyledIconButton
                             disableRipple
                             color="inherit"
+                            onClick={() => moveAccordionUp(state)}
+                            disabled={paneIndex === 0}
                         >
                             <ArrowUpward />
                         </StyledIconButton>
                     </StyledTooltip>
-                    <StyledTooltip title="add tab" arrow placement="top">
+                    <StyledTooltip title="add pane" arrow placement="top">
                         <StyledIconButton
                             disableRipple
                             color="inherit"
                             onClick={() => {
-                                addTab(state, paneIndex);
+                                addTab(state);
                             }}
                         >
                             <Add />
                         </StyledIconButton>
                     </StyledTooltip>
-                    <StyledTooltip title="remove current tab" arrow placement="top">
+                    <StyledTooltip title="remove current pane" arrow placement="top">
                         <StyledIconButton
                             disableRipple
                             color="inherit"

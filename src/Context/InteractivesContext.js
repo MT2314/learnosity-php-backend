@@ -24,17 +24,17 @@ export const layoutConfig = (draft, action) => {
         ...action.component,
       });
       return draft;
-    case "MOVE_TAB_LEFT":
+    case "MOVE_PANE_UP":
       // eslint-disable-next-line no-case-declarations
-      const elementL = draft[action.tabIndex];
-      draft.splice(action.tabIndex, 1);
-      draft.splice(action.tabIndex - 1, 0, elementL);
+      const elementL = draft[action.paneIndex];
+      draft.splice(action.paneIndex, 1);
+      draft.splice(action.paneIndex - 1, 0, elementL);
       return draft;
-    case "MOVE_TAB_RIGHT":
+    case "MOVE_PANE_DOWN":
       // eslint-disable-next-line no-case-declarations
-      const elementR = draft[action.tabIndex];
-      draft.splice(action.tabIndex, 1);
-      draft.splice(action.tabIndex + 1, 0, elementR);
+      const elementR = draft[action.paneIndex];
+      draft.splice(action.paneIndex, 1);
+      draft.splice(action.paneIndex + 1, 0, elementR);
       return draft;
     case "UPDATE_COMPONENT":
       draft[action.tabIndex].components[action.compIndex].componentProps = {

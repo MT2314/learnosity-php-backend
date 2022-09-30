@@ -55,7 +55,7 @@ const Accordions = () => {
     <div className="accordion-container" data-testid="accordion-component" ref={paneRef}>
       {/* TODO: Add Expand all and collapse all btns when a second pane is added */}
       <StyledToolBar toolbar={isActive === 0 ? true : isActive}>
-        <ConfigBar paneIndex={isActive} />
+        <ConfigBar paneIndex={isActive} setPaneIndex={setIsActive}/>
       </StyledToolBar>
       {state.length > 1 && (
         <StyledButtonsDiv>
