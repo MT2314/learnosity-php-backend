@@ -19,6 +19,9 @@
                 overflow: hidden;
                 border-left-width: 0;
                 font-weight: 600;
+                font-family: Lato;
+                font-style: normal;
+                font-size: 18px;
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
@@ -52,8 +55,7 @@
                 }
 
                 &:hover {
-                    color: inherit;
-                    text-decoration: underline;
+                    background-color: rgba(0, 0, 0, 0.02);
                     .hoverTabText {
                         display: block;
                     }
@@ -64,8 +66,7 @@
                     border-top: none;
                     border-bottom: 5px solid $tab-active-border-top;
                     padding-top: 4px; // to account for the larger border shifting the text down
-                    color: $tab-active-text;
-                    text-decoration: underline;
+                    color: black;
                 }
 
                 // AMP's CSS diminishes the focus outline, so this 
