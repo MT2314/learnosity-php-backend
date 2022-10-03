@@ -6,6 +6,8 @@ export const LayoutContext = createContext();
 
 export const layoutConfig = (draft, action) => {
   switch (action.func) {
+    case "UPDATE_STATE":
+      return action.data;
     case "ADD_LAYER":
       draft.push({
         id: action.id,
@@ -108,9 +110,20 @@ export const layoutConfig = (draft, action) => {
 export const LayoutProvider = ({ children, setProp, layoutState }) => {
   const [state, dispatch] = useReducer(produce(layoutConfig), layoutState);
 
+  const diff = JSON.stringify(state) !== JSON.stringify(layoutState);
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
-    setProp({ layoutState: state });
-  }, [state]);
+    dispatch({ func: "UPDATE_STATE", data: layoutState });
+    state.forEach(
+      (tab, index) => tab.activeTab === true && setActiveTab(index)
+    );
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    diff && mounted && dispatch({ func: "UPDATE_STATE", data: layoutState });
+  }, [layoutState]);
 
   return (
     <LayoutContext.Provider value={[state, dispatch]}>
