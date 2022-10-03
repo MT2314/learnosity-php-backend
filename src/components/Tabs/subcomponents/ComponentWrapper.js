@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { getEmptyImage } from 'react-dnd-html5-backend';
+import { useTranslation, Trans } from "react-i18next";
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
@@ -13,6 +14,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { LayoutContext } from "../TabContext";
 
 import DropIndicator from "../../../Utility/DropIndicator";
+import DragLabel from "../../../Utility/DragLabel"
 
 import TabComponent from "./TabComponent";
 
@@ -69,6 +71,9 @@ const ComponentWrapper = ({
   const [, dispatch] = useContext(LayoutContext);
   const [showSelf, setShowSelf] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
+
+  //use translation to localize component name
+  const { t } = useTranslation();
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -221,10 +226,7 @@ const ComponentWrapper = ({
 
   return (
     <>
-      {/* <DragPreviewImage
-        connect={dragPreview}
-        src={component.componentName.includes("Text") ? textDnd : defaultDnd}
-      /> */}
+      <DragLabel/>
       <div
         data-test-id="div-before-drop-indicator"
         ref={dropRef}
@@ -270,7 +272,7 @@ const ComponentWrapper = ({
               }}
               data-testid="component-label-name"
             >
-              {component.componentName}
+              {t(component.componentName)}
             </Typography>
             {compIndex !== 0 && (
               <SmallIconButton
