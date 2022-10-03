@@ -30,9 +30,9 @@ const dataConversionFlatArray = (data) => {
     const lessonPath = [
       ...lesson.path.map(
         (container) =>
-          `${container.type.substring(0, 1)}${container.indexInParent + 1}`
+          `${container.type.substring(0, 1).toUpperCase()}${container.indexInParent < 9 ? "0" : ""}${container.indexInParent + 1}`
       ),
-      `la${twoDigits}${lesson.indexInParent + 1}`,
+      `L${twoDigits}${lesson.indexInParent + 1}`,
     ].join("_");
     lessons.push(
       headingsConverter.parse(quillConverter.parse({ ...lesson, lessonPath }))
