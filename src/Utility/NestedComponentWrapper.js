@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { useDrag, useDrop, DragPreviewImage } from "react-dnd";
-import { getEmptyImage } from 'react-dnd-html5-backend';
+import { getEmptyImage } from "react-dnd-html5-backend";
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
@@ -10,7 +10,11 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import { LayoutContext, TabContext, ActivePaneContext } from "../Context/InteractivesContext";
+import {
+  LayoutContext,
+  TabContext,
+  ActivePaneContext,
+} from "../Context/InteractivesContext";
 
 import DropIndicator from "./DropIndicator";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
@@ -18,22 +22,24 @@ import componentIndex from "../components/componentIndex";
 import DragLabel from "./DragLabel";
 
 export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
-  color: draggingOver ? "transparent" : "#ffffff" ,
+  color: draggingOver ? "transparent" : "#ffffff",
 }));
 
 const BlueBox = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => ({
-    outline: showSelf && !draggingSelf
-      ? `3px solid #1466C0`
-      : hoverActive && !draggingSelf
-      ? `3px solid #DAE3EE`
-      : null,
+    outline:
+      showSelf && !draggingSelf
+        ? `3px solid #1466C0`
+        : hoverActive && !draggingSelf
+        ? `3px solid #DAE3EE`
+        : null,
     borderRadius: "4px",
     opacity: draggingSelf ? 0.4 : 1,
     '& [data-id="callout"]': {
       margin: 0,
     },
-  }));
+  })
+);
 
 const DragHandle = styled(DragHandleIcon)({
   color: "inherit",
@@ -261,7 +267,7 @@ const NestedComponentWrapper = ({
 
   return (
     <>
-      <DragLabel/>
+      <DragLabel />
       <div
         data-test-id="div-before-drop-indicator"
         key={`nested-component-${compIndex}`}
@@ -395,10 +401,11 @@ const NestedComponentWrapper = ({
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
-          <BlueBox 
-            showSelf={showSelf} 
+          <BlueBox
+            showSelf={showSelf}
             hoverActive={isHover}
-            draggingSelf={isDragging}>
+            draggingSelf={isDragging}
+          >
             <Component
               {...componentProps}
               role="listitem"
@@ -408,7 +415,7 @@ const NestedComponentWrapper = ({
                 dispatch({
                   func: "UPDATE_COMPONENT",
                   compIndex: compIndex,
-                  tabIndex: activeTab,
+                  tabIndex: tabIndex,
                   stateUpdate: stateUpdate,
                 });
               }}
