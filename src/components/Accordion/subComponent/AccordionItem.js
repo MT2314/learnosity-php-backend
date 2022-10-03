@@ -3,7 +3,7 @@ import { useDrop } from "react-dnd";
 import { AccordionDetails } from "@mui/material";
 import styled from "@emotion/styled";
 import {
-  TabContext,
+  ActivePaneContext,
   LayoutContext,
 } from "../../../Context/InteractivesContext";
 import PlaceHolder from "../subComponent/PlaceHolder";
@@ -19,7 +19,7 @@ const StyledAccordionDetails = styled(AccordionDetails)(({ isOver }) => ({
 const AccordionItem = ({ accordion, accordionIndex }) => {
   const { id, components } = accordion;
   const [activeComp, setActiveComp] = useState(null);
-  const [activeTab] = useContext(TabContext);
+  const [activeTab] = useContext(ActivePaneContext);
   const [state, dispatch] = useContext(LayoutContext);
   const [droppedIndex, setDroppedIndex] = useState(null);
   const [inContainer, setInContainer] = useState(null);

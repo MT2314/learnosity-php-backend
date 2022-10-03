@@ -10,7 +10,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import { LayoutContext, TabContext } from "../Context/InteractivesContext";
+import { LayoutContext, TabContext, ActivePaneContext } from "../Context/InteractivesContext";
 
 import DropIndicator from "./DropIndicator";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
@@ -94,7 +94,7 @@ const NestedComponentWrapper = ({
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
   const [tabActive, setTabActive] = useState(false);
 
-  const [activeTab] = useContext(TabContext);
+  const [activeTab] = useContext(ActivePaneContext);
 
   //get the matching component from the componentIndex
   const componentDetails = componentIndex[component.componentName];

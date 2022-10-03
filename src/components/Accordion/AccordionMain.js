@@ -5,7 +5,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { v4 as uuidv4 } from "uuid";
 import {
   LayoutProvider,
-  ActiveTabProvider,
 } from "../../Context/InteractivesContext";
 import Accordions from "./subComponent/Accordions";
 
@@ -26,9 +25,7 @@ const AccordionMain = ({ layoutState = [], setProp = () => {} }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <LayoutProvider layoutState={layoutState} setProp={setProp}>
-        <ActiveTabProvider>
           <Accordions />
-        </ActiveTabProvider>
       </LayoutProvider>
     </DndProvider>
   );
