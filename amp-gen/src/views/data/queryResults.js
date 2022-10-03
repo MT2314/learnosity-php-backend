@@ -54,7 +54,7 @@ module.exports = async function () {
         data[0]?.__typename === "LessonStructureContainer"
       ) {
         // Before conversion log
-        console.log("before conversion data", JSON.stringify(data, null, 4));
+        // console.log("before conversion data", JSON.stringify(data, null, 4));
         convertData.dataConversionFlatArray(data);
         // Afer conversion log
         // console.log("after conversion data", JSON.stringify(data, null, 4));
