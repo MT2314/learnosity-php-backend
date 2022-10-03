@@ -1,11 +1,13 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AccordionSummary } from "@mui/material";
 import { ExpandMore } from "@mui/icons-material";
 import styled from "@emotion/styled";
 import AccordionTitle from "./AccordionTitle";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import { LayoutContext } from "../../../Context/InteractivesContext";
+import {
+  LayoutContext,
+  ActivePaneContext,
+} from "../../../Context/InteractivesContext";
 
 //styles for accordion
 const StyledPaneContainer = styled("div")({
@@ -48,36 +50,34 @@ const StyledAccordionSummaryContents = styled("div")({
 });
 //styles end.
 
-const Pane = ({ accordionIndex, accordion }) => {
+const Pane = ({ accordionIndex, accordion, isActive, setIsActive, removeError, setRemoveError }) => {
   const { title, placeholderTitle } = accordion;
   const [, dispatch] = useContext(LayoutContext);
+  const [, setActivePane] = useContext(ActivePaneContext);
 
-  const [isActive, setIsActive] = useState(false);
-  //click outside hook sets active pane to null when user clicks outside the accordion pane
-  const paneRef = useRef();
-  useOnClickOutside(paneRef, () => setIsActive(false), true);
+  useEffect(() => {
+    setRemoveError(false);
+  }, [removeError]);
 
   return (
-    <StyledPaneContainer ref={paneRef}>
+    <StyledPaneContainer key={`pane-${accordionIndex}`}>
       <StyledAccordionSummary
         //id attribute below creates an "aria-labelledby" and is REQUIRED for accessibilty.
         id={`panel-${accordionIndex + 1}-add-components-${uuidv4()}`}
-        onClick={() => setIsActive(true)}
+        onClick={() => {
+          setIsActive(accordionIndex)
+        }}
         accordionIndex={accordionIndex}
-        isActive={isActive}
+        isActive={accordionIndex === isActive}
       >
         <StyledAccordionSummaryContents>
-          <AccordionTitle
-            key={`accordion-title-${accordionIndex}`}
-            placeholderTitle={placeholderTitle}
-            accordionIndex={accordionIndex}
-            accordionTitle={title}
-            isActive={isActive}
-            setIsActive={setIsActive}
-          />
           <ExpandMore
             onClick={() => {
               dispatch({
+                func: "TOGGLE_PANE",
+                paneIndex: accordionIndex,
+              });
+              setActivePane({
                 func: "TOGGLE_PANE",
                 paneIndex: accordionIndex,
               });
@@ -86,6 +86,14 @@ const Pane = ({ accordionIndex, accordion }) => {
               pointerEvents: "auto",
             }}
           />
+        <AccordionTitle
+          key={`accordion-title-${accordionIndex}`}
+          placeholderTitle={placeholderTitle}
+          accordionIndex={accordionIndex}
+          accordionTitle={title}
+          isActive={isActive}
+          setIsActive={setIsActive}
+        />
         </StyledAccordionSummaryContents>
       </StyledAccordionSummary>
     </StyledPaneContainer>
