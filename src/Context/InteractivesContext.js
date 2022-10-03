@@ -122,13 +122,6 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   }, []);
 
   useEffect(() => {
-    diff && mounted && setProp({ layoutState: state });
-    state.forEach(
-      (tab, index) => tab.activeTab === true && setActiveTab(index)
-    );
-  }, [state]);
-
-  useEffect(() => {
     diff && mounted && dispatch({ func: "UPDATE_STATE", data: layoutState });
   }, [layoutState]);
 

@@ -139,7 +139,6 @@ const NestedComponentWrapper = ({
       getItem: monitor.getItem(),
     }),
     drop: async (item, monitor) => {
-      console.log(item);
       const currentTab = item?.tabIndex === tabIndex;
 
       const hoverIndex = currentTab
@@ -159,7 +158,6 @@ const NestedComponentWrapper = ({
       if (acceptListComp(item)) {
         setDroppedIndex(hoverIndex);
         setDropIndexOffset(null);
-        console.log("DROPPED IN WRAPPER");
         dispatch({
           func:
             item.compIndex !== undefined && currentTab
@@ -177,10 +175,7 @@ const NestedComponentWrapper = ({
             },
           }),
         });
-        if (!currentTab && item?.delete) {
-          console.log("Deleting");
-          item?.delete();
-        }
+        !currentTab && item?.delete && item?.delete();
       }
     },
     canDrop: (item) => {
