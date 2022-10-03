@@ -71,6 +71,14 @@ const Pane = ({ accordionIndex, accordion, isActive, setIsActive, removeError, s
         isActive={accordionIndex === isActive}
       >
         <StyledAccordionSummaryContents>
+        <AccordionTitle
+          key={`accordion-title-${accordionIndex}`}
+          placeholderTitle={placeholderTitle}
+          accordionIndex={accordionIndex}
+          accordionTitle={title}
+          isActive={isActive}
+          setIsActive={setIsActive}
+        />
           <ExpandMore
             onClick={() => {
               dispatch({
@@ -86,14 +94,6 @@ const Pane = ({ accordionIndex, accordion, isActive, setIsActive, removeError, s
               pointerEvents: "auto",
             }}
           />
-        <AccordionTitle
-          key={`accordion-title-${accordionIndex}`}
-          placeholderTitle={placeholderTitle}
-          accordionIndex={accordionIndex}
-          accordionTitle={title}
-          isActive={isActive}
-          setIsActive={setIsActive}
-        />
         </StyledAccordionSummaryContents>
       </StyledAccordionSummary>
     </StyledPaneContainer>
