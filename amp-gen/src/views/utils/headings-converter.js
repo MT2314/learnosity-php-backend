@@ -65,9 +65,11 @@ function parse(entity, level = 0) {
 
   if (entity.__typename === "CourseStructureContainer") {
     entity.componentContainers.forEach(__parseElement);
+  } else if (entity.__typename === "LessonStructureContainer") {
+    __parseElement(entity.componentContainer);
   } else if (entity.__typename === "ComponentContainer") {
     entity.sections.forEach(__parseElement);
-  } else if (entity.type === "NONLEARNING" || entity.type === "LEARNING") {
+  } else if (entity.__typename === "Section") {
     entity.components.forEach(__parseElement);
   } else if (entity.componentName === "InfoBox") {
     entity.props.infoBoxState.infoBoxHeader = _setHeading(

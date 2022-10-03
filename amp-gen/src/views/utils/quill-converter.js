@@ -99,8 +99,6 @@ function _setHtml(quill) {
   // Converting and storing the quill data for easy access
   let converted = convertDeltaToHtml(quill);
 
-  console.log("converted:", JSON.stringify(converted, null, 4));
-
   // Adding sr-only text to links after quill conversion
   converted = converted.replace(
     /<\/a>/g,

@@ -1,18 +1,18 @@
 <div class="iframe wrapper bottom-margin clearfix">
 
 {% if data.props.width <= 360 %}
-    {% assign $breakpoint = 360 %}
+    {% assign breakpoint = 360 %}
 {% elsif data.props.width <= 475 %}
-    {% assign $breakpoint = 475 %}
+    {% assign breakpoint = 475 %}
 {% elsif data.props.width <= 640 %}
-    {% assign $breakpoint = 640 %}
+    {% assign breakpoint = 640 %}
 {% elsif data.props.width <= 832 %}
-    {% assign $breakpoint = 832 %}
+    {% assign breakpoint = 832 %}
 {% else %}
-    {% assign $breakpoint = 900 %}
+    {% assign breakpoint = 900 %}
 {% endif %}
 
-    <div class="visible-{{$breakpoint}}">
+    <div class="visible-{{breakpoint}}">
         <amp-iframe
             src="{{data.props.src}}"
             layout="fixed"
@@ -33,8 +33,8 @@
         </amp-iframe>
     </div>
 
-    <!-- When viewed at < {{$breakpoint}}px, launch the ILO into a new tab via link -->
-    <div class="box-shadow-darker std-radius py4 px3 center hidden-{{$breakpoint}}">
+    <!-- When viewed at < {{breakpoint}}px, launch the ILO into a new tab via link -->
+    <div class="box-shadow-darker std-radius py4 px3 center hidden-{{breakpoint}}">
         <div class="font-larger bold mt4 pb2 border-bottom" aria-hidden="true">
             {{data.props.title}}
         </div>

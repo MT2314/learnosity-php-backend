@@ -4,8 +4,6 @@ pagination:
   alias: result
   size: 1
 layout: amp-layout.njk
-#ToDo fix the lesson filename
-# permalink: "{{result.lessonPaths[0].courseCode | default: 'default' }}_u{{result.lessonPaths[0].unitNumber}}la{{result.index}}.html"
 permalink: "{{result.courseCode | default: 'noCourseCode'}}_{{result.lessonPath}}.html"
 ---
 
