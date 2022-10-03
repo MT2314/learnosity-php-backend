@@ -1,5 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
-import { useDrag, useDrop, DragPreviewImage } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
+import { getEmptyImage } from 'react-dnd-html5-backend';
+import { useTranslation, Trans } from "react-i18next";
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
@@ -11,9 +13,8 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import { ComponentContext, LayoutContext, TabContext } from "../TabContext";
 
-import textDnd from "../../../Icons/dndIcons/textDnd.png";
-import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
 import DropIndicator from "../../../Utility/DropIndicator";
+import DragLabel from "../../../Utility/DragLabel"
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import componentIndex from "../../../components/componentIndex";
 
@@ -109,6 +110,9 @@ const ComponentWrapper = ({
   useEffect(() => {
     tabActive && setShowSelf(true);
   }, [tabActive]);
+
+  //use translation to localize component name
+  const { t } = useTranslation();
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -251,6 +255,10 @@ const ComponentWrapper = ({
     }),
   });
 
+  useEffect(() => {
+    dragPreview(getEmptyImage(), { captureDraggingState: true });
+  }, []);
+
   drop(dropRef);
 
   useEffect(() => {
@@ -267,10 +275,7 @@ const ComponentWrapper = ({
 
   return (
     <>
-      <DragPreviewImage
-        connect={dragPreview}
-        src={component.componentName.includes("Text") ? textDnd : defaultDnd}
-      />
+      <DragLabel/>
       <div
         data-test-id="div-before-drop-indicator"
         key={`nested-component-${compIndex}`}
@@ -325,9 +330,9 @@ const ComponentWrapper = ({
                 }}
                 data-testid="component-label-name"
               >
-                {component.componentName}
               </Typography>
             </StaticLabel>
+                {component.componentName}
             {compIndex !== 0 && (
               <SmallIconButton
                 onClick={() => {
