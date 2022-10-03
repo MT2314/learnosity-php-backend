@@ -39,13 +39,11 @@ export const matchMsWordList = (node, delta) => {
 };
 
 export const maybeMatchMsWordList = (node, delta) => {
-  console.log(node);
-  console.log(delta);
-  if (delta.ops[0]?.insert) {
+  if (!delta?.ops[0]?.insert?.image) {
     if (
-      delta.ops[0]?.insert?.trimLeft()[0] === "·" ||
-      delta.ops[0]?.insert?.trimLeft()[0] === "o" ||
-      delta.ops[0]?.insert
+      delta?.ops[0]?.insert?.trimLeft()[0] === "·" ||
+      delta?.ops[0]?.insert?.trimLeft()[0] === "o" ||
+      delta?.ops[0]?.insert
         ?.trimLeft()
         ?.substring(0, 3)
         ?.match(/^(\d+\.\s)/)
