@@ -92,7 +92,7 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
       ) : (
         <PlaceHolder />
       )}
-    </StyleAccordionBody>
+    </StyledAccordionDetails>
   );
 };
 
