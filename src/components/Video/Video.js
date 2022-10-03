@@ -1,7 +1,6 @@
 import React from "react";
 
 import FormattedText from "../FormattedText/FormattedText";
-import DragLabel from "../../Utility/DragLabel";
 import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 
 import YouTube from "react-youtube";
@@ -30,8 +29,6 @@ const Video = ({
 
   return (
     <>
-      {/* on drag the drag label appears with component name */}
-      <DragLabel />
       <div className={styles.videoContainer} data-testid="video">
         {type === "" ||
           (type === "brightcove" && !videoId) ||

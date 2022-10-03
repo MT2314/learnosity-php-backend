@@ -3,7 +3,6 @@ import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
 import { Provider } from "./Provider";
 import "./styles/Text.scss";
-import DragLabel from "../../Utility/DragLabel";
 
 import PopupDialogs from "./dialogs/PopupDialogs";
 
@@ -42,8 +41,6 @@ const Text = ({
 
   return (
     <>
-    {/* on drag the drag label appears with component name */}
-      <DragLabel/>
       <CssBaseline />
       {/* <ThemeProvider theme={textTheme}> */}
       <ReactQuillContainer isInfoBox={isInfoBox}>
