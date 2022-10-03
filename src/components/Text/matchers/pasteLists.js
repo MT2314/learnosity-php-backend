@@ -11,11 +11,11 @@ export const matchMsWordList = (node, delta) => {
     return delta;
   }
 
-  bulletOp.insert = bulletOp.insert.trimLeft();
+  bulletOp.insert = bulletOp.insert?.trimLeft();
   let listPrefix = bulletOp.insert.match(/^.*?(^·|\.)/) || bulletOp.insert[0];
   bulletOp.insert = bulletOp.insert
     .substring(listPrefix[0].length, bulletOp.insert.length)
-    .trimLeft();
+    ?.trimLeft();
 
   // Trim the newline off the last op
   let last = ops[ops.length - 1];
@@ -39,15 +39,19 @@ export const matchMsWordList = (node, delta) => {
 };
 
 export const maybeMatchMsWordList = (node, delta) => {
-  if (
-    delta.ops[0]?.insert?.trimLeft()[0] === "·" ||
-    delta.ops[0]?.insert?.trimLeft()[0] === "o" ||
-    delta.ops[0]?.insert
-      ?.trimLeft()
-      ?.substring(0, 3)
-      ?.match(/^(\d+\.\s)/)
-  ) {
-    return matchMsWordList(node, delta);
+  console.log(node);
+  console.log(delta);
+  if (delta.ops[0]?.insert) {
+    if (
+      delta.ops[0]?.insert?.trimLeft()[0] === "·" ||
+      delta.ops[0]?.insert?.trimLeft()[0] === "o" ||
+      delta.ops[0]?.insert
+        ?.trimLeft()
+        ?.substring(0, 3)
+        ?.match(/^(\d+\.\s)/)
+    ) {
+      return matchMsWordList(node, delta);
+    }
   }
 
   return delta;
