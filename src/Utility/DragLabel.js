@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Menu } from '@mui/icons-material';
 import { useDragLayer } from "react-dnd";
 import { useTranslation, Trans } from "react-i18next";
+import "../Icons/componentIcons/Vector.svg"
 
 const StyledLabel = styled("div")(({ theme }) => ({
-  display:'flex',
+  display: 'flex',
   alignItems: 'center',
   width: 'fit-content',
   height: '64px',
@@ -15,7 +15,7 @@ const StyledLabel = styled("div")(({ theme }) => ({
   borderRadius: '4px',
 }));
 
-const StyledTypography = styled('p')(({theme}) => ({
+const StyledTypography = styled('p')(({ theme }) => ({
   fontFamily: 'Inter',
   fontWeight: 500,
   fontSize: '18px',
@@ -37,24 +37,24 @@ const StyledlayerStyles = styled('div')(() => ({
 
 
 
-const DragLabel = () => { 
-  
-  const { 
+const DragLabel = () => {
+
+  const {
     item,
     isDragging,
     initialCursorOffset,
     initialFileOffset,
-    currentFileOffset,} = useDragLayer(
-    monitor => ({
-      item: monitor.getItem(),
-      itemType: monitor.getItemType(),
-      initialCursorOffset: monitor.getInitialClientOffset(),
-      initialFileOffset: monitor.getInitialSourceClientOffset(),
-      currentFileOffset: monitor.getSourceClientOffset(),
-      isDragging: monitor.isDragging(),
-    }))
+    currentFileOffset, } = useDragLayer(
+      monitor => ({
+        item: monitor.getItem(),
+        itemType: monitor.getItemType(),
+        initialCursorOffset: monitor.getInitialClientOffset(),
+        initialFileOffset: monitor.getInitialSourceClientOffset(),
+        currentFileOffset: monitor.getSourceClientOffset(),
+        isDragging: monitor.isDragging(),
+      }))
 
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
   if (!isDragging) {
     return null;
@@ -69,17 +69,19 @@ const DragLabel = () => {
           currentFileOffset
         )}
       >
-      <div>
-      <StyledLabel>
-        <Menu/>
-        <StyledTypography>{t(item.componentName)}</StyledTypography>
-      </StyledLabel>
-      </div>
+        <div>
+          <StyledLabel>
+            <svg width="16" height="7" viewBox="0 0 16 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 0.5H0V2.5H16V0.5ZM0 6.5H16V4.5H0V6.5Z" fill="#232323" />
+            </svg>
+            <StyledTypography>{t(item.componentName)}</StyledTypography>
+          </StyledLabel>
+        </div>
       </div>
     </StyledlayerStyles>
   );
 
-  
+
   function getItemStyles(
     initialCursorOffset,
     initialOffset,
@@ -90,15 +92,15 @@ const DragLabel = () => {
         display: "none",
       };
     }
-  
+
     const x = initialCursorOffset?.x + (currentOffset.x - initialOffset.x);
     const y = initialCursorOffset?.y + (currentOffset.y - initialOffset.y);
     const transform = `translate(${x}px, ${y}px)`;
-  
+
     return {
       transform,
       WebkitTransform: transform,
     };
   }
-}  
+}
 export default DragLabel;
