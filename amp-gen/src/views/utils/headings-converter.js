@@ -104,8 +104,6 @@ function _setHeading(heading, level) {
     heading.headingLevel = "h" + level;
   }
 
-  console.log("heading:", heading);
-
   return heading;
 }
 
