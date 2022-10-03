@@ -85,6 +85,7 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
             setDroppedIndex={setDroppedIndex}
             setActiveComp={setActiveComp}
             activeComp={activeComp}
+            draggingOver={isOver}
             />
             );
           })
