@@ -82,6 +82,7 @@ const Q_GETLESSONS = gql`
       id
       type
       name
+      courseCode
       description
       indexInParent
       componentContainer {
