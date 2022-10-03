@@ -31,10 +31,14 @@ const StyledAccordionPane = styled(AccordionSummary)(({ isActive }) => ({
 }));
 //styles end.
 
-const Pane = ({ accordionIndex, accordion, isActive, setIsActive }) => {
+const Pane = ({ accordionIndex, accordion, isActive, setIsActive, removeError, setRemoveError }) => {
   const { title, placeholderTitle } = accordion;
   const [, dispatch] = useContext(LayoutContext);
   const [, setActivePane] = useContext(ActivePaneContext);
+
+  useEffect(() => {
+    setRemoveError(false);
+  }, [removeError]);
 
   return (
     <div key={`pane-${accordionIndex}`}>

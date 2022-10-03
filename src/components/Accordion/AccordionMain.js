@@ -10,7 +10,7 @@ export const defaultProps = {
       id: uuidv4(),
       title: "",
       placeholderTitle: "Pane 1",
-      components: [],
+      components: ["1"],
       expanded: false,
     }
   ],

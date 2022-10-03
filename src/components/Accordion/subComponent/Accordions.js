@@ -46,7 +46,10 @@ const StyledToolBar = styled("div")(({ toolbar }) => ({
 const Accordions = () => {
   const [state, dispatch] = useContext(LayoutContext);
   const [isActive, setIsActive] = useState(null);
-  
+
+  const [removeError, setRemoveError] = useState(false);
+
+
   //click outside hook sets active pane to null when user clicks outside the accordion pane
   const paneRef = useRef()
   useOnClickOutside(paneRef, () => setIsActive(null), true);
@@ -55,7 +58,7 @@ const Accordions = () => {
     <div className="accordion-container" data-testid="accordion-component" ref={paneRef}>
       {/* TODO: Add Expand all and collapse all btns when a second pane is added */}
       <StyledToolBar toolbar={isActive === 0 ? true : isActive}>
-        <ConfigBar paneIndex={isActive} setPaneIndex={setIsActive}/>
+        <ConfigBar paneIndex={isActive} setPaneIndex={setIsActive} setRemoveError={setRemoveError} />
       </StyledToolBar>
       {state.length > 1 && (
         <StyledButtonsDiv>
@@ -88,7 +91,8 @@ const Accordions = () => {
             disableGutters={true}
             expanded={accordion.expanded}
           >
-            <Pane accordionIndex={accordionIndex} accordion={accordion} isActive={isActive} setIsActive={setIsActive} />
+            <Pane accordionIndex={accordionIndex} accordion={accordion} isActive={isActive} setIsActive={setIsActive} removeError={removeError}
+              setRemoveError={setRemoveError} />
             <AccordionDetails
               sx={{
                 borderWidth: "1px 0px",

@@ -17,7 +17,7 @@ export const layoutConfig = (draft, action) => {
       });
       return draft;
     case "REMOVE_LAYER":
-      draft.splice(action.currentTab, 1);
+      draft.splice(action.paneIndex, 1);
       return draft;
     case "ADD_COMPONENT":
       draft[action.tabIndex].components.push({

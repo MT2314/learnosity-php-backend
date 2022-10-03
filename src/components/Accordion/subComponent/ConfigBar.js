@@ -1,9 +1,10 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import styled from "@emotion/styled";
 import { v4 as uuidv4 } from "uuid";
 import { tooltipClasses } from "@mui/material/Tooltip";
 import { IconButton, Toolbar, AppBar, Tooltip } from "@mui/material";
 import { ArrowDownward, ArrowUpward, Add, Remove } from "@mui/icons-material";
+import DialogProvider from "../../../Utility/DialogProvider";
 import { LayoutContext } from "../../../Context/InteractivesContext";
 
 // * Styled Components
@@ -72,9 +73,11 @@ const StyledIconButton = styled(IconButton)({
 });
 
 
-const ConfigBar = ({ paneIndex, setPaneIndex }) => {
+const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
 
     const [state, dispatch] = useContext(LayoutContext)
+
+    const [showDialog, setShowDialog] = useState(false);
 
     const addTab = (state) => {
         dispatch({
@@ -104,6 +107,53 @@ const ConfigBar = ({ paneIndex, setPaneIndex }) => {
         });
         setPaneIndex(paneIndex - 1)
     }
+
+    const removeTab = async () => {
+        setRemoveError(true);
+        let active;
+        
+        if(paneIndex === state.length - 1){
+            active = paneIndex - 1
+        } else if(paneIndex === 0){
+            active = 0
+        } else {
+            active = paneIndex + 1
+        }
+    
+        dispatch({
+          func: "REMOVE_LAYER",
+          paneIndex: paneIndex 
+        });
+        setPaneIndex(active);
+      };
+
+    const removeTabDialog = (state[paneIndex]?.title || state[paneIndex]?.placeholderTitle)  && {
+        title: "Delete Pane?",
+        message: [
+            `Deleting "${state[paneIndex].title || state[paneIndex].placeholderTitle
+            }" will also delete ${state[paneIndex].components.length} component(s).`,
+            <br key={1} />,
+            <br key={2} />,
+            `You are able to undo this action.`,
+        ],
+        onConfirm: () => {
+            onConfirm();
+        },
+        onCancel: () => {
+            handleClose();
+        },
+        confirmMessage: "Delete",
+        cancelMessage: "Cancel",
+    };
+
+    const handleClose = () => {
+        setShowDialog(false);
+    };
+
+    const onConfirm = () => {
+        setShowDialog(false);
+        removeTab();
+    };
 
     return (
         <Container>
@@ -140,10 +190,19 @@ const ConfigBar = ({ paneIndex, setPaneIndex }) => {
                             <Add />
                         </StyledIconButton>
                     </StyledTooltip>
+                    {showDialog && (
+                        <DialogProvider initialState={removeTabDialog} defaultState />
+                    )}
                     <StyledTooltip title="remove current pane" arrow placement="top">
                         <StyledIconButton
                             disableRipple
                             color="inherit"
+                            disabled={state.length <= 1}
+                            onClick={() => {
+                                state[paneIndex].components.length > 0
+                                    ? setShowDialog(true)
+                                    : removeTab()
+                            }}
                         >
                             <Remove />
                         </StyledIconButton>
