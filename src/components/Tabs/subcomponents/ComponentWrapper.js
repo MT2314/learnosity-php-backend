@@ -330,9 +330,9 @@ const ComponentWrapper = ({
                 }}
                 data-testid="component-label-name"
               >
+                {t(component.componentName)}
               </Typography>
             </StaticLabel>
-                {component.componentName}
             {compIndex !== 0 && (
               <SmallIconButton
                 onClick={() => {

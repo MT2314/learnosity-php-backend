@@ -1,5 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { useDrag, useDrop, DragPreviewImage } from "react-dnd";
+import { getEmptyImage } from 'react-dnd-html5-backend';
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
@@ -11,11 +12,10 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import {LayoutContext, TabContext} from "../Context/InteractivesContext";
 
-import textDnd from "../Icons/dndIcons/textDnd.png";
-import defaultDnd from "../Icons/dndIcons/defaultDnd.png";
 import DropIndicator from "./DropIndicator";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
 import componentIndex from "../components/componentIndex";
+import DragLabel from "./DragLabel";
 
 export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
   color: draggingOver ? "transparent" : "#ffffff" ,
@@ -261,6 +261,12 @@ const NestedComponentWrapper = ({
     }
   }, [didDrop]);
 
+
+  //remove default drag image from html5backend replace with DragLabel component
+  useEffect(() => {
+    dragPreview(getEmptyImage(), { captureDraggingState: true });
+  }, []);
+
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
@@ -275,12 +281,7 @@ const NestedComponentWrapper = ({
 
   return (
     <>
-
-    {/* remove for localized drag label */}
-      <DragPreviewImage
-        connect={dragPreview}
-        src={component.componentName.includes("Text") ? textDnd : defaultDnd}
-      />
+      <DragLabel/>
       <div
         data-test-id="div-before-drop-indicator"
         key={`nested-component-${compIndex}`}

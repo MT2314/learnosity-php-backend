@@ -15,27 +15,6 @@ const StyledAccordionContainer = styled("div")({
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
   backgroundColor: "#FFFFFF",
 }));
-
-const StyledAccordionDetails = styled(AccordionDetails)({
-  borderWidth: "0rem 0.0625rem 0.0625rem 0.0625rem",
-  borderStyle: "solid",
-  borderColor: "#BDBDBD",
-});
-
-const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
-  fontWeight: "400",
-  fontSize: "1rem",
-  color: disabled ? "#000000" : "#232323",
-  letterSpacing: "0.009375rem",
-  lineHeight: "1.5rem",
-  textTransform: "capitalize",
-}));
-
-const StyledButtonsDiv = styled("div")(() => ({
-  display: "flex",
-  justifyContent: "flex-end",
-  gap: "1rem",
-}));
 //Styled components end
 
 const Accordions = () => {
