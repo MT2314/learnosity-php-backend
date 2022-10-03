@@ -6,7 +6,7 @@ import {
   LayoutContext,
 } from "../../../Context/InteractivesContext";
 import PlaceHolder from "../subComponent/PlaceHolder";
-import NestedComponentWrapper from '../../../Utility/NestedComponentWrapper'
+import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 
 const StyleAccordionBody = styled("div")(({ isOver }) => ({
   backgroundColor: isOver ? "#E9EDF1" : "white",
@@ -14,7 +14,7 @@ const StyleAccordionBody = styled("div")(({ isOver }) => ({
 
 const AccordionItem = ({ accordion, accordionIndex }) => {
   const { id, components } = accordion;
-  const [ activeComp, setActiveComp] = useState(null);
+  const [activeComp, setActiveComp] = useState(null);
   const [activeTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
   const [droppedIndex, setDroppedIndex] = useState(null);
@@ -37,20 +37,20 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
       "IFrame",
     ],
     drop: async (item, monitor) => {
-      console.log(item)
       if (!acceptListComp(item)) setShowDropError(true);
       if (item.within && components.length !== 0) return;
       if (monitor.didDrop()) return;
+      if (!monitor.isOver({ shallow: true })) return;
       if (acceptListComp(item)) {
         dispatch({
           func: "ADD_COMPONENT",
-          tabIndex: activeTab,
+          tabIndex: accordionIndex,
           component: {
             componentName: item.componentName,
             componentProps: JSON.parse(item?.componentProps),
           },
         });
-        item?.delete && item?.delete(item.tabIndex, item.compIndex);
+        item?.delete && item?.delete();
       }
     },
     collect: (monitor) => ({
@@ -76,12 +76,12 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
               componentProps={component.componentProps}
               component={component}
               compIndex={compIndex}
-              tabIndex={activeTab}
+              tabIndex={accordionIndex}
               inContainer={inContainer}
               setDroppedIndex={setDroppedIndex}
               setActiveComp={setActiveComp}
               activeComp={activeComp}
-              />
+            />
           );
         })
       ) : (

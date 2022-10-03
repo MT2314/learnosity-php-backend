@@ -9,7 +9,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import {LayoutContext, TabContext} from "../Context/InteractivesContext";
+import { LayoutContext, TabContext } from "../Context/InteractivesContext";
 
 import textDnd from "../Icons/dndIcons/textDnd.png";
 import defaultDnd from "../Icons/dndIcons/defaultDnd.png";
@@ -87,7 +87,6 @@ const NestedComponentWrapper = ({
   setActiveComp,
   activeComp,
 }) => {
-
   const dropRef = useRef(null);
 
   const [, dispatch] = useContext(LayoutContext);
@@ -140,7 +139,9 @@ const NestedComponentWrapper = ({
       getItem: monitor.getItem(),
     }),
     drop: async (item, monitor) => {
+      console.log(item);
       const currentTab = item?.tabIndex === tabIndex;
+
       const hoverIndex = currentTab
         ? dropIndexOffset === 0
           ? item.compIndex < compIndex
@@ -158,7 +159,7 @@ const NestedComponentWrapper = ({
       if (acceptListComp(item)) {
         setDroppedIndex(hoverIndex);
         setDropIndexOffset(null);
-
+        console.log("DROPPED IN WRAPPER");
         dispatch({
           func:
             item.compIndex !== undefined && currentTab
@@ -177,7 +178,8 @@ const NestedComponentWrapper = ({
           }),
         });
         if (!currentTab && item?.delete) {
-          item?.delete(item.tabIndex, item.compIndex);
+          console.log("Deleting");
+          item?.delete();
         }
       }
     },
@@ -230,13 +232,13 @@ const NestedComponentWrapper = ({
     item: () => ({
       componentName: component.componentName,
       componentProps: JSON.stringify(componentProps),
-      compIndex: compIndex,
-      tabIndex: tabIndex,
-      delete: (tabIndex, compIndex) => {
+      compIndex,
+      tabIndex,
+      delete: () => {
         dispatch({
           func: "DELETE_COMPONENT",
-          tabIndex: tabIndex,
-          compIndex: compIndex,
+          tabIndex,
+          compIndex,
         });
       },
       within: true,
@@ -250,17 +252,6 @@ const NestedComponentWrapper = ({
   });
 
   drop(dropRef);
-
-  useEffect(() => {
-    if (didDrop && !inContainer) {
-      dispatch({
-        func: "DELETE_COMPONENT",
-        tabIndex: tabIndex,
-        compIndex: compIndex,
-      });
-      //setIsDragging(false);
-    }
-  }, [didDrop]);
 
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
