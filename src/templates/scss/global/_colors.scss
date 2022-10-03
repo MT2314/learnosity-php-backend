@@ -7,20 +7,19 @@
 // To see a documented version of the colour swatches, see
 // /views/demo-colors.html
 //
-$outline-focus: #0B9F93;
+$outline-focus: #0b9f93;
 
 $brand-primary: #0e8515; // NEW color for $brand-green
 $brand-primary-dark: #096e0f; // NEW color for $brand-green-dark
 
-$brand-secondary-light: #ececec; // formerly $background-grey
-$brand-secondary: #c6cdd0; // formerly $border-grey
+$brand-secondary-light: rgba(0, 0, 0, 0.02); // formerly $background-grey
+$brand-secondary: rgba(0, 0, 0, 0.15); // formerly $border-grey
 $brand-secondary-dark: #8e9295; // formerly $med-grey
 
 $brand-tertiary: #deeddf; // formerly $brand-green-light
 $brand-tertiary-dark: #aadead; // formerly $brand-green-med
 
 $brand-complementary: #b5e2de; // formerly $background-blue
-
 
 // ----------------------------------------------------------------------
 // Generic color/role Variables
@@ -36,26 +35,25 @@ $button-text: #fff;
 
 $page-background: #fff;
 
-// Below is a colour Karen is adding 
+// Below is a colour Karen is adding
 // PLEASE CHECK
 
 $box-shadow-2: #00000026;
 
 // Alert States - WIP
 //
-// Success 
+// Success
 // FA green icon for checkmarks
 $success-icon: #25912c; // $text-green
 
-// Warning 
-$warning-icon: #f9f1c6; // FA yellow icon for Exclamations 
+// Warning
+$warning-icon: #f9f1c6; // FA yellow icon for Exclamations
 $warning-bg: #f9f1c6;
 $warning-text: $brand-primary-dark;
 
-// Danger 
+// Danger
 // FA red icon for Xs
 $danger-icon: #f43131; // $text-red
-
 
 // ----------------------------------------------------------------------
 // Generic Roles
@@ -100,20 +98,17 @@ $accordion-heading-active-border: $brand-primary;
 // Audio
 $audio-bg: $brand-secondary-light;
 
-
 // Callout
 $callout-bg: $brand-secondary-light;
-
 
 // Carousel
 $carousel-dots-default-bg: $brand-secondary;
 $carousel-dots-current-bg: $brand-secondary-dark;
 
-
 // Click-to-Reveal
 $ctr-btn-active-border: $brand-tertiary-dark;
 
-// Navbar 
+// Navbar
 $navbar-progress-bar: $brand-primary-dark;
 $navbar-box-shadow: $box-shadow-2;
 $navbar-lesson-title-bg: $brand-secondary-light;
@@ -132,7 +127,6 @@ $navbar-sidebar-link-hover: $brand-primary-dark;
 $navbar-sidebar-link-bg: $brand-tertiary;
 $navbar-sidebar-close-icon: $heading-underline;
 
-
 // Skip-to-content link
 $link-skip-bg: $brand-secondary-light;
 
@@ -146,11 +140,9 @@ $quiz-choice-selected-border: $brand-primary;
 $quiz-choice-hover-bg: $brand-tertiary;
 $quiz-choice-hover-border: $brand-tertiary-dark;
 
-
 // Table
 $table-header-bg: $brand-tertiary;
 $table-striped-bg: $brand-secondary-light;
-
 
 // Tabs
 $tab-default-bg: $page-background;

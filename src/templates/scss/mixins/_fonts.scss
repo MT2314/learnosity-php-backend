@@ -2,41 +2,41 @@
 // They are commented for quick reference.
 // Largest/h1
 @mixin font-largest {
-    font-size: 1.7rem; // 27.2px / 30.6
-    //font-size: 1.875rem; // 30px
-    line-height: 1.9rem;
+  font-size: 1.7rem; // 27.2px / 30.6
+  //font-size: 1.875rem; // 30px
+  line-height: 1.9rem;
 }
 
 // Largest/h2
 @mixin font-larger {
-    font-size: 1.4rem; // 22.4px / 25.2px
-    //font-size: 1.5rem; // 24px
-    line-height: 1.6rem;
+  font-size: 1.4rem; // 22.4px / 25.2px
+  //font-size: 1.5rem; // 24px
+  line-height: 1.6rem;
 }
 
 // Large/h3
 @mixin font-large {
-    font-size: 1.1rem; // 17.6px / 19.8px
-    //font-size: 1.25rem; // 20px
-    line-height: 1.3rem;
+  font-size: 1.1rem; // 17.6px / 19.8px
+  //font-size: 1.25rem; // 20px
+  line-height: 1.3rem;
 }
 
 // Normal/h4/Formerly $body-copy
 @mixin font-normal {
-    font-size: 1rem; // 16px / 18px
-    line-height: 1.25rem;
+  font-size: 1rem; // 16px / 18px
+  line-height: 1.25rem;
 }
 
 // Small/h5
 @mixin font-small {
-    font-size: 0.9rem; // 14p.4x / 16.2px
-    //font-size: 0.875rem; // 14px
-    line-height: 1.1rem;
+  font-size: 0.9rem; // 14p.4x / 16.2px
+  //font-size: 0.875rem; // 14px
+  line-height: 1.1rem;
 }
 
 // Smallest/h6/captions
 @mixin font-smallest {
-    font-size: 0.8rem; // 12.8px / 14.4px
-    //font-size: 0.75rem; // 12px
-    line-height: 1rem;
+  font-size: 0.8rem; // 12.8px / 14.4px
+  //font-size: 0.75rem; // 12px
+  line-height: 1rem;
 }
