@@ -1,9 +1,0 @@
-.wrapper.iframe {
-    @include fit;
-    border-radius: $btn-goto-rad;
-
-    // center placeholder image
-    amp-img {
-        margin: auto;
-    }
-}

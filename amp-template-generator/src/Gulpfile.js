@@ -75,7 +75,8 @@ exports.reset = reset;
 function _sass() {
   return (
     gulp
-      .src("../../src/templates/scss/styles.scss")
+      // .src("../../src/templates/scss/styles.scss")
+      .src("styles/scss/styles.scss")
       .pipe(
         sass({
           includePaths: ["node_modules"],
