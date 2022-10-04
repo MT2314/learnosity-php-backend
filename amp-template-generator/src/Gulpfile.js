@@ -338,7 +338,7 @@ if (__getBuildMode() === "demo") {
   _copyMockData();
 }
 
-// Copying the contents of the mockData directory into views/data to be usesd with the demo html pages
+// Copying the contents of the mockData directory into views/data to be used with the demo html pages
 function _copyMockData() {
   return gulp.src("mockData/component*.js").pipe(gulp.dest("views/data/"));
 }
