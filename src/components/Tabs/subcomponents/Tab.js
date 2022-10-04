@@ -87,8 +87,10 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
     } else if (isOver) {
       setShowError();
       setShowDropError(false);
+      setIsDragging(true);
+    } else {
+      setIsDragging(false);
     }
-    setIsDragging(isOver);
   }, [isOver]);
 
   useEffect(() => {
