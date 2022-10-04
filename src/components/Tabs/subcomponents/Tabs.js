@@ -58,7 +58,7 @@ const Tabs = () => {
                 key={`tab-title-${tabIndex}`}
                 tabTitle={tab.title}
                 tab={tab}
-                placeholderTitle={tab.title}
+                tabPlaceholder={tab.placeholder}
                 tabIndex={tabIndex}
                 showToolbar={showToolbar}
               />

@@ -82,7 +82,7 @@ const StyledInput = styled(TextareaAutosize)(({ activeTab, tabIndexProp }) => ({
 }));
 //Styled components end
 
-const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
+const TabTitle = ({ tabTitle, tabPlaceholder, tabIndex, showToolbar }) => {
   const [activeTab, setActiveTab] = useContext(TabContext);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -139,7 +139,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
         <StyledInput
           activeTab={activeTab}
           tabIndexProp={tabIndex}
-          placeholder={tabTitle}
+          placeholder={tabPlaceholder}
           aria-label="tab title input"
           aria-multiline="true"
           role={activeTab == tabIndex ? "textbox" : "tab"}
@@ -150,7 +150,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           onChange={handleTitleChange}
           onFocus={() => handleCursorFocus(tabIndex)}
           data-id={state[tabIndex].id}
-          value={tabTitle || ""}
+          value={tabTitle.length > 0 ? tabTitle : ""}
           onBlur={handleTitleBlur}
           ref={inputRef}
         />
@@ -160,7 +160,7 @@ const TabTitle = ({ tabTitle, tabIndex, showToolbar }) => {
           tabIndexProp={tabIndex}
           role="tab"
         >
-          {tabTitle}
+          {tabTitle.length > 0 ? tabTitle : tabPlaceholder}
         </StyledPlaceholder>
       )}
     </StyledTitle>
