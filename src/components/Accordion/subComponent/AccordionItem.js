@@ -11,7 +11,7 @@ import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 
 const StyledAccordionDetails = styled(AccordionDetails)(({ isOver }) => ({
   backgroundColor: isOver ? 'rgba(21, 101, 192, 0.04)' : '#ffffff',
-  borderWidth: "1px 0px",
+  borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "#BDBDBD",
 }));
