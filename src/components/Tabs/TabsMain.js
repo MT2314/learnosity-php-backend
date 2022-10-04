@@ -12,12 +12,14 @@ export const defaultProps = {
     {
       id: uuidv4(),
       title: "Tab 1",
+      placeholder: "Tab 1",
       components: [],
       activeTab: true,
     },
     {
       id: uuidv4(),
       title: "Tab 2",
+      placeholder: "Tab 2",
       components: [],
       activeTab: false,
     },
