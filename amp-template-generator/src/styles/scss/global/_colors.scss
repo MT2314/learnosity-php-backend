@@ -1,25 +1,17 @@
 // ----------------------------------------------------------------------
 // Color Palette
 //
-// These colours should NOT get assigned within other CSS; Instead, assign
-// them to component role variable, below.
-//
-// To see a documented version of the colour swatches, see
-// /views/demo-colors.html
-//
-$outline-focus: #0b9f93;
+// Brand Colors (For example, initial ILC colors are green)
+$brand700: #005700;
+$brand500: #008800;
+$brand400: #34AE34;
+$brand300: #55C367;
+$brand200: #91E09E;
+$brand100: #CEF6D5;
+$brand50: #EEFFF1;
 
-$brand-primary: #0e8515; // NEW color for $brand-green
-$brand-primary-dark: #096e0f; // NEW color for $brand-green-dark
-
-$brand-secondary-light: rgba(0, 0, 0, 0.02); // formerly $background-grey
-$brand-secondary: rgba(0, 0, 0, 0.15); // formerly $border-grey
-$brand-secondary-dark: #8e9295; // formerly $med-grey
-
-$brand-tertiary: #deeddf; // formerly $brand-green-light
-$brand-tertiary-dark: #aadead; // formerly $brand-green-med
-
-$brand-complementary: #b5e2de; // formerly $background-blue
+// Grey Colors (Used for text/typography)
+$grey900: 
 
 // ----------------------------------------------------------------------
 // Generic color/role Variables
