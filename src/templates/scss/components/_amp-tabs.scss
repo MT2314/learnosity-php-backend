@@ -79,10 +79,7 @@
 
         &[selected] {
           background-color: $tab-active-bg;
-          // border-top: none;
-          border: 0.0625rem solid $border-color;
           border-bottom: 0.25rem solid $tab-active-border-top;
-          padding-top: 0.25rem; // to account for the larger border shifting the text down
           color: black;
         }
 
