@@ -1,5 +1,4 @@
 const client = require('./graphql-config').client;
-const constants = require('./constants');
 
 /**
  * Returns an Object representing the entity id provided. If an error is 
@@ -16,16 +15,16 @@ async function run(query, params) {
       if (err.hasOwnProperty('response')) {
         if (err.response.hasOwnProperty('errors')) {
           // error but probably not graphql specifically
-          console.error(err.response.errors);
+          console.error('gql client errors', err.response.errors);
         } else {
           // graphql error
-          console.error(err.response.error); // GraphQL response errors
-          console.error(err.request.query); // GraphQL response errors
-          console.error(err.response.data); // Response data if available
+          console.error('gql err.response.error', err.response.error); // GraphQL response errors
+          console.error('gql err.request.query', err.request.query); // GraphQL query errors
+          console.error('gql err.response.data', err.response.data); // Response data if available
         }
       } else {
         // general error
-        console.error(err);
+        console.error('gql general err', err);
       }
 
       return {};
