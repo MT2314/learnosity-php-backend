@@ -5,7 +5,7 @@ const PlaceholderContainer = styled("div")(({ isOver, showError }) => ({
   backgroundColor: isOver
     ? showError
       ? "rgba(211, 47, 47, 0.04)"
-      : "rgba(21, 101, 192, 0.04)"
+      : "#F6F9FC"
     : showError
     ? "rgba(211, 47, 47, 0.04)"
     : "inherit",
