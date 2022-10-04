@@ -183,7 +183,7 @@ const ComponentWrapper = ({
           }),
         });
         if (!currentTab && item?.delete) {
-          item?.delete(item.tabIndex, item.compIndex);
+          item.delete();
         }
       }
     },
@@ -238,15 +238,16 @@ const ComponentWrapper = ({
       componentProps: JSON.stringify(componentProps),
       compIndex: compIndex,
       tabIndex: tabIndex,
-      delete: (tabIndex, compIndex) => {
+      delete: () => {
         dispatch({
           func: "DELETE_COMPONENT",
-          tabIndex: tabIndex,
-          compIndex: compIndex,
+          tabIndex,
+          compIndex,
         });
       },
       within: true,
       new: true,
+      source: "component",
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),

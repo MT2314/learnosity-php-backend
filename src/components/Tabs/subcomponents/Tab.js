@@ -15,7 +15,7 @@ const StyleTabBody = styled("div")(({ isDragging }) => ({
   borderColor: "#bdbdbd",
   borderStyle: "solid",
   borderWidth: "0 1px 1px 1px",
-  backgroundColor: isDragging ? "#E9EDF1" : "white",
+  backgroundColor: isDragging ? "#F6F9FC" : "white",
 }));
 
 const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
@@ -58,7 +58,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
             componentProps: JSON.parse(item?.componentProps),
           },
         });
-        item?.delete && item?.delete(item.tabIndex, item.compIndex);
+        item?.delete && item?.delete();
       }
     },
 
@@ -88,8 +88,10 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
     } else if (isOver) {
       setShowError();
       setShowDropError(false);
+      setIsDragging(true);
+    } else {
+      setIsDragging(false);
     }
-    setIsDragging(isOver);
   }, [isOver]);
 
   useEffect(() => {
