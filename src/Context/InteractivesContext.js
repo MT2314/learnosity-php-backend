@@ -146,15 +146,14 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   }, []);
 
   useEffect(() => {
-    diff &&
-      mounted &&
-      dispatch({ func: "UPDATE_STATE", data: layoutState }) &&
-      setActivePane({
-        func: "UPDATE_STATE",
-        state: layoutState.map((item) => {
-          return { expanded: item.expanded };
-        }),
-      });
+    setActivePane({
+      func: "UPDATE_STATE",
+      state: layoutState.map((item) => {
+        return { expanded: item.expanded };
+      }),
+    });
+
+    diff && mounted && dispatch({ func: "UPDATE_STATE", data: layoutState });
   }, [layoutState]);
 
   useEffect(() => {

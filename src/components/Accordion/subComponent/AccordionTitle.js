@@ -92,7 +92,7 @@ const AccordionTitle = ({
 
   return (
     <>
-      {isActive ? (
+      {(isActive === 0 ? true : isActive) ? (
         <StyledAccordionTitle
           placeholder={placeholderTitle}
           aria-label="accordion title input"
