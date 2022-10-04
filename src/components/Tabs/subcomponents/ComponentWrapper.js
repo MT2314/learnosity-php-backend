@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { getEmptyImage } from 'react-dnd-html5-backend';
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
@@ -11,22 +11,23 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import { ComponentContext, LayoutContext, TabContext } from "../TabContext";
+import { LayoutContext } from "../TabContext";
 
 import DropIndicator from "../../../Utility/DropIndicator";
-import DragLabel from "../../../Utility/DragLabel"
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import componentIndex from "../../../components/componentIndex";
+import DragLabel from "../../../Utility/DragLabel"
 
-export const SmallIconButton = styled(IconButton)(() => ({
-  color: "#FFF",
+export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
+  color: draggingOver ? "transparent" : "#FFF",
 }));
 
 const BlueBox = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => ({
-    outline: showSelf
+    outline: 
+    showSelf && !draggingSelf
       ? `3px solid #1466C0`
-      : hoverActive
+      : hoverActive && !draggingSelf
       ? `3px solid #DAE3EE`
       : null,
     borderRadius: "4px",
@@ -42,15 +43,15 @@ const DragHandle = styled(DragHandleIcon)({
 });
 
 const StaticLabel = styled("span")(
-  ({ theme, isHoverActive, isDragging, showSelf }) => ({
-    background: isHoverActive && !showSelf ? "#DAE3EE" : "#1466C0",
+  ({ theme, hoverActive, draggingSelf, showSelf }) => ({
+    background: hoverActive && !showSelf ? "#DAE3EE" : "#1466C0",
     width: "fit-content",
     height: "100%",
     borderRadius: "4px 4px 0px 0px",
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
-    opacity: isDragging ? 0 : 1,
+    opacity: draggingSelf ? 0 : 1,
   })
 );
 
@@ -58,13 +59,13 @@ export const ComponentLabelContainer = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => {
     const style = {
       background: showSelf && "#1466C0",
+      display: draggingSelf ? "none" : "flex",
       width: "fit-content",
       marginLeft: "-3px",
       padding: "0 1px",
       color: showSelf ? "#FFF" : "#1466C0",
       borderRadius: "4px 4px 0px 0px",
       opacity: showSelf || hoverActive ? 1 : 0,
-      display: "flex",
       alignItems: "center",
     };
 
@@ -96,8 +97,6 @@ const ComponentWrapper = ({
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
   const [tabActive, setTabActive] = useState(false);
 
-  const [activeTab] = useContext(TabContext);
-
   //get the matching component from the componentIndex
   const componentDetails = componentIndex[component.componentName];
 
@@ -110,7 +109,6 @@ const ComponentWrapper = ({
   useEffect(() => {
     tabActive && setShowSelf(true);
   }, [tabActive]);
-
   //use translation to localize component name
   const { t } = useTranslation();
 
@@ -120,8 +118,6 @@ const ComponentWrapper = ({
       ["Text", "Table", "Video", "Image"].indexOf(item?.componentName) >= 0
     );
   };
-
-  // console.log("activeComp", activeComp);
 
   const [
     { isOver, canDrop, isOverCurrent, droppedInContainer, getItem },
@@ -164,7 +160,6 @@ const ComponentWrapper = ({
       if (acceptListComp(item)) {
         setDroppedIndex(hoverIndex);
         setDropIndexOffset(null);
-
         dispatch({
           func:
             item.compIndex !== undefined && currentTab
@@ -182,9 +177,7 @@ const ComponentWrapper = ({
             },
           }),
         });
-        if (!currentTab && item?.delete) {
-          item.delete();
-        }
+        !currentTab && item?.delete && item?.delete();
       }
     },
     canDrop: (item) => {
@@ -236,8 +229,8 @@ const ComponentWrapper = ({
     item: () => ({
       componentName: component.componentName,
       componentProps: JSON.stringify(componentProps),
-      compIndex: compIndex,
-      tabIndex: tabIndex,
+      compIndex,
+      tabIndex,
       delete: () => {
         dispatch({
           func: "DELETE_COMPONENT",
@@ -247,7 +240,7 @@ const ComponentWrapper = ({
       },
       within: true,
       new: true,
-      source: "component",
+      source:"component",
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -255,13 +248,13 @@ const ComponentWrapper = ({
       droppedItem: monitor.getItem(),
     }),
   });
-
+ //remove html5 default drag image
   useEffect(() => {
     dragPreview(getEmptyImage(), { captureDraggingState: true });
   }, []);
 
   drop(dropRef);
-
+  
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
@@ -303,8 +296,9 @@ const ComponentWrapper = ({
           >
             <StaticLabel
               data-testid="static-label"
-              isHoverActive={isHover}
+              hoverActive={isHover}
               showSelf={showSelf}
+              draggingSelf={isDragging}
               isDragging={isDragging}
             >
               <span
@@ -401,7 +395,11 @@ const ComponentWrapper = ({
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
-          <BlueBox showSelf={showSelf} hoverActive={isHover}>
+          <BlueBox 
+          showSelf={showSelf} 
+          hoverActive={isHover}
+          draggingSelf={isDragging}
+          >
             <Component
               {...componentProps}
               role="listitem"

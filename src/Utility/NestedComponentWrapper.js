@@ -11,11 +11,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import {
-  LayoutContext,
-  TabContext,
-  ActivePaneContext,
-} from "../Context/InteractivesContext";
+import { LayoutContext } from "../Context/InteractivesContext";
 
 import DropIndicator from "./DropIndicator";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
@@ -23,7 +19,7 @@ import componentIndex from "../components/componentIndex";
 import DragLabel from "./DragLabel";
 
 export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
-  color: draggingOver ? "transparent" : "#ffffff",
+  color: draggingOver ? "transparent" : "#FFF",
 }));
 
 const BlueBox = styled("div")(
@@ -101,8 +97,6 @@ const NestedComponentWrapper = ({
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
   const [tabActive, setTabActive] = useState(false);
 
-  const [activeTab] = useContext(ActivePaneContext);
-
   //get the matching component from the componentIndex
   const componentDetails = componentIndex[component.componentName];
 
@@ -111,13 +105,12 @@ const NestedComponentWrapper = ({
   //remove active border and label if you click outside component
   useOnClickOutside(dropRef, () => setShowSelf(false));
 
-  //use translation to localize component name
-  const { t } = useTranslation();
-
   //on first click of text component the active state wrapper shows
   useEffect(() => {
     tabActive && setShowSelf(true);
   }, [tabActive]);
+  //use translation to localize component name
+  const { t } = useTranslation();
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -247,7 +240,7 @@ const NestedComponentWrapper = ({
       },
       within: true,
       new: true,
-      source:"component"
+      source:"component",
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -255,8 +248,6 @@ const NestedComponentWrapper = ({
       droppedItem: monitor.getItem(),
     }),
   });
-
-  
   //remove html5 default drag image
   useEffect(() => {
     dragPreview(getEmptyImage(), { captureDraggingState: true });
