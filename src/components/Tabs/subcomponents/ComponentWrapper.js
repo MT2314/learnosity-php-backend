@@ -411,7 +411,7 @@ const ComponentWrapper = ({
                 dispatch({
                   func: "UPDATE_COMPONENT",
                   compIndex: compIndex,
-                  tabIndex: activeTab,
+                  tabIndex: tabIndex,
                   stateUpdate: stateUpdate,
                 });
               }}
