@@ -253,6 +253,11 @@ const NestedComponentWrapper = ({
 
   drop(dropRef);
 
+  //remove html5 default drag image
+  useEffect(() => {
+    dragPreview(getEmptyImage(), { captureDraggingState: true });
+  }, []);
+
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
