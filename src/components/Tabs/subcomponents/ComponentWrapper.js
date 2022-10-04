@@ -59,7 +59,7 @@ export const ComponentLabelContainer = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => {
     const style = {
       background: showSelf && "#1466C0",
-      display: draggingSelf ? "none" : "flex",
+      display: "flex",
       width: "fit-content",
       marginLeft: "-3px",
       padding: "0 1px",
@@ -254,7 +254,7 @@ const ComponentWrapper = ({
   }, []);
 
   drop(dropRef);
-  
+
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
