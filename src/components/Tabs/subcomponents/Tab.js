@@ -57,7 +57,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
             componentProps: JSON.parse(item?.componentProps),
           },
         });
-        item?.delete && item?.delete(item.tabIndex, item.compIndex);
+        item?.delete && item?.delete();
       }
     },
 
