@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
-import componentIndex from "../../../components/componentIndex";
-import { LayoutContext, TabContext } from "../TabContext";
+import componentIndex from "../../componentIndex";
+import {
+  LayoutContext,
+  TabContext,
+} from "../../../Context/InteractivesContext";
 
-const TabComponent = ({ component, compIndex }) => {
+const AccordionComponent = ({ component, compIndex }) => {
   const [, dispatch] = useContext(LayoutContext);
   const [activeTab] = useContext(TabContext);
 
@@ -29,4 +32,4 @@ const TabComponent = ({ component, compIndex }) => {
     />
   );
 };
-export default TabComponent;
+export default AccordionComponent;

@@ -1,5 +1,8 @@
 import React, { useContext, useCallback } from "react";
-import { LayoutContext } from "../../../Context/InteractivesContext";
+import {
+  LayoutContext,
+  ActivePaneContext,
+} from "../../../Context/InteractivesContext";
 import { TextareaAutosize } from "@material-ui/core";
 import styled from "@emotion/styled";
 
@@ -73,6 +76,7 @@ const AccordionTitle = ({
   setIsActive,
 }) => {
   const [, dispatch] = useContext(LayoutContext);
+  const [, setActivePane] = useContext(ActivePaneContext);
 
   //dispatches function from Context/InteractivesContext to change title and update data base.
   const handleTitleChange = useCallback((e) => {
@@ -88,7 +92,7 @@ const AccordionTitle = ({
 
   return (
     <>
-      {isActive ? (
+      {(isActive === 0 ? true : isActive) ? (
         <StyledAccordionTitle
           placeholder={placeholderTitle}
           aria-label="accordion title input"

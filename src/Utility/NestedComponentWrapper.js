@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { getEmptyImage } from 'react-dnd-html5-backend';
-import { useTranslation, Trans } from "react-i18next";
+import { getEmptyImage } from "react-dnd-html5-backend";
+import { useTranslation } from "react-i18next";
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
@@ -11,24 +11,29 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import { ComponentContext, LayoutContext, TabContext } from "../TabContext";
+import {
+  LayoutContext,
+  TabContext,
+  ActivePaneContext,
+} from "../Context/InteractivesContext";
 
-import DropIndicator from "../../../Utility/DropIndicator";
-import DragLabel from "../../../Utility/DragLabel"
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import componentIndex from "../../../components/componentIndex";
+import DropIndicator from "./DropIndicator";
+import { useOnClickOutside } from "../hooks/useOnClickOutside";
+import componentIndex from "../components/componentIndex";
+import DragLabel from "./DragLabel";
 
-export const SmallIconButton = styled(IconButton)(() => ({
-  color: "#FFF",
+export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
+  color: draggingOver ? "transparent" : "#ffffff",
 }));
 
 const BlueBox = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => ({
-    outline: showSelf
-      ? `3px solid #1466C0`
-      : hoverActive
-      ? `3px solid #DAE3EE`
-      : null,
+    outline:
+      showSelf && !draggingSelf
+        ? `3px solid #1466C0`
+        : hoverActive && !draggingSelf
+        ? `3px solid #DAE3EE`
+        : null,
     borderRadius: "4px",
     opacity: draggingSelf ? 0.4 : 1,
     '& [data-id="callout"]': {
@@ -42,15 +47,15 @@ const DragHandle = styled(DragHandleIcon)({
 });
 
 const StaticLabel = styled("span")(
-  ({ theme, isHoverActive, isDragging, showSelf }) => ({
-    background: isHoverActive && !showSelf ? "#DAE3EE" : "#1466C0",
+  ({ theme, hoverActive, draggingSelf, showSelf }) => ({
+    background: hoverActive && !showSelf ? "#DAE3EE" : "#1466C0",
     width: "fit-content",
     height: "100%",
     borderRadius: "4px 4px 0px 0px",
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
-    opacity: isDragging ? 0 : 1,
+    opacity: draggingSelf ? 0 : 1,
   })
 );
 
@@ -58,13 +63,13 @@ export const ComponentLabelContainer = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => {
     const style = {
       background: showSelf && "#1466C0",
+      display: draggingSelf ? "none" : "flex",
       width: "fit-content",
       marginLeft: "-3px",
       padding: "0 1px",
       color: showSelf ? "#FFF" : "#1466C0",
       borderRadius: "4px 4px 0px 0px",
       opacity: showSelf || hoverActive ? 1 : 0,
-      display: "flex",
       alignItems: "center",
     };
 
@@ -74,7 +79,7 @@ export const ComponentLabelContainer = styled("div")(
   }
 );
 
-const ComponentWrapper = ({
+const NestedComponentWrapper = ({
   component,
   compIndex,
   componentProps,
@@ -96,7 +101,7 @@ const ComponentWrapper = ({
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
   const [tabActive, setTabActive] = useState(false);
 
-  const [activeTab] = useContext(TabContext);
+  const [activeTab] = useContext(ActivePaneContext);
 
   //get the matching component from the componentIndex
   const componentDetails = componentIndex[component.componentName];
@@ -106,13 +111,13 @@ const ComponentWrapper = ({
   //remove active border and label if you click outside component
   useOnClickOutside(dropRef, () => setShowSelf(false));
 
+  //use translation to localize component name
+  const { t } = useTranslation();
+
   //on first click of text component the active state wrapper shows
   useEffect(() => {
     tabActive && setShowSelf(true);
   }, [tabActive]);
-
-  //use translation to localize component name
-  const { t } = useTranslation();
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -120,8 +125,6 @@ const ComponentWrapper = ({
       ["Text", "Table", "Video", "Image"].indexOf(item?.componentName) >= 0
     );
   };
-
-  // console.log("activeComp", activeComp);
 
   const [
     { isOver, canDrop, isOverCurrent, droppedInContainer, getItem },
@@ -164,7 +167,6 @@ const ComponentWrapper = ({
       if (acceptListComp(item)) {
         setDroppedIndex(hoverIndex);
         setDropIndexOffset(null);
-
         dispatch({
           func:
             item.compIndex !== undefined && currentTab
@@ -182,9 +184,7 @@ const ComponentWrapper = ({
             },
           }),
         });
-        if (!currentTab && item?.delete) {
-          item.delete();
-        }
+        !currentTab && item?.delete && item?.delete();
       }
     },
     canDrop: (item) => {
@@ -236,8 +236,8 @@ const ComponentWrapper = ({
     item: () => ({
       componentName: component.componentName,
       componentProps: JSON.stringify(componentProps),
-      compIndex: compIndex,
-      tabIndex: tabIndex,
+      compIndex,
+      tabIndex,
       delete: () => {
         dispatch({
           func: "DELETE_COMPONENT",
@@ -247,7 +247,6 @@ const ComponentWrapper = ({
       },
       within: true,
       new: true,
-      source: "component",
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -256,11 +255,12 @@ const ComponentWrapper = ({
     }),
   });
 
+  drop(dropRef);
+
+  //remove html5 default drag image
   useEffect(() => {
     dragPreview(getEmptyImage(), { captureDraggingState: true });
   }, []);
-
-  drop(dropRef);
 
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
@@ -276,7 +276,7 @@ const ComponentWrapper = ({
 
   return (
     <>
-      <DragLabel/>
+      <DragLabel />
       <div
         data-test-id="div-before-drop-indicator"
         key={`nested-component-${compIndex}`}
@@ -298,14 +298,15 @@ const ComponentWrapper = ({
           />
           <ComponentLabelContainer
             showSelf={showSelf}
+            draggingSelf={isDragging}
             hoverActive={isHover}
             data-testid="component-component-label-container"
           >
             <StaticLabel
               data-testid="static-label"
-              isHoverActive={isHover}
+              hoverActive={isHover}
               showSelf={showSelf}
-              isDragging={isDragging}
+              draggingSelf={isDragging}
             >
               <span
                 ref={drag}
@@ -348,6 +349,8 @@ const ComponentWrapper = ({
                 data-testid="move-up-button"
                 aria-label={"Move Component Up"}
                 size="small"
+                draggingSelf={isDragging}
+                draggingOver={draggingOver}
               >
                 <ArrowDropUpIcon fontSize="inherit" />
               </SmallIconButton>
@@ -366,6 +369,8 @@ const ComponentWrapper = ({
                 data-testid="move-down-button"
                 aria-label={"Move Component Down"}
                 size="small"
+                draggingSelf={isDragging}
+                draggingOver={draggingOver}
               >
                 <ArrowDropDownIcon fontSize="inherit" />
               </SmallIconButton>
@@ -383,6 +388,8 @@ const ComponentWrapper = ({
               aria-label={"Duplicate Component AriaLabel"}
               size="small"
               sx={{ fontSize: "0.9em" }}
+              draggingSelf={isDragging}
+              draggingOver={draggingOver}
             >
               <ContentCopyIcon fontSize="inherit" />
             </SmallIconButton>
@@ -397,11 +404,17 @@ const ComponentWrapper = ({
               data-testid="delete-component-button"
               aria-label={"Delete Component AriaLabel"}
               size="small"
+              draggingSelf={isDragging}
+              draggingOver={draggingOver}
             >
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
-          <BlueBox showSelf={showSelf} hoverActive={isHover}>
+          <BlueBox
+            showSelf={showSelf}
+            hoverActive={isHover}
+            draggingSelf={isDragging}
+          >
             <Component
               {...componentProps}
               role="listitem"
@@ -411,7 +424,7 @@ const ComponentWrapper = ({
                 dispatch({
                   func: "UPDATE_COMPONENT",
                   compIndex: compIndex,
-                  tabIndex: activeTab,
+                  tabIndex: tabIndex,
                   stateUpdate: stateUpdate,
                 });
               }}
@@ -431,4 +444,4 @@ const ComponentWrapper = ({
   );
 };
 
-export default ComponentWrapper;
+export default NestedComponentWrapper;

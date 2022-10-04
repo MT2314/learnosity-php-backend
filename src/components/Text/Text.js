@@ -16,6 +16,7 @@ import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
 export const defaultProps = { body: null };
 
 const Text = ({
+  setTabActive = () => {},
   body = { ops: [{ insert: "" }] },
   setProp = () => {},
   setActiveComponent = () => {},
@@ -50,13 +51,15 @@ const Text = ({
         !isInfoBox ? (
           <div
             onClick={() => {
-              setShowEditor(true);
+              setShowEditor(true)
+              setTabActive(true);
             }}
             className="mainContainer"
             data-testid="text-component"
             tabIndex="0"
             onFocus={() => {
               setShowEditor(true);
+              setTabActive(true);
             }}
           >
             <DefaultText />
@@ -78,6 +81,7 @@ const Text = ({
               setInfoHasFocus={setInfoHasFocus}
               setSelectedIcon={setSelectedIcon}
               setTextRef={setTextRef}
+              setTabActive={setTabActive}
             />
           </Provider>
         )}

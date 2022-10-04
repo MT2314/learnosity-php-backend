@@ -3,36 +3,40 @@ import produce from "immer";
 
 //state of tabs & accordion data stored in LayoutContext
 export const LayoutContext = createContext();
+export const ActivePaneContext = createContext();
 
 export const layoutConfig = (draft, action) => {
   switch (action.func) {
+    case "UPDATE_STATE":
+      return action.data;
     case "ADD_LAYER":
       draft.push({
         id: action.id,
         title: "",
         placeholderTitle: action.title,
         components: [],
+        expanded: action.expanded,
       });
       return draft;
     case "REMOVE_LAYER":
-      draft.splice(action.currentTab, 1);
+      draft.splice(action.paneIndex, 1);
       return draft;
     case "ADD_COMPONENT":
       draft[action.tabIndex].components.push({
         ...action.component,
       });
       return draft;
-    case "MOVE_TAB_LEFT":
+    case "MOVE_PANE_UP":
       // eslint-disable-next-line no-case-declarations
-      const elementL = draft[action.tabIndex];
-      draft.splice(action.tabIndex, 1);
-      draft.splice(action.tabIndex - 1, 0, elementL);
+      const elementL = draft[action.paneIndex];
+      draft.splice(action.paneIndex, 1);
+      draft.splice(action.paneIndex - 1, 0, elementL);
       return draft;
-    case "MOVE_TAB_RIGHT":
+    case "MOVE_PANE_DOWN":
       // eslint-disable-next-line no-case-declarations
-      const elementR = draft[action.tabIndex];
-      draft.splice(action.tabIndex, 1);
-      draft.splice(action.tabIndex + 1, 0, elementR);
+      const elementR = draft[action.paneIndex];
+      draft.splice(action.paneIndex, 1);
+      draft.splice(action.paneIndex + 1, 0, elementR);
       return draft;
     case "UPDATE_COMPONENT":
       draft[action.tabIndex].components[action.compIndex].componentProps = {
@@ -100,32 +104,78 @@ export const layoutConfig = (draft, action) => {
     case "COLLAPSE_ALL_PANE":
       draft.forEach((item) => (item.expanded = false));
       return draft;
+
     default:
       return draft;
   }
 };
+
+export const paneConfig = (draft, action) => {
+  switch (action.func) {
+    case "TOGGLE_PANE":
+      draft[action.paneIndex].expanded === true
+        ? (draft[action.paneIndex].expanded = false)
+        : (draft[action.paneIndex].expanded = true);
+      return draft;
+    case "UPDATE_STATE":
+      return action.state;
+    default:
+      return draft;
+  }
+};
+
 //layout provider wraps the tab & accordion component to access reducer
 export const LayoutProvider = ({ children, setProp, layoutState }) => {
   const [state, dispatch] = useReducer(produce(layoutConfig), layoutState);
+  const [activePane, setActivePane] = useReducer(
+    produce(paneConfig),
+    layoutState.map((item) => {
+      return { expanded: item.expanded };
+    })
+  );
+
+  const diff = JSON.stringify(state) !== JSON.stringify(layoutState);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setProp({ layoutState: state });
+    dispatch({ func: "UPDATE_STATE", data: layoutState });
+    state.forEach(
+      (tab, index) => tab.activeTab === true && setActiveTab(index)
+    );
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    setActivePane({
+      func: "UPDATE_STATE",
+      state: layoutState.map((item) => {
+        return { expanded: item.expanded };
+      }),
+    });
+
+    diff && mounted && dispatch({ func: "UPDATE_STATE", data: layoutState });
+  }, [layoutState]);
+
+  useEffect(() => {
+    const copyState = state.map((item) => ({ expanded: item.expanded }));
+    const diff = JSON.stringify(copyState) !== JSON.stringify(activePane);
+    const updatedLength = copyState.length && state.length;
+
+    const updateState =
+      diff & !updatedLength
+        ? state.map((item, index) => ({
+            ...item,
+            expanded: activePane[index].expanded,
+          }))
+        : state;
+    setProp({ layoutState: updateState });
   }, [state]);
+
   return (
     <LayoutContext.Provider value={[state, dispatch]}>
-      {children}
+      <ActivePaneContext.Provider value={[activePane, setActivePane]}>
+        {children}
+      </ActivePaneContext.Provider>
     </LayoutContext.Provider>
-  );
-};
-
-//state of the active tab in tab interactive
-export const TabContext = createContext();
-
-export const ActiveTabProvider = ({ children }) => {
-  const [activeTab, setActiveTab] = useState(0);
-  return (
-    <TabContext.Provider value={[activeTab, setActiveTab]}>
-      {children}
-    </TabContext.Provider>
   );
 };
