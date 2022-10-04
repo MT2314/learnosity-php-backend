@@ -16,6 +16,10 @@ const StyledAccordionContainer = styled("div")({
 
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
   backgroundColor: "#FFFFFF",
+  "&::before":{
+    backgroundColor: 'transparent'
+  }
+
 }));
 
 const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
