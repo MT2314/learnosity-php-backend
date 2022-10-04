@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
-import { useDrag, useDrop, DragPreviewImage } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
 import { getEmptyImage } from "react-dnd-html5-backend";
+import { useTranslation } from "react-i18next";
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
@@ -109,6 +110,9 @@ const NestedComponentWrapper = ({
 
   //remove active border and label if you click outside component
   useOnClickOutside(dropRef, () => setShowSelf(false));
+
+  //use translation to localize component name
+  const { t } = useTranslation();
 
   //on first click of text component the active state wrapper shows
   useEffect(() => {
@@ -328,7 +332,7 @@ const NestedComponentWrapper = ({
                 }}
                 data-testid="component-label-name"
               >
-                {component.componentName}
+                {t(component.componentName)}
               </Typography>
             </StaticLabel>
             {compIndex !== 0 && (
