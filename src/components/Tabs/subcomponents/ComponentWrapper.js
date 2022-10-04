@@ -342,6 +342,8 @@ const ComponentWrapper = ({
                 data-testid="move-up-button"
                 aria-label={"Move Component Up"}
                 size="small"
+                draggingSelf={isDragging}
+                draggingOver={draggingOver}
               >
                 <ArrowDropUpIcon fontSize="inherit" />
               </SmallIconButton>
@@ -360,6 +362,8 @@ const ComponentWrapper = ({
                 data-testid="move-down-button"
                 aria-label={"Move Component Down"}
                 size="small"
+                draggingSelf={isDragging}
+                draggingOver={draggingOver}
               >
                 <ArrowDropDownIcon fontSize="inherit" />
               </SmallIconButton>
@@ -377,6 +381,8 @@ const ComponentWrapper = ({
               aria-label={"Duplicate Component AriaLabel"}
               size="small"
               sx={{ fontSize: "0.9em" }}
+              draggingSelf={isDragging}
+              draggingOver={draggingOver}
             >
               <ContentCopyIcon fontSize="inherit" />
             </SmallIconButton>
@@ -391,6 +397,8 @@ const ComponentWrapper = ({
               data-testid="delete-component-button"
               aria-label={"Delete Component AriaLabel"}
               size="small"
+              draggingSelf={isDragging}
+              draggingOver={draggingOver}
             >
               <DeleteOutlineIcon fontSize="inherit" />
             </SmallIconButton>
