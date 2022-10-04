@@ -15,7 +15,7 @@ const StyleTabBody = styled("div")(({ isDragging }) => ({
   borderColor: "#bdbdbd",
   borderStyle: "solid",
   borderWidth: "0 1px 1px 1px",
-  backgroundColor: isDragging ? "#E9EDF1" : "white",
+  backgroundColor: isDragging ? "#F6F9FC" : "white",
 }));
 
 const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
