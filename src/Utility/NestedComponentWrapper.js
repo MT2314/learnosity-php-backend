@@ -247,6 +247,7 @@ const NestedComponentWrapper = ({
       },
       within: true,
       new: true,
+      source:"component"
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -255,13 +256,13 @@ const NestedComponentWrapper = ({
     }),
   });
 
-  drop(dropRef);
-
+  
   //remove html5 default drag image
   useEffect(() => {
     dragPreview(getEmptyImage(), { captureDraggingState: true });
   }, []);
-
+  
+  drop(dropRef);
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
@@ -276,7 +277,7 @@ const NestedComponentWrapper = ({
 
   return (
     <>
-      <DragLabel />
+      <DragLabel/>
       <div
         data-test-id="div-before-drop-indicator"
         key={`nested-component-${compIndex}`}
@@ -298,7 +299,7 @@ const NestedComponentWrapper = ({
           />
           <ComponentLabelContainer
             showSelf={showSelf}
-            draggingSelf={isDragging}
+            //draggingSelf={isDragging}
             hoverActive={isHover}
             data-testid="component-component-label-container"
           >
@@ -307,6 +308,7 @@ const NestedComponentWrapper = ({
               hoverActive={isHover}
               showSelf={showSelf}
               draggingSelf={isDragging}
+              isDragging={isDragging}
             >
               <span
                 ref={drag}
