@@ -50,6 +50,7 @@ export const layoutConfig = (draft, action) => {
       return draft;
     case "DELETE_COMPONENT":
       draft[action.tabIndex].components.splice(action.compIndex, 1);
+      activeTabFunc(draft, action.tabIndex);
       return draft;
     case "UPDATE_COMPONENT":
       draft[action.tabIndex].components[action.compIndex].componentProps = {
