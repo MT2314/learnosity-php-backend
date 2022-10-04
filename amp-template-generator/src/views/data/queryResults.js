@@ -21,7 +21,7 @@ module.exports = async function () {
     .run(queries[process.env.QUERY || "lesson"], queryVars)
     .then((data) => {
       const isEmpty = Object.keys(data).length === 0;
-      console.log("index.run result: ", data, isEmpty);
+      // console.log("index.run result: ", data, isEmpty);
       if (isEmpty) {
         return false;
       }

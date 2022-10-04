@@ -332,6 +332,22 @@ function _11ty() {
   });
 }
 
+// Check to see if "buildd" is being run
+if (__getBuildMode() === "demo") {
+  // If the build mode = demo, then we want to copy the js mock data to be used with our demo html pages
+  _copyMockData();
+}
+
+// Copying the contents of the mockData directory into views/data to be usesd with the demo html pages
+function _copyMockData() {
+  return gulp.src("mockData/component*.js").pipe(gulp.dest("views/data/"));
+}
+
+// Function to delete any files that begin with the name "component"
+function _deleteMockData() {
+  return del("views/data/component*.js");
+}
+
 /**
  * Public gulp task.
  * End-to-end local terminal transcompiler.
@@ -344,7 +360,8 @@ var buildLocal = gulp.series(
   _setUserId,
   __isDevMode() ? buildCssDebug : buildCss,
   _11ty,
-  _post11tyLocal
+  _post11tyLocal,
+  _deleteMockData
 );
 buildLocal.displayName = "build:local";
 buildLocal.description = "Runs the Transcompiler for local development";
@@ -353,6 +370,7 @@ buildLocal.flags = {
   "-s": "showcase page",
   "-n": "node.liquid",
 };
+
 exports.buildLocal = buildLocal;
 
 var lint = function () {
