@@ -21,201 +21,127 @@ afterEach(() => {
 const testLayout = [
   {
     id: 0,
-    title: "",
+    title: "Tab 1",
     placeholder: "Tab 1",
     components: [],
     activeTab: true,
   },
   {
     id: 1,
-    title: "",
+    title: "Tab 2",
     placeholder: "Tab 2",
-    components: [
-      { componentName: "Text", componentProps: { body: null } },
-      { componentName: "Text", componentProps: { body: null } },
-    ],
+    components: [],
     activeTab: false,
   },
 ];
 
-describe("Tabs", () => {
-  it("Renders Tab Component with default 2 tabs", async () => {
-    render(<TabsMain layoutState={testLayout} />);
-
-    expect(screen.getByPlaceholder(/Tab 1/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholder(/Tab 2/i)).toBeInTheDocument();
+describe("Renders Tab Component with default props", () => {
+  it("Renders Tab Component 2 default Tabs", async () => {
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+    expect(screen.getByText(/Tab 1/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tab 2/i)).toBeInTheDocument();
   });
-  // })
-  //   it("Displays placeholder text", async () => {
-  //     render(<TabsMain layoutState={testLayout} />);
-  //     expect(screen.getByText(/accepted components/i)).toBeInTheDocument();
-  //   });
+  it("Displays placeholder text within Tab", async () => {
+    render(<TabsMain layoutState={testLayout} />);
+    expect(screen.getByText(/Add a component here!/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /Drag and drop a component from the left panel or use your keyboard to insert a component./i
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /Accepted components: text, image, chart, table, video, and audio./i
+      )
+    ).toBeInTheDocument();
+  });
+});
+describe("Changing Active Tab", () => {
+  it("On click displays active tab", async () => {
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+    const tabLabel = screen.getByText(/Tab 2/i);
+    fireEvent.click(tabLabel);
+    // Placeholder Text in document only when tab is active, check by changing Text in test below
+    expect(screen.getByPlaceholderText(/Tab 2/i)).toBeInTheDocument();
+  });
+});
+describe("Check if toolbar renders", () => {
+  it("check for the 4 actions within toolbar", async () => {
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+    expect(screen.getByTestId("ArrowBackIcon")).toBeInTheDocument();
+    expect(screen.getByTestId("ArrowForwardIcon")).toBeInTheDocument();
+    expect(screen.getByTestId("AddIcon")).toBeInTheDocument();
+    expect(screen.getByTestId("RemoveIcon")).toBeInTheDocument();
+  });
+});
+describe("Check if toolbar actions work", () => {
+  it("move tab left with toolbar", () => {
+    const newState = produce(testLayout, (draft) => {
+      draft[0].activeTab = false;
+      draft[1].activeTab = true;
+    });
+    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    const moveLeft = screen.getByTestId("ArrowBackIcon");
+    const tab = screen.getByPlaceholderText(/Tab 2/i);
+    expect(tab).toHaveAttribute("activetab", "1");
+    fireEvent.click(moveLeft);
+    const tab1 = screen.getByPlaceholderText(/Tab 2/i);
+    expect(tab1).toHaveAttribute("activetab", "0");
+  });
 
-  //   it("On click displays active tab", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     const tabLabel = screen.getByText(/juno/i);
-  //     const placeholder = screen.getByText(/accepted components/i);
+  it("move tab right with toolbar", () => {
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+    const moveRight = screen.getByTestId("ArrowForwardIcon");
+    const tab = screen.getByPlaceholderText(/Tab 1/i);
+    expect(tab).toHaveAttribute("activetab", "0");
+    fireEvent.click(moveRight);
+    const tab1 = screen.getByPlaceholderText(/Tab 1/i);
+    expect(tab1).toHaveAttribute("activetab", "1");
+  });
 
-  //     expect(tabLabel).toBeInTheDocument();
-  //     expect(placeholder).toBeInTheDocument();
+  it("add a new tab with toolbar", async () => {
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+    const addTab = screen.getByTestId("AddIcon");
+    fireEvent.click(addTab);
+    expect(screen.getByText(/Tab 3/i)).toBeInTheDocument();
+  });
 
-  //     fireEvent.click(tabLabel);
-  //     expect(placeholder).not.toBeInTheDocument();
-  //   });
+  it("remove a tab with toolbar", async () => {
+    // Add another tab to the state
+    const newState = produce(testLayout, (draft) => {
+      draft.push({
+        id: 2,
+        title: "Tab 3",
+        placeholder: "Tab 3",
+        components: [],
+        activeTab: false,
+      });
+    });
+    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    // Tab 1 activeTab is at index 0
+    const tab1 = screen.getByPlaceholderText(/Tab 1/i);
+    expect(tab1).toHaveAttribute("activetab", "0");
+    // Click Remove Icon button
+    const removeTab = screen.getByTestId("RemoveIcon");
+    await fireEvent.click(removeTab);
+    // Tab 2 activeTab is at index 0
+    const tab2 = screen.getByPlaceholderText(/Tab 2/i);
+    expect(tab2).toHaveAttribute("activetab", "0");
+  });
 
-  //   it("adds a new tab", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     layoutConfig(testLayout, {
-  //       func: "ADD_TAB",
-  //       id: 2,
-  //     });
-  //     expect(testLayout.length).toBeGreaterThan(2);
-  //     expect(testLayout).toHaveLength(3);
-  //   });
-
-  //   it("removes a tab", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     layoutConfig(testLayout, {
-  //       func: "REMOVE_TAB",
-  //       currentTab: 2,
-  //     });
-  //     expect(testLayout).toHaveLength(2);
-  //   });
-
-  //   it("adds a component", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     layoutConfig(testLayout, {
-  //       func: "ADD_COMPONENT",
-  //       tabIndex: 1,
-  //       component: {
-  //         componentName: "Text",
-  //       },
-  //     });
-  //     expect(testLayout[1].components).toHaveLength(3);
-  //   });
-
-  //   it("updates the component state", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     layoutConfig(testLayout, {
-  //       func: "UPDATE_COMPONENT",
-  //       compIndex: 0,
-  //       tabIndex: 1,
-  //       stateUpdate: { newValue: "I updated the state of a component!!!" },
-  //     });
-
-  //     expect(testLayout[1].components[0].componentProps.newValue).toBe(
-  //       "I updated the state of a component!!!"
-  //     );
-  //   });
-
-  //   it("drags a component from index 0 to index 2 in the testLayout.components array", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     layoutConfig(testLayout, {
-  //       func: "DRAG_COMPONENT",
-  //       tabIndex: 1,
-  //       dragIndex: 0,
-  //       hoverIndex: 2,
-  //     });
-
-  //     expect(testLayout[1].components[0].componentProps).toStrictEqual({
-  //       body: null,
-  //     });
-  //     expect(testLayout[1].components[2].componentProps.newValue).toBe(
-  //       "I updated the state of a component!!!"
-  //     );
-  //   });
-
-  //   it("duplicates a component within a tab", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     layoutConfig(testLayout, {
-  //       func: "DUPLICATE_COMPONENT",
-  //       tabIndex: 1,
-  //       compIndex: 2,
-  //     });
-
-  //     expect(testLayout[1].components.length).toBe(4);
-  //     expect(testLayout[1].components[2]).toStrictEqual(
-  //       testLayout[1].components[3]
-  //     );
-  //   });
-
-  //   it("update the tab title", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     layoutConfig(testLayout, {
-  //       func: "CHANGE_TITLE",
-  //       title: "Web Solutions Component Team",
-  //       id: 0,
-  //     });
-
-  //     expect(testLayout[0].title).toBe("Web Solutions Component Team");
-  //   });
-
-  //   it("move a component up by 1 position and move it back down by 1", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-
-  //     const component = testLayout[1].components[1];
-
-  //     layoutConfig(testLayout, {
-  //       func: "MOVE_COMPONENT_UP",
-  //       tabIndex: 1,
-  //       compIndex: 1,
-  //     });
-
-  //     expect(testLayout[1].components[0]).toStrictEqual(component);
-
-  //     layoutConfig(testLayout, {
-  //       func: "MOVE_COMPONENT_DOWN",
-  //       tabIndex: 1,
-  //       compIndex: 0,
-  //     });
-
-  //     expect(testLayout[1].components[1]).toStrictEqual(component);
-  //   });
-
-  //   it("move a tab right by 1 position and move it back left by 1", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-
-  //     const tab = testLayout[0];
-
-  //     layoutConfig(testLayout, {
-  //       func: "MOVE_TAB_RIGHT",
-  //       tabIndex: 0,
-  //     });
-
-  //     expect(testLayout[1]).toStrictEqual(tab);
-
-  //     layoutConfig(testLayout, {
-  //       func: "MOVE_TAB_LEFT",
-  //       tabIndex: 1,
-  //     });
-
-  //     expect(testLayout[0]).toStrictEqual(tab);
-  //   });
-
-  //   const acceptListComp = (item) => {
-  //     return ["Text", "Table", "Video", "Image"].indexOf(item) >= 0;
-  //   };
-
-  //   it("adds an unacceptable component", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     if (acceptListComp("Callout")) {
-  //       layoutConfig(testLayout, {
-  //         func: "ADD_COMPONENT",
-  //         tabIndex: 1,
-  //         component: {
-  //           componentName: "Callout",
-  //         },
-  //       });
-  //       expect(testLayout[1].components).toHaveLength(4);
-  //     } else if (acceptListComp("Text")) {
-  //       layoutConfig(testLayout, {
-  //         func: "ADD_COMPONENT",
-  //         tabIndex: 1,
-  //         component: {
-  //           componentName: "Text",
-  //         },
-  //       });
-  //       expect(testLayout[1].components).toHaveLength(5);
-  //     }
-  //   });
+  it("Config buttons work in succession", async () => {
+    // Click Add Tab Icon button
+    render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+    const addTab = screen.getByTestId("AddIcon");
+    fireEvent.click(addTab);
+    // Tab 1 activeTab is at index 0
+    const tab1 = screen.getByPlaceholderText(/Tab 1/i);
+    expect(tab1).toHaveAttribute("activetab", "0");
+    // Click Remove Tab Icon button
+    const removeTab = screen.getByTestId("RemoveIcon");
+    await fireEvent.click(removeTab);
+    // Tab 2 activeTab is at index 0
+    const tab2 = screen.getByPlaceholderText(/Tab 2/i);
+    expect(tab2).toHaveAttribute("activetab", "0");
+  });
 });
