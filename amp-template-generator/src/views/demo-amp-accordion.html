@@ -1,60 +1,16 @@
 ---
 {
-  "result": {
-    "title": "Accordion",
-    "components": [
-      {
-        "uuid": "c2fc2507-39e3-47d9-a6c2-8d08bfe83358",
-        "uuidClean": "c2fc2507_39e3_47d9_a6c2_8d08bfe83358",
-        "type": "accordion",
-        "heading": {
-            "processed": "Here’s what the other students said",
-            "headingLevel": "h1"
-        },
-        "introduction": null,
-        "accordionPanes": [
-            {
-                "uuid": "c2fc2507-39e3-47d9-a6c2-8d08bfe83359",
-                "uuidClean": "c2fc2507_39e3_47d9_a6c2_8d08bfe83359",
-                "type": "accordion_pane",
-                "heading": {
-                    "processed": "Super long heading that will probably go into multiple lines on a small enough cellphone:",
-                    "headingLevel": "h2"
-                },
-                "body": "<p>The answer is \\(12:18\\)</p><p><amp-img alt=\"12 thumbs up and 18 thumbs up and down\" height=\"150\" layout=\"responsive\" src=\"https://dcc.ilc.org/jw-rnd-days/cs-amp-templates/images/01.02.11a.png\" width=\"284\"></p><p></amp-img><amp-img alt=\"12 thumbs down and 6 thumbs up\" height=\"227\" layout=\"responsive\" src=\"https://dcc.ilc.org/mpm1d/assets/img/01.02.06b_ratioThumbs.png\" width=\"454\"></amp-img></p><p>More text after the images.</p>"
-            },
-            {
-                "uuid": "c2fc2507-39e3-47d9-a6c2-8d08bfe83360",
-                "uuidClean": "c2fc2507_39e3_47d9_a6c2_8d08bfe83360",
-                "type": "accordion_pane",
-                "heading": {
-                    "processed": "Marie",
-                    "headingLevel": "h2"
-                },
-                "body": "<p>Yes, but if we group the emojis, we can see that \\(6:9\\) is an equivalent ratio.</p><p><amp-img alt=\"6 thumbs up and 9 thumbs up and down\" layout=\"responsive\" height=\"150\" src=\"https://dcc.ilc.org/mpm1d/assets/img/01.02.11b.svg\" width=\"287\"></amp-img></p><p><amp-img alt=\"6 thumbs up and 3 thumbs down\" layout=\"responsive\" height=\"150\" src=\"https://dcc.ilc.org/mpm1d/assets/img/01.02.06c_rev.svg\" width=\"247\"></amp-img></p><p>Additional text after the images.</p>"
-            },
-            {
-                "uuid": "c2fc2507-39e3-47d9-a6c2-8d08bfe83361",
-                "uuidClean": "c2fc2507_39e3_47d9_a6c2_8d08bfe83361",
-                "type": "accordion_pane",
-                "heading": {
-                    "processed": "Sanjita",
-                    "headingLevel": "h2"
-                },
-                "body": "<p>If we make even smaller groups, we get the ratio in lowest terms, which is \\(2:3\\)</p><p><amp-img alt=\"2 thumbs up and 3 thumbs up and down\" height=\"150\" layout=\"responsive\" src=\"https://dcc.ilc.org/mpm1d/assets/img/01.02.11c.svg\" width=\"296\"></amp-img></p><p><amp-img alt=\"2 up and 1 thumbs down\" height=\"150\" layout=\"responsive\" src=\"https://dcc.ilc.org/mpm1d/assets/img/01.02.06d_rev.svg\" width=\"275\"></amp-img></p><p>Here is some extra content.</p>"
-            }
-        ]
-      }
-    ]
-  },
   "layout": "amp-layout.njk",
   "permalink": "demo-amp-accordion.html"
 }
 ---
 <strong>{{result.title}} {{projectConfig.version}} - {{projectConfig.date}}</strong>
 
-{% include amp-accordion.html data:result.components[0] -%}
-
-<p>
-    This is some additional content after the accordion for testing screen reader focus.
-</p>
+{% for accordion in componentAccordion %}
+    {% if accordion.name == "Accordion Component"  %}
+        {%- assign components = accordion.componentContainer.sections[1].components -%}
+        {% for accordionComponent in components %}
+            {% include amp-accordion.html data:accordionComponent.props.layoutState -%}
+        {% endfor %}
+    {% endif %}
+{% endfor %}

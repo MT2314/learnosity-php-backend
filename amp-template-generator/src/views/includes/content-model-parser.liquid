@@ -19,11 +19,11 @@
     {%- when "Video" -%}
         {% include amp-video.html data:propName %}
     {%- when "Tab" -%}
-        {% include amp-tabs.html data:item %}
+        {% include amp-tabs.html data:propName %}
     {%- when "IFrame" -%}
-        {% include amp-iframe.html data:item %}
+        {% include amp-iframe.html data:propName %}
     {%- when "InfoBox" -%}
-        {% include amp-infobox.html data:item.props.infoBoxState %}
+        {% include amp-infobox.html data:propName.infoBoxState %}
     {%- when "Accordion" -%}
         {% include amp-accordion.html data:propName.layoutState %}        
     {%comment%} Not using below. {%endcomment%}

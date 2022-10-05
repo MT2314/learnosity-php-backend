@@ -5,7 +5,7 @@
         keyboard-select-mode="focus"
         id="{{tabListId}}">
 
-    {%- for tab in data.props.layoutState -%}
+    {%- for tab in data.layoutState -%}
 
         <div id="{{tabListId}}_tab{{forloop.index}}"
             role="tab"
@@ -18,15 +18,15 @@
         >
             {{tab.title}}
             
-        {% if tab.title.length > 84 and data.props.layoutState.length == 2 -%}
+        {% if tab.title.length > 84 and data.layoutState.length == 2 -%}
             <span class="hoverTabText hoverTabText2">
                 {{tab.title}}
             </span>
-        {% elsif tab.title.length > 46 and data.props.layoutState.length == 3 -%}
+        {% elsif tab.title.length > 46 and data.layoutState.length == 3 -%}
             <span class="hoverTabText hoverTabText3">
                 {{tab.title}}
             </span>
-        {% elsif tab.title.length > 33 and data.props.layoutState.length == 4 -%}
+        {% elsif tab.title.length > 33 and data.layoutState.length == 4 -%}
             <span class="hoverTabText hoverTabText4">
                 {{tab.title}}
             </span>
@@ -54,7 +54,7 @@
     {%- assign ariaControls = '' -%}
     {%- assign btnExpandHidden = '' -%}
     {%- assign btnCollapseHidden = '' -%}
-    {%- for tab in data.props.layoutState -%}
+    {%- for tab in data.layoutState -%}
         {%- assign ariaControls = ariaControls | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: ' ' -%}
         {%- assign btnExpandHidden = btnExpandHidden | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: '_expanded && ' -%}
         {%- assign btnCollapseHidden = btnCollapseHidden | append: '!' | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: '_expanded && ' -%}
@@ -94,9 +94,9 @@
             animate
             id="{{ accordionId }}"
             class="accordion"
-            aria-label="Accordion with {{ data.props.layoutState.length }} sections"
+            aria-label="Accordion with {{ data.layoutState.length }} sections"
         >
-        {%- for tab in data.props.layoutState -%}
+        {%- for tab in data.layoutState -%}
             {%comment%}Pane:{%endcomment%}
             <section
                 on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
