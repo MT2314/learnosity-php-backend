@@ -31,17 +31,17 @@
     <div class="right pb1" aria-hidden="true">
         <button
             id="{{ accordionId }}_expandAll"
-            on="tap:{{ accordionId }}.expand(),{{ accordionId }}_collapseAll.show(),{{ accordionId }}_expandAll.hide();"
-            [hidden]="{{ btnExpandHidden }}"
+            on="tap:{{ accordionId }}.expand();"
+            [disabled]="{{ btnExpandHidden }}"
             class="btn link"
         >
             <span class="bold">Expand All</span>
         </button>
         <button
             id="{{ accordionId }}_collapseAll"
-            on="tap:{{ accordionId }}.collapse(),{{ accordionId }}_collapseAll.hide(),{{ accordionId }}_expandAll.show();"
-            hidden
-            [hidden]="{{ btnCollapseHidden }}"
+            on="tap:{{ accordionId }}.collapse();"
+            disabled
+            [disabled]="{{ btnCollapseHidden }}"
             class="btn link"
         >
             <span class="bold">Close All</span>
@@ -54,7 +54,7 @@
         animate
         id="{{ accordionId }}"
         class="accordion"
-        aria-label="Accordion with {{ data.accordionPanes.size }} sections"
+        aria-label="Accordion with {{ data.length }} sections"
     >
     {%- for pane in data -%}
         {%comment%}Pane:{%endcomment%}
@@ -62,7 +62,7 @@
             on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
 
             {%comment%}Pane Heading:{%endcomment%}
-            <h2 id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.accordionPanes.size }} {{ pane.heading.processed }}">
+            <h2 id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.length }} {{ pane.heading.processed }}">
                 <span class="inline-block">
                     <!-- {{ pane.heading.processed }} -->
                     {{ pane.title }}
