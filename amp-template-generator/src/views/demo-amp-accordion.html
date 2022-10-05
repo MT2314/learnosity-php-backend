@@ -10,7 +10,7 @@
     {% if accordion.name == "Accordion Component"  %}
         {%- assign components = accordion.componentContainer.sections[1].components -%}
         {% for accordionComponent in components %}
-            {% include amp-accordion.html data:accordionComponent.props.layoutState -%}
+            {% include amp-accordion.html data:accordionComponent -%}
         {% endfor %}
     {% endif %}
 {% endfor %}

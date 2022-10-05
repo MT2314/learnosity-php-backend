@@ -12,11 +12,6 @@
         {%- assign components = infobox.componentContainer.sections[1].components -%}
         {% for infoboxComponent in components %}
             {% include amp-infobox.html data:infoboxComponent.props.infoBoxState -%}
-
-            <script type="text/javascript">
-                console.log("Dumping data object here");
-                console.log({{ infoboxComponent | json }});
-            </script>
         {% endfor %}
     {% endif %}
 {% endfor %}
