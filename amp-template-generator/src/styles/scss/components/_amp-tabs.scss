@@ -21,6 +21,10 @@
         border-left-width: 0;
         background-color: $inactive-tab-bg;
 
+        &:focus-visible {
+          outline: none;
+        }
+
         p {
           font-weight: 400;
           font-family: "Lato", sans-serif;
