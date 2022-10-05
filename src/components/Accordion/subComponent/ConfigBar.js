@@ -102,32 +102,35 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
         dispatch({
             func: "MOVE_PANE_UP",
             title: `Pane at position ${paneIndex} is now at position ${paneIndex + 1}`,
-            paneIndex: paneIndex,
-            nextPane: paneIndex + 1,
+            paneIndex: paneIndex
         });
-        setPaneIndex(paneIndex - 1)
+        if (paneIndex === 0) {
+            setPaneIndex(state.length - 1)
+        } else {
+            setPaneIndex(paneIndex - 1)
+        }
     }
 
     const removeTab = async () => {
         setRemoveError(true);
         let active;
-        
-        if(paneIndex === state.length - 1){
+
+        if (paneIndex === state.length - 1) {
             active = paneIndex - 1
-        } else if(paneIndex === 0){
+        } else if (paneIndex === 0) {
             active = 0
         } else {
             active = paneIndex + 1
         }
-    
+
         dispatch({
-          func: "REMOVE_LAYER",
-          paneIndex: paneIndex 
+            func: "REMOVE_LAYER",
+            paneIndex: paneIndex
         });
         setPaneIndex(active);
-      };
+    };
 
-    const removeTabDialog = (state[paneIndex]?.title || state[paneIndex]?.placeholderTitle)  && {
+    const removeTabDialog = (state[paneIndex]?.title || state[paneIndex]?.placeholderTitle) && {
         title: "Delete Pane?",
         message: [
             `Deleting "${state[paneIndex].title || state[paneIndex].placeholderTitle
@@ -159,6 +162,15 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
         <Container>
             <AppBar position="static">
                 <StyledToolbar variant="dense" disableGutters test-id="accordion-toolbar">
+                    <StyledTooltip title="move pane up" arrow placement="top">
+                        <StyledIconButton
+                            disableRipple
+                            color="inherit"
+                            onClick={() => moveAccordionUp(state)}
+                        >
+                            <ArrowUpward />
+                        </StyledIconButton>
+                    </StyledTooltip>
                     <StyledTooltip title="move pane down" arrow placement="top">
                         <StyledIconButton
                             disableRipple
@@ -167,16 +179,6 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
                             disabled={paneIndex === state.length - 1}
                         >
                             <ArrowDownward />
-                        </StyledIconButton>
-                    </StyledTooltip>
-                    <StyledTooltip title="move pane up" arrow placement="top">
-                        <StyledIconButton
-                            disableRipple
-                            color="inherit"
-                            onClick={() => moveAccordionUp(state)}
-                            disabled={paneIndex === 0}
-                        >
-                            <ArrowUpward />
                         </StyledIconButton>
                     </StyledTooltip>
                     <StyledTooltip title="add pane" arrow placement="top">

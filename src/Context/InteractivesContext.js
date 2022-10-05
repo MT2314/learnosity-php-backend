@@ -28,9 +28,15 @@ export const layoutConfig = (draft, action) => {
       return draft;
     case "MOVE_PANE_UP":
       // eslint-disable-next-line no-case-declarations
-      const elementL = draft[action.paneIndex];
-      draft.splice(action.paneIndex, 1);
-      draft.splice(action.paneIndex - 1, 0, elementL);
+      if (action.paneIndex !== 0) {
+        const elementL = draft[action.paneIndex];
+        draft.splice(action.paneIndex, 1);
+        draft.splice(action.paneIndex - 1, 0, elementL);
+      } else {
+        const elementL = draft[action.paneIndex];
+        draft.splice(0, 1);
+        draft.splice(draft.length, 0, elementL);
+      }
       return draft;
     case "MOVE_PANE_DOWN":
       // eslint-disable-next-line no-case-declarations
@@ -164,9 +170,9 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
     const updateState =
       diff & !updatedLength
         ? state.map((item, index) => ({
-            ...item,
-            expanded: activePane[index].expanded,
-          }))
+          ...item,
+          expanded: activePane[index].expanded,
+        }))
         : state;
     setProp({ layoutState: updateState });
   }, [state]);
