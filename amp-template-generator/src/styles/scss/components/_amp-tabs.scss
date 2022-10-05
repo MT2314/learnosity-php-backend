@@ -32,7 +32,7 @@
         letter-spacing: 0.03em;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
-        background-color: $tab-default-bg;
+        background-color: $primary-background;
 
         &:first-child {
           border-left-width: 0.0625rem;
@@ -90,6 +90,7 @@
         width: 100%;
         order: 1;
         border-color: $border-color;
+        background: $primary-background;
       }
 
       & [role="tab"][selected] + [role="tabpanel"] {

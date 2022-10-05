@@ -47,6 +47,9 @@ $transparent-white-200: #ffffff33; // TBD
 $transparent-white-100: #ffffff1a; // TBD
 $transparent-white-50: #ffffff0d; // TBD
 
+// White
+$white: #fff;
+
 // ----------------------------------------------------------------------
 // Generic color/role Variables
 //
@@ -57,6 +60,10 @@ $transparent-white-50: #ffffff0d; // TBD
 // Default font colors
 $primary-body-text: $grey-900;
 $secondary-text: $grey-600;
+
+// Border/background colors
+$primary-background: $transparent-grey-300;
+$secondary-background: $white;
 
 // Old colours/variables (KEEPING TO MAINTAIN PREVIOUS STYLES FOR NOW)
 $button-text: #fff;
