@@ -84,7 +84,8 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
             func: "ADD_LAYER",
             id: uuidv4(),
             title: `Pane ${state.length + 1}`,
-            expanded: false
+            expanded: false, 
+            paneIndex
         });
     };
 
@@ -92,42 +93,33 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
         dispatch({
             func: "MOVE_PANE_DOWN",
             title: `Pane at position ${paneIndex} is now at position ${paneIndex + 1}`,
-            paneIndex: paneIndex,
-            nextPane: paneIndex + 1,
+            paneIndex: paneIndex
         });
-        setPaneIndex(paneIndex + 1)
+        paneIndex === state.length - 1 ? setPaneIndex(0) : setPaneIndex(paneIndex + 1)
     }
 
     const moveAccordionUp = () => {
         dispatch({
             func: "MOVE_PANE_UP",
             title: `Pane at position ${paneIndex} is now at position ${paneIndex + 1}`,
-            paneIndex: paneIndex,
-            nextPane: paneIndex + 1,
+            paneIndex: paneIndex
         });
-        setPaneIndex(paneIndex - 1)
+        paneIndex === 0 ? setPaneIndex(state.length - 1) : setPaneIndex(paneIndex - 1)
     }
 
     const removeTab = async () => {
         setRemoveError(true);
         let active;
-        
-        if(paneIndex === state.length - 1){
-            active = paneIndex - 1
-        } else if(paneIndex === 0){
-            active = 0
-        } else {
-            active = paneIndex + 1
-        }
-    
+        paneIndex === state.length - 1 || 0 ? active = 0 : active = paneIndex
+
         dispatch({
-          func: "REMOVE_LAYER",
-          paneIndex: paneIndex 
+            func: "REMOVE_LAYER",
+            paneIndex: paneIndex
         });
         setPaneIndex(active);
-      };
+    };
 
-    const removeTabDialog = (state[paneIndex]?.title || state[paneIndex]?.placeholderTitle)  && {
+    const removeTabDialog = (state[paneIndex]?.title || state[paneIndex]?.placeholderTitle) && {
         title: "Delete Pane?",
         message: [
             `Deleting "${state[paneIndex].title || state[paneIndex].placeholderTitle
@@ -159,24 +151,24 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
         <Container>
             <AppBar position="static">
                 <StyledToolbar variant="dense" disableGutters test-id="accordion-toolbar">
-                    <StyledTooltip title="move pane down" arrow placement="top">
-                        <StyledIconButton
-                            disableRipple
-                            color="inherit"
-                            onClick={() => moveAccordionDown(state)}
-                            disabled={paneIndex === state.length - 1}
-                        >
-                            <ArrowDownward />
-                        </StyledIconButton>
-                    </StyledTooltip>
                     <StyledTooltip title="move pane up" arrow placement="top">
                         <StyledIconButton
                             disableRipple
                             color="inherit"
                             onClick={() => moveAccordionUp(state)}
-                            disabled={paneIndex === 0}
+                            disabled={state.length == 1}
                         >
                             <ArrowUpward />
+                        </StyledIconButton>
+                    </StyledTooltip>
+                    <StyledTooltip title="move pane down" arrow placement="top">
+                        <StyledIconButton
+                            disableRipple
+                            color="inherit"
+                            onClick={() => moveAccordionDown(state)}
+                            disabled={state.length == 1}
+                        >
+                            <ArrowDownward />
                         </StyledIconButton>
                     </StyledTooltip>
                     <StyledTooltip title="add pane" arrow placement="top">

@@ -5,17 +5,10 @@ import { useTranslation } from "react-i18next";
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
-import DragHandleIcon from "@mui/icons-material/DragHandle";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { DragHandle, ArrowDropUp, ArrowDropDown, ContentCopy, DeleteOutline } from "@mui/icons-material";
 
-import {
-  LayoutContext,
-  TabContext,
-  ActivePaneContext,
-} from "../Context/InteractivesContext";
+import { LayoutContext as AccordionContext} from "../Context/InteractivesContext";
+import { LayoutContext as TabContext } from "../components/Tabs/TabContext";
 
 import DropIndicator from "./DropIndicator";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
@@ -23,11 +16,11 @@ import componentIndex from "../components/componentIndex";
 import DragLabel from "./DragLabel";
 
 export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
-  color: draggingOver ? "transparent" : "#ffffff",
+  color: draggingOver ? "transparent" : "#FFF",
 }));
 
 const BlueBox = styled("div")(
-  ({ theme, draggingSelf, showSelf, hoverActive }) => ({
+  ({ draggingSelf, showSelf, hoverActive }) => ({
     outline:
       showSelf && !draggingSelf
         ? `3px solid #1466C0`
@@ -42,12 +35,12 @@ const BlueBox = styled("div")(
   })
 );
 
-const DragHandle = styled(DragHandleIcon)({
+const StyledDragHandle = styled(DragHandle)({
   color: "inherit",
 });
 
 const StaticLabel = styled("span")(
-  ({ theme, hoverActive, draggingSelf, showSelf }) => ({
+  ({ hoverActive, draggingSelf, showSelf }) => ({
     background: hoverActive && !showSelf ? "#DAE3EE" : "#1466C0",
     width: "fit-content",
     height: "100%",
@@ -63,7 +56,7 @@ export const ComponentLabelContainer = styled("div")(
   ({ theme, draggingSelf, showSelf, hoverActive }) => {
     const style = {
       background: showSelf && "#1466C0",
-      display: draggingSelf ? "none" : "flex",
+      display: "flex",
       width: "fit-content",
       marginLeft: "-3px",
       padding: "0 1px",
@@ -80,13 +73,12 @@ export const ComponentLabelContainer = styled("div")(
 );
 
 const NestedComponentWrapper = ({
+  componentType,
   component,
   compIndex,
   componentProps,
   tabIndex,
-  setIsDragging,
   numOfComponent,
-  inContainer,
   droppedIndex,
   setDroppedIndex,
   draggingOver,
@@ -95,13 +87,11 @@ const NestedComponentWrapper = ({
 }) => {
   const dropRef = useRef(null);
 
-  const [, dispatch] = useContext(LayoutContext);
+  const [, dispatch] = useContext(componentType === "accordion" ? AccordionContext : TabContext);
   const [showSelf, setShowSelf] = useState(false);
   const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
   const [tabActive, setTabActive] = useState(false);
-
-  const [activeTab] = useContext(ActivePaneContext);
 
   //get the matching component from the componentIndex
   const componentDetails = componentIndex[component.componentName];
@@ -111,13 +101,12 @@ const NestedComponentWrapper = ({
   //remove active border and label if you click outside component
   useOnClickOutside(dropRef, () => setShowSelf(false));
 
-  //use translation to localize component name
-  const { t } = useTranslation();
-
   //on first click of text component the active state wrapper shows
   useEffect(() => {
     tabActive && setShowSelf(true);
   }, [tabActive]);
+  //use translation to localize component name
+  const { t } = useTranslation();
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -127,7 +116,7 @@ const NestedComponentWrapper = ({
   };
 
   const [
-    { isOver, canDrop, isOverCurrent, droppedInContainer, getItem },
+    { isOver, getItem },
     drop,
   ] = useDrop({
     accept: [
@@ -231,7 +220,7 @@ const NestedComponentWrapper = ({
     },
   });
 
-  const [{ isDragging, didDrop, droppedItem }, drag, dragPreview] = useDrag({
+  const [{ isDragging }, drag, dragPreview] = useDrag({
     type: component.componentName,
     item: () => ({
       componentName: component.componentName,
@@ -247,6 +236,7 @@ const NestedComponentWrapper = ({
       },
       within: true,
       new: true,
+      source:"component",
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -254,14 +244,12 @@ const NestedComponentWrapper = ({
       droppedItem: monitor.getItem(),
     }),
   });
-
-  drop(dropRef);
-
   //remove html5 default drag image
   useEffect(() => {
     dragPreview(getEmptyImage(), { captureDraggingState: true });
   }, []);
-
+  
+  drop(dropRef);
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
@@ -276,7 +264,7 @@ const NestedComponentWrapper = ({
 
   return (
     <>
-      <DragLabel />
+      <DragLabel/>
       <div
         data-test-id="div-before-drop-indicator"
         key={`nested-component-${compIndex}`}
@@ -298,7 +286,6 @@ const NestedComponentWrapper = ({
           />
           <ComponentLabelContainer
             showSelf={showSelf}
-            draggingSelf={isDragging}
             hoverActive={isHover}
             data-testid="component-component-label-container"
           >
@@ -307,6 +294,7 @@ const NestedComponentWrapper = ({
               hoverActive={isHover}
               showSelf={showSelf}
               draggingSelf={isDragging}
+              isDragging={isDragging}
             >
               <span
                 ref={drag}
@@ -319,7 +307,7 @@ const NestedComponentWrapper = ({
                   paddingLeft: "5px",
                 }}
               >
-                <DragHandle />
+                <StyledDragHandle />
               </span>
               <Typography
                 variant="body2"
@@ -352,7 +340,7 @@ const NestedComponentWrapper = ({
                 draggingSelf={isDragging}
                 draggingOver={draggingOver}
               >
-                <ArrowDropUpIcon fontSize="inherit" />
+                <ArrowDropUp fontSize="inherit" />
               </SmallIconButton>
             )}
             {compIndex != numOfComponent - 1 && (
@@ -372,7 +360,7 @@ const NestedComponentWrapper = ({
                 draggingSelf={isDragging}
                 draggingOver={draggingOver}
               >
-                <ArrowDropDownIcon fontSize="inherit" />
+                <ArrowDropDown fontSize="inherit" />
               </SmallIconButton>
             )}
 
@@ -391,7 +379,7 @@ const NestedComponentWrapper = ({
               draggingSelf={isDragging}
               draggingOver={draggingOver}
             >
-              <ContentCopyIcon fontSize="inherit" />
+              <ContentCopy fontSize="inherit" />
             </SmallIconButton>
             <SmallIconButton
               onClick={() => {
@@ -407,7 +395,7 @@ const NestedComponentWrapper = ({
               draggingSelf={isDragging}
               draggingOver={draggingOver}
             >
-              <DeleteOutlineIcon fontSize="inherit" />
+              <DeleteOutline fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
           <BlueBox
@@ -436,7 +424,7 @@ const NestedComponentWrapper = ({
             showLine={dropIndexOffset === 0 && isOver}
             item={getItem}
             offsetDown={0}
-            offsetUp={15}
+            offsetUp={compIndex != numOfComponent - 1 ? 15 : 5}
           />
         </div>
       </div>

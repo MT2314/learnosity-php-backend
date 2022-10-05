@@ -40,39 +40,42 @@ const AccordionItem = ({
   };
 
   const [showDropError, setShowDropError] = useState();
-  const [{ isOver, getItem }, drop] = useDrop(() => ({
-    accept: [
-      "Text",
-      "Image",
-      "Video",
-      "Table",
-      "InfoBox",
-      "QuoteBox",
-      "IFrame",
-    ],
-    drop: async (item, monitor) => {
-      if (!acceptListComp(item) && components.length !== 0)
-        setShowDropError(true);
-      if (item.within && components.length !== 0) return;
-      if (monitor.didDrop()) return;
-      if (!monitor.isOver({ shallow: true })) return;
-      if (acceptListComp(item)) {
-        dispatch({
-          func: "ADD_COMPONENT",
-          tabIndex: accordionIndex,
-          component: {
-            componentName: item.componentName,
-            componentProps: JSON.parse(item?.componentProps),
-          },
-        });
-        item?.delete && item?.delete();
-      }
-    },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-      getItem: monitor.getItem(),
+  const [{ isOver, getItem }, drop] = useDrop(
+    () => ({
+      accept: [
+        "Text",
+        "Image",
+        "Video",
+        "Table",
+        "InfoBox",
+        "QuoteBox",
+        "IFrame",
+      ],
+      drop: async (item, monitor) => {
+        if (!acceptListComp(item) && components.length !== 0)
+          setShowDropError(true);
+        if (item.within && components.length !== 0) return;
+        if (monitor.didDrop()) return;
+        if (!monitor.isOver({ shallow: true })) return;
+        if (acceptListComp(item)) {
+          dispatch({
+            func: "ADD_COMPONENT",
+            tabIndex: accordionIndex,
+            component: {
+              componentName: item.componentName,
+              componentProps: JSON.parse(item?.componentProps),
+            },
+          });
+          item?.delete && item?.delete();
+        }
+      },
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver(),
+        getItem: monitor.getItem(),
+      }),
     }),
-  }));
+    [components]
+  );
 
   // Adding space between Cap except iFrame
   const trimCap = (item) => {
@@ -118,6 +121,7 @@ const AccordionItem = ({
           return (
             <NestedComponentWrapper
               key={`key-component-${compIndex}`}
+              componentType="accordion"
               numOfComponent={components.length}
               componentProps={component.componentProps}
               component={component}

@@ -10,13 +10,13 @@ export const layoutConfig = (draft, action) => {
     case "UPDATE_STATE":
       return action.data;
     case "ADD_LAYER":
-      draft.push({
+      draft.splice(action.paneIndex + 1, 0, {
         id: action.id,
         title: "",
         placeholderTitle: action.title,
         components: [],
         expanded: action.expanded,
-      });
+      })
       return draft;
     case "REMOVE_LAYER":
       draft.splice(action.paneIndex, 1);
@@ -28,15 +28,27 @@ export const layoutConfig = (draft, action) => {
       return draft;
     case "MOVE_PANE_UP":
       // eslint-disable-next-line no-case-declarations
-      const elementL = draft[action.paneIndex];
-      draft.splice(action.paneIndex, 1);
-      draft.splice(action.paneIndex - 1, 0, elementL);
+      if (action.paneIndex !== 0) {
+        const elementL = draft[action.paneIndex];
+        draft.splice(action.paneIndex, 1);
+        draft.splice(action.paneIndex - 1, 0, elementL);
+      } else {
+        const elementL = draft[action.paneIndex];
+        draft.splice(0, 1);
+        draft.splice(draft.length, 0, elementL);
+      }
       return draft;
     case "MOVE_PANE_DOWN":
       // eslint-disable-next-line no-case-declarations
-      const elementR = draft[action.paneIndex];
-      draft.splice(action.paneIndex, 1);
-      draft.splice(action.paneIndex + 1, 0, elementR);
+      if (action.paneIndex !== draft.length - 1) {
+        const elementR = draft[action.paneIndex];
+        draft.splice(action.paneIndex, 1);
+        draft.splice(action.paneIndex + 1, 0, elementR);
+      } else {
+        const elementR = draft[action.paneIndex];
+        draft.pop()
+        draft.unshift(elementR)
+      }
       return draft;
     case "UPDATE_COMPONENT":
       draft[action.tabIndex].components[action.compIndex].componentProps = {
@@ -164,9 +176,9 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
     const updateState =
       diff & !updatedLength
         ? state.map((item, index) => ({
-            ...item,
-            expanded: activePane[index].expanded,
-          }))
+          ...item,
+          expanded: activePane[index].expanded,
+        }))
         : state;
     setProp({ layoutState: updateState });
   }, [state]);
