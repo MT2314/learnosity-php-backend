@@ -16,8 +16,9 @@
             selected
         {%- endif -%}
         >
-            {{tab.title}}
-            
+            <p>
+                {{tab.title}}
+            </p>
         {% if tab.title.length > 84 and data.props.layoutState.length == 2 -%}
             <span class="hoverTabText hoverTabText2">
                 {{tab.title}}

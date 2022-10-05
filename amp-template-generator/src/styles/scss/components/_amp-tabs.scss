@@ -10,30 +10,34 @@
       flex-wrap: wrap;
 
       & [role="tab"] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         flex-grow: 1;
         box-sizing: border-box;
-        align-self: center;
-        justify-self: center;
         border: 0.0625rem solid $border-color;
-        border-bottom: 0.25rem solid $inactive-tab-bg;
         width: min-content;
         height: 4.625rem;
-        word-wrap: break-word;
-        overflow-x: hidden;
-        overflow-y: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        font-weight: 400;
-        font-family: "Lato", sans-serif;
-        font-style: normal;
-        font-size: 1.125rem;
-        line-height: 1.6875rem;
-        letter-spacing: 0.03em;
-        text-align: center;
         border-left-width: 0;
         background-color: $inactive-tab-bg;
+
+        p {
+          font-weight: 400;
+          font-family: "Lato", sans-serif;
+          font-style: normal;
+          font-size: 1.125rem;
+          text-align: center;
+          line-height: 1.6875rem;
+          letter-spacing: 0.03em;
+          word-wrap: break-word;
+          overflow-x: hidden;
+          overflow-y: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          margin: 0;
+        }
 
         &:first-child {
           border-left-width: 0.0625rem;
@@ -91,7 +95,6 @@
         width: 100%;
         order: 1;
         border-color: $border-color;
-        border-top: 0.0625rem solid $component-border;
         background: $primary-tab-bg;
       }
 
