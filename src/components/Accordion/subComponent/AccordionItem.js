@@ -76,6 +76,7 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
           return (
             <NestedComponentWrapper
               key={`key-component-${compIndex}`}
+              componentType='accordion'
               numOfComponent={components.length}
               componentProps={component.componentProps}
               component={component}
