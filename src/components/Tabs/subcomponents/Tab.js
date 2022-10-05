@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 
 import { TabContext, LayoutContext } from "../TabContext";
 import ComponentWrapper from "./ComponentWrapper";
+import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 
 //components
 import Placeholder from "./Placeholder";
@@ -120,7 +121,8 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
           <div role="list" isOver={isOver}>
             {components.map((component, compIndex) => {
               return (
-                <ComponentWrapper
+                <NestedComponentWrapper
+                  componentType='tabs'
                   key={`key-component-${compIndex}`}
                   numOfComponent={components.length}
                   componentProps={component.componentProps}

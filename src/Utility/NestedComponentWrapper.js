@@ -77,6 +77,7 @@ export const ComponentLabelContainer = styled("div")(
 );
 
 const NestedComponentWrapper = ({
+  componentType,
   component,
   compIndex,
   componentProps,
@@ -92,7 +93,7 @@ const NestedComponentWrapper = ({
 }) => {
   const dropRef = useRef(null);
 
-  const [, dispatch] = useContext(LayoutContext);
+  const [, dispatch] = useContext(componentType === "accordion" ? AccordionContext : TabContext);
   const [showSelf, setShowSelf] = useState(false);
   const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
