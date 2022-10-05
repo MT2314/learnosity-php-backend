@@ -116,7 +116,7 @@ const TabTitle = ({ tabTitle, tabPlaceholder, tabIndex, showToolbar }) => {
       tabIndexProp={tabIndex}
       role="tab"
       key={`tab-title-${tabIndex}`}
-      tabIndex="0"
+      tabIndex={tabIndex}
       aria-label={tabTitle}
       onFocus={() => {
         showToolbar(true);
