@@ -29,7 +29,7 @@ npm install
 
 ## Configure .env
 
-The .env file should be created within amp-template-generator/src/. Update environment variables as needed. Current the following variables are being used:
+The .env file should be created within amp-template-generator/src/. Update environment variables as needed. Currently the following variables are being used:
 
 ```
 GQL_ENDPOINT=
