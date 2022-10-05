@@ -9,7 +9,7 @@
       display: flex;
       flex-wrap: wrap;
 
-      & [role="tab"] {
+      [role="tab"] {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -22,7 +22,8 @@
         background-color: $inactive-tab-bg;
 
         &:focus-visible {
-          outline: none;
+          margin: 0.0625rem;
+          outline: 0.0625rem solid $tab-focus;
         }
 
         p {
