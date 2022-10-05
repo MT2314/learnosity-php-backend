@@ -11,28 +11,29 @@
 
       & [role="tab"] {
         flex-grow: 1;
-        display: flex;
         box-sizing: border-box;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+        align-self: center;
+        justify-self: center;
         border: 0.0625rem solid $border-color;
+        border-bottom: 0.25rem solid $inactive-tab-bg;
         width: min-content;
         height: 4.625rem;
         word-wrap: break-word;
         overflow-x: hidden;
         overflow-y: hidden;
         text-overflow: ellipsis;
-        border-left-width: 0;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
         font-weight: 400;
         font-family: "Lato", sans-serif;
         font-style: normal;
         font-size: 1.125rem;
         line-height: 1.6875rem;
         letter-spacing: 0.03em;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        background-color: $primary-background;
+        text-align: center;
+        border-left-width: 0;
+        background-color: $inactive-tab-bg;
 
         &:first-child {
           border-left-width: 0.0625rem;
@@ -66,14 +67,14 @@
         }
 
         &:hover {
-          background-color: rgba(0, 0, 0, 0.02);
+          background-color: $primary-tab-bg;
           .hoverTabText {
             display: block;
           }
         }
 
         &[selected] {
-          background-color: $tab-active-bg;
+          background-color: $active-tab-bg;
           border-bottom: 0.25rem solid $tab-active-border-top;
           color: black;
         }
@@ -90,7 +91,8 @@
         width: 100%;
         order: 1;
         border-color: $border-color;
-        background: $primary-background;
+        border-top: 0.0625rem solid $component-border;
+        background: $primary-tab-bg;
       }
 
       & [role="tab"][selected] + [role="tabpanel"] {

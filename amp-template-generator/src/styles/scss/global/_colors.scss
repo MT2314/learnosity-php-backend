@@ -3,49 +3,59 @@
 //
 //
 // Brand Colors (For example, initial ILC colors are green)
-$brand-700: #005700; // Button hover
-$brand-500: #008800; // Main brand color, button color, focus state outline
-$brand-400: #34ae34; // TBD
-$brand-300: #55c367; // TBD
-$brand-200: #91e09e; // TBD
-$brand-100: #cef6d5; // Text link underline, text link hover
-$brand-50: #eefff1; // Text highlight
+$brand-700: rgba(0, 87, 0, 1); // Button hover
+$brand-500: rgba(
+  0,
+  136,
+  0,
+  1
+); // Main brand color, button color, focus state outline
+$brand-400: rgba(52, 174, 52, 1); // TBD
+$brand-300: rgba(85, 195, 103, 1); // TBD
+$brand-200: rgba(145, 224, 158, 1); // TBD
+$brand-100: rgba(206, 246, 213, 1); // Text link underline, text link hover
+$brand-50: rgba(238, 255, 241, 1); // Text highlight
 
 // Grey Colors (Used for text/typography)
-$grey-900: #212121; // Primary body text
-$grey-800: #535353; // Overflow text box
-$grey-700: #595959; // TBD
-$grey-600: #757575; // Secondary text - picture caption
-$grey-500: #9e9e9e; // TBD
-$grey-400: #bdbdbd; // TBD
-$grey-300: #e0e0e0; // TBD
-$grey-200: #eeeeee; // TBD
-$grey-100: #f5f5f5; // TBD
-$grey-50: #fafafa; // TBD
+$grey-900: rgba(33, 33, 33, 1); // Primary body text
+$grey-800: rgba(83, 83, 83, 1); // Overflow text box
+$grey-700: rgba(89, 89, 89, 1); // TBD
+$grey-600: rgba(117, 117, 117, 1); // Secondary text - picture caption
+$grey-500: rgba(158, 158, 158, 1); // TBD
+$grey-400: rgba(189, 189, 189, 1); // TBD
+$grey-300: rgba(224, 224, 224, 1); // TBD
+$grey-200: rgba(238, 238, 238, 1); // TBD
+$grey-100: rgba(245, 245, 245, 1); // TBD
+$grey-50: rgba(250, 250, 250, 1); // TBD
 
 // Transparent Grey
-$transparent-grey-900: #000000d9; // TBD
-$transparent-grey-800: #000000bf; // TBD
-$transparent-grey-700: #0000008c; // TBD
-$transparent-grey-600: #00000073; // TBD
-$transparent-grey-500: #00000059; // TBD
-$transparent-grey-400: #00000040; // TBD
-$transparent-grey-300: #00000026; // UI lines
-$transparent-grey-200: #0000001a; // Accordion: arrow background circle hover
-$transparent-grey-100: #0000000d; // TBD
-$transparent-grey-50: #00000005; // UI Text background
+$transparent-grey-900: rgba(0, 0, 0, 0.85); // TBD
+$transparent-grey-800: rgba(0, 0, 0, 0.75); // TBD
+$transparent-grey-700: rgba(0, 0, 0, 0.55); // TBD
+$transparent-grey-600: rgba(0, 0, 0, 0.45); // TBD
+$transparent-grey-500: rgba(0, 0, 0, 0.35); // TBD
+$transparent-grey-400: rgba(0, 0, 0, 0.25); // TBD
+$transparent-grey-300: rgba(0, 0, 0, 0.15); // UI lines
+$transparent-grey-200: rgba(
+  0,
+  0,
+  0,
+  0.1
+); // Accordion: arrow background circle hover
+$transparent-grey-100: rgba(0, 0, 0, 0.05); // TBD
+$transparent-grey-50: rgba(0, 0, 0, 0.02); // UI Text background
 
 // Transparent White
-$transparent-white-900: #ffffffe5; // TBD
-$transparent-white-800: #ffffffcc; // TBD
-$transparent-white-700: #ffffffb2; // TBD
-$transparent-white-600: #ffffff99; // TBD
-$transparent-white-500: #ffffff80; // TBD
-$transparent-white-400: #ffffff66; // TBD
-$transparent-white-300: #ffffff4d; // TBD
-$transparent-white-200: #ffffff33; // TBD
-$transparent-white-100: #ffffff1a; // TBD
-$transparent-white-50: #ffffff0d; // TBD
+$transparent-white-900: rgba(255, 255, 255, 0.9); // TBD
+$transparent-white-800: rgba(255, 255, 255, 0.8); // TBD
+$transparent-white-700: rgba(255, 255, 255, 0.7); // TBD
+$transparent-white-600: rgba(255, 255, 255, 0.6); // TBD
+$transparent-white-500: rgba(255, 255, 255, 0.5); // TBD
+$transparent-white-400: rgba(255, 255, 255, 0.4); // TBD
+$transparent-white-300: rgba(255, 255, 255, 0.3); // TBD
+$transparent-white-200: rgba(255, 255, 255, 0.2); // TBD
+$transparent-white-100: rgba(255, 255, 255, 0.1); // TBD
+$transparent-white-50: rgba(255, 255, 255, 0.05); // TBD
 
 // White
 $white: #fff;
@@ -61,11 +71,54 @@ $white: #fff;
 $primary-body-text: $grey-900;
 $secondary-text: $grey-600;
 
-// Border/background colors
-$primary-background: $transparent-grey-300;
-$secondary-background: $white;
+// ----------------------------------------------------------------------
+// Component-Specific Roles
+
+// Text
+
+// Tabs
+$primary-tab-bg: $transparent-grey-50;
+$active-tab-bg: $transparent-grey-100;
+$inactive-tab-bg: $white;
+
+$component-border: $transparent-grey-300;
+
+// Accordion
 
 // Old colours/variables (KEEPING TO MAINTAIN PREVIOUS STYLES FOR NOW)
+// ----------------------------------------------------------------------
+// Color Palette
+//
+// These colours should NOT get assigned within other CSS; Instead, assign
+// them to component role variable, below.
+//
+// To see a documented version of the colour swatches, see
+// /views/demo-colors.html
+//
+$outline-focus: #0b9f93;
+
+$brand-primary: #0e8515; // NEW color for $brand-green
+$brand-primary-dark: #096e0f; // NEW color for $brand-green-dark
+
+$brand-secondary-light: rgba(0, 0, 0, 0.02); // formerly $background-grey
+$brand-secondary: rgba(0, 0, 0, 0.15); // formerly $border-grey
+$brand-secondary-dark: #8e9295; // formerly $med-grey
+
+$brand-tertiary: #deeddf; // formerly $brand-green-light
+$brand-tertiary-dark: #aadead; // formerly $brand-green-med
+
+$brand-complementary: #b5e2de; // formerly $background-blue
+
+// ----------------------------------------------------------------------
+// Generic color/role Variables
+//
+// Use your brain when referencing these colors. Sometimes it makes sense to
+// reference them directly in the CSS, and sometimes it is more appropriate to
+// use a component role variable, below.
+//
+// default font colours
+$text-body: #212628;
+$heading-underline: #56656a; // NEW
 $button-text: #fff;
 
 $page-background: #fff;
