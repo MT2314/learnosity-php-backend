@@ -2,7 +2,7 @@
     {%- assign tabListId = 'tablist' | append: data.id -%}
     <amp-selector class="tabs"
         role="tablist"
-        keyboard-select-mode="focus"
+        keyboard-select-mode="select"
         id="{{tabListId}}">
 
     {%- for tab in data.props.layoutState -%}
