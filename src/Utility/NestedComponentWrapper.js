@@ -5,11 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
-import DragHandleIcon from "@mui/icons-material/DragHandle";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { DragHandle, ArrowDropUp, ArrowDropDown, ContentCopy, DeleteOutline } from "@mui/icons-material";
 
 import { LayoutContext as AccordionContext} from "../Context/InteractivesContext";
 import { LayoutContext as TabContext } from "../components/Tabs/TabContext";
@@ -39,7 +35,7 @@ const BlueBox = styled("div")(
   })
 );
 
-const DragHandle = styled(DragHandleIcon)({
+const StyledDragHandle = styled(DragHandle)({
   color: "inherit",
 });
 
@@ -311,7 +307,7 @@ const NestedComponentWrapper = ({
                   paddingLeft: "5px",
                 }}
               >
-                <DragHandle />
+                <StyledDragHandle />
               </span>
               <Typography
                 variant="body2"
@@ -344,7 +340,7 @@ const NestedComponentWrapper = ({
                 draggingSelf={isDragging}
                 draggingOver={draggingOver}
               >
-                <ArrowDropUpIcon fontSize="inherit" />
+                <ArrowDropUp fontSize="inherit" />
               </SmallIconButton>
             )}
             {compIndex != numOfComponent - 1 && (
@@ -364,7 +360,7 @@ const NestedComponentWrapper = ({
                 draggingSelf={isDragging}
                 draggingOver={draggingOver}
               >
-                <ArrowDropDownIcon fontSize="inherit" />
+                <ArrowDropDown fontSize="inherit" />
               </SmallIconButton>
             )}
 
@@ -383,7 +379,7 @@ const NestedComponentWrapper = ({
               draggingSelf={isDragging}
               draggingOver={draggingOver}
             >
-              <ContentCopyIcon fontSize="inherit" />
+              <ContentCopy fontSize="inherit" />
             </SmallIconButton>
             <SmallIconButton
               onClick={() => {
@@ -399,7 +395,7 @@ const NestedComponentWrapper = ({
               draggingSelf={isDragging}
               draggingOver={draggingOver}
             >
-              <DeleteOutlineIcon fontSize="inherit" />
+              <DeleteOutline fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
           <BlueBox
