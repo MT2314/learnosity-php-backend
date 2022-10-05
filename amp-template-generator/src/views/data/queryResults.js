@@ -21,7 +21,7 @@ module.exports = async function () {
     .run(queries[process.env.QUERY || "lesson"], queryVars)
     .then((data) => {
       const isEmpty = Object.keys(data).length === 0;
-      console.log("index.run result: ", data, isEmpty);
+      // console.log("index.run result: ", data, isEmpty);
       if (isEmpty) {
         return false;
       }
@@ -42,20 +42,14 @@ module.exports = async function () {
       if (!data) {
         // TODO: there was a problem retrieving the data
       }
-      if (data?.__typename === "Course") {
-        // Before conversion log
-        // console.log("before conversion data", JSON.stringify(data, null, 4));
-        convertData.dataConversionFunction(data);
-        // Afer conversion log
-        // console.log("after conversion data", JSON.stringify(data, null, 4));
-      } else if (
+      if (
         // If the returns is an array of LessonStructureContainers (getLessons)
         Array.isArray(data) &&
         data[0]?.__typename === "LessonStructureContainer"
       ) {
         // Before conversion log
         // console.log("before conversion data", JSON.stringify(data, null, 4));
-        convertData.dataConversionFlatArray(data);
+        convertData.dataConversionFunction(data);
         // Afer conversion log
         // console.log("after conversion data", JSON.stringify(data, null, 4));
       } else {

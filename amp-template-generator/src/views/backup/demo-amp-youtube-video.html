@@ -1,0 +1,40 @@
+---
+{
+  "result": {
+    "title": "YouTube Video",
+    "components": [
+      {
+        "uuid": "00ef1a53-b7ec-4c11-9554-43bbd6d44db1",
+        "uuidClean": "00ef1a53_b7ec_4c11_9554_43bbd6d44db1",
+        "type": "youtube_video",
+        "videoUrl": "https://www.youtube.com/watch?v=haw9ZGpM0ws",
+        "videoName": "Creating and Sharing a Whiteboard In TVO Mathify",
+        "thumbnailUrl": "https://assets.contenta-qa.tvo.org/qa/public/oembed_thumbnails/FmRnPinmwV1xtOC6xV8y3ZflwlinaUYgJkpQiOf6J1c.jpg",
+        "thumbnailWidth": 480,
+        "thumbnailHeight": 360
+      },
+      {
+        "uuid": "00ef1a53-b7ec-4c11-9554-43bbd6d44db7",
+        "uuidClean": "00ef1a53_b7ec_4c11_9554_43bbd6d44db7",
+        "type": "youtube_video",
+        "videoUrl": "https://www.youtube.com/watch?v=mM5_T-F1Yn4",
+        "videoName": "4:3 demo",
+        "thumbnailUrl": "http://i3.ytimg.com/vi/mM5_T-F1Yn4/hqdefault.jpg",
+        "thumbnailWidth": 480,
+        "thumbnailHeight": 360
+      }
+    ]
+  },
+  "layout": "amp-layout.njk",
+  "permalink": "demo-amp-youtube-video.html"
+}
+---
+<h1>{{result.title}} {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+<h2>16x9 video</h2>
+<p>Widescreen player</p>
+{% include amp-youtube-video.html data:result.components[0] -%}
+
+<h2>4:3 video</h2>
+<p>Widescreen player, black bars on either side</p>
+{% include amp-youtube-video.html data:result.components[1] -%}

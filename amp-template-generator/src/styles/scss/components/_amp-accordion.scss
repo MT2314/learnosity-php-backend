@@ -4,6 +4,9 @@
         color: $accordion-btn-link-text-hover;
         box-shadow: none;
     }
+    .btn.link:disabled {
+        opacity: 0.2;
+    }
 
     .accordion {
         clear: right;
