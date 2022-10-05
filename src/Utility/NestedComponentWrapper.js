@@ -424,7 +424,7 @@ const NestedComponentWrapper = ({
             showLine={dropIndexOffset === 0 && isOver}
             item={getItem}
             offsetDown={0}
-            offsetUp={15}
+            offsetUp={compIndex != numOfComponent - 1 ? 15 : 5}
           />
         </div>
       </div>
