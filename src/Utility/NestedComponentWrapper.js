@@ -24,7 +24,7 @@ export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
 }));
 
 const BlueBox = styled("div")(
-  ({ theme, draggingSelf, showSelf, hoverActive }) => ({
+  ({ draggingSelf, showSelf, hoverActive }) => ({
     outline:
       showSelf && !draggingSelf
         ? `3px solid #1466C0`
@@ -44,7 +44,7 @@ const DragHandle = styled(DragHandleIcon)({
 });
 
 const StaticLabel = styled("span")(
-  ({ theme, hoverActive, draggingSelf, showSelf }) => ({
+  ({ hoverActive, draggingSelf, showSelf }) => ({
     background: hoverActive && !showSelf ? "#DAE3EE" : "#1466C0",
     width: "fit-content",
     height: "100%",
@@ -82,9 +82,7 @@ const NestedComponentWrapper = ({
   compIndex,
   componentProps,
   tabIndex,
-  setIsDragging,
   numOfComponent,
-  inContainer,
   droppedIndex,
   setDroppedIndex,
   draggingOver,
@@ -122,7 +120,7 @@ const NestedComponentWrapper = ({
   };
 
   const [
-    { isOver, canDrop, isOverCurrent, droppedInContainer, getItem },
+    { isOver, getItem },
     drop,
   ] = useDrop({
     accept: [
@@ -226,7 +224,7 @@ const NestedComponentWrapper = ({
     },
   });
 
-  const [{ isDragging, didDrop, droppedItem }, drag, dragPreview] = useDrag({
+  const [{ isDragging }, drag, dragPreview] = useDrag({
     type: component.componentName,
     item: () => ({
       componentName: component.componentName,

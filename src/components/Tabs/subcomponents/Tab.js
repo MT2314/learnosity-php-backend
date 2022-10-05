@@ -3,7 +3,6 @@ import { useDrop } from "react-dnd";
 import styled from "@emotion/styled";
 
 import { TabContext, LayoutContext } from "../TabContext";
-import ComponentWrapper from "./ComponentWrapper";
 import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 
 //components
