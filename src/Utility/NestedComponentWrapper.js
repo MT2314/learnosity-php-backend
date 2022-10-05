@@ -5,9 +5,15 @@ import { useTranslation } from "react-i18next";
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
-import { DragHandle, ArrowDropUp, ArrowDropDown, ContentCopy, DeleteOutline } from "@mui/icons-material";
+import {
+  DragHandle,
+  ArrowDropUp,
+  ArrowDropDown,
+  ContentCopy,
+  DeleteOutline,
+} from "@mui/icons-material";
 
-import { LayoutContext as AccordionContext} from "../Context/InteractivesContext";
+import { LayoutContext as AccordionContext } from "../Context/InteractivesContext";
 import { LayoutContext as TabContext } from "../components/Tabs/TabContext";
 
 import DropIndicator from "./DropIndicator";
@@ -18,21 +24,19 @@ export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
   color: draggingOver ? "transparent" : "#FFF",
 }));
 
-const BlueBox = styled("div")(
-  ({ draggingSelf, showSelf, hoverActive }) => ({
-    outline:
-      showSelf && !draggingSelf
-        ? `3px solid #1466C0`
-        : hoverActive && !draggingSelf
-        ? `3px solid #DAE3EE`
-        : null,
-    borderRadius: "4px",
-    opacity: draggingSelf ? 0.4 : 1,
-    '& [data-id="callout"]': {
-      margin: 0,
-    },
-  })
-);
+const BlueBox = styled("div")(({ draggingSelf, showSelf, hoverActive }) => ({
+  outline:
+    showSelf && !draggingSelf
+      ? `3px solid #1466C0`
+      : hoverActive && !draggingSelf
+      ? `3px solid #DAE3EE`
+      : null,
+  borderRadius: "4px",
+  opacity: draggingSelf ? 0.4 : 1,
+  '& [data-id="callout"]': {
+    margin: 0,
+  },
+}));
 
 const StyledDragHandle = styled(DragHandle)({
   color: "inherit",
@@ -86,7 +90,9 @@ const NestedComponentWrapper = ({
 }) => {
   const dropRef = useRef(null);
 
-  const [, dispatch] = useContext(componentType === "accordion" ? AccordionContext : TabContext);
+  const [, dispatch] = useContext(
+    componentType === "accordion" ? AccordionContext : TabContext
+  );
   const [showSelf, setShowSelf] = useState(false);
   const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
@@ -114,10 +120,7 @@ const NestedComponentWrapper = ({
     );
   };
 
-  const [
-    { isOver, getItem },
-    drop,
-  ] = useDrop({
+  const [{ isOver, getItem }, drop] = useDrop({
     accept: [
       "Text",
       "Image",
@@ -235,7 +238,7 @@ const NestedComponentWrapper = ({
       },
       within: true,
       new: true,
-      source:"component",
+      source: "component",
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -247,7 +250,7 @@ const NestedComponentWrapper = ({
   useEffect(() => {
     dragPreview(getEmptyImage(), { captureDraggingState: true });
   }, []);
-  
+
   drop(dropRef);
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
@@ -286,6 +289,7 @@ const NestedComponentWrapper = ({
             showSelf={showSelf}
             hoverActive={isHover}
             data-testid="component-component-label-container"
+            onDragStart={() => setShowSelf(false)}
           >
             <StaticLabel
               data-testid="static-label"
