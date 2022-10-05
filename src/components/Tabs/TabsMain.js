@@ -11,14 +11,14 @@ export const defaultProps = {
   layoutState: [
     {
       id: uuidv4(),
-      title: "Tab 1",
+      title: "",
       placeholder: "Tab 1",
       components: [],
       activeTab: true,
     },
     {
       id: uuidv4(),
-      title: "Tab 2",
+      title: "",
       placeholder: "Tab 2",
       components: [],
       activeTab: false,
