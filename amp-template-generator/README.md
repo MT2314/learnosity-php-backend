@@ -12,7 +12,7 @@ Move "zip.exe" into the following directory:
 "C:\Users\YOUR_USERNAME\AppData\Roaming\npm"
 ```
 
-From here you need to search for "edit the system environment variables" on you Windows machine. From here, click on "Environment Variables.." under the "Advanced" tab. Under the "User variables for YOUR_USERNAME" you should see "Path". Click on it and then click on "edit".
+From here you need to search for "edit the system environment variables" on your Windows machine. From here, click on "Environment Variables.." under the "Advanced" tab. Under the "User variables for YOUR_USERNAME" you should see "Path". Click on it and then click on "edit".
 
 A new modal will pop up and from here you need to click on "New". For the path name, you need to set it as the following:
 
