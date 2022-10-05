@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { getEmptyImage } from 'react-dnd-html5-backend';
+import { getEmptyImage } from "react-dnd-html5-backend";
 import { useTranslation, Trans } from "react-i18next";
 
 import styled from "@emotion/styled";
@@ -14,7 +14,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { ComponentContext, LayoutContext, TabContext } from "../TabContext";
 
 import DropIndicator from "../../../Utility/DropIndicator";
-import DragLabel from "../../../Utility/DragLabel"
+import DragLabel from "../../../Utility/DragLabel";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import componentIndex from "../../../components/componentIndex";
 
@@ -276,7 +276,7 @@ const ComponentWrapper = ({
 
   return (
     <>
-      <DragLabel/>
+      <DragLabel />
       <div
         data-test-id="div-before-drop-indicator"
         key={`nested-component-${compIndex}`}
@@ -423,7 +423,7 @@ const ComponentWrapper = ({
             showLine={dropIndexOffset === 0 && isOver}
             item={getItem}
             offsetDown={0}
-            offsetUp={15}
+            offsetUp={compIndex != numOfComponent - 1 ? 15 : 5}
           />
         </div>
       </div>

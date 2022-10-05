@@ -10,7 +10,7 @@ import PlaceHolder from "../subComponent/PlaceHolder";
 import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 
 const StyledAccordionDetails = styled(AccordionDetails)(({ isOver }) => ({
-  backgroundColor: isOver ? 'rgba(21, 101, 192, 0.04)' : '#ffffff',
+  backgroundColor: isOver ? "rgba(21, 101, 192, 0.04)" : "#ffffff",
   borderWidth: "1px",
   borderStyle: "solid",
   borderColor: "#BDBDBD",
@@ -30,47 +30,50 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
   };
 
   const [showDropError, setShowDropError] = useState();
-  const [{ isOver, getItem }, drop] = useDrop(() => ({
-    accept: [
-      "Text",
-      "Image",
-      "Video",
-      "Table",
-      "InfoBox",
-      "QuoteBox",
-      "IFrame",
-    ],
-    drop: async (item, monitor) => {
-      if (!acceptListComp(item)) setShowDropError(true);
-      if (item.within && components.length !== 0) return;
-      if (monitor.didDrop()) return;
-      if (!monitor.isOver({ shallow: true })) return;
-      if (acceptListComp(item)) {
-        dispatch({
-          func: "ADD_COMPONENT",
-          tabIndex: accordionIndex,
-          component: {
-            componentName: item.componentName,
-            componentProps: JSON.parse(item?.componentProps),
-          },
-        });
-        item?.delete && item?.delete();
-      }
-    },
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-      getItem: monitor.getItem(),
+  const [{ isOver, getItem }, drop] = useDrop(
+    () => ({
+      accept: [
+        "Text",
+        "Image",
+        "Video",
+        "Table",
+        "InfoBox",
+        "QuoteBox",
+        "IFrame",
+      ],
+      drop: async (item, monitor) => {
+        if (!acceptListComp(item)) setShowDropError(true);
+        if (item.within && components.length !== 0) return;
+        if (monitor.didDrop()) return;
+        if (!monitor.isOver({ shallow: true })) return;
+        if (acceptListComp(item)) {
+          dispatch({
+            func: "ADD_COMPONENT",
+            tabIndex: accordionIndex,
+            component: {
+              componentName: item.componentName,
+              componentProps: JSON.parse(item?.componentProps),
+            },
+          });
+          item?.delete && item?.delete();
+        }
+      },
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver(),
+        getItem: monitor.getItem(),
+      }),
     }),
-  }));
+    [components]
+  );
 
   return (
     <StyledAccordionDetails
-    data-testid="accordion-dropzone"
-    isOver={isOver}
-    ref={drop}
-    onDragLeave={() => setInContainer(false)}
-    onDragOver={() => setInContainer(true)}
-  >
+      data-testid="accordion-dropzone"
+      isOver={isOver}
+      ref={drop}
+      onDragLeave={() => setInContainer(false)}
+      onDragOver={() => setInContainer(true)}
+    >
       {components.length !== 0 ? (
         components.map((component, compIndex) => {
           return (
