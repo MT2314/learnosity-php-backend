@@ -1,33 +1,34 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-const PlaceholderContainer = styled("div")({
-  padding: "0.375rem 0.125rem 0.125rem 0.125rem",
-});
-
-const PlaceholderOutline = styled("div")({
-  height: "8.125rem",
-  width: "100%",
-  border: "0.1875rem dashed #1565c0",
+const PlaceholderContainer = styled("div")(({ isOver, showError }) => ({
+  backgroundColor: isOver
+    ? showError
+      ? "rgba(211, 47, 47, 0.04)"
+      : "#F6F9FC"
+    : showError
+    ? "rgba(211, 47, 47, 0.04)"
+    : "inherit",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-});
+  height: "130px",
+  border: showError ? "3px dashed #D32F2F" : "3px dashed #1565c0",
+}));
 
-const Title = styled("h3")(() => ({
-  color: "#636363",
+const Title = styled("h3")(({ showError }) => ({
+  color: showError ? "#D32F2F" : "#636363",
   fontWeight: "400",
-  fontSize: "1.5rem",
-  lineHeight: "2.00125rem",
+  fontSize: "24px",
+  lineHeight: "32.02px",
   margin: "0",
 }));
 
 const Paragraph = styled("p")({
-  fontSize: "0.875rem",
+  fontSize: "14px",
   marginBottom: "0",
   fontWeight: "500",
-  color: "#636363",
 });
 
 const SubParagraph = styled(Paragraph)({
@@ -35,19 +36,21 @@ const SubParagraph = styled(Paragraph)({
   color: "#1565c0",
 });
 
-const Placeholder = () => {
+const Placeholder = ({ isOver, showError }) => {
   return (
-    <PlaceholderContainer>
-      <PlaceholderOutline>
-        <Title>Add a component here!</Title>
-        <Paragraph>
-          Drag and drop a component from the left panel or use your keyboard to
-          insert a component.
-        </Paragraph>
-        <SubParagraph>
-          Accepted components: text, image, chart, table, video, and audio.
-        </SubParagraph>
-      </PlaceholderOutline>
+    <PlaceholderContainer isOver={isOver} showError={showError}>
+      <Title showError={showError}>
+        {showError
+          ? `Error: ${showError} not compatible!`
+          : `Add a component here!`}
+      </Title>
+      <Paragraph>
+        Drag and drop a component from the left panel or use your keyboard to
+        insert a component.
+      </Paragraph>
+      <SubParagraph>
+        Accepted components: text, image, chart, table, video, and audio.
+      </SubParagraph>
     </PlaceholderContainer>
   );
 };
