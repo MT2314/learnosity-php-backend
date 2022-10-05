@@ -97,6 +97,7 @@ const AccordionItem = ({
       setShowError(trimCap(getItem.componentName));
     } else if (isOver) {
       setShowError();
+      setShowDropError(false);
       setIsDragging(true);
     } else {
       setIsDragging(false);
