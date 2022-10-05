@@ -61,14 +61,12 @@ module.exports = async function () {
     },
   ];
 
-  if (data?.__typename === "Course") {
-    convertData.dataConversionFunction(data);
-  } else if (
+  if (
     // If the returns is an array of LessonStructureContainers (getLessons)
     Array.isArray(data) &&
     data[0]?.__typename === "LessonStructureContainer"
   ) {
-    convertData.dataConversionFlatArray(data);
+    convertData.dataConversionFunction(data);
   } else {
     // TODO: may need to check for type if __typename does not exist eg. getLesson
   }
