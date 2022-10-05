@@ -1,6 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
 import styled from "@emotion/styled";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 import Tab from "./Tab";
 import ConfigBar from "../subcomponents/ConfigBar";
@@ -37,10 +38,17 @@ const Tabs = () => {
   const [state] = useContext(LayoutContext);
   const [toolbar, showToolbar] = useState(false);
   const [removeError, setRemoveError] = useState(false);
+  const showToolbarRef = useRef(null);
+
+  useOnClickOutside(showToolbarRef, () => {
+    showToolbar(false);
+  });
+
   return (
     <>
       <StyledTabContainer data-testid="tab-component">
         <StyledTabTitleWrapper
+          ref={showToolbarRef}
           role="tablist"
           onBlur={(e) => {
             const relatedTarget = e.relatedTarget || document.activeElement;
