@@ -150,7 +150,7 @@ const TabTitle = ({ tabTitle, tabPlaceholder, tabIndex, showToolbar }) => {
           onChange={handleTitleChange}
           onFocus={() => handleCursorFocus(tabIndex)}
           data-id={state[tabIndex].id}
-          value={tabTitle.length > 0 ? tabTitle : ""}
+          value={tabTitle.length > 0 ? tabTitle : null}
           onBlur={handleTitleBlur}
           ref={inputRef}
         />
