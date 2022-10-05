@@ -1,0 +1,21 @@
+---
+{
+  "result": {
+    "title": "Brightcove Video",
+    "components": [
+      {
+        "uuid": "00ef1a53-b7ec-4c11-9554-43bbd6d44db1",
+        "uuidClean": "00ef1a53_b7ec_4c11_9554_43bbd6d44db1",
+        "type": "brightcove_video",
+        "brightcoveDataVideoId": "ref:2531990",
+        "brightcoveDataPlayer": "mLPSmEWSk"
+      }
+    ]
+  },
+  "layout": "amp-layout.njk",
+  "permalink": "demo-amp-brightcove-video.html"
+}
+---
+<h1>{{result.title}} {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+{% include amp-brightcove-video.html data:result.components[0] -%}

@@ -21,9 +21,9 @@
     {%- when "Tab" -%}
         {% include amp-tabs.html data:item %}
     {%- when "IFrame" -%}
-        {% include amp-iframe.html data:item %}
+        {% include amp-iframe.html data:propName %}
     {%- when "InfoBox" -%}
-        {% include amp-infobox.html data:item.props.infoBoxState %}
+        {% include amp-infobox.html data:propName.infoBoxState %}
     {%- when "Accordion" -%}
         {% include amp-accordion.html data:item %}        
     {%comment%} Not using below. {%endcomment%}

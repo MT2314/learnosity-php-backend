@@ -6,7 +6,7 @@ module.exports = async function () {
       __typename: "LessonStructureContainer",
       id: "633aebff203363a7d97f7354",
       type: "lesson",
-      name: "Iframe Component",
+      name: "Accordion Component",
       description: null,
       indexInParent: 0,
       componentContainer: {
@@ -37,9 +37,9 @@ module.exports = async function () {
             components: [
               {
                 id: "633aedea203363a7d97f75b9",
-                componentName: "IFrame",
+                componentName: "Accordion",
                 props:
-                  '{"title":"Pretend iFrame Title","titleDisplay":true,"src":"https://dcc.ilc.org/bbi2o/10/income_statement_1/index.html","height":"500","width":"900","heightType":"px","widthType":"px"}',
+                  '{"layoutState":[{"id":"5cec2119-1c74-4118-b467-a9a4a94ff4fa","title":"Pane 1","placeholderTitle":"Pane 1","components":[{"componentName":"Text","componentProps":{"body":{"ops":[{"insert":"Accordion 1 text\\n"}]}}}],"expanded":false},{"id":"5cec2119-1c74-4118-b467-a9a4a94ff4fb","title":"Pane 2","placeholderTitle":"Pane 1","components":[{"componentName":"Text","componentProps":{"body":{"ops":[{"insert":"Accordion 2 text 1\\n"}]}}},{"componentName":"Text","componentProps":{"body":{"ops":[{"insert":"Accordion 2 text 2\\n"}]}}}],"expanded":false},{"id":"5cec2119-1c74-4118-b467-a9a4a94ff4fc","title":"Pane 3","placeholderTitle":"Pane 1","components":[],"expanded":false}]}',
                 locked: false,
               },
             ],
@@ -61,14 +61,12 @@ module.exports = async function () {
     },
   ];
 
-  if (data?.__typename === "Course") {
-    convertData.dataConversionFunction(data);
-  } else if (
+  if (
     // If the returns is an array of LessonStructureContainers (getLessons)
     Array.isArray(data) &&
     data[0]?.__typename === "LessonStructureContainer"
   ) {
-    convertData.dataConversionFlatArray(data);
+    convertData.dataConversionFunction(data);
   } else {
     // TODO: may need to check for type if __typename does not exist eg. getLesson
   }
