@@ -110,14 +110,7 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
     const removeTab = async () => {
         setRemoveError(true);
         let active;
-
-        if (paneIndex === state.length - 1) {
-            active = paneIndex - 1
-        } else if (paneIndex === 0) {
-            active = 0
-        } else {
-            active = paneIndex + 1
-        }
+        paneIndex === state.length - 1 || 0 ? active = 0 : active = paneIndex
 
         dispatch({
             func: "REMOVE_LAYER",
