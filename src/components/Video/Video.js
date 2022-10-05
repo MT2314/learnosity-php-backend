@@ -5,6 +5,7 @@ import { useToolBarOptions } from "../../hooks/useToolBarOptions";
 
 import YouTube from "react-youtube";
 import ReactPlayerLoader from "@brightcove/react-player-loader";
+import DragLabel from "../../Utility/DragLabel";
 
 import styles from "./styles/Video.module.scss";
 
@@ -29,6 +30,8 @@ const Video = ({
 
   return (
     <>
+      {/* on drag <DragLabel/> shows the components name */}
+      <DragLabel/>
       <div className={styles.videoContainer} data-testid="video">
         {type === "" ||
           (type === "brightcove" && !videoId) ||
