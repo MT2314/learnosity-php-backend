@@ -54,6 +54,12 @@ cd src
 
 // outputs demo templates /dist/demo/demo-\*.html
 
+Currently for the demo pages we have javascript files within the "amp-template-generator/src/mockData/" folder that replicates the data structure of each component and flows through the conversion process to mimic what would happen in a runtime scenario.
+
+In the "Gulpfile" within "amp-template-generator/src/" we have created a function called "\_copyMockData()" that is triggered based on if the build mode is equal to "demo" (buildd). The function copies the contents of the "mockData" folder, it is important to note the naming convention of these files as the gulp task scans the directory for any files that begin with the word "component". An example of what a file could be named would be: "componentText". These files are then copied over to "amp-template-generator/src/views/data/". Once the build task has been completed, the "\_deleteMockData()" function is triggered as the last step of the build process and then removes the files that were copied over into the "amp-template-generator/src/views/data/".
+
+Within "amp-template-generator/src/views/" resides our demo template files. The naming convention for the these files is the following: "demo-amp-COMPONENTNAME.html". There is an easy to follow pattern throughout these files for developers to be able to add new components. With these files, you are able to access the javascript files that were copied over into the "amp-template-generator/src/views/data/" folder during the buildd process. We receive an array of all the data files within that folder and have to loop through until we find a match to the desired component. Once we get to the individual component data, then we include the correct template from "amp-template-generator/src/views/includes/" and pass the data off to it as a prop to be able to generate the correct component/s.
+
 ```
 npm run buildd
 ```
@@ -92,7 +98,7 @@ npm run buildz
 
 ## Brightcove Stylesheet
 
-The stylings of an <amp-brightcove/> component work a little differently than other components. Brightcove videos are loaded inside an iframe, so the CSS to style the video player must be uploaded directly to Brightcove via the Digital Media Services team (Keith Lennox).
+The stylings of an `<amp-brightcove/>` component work a little differently than other components. Brightcove videos are loaded inside an iframe, so the CSS to style the video player must be uploaded directly to Brightcove via the Digital Media Services team (Keith Lennox).
 The Brightcove CSS uses the same mixins and color variables as our other SASS, but it is compiled as a standalone CSS output.
 The process for changing the Brightcove player styles is:
 

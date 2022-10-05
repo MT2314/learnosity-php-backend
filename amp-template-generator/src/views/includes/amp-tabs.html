@@ -2,7 +2,7 @@
     {%- assign tabListId = 'tablist' | append: data.id -%}
     <amp-selector class="tabs"
         role="tablist"
-        keyboard-select-mode="focus"
+        keyboard-select-mode="select"
         id="{{tabListId}}">
 
     {%- for tab in data.props.layoutState -%}
@@ -39,7 +39,8 @@
         <div id="{{tabListId}}_tabpanel{{forloop.index}}"
             role="tabpanel"
             aria-labelledby="{{tabListId}}_tab{{forloop.index}}"
-            class="border-left border-right border-bottom px3 pt3">
+            class="border-left border-right border-bottom px3 pt3"
+            tabindex="0">
 
             {%- for c in tab.components -%}
                 {% include content-model-parser.liquid item:c %}
