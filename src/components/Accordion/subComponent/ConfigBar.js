@@ -84,7 +84,8 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
             func: "ADD_LAYER",
             id: uuidv4(),
             title: `Pane ${state.length + 1}`,
-            expanded: false
+            expanded: false, 
+            paneIndex
         });
     };
 
@@ -92,10 +93,9 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
         dispatch({
             func: "MOVE_PANE_DOWN",
             title: `Pane at position ${paneIndex} is now at position ${paneIndex + 1}`,
-            paneIndex: paneIndex,
-            nextPane: paneIndex + 1,
+            paneIndex: paneIndex
         });
-        setPaneIndex(paneIndex + 1)
+        paneIndex === state.length - 1 ? setPaneIndex(0) : setPaneIndex(paneIndex + 1)
     }
 
     const moveAccordionUp = () => {
@@ -104,11 +104,7 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
             title: `Pane at position ${paneIndex} is now at position ${paneIndex + 1}`,
             paneIndex: paneIndex
         });
-        if (paneIndex === 0) {
-            setPaneIndex(state.length - 1)
-        } else {
-            setPaneIndex(paneIndex - 1)
-        }
+        paneIndex === 0 ? setPaneIndex(state.length - 1) : setPaneIndex(paneIndex - 1)
     }
 
     const removeTab = async () => {
@@ -167,6 +163,7 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
                             disableRipple
                             color="inherit"
                             onClick={() => moveAccordionUp(state)}
+                            disabled={state.length == 1}
                         >
                             <ArrowUpward />
                         </StyledIconButton>
@@ -176,7 +173,7 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
                             disableRipple
                             color="inherit"
                             onClick={() => moveAccordionDown(state)}
-                            disabled={paneIndex === state.length - 1}
+                            disabled={state.length == 1}
                         >
                             <ArrowDownward />
                         </StyledIconButton>

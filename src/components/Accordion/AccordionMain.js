@@ -14,7 +14,7 @@ export const defaultProps = {
       title: "",
       placeholderTitle: "Pane 1",
       components: [],
-      expanded: false,
+      expanded: true,
     },
   ],
 };

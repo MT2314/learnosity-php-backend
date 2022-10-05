@@ -10,13 +10,13 @@ export const layoutConfig = (draft, action) => {
     case "UPDATE_STATE":
       return action.data;
     case "ADD_LAYER":
-      draft.push({
+      draft.splice(action.paneIndex + 1, 0, {
         id: action.id,
         title: "",
         placeholderTitle: action.title,
         components: [],
         expanded: action.expanded,
-      });
+      })
       return draft;
     case "REMOVE_LAYER":
       draft.splice(action.paneIndex, 1);
@@ -40,9 +40,15 @@ export const layoutConfig = (draft, action) => {
       return draft;
     case "MOVE_PANE_DOWN":
       // eslint-disable-next-line no-case-declarations
-      const elementR = draft[action.paneIndex];
-      draft.splice(action.paneIndex, 1);
-      draft.splice(action.paneIndex + 1, 0, elementR);
+      if (action.paneIndex !== draft.length - 1) {
+        const elementR = draft[action.paneIndex];
+        draft.splice(action.paneIndex, 1);
+        draft.splice(action.paneIndex + 1, 0, elementR);
+      } else {
+        const elementR = draft[action.paneIndex];
+        draft.pop()
+        draft.unshift(elementR)
+      }
       return draft;
     case "UPDATE_COMPONENT":
       draft[action.tabIndex].components[action.compIndex].componentProps = {
