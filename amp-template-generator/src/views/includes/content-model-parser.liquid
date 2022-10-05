@@ -5,25 +5,25 @@
 {%- endif -%}
 
 {% if item.props %} 
-    {% assign component = item.props %} 
+    {% assign propName = item.props %} 
 {% elsif item.componentProps %} 
-    {% assign component = item.componentProps %} 
+    {% assign propName = item.componentProps %} 
 {% endif %}
 
 {%comment%} Main Content Model Parser block {%endcomment%}
 {%- case item.componentName -%}
     {%- when "Text" -%}
-        {% include amp-text.html data:component %}
+        {% include amp-text.html data:propName %}
     {%- when "Image" -%}
-        {% include amp-image.html data:component %}
+        {% include amp-image.html data:propName %}
     {%- when "Video" -%}
-        {% include amp-video.html data:component %}
+        {% include amp-video.html data:propName %}
     {%- when "Tab" -%}
         {% include amp-tabs.html data:item %}
     {%- when "IFrame" -%}
-        {% include amp-iframe.html data:component %}
+        {% include amp-iframe.html data:propName %}
     {%- when "InfoBox" -%}
-        {% include amp-infobox.html data:component.infoBoxState %}
+        {% include amp-infobox.html data:propName.infoBoxState %}
     {%- when "Accordion" -%}
         {% include amp-accordion.html data:item %}        
     {%comment%} Not using below. {%endcomment%}
