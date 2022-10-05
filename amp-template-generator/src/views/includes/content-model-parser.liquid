@@ -25,7 +25,7 @@
     {%- when "InfoBox" -%}
         {% include amp-infobox.html data:propName.infoBoxState %}
     {%- when "Accordion" -%}
-        {% include amp-accordion.html data:propName.layoutState %}        
+        {% include amp-accordion.html data:item %}        
     {%comment%} Not using below. {%endcomment%}
     {%- when "formatted_text_no_heading" -%}
         {% include amp-formatted-text.html data:item %}
