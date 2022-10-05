@@ -11,7 +11,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-import { LayoutContext } from "../Context/InteractivesContext";
+import { LayoutContext as AccordionContext} from "../Context/InteractivesContext";
+import { LayoutContext as TabContext } from "../components/Tabs/TabContext";
 
 import DropIndicator from "./DropIndicator";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
