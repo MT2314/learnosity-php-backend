@@ -1,4 +1,4 @@
-.wrapper.tabs {
+.wrapper.tabs-component {
   // Brightcove videos inside tabs are too wide to fit on small
   // viewports with the default padding. This reduces the outer
   // padding between the tab border and the viewport to 5px to
@@ -15,15 +15,16 @@
         align-items: center;
         flex-grow: 1;
         box-sizing: border-box;
-        border: 0.0625rem solid $border-color;
+        // border: 0.0625rem solid $border-color;
+        box-shadow: 0 0 0 0.0625rem $border-color;
         width: min-content;
         height: 4.625rem;
         border-left-width: 0;
         background-color: $inactive-tab-bg;
 
         &:focus-visible {
-          margin: 0.0625rem;
-          outline: 0.0625rem solid $tab-focus;
+          outline: none;
+          box-shadow: 0 0 0 0.0625rem $tab-focus;
         }
 
         p {
@@ -45,7 +46,7 @@
         }
 
         &:first-child {
-          border-left-width: 0.0625rem;
+          // border-left-width: 0.0625rem;
           border-radius: 0.625rem 0 0 0;
         }
 
@@ -61,7 +62,7 @@
           width: min-content;
           color: $white;
           line-height: 1.6875rem;
-          padding: 1rem 0.625rem;
+          padding: 0.625rem 1rem;
           top: 4.6875rem;
           z-index: 99;
         }
@@ -76,7 +77,8 @@
           width: 24%;
         }
 
-        &:hover {
+        &:hover,
+        &:focus-visible {
           background-color: $primary-tab-bg;
           text-decoration-line: underline;
           .hoverTabText {
@@ -138,7 +140,7 @@
   .hideAccordion {
     display: block;
   }
-  .wrapper.tabs {
+  .wrapper.tabs-component {
     display: none;
   }
 }
