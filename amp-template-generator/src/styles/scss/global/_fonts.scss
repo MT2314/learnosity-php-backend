@@ -1,0 +1,10 @@
+// Google fonts imports
+// Lato (Main component text ie tab title, accordion titles, etc)
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+// Crimson Pro (Text component body font)
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap");
+// Any new fonts can be imported below...
+
+// Font families
+$component-main-font: "Lato", serif;
+$text-body-font: "Crimson Pro", serif;

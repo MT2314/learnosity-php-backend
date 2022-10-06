@@ -28,7 +28,7 @@
 
         p {
           font-weight: 400;
-          font-family: "Lato", sans-serif;
+          font-family: $component-main-font;
           font-style: normal;
           font-size: 1.125rem;
           text-align: center;
@@ -56,10 +56,11 @@
         .hoverTabText {
           position: absolute;
           display: none;
-          background: #404040;
+          background: $grey-800;
           border-radius: 0.375rem;
           width: min-content;
-          color: white;
+          color: $white;
+          line-height: 1.6875rem;
           padding: 1rem 0.625rem;
           top: 4.6875rem;
           z-index: 99;
@@ -77,6 +78,7 @@
 
         &:hover {
           background-color: $primary-tab-bg;
+          text-decoration-line: underline;
           .hoverTabText {
             display: block;
           }
@@ -84,8 +86,12 @@
 
         &[selected] {
           background-color: $active-tab-bg;
-          border-bottom: 0.25rem solid $tab-active-border-top;
-          color: black;
+          border-bottom: 0.25rem solid $tab-border-bottom;
+          color: $grey-900;
+
+          &:hover {
+            text-decoration-line: none;
+          }
         }
 
         // AMP's CSS diminishes the focus outline, so this
@@ -99,7 +105,7 @@
         display: none;
         width: 100%;
         order: 1;
-        border-color: $border-color;
+        border-color: $component-border;
         background: $primary-tab-bg;
       }
 
