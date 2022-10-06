@@ -9,7 +9,7 @@ const AmpOptimizer = require('@ampproject/toolbox-optimizer');
  * @returns {Transform}
  */
 module.exports = async function (file, config, cb) {
-    console.log('welcome to amp optimizer', config, typeof file);
+    // console.log('welcome to amp optimizer', config, typeof file);
     const ampOptimizer = AmpOptimizer.create(config); 
     var data = file;
     var ampResult = ampOptimizer.transformHtml(data);
