@@ -21,14 +21,14 @@ afterEach(() => {
 const testLayout = [
   {
     id: 0,
-    title: "",
+    title: "Pane 1",
     placeholderTitle: "Pane 1",
     components: [],
     expanded: true,
   },
   {
     id: 1,
-    title: "",
+    title: "Pane 2",
     placeholderTitle: "Pane 2",
     components: [],
     expanded: false,
@@ -82,7 +82,7 @@ describe("Check if toolbar renders", () => {
     expect(screen.getByTestId("RemoveIcon")).toBeInTheDocument();
   });
 });
-describe("Check if toolbar actions work", () => {
+describe("Check if toolbar Move Pane Up/Down Work", () => {
   it("move pane upward with toolbar", () => {
     render(<AccordionMain layoutState={testLayout} setProp={() => {}} />);
     const pane = screen.getByRole("button", { expanded: false });
@@ -93,56 +93,77 @@ describe("Check if toolbar actions work", () => {
     const pane2 = screen.getByRole("button", { expanded: false });
     expect(pane2).toHaveAttribute("accordionindex", "0");
   });
-  //   it("move tab right with toolbar", () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     const moveRight = screen.getByTestId("ArrowForwardIcon");
-  //     const tab = screen.getByPlaceholderText(/Tab 1/i);
-  //     expect(tab).toHaveAttribute("activetab", "0");
-  //     fireEvent.click(moveRight);
-  //     const tab1 = screen.getByPlaceholderText(/Tab 1/i);
-  //     expect(tab1).toHaveAttribute("activetab", "1");
-  //   });
-  //   it("add a new tab with toolbar", async () => {
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     const addTab = screen.getByTestId("AddIcon");
-  //     fireEvent.click(addTab);
-  //     expect(screen.getByText(/Tab 3/i)).toBeInTheDocument();
-  //   });
-  //   it("remove a tab with toolbar", async () => {
-  //     // Add another tab to the state
-  //     const newState = produce(testLayout, (draft) => {
-  //       draft.push({
-  //         id: 2,
-  //         title: "Tab 3",
-  //         placeholder: "Tab 3",
-  //         components: [],
-  //         activeTab: false,
-  //       });
-  //     });
-  //     render(<TabsMain layoutState={newState} setProp={() => {}} />);
-  //     // Tab 1 activeTab is at index 0
-  //     const tab1 = screen.getByPlaceholderText(/Tab 1/i);
-  //     expect(tab1).toHaveAttribute("activetab", "0");
-  //     // Click Remove Icon button
-  //     const removeTab = screen.getByTestId("RemoveIcon");
-  //     await fireEvent.click(removeTab);
-  //     // Tab 2 activeTab is at index 0
-  //     const tab2 = screen.getByPlaceholderText(/Tab 2/i);
-  //     expect(tab2).toHaveAttribute("activetab", "0");
-  //   });
-  //   it("Config buttons work in succession", async () => {
-  //     // Click Add Tab Icon button
-  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-  //     const addTab = screen.getByTestId("AddIcon");
-  //     fireEvent.click(addTab);
-  //     // Tab 1 activeTab is at index 0
-  //     const tab1 = screen.getByPlaceholderText(/Tab 1/i);
-  //     expect(tab1).toHaveAttribute("activetab", "0");
-  //     // Click Remove Tab Icon button
-  //     const removeTab = screen.getByTestId("RemoveIcon");
-  //     await fireEvent.click(removeTab);
-  //     // Tab 2 activeTab is at index 0
-  //     const tab2 = screen.getByPlaceholderText(/Tab 2/i);
-  //     expect(tab2).toHaveAttribute("activetab", "0");
-  //   });
+  it("move pane downward with toolbar", () => {
+    render(<AccordionMain layoutState={testLayout} setProp={() => {}} />);
+    const pane = screen.getByRole("button", { expanded: true });
+    fireEvent.click(pane);
+    const moveDown = screen.getByTestId("ArrowDownwardIcon");
+    expect(pane).toHaveAttribute("accordionindex", "0");
+    fireEvent.click(moveDown);
+    const pane2 = screen.getByRole("button", { expanded: true });
+    expect(pane2).toHaveAttribute("accordionindex", "1");
+  });
+  it("moving pane circles around, from last index to first and vice versa", () => {
+    render(<AccordionMain layoutState={testLayout} setProp={() => {}} />);
+    const pane = screen.getByRole("button", { expanded: true });
+    fireEvent.click(pane);
+    const moveDown = screen.getByTestId("ArrowDownwardIcon");
+    expect(pane).toHaveAttribute("accordionindex", "0");
+    fireEvent.click(moveDown);
+    const pane2 = screen.getByRole("button", { expanded: true });
+    expect(pane2).toHaveAttribute("accordionindex", "1");
+    fireEvent.click(moveDown);
+    const pane3 = screen.getByRole("button", { expanded: true });
+    expect(pane3).toHaveAttribute("accordionindex", "0");
+  });
+});
+
+describe("Check if toolbar renders", () => {
+  it("add a new pane with toolbar", async () => {
+    render(<AccordionMain layoutState={testLayout} setProp={() => {}} />);
+    const addPane = screen.getByTestId("AddIcon");
+    fireEvent.click(addPane);
+    expect(screen.getByText(/Pane 3/i)).toBeInTheDocument();
+  });
+  it("remove a pane with toolbar", async () => {
+    render(<AccordionMain layoutState={testLayout} setProp={() => {}} />);
+    const removePane = screen.getByTestId("RemoveIcon");
+    // Pane 1 accordionindex is at index 0
+    const pane1 = screen.getByRole("button", {
+      name: /Pane 1/i,
+    });
+    expect(pane1).toHaveAttribute("accordionindex", "0");
+    // Click Remove Icon button
+    fireEvent.click(pane1);
+    fireEvent.click(removePane);
+    // Pane 2 accordionIndex is now at index 0
+    const pane2 = await screen.findByRole("button", {
+      name: /Pane 2/i,
+    });
+    expect(pane2).toHaveAttribute("accordionindex", "0");
+  });
+  it("Config buttons work in succession", async () => {
+    render(<AccordionMain layoutState={testLayout} setProp={() => {}} />);
+    const removePane = screen.getByTestId("RemoveIcon");
+    const addPane = screen.getByTestId("AddIcon");
+    // Tab 1 activeTab is at index 0
+    const pane1 = screen.getByRole("button", {
+      name: /Pane 1/i,
+    });
+    expect(pane1).toHaveAttribute("accordionindex", "0");
+    // Click Remove Icon button
+    fireEvent.click(pane1);
+    fireEvent.click(removePane);
+    // Pane 2 accordionIndex is now at index 0
+    const pane2 = await screen.findByRole("button", {
+      name: /Pane 2/i,
+    });
+    expect(pane2).toHaveAttribute("accordionindex", "0");
+    fireEvent.click(addPane);
+    const newPane = await screen.findByRole("button", {
+      name: "",
+    });
+    expect(pane2).toHaveAttribute("accordionindex", "0");
+    expect(newPane).toHaveAttribute("accordionindex", "1");
+  });
 });
