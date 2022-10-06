@@ -102,6 +102,7 @@ const Pane = ({
             }}
             sx={{
               pointerEvents: "auto",
+              color: "#000",
             }}
           />
         }
