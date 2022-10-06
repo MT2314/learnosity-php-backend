@@ -1,3 +1,16 @@
+p {
+  margin: 0 0 1.25rem 0;
+  font-weight: 400;
+  line-height: 1.5rem;
+  letter-spacing: 0.009375rem;
+  color: #232323;
+}
+
+a {
+  color: $link-color;
+  font-style: normal;
+}
+
 .ql-align-right {
   text-align: right;
   list-style-position: inside;
