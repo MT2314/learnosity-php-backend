@@ -82,70 +82,67 @@ describe("Check if toolbar renders", () => {
     expect(screen.getByTestId("RemoveIcon")).toBeInTheDocument();
   });
 });
-// describe("Check if toolbar actions work", () => {
-//   it("move tab left with toolbar", () => {
-//     const newState = produce(testLayout, (draft) => {
-//       draft[0].activeTab = false;
-//       draft[1].activeTab = true;
-//     });
-//     render(<TabsMain layoutState={newState} setProp={() => {}} />);
-//     const moveLeft = screen.getByTestId("ArrowBackIcon");
-//     const tab = screen.getByPlaceholderText(/Tab 2/i);
-//     expect(tab).toHaveAttribute("activetab", "1");
-//     fireEvent.click(moveLeft);
-//     const tab1 = screen.getByPlaceholderText(/Tab 2/i);
-//     expect(tab1).toHaveAttribute("activetab", "0");
-//   });
-//   it("move tab right with toolbar", () => {
-//     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-//     const moveRight = screen.getByTestId("ArrowForwardIcon");
-//     const tab = screen.getByPlaceholderText(/Tab 1/i);
-//     expect(tab).toHaveAttribute("activetab", "0");
-//     fireEvent.click(moveRight);
-//     const tab1 = screen.getByPlaceholderText(/Tab 1/i);
-//     expect(tab1).toHaveAttribute("activetab", "1");
-//   });
-//   it("add a new tab with toolbar", async () => {
-//     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-//     const addTab = screen.getByTestId("AddIcon");
-//     fireEvent.click(addTab);
-//     expect(screen.getByText(/Tab 3/i)).toBeInTheDocument();
-//   });
-//   it("remove a tab with toolbar", async () => {
-//     // Add another tab to the state
-//     const newState = produce(testLayout, (draft) => {
-//       draft.push({
-//         id: 2,
-//         title: "Tab 3",
-//         placeholder: "Tab 3",
-//         components: [],
-//         activeTab: false,
-//       });
-//     });
-//     render(<TabsMain layoutState={newState} setProp={() => {}} />);
-//     // Tab 1 activeTab is at index 0
-//     const tab1 = screen.getByPlaceholderText(/Tab 1/i);
-//     expect(tab1).toHaveAttribute("activetab", "0");
-//     // Click Remove Icon button
-//     const removeTab = screen.getByTestId("RemoveIcon");
-//     await fireEvent.click(removeTab);
-//     // Tab 2 activeTab is at index 0
-//     const tab2 = screen.getByPlaceholderText(/Tab 2/i);
-//     expect(tab2).toHaveAttribute("activetab", "0");
-//   });
-//   it("Config buttons work in succession", async () => {
-//     // Click Add Tab Icon button
-//     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
-//     const addTab = screen.getByTestId("AddIcon");
-//     fireEvent.click(addTab);
-//     // Tab 1 activeTab is at index 0
-//     const tab1 = screen.getByPlaceholderText(/Tab 1/i);
-//     expect(tab1).toHaveAttribute("activetab", "0");
-//     // Click Remove Tab Icon button
-//     const removeTab = screen.getByTestId("RemoveIcon");
-//     await fireEvent.click(removeTab);
-//     // Tab 2 activeTab is at index 0
-//     const tab2 = screen.getByPlaceholderText(/Tab 2/i);
-//     expect(tab2).toHaveAttribute("activetab", "0");
-//   });
-// });
+describe("Check if toolbar actions work", () => {
+  it("move pane upward with toolbar", () => {
+    render(<AccordionMain layoutState={testLayout} setProp={() => {}} />);
+    const pane = screen.getByRole("button", { expanded: false });
+    fireEvent.click(pane);
+    const moveUp = screen.getByTestId("ArrowUpwardIcon");
+    expect(pane).toHaveAttribute("accordionindex", "1");
+    fireEvent.click(moveUp);
+    const pane2 = screen.getByRole("button", { expanded: false });
+    expect(pane2).toHaveAttribute("accordionindex", "0");
+  });
+  //   it("move tab right with toolbar", () => {
+  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+  //     const moveRight = screen.getByTestId("ArrowForwardIcon");
+  //     const tab = screen.getByPlaceholderText(/Tab 1/i);
+  //     expect(tab).toHaveAttribute("activetab", "0");
+  //     fireEvent.click(moveRight);
+  //     const tab1 = screen.getByPlaceholderText(/Tab 1/i);
+  //     expect(tab1).toHaveAttribute("activetab", "1");
+  //   });
+  //   it("add a new tab with toolbar", async () => {
+  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+  //     const addTab = screen.getByTestId("AddIcon");
+  //     fireEvent.click(addTab);
+  //     expect(screen.getByText(/Tab 3/i)).toBeInTheDocument();
+  //   });
+  //   it("remove a tab with toolbar", async () => {
+  //     // Add another tab to the state
+  //     const newState = produce(testLayout, (draft) => {
+  //       draft.push({
+  //         id: 2,
+  //         title: "Tab 3",
+  //         placeholder: "Tab 3",
+  //         components: [],
+  //         activeTab: false,
+  //       });
+  //     });
+  //     render(<TabsMain layoutState={newState} setProp={() => {}} />);
+  //     // Tab 1 activeTab is at index 0
+  //     const tab1 = screen.getByPlaceholderText(/Tab 1/i);
+  //     expect(tab1).toHaveAttribute("activetab", "0");
+  //     // Click Remove Icon button
+  //     const removeTab = screen.getByTestId("RemoveIcon");
+  //     await fireEvent.click(removeTab);
+  //     // Tab 2 activeTab is at index 0
+  //     const tab2 = screen.getByPlaceholderText(/Tab 2/i);
+  //     expect(tab2).toHaveAttribute("activetab", "0");
+  //   });
+  //   it("Config buttons work in succession", async () => {
+  //     // Click Add Tab Icon button
+  //     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+  //     const addTab = screen.getByTestId("AddIcon");
+  //     fireEvent.click(addTab);
+  //     // Tab 1 activeTab is at index 0
+  //     const tab1 = screen.getByPlaceholderText(/Tab 1/i);
+  //     expect(tab1).toHaveAttribute("activetab", "0");
+  //     // Click Remove Tab Icon button
+  //     const removeTab = screen.getByTestId("RemoveIcon");
+  //     await fireEvent.click(removeTab);
+  //     // Tab 2 activeTab is at index 0
+  //     const tab2 = screen.getByPlaceholderText(/Tab 2/i);
+  //     expect(tab2).toHaveAttribute("activetab", "0");
+  //   });
+});
