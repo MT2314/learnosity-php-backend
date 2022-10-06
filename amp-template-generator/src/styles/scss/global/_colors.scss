@@ -77,9 +77,13 @@ $secondary-text: $grey-600;
 // Text
 
 // Tabs
+// background colors
 $primary-tab-bg: $transparent-grey-50;
 $active-tab-bg: $transparent-grey-100;
 $inactive-tab-bg: $white;
+
+// focus color
+$tab-focus: rgba(0, 136, 0, 1);
 
 $component-border: $transparent-grey-300;
 
