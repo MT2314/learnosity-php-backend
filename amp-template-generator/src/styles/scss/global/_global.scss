@@ -5,6 +5,11 @@ html {
 body {
   color: $text-body;
   background-color: $page-background;
+
+  // Changes the highlight background color
+  ::selection {
+    background: $body-highlight;
+  }
 }
 
 // *:focus {

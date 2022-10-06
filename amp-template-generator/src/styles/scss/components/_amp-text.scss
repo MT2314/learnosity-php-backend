@@ -7,15 +7,56 @@ p {
 }
 
 a {
-  color: $link-color;
-  font-style: normal;
+  color: $primary-body-text;
+  // font-style: normal;
+  // font-weight: 500;
+  // line-height: 34px;
+  // text-decoration: underline;
+  // text-decoration-color: $link-underline;
+  // text-decoration-thickness: 4px;
+
+  // &:hover {
+  //   color: yellow;
+  // }
+
+  text-shadow: none;
+  box-shadow: none;
+  border-bottom: none;
+  background-image: linear-gradient($link-underline 0%, $link-underline 100%);
+  background-position: 0px 100%;
+  background-size: 1px 0.1em;
+  background-repeat: repeat-x;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
+  text-decoration: none;
+  animation: 0s ease 0s 1 normal none running none;
+  transition: background-size 0.2s ease 0.05s;
+  padding-left: 0px;
+
+  &:hover {
+    text-decoration: none;
+    background-image: linear-gradient($link-underline 0%, $link-underline 100%);
+    background-position: 0px 100%;
+    background-size: 100% 100%;
+    background-repeat: repeat-x;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: initial;
+    box-shadow: none;
+    border-color: transparent;
+  }
 }
 
+// Align text right
 .ql-align-right {
   text-align: right;
   list-style-position: inside;
 }
 
+// Align text center
 .ql-align-center {
   text-align: center;
   list-style-position: inside;
