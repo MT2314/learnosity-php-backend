@@ -7,6 +7,9 @@
         font-size: 1.125rem;
         text-decoration: none;
     }
+    .btn.link:hover {
+        background-color: $brand-200;
+    }
     .btn.link:disabled {
         opacity: 0.2;
         box-shadow: none;
@@ -20,11 +23,28 @@
         clear: right;
 
         .heading {
-            background-color: $accordion-heading-bg;
+            background-color: $white;
             border-color: $border-color;
             
             &:hover {
-                background-color: $accordion-heading-bg-hover;
+                background-color: $transparent-grey-300;
+                i {
+                    display: inline-block;
+                    border-radius: 60px;
+                    box-shadow: 0 0 2px #888;
+                    padding: 0.5em 0.6em;
+                    position: absolute;
+                    right: 7px;
+                    bottom: 8px;
+                }
+                .fa-chevron-up {
+                    background-color: $brand-500;
+                    color: $white;
+                }
+                .fa-chevron-down {
+                    background-color: $transparent-grey-300;
+                }
+
             }
 
             span {

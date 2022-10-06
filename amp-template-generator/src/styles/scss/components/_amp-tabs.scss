@@ -75,7 +75,8 @@
           width: 24%;
         }
 
-        &:hover {
+        &:hover, 
+        &:focus-visible {
           background-color: $primary-tab-bg;
           .hoverTabText {
             display: block;
