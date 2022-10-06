@@ -16,8 +16,9 @@
             selected
         {%- endif -%}
         >
-            {{tab.title}}
-            
+            <p>
+                {{tab.title}}
+            </p>
         {% if tab.title.length > 84 and data.props.layoutState.length == 2 -%}
             <span class="hoverTabText hoverTabText2">
                 {{tab.title}}
@@ -39,7 +40,8 @@
             role="tabpanel"
             aria-labelledby="{{tabListId}}_tab{{forloop.index}}"
             class="border-left border-right border-bottom px3 pt3"
-            tabindex="0">
+            tabindex="0"
+        >
 
             {%- for c in tab.components -%}
                 {% include content-model-parser.liquid item:c %}
