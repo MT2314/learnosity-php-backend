@@ -19,7 +19,6 @@ import { LayoutContext as TabContext } from "../components/Tabs/TabContext";
 import DropIndicator from "./DropIndicator";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
 import componentIndex from "../components/componentIndex";
-import DragLabel from "./DragLabel";
 
 export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
   color: draggingOver ? "transparent" : "#FFF",
@@ -251,7 +250,7 @@ const NestedComponentWrapper = ({
   useEffect(() => {
     console.log('empty image')
     dragPreview(getEmptyImage(), { captureDraggingState: true });
-  }, [showSelf]);
+  }, [showSelf, isHover]);
 
   getEmptyImage(drop(dropRef));
   useEffect(() => {

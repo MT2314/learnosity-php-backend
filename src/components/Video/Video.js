@@ -31,7 +31,7 @@ const Video = ({
   return (
     <>
       {/* on drag <DragLabel/> shows the components name */}
-      {/* <DragLabel/> */}
+      <DragLabel/>
       <div className={styles.videoContainer} data-testid="video">
         {type === "" ||
           (type === "brightcove" && !videoId) ||

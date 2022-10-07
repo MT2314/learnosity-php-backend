@@ -48,7 +48,7 @@ const Image = ({
   return (
     <>
       {/* on drag <DragLabel/> shows the components name */}
-      {/* <DragLabel/> */}
+      <DragLabel/>
       <Paper
         data-testid="image-container"
         className={styles.imageContainer}
