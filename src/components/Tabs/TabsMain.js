@@ -13,7 +13,16 @@ export const defaultProps = {
       id: uuidv4(),
       title: "",
       placeholder: "Tab 1",
-      components: [],
+      components: [
+        {
+          componentName: "Text",
+          componentProps: {
+            body: {
+              ops: [{ insert: "Polkaroo\n" }],
+            },
+          },
+        },
+      ],
       activeTab: true,
     },
     {
