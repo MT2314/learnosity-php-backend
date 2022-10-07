@@ -220,7 +220,7 @@ function _post11tyLocal() {
         //   "RemoveCspNonce",
         //   "MinifyHtml",
         // ],
-        minify: true,
+        minify: false,
       })
     )
     .pipe(gulp.dest(outputPath));
