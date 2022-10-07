@@ -3,10 +3,8 @@ import PropTypes from "prop-types";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { v4 as uuidv4 } from "uuid";
-import { LayoutProvider, ActiveTabProvider } from "./TabContext";
+import { LayoutProvider } from "./TabContext";
 import Tabs from "./subcomponents/Tabs";
-
-import "./styles/Tab.scss";
 
 //tabs default props
 export const defaultProps = {
@@ -14,14 +12,16 @@ export const defaultProps = {
     {
       id: uuidv4(),
       title: "",
-      placeholderTitle:"Tab 1",
+      placeholder: "Tab 1",
       components: [],
+      activeTab: true,
     },
     {
       id: uuidv4(),
       title: "",
-      placeholderTitle:"Tab 2",
+      placeholder: "Tab 2",
       components: [],
+      activeTab: false,
     },
   ],
 };
@@ -30,9 +30,7 @@ const TabsMain = ({ layoutState = [], setProp = () => {} }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <LayoutProvider layoutState={layoutState} setProp={setProp}>
-        <ActiveTabProvider>
-          <Tabs />
-        </ActiveTabProvider>
+        <Tabs />
       </LayoutProvider>
     </DndProvider>
   );

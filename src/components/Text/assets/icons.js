@@ -285,6 +285,3 @@ icons["pencil"] = (
 );
 
 export default icons;
-
-
-
