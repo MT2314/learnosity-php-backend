@@ -68,7 +68,8 @@ describe("Accordion", () => {
     testLayout.forEach((item) => expect(item.expanded).toBeFalsy());
   });
 
-  it("adds a component to pane on drop"), async () => {
-    render(<AccordionMain layoutState={testLayout} />);
-  }
+  it("adds a component to pane on drop"),
+    async () => {
+      render(<AccordionMain layoutState={testLayout} />);
+    };
 });
