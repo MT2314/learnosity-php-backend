@@ -1,57 +1,25 @@
 @font-face {
   font-family: "platypus";
-  src: 
-  // url("https://s3-componentsexperiments-sbx01-cac1-01.s3.ca-central-1.amazonaws.com/AMP/Font+Testing/platypus.eot")
-    //   format("embedded-opentype"),
-    // url("https://s3-componentsexperiments-sbx01-cac1-01.s3.ca-central-1.amazonaws.com/AMP/Font+Testing/platypus.woff2")
-    //   format("woff2"),
-    // url("https://s3-componentsexperiments-sbx01-cac1-01.s3.ca-central-1.amazonaws.com/AMP/Font+Testing/platypus.woff")
-    //   format("woff"),
-    url("https://s3-componentsexperiments-sbx01-cac1-01.s3.ca-central-1.amazonaws.com/AMP/Font+Testing/platypus.ttf")
-    format("truetype");
-  // url("https://s3-componentsexperiments-sbx01-cac1-01.s3.ca-central-1.amazonaws.com/AMP/Font+Testing/platypus.svg")
-  //   format("svg");
+  src: url("https://s3-componentsexperiments-sbx01-cac1-01.s3.ca-central-1.amazonaws.com/AMP/Font+Testing/platypus.ttf");
   font-weight: normal;
   font-style: normal;
 }
 
-// .icon-minor-link-external {
-//   font-family: "platypus";
-// }
-
-.demo-icon {
+.anchor-icon {
   font-family: "platypus";
   font-style: normal;
   font-weight: normal;
-
-  // display: inline-block;
   text-decoration: inherit;
   width: 1em;
-  // margin-right: 0.2em;
   text-align: center;
-
-  /* opacity: .8; */
-
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
   text-transform: none;
-
   /* fix buttons height, for twitter bootstrap */
   line-height: 1em;
-
-  /* Animation center compensation - margins should be symmetric */
-  /* remove if not needed */
-  // margin-left: 0.2em;
-
-  /* You can be more comfortable with increased icons size */
-  /* font-size: 120%; */
-
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* Uncomment for 3D effect */
-  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
 
 p {
@@ -64,23 +32,9 @@ p {
 
 a {
   color: $primary-body-text;
-  // animation: 0s ease 0s 1 normal none running none;
-  // transition: background-color 0.2s ease 0.05s;
-  // transition: background-color 1s;
-
-  // background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13 5.00001L13 1.00001M13 1.00001H8.99999M13 1.00001L7 7M5.66667 1H4.2C3.0799 1 2.51984 1 2.09202 1.21799C1.71569 1.40973 1.40973 1.71569 1.21799 2.09202C1 2.51984 1 3.07989 1 4.2V9.8C1 10.9201 1 11.4802 1.21799 11.908C1.40973 12.2843 1.71569 12.5903 2.09202 12.782C2.51984 13 3.07989 13 4.2 13H9.8C10.9201 13 11.4802 13 11.908 12.782C12.2843 12.5903 12.5903 12.2843 12.782 11.908C13 11.4802 13 10.9201 13 9.8V8.33333' stroke='%23292929' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  // background-repeat: no-repeat;
-  // background-position: right;
-  // padding-right: 17px;
-  // display: inline-block;
-
   text-decoration: underline;
   text-decoration-color: $link-underline;
   text-decoration-thickness: 4px;
-
-  // text-decoration: none;
-  // border-bottom: 4px solid $link-underline;
-
   position: relative;
   // z-index: 1;
 
@@ -104,11 +58,7 @@ a {
 
   &:visited {
     // color: blue;
-    // border-bottom: 4px solid $link-visited-underline;
-
-    // text-decoration: underline;
     text-decoration-color: $link-visited-underline;
-    // text-decoration-thickness: 4px;
 
     &::after {
       content: "";
@@ -125,32 +75,19 @@ a {
     }
 
     &:hover {
-      // color: purple;
-      // background-color: $link-visited-underline;
-      // border-bottom: 4px solid $link-visited-underline;
-
       text-decoration-color: $link-visited-underline;
     }
   }
 
   &:hover {
     // color: orange;
-    // background-color: $link-underline;
-    // border-bottom: 4px solid $link-underline;
-
     text-decoration-color: $link-underline;
   }
 
   &::selection {
-    // border-bottom: 4px solid black;
     text-decoration-color: $link-visited-underline;
   }
 }
-
-// Used if svg is an element, set in quill-converter.js
-// .anchor-img {
-//   z-index: 1;
-// }
 
 // Align text right
 .ql-align-right {
