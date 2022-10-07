@@ -44,7 +44,7 @@ const Text = ({
   return (
     <>
     {/* on drag <DragLabel/> shows the components name */}
-      <DragLabel/>
+      {/* <DragLabel/> */}
       <CssBaseline />
       {/* <ThemeProvider theme={textTheme}> */}
       <ReactQuillContainer isInfoBox={isInfoBox}>
