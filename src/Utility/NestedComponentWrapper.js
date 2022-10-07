@@ -248,7 +248,6 @@ const NestedComponentWrapper = ({
   });
   //remove html5 default drag image
   useEffect(() => {
-    console.log('empty image')
     dragPreview(getEmptyImage(), { captureDraggingState: true });
   }, [showSelf, isHover]);
 
