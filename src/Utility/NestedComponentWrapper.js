@@ -249,9 +249,9 @@ const NestedComponentWrapper = ({
   //remove html5 default drag image
   useEffect(() => {
     dragPreview(getEmptyImage(), { captureDraggingState: true });
-  }, []);
+  }, [showSelf, isHover]);
 
-  drop(dropRef);
+  getEmptyImage(drop(dropRef));
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
