@@ -275,6 +275,10 @@ const NestedComponentWrapper = ({
         onFocus={() => setShowSelf(true)}
         onBlur={() => setShowSelf(false)}
         onClick={() => setShowSelf(true)}
+        style={{
+          paddingBottom: "0.4rem",
+          paddingTop: "0.4rem",
+        }}
       >
         <div>
           <DropIndicator
