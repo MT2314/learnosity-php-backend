@@ -1,0 +1,12 @@
+
+<article class="topic">
+    
+  <div class="topic-heading wrapper" tabindex="-1" id="topic{{topic._id}}">
+    {% include amp-heading.html data:topic.heading headingClass:'border-bottom'%}
+  </div>
+
+  {%- for component in topic.components -%}
+      {% include content-model-parser.liquid item:component %}
+  {%- endfor -%}
+
+</article>

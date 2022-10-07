@@ -1,0 +1,17 @@
+---
+{
+	"layout": "amp-layout.njk",
+	"permalink": "demo-amp-image.html"
+}
+---
+<h1>Image Component {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+{% for image in componentImage %}
+    {% if image.name == "Image Component"  %}
+        {%- assign components = image.componentContainer.sections[1].components -%}
+        {% for imageComponent in components %}
+            {% include amp-image.html data:imageComponent.props -%}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+

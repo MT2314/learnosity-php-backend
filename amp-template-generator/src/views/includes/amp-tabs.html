@@ -1,0 +1,57 @@
+<div class="tabs wrapper bottom-margin">
+    {%- assign tabListId = 'tablist' | append: data.id -%}
+    <amp-selector class="tabs"
+        role="tablist"
+        keyboard-select-mode="select"
+        id="{{tabListId}}">
+
+    {%- for tab in data.props.layoutState -%}
+
+        <div id="{{tabListId}}_tab{{forloop.index}}"
+            role="tab"
+            aria-controls="{{tabListId}}_tabpanel{{forloop.index}}"
+            class="p1"
+            option
+        {% if forloop.index == 1 -%}
+            selected
+        {%- endif -%}
+        >
+            <p>
+                {{tab.title}}
+            </p>
+        {% if tab.title.length > 84 and data.props.layoutState.length == 2 -%}
+            <span class="hoverTabText hoverTabText2">
+                {{tab.title}}
+            </span>
+        {% elsif tab.title.length > 46 and data.props.layoutState.length == 3 -%}
+            <span class="hoverTabText hoverTabText3">
+                {{tab.title}}
+            </span>
+        {% elsif tab.title.length > 33 and data.props.layoutState.length == 4 -%}
+            <span class="hoverTabText hoverTabText4">
+                {{tab.title}}
+            </span>
+        {%- endif -%}
+        
+        </div>
+
+
+        <div id="{{tabListId}}_tabpanel{{forloop.index}}"
+            role="tabpanel"
+            aria-labelledby="{{tabListId}}_tab{{forloop.index}}"
+            class="border-left border-right border-bottom px3 pt3"
+            tabindex="0"
+        >
+
+            {%- for c in tab.components -%}
+                {% include content-model-parser.liquid item:c %}
+            {%- endfor -%}
+        </div>
+    {%- endfor -%}
+
+    </amp-selector>
+</div>
+
+<div class="hideAccordion">
+    {% include amp-accordion.html data:data %}    
+</div>

@@ -1,0 +1,56 @@
+{
+  "_from": "@content-solutions/gulp-purge-css@^1.1.2",
+  "_id": "@content-solutions/gulp-purge-css@1.1.2",
+  "_inBundle": false,
+  "_integrity": "sha1-f2w4I3uZJ1VZ4sprjzKR+eVRPKM=",
+  "_location": "/@content-solutions/gulp-purge-css",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@content-solutions/gulp-purge-css@^1.1.2",
+    "name": "@content-solutions/gulp-purge-css",
+    "escapedName": "@content-solutions%2fgulp-purge-css",
+    "scope": "@content-solutions",
+    "rawSpec": "^1.1.2",
+    "saveSpec": null,
+    "fetchSpec": "^1.1.2"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://gitlab.tvo.org/api/v4/projects/1136/packages/npm/@content-solutions/gulp-purge-css/-/@content-solutions/gulp-purge-css-1.1.2.tgz",
+  "_shasum": "7f6c38237b99275559e2ca6b8f3291f9e5513ca3",
+  "_spec": "@content-solutions/gulp-purge-css@^1.1.2",
+  "_where": "C:\\xampp\\htdocs\\mf-component-library\\amp-template-generator",
+  "bundleDependencies": false,
+  "dependencies": {
+    "plugin-error": "^1.0.1",
+    "purgecss": "^3.0.0",
+    "replacestream": "^4.0.3",
+    "through2": "^4.0.2"
+  },
+  "deprecated": false,
+  "description": "Thin wrapper for purgecss library to add support for gulp vinyl streams",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  },
+  "engines": {
+    "node": ">= 10.0"
+  },
+  "files": [
+    "index.js"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "@content-solutions/gulp-purge-css",
+  "publishConfig": {
+    "@content-solutions:registry": "https://gitlab.tvo.org/api/v4/projects/1136/packages/npm/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.tvo.org/content-solutions/gulp-plugins/gulp-purge-css.git"
+  },
+  "scripts": {},
+  "version": "1.1.2"
+}

@@ -1,0 +1,17 @@
+---
+{
+  "layout": "amp-layout.njk",
+  "permalink": "demo-amp-tabs.html",
+}
+---
+
+<h1>Tab Component {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+{% for tab in componentTab %}
+    {% if tab.name == "Tabs Component"  %}
+        {%- assign components = tab.componentContainer.sections[1].components -%}
+        {% for tabComponent in components %}
+            {% include amp-tabs.html data:tabComponent -%}
+        {% endfor %}
+    {% endif %}
+{% endfor %}

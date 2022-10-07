@@ -1,0 +1,22 @@
+---
+{
+    "layout": "amp-layout.njk", 
+    "permalink": "demo-amp-video.html"
+}
+---
+<h1>Video Component {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+{% for video in componentVideo %}
+    {% if video.name == "Video Component"  %}
+        {%- assign components = video.componentContainer.sections[1].components -%}
+        {% for videoComponent in components %}
+            {% include amp-video.html data:videoComponent.props -%}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+
+<!-- {%- assign components = result.children[0].children[0].componentContainers[0].sections[1].components -%}
+
+{% for video in components %}
+    {% include amp-video.html data:video.componentProps -%}
+{% endfor %} -->
