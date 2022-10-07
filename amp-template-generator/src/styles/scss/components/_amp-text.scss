@@ -17,41 +17,83 @@ a {
   background-position: right;
   padding-right: 17px;
   display: inline-block;
-  text-decoration: none;
 
-  border-bottom: 4px solid $link-underline;
+  text-decoration: underline;
+  text-decoration-color: $link-underline;
+  text-decoration-thickness: 4px;
+
+  // text-decoration: none;
+  // border-bottom: 4px solid $link-underline;
+
+  position: relative;
+  // z-index: 1;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0.5px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: bottom center;
+    background-color: $link-underline;
+    z-index: -1;
+    transition: transform 0.3s;
+  }
+
+  &:hover::after {
+    transform: scaleY(1);
+  }
 
   &:visited {
-    color: blue;
-    border-bottom: 4px solid $link-visited-underline;
+    // color: blue;
+    // border-bottom: 4px solid $link-visited-underline;
 
-    &:hover {
-      color: purple;
+    // text-decoration: underline;
+    text-decoration-color: $link-visited-underline;
+    // text-decoration-thickness: 4px;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transform: scaleY(0);
+      transform-origin: bottom center;
       background-color: $link-visited-underline;
-      border-bottom: 4px solid $link-visited-underline;
+      z-index: -1;
+      transition: transform 0.3s;
     }
 
-    &::selection {
-      background-color: red;
+    &:hover {
+      // color: purple;
+      // background-color: $link-visited-underline;
+      // border-bottom: 4px solid $link-visited-underline;
+
+      text-decoration-color: $link-visited-underline;
     }
   }
 
   &:hover {
-    color: orange;
-    background-color: $link-underline;
-    border-bottom: 4px solid $link-underline;
+    // color: orange;
+    // background-color: $link-underline;
+    // border-bottom: 4px solid $link-underline;
+
+    text-decoration-color: $link-underline;
   }
 
   &::selection {
-    border-bottom: 4px solid black;
+    // border-bottom: 4px solid black;
+    text-decoration-color: $link-visited-underline;
   }
 }
 
+// Used if svg is an element, set in quill-converter.js
 // .anchor-img {
-//   &::selection {
-//     background: $body-highlight;
-//     border-bottom: 4px solid black;
-//   }
+//   z-index: 1;
 // }
 
 // Align text right

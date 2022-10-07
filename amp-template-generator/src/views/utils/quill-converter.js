@@ -103,7 +103,9 @@ function _setHtml(quill) {
   converted = converted.replace(
     /<\/a>/g,
     "<span class='sr-only'>(Opens in a new window)</span></a>"
-    // "<span class='sr-only'>(Opens in a new window)</span><svg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M13 5.00001L13 1.00001M13 1.00001H8.99999M13 1.00001L7 7M5.66667 1H4.2C3.0799 1 2.51984 1 2.09202 1.21799C1.71569 1.40973 1.40973 1.71569 1.21799 2.09202C1 2.51984 1 3.07989 1 4.2V9.8C1 10.9201 1 11.4802 1.21799 11.908C1.40973 12.2843 1.71569 12.5903 2.09202 12.782C2.51984 13 3.07989 13 4.2 13H9.8C10.9201 13 11.4802 13 11.908 12.782C12.2843 12.5903 12.5903 12.2843 12.782 11.908C13 11.4802 13 10.9201 13 9.8V8.33333' stroke='#292929' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></a>"
+    // Used if svg is set as element
+    // "<span class='sr-only'>(Opens in a new window)</span><svg class='anchor-img' width='12' height='12' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M13 5.00001L13 1.00001M13 1.00001H8.99999M13 1.00001L7 7M5.66667 1H4.2C3.0799 1 2.51984 1 2.09202 1.21799C1.71569 1.40973 1.40973 1.71569 1.21799 2.09202C1 2.51984 1 3.07989 1 4.2V9.8C1 10.9201 1 11.4802 1.21799 11.908C1.40973 12.2843 1.71569 12.5903 2.09202 12.782C2.51984 13 3.07989 13 4.2 13H9.8C10.9201 13 11.4802 13 11.908 12.782C12.2843 12.5903 12.5903 12.2843 12.782 11.908C13 11.4802 13 10.9201 13 9.8V8.33333' stroke='#292929' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg></a>"
+    // Used if img is set as element
     // "<span class='sr-only'>(Opens in a new window)</span><img class='anchor-img' src='https://s3-componentsexperiments-sbx01-cac1-01.s3.ca-central-1.amazonaws.com/AMP/Icon.png' alt='Girl in a jacket' width='14' height='14'></a>"
   );
 
