@@ -21,11 +21,6 @@
         border-left-width: 0;
         background-color: $inactive-tab-bg;
 
-        &:focus-visible {
-          margin: 0.0625rem;
-          outline: 0.0625rem solid $tab-focus;
-        }
-
         p {
           font-weight: 400;
           font-family: "Lato", sans-serif;
@@ -106,6 +101,14 @@
 
       & [role="tab"][selected] + [role="tabpanel"] {
         display: block;
+      }
+
+      & [role="tab"], 
+      & [role="tabpanel"] {
+        &:focus-visible {
+          outline: 0.0625rem solid $tab-focus;
+          z-index: 99;
+        }
       }
     }
 

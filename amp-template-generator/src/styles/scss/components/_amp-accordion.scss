@@ -31,11 +31,11 @@
                 i {
                     display: inline-block;
                     border-radius: 60px;
-                    box-shadow: 0 0 2px #888;
+                    box-shadow: 0 0 3px #888;
                     padding: 0.5em 0.6em;
                     position: absolute;
                     right: 7px;
-                    bottom: 8px;
+                    bottom: 12px;
                 }
                 .fa-chevron-up {
                     background-color: $brand-500;
@@ -54,6 +54,7 @@
         
         .section-content {
             border-color: $border-color;
+            background-color: $transparent-grey-300;
         }
 
         section {
