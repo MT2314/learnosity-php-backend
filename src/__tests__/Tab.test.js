@@ -23,11 +23,7 @@ const testLayout = [
     id: 0,
     title: "Tab 1",
     placeholder: "Tab 1",
-    components: [
-      {
-        componentName: "Text",
-      },
-    ],
+    components: [],
     activeTab: true,
   },
   {
@@ -149,28 +145,56 @@ xdescribe("Check if toolbar actions work", () => {
     expect(tab2).toHaveAttribute("activetab", "0");
   });
 });
-jest.mock("../components/Text/Text", () => ({
-  AwesomeComponent: (props) => {
-    const Text = "default-awesome-component-mock";
-    return <Text {...props} />;
-  },
-}));
 
-// Mock Data, can't test actual drag and drop since we are rendering only the Tabs component
-describe("Testing Drag and Drop", () => {
-  it("Dropping text component into a tab is registered", async () => {
-    // const newState = produce(testLayout, (draft) => {
-    //   draft[0].components = [
-    //     {
-    //       componentName: "Text",
-    //       componentProps: {
-    //         body: {
-    //           ops: [{ insert: "Polkaroo\n" }],
-    //         },
-    //       },
-    //     },
-    //   ];
-    // });
-    await render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
+// Mock Data, can't test actual drag and drop since we are rendering only the Tabs component and there is nothing to drag
+xdescribe("Testing Rendering components when added", () => {
+  it("Dropping text component into a tab is registered and Text comp is rendered", async () => {
+    const newState = produce(testLayout, (draft) => {
+      draft[0].components.push({
+        componentName: "Text",
+        componentProps: {
+          body: {
+            ops: [{ insert: "Polkaroo\n" }],
+          },
+        },
+      });
+    });
+    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    const textComponent = screen.getByTestId("text-editor-component");
+    expect(textComponent).toBeInTheDocument();
+    expect(screen.getByText(/Polkaroo/i)).toBeInTheDocument();
+  });
+});
+
+// Mock Data, can't test actual drag and drop since we are rendering only the Tabs component and there is nothing to drag
+describe("Testing Component Wrapper", () => {
+  const newState = produce(testLayout, (draft) => {
+    draft[0].components.push(
+      {
+        componentName: "Text",
+        componentProps: {
+          body: {
+            ops: [{ insert: "Polkaroo\n" }],
+          },
+        },
+      },
+      {
+        componentName: "Text",
+        componentProps: {
+          body: {
+            ops: [{ insert: "Polkaroo 2\n" }],
+          },
+        },
+      }
+    );
+  });
+  it("Wrap Component renders", async () => {
+    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    const textComponent = screen.getByTestId("text-editor-component");
+    expect(textComponent).toBeInTheDocument();
+    expect(screen.getByText(/Polkaroo/i)).toBeInTheDocument();
+    // expect(screen.getByText(/Polkaroo 2/i)).toBeInTheDocument();
+    const Components = screen.getAllByTestId("div-before-drop-indicator");
+    expect(Components.length).toBe(2);
   });
 });
