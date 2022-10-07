@@ -15,16 +15,14 @@
         align-items: center;
         flex-grow: 1;
         box-sizing: border-box;
-        // border: 0.0625rem solid $border-color;
-        box-shadow: 0 0 0 0.0625rem $border-color;
+        border: 0.0625rem solid $border-color;
         width: min-content;
         height: 4.625rem;
         border-left-width: 0;
         background-color: $inactive-tab-bg;
 
         &:focus-visible {
-          outline: none;
-          box-shadow: 0 0 0 0.0625rem $tab-focus;
+          border: 0.0625rem solid $tab-focus;
         }
 
         p {
@@ -46,7 +44,7 @@
         }
 
         &:first-child {
-          // border-left-width: 0.0625rem;
+          border-left-width: 0.0625rem;
           border-radius: 0.625rem 0 0 0;
         }
 
@@ -95,12 +93,6 @@
             text-decoration-line: none;
           }
         }
-
-        // AMP's CSS diminishes the focus outline, so this
-        // re-applies our focus rule
-        // &[selected]:focus {
-        //   @include outline-focus;
-        // }
       }
 
       & [role="tabpanel"] {
