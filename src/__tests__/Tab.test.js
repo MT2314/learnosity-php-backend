@@ -35,7 +35,7 @@ const testLayout = [
   },
 ];
 
-xdescribe("Renders Tab Component with default props", () => {
+describe("Renders Tab Component with default props", () => {
   it("Renders Tab Component 2 default Tabs", async () => {
     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     expect(screen.getByText(/Tab 1/i)).toBeInTheDocument();
@@ -56,7 +56,7 @@ xdescribe("Renders Tab Component with default props", () => {
     ).toBeInTheDocument();
   });
 });
-xdescribe("Changing Active Tab", () => {
+describe("Changing Active Tab", () => {
   it("On click displays active tab", async () => {
     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     const tabLabel = screen.getByText(/Tab 2/i);
@@ -65,7 +65,7 @@ xdescribe("Changing Active Tab", () => {
     expect(screen.getByPlaceholderText(/Tab 2/i)).toBeInTheDocument();
   });
 });
-xdescribe("Check if toolbar renders", () => {
+describe("Check if toolbar renders", () => {
   it("check for the 4 actions within toolbar", async () => {
     render(<TabsMain layoutState={testLayout} setProp={() => {}} />);
     expect(screen.getByTestId("ArrowBackIcon")).toBeInTheDocument();
@@ -74,7 +74,7 @@ xdescribe("Check if toolbar renders", () => {
     expect(screen.getByTestId("RemoveIcon")).toBeInTheDocument();
   });
 });
-xdescribe("Check if toolbar actions work", () => {
+describe("Check if toolbar actions work", () => {
   it("move tab left with toolbar", () => {
     const newState = produce(testLayout, (draft) => {
       draft[0].activeTab = false;
@@ -157,18 +157,15 @@ describe("Testing Rendering components when added", () => {
         },
       },
     });
-    it("Dropping text component into a tab is registered and Text comp is rendered", async () => {
-      render(<TabsMain layoutState={newState} setProp={() => {}} />);
-      const textComponent = screen.getByTestId("text-editor-component");
-      expect(textComponent).toBeInTheDocument();
-      expect(screen.getByText(/Polkaroo/i)).toBeInTheDocument();
-    });
   });
-});
+  it("Dropping text component into a tab is registered and Text comp is rendered", async () => {
+    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    const textComponent = screen.getByTestId("text-editor-component");
+    expect(textComponent).toBeInTheDocument();
+    expect(screen.getByText(/Polkaroo/i)).toBeInTheDocument();
+  });
 
-// Mock Data, can't test actual drag and drop since we are rendering only the Tabs component and there is nothing to drag
-describe("Testing Component Wrapper", () => {
-  const newState = produce(testLayout, (draft) => {
+  const newState2 = produce(testLayout, (draft) => {
     draft[0].components.push(
       {
         componentName: "Text",
@@ -188,13 +185,60 @@ describe("Testing Component Wrapper", () => {
       }
     );
   });
-  it("Wrap Component renders", async () => {
-    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+  it("Multiple components render", async () => {
+    render(<TabsMain layoutState={newState2} setProp={() => {}} />);
     const textComponent = screen.getAllByTestId("text-editor-component");
     expect(textComponent[0]).toBeInTheDocument();
     expect(screen.getByText("Polkaroo")).toBeInTheDocument();
     expect(screen.getByText("Polkaroo 2")).toBeInTheDocument();
+  });
+});
+
+// Component Wrapper Testing, Renders with correct label + Duplicate and Delete buttons works properly
+describe("Testing Component Wrapper", () => {
+  const newState = produce(testLayout, (draft) => {
+    draft[0].components.push({
+      componentName: "Text",
+      componentProps: {
+        body: {
+          ops: [{ insert: "Polkaroo\n" }],
+        },
+      },
+    });
+  });
+  it("Wrapper Renders for Text Component", async () => {
+    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    const textComponent = screen.getByTestId("text-editor-component");
+    expect(textComponent).toBeInTheDocument();
+    expect(screen.getByText("Polkaroo")).toBeInTheDocument();
     const Component1 = screen.getAllByTestId("div-before-drop-indicator");
-    expect(Component1[0]).toBeInTheDocument;
+    expect(Component1).toBeInTheDocument;
+    const DragHandleIcon = screen.getByTestId("DragHandleIcon");
+    const ComponentLabel = screen.getByTestId("component-label-name");
+    const DuplicateComponentBtn = screen.getByTestId(
+      "duplicate-component-button"
+    );
+    const DeleteComponentBtn = screen.getByTestId("delete-component-button");
+    expect(DragHandleIcon).toBeInTheDocument;
+    expect(ComponentLabel).toBeInTheDocument;
+    expect(DuplicateComponentBtn).toBeInTheDocument;
+    expect(DeleteComponentBtn).toBeInTheDocument;
+    expect(ComponentLabel).toHaveTextContent("Text");
+  });
+  it("Duplicate Component Button works", async () => {
+    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    const DuplicateComponentBtn = screen.getByTestId(
+      "duplicate-component-button"
+    );
+    fireEvent.click(DuplicateComponentBtn);
+    const textComponent = screen.getAllByTestId("text-editor-component");
+    expect(textComponent).toHaveLength(2);
+  });
+  it("Delete Component Button works", async () => {
+    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    const DeleteComponentBtn = screen.getByTestId("delete-component-button");
+    fireEvent.click(DeleteComponentBtn);
+    const textComponent = screen.queryByTestId("text-editor-component");
+    expect(textComponent).not.toBeInTheDocument();
   });
 });
