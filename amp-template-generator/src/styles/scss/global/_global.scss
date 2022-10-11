@@ -5,6 +5,11 @@ html {
 body {
   color: $text-body;
   background-color: $page-background;
+
+  // Changes the highlight background color
+  ::selection {
+    background: $body-highlight;
+  }
 }
 
 // *:focus {
@@ -74,19 +79,6 @@ h6,
 .h6,
 .font-smallest {
   @include font-smallest;
-}
-
-p {
-  margin: 0 0 1.25rem 0;
-  font-weight: 400;
-  line-height: 1.5rem;
-  letter-spacing: 0.009375rem;
-  color: #232323;
-}
-
-a {
-  color: $link-color;
-  font-style: normal;
 }
 
 .pointer {
