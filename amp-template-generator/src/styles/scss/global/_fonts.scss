@@ -1,10 +1,26 @@
 // Google fonts imports
 // Lato (Main component text ie tab title, accordion titles, etc)
-@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+@font-face {
+  font-family: "Lato";
+  src: url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+}
+
 // Crimson Pro (Text component body font)
-@import url("https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap");
+@font-face {
+  font-family: "Crimson Pro";
+  src: url("https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap");
+}
+
+// Platypus custom in house font used for icons
+@font-face {
+  font-family: "platypus";
+  src: url("https://s3-componentsexperiments-sbx01-cac1-01.s3.ca-central-1.amazonaws.com/AMP/Font+Testing/platypus.ttf");
+  // Important to note with this font: set the font-weight and font-style to normal when using this font
+}
+
 // Any new fonts can be imported below...
 
 // Font families
 $component-main-font: "Lato", serif;
 $text-body-font: "Crimson Pro", serif;
+$amp-icons-font: "platypus";
