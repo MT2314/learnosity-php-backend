@@ -18,6 +18,7 @@ afterEach(() => {
   container = null;
 });
 
+// Default Mock Data
 const testLayout = [
   {
     id: 0,
@@ -34,6 +35,49 @@ const testLayout = [
     activeTab: false,
   },
 ];
+
+// Mock Data muated with immer
+const singleComponent = produce(testLayout, (draft) => {
+  draft[0].components.push({
+    componentName: "Text",
+    componentProps: {
+      body: {
+        ops: [{ insert: "Polkaroo\n" }],
+      },
+    },
+  });
+});
+
+const multipleComponents = produce(testLayout, (draft) => {
+  draft[0].components.push(
+    {
+      componentName: "Text",
+      componentProps: {
+        body: {
+          ops: [{ insert: "Polkaroo\n" }],
+        },
+      },
+    },
+    {
+      componentName: "Text",
+      componentProps: {
+        body: {
+          ops: [{ insert: "Polkaroo 2\n" }],
+        },
+      },
+    }
+  );
+});
+
+const addTab = produce(testLayout, (draft) => {
+  draft.push({
+    id: 2,
+    title: "Tab 3",
+    placeholder: "Tab 3",
+    components: [],
+    activeTab: false,
+  });
+});
 
 describe("Renders Tab Component with default props", () => {
   it("Renders Tab Component 2 default Tabs", async () => {
@@ -108,16 +152,7 @@ describe("Check if toolbar actions work", () => {
 
   it("remove a tab with toolbar", async () => {
     // Add another tab to the state
-    const newState = produce(testLayout, (draft) => {
-      draft.push({
-        id: 2,
-        title: "Tab 3",
-        placeholder: "Tab 3",
-        components: [],
-        activeTab: false,
-      });
-    });
-    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    render(<TabsMain layoutState={addTab} setProp={() => {}} />);
     // Tab 1 activeTab is at index 0
     const tab1 = screen.getByPlaceholderText(/Tab 1/i);
     expect(tab1).toHaveAttribute("activetab", "0");
@@ -148,45 +183,15 @@ describe("Check if toolbar actions work", () => {
 
 // Mock Data, can't test actual drag and drop since we are rendering only the Tabs component and there is nothing to drag
 describe("Testing Rendering components when added", () => {
-  const newState = produce(testLayout, (draft) => {
-    draft[0].components.push({
-      componentName: "Text",
-      componentProps: {
-        body: {
-          ops: [{ insert: "Polkaroo\n" }],
-        },
-      },
-    });
-  });
   it("Dropping text component into a tab is registered and Text comp is rendered", async () => {
-    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    render(<TabsMain layoutState={singleComponent} setProp={() => {}} />);
     const textComponent = screen.getByTestId("text-editor-component");
     expect(textComponent).toBeInTheDocument();
     expect(screen.getByText(/Polkaroo/i)).toBeInTheDocument();
   });
 
-  const newState2 = produce(testLayout, (draft) => {
-    draft[0].components.push(
-      {
-        componentName: "Text",
-        componentProps: {
-          body: {
-            ops: [{ insert: "Polkaroo\n" }],
-          },
-        },
-      },
-      {
-        componentName: "Text",
-        componentProps: {
-          body: {
-            ops: [{ insert: "Polkaroo 2\n" }],
-          },
-        },
-      }
-    );
-  });
   it("Multiple components render", async () => {
-    render(<TabsMain layoutState={newState2} setProp={() => {}} />);
+    render(<TabsMain layoutState={multipleComponents} setProp={() => {}} />);
     const textComponent = screen.getAllByTestId("text-editor-component");
     expect(textComponent[0]).toBeInTheDocument();
     expect(screen.getByText("Polkaroo")).toBeInTheDocument();
@@ -196,24 +201,14 @@ describe("Testing Rendering components when added", () => {
 
 // Component Wrapper Testing, Renders with correct label + Duplicate and Delete buttons works properly
 describe("Testing Component Wrapper", () => {
-  const newState = produce(testLayout, (draft) => {
-    draft[0].components.push({
-      componentName: "Text",
-      componentProps: {
-        body: {
-          ops: [{ insert: "Polkaroo\n" }],
-        },
-      },
-    });
-  });
   it("Wrapper Renders for Text Component", async () => {
-    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    render(<TabsMain layoutState={singleComponent} setProp={() => {}} />);
     const textComponent = screen.getByTestId("text-editor-component");
     expect(textComponent).toBeInTheDocument();
     expect(screen.getByText("Polkaroo")).toBeInTheDocument();
     const Component1 = screen.getAllByTestId("div-before-drop-indicator");
     expect(Component1).toBeInTheDocument;
-    const DragHandleIcon = screen.getByTestId("DragHandleIcon");
+    const DragHandleIcon = screen.getByTestId("component-drag");
     const ComponentLabel = screen.getByTestId("component-label-name");
     const DuplicateComponentBtn = screen.getByTestId(
       "duplicate-component-button"
@@ -226,7 +221,7 @@ describe("Testing Component Wrapper", () => {
     expect(ComponentLabel).toHaveTextContent("Text");
   });
   it("Duplicate Component Button works", async () => {
-    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    render(<TabsMain layoutState={singleComponent} setProp={() => {}} />);
     const DuplicateComponentBtn = screen.getByTestId(
       "duplicate-component-button"
     );
@@ -235,7 +230,7 @@ describe("Testing Component Wrapper", () => {
     expect(textComponent).toHaveLength(2);
   });
   it("Delete Component Button works", async () => {
-    render(<TabsMain layoutState={newState} setProp={() => {}} />);
+    render(<TabsMain layoutState={singleComponent} setProp={() => {}} />);
     const DeleteComponentBtn = screen.getByTestId("delete-component-button");
     fireEvent.click(DeleteComponentBtn);
     const textComponent = screen.queryByTestId("text-editor-component");
