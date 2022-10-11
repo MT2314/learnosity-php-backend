@@ -3,19 +3,19 @@ import { useDrop } from "react-dnd";
 import styled from "@emotion/styled";
 
 import { TabContext, LayoutContext } from "../TabContext";
-import ComponentWrapper from "./ComponentWrapper";
+import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 
 //components
 import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
 
 // NOTE: We can use theme once it is set it up end to end
-const StyleTabBody = styled("div")(({ theme, isDragging }) => ({
-  padding: "10px 10px 20px 10px",
+const StyleTabBody = styled("div")(({ isDragging }) => ({
+  padding: "0.625rem",
   borderColor: "#bdbdbd",
   borderStyle: "solid",
   borderWidth: "0 1px 1px 1px",
-  backgroundColor: isDragging ? "#E9EDF1" : "white",
+  backgroundColor: isDragging ? "#F6F9FC" : "white",
 }));
 
 const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
@@ -26,6 +26,8 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
   const [, dispatch] = useContext(LayoutContext);
   const [isDragging, setIsDragging] = useState(false);
   const [inContainer, setInContainer] = useState(null);
+  const [droppedIndex, setDroppedIndex] = useState(null);
+  const [ activeComp, setActiveComp] = useState(null);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -50,13 +52,13 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       if (acceptListComp(item)) {
         dispatch({
           func: "ADD_COMPONENT",
-          tabIndex: tabIndex,
+          tabIndex: activeTab,
           component: {
             componentName: item.componentName,
             componentProps: JSON.parse(item?.componentProps),
           },
         });
-        item?.delete && item?.delete(item.tabIndex, item.compIndex);
+        item?.delete && item?.delete();
       }
     },
 
@@ -86,19 +88,25 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
     } else if (isOver) {
       setShowError();
       setShowDropError(false);
+      setIsDragging(true);
+    } else {
+      setIsDragging(false);
     }
   }, [isOver]);
 
   useEffect(() => {
     setShowError();
     setRemoveError(false);
-  }, [removeError])
+  }, [removeError]);
 
   drop(dropRef);
+
 
   return (
     <>
       <StyleTabBody
+        activeTab={activeTab}
+        tabIndex={tabIndex}
         onDragLeave={() => setInContainer(false)}
         onDragOver={() => setInContainer(true)}
         ref={dropRef}
@@ -109,16 +117,11 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         {activeTab === tabIndex && components.length === 0 ? (
           <Placeholder isOver={isOver} showError={showError} />
         ) : (
-          <ul
-            style={{
-              padding: 0,
-              listStyleType: "none",
-            }}
-            isOver={isOver}
-          >
+          <div role="list" isOver={isOver}>
             {components.map((component, compIndex) => {
               return (
-                <ComponentWrapper
+                <NestedComponentWrapper
+                  componentType='tabs'
                   key={`key-component-${compIndex}`}
                   numOfComponent={components.length}
                   componentProps={component.componentProps}
@@ -127,11 +130,16 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
                   tabIndex={tabIndex}
                   setIsDragging={setIsDragging}
                   inContainer={inContainer}
+                  draggingOver={isOver}
+                  setDroppedIndex={setDroppedIndex}
+                  droppedIndex={droppedIndex}
+                  setActiveComp={setActiveComp}
+                  activeComp={activeComp}
                 />
               );
             })}
             <PlaceholderError showError={showDropError} />
-          </ul>
+          </div>
         )}
       </StyleTabBody>
     </>

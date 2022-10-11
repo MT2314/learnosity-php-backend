@@ -82,10 +82,15 @@ $primary-tab-bg: $transparent-grey-50;
 $active-tab-bg: $transparent-grey-100;
 $inactive-tab-bg: $white;
 
-// focus color
+// Hover dialog background
+$hover-dialog-bg: #404040;
+
+// focus colors
 $tab-focus: rgba(0, 136, 0, 1);
 
+// Border colors
 $component-border: $transparent-grey-300;
+$tab-border-bottom: $brand-500;
 
 // Accordion
 
@@ -245,8 +250,6 @@ $table-striped-bg: $brand-secondary-light;
 
 // Tabs
 $tab-default-bg: $page-background;
-$tab-default-bg-hover: $brand-secondary;
 
 $tab-active-bg: $brand-secondary-light;
 $tab-active-text: $brand-primary;
-$tab-active-border-top: $brand-primary;
