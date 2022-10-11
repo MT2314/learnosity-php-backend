@@ -71,7 +71,7 @@
           width: 24%;
         }
 
-        &:hover, 
+        &:hover,
         &:focus-visible {
           background-color: $primary-tab-bg;
           text-decoration-line: underline;
@@ -103,10 +103,11 @@
         display: block;
       }
 
-      & [role="tab"], 
+      & [role="tab"],
       & [role="tabpanel"] {
         &:focus-visible {
           outline: 0.0625rem solid $tab-focus;
+          outline-offset: 0.0625rem;
           z-index: 99;
         }
       }
