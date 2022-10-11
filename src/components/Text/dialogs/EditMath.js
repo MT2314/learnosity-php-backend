@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import './EditMath.scss';
+import React, { useRef } from "react";
+import "./EditMath.scss";
 
 import {
   useSetEditState,
@@ -8,12 +8,12 @@ import {
   useSetEditFormula,
   useSetKeepEditor,
   useQuill,
-} from '../Provider';
-import { Tooltip } from '@material-ui/core';
-import '../styles/EditMath.scss';
+} from "../Provider";
+import { Tooltip } from "@material-ui/core";
+import "../styles/EditMath.scss";
 
-import icons from '../assets/icons';
-import { useOnClickOutside } from '../../../hooks/useOnClickOutside';
+import icons from "../assets/icons";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 const EditMath = () => {
   const containerRef = useRef(null);
 
@@ -36,20 +36,20 @@ const EditMath = () => {
   });
 
   const container = {
-    display: editState?.value ? 'flex' : 'none',
-    position: 'fixed',
-    top: editState?.clientY ? `${editState.clientY}px` : '0',
-    left: editState?.clientX ? `${editState.clientX}px` : '0',
-    width: '80px',
-    zIndex: '4',
-    borderRadius: '4px',
-    border: '1px solid rgba(0,0,0,.25)',
-    backgroundColor: 'white',
-    padding: '4px',
-    boxShadow: '0 5px 10px rgba(0,0,0,.2)',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: editState?.value ? "flex" : "none",
+    position: "fixed",
+    top: editState?.clientY ? `${editState.clientY}px` : "0",
+    left: editState?.clientX ? `${editState.clientX}px` : "0",
+    width: "80px",
+    zIndex: "4",
+    borderRadius: "4px",
+    border: "1px solid rgba(0,0,0,.25)",
+    backgroundColor: "white",
+    padding: "4px",
+    boxShadow: "0 5px 10px rgba(0,0,0,.2)",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   };
 
   const handlePencilClick = (e) => {
@@ -94,7 +94,7 @@ const EditMath = () => {
               className="pencil"
               onClick={handlePencilClick}
             >
-              {icons['pencil']}
+              {icons["pencil"]}
             </button>
           </Tooltip>
           <Tooltip
@@ -109,7 +109,7 @@ const EditMath = () => {
                 modifiers: {
                   preventOverflow: {
                     enabled: true,
-                    boundariesElement: 'window',
+                    boundariesElement: "window",
                   },
                 },
               },
@@ -120,7 +120,7 @@ const EditMath = () => {
               className="trashcan"
               onClick={handleTrashCanClick}
             >
-              {icons['trashcan']}
+              {icons["trashcan"]}
             </button>
           </Tooltip>
         </>

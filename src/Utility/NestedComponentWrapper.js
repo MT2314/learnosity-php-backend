@@ -1,28 +1,36 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
-import { useDrag, useDrop, DragPreviewImage } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
+import { getEmptyImage } from "react-dnd-html5-backend";
+import { useTranslation } from "react-i18next";
 
 import styled from "@emotion/styled";
 import { IconButton, Typography } from "@mui/material";
-import DragHandleIcon from "@mui/icons-material/DragHandle";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import {
+  DragHandle,
+  ArrowDropUp,
+  ArrowDropDown,
+  ContentCopy,
+  DeleteOutline,
+} from "@mui/icons-material";
 
-import { LayoutContext } from "../TabContext";
+import { LayoutContext as AccordionContext } from "../Context/InteractivesContext";
+import { LayoutContext as TabContext } from "../components/Tabs/TabContext";
 
-import textDnd from "../../../Icons/dndIcons/textDnd.png";
-import defaultDnd from "../../../Icons/dndIcons/defaultDnd.png";
-import DropIndicator from "../../../Utility/DropIndicator";
+import DropIndicator from "./DropIndicator";
+import { useOnClickOutside } from "../hooks/useOnClickOutside";
+import componentIndex from "../components/componentIndex";
 
-import TabComponent from "./TabComponent";
-
-export const SmallIconButton = styled(IconButton)(() => ({
-  color: "#FFF",
+export const SmallIconButton = styled(IconButton)(({ draggingOver }) => ({
+  color: draggingOver ? "transparent" : "#FFF",
 }));
 
-const BlueBox = styled("div")(({ theme, draggingSelf, showSelf }) => ({
-  outline: showSelf ? `3px solid #1466C0` : null,
+const BlueBox = styled("div")(({ draggingSelf, showSelf, hoverActive }) => ({
+  outline:
+    showSelf && !draggingSelf
+      ? `3px solid #1466C0`
+      : hoverActive && !draggingSelf
+      ? `3px solid #DAE3EE`
+      : null,
   borderRadius: "4px",
   opacity: draggingSelf ? 0.4 : 1,
   '& [data-id="callout"]': {
@@ -30,20 +38,34 @@ const BlueBox = styled("div")(({ theme, draggingSelf, showSelf }) => ({
   },
 }));
 
-const DragHandle = styled(DragHandleIcon)({
+const StyledDragHandle = styled(DragHandle)({
   color: "inherit",
 });
 
+const StaticLabel = styled("span")(
+  ({ hoverActive, draggingSelf, showSelf }) => ({
+    background: hoverActive && !showSelf ? "#DAE3EE" : "#1466C0",
+    width: "fit-content",
+    height: "100%",
+    borderRadius: "4px 4px 0px 0px",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    opacity: draggingSelf ? 0 : 1,
+  })
+);
+
 export const ComponentLabelContainer = styled("div")(
-  ({ theme, draggingSelf, showSelf }) => {
+  ({ theme, draggingSelf, showSelf, hoverActive }) => {
     const style = {
-      background: "#1466C0",
+      background: showSelf && "#1466C0",
+      display: "flex",
       width: "fit-content",
       marginLeft: "-3px",
-      color: "#FFF",
+      padding: "0 1px",
+      color: showSelf ? "#FFF" : "#1466C0",
       borderRadius: "4px 4px 0px 0px",
-      opacity: showSelf ? 1 : 0,
-      display: "flex",
+      opacity: showSelf || hoverActive ? 1 : 0,
       alignItems: "center",
     };
 
@@ -53,23 +75,43 @@ export const ComponentLabelContainer = styled("div")(
   }
 );
 
-const ComponentWrapper = ({
+const NestedComponentWrapper = ({
+  componentType,
   component,
   compIndex,
   componentProps,
   tabIndex,
-  setIsDragging,
   numOfComponent,
-  inContainer,
+  droppedIndex,
+  setDroppedIndex,
+  draggingOver,
+  setActiveComp,
+  activeComp,
 }) => {
   const dropRef = useRef(null);
 
-  const [, dispatch] = useContext(LayoutContext);
+  const [, dispatch] = useContext(
+    componentType === "accordion" ? AccordionContext : TabContext
+  );
   const [showSelf, setShowSelf] = useState(false);
+  const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
+  const [tabActive, setTabActive] = useState(false);
 
-  // !WIP - needed to drag and drop outside of Tabs
-  const prevNumOfComponent = usePrevious(numOfComponent);
+  //get the matching component from the componentIndex
+  const componentDetails = componentIndex[component.componentName];
+
+  const { Component } = componentDetails;
+
+  //remove active border and label if you click outside component
+  useOnClickOutside(dropRef, () => setShowSelf(false));
+
+  //on first click of text component the active state wrapper shows
+  useEffect(() => {
+    tabActive && setShowSelf(true);
+  }, [tabActive]);
+  //use translation to localize component name
+  const { t } = useTranslation();
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -78,10 +120,7 @@ const ComponentWrapper = ({
     );
   };
 
-  const [
-    { isOver, canDrop, isOverCurrent, droppedInContainer, getItem },
-    drop,
-  ] = useDrop({
+  const [{ isOver, getItem }, drop] = useDrop({
     accept: [
       "Text",
       "Image",
@@ -100,20 +139,25 @@ const ComponentWrapper = ({
       getItem: monitor.getItem(),
     }),
     drop: async (item, monitor) => {
-      const hoverIndex =
-        dropIndexOffset === 0
+      const currentTab = item?.tabIndex === tabIndex;
+
+      const hoverIndex = currentTab
+        ? dropIndexOffset === 0
           ? item.compIndex < compIndex
             ? compIndex
             : compIndex + 1
           : item.compIndex < compIndex
           ? compIndex - 1
-          : compIndex;
+          : compIndex
+        : dropIndexOffset === 0
+        ? compIndex + 1
+        : compIndex;
 
-      const dragIndex = item?.compIndex;
-
-      const currentTab = item?.tabIndex === tabIndex;
+      const dragIndex = currentTab ? item?.compIndex : undefined;
 
       if (acceptListComp(item)) {
+        setDroppedIndex(hoverIndex);
+        setDropIndexOffset(null);
         dispatch({
           func:
             item.compIndex !== undefined && currentTab
@@ -131,9 +175,7 @@ const ComponentWrapper = ({
             },
           }),
         });
-        if (!currentTab && item?.delete) {
-          item?.delete(item.tabIndex, item.compIndex);
-        }
+        !currentTab && item?.delete && item?.delete();
       }
     },
     canDrop: (item) => {
@@ -180,22 +222,23 @@ const ComponentWrapper = ({
     },
   });
 
-  const [{ isDragging, didDrop, droppedItem }, drag, dragPreview] = useDrag({
+  const [{ isDragging }, drag, dragPreview] = useDrag({
     type: component.componentName,
     item: () => ({
       componentName: component.componentName,
       componentProps: JSON.stringify(componentProps),
-      compIndex: compIndex,
-      tabIndex: tabIndex,
-      delete: (tabIndex, compIndex) => {
+      compIndex,
+      tabIndex,
+      delete: () => {
         dispatch({
           func: "DELETE_COMPONENT",
-          tabIndex: tabIndex,
-          compIndex: compIndex,
+          tabIndex,
+          compIndex,
         });
       },
       within: true,
       new: true,
+      source: "component",
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -203,35 +246,35 @@ const ComponentWrapper = ({
       droppedItem: monitor.getItem(),
     }),
   });
+  //remove html5 default drag image
+  useEffect(() => {
+    dragPreview(getEmptyImage(), { captureDraggingState: true });
+  }, [showSelf, isHover]);
+
+  getEmptyImage(drop(dropRef));
+  useEffect(() => {
+    droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
+  }, [droppedIndex]);
 
   useEffect(() => {
-    setIsDragging(isDragging);
-  }, [isDragging]);
-
-  drop(dropRef);
-
-  useEffect(() => {
-    if (didDrop && prevNumOfComponent === numOfComponent && !inContainer) {
-      dispatch({
-        func: "DELETE_COMPONENT",
-        tabIndex: tabIndex,
-        compIndex: compIndex,
-      });
-      setIsDragging(false);
+    if (activeComp !== null) {
+      activeComp === compIndex
+        ? (setShowSelf(true), setActiveComp(null))
+        : (setShowSelf(false), setTabActive(false));
     }
-  }, [didDrop]);
+  }, [activeComp]);
 
   return (
     <>
-      <DragPreviewImage
-        connect={dragPreview}
-        src={component.componentName.includes("Text") ? textDnd : defaultDnd}
-      />
       <div
         data-test-id="div-before-drop-indicator"
+        key={`nested-component-${compIndex}`}
         ref={dropRef}
-        onMouseEnter={() => setShowSelf(true)}
-        onMouseLeave={() => setShowSelf(false)}
+        onMouseEnter={() => !draggingOver && setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+        onFocus={() => setShowSelf(true)}
+        onBlur={() => setShowSelf(false)}
+        onClick={() => setShowSelf(true)}
       >
         <div>
           <DropIndicator
@@ -244,64 +287,82 @@ const ComponentWrapper = ({
           />
           <ComponentLabelContainer
             showSelf={showSelf}
+            hoverActive={isHover}
             data-testid="component-component-label-container"
+            onDragStart={() => setShowSelf(false)}
           >
-            <span
-              ref={drag}
-              data-testid="component-drag"
-              style={{
-                display: "inline-flex",
-                justifyContent: "center",
-                cursor: "move",
-                padding: "3px  0",
-                paddingLeft: "5px",
-              }}
+            <StaticLabel
+              data-testid="static-label"
+              hoverActive={isHover}
+              showSelf={showSelf}
+              draggingSelf={isDragging}
+              isDragging={isDragging}
             >
-              <DragHandle />
-            </span>
-            <Typography
-              variant="body2"
-              component="span"
-              sx={{
-                borderRight: "0.5px solid #FFF",
-                paddingRight: "10px",
-                paddingLeft: "10px",
-                marginRight: "5px",
-              }}
-              data-testid="component-label-name"
-            >
-              {component.componentName}
-            </Typography>
+              <span
+                ref={drag}
+                data-testid="component-drag"
+                style={{
+                  display: "inline-flex",
+                  justifyContent: "center",
+                  cursor: "move",
+                  padding: "3px  0",
+                  paddingLeft: "5px",
+                }}
+              >
+                <StyledDragHandle />
+              </span>
+              <Typography
+                variant="body2"
+                component="span"
+                sx={{
+                  borderRight: showSelf && "0.5px solid #FFF",
+                  paddingRight: "10px",
+                  paddingLeft: "10px",
+                  marginRight: "5px",
+                }}
+                data-testid="component-label-name"
+              >
+                {t(component.componentName)}
+              </Typography>
+            </StaticLabel>
             {compIndex !== 0 && (
               <SmallIconButton
                 onClick={() => {
+                  setShowSelf(false);
                   dispatch({
                     func: "MOVE_COMPONENT_UP",
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
+                  setActiveComp(compIndex - 1);
                 }}
                 data-testid="move-up-button"
                 aria-label={"Move Component Up"}
                 size="small"
+                draggingSelf={isDragging}
+                draggingOver={draggingOver}
               >
-                <ArrowDropUpIcon fontSize="inherit" />
+                <ArrowDropUp fontSize="inherit" />
               </SmallIconButton>
             )}
             {compIndex != numOfComponent - 1 && (
               <SmallIconButton
                 onClick={() => {
+                  setShowSelf(false);
                   dispatch({
                     func: "MOVE_COMPONENT_DOWN",
                     compIndex: compIndex,
                     tabIndex: tabIndex,
                   });
+                  setActiveComp(compIndex + 1);
                 }}
                 data-testid="move-down-button"
                 aria-label={"Move Component Down"}
                 size="small"
+                draggingSelf={isDragging}
+                draggingOver={draggingOver}
               >
-                <ArrowDropDownIcon fontSize="inherit" />
+                <ArrowDropDown fontSize="inherit" />
               </SmallIconButton>
             )}
 
@@ -317,8 +378,10 @@ const ComponentWrapper = ({
               aria-label={"Duplicate Component AriaLabel"}
               size="small"
               sx={{ fontSize: "0.9em" }}
+              draggingSelf={isDragging}
+              draggingOver={draggingOver}
             >
-              <ContentCopyIcon fontSize="inherit" />
+              <ContentCopy fontSize="inherit" />
             </SmallIconButton>
             <SmallIconButton
               onClick={() => {
@@ -331,16 +394,30 @@ const ComponentWrapper = ({
               data-testid="delete-component-button"
               aria-label={"Delete Component AriaLabel"}
               size="small"
+              draggingSelf={isDragging}
+              draggingOver={draggingOver}
             >
-              <DeleteOutlineIcon fontSize="inherit" />
+              <DeleteOutline fontSize="inherit" />
             </SmallIconButton>
           </ComponentLabelContainer>
-          <BlueBox showSelf={showSelf}>
-            <TabComponent
-              key={`key-component-${compIndex}`}
-              component={component}
-              compIndex={compIndex}
-              tabIndex={tabIndex}
+          <BlueBox
+            showSelf={showSelf}
+            hoverActive={isHover}
+            draggingSelf={isDragging}
+          >
+            <Component
+              {...componentProps}
+              role="listitem"
+              setTabActive={setTabActive}
+              setActiveComp={setActiveComp}
+              setProp={(stateUpdate) => {
+                dispatch({
+                  func: "UPDATE_COMPONENT",
+                  compIndex: compIndex,
+                  tabIndex: tabIndex,
+                  stateUpdate: stateUpdate,
+                });
+              }}
             />
           </BlueBox>
           <DropIndicator
@@ -349,7 +426,7 @@ const ComponentWrapper = ({
             showLine={dropIndexOffset === 0 && isOver}
             item={getItem}
             offsetDown={0}
-            offsetUp={15}
+            offsetUp={compIndex != numOfComponent - 1 ? 15 : 5}
           />
         </div>
       </div>
@@ -357,12 +434,4 @@ const ComponentWrapper = ({
   );
 };
 
-const usePrevious = (value) => {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-};
-
-export default ComponentWrapper;
+export default NestedComponentWrapper;

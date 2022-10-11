@@ -12,21 +12,23 @@ import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
 import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
 import TabsMain, { defaultProps as testTabDefaultProps } from "./Tabs/TabsMain";
+//Accordion
+import AccordionMain, {
+  defaultProps as testAccordionDefaultProps,
+} from "./Accordion/AccordionMain";
 // Category Icons
 import interactiveCategoryIcon from "../Icons/categoriesIcons/interactive.png";
 import mediaCategoryIcon from "../Icons/categoriesIcons/media.png";
 import textCategoryIcon from "../Icons/categoriesIcons/text.png";
-// DND Icons
-import textDndLabel from "../Icons/dndIcons/textDnd.png"
-import calloutDndLabel from "../Icons/dndIcons/calloutDnd.png"
-import tabsDndLabel from "../Icons/dndIcons/tabsDnd.png"
-import defaultDndLabel from "../Icons/dndIcons/defaultDnd.png"
-// Text Component Icons
-import tabsComponentIcon from "../Icons/componentIcons/tabsIcon.png"
-import textComponentIcon from "../Icons/componentIcons/textIcon.png"
-import defaultComponentIcon from "../Icons/componentIcons/defaultIcon.png"
 
-import exposedVersion from "../../exposedStage"
+// Component Icons
+import tabsComponentIcon from "../Icons/componentIcons/tabsIcon.png";
+import textComponentIcon from "../Icons/componentIcons/textIcon.png";
+import defaultComponentIcon from "../Icons/componentIcons/defaultIcon.png";
+
+
+
+import exposedVersion from "../../exposedStage";
 
 console.log(
   `Component Library stage is ${exposedVersion.stage} and version of the app is ${exposedVersion.version}`
@@ -54,8 +56,7 @@ const componentIndex = {
     defaultProps: infoBoxDefaultProps,
     version: "0.0.1",
     category: categories.text,
-    dndLabel: calloutDndLabel,
-    componentIcon: defaultComponentIcon
+    componentIcon: defaultComponentIcon,
   },
   Text: {
     Component: Text,
@@ -63,8 +64,7 @@ const componentIndex = {
     defaultProps: quillDefaultProps,
     version: "0.0.1",
     category: categories.text,
-    dndLabel: textDndLabel,
-    componentIcon: textComponentIcon
+    componentIcon: textComponentIcon,
   },
   Image: {
     Component: Image,
@@ -73,8 +73,7 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: ImageConfig,
     category: categories.media,
-    dndLabel: defaultDndLabel,
-    componentIcon: defaultComponentIcon
+    componentIcon: defaultComponentIcon,
   },
   QuoteBox: {
     Component: QuoteBox,
@@ -82,8 +81,7 @@ const componentIndex = {
     defaultProps: quoteBoxDefaultProps,
     version: "0.0.1",
     category: categories.text,
-    dndLabel: defaultDndLabel,
-    componentIcon: defaultComponentIcon
+    componentIcon: defaultComponentIcon,
   },
   Video: {
     Component: Video,
@@ -92,8 +90,7 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: VideoConfig,
     category: categories.media,
-    dndLabel: defaultDndLabel,
-    componentIcon: defaultComponentIcon
+    componentIcon: defaultComponentIcon,
   },
   IFrame: {
     Component: IFrame,
@@ -102,7 +99,6 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: IFrameConfig,
     category: categories.media,
-    dndLabel: defaultDndLabel,
     componentIcon: defaultComponentIcon
   },
   Tab: {
@@ -111,8 +107,15 @@ const componentIndex = {
     defaultProps: testTabDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
-    dndLabel: tabsDndLabel, 
     componentIcon: tabsComponentIcon
+  },
+  Accordion: {
+    Component: AccordionMain,
+    readableName: "Accordion",
+    defaultProps: testAccordionDefaultProps,
+    version: "0.0.1",
+    category: categories.interactive,
+    componentIcon: defaultComponentIcon,
   },
 };
 

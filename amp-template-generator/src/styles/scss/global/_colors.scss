@@ -82,10 +82,15 @@ $primary-tab-bg: $transparent-grey-50;
 $active-tab-bg: $transparent-grey-100;
 $inactive-tab-bg: $white;
 
-// focus color
+// Hover dialog background
+$hover-dialog-bg: #404040;
+
+// focus colors
 $tab-focus: rgba(0, 136, 0, 1);
 
+// Border colors
 $component-border: $transparent-grey-300;
+$tab-border-bottom: $brand-500;
 
 // Accordion
 
@@ -120,6 +125,7 @@ $brand-complementary: #b5e2de; // formerly $background-blue
 // reference them directly in the CSS, and sometimes it is more appropriate to
 // use a component role variable, below.
 //
+
 // default font colours
 $text-body: #212628;
 $heading-underline: #56656a; // NEW
@@ -154,7 +160,13 @@ $danger-icon: #f43131; // $text-red
 // but still have a singular purpose.
 //
 $border-color: $brand-secondary;
-$link-color: $brand-primary;
+
+// Links
+$link-underline: $brand-100;
+$link-visited-underline: $brand-300;
+
+// Body highlight
+$body-highlight: $brand-50;
 
 // Buttons
 $btn-default-bg: $brand-primary;
@@ -238,8 +250,6 @@ $table-striped-bg: $brand-secondary-light;
 
 // Tabs
 $tab-default-bg: $page-background;
-$tab-default-bg-hover: $brand-secondary;
 
 $tab-active-bg: $brand-secondary-light;
 $tab-active-text: $brand-primary;
-$tab-active-border-top: $brand-primary;

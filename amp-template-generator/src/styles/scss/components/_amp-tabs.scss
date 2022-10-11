@@ -1,4 +1,4 @@
-.wrapper.tabs {
+.wrapper.tabs-component {
   // Brightcove videos inside tabs are too wide to fit on small
   // viewports with the default padding. This reduces the outer
   // padding between the tab border and the viewport to 5px to
@@ -22,8 +22,8 @@
         background-color: $inactive-tab-bg;
 
         p {
-          font-weight: 400;
-          font-family: "Lato", sans-serif;
+          font-weight: 600;
+          font-family: $component-main-font;
           font-style: normal;
           font-size: 1.125rem;
           text-align: center;
@@ -51,11 +51,12 @@
         .hoverTabText {
           position: absolute;
           display: none;
-          background: #404040;
+          background: $grey-800;
           border-radius: 0.375rem;
           width: min-content;
-          color: white;
-          padding: 1rem 0.625rem;
+          color: $white;
+          line-height: 1.6875rem;
+          padding: 0.625rem 1rem;
           top: 4.6875rem;
           z-index: 99;
         }
@@ -73,6 +74,7 @@
         &:hover, 
         &:focus-visible {
           background-color: $primary-tab-bg;
+          text-decoration-line: underline;
           .hoverTabText {
             display: block;
           }
@@ -80,22 +82,20 @@
 
         &[selected] {
           background-color: $active-tab-bg;
-          border-bottom: 0.25rem solid $tab-active-border-top;
-          color: black;
-        }
+          border-bottom: 0.25rem solid $tab-border-bottom;
+          color: $grey-900;
 
-        // AMP's CSS diminishes the focus outline, so this
-        // re-applies our focus rule
-        // &[selected]:focus {
-        //   @include outline-focus;
-        // }
+          &:hover {
+            text-decoration-line: none;
+          }
+        }
       }
 
       & [role="tabpanel"] {
         display: none;
         width: 100%;
         order: 1;
-        border-color: $border-color;
+        border-color: $component-border;
         background: $primary-tab-bg;
       }
 
@@ -136,7 +136,7 @@
   .hideAccordion {
     display: block;
   }
-  .wrapper.tabs {
+  .wrapper.tabs-component {
     display: none;
   }
 }

@@ -1,20 +1,54 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { TabContext, LayoutContext } from "../TabContext";
+import styled from "@emotion/styled";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 import Tab from "./Tab";
 import ConfigBar from "../subcomponents/ConfigBar";
 import TabTitle from "./TabTitle";
+
+//Styled components for Tabs.js
+const StyledTabContainer = styled("div")(() => ({
+  boxSizing: "border-box",
+  letterSpacing: "0.1px",
+  lineHeight: "25px",
+  color: "#636363",
+}));
+
+const StyledTabTitleWrapper = styled("div")(() => ({
+  display: "flex",
+  minHeight: "40px",
+  maxHeight: "69px",
+}));
+
+const StyledToolBar = styled("div")(({ toolbar }) => ({
+  display: toolbar ? "block " : "none",
+  position: "fixed ",
+  top: "80px ",
+  left: "50% ",
+  transform: "translateX(-50%) ",
+  zIndex: "1000",
+  justifyContent: "center ",
+  backgroundColor: "#fff ",
+}));
+//Styled component end.
 
 const Tabs = () => {
   const [activeTab] = useContext(TabContext);
   const [state] = useContext(LayoutContext);
   const [toolbar, showToolbar] = useState(false);
   const [removeError, setRemoveError] = useState(false);
+  const showToolbarRef = useRef(null);
+
+  useOnClickOutside(showToolbarRef, () => {
+    showToolbar(false);
+  });
+
   return (
     <>
-      <div className="tab-container" data-testid="tab-component">
-        <div
-          className="tab-title-wrapper"
+      <StyledTabContainer data-testid="tab-component">
+        <StyledTabTitleWrapper
+          ref={showToolbarRef}
           role="tablist"
           onBlur={(e) => {
             const relatedTarget = e.relatedTarget || document.activeElement;
@@ -23,22 +57,22 @@ const Tabs = () => {
             }
           }}
         >
-          <div className={toolbar ? "show-tabtoolbar" : "hide-tabtoolbar"}>
+          <StyledToolBar toolbar={toolbar}>
             <ConfigBar setRemoveError={setRemoveError} />
-          </div>
+          </StyledToolBar>
           {state.map((tab, tabIndex) => {
             return (
               <TabTitle
                 key={`tab-title-${tabIndex}`}
                 tabTitle={tab.title}
                 tab={tab}
-                placeholderTitle={tab.placeholderTitle}
+                tabPlaceholder={tab.placeholder}
                 tabIndex={tabIndex}
                 showToolbar={showToolbar}
               />
             );
           })}
-        </div>
+        </StyledTabTitleWrapper>
         {state.map((tab, tabIndex) => {
           return (
             <>
@@ -53,7 +87,7 @@ const Tabs = () => {
             </>
           );
         })}
-      </div>
+      </StyledTabContainer>
     </>
   );
 };
