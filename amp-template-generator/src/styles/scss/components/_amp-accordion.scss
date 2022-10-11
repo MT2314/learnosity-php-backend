@@ -1,11 +1,11 @@
 .wrapper.accordion {
     .btn.link {
         color: $grey-500;
-        font-weight: 400;
         font-family: "Lato", sans-serif;
         font-style: normal;
         font-size: 1.125rem;
         text-decoration: none;
+        text-transform: uppercase;
     }
     .btn.link:hover {
         background-color: $brand-200;
