@@ -390,7 +390,14 @@ exports.lint = lint;
 function _copyFiles() {
   return gulp
     .src(
-      ["views/**/*", "utils/**/*", "package*.json", ".eleventy.js", "index.js"],
+      [
+        "views/**/*",
+        "utils/**/*",
+        "package*.json",
+        ".eleventy.js",
+        "index.js",
+        "styles/fonts/*",
+      ],
       {
         base: "./",
       }
