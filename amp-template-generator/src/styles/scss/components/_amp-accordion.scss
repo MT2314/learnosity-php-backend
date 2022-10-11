@@ -1,7 +1,7 @@
 .wrapper.accordion {
     .btn.link {
         color: $grey-500;
-        font-family: "Lato", sans-serif;
+        font-family: $component-main-font;
         font-style: normal;
         font-size: 1.125rem;
         text-decoration: none;
@@ -9,11 +9,15 @@
     }
     .btn.link:hover {
         background-color: $brand-200;
+        color: $hover-dialog-bg;
     }
     .btn.link:disabled {
         opacity: 0.2;
         box-shadow: none;
         pointer-events: none;
+    }
+    .btn.link:focus-visible {
+        outline: 0.0625rem solid $tab-focus;
     }
     .verticalBar {
         color: $grey-500;
@@ -25,30 +29,41 @@
         .heading {
             background-color: $white;
             border-color: $border-color;
+            .fa-chevron-up {
+                background-color: $brand-500;
+                color: $white;
+                display: inline-block;
+                border-radius: 3.75em;
+                padding: 0.5em 0.6em;
+                position: absolute;
+                right: 0.4em;
+                bottom: 0.75em;
+            }
+
+            span {
+                width: calc(100% - 1.5rem);
+            }
             
             &:hover {
                 background-color: $transparent-grey-300;
-                i {
+                span {
+                    text-decoration-line: underline;
+                }
+                .fa-chevron-down {
+                    background-color: $transparent-grey-300;
                     display: inline-block;
                     border-radius: 3.75em;
-                    box-shadow: 0 0 3px #888;
+                    box-shadow: 0 0 2px #888;
                     padding: 0.5em 0.6em;
                     position: absolute;
                     right: 0.4em;
                     bottom: 0.75em;
                 }
-                .fa-chevron-up {
-                    background-color: $brand-500;
-                    color: $white;
-                }
-                .fa-chevron-down {
-                    background-color: $transparent-grey-300;
-                }
-
             }
 
-            span {
-                width: calc(100% - 1.5rem);
+            &:focus-visible {
+                outline: 0.0625rem solid $tab-focus;
+                z-index: 99;
             }
         }
         
@@ -75,8 +90,7 @@
 
 /*! purgecss start ignore */
 .wrapper.accordion .accordion section[expanded] .heading {
-    background-color: $accordion-heading-active-bg;
-    border-color: $accordion-heading-active-border;
+    background-color: $transparent-grey-100;
 }
 
 .wrapper.accordion .accordion section:last-child[expanded] .heading {
