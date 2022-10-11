@@ -55,11 +55,6 @@ a {
     }
   }
 
-  &::selection {
-    color: $link-visited-underline;
-    // text-decoration-color: $link-visited-underline;
-  }
-
   .anchor-icon {
     font-family: $amp-icons-font;
     font-style: normal;
@@ -68,11 +63,6 @@ a {
     /* Font smoothing. That was taken from TWBS */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
-    &::selection {
-      color: $link-visited-underline;
-      // text-decoration-color: $link-visited-underline;
-    }
   }
 }
 
