@@ -22,10 +22,11 @@
                 id="{{ accordionId }}_expandAll"
                 on="tap:{{ accordionId }}.expand();"
                 [disabled]="{{ btnExpandHidden }}"
-                class="btn link"
+                class="btn link "
             >
-                <span class="bold">Expand All</span>
+                <span class="bold">EXPAND ALL</span>
             </button>
+                <span class="verticalBar">|</span>
             <button
                 id="{{ accordionId }}_collapseAll"
                 on="tap:{{ accordionId }}.collapse();"
@@ -33,7 +34,7 @@
                 [disabled]="{{ btnCollapseHidden }}"
                 class="btn link"
             >
-                <span class="bold">Close All</span>
+                <span class="bold">COLLAPSE ALL</span>
             </button>
         </div>
     

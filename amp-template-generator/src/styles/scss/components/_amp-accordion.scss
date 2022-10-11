@@ -1,22 +1,50 @@
 .wrapper.accordion {
+    .btn.link {
+        color: $grey-500;
+        font-weight: 400;
+        font-family: "Lato", sans-serif;
+        font-style: normal;
+        font-size: 1.125rem;
+        text-decoration: none;
+    }
     .btn.link:hover {
-        background-color: $accordion-btn-link-bg-hover;
-        color: $accordion-btn-link-text-hover;
-        box-shadow: none;
+        background-color: $brand-200;
     }
     .btn.link:disabled {
         opacity: 0.2;
+        box-shadow: none;
+        pointer-events: none;
+    }
+    .verticalBar {
+        color: $grey-500;
     }
 
     .accordion {
         clear: right;
 
         .heading {
-            background-color: $accordion-heading-bg;
+            background-color: $white;
             border-color: $border-color;
             
             &:hover {
-                background-color: $accordion-heading-bg-hover;
+                background-color: $transparent-grey-300;
+                i {
+                    display: inline-block;
+                    border-radius: 3.75em;
+                    box-shadow: 0 0 3px #888;
+                    padding: 0.5em 0.6em;
+                    position: absolute;
+                    right: 0.4em;
+                    bottom: 0.75em;
+                }
+                .fa-chevron-up {
+                    background-color: $brand-500;
+                    color: $white;
+                }
+                .fa-chevron-down {
+                    background-color: $transparent-grey-300;
+                }
+
             }
 
             span {
@@ -26,6 +54,7 @@
         
         .section-content {
             border-color: $border-color;
+            background-color: $transparent-grey-300;
         }
 
         section {

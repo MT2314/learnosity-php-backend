@@ -21,10 +21,6 @@
         border-left-width: 0;
         background-color: $inactive-tab-bg;
 
-        &:focus-visible {
-          border: 0.0625rem solid $tab-focus;
-        }
-
         p {
           font-weight: 600;
           font-family: $component-main-font;
@@ -75,7 +71,7 @@
           width: 24%;
         }
 
-        &:hover,
+        &:hover, 
         &:focus-visible {
           background-color: $primary-tab-bg;
           text-decoration-line: underline;
@@ -105,6 +101,14 @@
 
       & [role="tab"][selected] + [role="tabpanel"] {
         display: block;
+      }
+
+      & [role="tab"], 
+      & [role="tabpanel"] {
+        &:focus-visible {
+          outline: 0.0625rem solid $tab-focus;
+          z-index: 99;
+        }
       }
     }
 
