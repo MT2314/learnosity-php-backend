@@ -125,6 +125,7 @@ $brand-complementary: #b5e2de; // formerly $background-blue
 // reference them directly in the CSS, and sometimes it is more appropriate to
 // use a component role variable, below.
 //
+
 // default font colours
 $text-body: #212628;
 $heading-underline: #56656a; // NEW
@@ -159,7 +160,13 @@ $danger-icon: #f43131; // $text-red
 // but still have a singular purpose.
 //
 $border-color: $brand-secondary;
-$link-color: $brand-primary;
+
+// Links
+$link-underline: $brand-100;
+$link-visited-underline: $brand-300;
+
+// Body highlight
+$body-highlight: $brand-50;
 
 // Buttons
 $btn-default-bg: $brand-primary;
