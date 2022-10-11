@@ -1,0 +1,55 @@
+{
+  "_from": "@content-solutions/gulp-amp-optimizer@^1.1.3",
+  "_id": "@content-solutions/gulp-amp-optimizer@1.1.4",
+  "_inBundle": false,
+  "_integrity": "sha1-eMPnyd6pzcqbeAZLxSOz6O5WGnM=",
+  "_location": "/@content-solutions/gulp-amp-optimizer",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "@content-solutions/gulp-amp-optimizer@^1.1.3",
+    "name": "@content-solutions/gulp-amp-optimizer",
+    "escapedName": "@content-solutions%2fgulp-amp-optimizer",
+    "scope": "@content-solutions",
+    "rawSpec": "^1.1.3",
+    "saveSpec": null,
+    "fetchSpec": "^1.1.3"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://gitlab.tvo.org/api/v4/projects/1132/packages/npm/@content-solutions/gulp-amp-optimizer/-/@content-solutions/gulp-amp-optimizer-1.1.4.tgz",
+  "_shasum": "78c3e7c9dea9cdca9b78064bc523b3e8ee561a73",
+  "_spec": "@content-solutions/gulp-amp-optimizer@^1.1.3",
+  "_where": "C:\\xampp\\htdocs\\mf-component-library\\amp-template-generator",
+  "bundleDependencies": false,
+  "dependencies": {
+    "@ampproject/toolbox-optimizer": "^2.7.1",
+    "plugin-error": "^1.0.1",
+    "through2": "^4.0.2"
+  },
+  "deprecated": false,
+  "description": "Thin wrapper for amp-optimizer library to add support for gulp vinyl streams",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  },
+  "engines": {
+    "node": ">= 10.0"
+  },
+  "files": [
+    "index.js"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "@content-solutions/gulp-amp-optimizer",
+  "publishConfig": {
+    "@content-solutions:registry": "https://gitlab.tvo.org/api/v4/projects/1132/packages/npm/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.tvo.org/content-solutions/gulp-plugins/gulp-amp-optimizer.git"
+  },
+  "scripts": {},
+  "version": "1.1.4"
+}

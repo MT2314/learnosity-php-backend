@@ -1,0 +1,108 @@
+<div class="image wrapper {{wrapperStyles | default: "bottom-margin"}}">
+
+  <amp-img
+      {%comment%}    
+      width="{{data.width}}" 
+      height="{{data.height}}"
+      {%endcomment%}
+      width="100" 
+      height="100"
+      alt="{{data.alt}}"
+      layout="responsive"
+      src="{{data.uploadedImg}}">
+
+{%comment%}
+Removing this until Distribution can fix it...
+    srcset="
+
+    Only add each image style to the srcset list if the image is smaller than the
+    original image. This is because the very last image in the list will be the original,
+    which will always be the "largest version" of the image to be rendered at larger
+    breakpoints.
+
+    Also, Only include each style if it was returned in the JSON, obviously :-)
+
+    {%- if data.image.entity.thumbnail.RESPONSIVE_330 and 
+          data.image.entity.thumbnail.RESPONSIVE_330.width < data.image.entity.thumbnail.width -%}
+        
+        {{data.image.entity.thumbnail.RESPONSIVE_330.url}} {{data.image.entity.thumbnail.RESPONSIVE_330.width}}w,
+
+    {%- endif -%}
+    {%- if data.image.entity.thumbnail.RESPONSIVE_508 and 
+          data.image.entity.thumbnail.RESPONSIVE_508.width < data.image.entity.thumbnail.width %}
+        
+        {{data.image.entity.thumbnail.RESPONSIVE_508.url}} {{data.image.entity.thumbnail.RESPONSIVE_508.width}}w,
+
+    {%- endif -%}
+    {%- if data.image.entity.thumbnail.RESPONSIVE_524 and 
+          data.image.entity.thumbnail.RESPONSIVE_524.width < data.image.entity.thumbnail.width %}
+        
+        {{data.image.entity.thumbnail.RESPONSIVE_524.url}} {{data.image.entity.thumbnail.RESPONSIVE_524.width}}w,
+
+    {%- endif -%}
+    {%- if data.image.entity.thumbnail.RESPONSIVE_647 and 
+          data.image.entity.thumbnail.RESPONSIVE_647.width < data.image.entity.thumbnail.width %}
+        
+        {{data.image.entity.thumbnail.RESPONSIVE_647.url}} {{data.image.entity.thumbnail.RESPONSIVE_647.width}}w,
+
+    {%- endif -%}
+    {%- if data.image.entity.thumbnail.RESPONSIVE_792 and 
+          data.image.entity.thumbnail.RESPONSIVE_792.width < data.image.entity.thumbnail.width %}
+        
+        {{data.image.entity.thumbnail.RESPONSIVE_792.url}} {{data.image.entity.thumbnail.RESPONSIVE_792.width}}w,
+
+    {%- endif -%}
+    {%- if data.image.entity.thumbnail.RESPONSIVE_1000 and 
+          data.image.entity.thumbnail.RESPONSIVE_1000.width < data.image.entity.thumbnail.width  %}
+        
+        {{data.image.entity.thumbnail.RESPONSIVE_1000.url}} {{data.image.entity.thumbnail.RESPONSIVE_1000.width}}w,
+
+    {%- endif -%}
+    {%- if data.image.entity.thumbnail.RESPONSIVE_1294 and 
+          data.image.entity.thumbnail.RESPONSIVE_1294.width < data.image.entity.thumbnail.width %}
+        
+        {{data.image.entity.thumbnail.RESPONSIVE_1294.url}} {{data.image.entity.thumbnail.RESPONSIVE_1294.width}}w,
+
+    {%- endif -%}
+    {%- if data.image.entity.thumbnail.RESPONSIVE_1584 and 
+          data.image.entity.thumbnail.RESPONSIVE_1584.width < data.image.entity.thumbnail.width %}
+        
+        {{data.image.entity.thumbnail.RESPONSIVE_1584.url}} {{data.image.entity.thumbnail.RESPONSIVE_1584.width}}w,
+
+    {%- endif -%}
+    {%- if data.image.entity.thumbnail.RESPONSIVE_2000 and 
+          data.image.entity.thumbnail.RESPONSIVE_2000.width < data.image.entity.thumbnail.width %}
+        
+        {{data.image.entity.thumbnail.RESPONSIVE_2000.url}} {{data.image.entity.thumbnail.RESPONSIVE_2000.width}}w,
+
+    {%- endif -%}
+
+    After all the responsive image styles, include the original image in srcset. That way,
+    if any of the above were excluded, there is something here to use as the "largest image"
+        
+        {{data.image.entity.thumbnail.url}} {{data.image.entity.thumbnail.width}}w">
+{%endcomment%}
+
+  </amp-img>
+
+  {% if data.caption %}
+  <figure class="figure">
+    <figcaption class="caption center pt2 italic">
+      {{data.caption}}
+    </figcaption>
+  </figure>
+{% endif %}
+
+  <!-- {% if data.longDesc %}
+    ToDo: create a long description
+  {% endif %} -->
+
+  {% if data.imgLink %}
+    <a href="{{data.imgLink}}" target="_blank">{{data.alt}}</a>
+  {% endif %}
+
+  <!-- {% if data.credit %}
+    ToDo: create a credit section
+  {% endif %} -->
+
+</div>

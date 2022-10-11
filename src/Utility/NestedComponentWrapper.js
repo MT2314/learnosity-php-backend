@@ -249,9 +249,9 @@ const NestedComponentWrapper = ({
   //remove html5 default drag image
   useEffect(() => {
     dragPreview(getEmptyImage(), { captureDraggingState: true });
-  }, []);
+  }, [showSelf, isHover]);
 
-  drop(dropRef);
+  getEmptyImage(drop(dropRef));
   useEffect(() => {
     droppedIndex === compIndex && (setShowSelf(true), setDroppedIndex(null));
   }, [droppedIndex]);
@@ -275,6 +275,10 @@ const NestedComponentWrapper = ({
         onFocus={() => setShowSelf(true)}
         onBlur={() => setShowSelf(false)}
         onClick={() => setShowSelf(true)}
+        style={{
+          paddingBottom: "0.4rem",
+          paddingTop: "0.4rem",
+        }}
       >
         <div>
           <DropIndicator

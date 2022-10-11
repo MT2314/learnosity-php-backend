@@ -1,0 +1,138 @@
+.wrapper.tabs {
+  // Brightcove videos inside tabs are too wide to fit on small
+  // viewports with the default padding. This reduces the outer
+  // padding between the tab border and the viewport to 5px to
+  // alleviate the problem.
+  .tabs {
+    &[role="tablist"] {
+      /* Styles for the flex layout based tabs */
+      display: flex;
+      flex-wrap: wrap;
+
+      [role="tab"] {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        box-sizing: border-box;
+        border: 0.0625rem solid $border-color;
+        width: min-content;
+        height: 4.625rem;
+        border-left-width: 0;
+        background-color: $inactive-tab-bg;
+
+        &:focus-visible {
+          margin: 0.0625rem;
+          outline: 0.0625rem solid $tab-focus;
+        }
+
+        p {
+          font-weight: 400;
+          font-family: "Lato", sans-serif;
+          font-style: normal;
+          font-size: 1.125rem;
+          text-align: center;
+          line-height: 1.6875rem;
+          letter-spacing: 0.03em;
+          word-wrap: break-word;
+          overflow-x: hidden;
+          overflow-y: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          margin: 0;
+        }
+
+        &:first-child {
+          border-left-width: 0.0625rem;
+          border-radius: 0.625rem 0 0 0;
+        }
+
+        &:nth-last-child(2) {
+          border-radius: 0 0.625rem 0 0;
+        }
+
+        .hoverTabText {
+          position: absolute;
+          display: none;
+          background: #404040;
+          border-radius: 0.375rem;
+          width: min-content;
+          color: white;
+          padding: 1rem 0.625rem;
+          top: 4.6875rem;
+          z-index: 99;
+        }
+
+        .hoverTabText2 {
+          width: 49.5%;
+        }
+        .hoverTabText3 {
+          width: 32%;
+        }
+        .hoverTabText4 {
+          width: 24%;
+        }
+
+        &:hover {
+          background-color: $primary-tab-bg;
+          .hoverTabText {
+            display: block;
+          }
+        }
+
+        &[selected] {
+          background-color: $active-tab-bg;
+          border-bottom: 0.25rem solid $tab-active-border-top;
+          color: black;
+        }
+
+        // AMP's CSS diminishes the focus outline, so this
+        // re-applies our focus rule
+        // &[selected]:focus {
+        //   @include outline-focus;
+        // }
+      }
+
+      & [role="tabpanel"] {
+        display: none;
+        width: 100%;
+        order: 1;
+        border-color: $border-color;
+        background: $primary-tab-bg;
+      }
+
+      & [role="tab"][selected] + [role="tabpanel"] {
+        display: block;
+      }
+    }
+
+    // images and videos inside tabs have their own wrappers,
+    // and they probably aren't .wrapper.inner, so this forces
+    // them to behave as if they have the inner rule, so we dont
+    // get "dobule padding" inside tab content.
+    .wrapper {
+      padding: 0;
+    }
+  }
+
+  // Remove default AMP selector outline styles
+  amp-selector [option][selected] {
+    cursor: auto;
+    outline: none;
+  }
+}
+
+.hideAccordion {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .hideAccordion {
+    display: block;
+  }
+  .wrapper.tabs {
+    display: none;
+  }
+}

@@ -1,0 +1,17 @@
+---
+{
+    "layout": "amp-layout.njk", 
+    "permalink": "demo-amp-text.html"
+}
+---
+
+<h1>Text Component {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+{% for text in componentText %}
+    {% if text.name == "Text Component"  %}
+        {%- assign components = text.componentContainer.sections[1].components -%}
+        {% for textComponent in components %}
+            {% include amp-text.html data:textComponent.props -%}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
