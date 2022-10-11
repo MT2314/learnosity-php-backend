@@ -10,11 +10,7 @@ const activeTabFunc = (draft, active, test) => {
   // Uncomment below to see which reducer is being called
   // console.log("activeTabFunc", active, test);
   draft.map((tab, index) => {
-    if (index == active) {
-      tab.activeTab = true;
-    } else {
-      tab.activeTab = false;
-    }
+    index == active ? (tab.activeTab = true) : (tab.activeTab = false);
   });
 };
 export const layoutConfig = (draft, action) => {
