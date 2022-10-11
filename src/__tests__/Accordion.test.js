@@ -35,6 +35,39 @@ const testLayout = [
   },
 ];
 
+// Mock Data muated with immer
+const singleComponent = produce(testLayout, (draft) => {
+  draft[0].components.push({
+    componentName: "Text",
+    componentProps: {
+      body: {
+        ops: [{ insert: "Polkaroo\n" }],
+      },
+    },
+  });
+});
+
+const multipleComponents = produce(testLayout, (draft) => {
+  draft[0].components.push(
+    {
+      componentName: "Text",
+      componentProps: {
+        body: {
+          ops: [{ insert: "Polkaroo\n" }],
+        },
+      },
+    },
+    {
+      componentName: "Text",
+      componentProps: {
+        body: {
+          ops: [{ insert: "Polkaroo 2\n" }],
+        },
+      },
+    }
+  );
+});
+
 describe("Renders Accordion Component with default props", () => {
   it("Renders Accordion Panes with default data", async () => {
     render(<AccordionMain layoutState={testLayout} setProp={() => {}} />);
@@ -118,7 +151,7 @@ describe("Check if toolbar Move Pane Up/Down Work", () => {
   });
 });
 
-describe("Check if toolbar renders", () => {
+describe("Check if toolbar renders and functions work", () => {
   it("add a new pane with toolbar", async () => {
     render(<AccordionMain layoutState={testLayout} setProp={() => {}} />);
     const addPane = screen.getByTestId("AddIcon");
@@ -146,7 +179,7 @@ describe("Check if toolbar renders", () => {
     render(<AccordionMain layoutState={testLayout} setProp={() => {}} />);
     const removePane = screen.getByTestId("RemoveIcon");
     const addPane = screen.getByTestId("AddIcon");
-    // Tab 1 activeTab is at index 0
+    // Accordion 1 activeAccordion is at index 0
     const pane1 = screen.getByRole("button", {
       name: /Pane 1/i,
     });
@@ -165,5 +198,62 @@ describe("Check if toolbar renders", () => {
     });
     expect(pane2).toHaveAttribute("accordionindex", "0");
     expect(newPane).toHaveAttribute("accordionindex", "1");
+  });
+});
+// Mock Data, can't test actual drag and drop since we are rendering only the Accordions component and there is nothing to drag
+describe("Testing Rendering components when added", () => {
+  it("Dropping text component into a Accordion is registered and Text comp is rendered", async () => {
+    render(<AccordionMain layoutState={singleComponent} setProp={() => {}} />);
+    const textComponent = screen.getByTestId("text-editor-component");
+    expect(textComponent).toBeInTheDocument();
+    expect(screen.getByText(/Polkaroo/i)).toBeInTheDocument();
+  });
+
+  it("Multiple components render", async () => {
+    render(
+      <AccordionMain layoutState={multipleComponents} setProp={() => {}} />
+    );
+    const textComponent = screen.getAllByTestId("text-editor-component");
+    expect(textComponent[0]).toBeInTheDocument();
+    expect(screen.getByText("Polkaroo")).toBeInTheDocument();
+    expect(screen.getByText("Polkaroo 2")).toBeInTheDocument();
+  });
+});
+
+// Component Wrapper Testing, Renders with correct label + Duplicate and Delete buttons works properly
+describe("Testing Component Wrapper", () => {
+  it("Wrapper Renders for Text Component", async () => {
+    render(<AccordionMain layoutState={singleComponent} setProp={() => {}} />);
+    const textComponent = screen.getByTestId("text-editor-component");
+    expect(textComponent).toBeInTheDocument();
+    expect(screen.getByText("Polkaroo")).toBeInTheDocument();
+    fireEvent.click(textComponent);
+    const DragHandleIcon = screen.getByTestId("component-drag");
+    const ComponentLabel = screen.getByTestId("component-label-name");
+    const DuplicateComponentBtn = screen.getByTestId(
+      "duplicate-component-button"
+    );
+    const DeleteComponentBtn = screen.getByTestId("delete-component-button");
+    expect(DragHandleIcon).toBeInTheDocument;
+    expect(ComponentLabel).toBeInTheDocument;
+    expect(DuplicateComponentBtn).toBeInTheDocument;
+    expect(DeleteComponentBtn).toBeInTheDocument;
+    expect(ComponentLabel).toHaveTextContent("Text");
+  });
+  it("Duplicate Component Button works", async () => {
+    render(<AccordionMain layoutState={singleComponent} setProp={() => {}} />);
+    const DuplicateComponentBtn = screen.getByTestId(
+      "duplicate-component-button"
+    );
+    fireEvent.click(DuplicateComponentBtn);
+    const textComponent = screen.getAllByTestId("text-editor-component");
+    expect(textComponent).toHaveLength(2);
+  });
+  it("Delete Component Button works", async () => {
+    render(<AccordionMain layoutState={singleComponent} setProp={() => {}} />);
+    const DeleteComponentBtn = screen.getByTestId("delete-component-button");
+    fireEvent.click(DeleteComponentBtn);
+    const textComponent = screen.queryByTestId("text-editor-component");
+    expect(textComponent).not.toBeInTheDocument();
   });
 });
