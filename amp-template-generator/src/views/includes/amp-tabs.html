@@ -20,15 +20,15 @@
                 {{tab.title}}
             </p>
         {% if tab.title.length > 84 and data.props.layoutState.length == 2 -%}
-            <span class="hoverTabText hoverTabText2">
+            <span class="hoverTabText hoverTabText2" aria-hidden="true">
                 {{tab.title}}
             </span>
         {% elsif tab.title.length > 46 and data.props.layoutState.length == 3 -%}
-            <span class="hoverTabText hoverTabText3">
+            <span class="hoverTabText hoverTabText3" aria-hidden="true">
                 {{tab.title}}
             </span>
         {% elsif tab.title.length > 33 and data.props.layoutState.length == 4 -%}
-            <span class="hoverTabText hoverTabText4">
+            <span class="hoverTabText hoverTabText4" aria-hidden="true">
                 {{tab.title}}
             </span>
         {%- endif -%}
