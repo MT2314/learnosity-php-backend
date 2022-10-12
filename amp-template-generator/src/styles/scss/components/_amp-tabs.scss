@@ -1,12 +1,4 @@
 .wrapper.tabs-component {
-  // Brightcove videos inside tabs are too wide to fit on small
-  // viewports with the default padding. This reduces the outer
-  // padding between the tab border and the viewport to 5px to
-  // alleviate the problem.
-  p {
-    margin: 0;
-  }
-
   // This clears the bottom-margin that is added to text/other components
   .bottom-margin {
     margin-bottom: 0;
