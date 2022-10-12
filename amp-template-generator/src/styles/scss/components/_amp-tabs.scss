@@ -3,6 +3,10 @@
   // viewports with the default padding. This reduces the outer
   // padding between the tab border and the viewport to 5px to
   // alleviate the problem.
+  p {
+    margin: 0;
+  }
+
   .tabs {
     &[role="tablist"] {
       /* Styles for the flex layout based tabs */
