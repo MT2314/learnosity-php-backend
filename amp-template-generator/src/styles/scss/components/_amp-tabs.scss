@@ -1,10 +1,7 @@
 .wrapper.tabs-component {
-  // Brightcove videos inside tabs are too wide to fit on small
-  // viewports with the default padding. This reduces the outer
-  // padding between the tab border and the viewport to 5px to
-  // alleviate the problem.
-  p {
-    margin: 0;
+  // This clears the bottom-margin that is added to text/other components
+  .bottom-margin {
+    margin-bottom: 0;
   }
 
   .tabs {
@@ -105,13 +102,16 @@
 
       & [role="tab"][selected] + [role="tabpanel"] {
         display: block;
+        margin: 0;
+        padding: 1.25rem 1.5rem 1.5rem 1.5rem;
+        height: auto;
       }
 
       & [role="tab"],
       & [role="tabpanel"] {
         &:focus-visible {
-          outline: 0.0625rem solid $tab-focus;
-          outline-offset: 0.0625rem;
+          outline: 0.125rem solid $tab-focus;
+          outline-offset: 0.125rem;
           z-index: 99;
         }
       }
