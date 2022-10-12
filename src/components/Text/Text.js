@@ -31,6 +31,7 @@ const Text = ({
   selectedIcon = null,
   setSelectedIcon = () => {},
   setInfoHasFocus = () => {},
+  setVideoHasFocus = () => {},
   setTextRef = () => {},
 }) => {
   const [showEditor, setShowEditor] = useState(false);
@@ -84,10 +85,12 @@ const Text = ({
               isInfoBox={isInfoBox}
               isVideo={isVideo}
               infoAreaFocused={infoAreaFocused}
+              videoAreaFocused={videoAreaFocused}
               selectedIcon={selectedIcon}
               infoHasFocus={infoHasFocus}
               videoHasFocus={videoHasFocus}
               setInfoHasFocus={setInfoHasFocus}
+              setVideoHasFocus={setVideoHasFocus}
               setSelectedIcon={setSelectedIcon}
               setTextRef={setTextRef}
               setTabActive={setTabActive}

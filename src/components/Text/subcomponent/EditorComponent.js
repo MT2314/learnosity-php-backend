@@ -42,14 +42,21 @@ const Delta = Quill.import("delta");
 Quill.register("formats/mathpix", MathPixMarkdown);
 
 const StyledConfigBar = styled("div")(
-  ({ editorIsFocus, isInfoBox, infoAreaFocused }) => {
-    const display = isInfoBox
-      ? infoAreaFocused
+  ({
+    editorIsFocus,
+    isInfoBox,
+    isVideo,
+    infoAreaFocused,
+    videoAreaFocused,
+  }) => {
+    const display =
+      isInfoBox || isVideo
+        ? infoAreaFocused || videoAreaFocused
+          ? "flex"
+          : "none"
+        : editorIsFocus
         ? "flex"
-        : "none"
-      : editorIsFocus
-      ? "flex"
-      : "none";
+        : "none";
 
     const configBarStyles = {
       display: display,
@@ -76,10 +83,12 @@ const EditorComponent = ({
   infoAreaFocused,
   infoHasFocus,
   isVideo,
+  videoAreaFocused,
   videoHasFocus,
   selectedIcon,
   setSelectedIcon,
   setInfoHasFocus,
+  setVideoHasFocus,
   setTextRef,
   setTabActive,
 }) => {
@@ -315,6 +324,7 @@ const EditorComponent = ({
         isInfoBox={isInfoBox}
         isVideo={isVideo}
         infoAreaFocused={infoAreaFocused}
+        videoAreaFocused={videoAreaFocused}
       >
         <CustomToolBar
           toolbarId={toolbarId}
@@ -352,7 +362,10 @@ const EditorComponent = ({
         onFocus={() => {
           setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
-          (infoHasFocus || videoHasFocus) && setInfoHasFocus(false);
+          if (infoHasFocus || videoHasFocus) {
+            setInfoHasFocus(false);
+            setVideoHasFocus(false);
+          }
         }}
         onKeyDown={(e) => {
           onKeyDropDown(e);

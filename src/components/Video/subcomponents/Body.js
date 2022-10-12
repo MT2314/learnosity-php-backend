@@ -46,12 +46,8 @@ const Body = (props) => {
   const [refs, setTextRef] = useState({ text: null, quill: null });
   const [textFocused, setTextFocused] = useState(false);
 
-  const infoBoxBodyRef = useRef();
+  const videoBodyRef = useRef();
   const placeholderRef = useRef();
-
-  useEffect(() => {
-    dispatch({ func: "CHANGE_ICON", icon: props?.selectedIcon });
-  }, [props.selectedIcon]);
 
   const updateBody = useCallback((body) => {
     dispatch({ func: "CHANGE_BODY", body: body.body });
@@ -64,8 +60,8 @@ const Body = (props) => {
   }, [document.activeElement]);
 
   useEffect(() => {
-    if (infoBoxBodyRef.current) {
-      props.setInfoBoxBody(infoBoxBodyRef.current);
+    if (videoBodyRef.current) {
+      props.setVideoBody(videoBodyRef.current);
       props.setPlaceHolder(placeholderRef.current);
     }
   }, []);
@@ -74,20 +70,20 @@ const Body = (props) => {
     () =>
       (!stateBody || !stateBody.ops || stateBody.ops[0].insert === "") &&
       !textFocused,
-    [stateBody, textFocused, props.infoAreaFocused]
+    [stateBody, textFocused, props.videoAreaFocused]
   );
 
   useEffect(() => {
     if (
-      !props.infoAreaFocused &&
+      !props.videoAreaFocused &&
       (!stateBody || !stateBody.ops || stateBody.ops[0].insert === "")
     ) {
       setTextFocused(false);
     }
-  }, [props.infoAreaFocused]);
+  }, [props.videoAreaFocused]);
 
   return (
-    <div ref={infoBoxBodyRef} style={{ position: "relative" }}>
+    <div ref={videoBodyRef} style={{ position: "relative" }}>
       <Text
         body={stateBody}
         setProp={updateBody}

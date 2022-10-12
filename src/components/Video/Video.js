@@ -122,11 +122,10 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
             <Body
               isVideo={isVideo}
               videoHasFocus={videoHasFocus}
-              selectedIcon={selectedIcon}
               infoAreaFocused={videoAreaFocused}
               setSelectedIcon={setSelectedIcon}
-              setInfoHasFocus={setVideoHasFocus}
-              setInfoBoxBody={setVideoBody}
+              setVideoHasFocus={setVideoHasFocus}
+              setVideoBody={setVideoBody}
               setPlaceHolder={setPlaceHolder}
               t={t}
             />
