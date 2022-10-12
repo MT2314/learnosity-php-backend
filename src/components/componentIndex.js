@@ -21,6 +21,13 @@ import interactiveCategoryIcon from "../Icons/categoriesIcons/interactive.png";
 import mediaCategoryIcon from "../Icons/categoriesIcons/media.png";
 import textCategoryIcon from "../Icons/categoriesIcons/text.png";
 
+// Component Icons
+import tabsComponentIcon from "../Icons/componentIcons/tabsIcon.png";
+import textComponentIcon from "../Icons/componentIcons/textIcon.png";
+import defaultComponentIcon from "../Icons/componentIcons/defaultIcon.png";
+
+
+
 import exposedVersion from "../../exposedStage";
 
 console.log(
@@ -49,6 +56,7 @@ const componentIndex = {
     defaultProps: infoBoxDefaultProps,
     version: "0.0.1",
     category: categories.text,
+    componentIcon: defaultComponentIcon,
   },
   Text: {
     Component: Text,
@@ -56,6 +64,7 @@ const componentIndex = {
     defaultProps: quillDefaultProps,
     version: "0.0.1",
     category: categories.text,
+    componentIcon: textComponentIcon,
   },
   Image: {
     Component: Image,
@@ -64,6 +73,7 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: ImageConfig,
     category: categories.media,
+    componentIcon: defaultComponentIcon,
   },
   QuoteBox: {
     Component: QuoteBox,
@@ -71,6 +81,7 @@ const componentIndex = {
     defaultProps: quoteBoxDefaultProps,
     version: "0.0.1",
     category: categories.text,
+    componentIcon: defaultComponentIcon,
   },
   Video: {
     Component: Video,
@@ -79,7 +90,7 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: VideoConfig,
     category: categories.media,
-
+    componentIcon: defaultComponentIcon,
   },
   IFrame: {
     Component: IFrame,
@@ -88,6 +99,7 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: IFrameConfig,
     category: categories.media,
+    componentIcon: defaultComponentIcon
   },
   Tab: {
     Component: TabsMain,
@@ -95,6 +107,7 @@ const componentIndex = {
     defaultProps: testTabDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
+    componentIcon: tabsComponentIcon
   },
   Accordion: {
     Component: AccordionMain,
@@ -102,6 +115,7 @@ const componentIndex = {
     defaultProps: testAccordionDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
+    componentIcon: defaultComponentIcon,
   },
 };
 

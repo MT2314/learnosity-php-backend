@@ -1,0 +1,245 @@
+// ----------------------------------------------------------------------
+// Color Palette
+//
+//
+// Brand Colors (For example, initial ILC colors are green)
+$brand-700: rgba(0, 87, 0, 1); // Button hover
+$brand-500: rgba(
+  0,
+  136,
+  0,
+  1
+); // Main brand color, button color, focus state outline
+$brand-400: rgba(52, 174, 52, 1); // TBD
+$brand-300: rgba(85, 195, 103, 1); // TBD
+$brand-200: rgba(145, 224, 158, 1); // TBD
+$brand-100: rgba(206, 246, 213, 1); // Text link underline, text link hover
+$brand-50: rgba(238, 255, 241, 1); // Text highlight
+
+// Grey Colors (Used for text/typography)
+$grey-900: rgba(33, 33, 33, 1); // Primary body text
+$grey-800: rgba(83, 83, 83, 1); // Overflow text box
+$grey-700: rgba(89, 89, 89, 1); // TBD
+$grey-600: rgba(117, 117, 117, 1); // Secondary text - picture caption
+$grey-500: rgba(158, 158, 158, 1); // TBD
+$grey-400: rgba(189, 189, 189, 1); // TBD
+$grey-300: rgba(224, 224, 224, 1); // TBD
+$grey-200: rgba(238, 238, 238, 1); // TBD
+$grey-100: rgba(245, 245, 245, 1); // TBD
+$grey-50: rgba(250, 250, 250, 1); // TBD
+
+// Transparent Grey
+$transparent-grey-900: rgba(0, 0, 0, 0.85); // TBD
+$transparent-grey-800: rgba(0, 0, 0, 0.75); // TBD
+$transparent-grey-700: rgba(0, 0, 0, 0.55); // TBD
+$transparent-grey-600: rgba(0, 0, 0, 0.45); // TBD
+$transparent-grey-500: rgba(0, 0, 0, 0.35); // TBD
+$transparent-grey-400: rgba(0, 0, 0, 0.25); // TBD
+$transparent-grey-300: rgba(0, 0, 0, 0.15); // UI lines
+$transparent-grey-200: rgba(
+  0,
+  0,
+  0,
+  0.1
+); // Accordion: arrow background circle hover
+$transparent-grey-100: rgba(0, 0, 0, 0.05); // TBD
+$transparent-grey-50: rgba(0, 0, 0, 0.02); // UI Text background
+
+// Transparent White
+$transparent-white-900: rgba(255, 255, 255, 0.9); // TBD
+$transparent-white-800: rgba(255, 255, 255, 0.8); // TBD
+$transparent-white-700: rgba(255, 255, 255, 0.7); // TBD
+$transparent-white-600: rgba(255, 255, 255, 0.6); // TBD
+$transparent-white-500: rgba(255, 255, 255, 0.5); // TBD
+$transparent-white-400: rgba(255, 255, 255, 0.4); // TBD
+$transparent-white-300: rgba(255, 255, 255, 0.3); // TBD
+$transparent-white-200: rgba(255, 255, 255, 0.2); // TBD
+$transparent-white-100: rgba(255, 255, 255, 0.1); // TBD
+$transparent-white-50: rgba(255, 255, 255, 0.05); // TBD
+
+// White
+$white: #fff;
+
+// ----------------------------------------------------------------------
+// Generic color/role Variables
+//
+// Use your brain when referencing these colors. Sometimes it makes sense to
+// reference them directly in the CSS, and sometimes it is more appropriate to
+// use a component role variable, below.
+//
+// Default font colors
+$primary-body-text: $grey-900;
+$secondary-text: $grey-600;
+
+// ----------------------------------------------------------------------
+// Component-Specific Roles
+
+// Text
+
+// Tabs
+// background colors
+$primary-tab-bg: $transparent-grey-50;
+$active-tab-bg: $transparent-grey-100;
+$inactive-tab-bg: $white;
+
+// focus color
+$tab-focus: rgba(0, 136, 0, 1);
+
+$component-border: $transparent-grey-300;
+
+// Accordion
+
+// Old colours/variables (KEEPING TO MAINTAIN PREVIOUS STYLES FOR NOW)
+// ----------------------------------------------------------------------
+// Color Palette
+//
+// These colours should NOT get assigned within other CSS; Instead, assign
+// them to component role variable, below.
+//
+// To see a documented version of the colour swatches, see
+// /views/demo-colors.html
+//
+$outline-focus: #0b9f93;
+
+$brand-primary: #0e8515; // NEW color for $brand-green
+$brand-primary-dark: #096e0f; // NEW color for $brand-green-dark
+
+$brand-secondary-light: rgba(0, 0, 0, 0.02); // formerly $background-grey
+$brand-secondary: rgba(0, 0, 0, 0.15); // formerly $border-grey
+$brand-secondary-dark: #8e9295; // formerly $med-grey
+
+$brand-tertiary: #deeddf; // formerly $brand-green-light
+$brand-tertiary-dark: #aadead; // formerly $brand-green-med
+
+$brand-complementary: #b5e2de; // formerly $background-blue
+
+// ----------------------------------------------------------------------
+// Generic color/role Variables
+//
+// Use your brain when referencing these colors. Sometimes it makes sense to
+// reference them directly in the CSS, and sometimes it is more appropriate to
+// use a component role variable, below.
+//
+// default font colours
+$text-body: #212628;
+$heading-underline: #56656a; // NEW
+$button-text: #fff;
+
+$page-background: #fff;
+
+// Below is a colour Karen is adding
+// PLEASE CHECK
+
+$box-shadow-2: #00000026;
+
+// Alert States - WIP
+//
+// Success
+// FA green icon for checkmarks
+$success-icon: #25912c; // $text-green
+
+// Warning
+$warning-icon: #f9f1c6; // FA yellow icon for Exclamations
+$warning-bg: #f9f1c6;
+$warning-text: $brand-primary-dark;
+
+// Danger
+// FA red icon for Xs
+$danger-icon: #f43131; // $text-red
+
+// ----------------------------------------------------------------------
+// Generic Roles
+//
+// These are variables that are generally used across multiple components,
+// but still have a singular purpose.
+//
+$border-color: $brand-secondary;
+$link-color: $brand-primary;
+
+// Buttons
+$btn-default-bg: $brand-primary;
+$btn-default-text: $button-text;
+$btn-default-bg-hover: $brand-primary-dark;
+$btn-default-border-hover: $brand-tertiary-dark;
+
+$btn-disabled-bg: $brand-secondary-light;
+$btn-disabled-text: $brand-secondary;
+$btn-disabled-border: $brand-secondary;
+
+$btn-link-text: $brand-primary;
+
+// Forms
+$input-border: $brand-primary;
+$radio-bg: $page-background;
+$textarea-border-hover: $brand-tertiary-dark;
+
+// ----------------------------------------------------------------------
+// Component-Specific Roles
+//
+// These are variables that are specific to a component.
+//
+// Accordion
+$accordion-btn-link-bg-hover: $brand-primary;
+$accordion-btn-link-text-hover: $button-text;
+
+$accordion-heading-bg: $brand-secondary-light;
+$accordion-heading-bg-hover: $brand-tertiary;
+$accordion-heading-active-bg: $brand-tertiary;
+$accordion-heading-active-border: $brand-primary;
+
+// Audio
+$audio-bg: $brand-secondary-light;
+
+// Callout
+$callout-bg: $brand-secondary-light;
+
+// Carousel
+$carousel-dots-default-bg: $brand-secondary;
+$carousel-dots-current-bg: $brand-secondary-dark;
+
+// Click-to-Reveal
+$ctr-btn-active-border: $brand-tertiary-dark;
+
+// Navbar
+$navbar-progress-bar: $brand-primary-dark;
+$navbar-box-shadow: $box-shadow-2;
+$navbar-lesson-title-bg: $brand-secondary-light;
+$navbar-main-page-blur-effect: $heading-underline;
+
+$navbar-btn-active-bg: $brand-primary;
+$navbar-btn-active-text: $button-text;
+$navbar-btn-inactive-icon: $brand-primary;
+
+$navbar-sidebar-goals-bg: $brand-tertiary;
+$nabvar-sidebar-success-bg: $brand-complementary;
+$navbar-sidebar-circle: $brand-primary;
+$navbar-sidebar-circle-hover: $brand-secondary;
+$navbar-sidebar-close-btn-hover: $success-icon;
+$navbar-sidebar-link-hover: $brand-primary-dark;
+$navbar-sidebar-link-bg: $brand-tertiary;
+$navbar-sidebar-close-icon: $heading-underline;
+
+// Skip-to-content link
+$link-skip-bg: $brand-secondary-light;
+
+// Quiz
+$quiz-choice-default-bg: $brand-secondary-light;
+$quiz-choice-default-border: $brand-secondary-light;
+$quiz-choice-default-border-hover: $brand-tertiary-dark;
+
+$quiz-choice-selected-bg: $brand-tertiary;
+$quiz-choice-selected-border: $brand-primary;
+$quiz-choice-hover-bg: $brand-tertiary;
+$quiz-choice-hover-border: $brand-tertiary-dark;
+
+// Table
+$table-header-bg: $brand-tertiary;
+$table-striped-bg: $brand-secondary-light;
+
+// Tabs
+$tab-default-bg: $page-background;
+$tab-default-bg-hover: $brand-secondary;
+
+$tab-active-bg: $brand-secondary-light;
+$tab-active-text: $brand-primary;
+$tab-active-border-top: $brand-primary;

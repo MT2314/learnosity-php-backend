@@ -1,0 +1,17 @@
+---
+{
+  "layout": "amp-layout.njk",
+  "permalink": "demo-amp-iframe.html",
+}
+---
+
+<h1>Iframe Component {{projectConfig.version}} - {{projectConfig.date}}</h1>
+
+{% for iframe in componentIframe %}
+    {% if iframe.name == "Iframe Component"  %}
+        {%- assign components = iframe.componentContainer.sections[1].components -%}
+        {% for iframeComponent in components %}
+            {% include amp-iframe.html data:iframeComponent.props -%}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
