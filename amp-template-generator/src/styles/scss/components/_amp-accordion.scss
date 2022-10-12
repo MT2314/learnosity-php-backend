@@ -17,7 +17,8 @@
         pointer-events: none;
     }
     .btn.link:focus-visible {
-        outline: 0.0625rem solid $tab-focus;
+        outline: 0.125rem solid $tab-focus;
+        outline-offset: 0.125rem;
     }
     .verticalBar {
         color: $grey-500;
@@ -29,19 +30,23 @@
         .heading {
             background-color: $white;
             border-color: $border-color;
+            i {
+                text-align: center;
+                border-radius: 30px;
+                width: 25px;
+                height: 25px;
+                &:before {
+                    position: relative;
+                    top: 2px;
+                }
+            }
             .fa-chevron-up {
                 background-color: $brand-500;
                 color: $white;
-                display: inline-block;
-                border-radius: 3.75em;
-                padding: 0.5em 0.6em;
-                position: absolute;
-                right: 0.4em;
-                bottom: 0.75em;
             }
 
             span {
-                width: calc(100% - 1.5rem);
+                width: calc(100% - 2.5rem);
             }
             
             &:hover {
@@ -51,18 +56,12 @@
                 }
                 .fa-chevron-down {
                     background-color: $transparent-grey-300;
-                    display: inline-block;
-                    border-radius: 3.75em;
-                    box-shadow: 0 0 2px #888;
-                    padding: 0.5em 0.6em;
-                    position: absolute;
-                    right: 0.4em;
-                    bottom: 0.75em;
                 }
             }
 
             &:focus-visible {
-                outline: 0.0625rem solid $tab-focus;
+                outline: 0.125rem solid $tab-focus;
+                outline-offset: 0.125rem;
                 z-index: 99;
             }
         }
