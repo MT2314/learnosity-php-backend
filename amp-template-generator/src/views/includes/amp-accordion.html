@@ -51,14 +51,14 @@
                 on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
     
                 {%comment%}Pane Heading:{%endcomment%}
-                <h4 id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ pane.heading.processed }}">
+                <header id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading p2" aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ pane.heading.processed }}">
                     <span class="inline-block">
                         {{ tab.title }}
                     </span>
                     <i class="fa fa-chevron-down fa-pull-right m0" 
                        [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'fa fa-chevron-up fa-pull-right m0' : 'fa fa-chevron-down fa-pull-right m0'"
                        aria-hidden="true"></i>
-                </h4>
+                </header>
     
                 {%comment%}Pane Body:{%endcomment%}
                 <div class="section-content border-left border-right px3 pt3" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">
