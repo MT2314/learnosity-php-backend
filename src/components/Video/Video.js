@@ -24,21 +24,21 @@ const StyledVideoDefaultContainer = styled("div")({
 });
 
 
-const StyledAccordionContainer = styled("div")({
+const StyledVideoContainer = styled("div")({
     width: "100%",
     maxWidth: "60.5rem",
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    marginLeft: "104px", 
+    marginRight: "104px"
 });
 
 const StyledCircleContainer = styled("div")({
     width: "200px",
     height: "200px",
     outline: "5px solid #E0E0E0",
-    borderRadius: "50%", 
-    display: "flex", 
-    alignItems: "center", 
+    borderRadius: "50%",
+    display: "flex",
+    alignItems: "center",
     justifyContent: "center"
 })
 
@@ -47,15 +47,75 @@ const StyledTriangleImage = styled("img")({
     paddingLeft: "20px"
 })
 
+const StyledVideoDescriptionContainer = styled("div")({
+    marginTop: "15px",
+    display: "flex",
+    gap: "30px", 
+    marginBottom: "30px"
+})
+
+const DescriptionCreditContainer = styled("div")({
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px"
+})
+
+const TranscriptButtonContainer = styled("button")({
+    padding: "7px 12.5px !important",
+    backgroundColor: "#EBEBEB",
+    border: "none",
+    borderRadius: "16px", 
+    height: "32px", 
+    fontWeight: "400", 
+    fontSize: "13px",
+    textAlign: "center", 
+    color: "#929292"
+})
+
+const DescriptionInput = styled("input")({
+    width: "622px", 
+    border: "none", 
+    fontFamily: "Inter", 
+    fontWeight: "400", 
+    letterSpacing: "0.4px", 
+    "&::placeholder": {
+        color: "#232323"
+    }
+})
+
+const CreditInpput = styled("input")({
+    width: "622px", 
+    border: "none", 
+    height: "16px", 
+    fontFamily: "Inter", 
+    fontWeight: "400",
+    fontSize: "12px", 
+    fontStyle: "italic", 
+    "&::placeholder": {
+        color: "#636363"
+    }
+})
+
 const Video = () => {
     return (
-        <StyledAccordionContainer>
-            <StyledVideoDefaultContainer >
-                <StyledCircleContainer>
-                    <StyledTriangleImage src={TriangleIcon} />
-                </StyledCircleContainer>
-            </StyledVideoDefaultContainer>
-        </StyledAccordionContainer>
+        <>
+            <StyledVideoContainer>
+                <StyledVideoDefaultContainer >
+                    <StyledCircleContainer>
+                        <StyledTriangleImage src={TriangleIcon} />
+                    </StyledCircleContainer>
+                </StyledVideoDefaultContainer>
+            </StyledVideoContainer>
+            <StyledVideoContainer>
+                <StyledVideoDescriptionContainer>
+                    <DescriptionCreditContainer>
+                        <DescriptionInput type="text" placeholder="Video Description" />
+                        <CreditInpput type="text" placeholder="Credit" />
+                    </DescriptionCreditContainer>
+                    <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
+                </StyledVideoDescriptionContainer>
+            </StyledVideoContainer>
+        </>
     )
 }
 
