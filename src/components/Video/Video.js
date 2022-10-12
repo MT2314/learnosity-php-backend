@@ -82,35 +82,35 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
 
   const [selectedIcon, setSelectedIcon] = useState(null);
 
-  const [infoHasFocus, setInfoHasFocus] = useState(false);
-  const [infoAreaFocused, setInfoAreaFocused] = useState(false);
+  const [videoHasFocus, setVideoHasFocus] = useState(false);
+  const [videoAreaFocused, setVideoAreaFocused] = useState(false);
 
-  const [infoBoxBody, setInfoBoxBody] = useState(null);
+  const [videoBody, setVideoBody] = useState(null);
   const [placeHolder, setPlaceHolder] = useState(null);
 
-  const isInfoBox = useMemo(() => true, []);
-  const infoBoxRef = useRef();
+  const isVideo = useMemo(() => true, []);
+  const videoRef = useRef();
 
-  useOnClickOutside(infoBoxRef, () => {
-    setInfoHasFocus(false);
-    setInfoAreaFocused(false);
+  useOnClickOutside(videoRef, () => {
+    setVideoHasFocus(false);
+    setVideoAreaFocused(false);
   });
 
-  const infoBoxFocused = (e) => {
-    setInfoAreaFocused(true);
-    if (!infoBoxBody.contains(e.target) && e.target !== placeHolder) {
-      setInfoHasFocus(true);
+  const videoFocused = (e) => {
+    setVideoAreaFocused(true);
+    if (!videoBody.contains(e.target) && e.target !== placeHolder) {
+      setVideoHasFocus(true);
     }
   };
 
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
       <StyledAccordionContainer
-        aria-label={t("InfoBox")}
-        data-testid="infoBox-container"
-        ref={infoBoxRef}
-        onClick={(e) => infoBoxFocused(e)}
-        onFocus={(e) => infoBoxFocused(e)}
+        aria-label={t("Video")}
+        data-testid="video-container"
+        ref={videoRef}
+        onClick={(e) => videoFocused(e)}
+        onFocus={(e) => videoFocused(e)}
       >
         <StyledVideoDefaultContainer>
           <StyledCircleContainer>
@@ -119,13 +119,13 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
         </StyledVideoDefaultContainer>
         <StyledTextContainer>
           <Body
-            isInfoBox={isInfoBox}
-            infoHasFocus={infoHasFocus}
+            isInfoBox={isVideo}
+            infoHasFocus={videoHasFocus}
             selectedIcon={selectedIcon}
-            infoAreaFocused={infoAreaFocused}
+            infoAreaFocused={videoAreaFocused}
             setSelectedIcon={setSelectedIcon}
-            setInfoHasFocus={setInfoHasFocus}
-            setInfoBoxBody={setInfoBoxBody}
+            setInfoHasFocus={setVideoHasFocus}
+            setInfoBoxBody={setVideoBody}
             setPlaceHolder={setPlaceHolder}
             t={t}
           />
