@@ -73,6 +73,7 @@ const EditorComponent = ({
   setActiveComponent,
   isActiveComponent,
   isInfoBox,
+  isVideo,
   infoAreaFocused,
   infoHasFocus,
   selectedIcon,
@@ -112,12 +113,12 @@ const EditorComponent = ({
   }, [editorIsFocus]);
 
   useOnClickOutside(textRef, () => {
-    if (!showMath && !keepEditor && !isInfoBox) {
+    if (!showMath && !keepEditor && !isInfoBox && !isVideo) {
       alignmentObserver?.disconnect();
       setEditorIsFocus(false);
       setShowEditor(false);
       setActiveComponent(false);
-      setTabActive(false)
+      setTabActive(false);
     }
   });
 
@@ -134,11 +135,11 @@ const EditorComponent = ({
     //check for formulas
     FormulaEvents(toolbarId);
     // on render editor is focused
-    showEditor && !isInfoBox && focusRef.current.focus();
+    showEditor && !isInfoBox && !isVideo && focusRef.current.focus();
     //on render toolbar appears
-    showEditor && !isInfoBox && setEditorIsFocus(true);
+    showEditor && !isInfoBox && !isVideo && setEditorIsFocus(true);
     //on mount pass back focusRef
-    isInfoBox &&
+    (isInfoBox || isVideo) &&
       setTextRef({ text: textRef.current, quill: focusRef?.current });
   }, []);
 
@@ -294,13 +295,14 @@ const EditorComponent = ({
           (!relatedTarget ||
             (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
           !showMath &&
-          !isInfoBox
+          !isInfoBox &&
+          !isVideo
         ) {
           alignmentObserver?.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
           setActiveComponent(false);
-          setTabActive(false)
+          setTabActive(false);
         }
       }}
       className="text-editor"
@@ -310,6 +312,7 @@ const EditorComponent = ({
       <StyledConfigBar
         editorIsFocus={editorIsFocus}
         isInfoBox={isInfoBox}
+        isVideo={isVideo}
         infoAreaFocused={infoAreaFocused}
       >
         <CustomToolBar
@@ -320,6 +323,7 @@ const EditorComponent = ({
           activeDropDownAlignItem={activeDropDownAlignItem}
           setActiveDropDownAlignItem={setActiveDropDownAlignItem}
           isInfoBox={isInfoBox}
+          isVideo={isVideo}
           infoHasFocus={infoHasFocus}
           selectedIcon={selectedIcon}
           setSelectedIcon={setSelectedIcon}

@@ -117,19 +117,21 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
             <StyledTriangleImage src={TriangleIcon} />
           </StyledCircleContainer>
         </StyledVideoDefaultContainer>
-        <StyledTextContainer>
-          <Body
-            isInfoBox={isVideo}
-            infoHasFocus={videoHasFocus}
-            selectedIcon={selectedIcon}
-            infoAreaFocused={videoAreaFocused}
-            setSelectedIcon={setSelectedIcon}
-            setInfoHasFocus={setVideoHasFocus}
-            setInfoBoxBody={setVideoBody}
-            setPlaceHolder={setPlaceHolder}
-            t={t}
-          />
-        </StyledTextContainer>
+        <StyledPaper>
+          <StyledTextContainer>
+            <Body
+              isVideo={isVideo}
+              infoHasFocus={videoHasFocus}
+              selectedIcon={selectedIcon}
+              infoAreaFocused={videoAreaFocused}
+              setSelectedIcon={setSelectedIcon}
+              setInfoHasFocus={setVideoHasFocus}
+              setInfoBoxBody={setVideoBody}
+              setPlaceHolder={setPlaceHolder}
+              t={t}
+            />
+          </StyledTextContainer>
+        </StyledPaper>
       </StyledAccordionContainer>
     </VideoProvider>
   );

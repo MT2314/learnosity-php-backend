@@ -52,12 +52,12 @@ const StyledAppbar = styled(AppBar)({
 });
 
 // ? Styled Text Toolbar (Possibly Temp)
-const StyledToolbar = styled(Toolbar)(({ isInfoBox }) => ({
+const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   display: "flex",
   justifyContent: "space-between",
-  ...(isInfoBox && { borderLeft: "none !important" }),
+  ...((isInfoBox || isVideo) && { borderLeft: "none !important" }),
   minHeight: "40px !important",
-  width: isInfoBox ? "160px" : "184px !important",
+  width: isInfoBox || isVideo ? "160px" : "184px !important",
   margin: "10px, 8px",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -155,6 +155,7 @@ const CustomToolBar = ({
   activeDropDownAlignItem,
   setActiveDropDownAlignItem,
   isInfoBox,
+  isVideo,
   infoHasFocus,
   selectedIcon,
   setSelectedIcon,
@@ -251,7 +252,7 @@ const CustomToolBar = ({
     >
       <StyledAppbar position="static">
         {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
-        {isInfoBox && (
+        {(isInfoBox || isVideo) && (
           <StyledIconDropdownButton
             ref={IconDropDown}
             id="iconToolBar"
@@ -324,6 +325,7 @@ const CustomToolBar = ({
           <StyledToolbar
             id={toolbarId}
             isInfoBox={isInfoBox}
+            isVideo={isVideo}
             className="toolbarContainer"
             variant="dense"
             disableGutters
@@ -401,7 +403,7 @@ const CustomToolBar = ({
               }}
             ></BoldDropdownButton>
 
-            {!isInfoBox && (
+            {(!isInfoBox || !isVideo) && (
               <Tooltip
                 aria-label="equation"
                 title="equation"
@@ -501,6 +503,7 @@ const CustomToolBar = ({
             <AlignDropdownButton
               show={alignVisibility}
               isInfoBox={isInfoBox}
+              isVideo={isVideo}
               className="dropdown-content"
               aria-label="alignment buttons options"
               activeDropDownItem={activeDropDownAlignItem}
@@ -561,6 +564,7 @@ const CustomToolBar = ({
             <ListDropdownButton
               show={listVisibility}
               isInfoBox={isInfoBox}
+              isVideo={isVideo}
               className="dropdown-content"
               aria-label="list buttons dropdown"
               activeDropDownItem={activeDropDownListItem}

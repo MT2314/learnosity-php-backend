@@ -39,7 +39,7 @@ const Text = ({
   // const textTheme = createMFTheme();
 
   useEffect(() => {
-    if (isInfoBox) {
+    if (isInfoBox || isVideo) {
       setShowEditor(true);
     }
   }, []);
@@ -50,11 +50,12 @@ const Text = ({
       <DragLabel />
       <CssBaseline />
       {/* <ThemeProvider theme={textTheme}> */}
-      <ReactQuillContainer isInfoBox={isInfoBox}>
+      <ReactQuillContainer isInfoBox={isInfoBox} isVideo={isVideo}>
         {((!showEditor && body === null) ||
           (!showEditor && !body.ops) ||
           (!showEditor && body.ops[0].insert === "")) &&
-        !isInfoBox ? (
+        !isInfoBox &&
+        !isVideo ? (
           <div
             onClick={() => {
               setShowEditor(true);
@@ -81,6 +82,7 @@ const Text = ({
               setActiveComponent={setActiveComponent}
               isActiveComponent={isActiveComponent}
               isInfoBox={isInfoBox}
+              isVideo={isVideo}
               infoAreaFocused={infoAreaFocused}
               selectedIcon={selectedIcon}
               infoHasFocus={infoHasFocus}
