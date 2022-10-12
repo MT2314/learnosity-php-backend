@@ -40,7 +40,8 @@ h5,
 .h5,
 h6,
 .h6 {
-  font-weight: bold;
+  font-family: $component-main-font;
+  font-weight: 600;
   margin-top: 0;
 
   &.border-bottom {
