@@ -155,8 +155,9 @@ const CustomToolBar = ({
   activeDropDownAlignItem,
   setActiveDropDownAlignItem,
   isInfoBox,
-  isVideo,
   infoHasFocus,
+  isVideo,
+  videoHasFocus,
   selectedIcon,
   setSelectedIcon,
 }) => {
@@ -236,14 +237,14 @@ const CustomToolBar = ({
   }, [showMath]);
 
   useEffect(() => {
-    if (infoHasFocus) {
+    if (infoHasFocus || videoHasFocus) {
       setActiveTopMenu("");
       setActiveDropDownItem("");
       setBoldVisibility(false);
       setListVisibility(false);
       setAlignVisibility(false);
     }
-  }, [infoHasFocus]);
+  }, [infoHasFocus, videoHasFocus]);
 
   return (
     <Container
@@ -366,7 +367,7 @@ const CustomToolBar = ({
             >
               <StyledIconButton
                 ref={boldRef}
-                disabled={infoHasFocus}
+                disabled={infoHasFocus || videoHasFocus}
                 disableRipple
                 color="inherit"
                 onClick={() => {
@@ -432,7 +433,7 @@ const CustomToolBar = ({
                   aria-label="math equation button"
                   disableRipple
                   color="inherit"
-                  disabled={infoHasFocus}
+                  disabled={infoHasFocus || videoHasFocus}
                   onClick={() => {
                     setAlignVisibility(false);
                     setBoldVisibility(false);
@@ -471,7 +472,7 @@ const CustomToolBar = ({
             >
               <StyledIconButton
                 ref={alignRef}
-                disabled={infoHasFocus}
+                disabled={infoHasFocus || videoHasFocus}
                 disableRipple
                 color="inherit"
                 onClick={() => {
@@ -536,7 +537,7 @@ const CustomToolBar = ({
             >
               <StyledIconButton
                 ref={listRef}
-                disabled={infoHasFocus}
+                disabled={infoHasFocus || videoHasFocus}
                 disableRipple
                 color="inherit"
                 onClick={() => {
@@ -596,7 +597,7 @@ const CustomToolBar = ({
               }}
             >
               <StyledIconButton
-                disabled={infoHasFocus}
+                disabled={infoHasFocus || videoHasFocus}
                 disableRipple
                 color="inherit"
                 aria-label="add link button"

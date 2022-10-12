@@ -73,9 +73,10 @@ const EditorComponent = ({
   setActiveComponent,
   isActiveComponent,
   isInfoBox,
-  isVideo,
   infoAreaFocused,
   infoHasFocus,
+  isVideo,
+  videoHasFocus,
   selectedIcon,
   setSelectedIcon,
   setInfoHasFocus,
@@ -325,6 +326,7 @@ const EditorComponent = ({
           isInfoBox={isInfoBox}
           isVideo={isVideo}
           infoHasFocus={infoHasFocus}
+          videoHasFocus={videoHasFocus}
           selectedIcon={selectedIcon}
           setSelectedIcon={setSelectedIcon}
         />
@@ -350,7 +352,7 @@ const EditorComponent = ({
         onFocus={() => {
           setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
-          infoHasFocus && setInfoHasFocus(false);
+          (infoHasFocus || videoHasFocus) && setInfoHasFocus(false);
         }}
         onKeyDown={(e) => {
           onKeyDropDown(e);

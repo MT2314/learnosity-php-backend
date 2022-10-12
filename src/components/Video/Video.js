@@ -121,7 +121,7 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
           <StyledTextContainer>
             <Body
               isVideo={isVideo}
-              infoHasFocus={videoHasFocus}
+              videoHasFocus={videoHasFocus}
               selectedIcon={selectedIcon}
               infoAreaFocused={videoAreaFocused}
               setSelectedIcon={setSelectedIcon}

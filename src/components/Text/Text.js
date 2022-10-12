@@ -26,8 +26,8 @@ const Text = ({
   infoAreaFocused = false,
   infoHasFocus = false,
   isVideo = false,
-  videoAreaFocused = false,
   videoHasFocus = false,
+  videoAreaFocused = false,
   selectedIcon = null,
   setSelectedIcon = () => {},
   setInfoHasFocus = () => {},
@@ -86,6 +86,7 @@ const Text = ({
               infoAreaFocused={infoAreaFocused}
               selectedIcon={selectedIcon}
               infoHasFocus={infoHasFocus}
+              videoHasFocus={videoHasFocus}
               setInfoHasFocus={setInfoHasFocus}
               setSelectedIcon={setSelectedIcon}
               setTextRef={setTextRef}
