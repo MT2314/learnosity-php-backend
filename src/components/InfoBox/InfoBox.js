@@ -30,7 +30,7 @@ export const defaultProps = {
       headingLevel: "H3",
     },
     body: null,
-  }
+  },
 };
 
 // Styled components begin

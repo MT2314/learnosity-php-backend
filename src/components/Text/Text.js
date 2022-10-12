@@ -7,7 +7,7 @@ import "./styles/Text.scss";
 import PopupDialogs from "./dialogs/PopupDialogs";
 
 import { CssBaseline } from "@mui/material";
-import DragLabel from "../../Utility/DragLabel"
+import DragLabel from "../../Utility/DragLabel";
 // import { ThemeProvider } from "@mui/material/styles";
 
 //? PP Imports
@@ -25,6 +25,9 @@ const Text = ({
   isInfoBox = false,
   infoAreaFocused = false,
   infoHasFocus = false,
+  isVideo = false,
+  videoAreaFocused = false,
+  videoHasFocus = false,
   selectedIcon = null,
   setSelectedIcon = () => {},
   setInfoHasFocus = () => {},
@@ -43,8 +46,8 @@ const Text = ({
 
   return (
     <>
-    {/* on drag <DragLabel/> shows the components name */}
-      <DragLabel/>
+      {/* on drag <DragLabel/> shows the components name */}
+      <DragLabel />
       <CssBaseline />
       {/* <ThemeProvider theme={textTheme}> */}
       <ReactQuillContainer isInfoBox={isInfoBox}>
@@ -54,7 +57,7 @@ const Text = ({
         !isInfoBox ? (
           <div
             onClick={() => {
-              setShowEditor(true)
+              setShowEditor(true);
               setTabActive(true);
             }}
             className="mainContainer"
