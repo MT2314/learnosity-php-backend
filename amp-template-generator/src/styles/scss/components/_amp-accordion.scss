@@ -115,23 +115,27 @@
           z-index: 99;
         }
       }
-    }
-  }
 
-  .section-content {
-    border-color: $component-border;
-    background-color: $primary-bg;
-    padding: 1.5rem;
+      .section-content {
+        border-color: $component-border;
+        background-color: $primary-bg;
+        padding: 1.5rem;
 
-    // This strips paragraph tags of global styles for nesting inside other components
-    p {
-      margin: 0;
-    }
-    
-    .wrapper {
-      &:last-child.bottom-margin {
-        // This clears the bottom-margin that is added to text/other components
-        margin-bottom: 0;
+        // This strips paragraph tags of global styles for nesting inside other components
+        p {
+          margin: 0;
+        }
+
+        .text-component {
+          padding: 0;
+        }
+
+        .wrapper {
+          &:nth-last-child(2).bottom-margin {
+            // This clears the bottom-margin that is added to text/other components
+            margin-bottom: 0;
+          }
+        }
       }
     }
   }
