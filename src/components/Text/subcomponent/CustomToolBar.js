@@ -234,10 +234,13 @@ const CustomToolBar = ({
     setSelectedIcon(iconDropdownOptions[index].type);
   };
 
-  const handleToggle = (e) => {
-    console.log("HELLO");
+  const handleToggleInfo = (e) => {
     e.target.contains(IconDropDown.current) && setIconOpen(!openIcon);
+  };
+  const handleToggleVideo = (e) => {
     e.target.contains(AddVideo.current) && setVideoOpen(!openVideo);
+  };
+  const handleToggleTranscript = (e) => {
     e.target.contains(TranscriptVideo.current) &&
       setTranscriptOpen(!openTranscript);
   };
@@ -314,7 +317,7 @@ const CustomToolBar = ({
             disableElevation
             disableRipple
             disableFocusRipple
-            onClick={handleToggle}
+            onClick={handleToggleInfo}
             startIcon={
               openIcon ? (
                 <ExpandMoreIcon
@@ -383,7 +386,7 @@ const CustomToolBar = ({
               disableElevation
               disableRipple
               disableFocusRipple
-              onClick={handleToggle}
+              onClick={handleToggleVideo}
             >
               Add Video
               <Popper
@@ -423,7 +426,7 @@ const CustomToolBar = ({
               disableElevation
               disableRipple
               disableFocusRipple
-              onClick={handleToggle}
+              onClick={handleToggleTranscript}
             >
               <span>Transcript</span>
               <Popper
