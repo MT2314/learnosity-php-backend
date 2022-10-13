@@ -1,27 +1,28 @@
 .wrapper.accordion {
-  .btn.link {
-    color: $grey-500;
-    font-family: $component-main-font;
-    font-style: normal;
-    font-size: 1.125rem;
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-  .btn.link:hover {
-    background-color: $brand-200;
-    color: $hover-dialog-bg;
-  }
-  .btn.link:disabled {
-    opacity: 0.2;
-    box-shadow: none;
-    pointer-events: none;
-  }
-  .btn.link:focus-visible {
-    outline: 0.0625rem solid $tab-focus;
-  }
-  .verticalBar {
-    color: $grey-500;
-  }
+    .btn.link {
+        color: $grey-500;
+        font-family: $component-main-font;
+        font-style: normal;
+        font-size: 1.125rem;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+    .btn.link:hover {
+        background-color: $brand-200;
+        color: $hover-dialog-bg;
+    }
+    .btn.link:disabled {
+        opacity: 0.2;
+        box-shadow: none;
+        pointer-events: none;
+    }
+    .btn.link:focus-visible {
+        outline: 0.125rem solid $tab-focus;
+        outline-offset: 0.125rem;
+    }
+    .verticalBar {
+        color: $grey-500;
+    }
 
   .accordion {
     clear: right;
