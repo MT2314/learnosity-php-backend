@@ -339,13 +339,23 @@ const CustomToolBar = ({
   // ? Video Toolbar
   const handleToggleVideo = (e) => {
     e.target.contains(AddVideo.current) && setVideoOpen(!openVideo);
+    setActiveTopMenu("");
+    setActiveDropDownItem("");
+    setBoldVisibility(false);
+    setListVisibility(false);
+    setAlignVisibility(false);
+    setTranscriptOpen(false);
+    setDescriptionKebabOpen(false);
   };
   const handleToggleVideoKebab = (e) => {
-    // e.target.contains(DescriptionKebab.current) &&
-    //   setDescriptionKebabOpen(!openDescriptionKebab);
-
     setDescriptionKebabOpen(!openDescriptionKebab);
-    // setVideoOpen(false);
+    setActiveTopMenu("");
+    setActiveDropDownItem("");
+    setBoldVisibility(false);
+    setListVisibility(false);
+    setAlignVisibility(false);
+    setTranscriptOpen(false);
+    setVideoOpen(false);
   };
 
   const handleCloseVideo = (event) => {
@@ -610,6 +620,8 @@ const CustomToolBar = ({
                     setActiveTopMenu("bold");
                   }
                   setActiveDropDownItem("");
+                  setVideoOpen(false);
+                  setDescriptionKebabOpen(false);
                 }}
                 onKeyDown={(e) => {
                   onKeyDropDown(e, boldRef);
@@ -674,7 +686,6 @@ const CustomToolBar = ({
                       } else {
                         setActiveTopMenu("math");
                       }
-                      setActiveDropDownItem("");
                     }}
                   >
                     {icons["formula"]}
@@ -716,6 +727,8 @@ const CustomToolBar = ({
                     setActiveTopMenu("align");
                   }
                   setActiveDropDownItem("");
+                  setVideoOpen(false);
+                  setDescriptionKebabOpen(false);
                 }}
                 className={
                   activeTopMenu === "align"
@@ -780,6 +793,8 @@ const CustomToolBar = ({
                   } else {
                     setActiveTopMenu("lists");
                   }
+                  setVideoOpen(false);
+                  setDescriptionKebabOpen(false);
                 }}
                 className={
                   activeTopMenu === "lists" ? "ql-selected ql-active" : null
@@ -839,6 +854,8 @@ const CustomToolBar = ({
                   setListVisibility(false);
 
                   setActiveTopMenu(activeTopMenu === "link" ? "" : "link");
+                  setVideoOpen(false);
+                  setDescriptionKebabOpen(false);
                 }}
                 sx={{ paddingLeft: "12px", paddingRight: "12px" }}
               >
