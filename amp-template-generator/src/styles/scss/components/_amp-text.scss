@@ -1,6 +1,5 @@
 .text-component {
   p {
-    font-family: $text-body-font;
     font-size: 1.375rem;
     margin: 0 0 1.25rem 0;
     font-weight: 400;
@@ -12,7 +11,7 @@
   }
 
   a {
-    color: $primary-body-text;
+    // color: $primary-body-text;
 
     // padding-bottom: 2px;
     // border-bottom: 4px solid $link-underline;
