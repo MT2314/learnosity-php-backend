@@ -1,4 +1,4 @@
-.wrapper.accordion {
+.wrapper.accordion-component {
     .btn.link {
         color: $grey-500;
         font-family: $component-main-font;
@@ -20,7 +20,7 @@
         outline: 0.125rem solid $tab-focus;
         outline-offset: 0.125rem;
     }
-    .verticalBar {
+    .vertical-bar {
         color: $grey-500;
     }
 
@@ -37,13 +37,13 @@
       &:last-child {
         .heading {
           border-radius: 0 0 6px 6px;
-          border-bottom: 0.0625rem solid $border-color;
+          border-bottom: 0.0625rem solid $component-border;
         }
       }
 
       &[expanded] {
         .heading {
-          border-bottom: 0.0625rem solid $border-color;
+          border-bottom: 0.0625rem solid $component-border;
 
           &:focus-visible {
             outline: 0.0625rem solid $tab-focus;
@@ -53,8 +53,8 @@
       }
 
       .heading {
-        background-color: $white;
-        border: 0.0625rem solid $border-color;
+        background-color: $inactive-bg;
+        border: 0.0625rem solid $component-border;
         border-bottom: none;
 
         .fa-chevron-up {
@@ -98,21 +98,21 @@
   }
 
   .section-content {
-    border-color: $border-color;
+    border-color: $component-border;
     background-color: $transparent-grey-50;
   }
 }
 
 /*! purgecss start ignore */
-.wrapper.accordion .accordion section[expanded] .heading {
+.wrapper.accordion-component .accordion section[expanded] .heading {
   background-color: $transparent-grey-100;
 }
 
-.wrapper.accordion .accordion section:last-child[expanded] .heading {
+.wrapper.accordion-component .accordion section:last-child[expanded] .heading {
   border-radius: 0;
 }
 
-.wrapper.accordion .accordion section:last-child[expanded] .section-content {
-  border-bottom: 1px solid $border-color;
+.wrapper.accordion-component .accordion section:last-child[expanded] .section-content {
+  border-bottom: 1px solid $component-border;
 }
 /*! purgecss end ignore */
