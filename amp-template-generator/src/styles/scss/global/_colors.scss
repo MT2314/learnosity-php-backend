@@ -75,12 +75,17 @@ $secondary-text: $grey-600;
 // Component-Specific Roles
 
 // Text
+$link-underline: $brand-100;
+$link-visited-underline: $brand-300;
+// Body highlight
+$body-highlight: $brand-100;
 
-// Tabs
+// Tabs/Accordion
 // background colors
-$primary-tab-bg: $transparent-grey-50;
-$active-tab-bg: $transparent-grey-100;
-$inactive-tab-bg: $white;
+$primary-bg: $transparent-grey-50;
+$active-bg: $transparent-grey-100;
+$inactive-bg: $white;
+
 
 // Hover dialog background
 $hover-dialog-bg: #404040;
@@ -91,8 +96,6 @@ $tab-focus: rgba(0, 136, 0, 1);
 // Border colors
 $component-border: $transparent-grey-300;
 $tab-border-bottom: $brand-500;
-
-// Accordion
 
 // Old colours/variables (KEEPING TO MAINTAIN PREVIOUS STYLES FOR NOW)
 // ----------------------------------------------------------------------
@@ -160,13 +163,6 @@ $danger-icon: #f43131; // $text-red
 // but still have a singular purpose.
 //
 $border-color: $brand-secondary;
-
-// Links
-$link-underline: $brand-100;
-$link-visited-underline: $brand-300;
-
-// Body highlight
-$body-highlight: $brand-100;
 
 // Buttons
 $btn-default-bg: $brand-primary;
