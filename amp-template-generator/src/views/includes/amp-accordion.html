@@ -52,12 +52,13 @@
     
                 {%comment%}Pane Heading:{%endcomment%}
                 <header id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading p2" aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ pane.heading.processed }}">
-                    <span class="inline-block">
-                        {{ tab.title }}
+                    <span class="flexDisplay">
+                        <span class="underText">
+                            {{ tab.title }}
+                        </span>
+                        <i class="chevronDown" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'hiddenIcon' : 'chevronDown'" aria-hidden="true">&#x22;</i>
+                        <i class="hiddenIcon" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'chevronUp' : 'hiddenIcon'" aria-hidden="true">&#xe800;</i>
                     </span>
-                    <i class="fa fa-chevron-down fa-pull-right m0" 
-                       [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'fa fa-chevron-up fa-pull-right m0' : 'fa fa-chevron-down fa-pull-right m0'"
-                       aria-hidden="true"></i>
                 </header>
     
                 {%comment%}Pane Body:{%endcomment%}

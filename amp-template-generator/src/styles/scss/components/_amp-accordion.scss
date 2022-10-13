@@ -62,40 +62,52 @@
         letter-spacing: 0.03em;
         line-height: 1.6875rem;
 
-        .fa-chevron-up {
-          background-color: $brand-500;
-          color: $white;
-          display: inline-block;
-          border-radius: 3.75em;
-          padding: 0.5em 0.6em;
-          position: absolute;
-          right: 0.4em;
-          bottom: 0.75em;
+        .flexDisplay {
+            display: flex;
+            align-items: center;
+        }
+        i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: $amp-icons-font;
+            font-style: normal;
+            font-weight: normal;
+            /* Font smoothing. That was taken from TWBS */
+            -webkit-font-smoothing: antialiased;
+            border-radius: 50%;
+            height: 2.5rem;
+            width: 2.5rem;
+            &:before {
+                position: relative;
+                top: 2px;
+            }
+        }
+        .hiddenIcon {
+            display: none;
+        }
+        .chevronUp {
+            background-color: $brand-500;
+            color: $white;
         }
 
         span {
-          width: calc(100% - 1.5rem);
+          width: calc(100% - 0.5rem);
         }
 
         &:hover {
           background-color: $primary-bg;
-          span {
+          .underText {
             text-decoration-line: underline;
-          }
-          .fa-chevron-down {
-            background-color: $transparent-grey-300;
-            display: inline-block;
-            border-radius: 3.75em;
-            box-shadow: 0 0 2px #888;
-            padding: 0.5em 0.6em;
-            position: absolute;
-            right: 0.4em;
-            bottom: 0.75em;
-          }
+            }
+            .chevronDown {
+                background-color: $transparent-grey-300;
+            }
         }
 
         &:focus-visible {
-          outline: 0.0625rem solid $tab-focus;
+          outline: 0.125rem solid $tab-focus;
+          outline-offset: 0.125rem;
           z-index: 99;
         }
       }
