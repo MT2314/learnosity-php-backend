@@ -68,6 +68,46 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   },
 }));
 
+// ? Styled Text Toolbar (Possibly Temp)
+const StyledVideoToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
+  borderLeft: "4px solid #1565C0",
+  display: "flex",
+  justifyContent: "space-between",
+  minHeight: "40px !important",
+  width: isInfoBox || isVideo ? "160px" : "184px !important",
+  margin: "10px, 8px",
+  backgroundColor: "#FFF",
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  borderRadius: "4px",
+  "& .MuiToolbar-gutters": {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+}));
+
+const StyledVideoButton = styled(Button)(({ isVideo }) => ({
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  backgroundColor: "#FFF",
+  color: "#232323",
+  fontFamily: `"Inter", sans-serif`,
+  fontSize: "1rem",
+  fontWeight: "400",
+  lineHeight: "1.5rem",
+  letterSpacing: "0.009375rem",
+  width: "100%",
+  padding: "8px 22px",
+  display: "flex",
+  flexDirection: "row",
+  whiteSpace: "nowrap",
+  textAlign: "center",
+  textTransform: "none",
+
+  "&:hover": {
+    background: "#FFF",
+    color: "#1565C0",
+  },
+}));
+
 const StyledIconDropdownButton = styled(Button)({
   borderLeft: "4px solid #1565C0",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -170,7 +210,9 @@ const CustomToolBar = ({
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
 
-  const [open, setOpen] = useState(false);
+  const [openIcon, setIconOpen] = useState(false);
+  const [openVideo, setVideoOpen] = useState(false);
+  const [openTranscript, setTranscriptOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
@@ -184,29 +226,37 @@ const CustomToolBar = ({
   const alignRef = useRef(null);
 
   const IconDropDown = useRef(null);
+  const AddVideo = useRef(null);
+  const TranscriptVideo = useRef(null);
 
   const handleMenuItemClick = (e, index) => {
     setSelectedIndex(index);
     setSelectedIcon(iconDropdownOptions[index].type);
   };
 
-  const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
+  const handleToggle = (e) => {
+    console.log("HELLO");
+    e.target.contains(IconDropDown.current) && setIconOpen(!openIcon);
+    e.target.contains(AddVideo.current) && setVideoOpen(!openVideo);
+    e.target.contains(TranscriptVideo.current) &&
+      setTranscriptOpen(!openTranscript);
   };
 
   const handleClose = (event) => {
     if (IconDropDown.current && IconDropDown.current.contains(event.target)) {
       return;
     }
-    setOpen(false);
+    setIconOpen(false);
   };
 
   function handleListKeyDown(event) {
     if (event.key === "Tab") {
       event.preventDefault();
-      setOpen(false);
+      setIconOpen(false);
+      setVideoOpen(false);
+      setTranscriptOpen(false);
     } else if (event.key === "Escape") {
-      setOpen(false);
+      setIconOpen(false);
     }
   }
 
@@ -253,12 +303,12 @@ const CustomToolBar = ({
     >
       <StyledAppbar position="static">
         {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
-        {(isInfoBox || isVideo) && (
+        {isInfoBox && (
           <StyledIconDropdownButton
             ref={IconDropDown}
             id="iconToolBar"
-            aria-controls={open ? t("Infobox Select Icon") : undefined}
-            aria-expanded={open ? "true" : undefined}
+            aria-controls={openIcon ? t("Infobox Select Icon") : undefined}
+            aria-expanded={openIcon ? "true" : undefined}
             variant="contained"
             fullWidth
             disableElevation
@@ -266,7 +316,7 @@ const CustomToolBar = ({
             disableFocusRipple
             onClick={handleToggle}
             startIcon={
-              open ? (
+              openIcon ? (
                 <ExpandMoreIcon
                   sx={{
                     transform: "rotate(180deg)",
@@ -281,7 +331,7 @@ const CustomToolBar = ({
               ? t("Infobox Select Icon")
               : t(`${selectedIcon}`)}
             <Popper
-              open={open}
+              open={openIcon}
               anchorEl={IconDropDown.current}
               placement="bottom-start"
               transition
@@ -292,7 +342,7 @@ const CustomToolBar = ({
                   <Paper>
                     <ClickAwayListener onClickAway={handleClose}>
                       <StyledMenu
-                        autoFocusItem={open}
+                        autoFocusItem={openIcon}
                         data-testid="icon-select-dropdown"
                         aria-labelledby={t("Infobox Icon Drop Down")}
                         onKeyDown={handleListKeyDown}
@@ -321,7 +371,94 @@ const CustomToolBar = ({
             </Popper>
           </StyledIconDropdownButton>
         )}
-
+        {isVideo && (
+          <StyledVideoToolbar>
+            <StyledVideoButton
+              ref={AddVideo}
+              id="AddVideo"
+              aria-controls={openVideo ? t("Add Video") : undefined}
+              aria-expanded={openVideo ? "true" : undefined}
+              variant="contained"
+              fullWidth
+              disableElevation
+              disableRipple
+              disableFocusRipple
+              onClick={handleToggle}
+            >
+              Add Video
+              <Popper
+                open={openVideo}
+                anchorEl={AddVideo.current}
+                placement="bottom-start"
+                transition
+                disablePortal
+              >
+                {({ TransitionProps }) => (
+                  <Grow {...TransitionProps}>
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <StyledMenu
+                          autoFocusItem={openVideo}
+                          data-testid="icon-select-dropdown"
+                          aria-labelledby={t("Infobox Icon Drop Down")}
+                          onKeyDown={handleListKeyDown}
+                        >
+                          <StyledMenuItem>Video</StyledMenuItem>
+                        </StyledMenu>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </StyledVideoButton>
+            <StyledVideoButton
+              ref={TranscriptVideo}
+              id="TranscriptVideo"
+              aria-controls={
+                openTranscript ? t("Infobox Select Icon") : undefined
+              }
+              aria-expanded={openTranscript ? "true" : undefined}
+              variant="contained"
+              fullWidth
+              disableElevation
+              disableRipple
+              disableFocusRipple
+              onClick={handleToggle}
+            >
+              <span>Transcript</span>
+              <Popper
+                open={openTranscript}
+                anchorEl={TranscriptVideo.current}
+                placement="bottom-start"
+                transition
+                disablePortal
+              >
+                {({ TransitionProps }) => (
+                  <Grow {...TransitionProps}>
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <StyledMenu
+                          autoFocusItem={openTranscript}
+                          data-testid="transcript-icon"
+                          aria-labelledby={t("Transcript")}
+                          onKeyDown={handleListKeyDown}
+                        >
+                          <StyledMenuItem
+                            onClick={(e) => handleMenuItemClick(e, index)}
+                            data-testid={`Add Transcript`}
+                            aria-labelledby={`Add Transcript`}
+                          >
+                            {t("Add Transcript")}
+                          </StyledMenuItem>
+                        </StyledMenu>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </StyledVideoButton>
+          </StyledVideoToolbar>
+        )}
         <div>
           <StyledToolbar
             id={toolbarId}

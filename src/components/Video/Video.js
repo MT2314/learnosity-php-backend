@@ -136,8 +136,6 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
   // Localization
   const { t } = useTranslation();
 
-  const [selectedIcon, setSelectedIcon] = useState(null);
-
   const [videoHasFocus, setVideoHasFocus] = useState(false);
   const [videoAreaFocused, setVideoAreaFocused] = useState(false);
 
@@ -181,8 +179,7 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
               <Body
                 isVideo={isVideo}
                 videoHasFocus={videoHasFocus}
-                infoAreaFocused={videoAreaFocused}
-                setSelectedIcon={setSelectedIcon}
+                videoAreaFocused={videoAreaFocused}
                 setVideoHasFocus={setVideoHasFocus}
                 setVideoBody={setVideoBody}
                 setPlaceHolder={setPlaceHolder}
