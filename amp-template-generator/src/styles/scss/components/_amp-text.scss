@@ -3,7 +3,6 @@
     font-size: 1.375rem;
     margin: 0 0 1.25rem 0;
     font-weight: 400;
-    // Changed line height to 2.125rem from 1.5rem to make sure the anchor tag underline does not collide with text beneath it
     line-height: 2.125rem;
     letter-spacing: 0.009375rem;
     color: #232323;
@@ -29,7 +28,6 @@
 
     &:focus {
       outline: 2px solid $link-focus;
-      // border: 2px solid $link-focus;
       border-radius: 2px;
     }
 
