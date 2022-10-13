@@ -85,13 +85,16 @@ $body-highlight: $brand-100;
 $primary-bg: $transparent-grey-50;
 $active-bg: $transparent-grey-100;
 $inactive-bg: $white;
-
+// Accordion expand all/collapse buttons
+$button-active: $grey-700;
+$button-disabled: $grey-500;
+$accordion-button-hover: $brand-200;
 
 // Hover dialog background
-$hover-dialog-bg: #404040;
+$hover-dialog-bg: $grey-800;
 
 // focus colors
-$tab-focus: rgba(0, 136, 0, 1);
+$tab-focus: $brand-500;
 
 // Border colors
 $component-border: $transparent-grey-300;
