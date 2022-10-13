@@ -1,28 +1,32 @@
 .wrapper.accordion-component {
-    .btn.link {
-        color: $button-active;
-        font-family: $component-main-font;
-        font-weight: 600;
-        font-size: 1rem;
-        text-decoration: none;
-        text-transform: uppercase;
-    }
-    .btn.link:hover {
-        background-color: $body-highlight;
-        color: $hover-dialog-bg;
-    }
-    .btn.link:disabled {
-        opacity: 0.2;
-        box-shadow: none;
-        pointer-events: none;
-    }
-    .btn.link:focus-visible {
-        outline: 0.125rem solid $tab-focus;
-        outline-offset: 0.125rem;
-    }
-    .vertical-bar {
-        color: $button-disabled;
-    }
+  .btn.link {
+    color: $button-active;
+    font-family: $component-main-font;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .btn.link:hover {
+    background-color: $body-highlight;
+    color: $hover-dialog-bg;
+  }
+
+  .btn.link:disabled {
+    opacity: 0.2;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  .btn.link:focus-visible {
+    outline: 0.125rem solid $tab-focus;
+    outline-offset: 0.125rem;
+  }
+
+  .vertical-bar {
+    color: $button-disabled;
+  }
 
   .accordion {
     clear: right;
@@ -117,6 +121,19 @@
   .section-content {
     border-color: $component-border;
     background-color: $primary-bg;
+    padding: 1.5rem;
+
+    // This strips paragraph tags of global styles for nesting inside other components
+    p {
+      margin: 0;
+    }
+    
+    .wrapper {
+      &:last-child.bottom-margin {
+        // This clears the bottom-margin that is added to text/other components
+        margin-bottom: 0;
+      }
+    }
   }
 }
 
