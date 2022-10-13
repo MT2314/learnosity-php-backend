@@ -841,49 +841,36 @@ const CustomToolBar = ({
                   placement="bottom-start"
                   transition
                   disablePortal
+                  sx={{ marginTop: "8px !important" }}
                 >
                   {({ TransitionProps }) => (
                     <Grow {...TransitionProps}>
                       <Paper>
-                        <MenuItem
-                          key="Show description"
-                          value="Show description"
-                        >
-                          <ListItemIcon>
-                            <Checkbox />
-                          </ListItemIcon>
-                          <ListItemText primary="Show description" />
-                        </MenuItem>
-                        <MenuItem key="Show credit" value="Show credit">
-                          <ListItemIcon>
-                            <Checkbox />
-                          </ListItemIcon>
-                          <ListItemText primary="Show credit" />
-                        </MenuItem>
-
-                        {/* <StyledMenu
-                          autoFocusItem={openIcon}
-                          data-testid="icon-select-dropdown"
-                          aria-labelledby={t("Infobox Icon Drop Down")}
-                          onKeyDown={handleListKeyDown}
-                        >
-                          <FormGroup>
-                            <FormControl onClick={handleKebobChange}>
-                              <FormControlLabel
-                                control={<Checkbox />}
-                                label="Show description"
-                                size="small"
-                              />
-                            </FormControl>
-                            <FormControl onClick={handleKebobChange}>
-                              <FormControlLabel
-                                control={<Checkbox />}
-                                label="Show credit"
-                                size="small"
-                              />
-                            </FormControl>
-                          </FormGroup>
-                        </StyledMenu> */}
+                        <ClickAwayListener onClickAway={handleCloseVideo}>
+                          <StyledMenu
+                            autoFocusItem={openVideo}
+                            data-testid="video-select-dropdown"
+                            aria-labelledby={t("Video Drop Down")}
+                            onKeyDown={handleListKeyDown}
+                          >
+                            <FormGroup>
+                              <FormControl onClick={handleKebobChange}>
+                                <FormControlLabel
+                                  control={<Checkbox />}
+                                  label="Show description"
+                                  size="small"
+                                />
+                              </FormControl>
+                              <FormControl onClick={handleKebobChange}>
+                                <FormControlLabel
+                                  control={<Checkbox />}
+                                  label="Show credit"
+                                  size="small"
+                                />
+                              </FormControl>
+                            </FormGroup>
+                          </StyledMenu>
+                        </ClickAwayListener>
                       </Paper>
                     </Grow>
                   )}
