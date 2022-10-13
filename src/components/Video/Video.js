@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 
 // Interal Imports
 import Body from "./subcomponents/Body";
-import TriangleIcon from "./assests/Triangle.png";
+import TriangleIcon from "./assets/Triangle.png";
 // MUI/@emotion imports
 import { Paper } from "@mui/material";
 

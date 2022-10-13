@@ -2,11 +2,25 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSetShowMath, useShowMath, useBoldRef } from "../Provider";
 import styled from "@emotion/styled";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useTranslation } from "react-i18next";
 
+// ? InfoBox imports
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { iconDropdownOptions } from "../../InfoBox/icons/infoBoxIcons";
 
+// ? Video imports
+import Menu from "@mui/material/Menu";
+import FormGroup from "@mui/material/FormGroup";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import SvgIcon from "@mui/material/SvgIcon";
+import BrightspaceSVG from "../../Video/assets/Brightspace";
+import YoutubeSVG from "../../Video/assets/Youtube";
+// ? Text Toolbar imports
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
@@ -57,7 +71,11 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   justifyContent: "space-between",
   ...((isInfoBox || isVideo) && { borderLeft: "none !important" }),
   minHeight: "40px !important",
-  width: isInfoBox || isVideo ? "160px" : "184px !important",
+  width: isInfoBox
+    ? "160px"
+    : isVideo
+    ? "196px !important"
+    : "184px !important",
   margin: "10px, 8px",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -68,14 +86,15 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   },
 }));
 
-// ? Styled Text Toolbar (Possibly Temp)
-const StyledVideoToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
+// Video Styled Components
+const StyledVideoToolbar = styled(Toolbar)(({ isVideo }) => ({
   borderLeft: "4px solid #1565C0",
   display: "flex",
   justifyContent: "space-between",
   minHeight: "40px !important",
-  width: isInfoBox || isVideo ? "160px" : "184px !important",
-  margin: "10px, 8px",
+  width: "200px !important",
+  padding: "0",
+  // margin: "10px, 8px",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
@@ -84,9 +103,9 @@ const StyledVideoToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
     paddingRight: 0,
   },
 }));
-
 const StyledVideoButton = styled(Button)(({ isVideo }) => ({
-  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  display: "flex",
+  flexDirection: "row",
   backgroundColor: "#FFF",
   color: "#232323",
   fontFamily: `"Inter", sans-serif`,
@@ -94,10 +113,8 @@ const StyledVideoButton = styled(Button)(({ isVideo }) => ({
   fontWeight: "400",
   lineHeight: "1.5rem",
   letterSpacing: "0.009375rem",
-  width: "100%",
-  padding: "8px 22px",
-  display: "flex",
-  flexDirection: "row",
+  width: "78px",
+  padding: "8px 10px",
   whiteSpace: "nowrap",
   textAlign: "center",
   textTransform: "none",
@@ -108,6 +125,49 @@ const StyledVideoButton = styled(Button)(({ isVideo }) => ({
   },
 }));
 
+const StyledVideoMenuItem = styled(MenuItem)({
+  width: "287px",
+  padding: "6px 16px",
+  height: "36px",
+  "&:hover": {
+    backgroundColor: " rgba(0, 0, 0, 0.04);!important",
+  },
+  "&:active": {
+    backgroundColor: " rgba(0, 0, 0, 0.04);!important",
+  },
+});
+
+const StyledKebabButton = styled(IconButton)(({ disabled }) => ({
+  justifyContent: "flex",
+  height: "30px",
+  padding: "7px",
+  color: "#232323",
+  backgroundColor: "none",
+  borderRadius: "4px !important",
+
+  "& svg": {
+    color: "#000",
+    ...(disabled && { opacity: 0.3 }),
+  },
+  "&:hover": {
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    "& svg": {
+      color: "rgba(21, 101, 192, 1)",
+    },
+  },
+  "&:active": {
+    cursor: "pointer",
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    "& svg": {
+      color: "rgba(21, 101, 192, 1)",
+    },
+  },
+  "&:focus-visible": {
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+  },
+}));
+
+// Info Box
 const StyledIconDropdownButton = styled(Button)({
   borderLeft: "4px solid #1565C0",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -210,9 +270,12 @@ const CustomToolBar = ({
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
 
+  // IconBox
   const [openIcon, setIconOpen] = useState(false);
+  // Video
   const [openVideo, setVideoOpen] = useState(false);
   const [openTranscript, setTranscriptOpen] = useState(false);
+  const [openDescriptionKebab, setDescriptionKebabOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
@@ -224,32 +287,50 @@ const CustomToolBar = ({
   //focus to the list and align. Bold Ref is found in EditorComponent.js
   const listRef = useRef(null);
   const alignRef = useRef(null);
-
+  // ? IconBox refs
   const IconDropDown = useRef(null);
+  // ? Video refs
   const AddVideo = useRef(null);
   const TranscriptVideo = useRef(null);
+  const DescriptionKebab = useRef(null);
 
-  const handleMenuItemClick = (e, index) => {
-    setSelectedIndex(index);
-    setSelectedIcon(iconDropdownOptions[index].type);
-  };
-
+  // ? InfoBox Toolbar
   const handleToggleInfo = (e) => {
     e.target.contains(IconDropDown.current) && setIconOpen(!openIcon);
   };
-  const handleToggleVideo = (e) => {
-    e.target.contains(AddVideo.current) && setVideoOpen(!openVideo);
-  };
-  const handleToggleTranscript = (e) => {
-    e.target.contains(TranscriptVideo.current) &&
-      setTranscriptOpen(!openTranscript);
-  };
 
-  const handleClose = (event) => {
+  const handleCloseIcon = (event) => {
     if (IconDropDown.current && IconDropDown.current.contains(event.target)) {
       return;
     }
     setIconOpen(false);
+  };
+
+  const handleIconMenuItemClick = (e, index) => {
+    setSelectedIndex(index);
+    setSelectedIcon(iconDropdownOptions[index].type);
+  };
+
+  // ? Video Toolbar
+  const handleToggleVideo = (e) => {
+    e.target.contains(AddVideo.current) && setVideoOpen(!openVideo);
+  };
+  const handleToggleVideoKebab = (e) => {
+    // e.target.contains(DescriptionKebab.current) &&
+    //   setDescriptionKebabOpen(!openDescriptionKebab);
+
+    setDescriptionKebabOpen(!openDescriptionKebab);
+    // setVideoOpen(false);
+  };
+
+  const handleCloseVideo = (event) => {
+    // setDescriptionKebabOpen(false);
+    // setVideoOpen(false);
+    // TranscriptVideo(false);
+  };
+  const handleKebobChange = (e) => {
+    e.stopPropagation();
+    console.log(e.target.value);
   };
 
   function handleListKeyDown(event) {
@@ -343,7 +424,7 @@ const CustomToolBar = ({
               {({ TransitionProps }) => (
                 <Grow {...TransitionProps}>
                   <Paper>
-                    <ClickAwayListener onClickAway={handleClose}>
+                    <ClickAwayListener onClickAway={handleCloseIcon}>
                       <StyledMenu
                         autoFocusItem={openIcon}
                         data-testid="icon-select-dropdown"
@@ -356,7 +437,7 @@ const CustomToolBar = ({
                               key={infoBox.id}
                               value={infoBox.type}
                               selected={index === selectedIndex}
-                              onClick={(e) => handleMenuItemClick(e, index)}
+                              onClick={(e) => handleIconMenuItemClick(e, index)}
                               data-testid={`${infoBox.type} icon`}
                               aria-labelledby={`${t(infoBox.type)} ${t(
                                 "Icon"
@@ -375,7 +456,7 @@ const CustomToolBar = ({
           </StyledIconDropdownButton>
         )}
         {isVideo && (
-          <StyledVideoToolbar>
+          <StyledVideoToolbar position="static">
             <StyledVideoButton
               ref={AddVideo}
               id="AddVideo"
@@ -395,18 +476,30 @@ const CustomToolBar = ({
                 placement="bottom-start"
                 transition
                 disablePortal
+                sx={{ marginLeft: "-10px !important" }}
               >
                 {({ TransitionProps }) => (
                   <Grow {...TransitionProps}>
                     <Paper>
-                      <ClickAwayListener onClickAway={handleClose}>
+                      <ClickAwayListener onClickAway={handleCloseVideo}>
                         <StyledMenu
                           autoFocusItem={openVideo}
-                          data-testid="icon-select-dropdown"
-                          aria-labelledby={t("Infobox Icon Drop Down")}
+                          data-testid="video-select-dropdown"
+                          aria-labelledby={t("Video Drop Down")}
                           onKeyDown={handleListKeyDown}
                         >
-                          <StyledMenuItem>Video</StyledMenuItem>
+                          <StyledVideoMenuItem>
+                            <BrightspaceSVG />
+                            <span style={{ marginLeft: "33.66px" }}>
+                              Add from Brightcove
+                            </span>
+                          </StyledVideoMenuItem>
+                          <StyledVideoMenuItem>
+                            <YoutubeSVG />
+                            <span style={{ marginLeft: "33.66px" }}>
+                              Add from YouTube
+                            </span>
+                          </StyledVideoMenuItem>
                         </StyledMenu>
                       </ClickAwayListener>
                     </Paper>
@@ -414,6 +507,8 @@ const CustomToolBar = ({
                 )}
               </Popper>
             </StyledVideoButton>
+            <Divider />
+
             <StyledVideoButton
               ref={TranscriptVideo}
               id="TranscriptVideo"
@@ -426,39 +521,9 @@ const CustomToolBar = ({
               disableElevation
               disableRipple
               disableFocusRipple
-              onClick={handleToggleTranscript}
+              onClick={handleToggleVideo}
             >
-              <span>Transcript</span>
-              <Popper
-                open={openTranscript}
-                anchorEl={TranscriptVideo.current}
-                placement="bottom-start"
-                transition
-                disablePortal
-              >
-                {({ TransitionProps }) => (
-                  <Grow {...TransitionProps}>
-                    <Paper>
-                      <ClickAwayListener onClickAway={handleClose}>
-                        <StyledMenu
-                          autoFocusItem={openTranscript}
-                          data-testid="transcript-icon"
-                          aria-labelledby={t("Transcript")}
-                          onKeyDown={handleListKeyDown}
-                        >
-                          <StyledMenuItem
-                            onClick={(e) => handleMenuItemClick(e, index)}
-                            data-testid={`Add Transcript`}
-                            aria-labelledby={`Add Transcript`}
-                          >
-                            {t("Add Transcript")}
-                          </StyledMenuItem>
-                        </StyledMenu>
-                      </ClickAwayListener>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
+              Transcript
             </StyledVideoButton>
           </StyledVideoToolbar>
         )}
@@ -754,6 +819,77 @@ const CustomToolBar = ({
               </StyledIconButton>
             </Tooltip>
             <HiddenQuillBackgroundColorSelector />
+            {/* {/* Video Kebab */}
+            {isVideo && (
+              <StyledKebabButton
+                ref={DescriptionKebab}
+                id="Video Settings"
+                // aria-controls={openVideo ? t("Add Video") : undefined}
+                // aria-expanded={openVideo ? "true" : undefined}
+                variant="contained"
+                fullWidth
+                disableElevation
+                disableRipple
+                disableFocusRipple
+                onClick={handleToggleVideoKebab}
+              >
+                <MoreVertRoundedIcon />
+
+                <Popper
+                  open={openDescriptionKebab}
+                  anchorEl={DescriptionKebab.current}
+                  placement="bottom-start"
+                  transition
+                  disablePortal
+                >
+                  {({ TransitionProps }) => (
+                    <Grow {...TransitionProps}>
+                      <Paper>
+                        <MenuItem
+                          key="Show description"
+                          value="Show description"
+                        >
+                          <ListItemIcon>
+                            <Checkbox />
+                          </ListItemIcon>
+                          <ListItemText primary="Show description" />
+                        </MenuItem>
+                        <MenuItem key="Show credit" value="Show credit">
+                          <ListItemIcon>
+                            <Checkbox />
+                          </ListItemIcon>
+                          <ListItemText primary="Show credit" />
+                        </MenuItem>
+
+                        {/* <StyledMenu
+                          autoFocusItem={openIcon}
+                          data-testid="icon-select-dropdown"
+                          aria-labelledby={t("Infobox Icon Drop Down")}
+                          onKeyDown={handleListKeyDown}
+                        >
+                          <FormGroup>
+                            <FormControl onClick={handleKebobChange}>
+                              <FormControlLabel
+                                control={<Checkbox />}
+                                label="Show description"
+                                size="small"
+                              />
+                            </FormControl>
+                            <FormControl onClick={handleKebobChange}>
+                              <FormControlLabel
+                                control={<Checkbox />}
+                                label="Show credit"
+                                size="small"
+                              />
+                            </FormControl>
+                          </FormGroup>
+                        </StyledMenu> */}
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              </StyledKebabButton>
+            )}
           </StyledToolbar>
         </div>
       </StyledAppbar>
