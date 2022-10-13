@@ -78,7 +78,7 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
     ? "196px !important"
     : "184px !important",
   margin: "10px, 8px",
-  paddingRight: isVideo && "0px !important",
+  paddingRight: "0px !important",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
@@ -95,8 +95,8 @@ const StyledVideoToolbar = styled(Toolbar)(({ isVideo }) => ({
   justifyContent: "space-between",
   minHeight: "40px !important",
   width: "200px !important",
-  padding: "0",
-  // margin: "10px, 8px",
+  paddingRight: "0px",
+  margin: "10px, 7px",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
@@ -646,52 +646,51 @@ const CustomToolBar = ({
               }}
             ></BoldDropdownButton>
 
-            {!isInfoBox ||
-              (!isVideo && (
-                <Tooltip
-                  aria-label="equation"
-                  title="equation"
-                  placement="top"
-                  arrow
-                  PopperProps={{
-                    disablePortal: true,
-                    popperOptions: {
-                      positionFixed: true,
-                      modifiers: {
-                        preventOverflow: {
-                          enabled: true,
-                          boundariesElement: "window", // where "window" is the boundary
-                        },
+            {!isInfoBox && !isVideo && (
+              <Tooltip
+                aria-label="equation"
+                title="equation"
+                placement="top"
+                arrow
+                PopperProps={{
+                  disablePortal: true,
+                  popperOptions: {
+                    positionFixed: true,
+                    modifiers: {
+                      preventOverflow: {
+                        enabled: true,
+                        boundariesElement: "window", // where "window" is the boundary
                       },
                     },
+                  },
+                }}
+              >
+                <StyledIconButton
+                  className={
+                    activeTopMenu === "math"
+                      ? "ql-formula ql-selected ql-active"
+                      : "ql-formula"
+                  }
+                  // style={{ display: isInfoBox ? "none" : "block" }}
+                  aria-label="math equation button"
+                  disableRipple
+                  color="inherit"
+                  disabled={infoHasFocus || videoHasFocus}
+                  onClick={() => {
+                    setAlignVisibility(false);
+                    setBoldVisibility(false);
+                    setListVisibility(false);
+                    if (activeTopMenu === "math") {
+                      setActiveTopMenu("");
+                    } else {
+                      setActiveTopMenu("math");
+                    }
                   }}
                 >
-                  <StyledIconButton
-                    className={
-                      activeTopMenu === "math"
-                        ? "ql-formula ql-selected ql-active"
-                        : "ql-formula"
-                    }
-                    // style={{ display: isInfoBox ? "none" : "block" }}
-                    aria-label="math equation button"
-                    disableRipple
-                    color="inherit"
-                    disabled={infoHasFocus || videoHasFocus}
-                    onClick={() => {
-                      setAlignVisibility(false);
-                      setBoldVisibility(false);
-                      setListVisibility(false);
-                      if (activeTopMenu === "math") {
-                        setActiveTopMenu("");
-                      } else {
-                        setActiveTopMenu("math");
-                      }
-                    }}
-                  >
-                    {icons["formula"]}
-                  </StyledIconButton>
-                </Tooltip>
-              ))}
+                  {icons["formula"]}
+                </StyledIconButton>
+              </Tooltip>
+            )}
 
             {/* alignment dropdown */}
             <Tooltip
