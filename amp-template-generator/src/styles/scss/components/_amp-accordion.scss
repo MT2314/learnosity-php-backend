@@ -1,14 +1,14 @@
 .wrapper.accordion-component {
     .btn.link {
-        color: $grey-500;
+        color: $button-active;
         font-family: $component-main-font;
-        font-style: normal;
-        font-size: 1.125rem;
+        font-weight: 600;
+        font-size: 1rem;
         text-decoration: none;
         text-transform: uppercase;
     }
     .btn.link:hover {
-        background-color: $brand-200;
+        background-color: $body-highlight;
         color: $hover-dialog-bg;
     }
     .btn.link:disabled {
@@ -21,7 +21,7 @@
         outline-offset: 0.125rem;
     }
     .vertical-bar {
-        color: $grey-500;
+        color: $button-disabled;
     }
 
   .accordion {
@@ -30,13 +30,13 @@
     section {
       &:first-child {
         .heading {
-          border-radius: 6px 6px 0 0;
+          border-radius: 0.625rem 0.625rem 0 0;
         }
       }
 
       &:last-child {
         .heading {
-          border-radius: 0 0 6px 6px;
+          border-radius: 0 0 0.625rem 0.625rem;
           border-bottom: 0.0625rem solid $component-border;
         }
       }
@@ -56,6 +56,11 @@
         background-color: $inactive-bg;
         border: 0.0625rem solid $component-border;
         border-bottom: none;
+        font-family: $component-main-font;
+        font-weight: 600;
+        font-size: 1.125rem;
+        letter-spacing: 0.03em;
+        line-height: 1.6875rem;
 
         .fa-chevron-up {
           background-color: $brand-500;
@@ -73,7 +78,7 @@
         }
 
         &:hover {
-          background-color: $transparent-grey-300;
+          background-color: $primary-bg;
           span {
             text-decoration-line: underline;
           }
@@ -99,13 +104,13 @@
 
   .section-content {
     border-color: $component-border;
-    background-color: $transparent-grey-50;
+    background-color: $primary-bg;
   }
 }
 
 /*! purgecss start ignore */
 .wrapper.accordion-component .accordion section[expanded] .heading {
-  background-color: $transparent-grey-100;
+  background-color: $active-bg;
 }
 
 .wrapper.accordion-component .accordion section:last-child[expanded] .heading {
