@@ -1,161 +1,34 @@
 .text-component {
   p {
-    font-family: $text-body-font;
     font-size: 1.375rem;
     margin: 0 0 1.25rem 0;
     font-weight: 400;
-    // line-height: 1.5rem;
-    // Changed line height to 1.8rem to make sure the anchor tag underline does not collide with text beneath it
-    line-height: 2.13rem;
+    line-height: 2.125rem;
     letter-spacing: 0.009375rem;
     color: #232323;
   }
 
   a {
     color: $primary-body-text;
-
-    // padding-bottom: 2px;
-    // border-bottom: 4px solid $link-underline;
-
     text-decoration: underline;
     text-decoration-color: $link-underline;
-    text-decoration-thickness: 4px;
-    text-underline-offset: 0.3em;
-    padding-bottom: 2px;
-
-    // position: relative;
-
-    // text-decoration: none;
-
-    box-shadow: inset 0 0 0 0 $link-underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 0.23em;
+    padding-bottom: 3px;
+    box-shadow: inset 0 0 0 0 $body-highlight;
     transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 
-    // &::selection {
-    //   border-color: $primary-body-text;
-    // }
-
     &:hover {
-      /*   color: #fff; */
-      box-shadow: inset 0 -40px 0 0 $link-underline;
+      box-shadow: inset 0 -40px 0 0 $body-highlight;
     }
-
-    // text-shadow: none;
-    // --tve-applied-text-shadow: none;
-    // color: rgb(22, 23, 37);
-    // --tve-applied-color: var$(--tcb-color-7);
-    // --eff-color: rgba(50, 225, 77, 0.75);
-    // --eff-faded: rgba(50, 225, 77, 0.35);
-    // --eff-ensure-contrast: rgba(50, 225, 77, 0.35);
-    // --eff-ensure-contrast-complement: rgba(50, 198, 225, 0.35);
-    // box-shadow: none;
-    // border-bottom: none;
-    // background-image: linear-gradient(
-    //   var(--eff-ensure-contrast) 0%,
-    //   var(--eff-ensure-contrast) 100%
-    // );
-    // background-position: 0px 100%;
-    // background-size: 1px 0.1em;
-    // background-repeat: repeat-x;
-    // background-attachment: initial;
-    // background-origin: initial;
-    // background-clip: initial;
-    // background-color: initial;
-    // text-decoration: none;
-    // animation: 0s ease 0s 1 normal none running none;
-    // transition: background-size 0.2s ease 0.05s;
-    // padding-left: 0px;
-    // --eff: anim-fill;
-    // --tve-applied-box-shadow: none;
-    // --tve-applied-background-image: linear-gradient(
-    //   var$(--eff-ensure-contrast) 0%,
-    //   var$(--eff-ensure-contrast) 100%
-    // );
-
-    // &:hover {
-    //   text-decoration: none;
-    //   background-image: linear-gradient(
-    //     var(--eff-ensure-contrast) 0%,
-    //     var(--eff-ensure-contrast) 100%
-    //   );
-    //   background-position: 0px 100%;
-    //   background-size: 100% 100%;
-    //   background-repeat: repeat-x;
-    //   background-attachment: initial;
-    //   background-origin: initial;
-    //   background-clip: initial;
-    //   background-color: initial;
-    //   box-shadow: none;
-    //   --tve-applied-box-shadow: none;
-    //   --tve-applied-background-image: linear-gradient(
-    //     var$(--eff-ensure-contrast) 0%,
-    //     var$(--eff-ensure-contrast) 100%
-    //   );
-    //   border-color: transparent;
-    // }
-
-    // &::after {
-    //   content: "";
-    //   position: absolute;
-    //   bottom: 0.5px;
-    //   left: -0.02px;
-    //   width: 100%;
-    //   height: 100%;
-    //   transform: scaleY(0);
-    //   transform-origin: bottom center;
-    //   background-color: $link-underline;
-    //   z-index: -1;
-    //   transition: transform 0.3s;
-    // }
-
-    // &:hover::after {
-    //   transform: scaleY(1);
-    // }
 
     &:visited {
       text-decoration-color: $link-visited-underline;
-      // border-color: $link-visited-underline;
+    }
 
-      // &::after {
-      //   content: "";
-      //   position: absolute;
-      //   bottom: 0;
-      //   left: -0.02px;
-      //   width: 100%;
-      //   height: 100%;
-      //   transform: scaleY(0);
-      //   transform-origin: bottom center;
-      //   background-color: $link-visited-underline;
-      //   z-index: -1;
-      //   transition: transform 0.3s;
-      // }
-
-      // &:hover {
-      //   text-decoration-color: $link-visited-underline;
-      //   box-shadow: inset 0 -40px 0 0 yellow;
-      // }
-
-      // &:hover {
-      //   text-decoration: none;
-      //   --eff-ensure-contrast: rgba(87, 33, 212, 0.35);
-      //   background-image: linear-gradient(
-      //     var(--eff-ensure-contrast) 0%,
-      //     var(--eff-ensure-contrast) 100%
-      //   );
-      //   background-position: 0px 100%;
-      //   background-size: 100% 100%;
-      //   background-repeat: repeat-x;
-      //   background-attachment: initial;
-      //   background-origin: initial;
-      //   background-clip: initial;
-      //   background-color: initial;
-      //   box-shadow: none;
-      //   --tve-applied-box-shadow: none;
-      //   --tve-applied-background-image: linear-gradient(
-      //     var$(--eff-ensure-contrast) 0%,
-      //     var$(--eff-ensure-contrast) 100%
-      //   );
-      //   border-color: transparent;
-      // }
+    &:focus {
+      outline: 2px solid $link-focus;
+      border-radius: 2px;
     }
 
     .anchor-icon {
@@ -167,6 +40,21 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
+  }
+
+  ul,
+  ol {
+    font-size: 1.375rem;
+    margin-left: 1.75rem;
+  }
+
+  li span {
+    position: relative;
+    left: 0.875rem;
+  }
+
+  li {
+    padding-bottom: 0.875rem;
   }
 
   // Align text right
