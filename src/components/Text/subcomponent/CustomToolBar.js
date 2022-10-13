@@ -852,13 +852,29 @@ const CustomToolBar = ({
                             data-testid="video-select-dropdown"
                             aria-labelledby={t("Video Drop Down")}
                             onKeyDown={handleListKeyDown}
+                            sx={{
+                              width: "204px",
+                              height: "108px",
+                              paddingLeft: "27.5px",
+                              paddingTop: "23px",
+                              paddingBottom: "23px",
+                            }}
                           >
-                            <FormGroup>
+                            <FormGroup sx={{ gap: "14px" }}>
                               <FormControl onClick={handleKebobChange}>
                                 <FormControlLabel
                                   control={<Checkbox />}
                                   label="Show description"
                                   size="small"
+                                  sx={{
+                                    height: "24px",
+                                    whiteSpace: "nowrap",
+                                    fontFamily: `"Inter", sans-serif`,
+                                    fontSize: "1rem",
+                                    fontWeight: "400",
+                                    lineHeight: "1.5rem",
+                                    letterSpacing: "0.009375rem",
+                                  }}
                                 />
                               </FormControl>
                               <FormControl onClick={handleKebobChange}>
@@ -866,6 +882,15 @@ const CustomToolBar = ({
                                   control={<Checkbox />}
                                   label="Show credit"
                                   size="small"
+                                  sx={{
+                                    height: "24px",
+                                    whiteSpace: "nowrap",
+                                    fontFamily: `"Inter", sans-serif`,
+                                    fontSize: "1rem",
+                                    fontWeight: "400",
+                                    lineHeight: "1.5rem",
+                                    letterSpacing: "0.009375rem",
+                                  }}
                                 />
                               </FormControl>
                             </FormGroup>
