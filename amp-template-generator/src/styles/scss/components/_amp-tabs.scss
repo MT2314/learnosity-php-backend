@@ -3,6 +3,17 @@
   // viewports with the default padding. This reduces the outer
   // padding between the tab border and the viewport to 5px to
   // alleviate the problem.
+  p {
+    margin: 0;
+  }
+
+  .wrapper {
+    &:last-child.bottom-margin {
+      // This clears the bottom-margin that is added to text/other components
+      margin-bottom: 0;
+    }
+  }
+
   .tabs {
     &[role="tablist"] {
       /* Styles for the flex layout based tabs */
@@ -19,7 +30,7 @@
         width: min-content;
         height: 4.625rem;
         border-left-width: 0;
-        background-color: $inactive-tab-bg;
+        background-color: $inactive-bg;
 
         p {
           font-weight: 600;
@@ -49,6 +60,10 @@
         }
 
         .hoverTabText {
+          font-family: $component-main-font;
+          font-size: 1.125rem;
+          font-weight: 600;
+          line-height: 1.6875rem;
           position: absolute;
           display: none;
           background: $grey-800;
@@ -71,9 +86,9 @@
           width: 24%;
         }
 
-        &:hover, 
+        &:hover,
         &:focus-visible {
-          background-color: $primary-tab-bg;
+          background-color: $primary-bg;
           text-decoration-line: underline;
           .hoverTabText {
             display: block;
@@ -81,7 +96,7 @@
         }
 
         &[selected] {
-          background-color: $active-tab-bg;
+          background-color: $active-bg;
           border-bottom: 0.25rem solid $tab-border-bottom;
           color: $grey-900;
 
@@ -96,17 +111,20 @@
         width: 100%;
         order: 1;
         border-color: $component-border;
-        background: $primary-tab-bg;
+        background: $primary-bg;
       }
 
       & [role="tab"][selected] + [role="tabpanel"] {
         display: block;
+        margin: 0;
+        padding: 1.25rem 1.5rem 1.5rem 1.5rem;
       }
 
-      & [role="tab"], 
+      & [role="tab"],
       & [role="tabpanel"] {
         &:focus-visible {
-          outline: 0.0625rem solid $tab-focus;
+          outline: 0.125rem solid $tab-focus;
+          outline-offset: 0.125rem;
           z-index: 99;
         }
       }

@@ -1,89 +1,156 @@
-.wrapper.accordion {
-    .btn.link {
-        color: $grey-500;
-        font-weight: 400;
-        font-family: "Lato", sans-serif;
-        font-style: normal;
-        font-size: 1.125rem;
-        text-decoration: none;
-    }
-    .btn.link:hover {
-        background-color: $brand-200;
-    }
-    .btn.link:disabled {
-        opacity: 0.2;
-        box-shadow: none;
-        pointer-events: none;
-    }
-    .verticalBar {
-        color: $grey-500;
-    }
+.wrapper.accordion-component {
+  .btn.link {
+    color: $button-active;
+    font-family: $component-main-font;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
 
-    .accordion {
-        clear: right;
+  .btn.link:hover {
+    background-color: $body-highlight;
+    color: $hover-dialog-bg;
+  }
 
+  .btn.link:disabled {
+    opacity: 0.2;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  .btn.link:focus-visible {
+    outline: 0.125rem solid $tab-focus;
+    outline-offset: 0.125rem;
+  }
+
+  .vertical-bar {
+    color: $button-disabled;
+  }
+
+  .accordion {
+    clear: right;
+
+    section {
+      &:first-child {
         .heading {
-            background-color: $white;
-            border-color: $border-color;
-            
-            &:hover {
-                background-color: $transparent-grey-300;
-                i {
-                    display: inline-block;
-                    border-radius: 3.75em;
-                    box-shadow: 0 0 3px #888;
-                    padding: 0.5em 0.6em;
-                    position: absolute;
-                    right: 0.4em;
-                    bottom: 0.75em;
-                }
-                .fa-chevron-up {
-                    background-color: $brand-500;
-                    color: $white;
-                }
-                .fa-chevron-down {
-                    background-color: $transparent-grey-300;
-                }
+          border-radius: 0.625rem 0.625rem 0 0;
+        }
+      }
 
-            }
+      &:last-child {
+        .heading {
+          border-radius: 0 0 0.625rem 0.625rem;
+          border-bottom: 0.0625rem solid $component-border;
+        }
+      }
 
-            span {
-                width: calc(100% - 1.5rem);
+      &[expanded] {
+        .heading {
+          border-bottom: 0.0625rem solid $component-border;
+
+          &:focus-visible {
+            outline: 0.0625rem solid $tab-focus;
+            z-index: 99;
+          }
+        }
+      }
+
+      .heading {
+        background-color: $inactive-bg;
+        border: 0.0625rem solid $component-border;
+        border-bottom: none;
+        font-family: $component-main-font;
+        font-weight: 600;
+        font-size: 1.125rem;
+        letter-spacing: 0.03em;
+        line-height: 1.6875rem;
+
+        .flexDisplay {
+            display: flex;
+            align-items: center;
+        }
+        i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: $amp-icons-font;
+            font-style: normal;
+            font-weight: normal;
+            /* Font smoothing. That was taken from TWBS */
+            -webkit-font-smoothing: antialiased;
+            border-radius: 50%;
+            height: 2.5rem;
+            width: 2.5rem;
+            &:before {
+                position: relative;
+                top: 2px;
             }
         }
-        
-        .section-content {
-            border-color: $border-color;
-            background-color: $transparent-grey-300;
+        .hiddenIcon {
+            display: none;
+        }
+        .chevronUp {
+            background-color: $brand-500;
+            color: $white;
         }
 
-        section {
-            &:first-child {
-                .heading {
-                    border-radius: 6px 6px 0 0;
-                }
+        span {
+          width: calc(100% - 0.5rem);
+        }
+
+        &:hover {
+          background-color: $active-bg;
+          .underText {
+            text-decoration-line: underline;
             }
-        
-            &:last-child {
-                .heading {
-                    border-radius: 0 0 6px 6px;
-                }
+            .chevronDown {
+                background-color: $active-bg;
             }
         }
+
+        &:focus-visible {
+          outline: 0.125rem solid $tab-focus;
+          outline-offset: 0.125rem;
+          z-index: 99;
+        }
+      }
+
+      .section-content {
+        border-color: $component-border;
+        background-color: $primary-bg;
+        padding: 1.5rem;
+
+        // This strips paragraph tags of global styles for nesting inside other components
+        p {
+          margin: 0;
+        }
+
+        .text-component {
+          padding: 0;
+        }
+
+        .wrapper {
+          &:nth-last-child(2).bottom-margin {
+            // This clears the bottom-margin that is added to text/other components
+            margin-bottom: 0;
+          }
+        }
+      }
     }
+  }
 }
 
 /*! purgecss start ignore */
-.wrapper.accordion .accordion section[expanded] .heading {
-    background-color: $accordion-heading-active-bg;
-    border-color: $accordion-heading-active-border;
+.wrapper.accordion-component .accordion section[expanded] .heading {
+  background-color: $active-bg;
 }
 
-.wrapper.accordion .accordion section:last-child[expanded] .heading {
-    border-radius: 0;
+.wrapper.accordion-component .accordion section:last-child[expanded] .heading {
+  border-radius: 0;
 }
 
-.wrapper.accordion .accordion section:last-child[expanded] .section-content {
-    border-bottom: 1px solid $border-color;
+.wrapper.accordion-component .accordion section:last-child[expanded] .section-content {
+  border-bottom: 1px solid $component-border;
 }
 /*! purgecss end ignore */
