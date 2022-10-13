@@ -17,7 +17,7 @@ $brand-100: rgba(206, 246, 213, 1); // Text link underline, text link hover
 $brand-50: rgba(238, 255, 241, 1); // Text highlight
 
 // Grey Colors (Used for text/typography)
-$grey-900: rgba(33, 33, 33, 1); // Primary body text
+$grey-900: rgba(41, 41, 41, 1); // Primary body text
 $grey-800: rgba(64, 64, 64, 1); // Overflow text box
 $grey-700: rgba(89, 89, 89, 1); // TBD
 $grey-600: rgba(117, 117, 117, 1); // Secondary text - picture caption
@@ -75,24 +75,41 @@ $secondary-text: $grey-600;
 // Component-Specific Roles
 
 // Text
+$link-underline: $brand-100;
+$link-visited-underline: $brand-300;
+// Body highlight
+$body-highlight: $brand-100;
 
-// Tabs
+// Tabs/Accordion
 // background colors
-$primary-tab-bg: $transparent-grey-50;
-$active-tab-bg: $transparent-grey-100;
-$inactive-tab-bg: $white;
+$primary-bg: $transparent-grey-50;
+$active-bg: $transparent-grey-100;
+$inactive-bg: $white;
+// Accordion expand all/collapse buttons
+$button-active: $grey-700;
+$button-disabled: $grey-500;
+$accordion-button-hover: $brand-200;
 
 // Hover dialog background
-$hover-dialog-bg: #404040;
+$hover-dialog-bg: $grey-800;
 
 // focus colors
-$tab-focus: rgba(0, 136, 0, 1);
+$tab-focus: $brand-500;
 
 // Border colors
 $component-border: $transparent-grey-300;
 $tab-border-bottom: $brand-500;
 
-// Accordion
+
+
+
+
+
+
+
+
+
+
 
 // Old colours/variables (KEEPING TO MAINTAIN PREVIOUS STYLES FOR NOW)
 // ----------------------------------------------------------------------
@@ -160,13 +177,6 @@ $danger-icon: #f43131; // $text-red
 // but still have a singular purpose.
 //
 $border-color: $brand-secondary;
-
-// Links
-$link-underline: $brand-100;
-$link-visited-underline: $brand-300;
-
-// Body highlight
-$body-highlight: $brand-100;
 
 // Buttons
 $btn-default-bg: $brand-primary;
