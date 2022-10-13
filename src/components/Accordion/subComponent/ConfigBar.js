@@ -84,7 +84,7 @@ const ConfigBar = ({ paneIndex, setPaneIndex, setRemoveError }) => {
             func: "ADD_LAYER",
             id: uuidv4(),
             title: `Pane ${state.length + 1}`,
-            expanded: false, 
+            expanded: true, 
             paneIndex
         });
     };
