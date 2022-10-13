@@ -7,9 +7,11 @@
     margin: 0;
   }
 
-  // This clears the bottom-margin that is added to text/other components
-  .bottom-margin {
-    margin-bottom: 0;
+  .wrapper {
+    &:last-child.bottom-margin {
+      // This clears the bottom-margin that is added to text/other components
+      margin-bottom: 0;
+    }
   }
 
   .tabs {
