@@ -28,7 +28,7 @@
         width: min-content;
         height: 4.625rem;
         border-left-width: 0;
-        background-color: $inactive-tab-bg;
+        background-color: $inactive-bg;
 
         p {
           font-weight: 600;
@@ -86,7 +86,7 @@
 
         &:hover,
         &:focus-visible {
-          background-color: $primary-tab-bg;
+          background-color: $primary-bg;
           text-decoration-line: underline;
           .hoverTabText {
             display: block;
@@ -94,7 +94,7 @@
         }
 
         &[selected] {
-          background-color: $active-tab-bg;
+          background-color: $active-bg;
           border-bottom: 0.25rem solid $tab-border-bottom;
           color: $grey-900;
 
@@ -109,7 +109,7 @@
         width: 100%;
         order: 1;
         border-color: $component-border;
-        background: $primary-tab-bg;
+        background: $primary-bg;
       }
 
       & [role="tab"][selected] + [role="tabpanel"] {
