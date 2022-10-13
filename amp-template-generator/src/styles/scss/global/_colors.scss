@@ -75,9 +75,10 @@ $secondary-text: $grey-600;
 // Component-Specific Roles
 
 // Text
-$link-underline: $brand-100;
+$link-underline: $brand-200;
 $link-visited-underline: $brand-300;
-// Body highlight
+$link-focus: $brand-500;
+// Body highlight and link highlight animation color
 $body-highlight: $brand-100;
 
 // Tabs/Accordion
@@ -99,17 +100,6 @@ $tab-focus: $brand-500;
 // Border colors
 $component-border: $transparent-grey-300;
 $tab-border-bottom: $brand-500;
-
-
-
-
-
-
-
-
-
-
-
 
 // Old colours/variables (KEEPING TO MAINTAIN PREVIOUS STYLES FOR NOW)
 // ----------------------------------------------------------------------
