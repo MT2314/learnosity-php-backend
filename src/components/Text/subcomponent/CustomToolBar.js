@@ -20,6 +20,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import SvgIcon from "@mui/material/SvgIcon";
 import BrightspaceSVG from "../../Video/assets/Brightspace";
 import YoutubeSVG from "../../Video/assets/Youtube";
+import KebabSVG from "../../Video/assets/Kebab";
 // ? Text Toolbar imports
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
@@ -77,6 +78,7 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
     ? "196px !important"
     : "184px !important",
   margin: "10px, 8px",
+  paddingRight: isVideo && "0px !important",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
@@ -138,9 +140,11 @@ const StyledVideoMenuItem = styled(MenuItem)({
 });
 
 const StyledKebabButton = styled(IconButton)(({ disabled }) => ({
-  justifyContent: "flex",
+  display: "flex !important",
   height: "30px",
-  padding: "7px",
+  width: "30px",
+  padding: "5px",
+  margin: "0px",
   color: "#232323",
   backgroundColor: "none",
   borderRadius: "4px !important",
@@ -166,6 +170,27 @@ const StyledKebabButton = styled(IconButton)(({ disabled }) => ({
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
   },
 }));
+const StyledFormControlLabel = styled(FormControlLabel)(({ isVideo }) => ({
+  height: "24px",
+  whiteSpace: "nowrap",
+  fontFamily: `"Inter", sans-serif`,
+  fontSize: "1rem",
+  fontWeight: "400",
+  lineHeight: "1.5rem",
+  letterSpacing: "0.009375rem",
+}));
+const StyledKebabMenu = styled(MenuList)({
+  background: "#FFFFFF",
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  borderRadius: "4px",
+  marginLeft: "0px",
+  marginTop: "12px",
+  width: "204px",
+  height: "108px",
+  paddingLeft: "27.5px",
+  paddingTop: "23px",
+  paddingBottom: "23px",
+});
 
 // Info Box
 const StyledIconDropdownButton = styled(Button)({
@@ -212,7 +237,7 @@ const StyledMenuItem = styled(MenuItem)({
 });
 
 const StyledIconButton = styled(IconButton)(({ disabled }) => ({
-  justifyContent: "flex-start !important",
+  display: "flex !important",
   width: "30px",
   height: "30px",
   padding: "7px",
@@ -609,52 +634,53 @@ const CustomToolBar = ({
               }}
             ></BoldDropdownButton>
 
-            {(!isInfoBox || !isVideo) && (
-              <Tooltip
-                aria-label="equation"
-                title="equation"
-                placement="top"
-                arrow
-                PopperProps={{
-                  disablePortal: true,
-                  popperOptions: {
-                    positionFixed: true,
-                    modifiers: {
-                      preventOverflow: {
-                        enabled: true,
-                        boundariesElement: "window", // where "window" is the boundary
+            {!isInfoBox ||
+              (!isVideo && (
+                <Tooltip
+                  aria-label="equation"
+                  title="equation"
+                  placement="top"
+                  arrow
+                  PopperProps={{
+                    disablePortal: true,
+                    popperOptions: {
+                      positionFixed: true,
+                      modifiers: {
+                        preventOverflow: {
+                          enabled: true,
+                          boundariesElement: "window", // where "window" is the boundary
+                        },
                       },
                     },
-                  },
-                }}
-              >
-                <StyledIconButton
-                  className={
-                    activeTopMenu === "math"
-                      ? "ql-formula ql-selected ql-active"
-                      : "ql-formula"
-                  }
-                  // style={{ display: isInfoBox ? "none" : "block" }}
-                  aria-label="math equation button"
-                  disableRipple
-                  color="inherit"
-                  disabled={infoHasFocus || videoHasFocus}
-                  onClick={() => {
-                    setAlignVisibility(false);
-                    setBoldVisibility(false);
-                    setListVisibility(false);
-                    if (activeTopMenu === "math") {
-                      setActiveTopMenu("");
-                    } else {
-                      setActiveTopMenu("math");
-                    }
-                    setActiveDropDownItem("");
                   }}
                 >
-                  {icons["formula"]}
-                </StyledIconButton>
-              </Tooltip>
-            )}
+                  <StyledIconButton
+                    className={
+                      activeTopMenu === "math"
+                        ? "ql-formula ql-selected ql-active"
+                        : "ql-formula"
+                    }
+                    // style={{ display: isInfoBox ? "none" : "block" }}
+                    aria-label="math equation button"
+                    disableRipple
+                    color="inherit"
+                    disabled={infoHasFocus || videoHasFocus}
+                    onClick={() => {
+                      setAlignVisibility(false);
+                      setBoldVisibility(false);
+                      setListVisibility(false);
+                      if (activeTopMenu === "math") {
+                        setActiveTopMenu("");
+                      } else {
+                        setActiveTopMenu("math");
+                      }
+                      setActiveDropDownItem("");
+                    }}
+                  >
+                    {icons["formula"]}
+                  </StyledIconButton>
+                </Tooltip>
+              ))}
 
             {/* alignment dropdown */}
             <Tooltip
@@ -814,6 +840,7 @@ const CustomToolBar = ({
 
                   setActiveTopMenu(activeTopMenu === "link" ? "" : "link");
                 }}
+                sx={{ paddingLeft: "12px", paddingRight: "12px" }}
               >
                 {icons["link"]}
               </StyledIconButton>
@@ -821,86 +848,63 @@ const CustomToolBar = ({
             <HiddenQuillBackgroundColorSelector />
             {/* {/* Video Kebab */}
             {isVideo && (
-              <StyledKebabButton
-                ref={DescriptionKebab}
-                id="Video Settings"
-                // aria-controls={openVideo ? t("Add Video") : undefined}
-                // aria-expanded={openVideo ? "true" : undefined}
-                variant="contained"
-                fullWidth
-                disableElevation
-                disableRipple
-                disableFocusRipple
-                onClick={handleToggleVideoKebab}
-              >
-                <MoreVertRoundedIcon />
-
-                <Popper
-                  open={openDescriptionKebab}
-                  anchorEl={DescriptionKebab.current}
-                  placement="bottom-start"
-                  transition
-                  disablePortal
-                  sx={{ marginTop: "8px !important" }}
+              <>
+                <Divider />
+                <StyledKebabButton
+                  ref={DescriptionKebab}
+                  id="Video Settings"
+                  // aria-controls={openVideo ? t("Add Video") : undefined}
+                  // aria-expanded={openVideo ? "true" : undefined}
+                  // variant="contained"
+                  // fullWidth
+                  disableElevation
+                  disableRipple
+                  disableFocusRipple
+                  onClick={handleToggleVideoKebab}
                 >
-                  {({ TransitionProps }) => (
-                    <Grow {...TransitionProps}>
-                      <Paper>
-                        <ClickAwayListener onClickAway={handleCloseVideo}>
-                          <StyledMenu
-                            autoFocusItem={openVideo}
-                            data-testid="video-select-dropdown"
-                            aria-labelledby={t("Video Drop Down")}
-                            onKeyDown={handleListKeyDown}
-                            sx={{
-                              width: "204px",
-                              height: "108px",
-                              paddingLeft: "27.5px",
-                              paddingTop: "23px",
-                              paddingBottom: "23px",
-                            }}
-                          >
-                            <FormGroup sx={{ gap: "14px" }}>
-                              <FormControl onClick={handleKebobChange}>
-                                <FormControlLabel
-                                  control={<Checkbox />}
-                                  label="Show description"
-                                  size="small"
-                                  sx={{
-                                    height: "24px",
-                                    whiteSpace: "nowrap",
-                                    fontFamily: `"Inter", sans-serif`,
-                                    fontSize: "1rem",
-                                    fontWeight: "400",
-                                    lineHeight: "1.5rem",
-                                    letterSpacing: "0.009375rem",
-                                  }}
-                                />
-                              </FormControl>
-                              <FormControl onClick={handleKebobChange}>
-                                <FormControlLabel
-                                  control={<Checkbox />}
-                                  label="Show credit"
-                                  size="small"
-                                  sx={{
-                                    height: "24px",
-                                    whiteSpace: "nowrap",
-                                    fontFamily: `"Inter", sans-serif`,
-                                    fontSize: "1rem",
-                                    fontWeight: "400",
-                                    lineHeight: "1.5rem",
-                                    letterSpacing: "0.009375rem",
-                                  }}
-                                />
-                              </FormControl>
-                            </FormGroup>
-                          </StyledMenu>
-                        </ClickAwayListener>
-                      </Paper>
-                    </Grow>
-                  )}
-                </Popper>
-              </StyledKebabButton>
+                  <KebabSVG />
+
+                  <Popper
+                    open={openDescriptionKebab}
+                    anchorEl={DescriptionKebab.current}
+                    placement="bottom-start"
+                    transition
+                    disablePortal
+                  >
+                    {({ TransitionProps }) => (
+                      <Grow {...TransitionProps}>
+                        <Paper>
+                          <ClickAwayListener onClickAway={handleCloseVideo}>
+                            <StyledKebabMenu
+                              autoFocusItem={openDescriptionKebab}
+                              data-testid="video-select-dropdown"
+                              aria-labelledby={t("Video Drop Down")}
+                              onKeyDown={handleListKeyDown}
+                            >
+                              <FormGroup sx={{ gap: "14px" }}>
+                                <FormControl onClick={handleKebobChange}>
+                                  <StyledFormControlLabel
+                                    control={<Checkbox />}
+                                    label="Show description"
+                                    size="small"
+                                  />
+                                </FormControl>
+                                <FormControl onClick={handleKebobChange}>
+                                  <StyledFormControlLabel
+                                    control={<Checkbox />}
+                                    label="Show credit"
+                                    size="small"
+                                  />
+                                </FormControl>
+                              </FormGroup>
+                            </StyledKebabMenu>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
+                    )}
+                  </Popper>
+                </StyledKebabButton>
+              </>
             )}
           </StyledToolbar>
         </div>
