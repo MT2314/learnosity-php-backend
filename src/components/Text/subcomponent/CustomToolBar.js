@@ -105,7 +105,7 @@ const StyledVideoToolbar = styled(Toolbar)(({ isVideo }) => ({
     paddingRight: 0,
   },
 }));
-const StyledVideoButton = styled(Button)(({ isVideo }) => ({
+const StyledVideoButton = styled(Button)(({ openVideo }) => ({
   display: "flex",
   flexDirection: "row",
   backgroundColor: "#FFF",
@@ -120,24 +120,28 @@ const StyledVideoButton = styled(Button)(({ isVideo }) => ({
   whiteSpace: "nowrap",
   textAlign: "center",
   textTransform: "none",
-
+  ...(openVideo && {
+    cursor: "pointer",
+    color: "rgba(21, 101, 192, 1)",
+  }),
   "&:hover": {
     background: "#FFF",
     color: "#1565C0",
   },
 }));
 
-const StyledVideoMenuItem = styled(MenuItem)({
+const StyledVideoMenuItem = styled(MenuItem)(({ openVideo }) => ({
   width: "287px",
   padding: "6px 16px",
   height: "36px",
+
   "&:hover": {
     backgroundColor: " rgba(0, 0, 0, 0.04);!important",
   },
   "&:active": {
     backgroundColor: " rgba(0, 0, 0, 0.04);!important",
   },
-});
+}));
 
 const StyledKebabButton = styled(IconButton)(
   ({ disabled, openDescriptionKebab, checked }) => ({
@@ -149,29 +153,10 @@ const StyledKebabButton = styled(IconButton)(
     color: "#232323",
     backgroundColor: "none",
     borderRadius: "4px !important",
-
-    // "& svg": {
-    //   color: "#000",
-    //   ...(disabled && { opacity: 0.3 }),
-    // },
-    // "&:hover": {
-    //   backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    //   "& svg": {
-    //     color: "rgba(21, 101, 192, 1)",
-    //   },
-    // },
     ...(openDescriptionKebab && {
       cursor: "pointer",
       backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-      // "& svg": {
-      //   color: "#000",
-      //   backgroundColor: "none",
-      //   ...(disabled && { opacity: 0.3 }),
-      // },
     }),
-    // "&:focus-visible": {
-    //   backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    // },
   })
 );
 const StyledFormControlLabel = styled(FormControlLabel)(({ isVideo }) => ({
@@ -351,6 +336,16 @@ const CustomToolBar = ({
     setTranscriptOpen(false);
     setDescriptionKebabOpen(false);
   };
+  const handleClickTranscript = (e) => {
+    e.target.contains(TranscriptVideo.current) && setVideoOpen(!openVideo);
+    setActiveTopMenu("");
+    setActiveDropDownItem("");
+    setBoldVisibility(false);
+    setListVisibility(false);
+    setAlignVisibility(false);
+    setVideotOpen(false);
+    setDescriptionKebabOpen(false);
+  };
   const handleToggleVideoKebab = (e) => {
     setDescriptionKebabOpen(!openDescriptionKebab);
     setActiveTopMenu("");
@@ -502,6 +497,7 @@ const CustomToolBar = ({
               aria-controls={openVideo ? t("Add Video") : undefined}
               aria-expanded={openVideo ? "true" : undefined}
               variant="contained"
+              openVideo={openVideo}
               fullWidth
               disableElevation
               disableRipple
@@ -560,7 +556,7 @@ const CustomToolBar = ({
               disableElevation
               disableRipple
               disableFocusRipple
-              onClick={handleToggleVideo}
+              onClick={handleClickTranscript}
             >
               Transcript
             </StyledVideoButton>
