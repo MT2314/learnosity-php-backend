@@ -100,7 +100,6 @@ const VideoDescriptionCredit = (props) => {
         body={stateBody}
         setProp={updateBody}
         setTextRef={setTextRef}
-        sx={{ background: "#FFF" }}
         {...props}
       />
       <DescriptionInput
@@ -119,8 +118,9 @@ const VideoDescriptionCredit = (props) => {
         name="infoBoxBody"
         aria-label={props.t("InfoBox body")}
         aria-multiline="true"
-        placeholder="Description"
+        placeholder="Video description"
       />
+
       <CreditInpput type="text" placeholder="Credit" />
     </div>
   );

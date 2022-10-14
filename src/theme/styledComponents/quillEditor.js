@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 export const ReactQuillContainer = styled("div")(
   ({ theme, isInfoBox, isVideo }) => ({
     "& .ql-container": {
-      background: !isInfoBox && !isVideo ? "rgba(255, 255, 255, 1)" : "#FAFAFA",
+      background: !isInfoBox ? "rgba(255, 255, 255, 1)" : "#FAFAFA",
       padding: !isInfoBox && !isVideo ? "40px 104px" : "15px 15px",
       minHeight: "100px",
       ...(isInfoBox || (isVideo && { margin: "0px 0px 0px -15px !important" })),
@@ -21,10 +21,14 @@ export const ReactQuillContainer = styled("div")(
       fontFamily: ["Inter", "sans-serif"].join(","),
       letterSpacing: "0.15px",
       letterHeight: "24px",
-      background: !isInfoBox && !isVideo ? "rgba(255, 255, 255, 1)" : "#FAFAFA",
+      background: !isInfoBox ? "rgba(255, 255, 255, 1)" : "#FAFAFA",
     },
     "& .ql-editor.ql-blank::before": {
       padding: !isInfoBox && !isVideo ? "0px 104px" : "0px !important",
+      background: isVideo && "rgba(255, 255, 255, 1)",
+    },
+    "& .ql-editor.ql-blank::after": {
+      background: isVideo && "rgba(255, 255, 255, 1)",
     },
     "& .ql-toolbar .MuiPaper-root": {
       background: !isInfoBox && !isVideo ? "rgba(255, 255, 255, 1)" : "#FAFAFA",
