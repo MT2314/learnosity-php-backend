@@ -24,6 +24,7 @@ export const ReactQuillContainer = styled("div")(
       fontFamily: ["Inter", "sans-serif"].join(","),
       letterSpacing: "0.15px",
       letterHeight: "24px",
+      whiteSpace: "normal",
       background: !isInfoBox ? "rgba(255, 255, 255, 1)" : "#FAFAFA",
       "& p": {
         marginLeft: "-12px",
