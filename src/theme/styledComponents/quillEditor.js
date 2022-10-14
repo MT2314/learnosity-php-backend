@@ -5,12 +5,15 @@ export const ReactQuillContainer = styled("div")(
     "& .ql-container": {
       background: !isInfoBox ? "rgba(255, 255, 255, 1)" : "#FAFAFA",
       padding: !isInfoBox && !isVideo ? "40px 104px" : "15px 15px",
-      minHeight: "100px",
+      paddingBottom: isVideo && "10px",
+      minHeight: !isVideo ? "100px" : "30px",
       ...(isInfoBox || (isVideo && { margin: "0px 0px 0px -15px !important" })),
     },
     "& .ql-editor": {
-      minHeight: "96px",
-      padding: !isInfoBox ? "0 15px" : "0px",
+      minHeight: !isVideo ? "100px" : "20px",
+      height: isVideo && "20px",
+      padding: !isInfoBox || !isVideo ? "0 15px" : "0px",
+      paddingBottom: isVideo && "20px",
       border: `none`,
       borderRadius: `none`,
       boxShadow: `none`,
@@ -22,6 +25,9 @@ export const ReactQuillContainer = styled("div")(
       letterSpacing: "0.15px",
       letterHeight: "24px",
       background: !isInfoBox ? "rgba(255, 255, 255, 1)" : "#FAFAFA",
+      "& p": {
+        marginLeft: "-12px",
+      },
     },
     "& .ql-editor.ql-blank::before": {
       padding: !isInfoBox && !isVideo ? "0px 104px" : "0px !important",

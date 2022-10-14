@@ -22,8 +22,7 @@ const DescriptionInput = styled(TextareaAutosize)({
   marginTop: "15px",
   lineHeight: "1.5rem",
   color: "#232323",
-  minHeight: "72px",
-  marginTop: "0.9375rem",
+  minHeight: "20px",
   background: "#FFF",
   resize: "none",
 
@@ -40,7 +39,7 @@ const DescriptionInput = styled(TextareaAutosize)({
   },
 });
 
-const CreditInpput = styled("input")({
+const CreditInput = styled("input")({
   width: "622px",
   border: "none",
   height: "16px",
@@ -49,7 +48,15 @@ const CreditInpput = styled("input")({
   fontSize: "12px",
   fontStyle: "italic",
   "&::placeholder": {
-    color: "#636363",
+    color: "#232323",
+  },
+
+  "&:focus": {
+    outline: "none",
+
+    "&::placeholder": {
+      color: "rgba(0, 0, 0, 0.12)",
+    },
   },
 });
 
@@ -121,7 +128,7 @@ const VideoDescriptionCredit = (props) => {
         placeholder="Video description"
       />
 
-      <CreditInpput type="text" placeholder="Credit" />
+      <CreditInput type="text" placeholder="Credit" />
     </div>
   );
 };

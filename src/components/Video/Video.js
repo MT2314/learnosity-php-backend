@@ -78,7 +78,7 @@ const StyledPaper = styled(Paper)({
 });
 
 const StyledVideoDescriptionContainer = styled("div")({
-  marginTop: "15px",
+  marginTop: "0px",
   display: "flex",
   gap: "30px",
   marginBottom: "30px",
