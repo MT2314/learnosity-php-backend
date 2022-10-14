@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useDrop } from "react-dnd";
 import { AccordionDetails } from "@mui/material";
 import styled from "@emotion/styled";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import {
   ActivePaneContext,
   LayoutContext,
@@ -24,6 +25,7 @@ const AccordionItem = ({
   accordionIndex,
   removeError,
   setRemoveError,
+  paneRef,
 }) => {
   const { id, components } = accordion;
   const [activeComp, setActiveComp] = useState(null);
@@ -88,6 +90,8 @@ const AccordionItem = ({
         return item.replace(/([A-Z])/g, " $1").trim();
     }
   };
+
+  useOnClickOutside(paneRef, () => setShowError(false), true);
 
   // ? Error Message
   // Error message stays. This gives the user time to read and learn.

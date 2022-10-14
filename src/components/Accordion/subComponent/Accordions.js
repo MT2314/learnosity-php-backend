@@ -111,6 +111,7 @@ const Accordions = () => {
               accordion={accordion}
               removeError={removeError}
               setRemoveError={setRemoveError}
+              paneRef={paneRef}
             />
           </StyledAccordion>
         );
