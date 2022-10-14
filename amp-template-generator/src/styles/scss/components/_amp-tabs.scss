@@ -74,6 +74,10 @@
           padding: 0.625rem 1rem;
           top: 4.6875rem;
           z-index: 99;
+
+          &::selection {
+            color: $primary-body-text;
+          }
         }
 
         .hoverTabText2 {
