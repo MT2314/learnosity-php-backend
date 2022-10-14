@@ -16,10 +16,9 @@ const StyledAccordionContainer = styled("div")({
 
 const StyledAccordion = styled(Accordion)(({ accordionIndex }) => ({
   backgroundColor: "#FFFFFF",
-  "&::before":{
-    backgroundColor: 'transparent'
-  }
-
+  "&::before": {
+    backgroundColor: "transparent",
+  },
 }));
 
 const StyledExpandCollapseButton = styled(Button)(({ disabled }) => ({
@@ -55,40 +54,43 @@ const Accordions = () => {
 
   const [removeError, setRemoveError] = useState(false);
 
-
   //click outside hook sets active pane to null when user clicks outside the accordion pane
-  const paneRef = useRef()
+  const paneRef = useRef();
   useOnClickOutside(paneRef, () => setIsActive(null), true);
 
   return (
     <StyledAccordionContainer data-testid="accordion-component" ref={paneRef}>
       <StyledToolBar toolbar={isActive === 0 ? true : isActive}>
-        <ConfigBar paneIndex={isActive} setPaneIndex={setIsActive} setRemoveError={setRemoveError} />
+        <ConfigBar
+          paneIndex={isActive}
+          setPaneIndex={setIsActive}
+          setRemoveError={setRemoveError}
+        />
       </StyledToolBar>
       {state.length > 1 && (
         <StyledButtonsDiv>
           <StyledExpandCollapseButton
             onClick={() => {
               dispatch({
-                func: "EXPAND_ALL_PANE"
+                func: "EXPAND_ALL_PANE",
               });
             }}
-            disabled={state.every(s => s.expanded === true)}
+            disabled={state.every((s) => s.expanded === true)}
           >
             Expand All
           </StyledExpandCollapseButton>
           <StyledExpandCollapseButton
             onClick={() => {
               dispatch({
-                func: "COLLAPSE_ALL_PANE"
+                func: "COLLAPSE_ALL_PANE",
               });
             }}
-            disabled={state.every(s => s.expanded === false)}>
+            disabled={state.every((s) => s.expanded === false)}
+          >
             Collapse All
           </StyledExpandCollapseButton>
         </StyledButtonsDiv>
-      )
-      }
+      )}
       {state.map((accordion, accordionIndex) => {
         return (
           <StyledAccordion
@@ -96,11 +98,21 @@ const Accordions = () => {
             disableGutters={true}
             expanded={accordion.expanded}
           >
-            <Pane accordionIndex={accordionIndex} accordion={accordion} isActive={isActive} setIsActive={setIsActive} removeError={removeError} setRemoveError={setRemoveError} />
+            <Pane
+              accordionIndex={accordionIndex}
+              accordion={accordion}
+              isActive={isActive}
+              setIsActive={setIsActive}
+              removeError={removeError}
+              setRemoveError={setRemoveError}
+            />
             <AccordionItem
               accordionIndex={accordionIndex}
               accordion={accordion}
-            />    
+              removeError={removeError}
+              setRemoveError={setRemoveError}
+              paneRef={paneRef}
+            />
           </StyledAccordion>
         );
       })}

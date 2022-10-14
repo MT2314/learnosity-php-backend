@@ -1,12 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDrop } from "react-dnd";
 import { AccordionDetails } from "@mui/material";
 import styled from "@emotion/styled";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import {
   ActivePaneContext,
   LayoutContext,
 } from "../../../Context/InteractivesContext";
+
+// ? Components
 import PlaceHolder from "../subComponent/PlaceHolder";
+import PlaceholderError from "./PlaceholderError";
 import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 
 const StyledAccordionDetails = styled(AccordionDetails)(({ isOver }) => ({
@@ -16,11 +20,19 @@ const StyledAccordionDetails = styled(AccordionDetails)(({ isOver }) => ({
   borderColor: "#BDBDBD",
 }));
 
-const AccordionItem = ({ accordion, accordionIndex }) => {
+const AccordionItem = ({
+  accordion,
+  accordionIndex,
+  removeError,
+  setRemoveError,
+  paneRef,
+}) => {
   const { id, components } = accordion;
   const [activeComp, setActiveComp] = useState(null);
   const [activeTab] = useContext(ActivePaneContext);
   const [state, dispatch] = useContext(LayoutContext);
+  const [isDragging, setIsDragging] = useState(false);
+
   const [droppedIndex, setDroppedIndex] = useState(null);
   const [inContainer, setInContainer] = useState(null);
 
@@ -42,7 +54,8 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
         "IFrame",
       ],
       drop: async (item, monitor) => {
-        if (!acceptListComp(item)) setShowDropError(true);
+        if (!acceptListComp(item) && components.length !== 0)
+          setShowDropError(true);
         if (item.within && components.length !== 0) return;
         if (monitor.didDrop()) return;
         if (!monitor.isOver({ shallow: true })) return;
@@ -66,6 +79,40 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
     [components]
   );
 
+  // Adding space between Cap except iFrame
+  const trimCap = (item) => {
+    switch (item) {
+      case "IFrame":
+        return "iFrame";
+      case "InfoBox":
+        return "InfoBox";
+      default:
+        return item.replace(/([A-Z])/g, " $1").trim();
+    }
+  };
+
+  useOnClickOutside(paneRef, () => setShowError(false), true);
+
+  // ? Error Message
+  // Error message stays. This gives the user time to read and learn.
+  const [showError, setShowError] = useState();
+  useEffect(() => {
+    if (isOver && !acceptListComp(getItem)) {
+      setShowError(trimCap(getItem.componentName));
+    } else if (isOver) {
+      setShowError();
+      setShowDropError(false);
+      setIsDragging(true);
+    } else {
+      setIsDragging(false);
+    }
+  }, [isOver]);
+
+  useEffect(() => {
+    setShowError();
+    setRemoveError(false);
+  }, [removeError]);
+
   return (
     <StyledAccordionDetails
       data-testid="accordion-dropzone"
@@ -79,7 +126,7 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
           return (
             <NestedComponentWrapper
               key={`key-component-${compIndex}`}
-              componentType='accordion'
+              componentType="accordion"
               numOfComponent={components.length}
               componentProps={component.componentProps}
               component={component}
@@ -94,8 +141,9 @@ const AccordionItem = ({ accordion, accordionIndex }) => {
           );
         })
       ) : (
-        <PlaceHolder />
+        <PlaceHolder isOver={isOver} showError={showError} />
       )}
+      <PlaceholderError showError={showDropError} />
     </StyledAccordionDetails>
   );
 };
