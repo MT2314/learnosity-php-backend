@@ -343,7 +343,7 @@ const CustomToolBar = ({
     setBoldVisibility(false);
     setListVisibility(false);
     setAlignVisibility(false);
-    setVideotOpen(false);
+    setVideoOpen(false);
     setDescriptionKebabOpen(false);
   };
   const handleToggleVideoKebab = (e) => {
