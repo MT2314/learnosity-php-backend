@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 
 // Interal Imports
 import Body from "./subcomponents/Body";
+import VideoDescriptionCredit from "./subcomponents/VideoDescriptionCredit";
 import TriangleIcon from "./assets/Triangle.png";
 // MUI/@emotion imports
 import { Paper } from "@mui/material";
@@ -75,6 +76,7 @@ const StyledPaper = styled(Paper)({
   display: "flex",
   background: "#FAFAFA",
 });
+
 const StyledVideoDescriptionContainer = styled("div")({
   marginTop: "15px",
   display: "flex",
@@ -98,30 +100,6 @@ const TranscriptButtonContainer = styled("button")({
   fontSize: "13px",
   textAlign: "center",
   color: "#929292",
-});
-
-const DescriptionInput = styled("input")({
-  width: "622px",
-  border: "none",
-  fontFamily: "Inter",
-  fontWeight: "400",
-  letterSpacing: "0.4px",
-  "&::placeholder": {
-    color: "#232323",
-  },
-});
-
-const CreditInpput = styled("input")({
-  width: "622px",
-  border: "none",
-  height: "16px",
-  fontFamily: "Inter",
-  fontWeight: "400",
-  fontSize: "12px",
-  fontStyle: "italic",
-  "&::placeholder": {
-    color: "#636363",
-  },
 });
 
 const StyledTextContainer = styled("div")({
@@ -176,7 +154,7 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
         <StyledVideoContainer>
           <StyledVideoDescriptionContainer>
             <DescriptionCreditContainer>
-              <Body
+              <VideoDescriptionCredit
                 isVideo={isVideo}
                 videoHasFocus={videoHasFocus}
                 videoAreaFocused={videoAreaFocused}
@@ -185,8 +163,6 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
                 setPlaceHolder={setPlaceHolder}
                 t={t}
               />
-              <DescriptionInput type="text" placeholder="Video Description" />
-              <CreditInpput type="text" placeholder="Credit" />
             </DescriptionCreditContainer>
             <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
           </StyledVideoDescriptionContainer>

@@ -7,24 +7,24 @@ import React, {
   useRef,
 } from "react";
 import { VideoContext } from "../VideoContext";
+
+import styled from "@emotion/styled";
+import { TextareaAutosize } from "@material-ui/core";
 import Text from "../../Text/Text";
 
-import { TextareaAutosize } from "@material-ui/core";
-import styled from "@emotion/styled";
-
-const StyledBodyTextArea = styled(TextareaAutosize)({
+const DescriptionInput = styled(TextareaAutosize)({
+  width: "622px",
+  border: "none",
+  fontWeight: "400",
+  letterSpacing: "0.4px",
   fontFamily: `"Inter", sans-serif`,
   fontSize: "1rem",
-  fontWeight: "400",
   marginTop: "15px",
   lineHeight: "1.5rem",
-  letterSpacing: "0.009375rem",
   color: "#232323",
-  width: "100%",
   minHeight: "72px",
   marginTop: "0.9375rem",
-  background: "#FAFAFA",
-  border: "none",
+  background: "#FFF",
   resize: "none",
 
   "&::placeholder": {
@@ -40,7 +40,20 @@ const StyledBodyTextArea = styled(TextareaAutosize)({
   },
 });
 
-const Body = (props) => {
+const CreditInpput = styled("input")({
+  width: "622px",
+  border: "none",
+  height: "16px",
+  fontFamily: "Inter",
+  fontWeight: "400",
+  fontSize: "12px",
+  fontStyle: "italic",
+  "&::placeholder": {
+    color: "#636363",
+  },
+});
+
+const VideoDescriptionCredit = (props) => {
   const [state, dispatch] = useContext(VideoContext);
   const stateBody = useMemo(() => state?.body, [state?.body]);
   const [refs, setTextRef] = useState({ text: null, quill: null });
@@ -81,16 +94,16 @@ const Body = (props) => {
       setTextFocused(false);
     }
   }, [props.videoAreaFocused]);
-
   return (
     <div ref={videoBodyRef} style={{ position: "relative" }}>
       <Text
         body={stateBody}
         setProp={updateBody}
         setTextRef={setTextRef}
+        sx={{ background: "#FFF" }}
         {...props}
       />
-      <StyledBodyTextArea
+      <DescriptionInput
         ref={placeholderRef}
         onFocus={(e) => {
           e.preventDefault();
@@ -106,10 +119,22 @@ const Body = (props) => {
         name="infoBoxBody"
         aria-label={props.t("InfoBox body")}
         aria-multiline="true"
-        // placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        placeholder="Description"
       />
+      <CreditInpput type="text" placeholder="Credit" />
     </div>
   );
 };
 
-export default Body;
+export default VideoDescriptionCredit;
+
+{
+  /* <Body
+isVideo={isVideo}
+videoHasFocus={videoHasFocus}
+videoAreaFocused={videoAreaFocused}
+setVideoHasFocus={setVideoHasFocus}
+setVideoBody={setVideoBody}
+setPlaceHolder={setPlaceHolder}
+t={t} />*/
+}

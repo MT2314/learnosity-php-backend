@@ -10,14 +10,11 @@ import { iconDropdownOptions } from "../../InfoBox/icons/infoBoxIcons";
 
 // ? Video imports
 import Menu from "@mui/material/Menu";
+import Input from "@mui/material/Input";
 import FormGroup from "@mui/material/FormGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import SvgIcon from "@mui/material/SvgIcon";
 import BrightspaceSVG from "../../Video/assets/Brightspace";
 import YoutubeSVG from "../../Video/assets/Youtube";
 import KebabSVG from "../../Video/assets/Kebab";
@@ -286,11 +283,14 @@ const CustomToolBar = ({
 
   // IconBox
   const [openIcon, setIconOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
   // Video
   const [openVideo, setVideoOpen] = useState(false);
   const [openTranscript, setTranscriptOpen] = useState(false);
   const [openDescriptionKebab, setDescriptionKebabOpen] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [selectBrightcove, setSelectBrightcove] = useState(false);
+  const [selectYoutube, setSelectYoutube] = useState(false);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
@@ -308,8 +308,26 @@ const CustomToolBar = ({
   const TranscriptVideo = useRef(null);
   const DescriptionKebab = useRef(null);
 
+  const toggleCloseToolbar = (source) => {
+    setActiveTopMenu("");
+    setActiveDropDownItem("");
+    setBoldVisibility(false);
+    setListVisibility(false);
+    setAlignVisibility(false);
+    if (source !== "Video") {
+      setSelectBrightcove(false);
+      setVideoOpen(false);
+      setSelectYoutube(false);
+    }
+    if (source !== "Kebab") {
+      setDescriptionKebabOpen(false);
+    }
+    setSelectBrightcove(false);
+  };
+
   // ? InfoBox Toolbar
-  const handleToggleInfo = (e) => {
+  const handleToggleInfo = async (e) => {
+    await toggleCloseToolbar();
     e.target.contains(IconDropDown.current) && setIconOpen(!openIcon);
   };
 
@@ -326,47 +344,36 @@ const CustomToolBar = ({
   };
 
   // ? Video Toolbar
-  const handleToggleVideo = (e) => {
+  const handleToggleVideo = async (e) => {
+    await toggleCloseToolbar("Video");
     e.target.contains(AddVideo.current) && setVideoOpen(!openVideo);
-    setActiveTopMenu("");
-    setActiveDropDownItem("");
-    setBoldVisibility(false);
-    setListVisibility(false);
-    setAlignVisibility(false);
-    setTranscriptOpen(false);
-    setDescriptionKebabOpen(false);
-  };
-  const handleClickTranscript = (e) => {
-    e.target.contains(TranscriptVideo.current) && setVideoOpen(!openVideo);
-    setActiveTopMenu("");
-    setActiveDropDownItem("");
-    setBoldVisibility(false);
-    setListVisibility(false);
-    setAlignVisibility(false);
-    setVideoOpen(false);
-    setDescriptionKebabOpen(false);
-  };
-  const handleToggleVideoKebab = (e) => {
-    setDescriptionKebabOpen(!openDescriptionKebab);
-    setActiveTopMenu("");
-    setActiveDropDownItem("");
-    setBoldVisibility(false);
-    setListVisibility(false);
-    setAlignVisibility(false);
-    setTranscriptOpen(false);
-    setVideoOpen(false);
   };
 
-  const handleCloseVideo = (event) => {
-    // setDescriptionKebabOpen(false);
-    // setVideoOpen(false);
-    // TranscriptVideo(false);
+  const handleClickTranscript = async (e) => {
+    await toggleCloseToolbar("Transcript");
+    e.target.contains(TranscriptVideo.current) && setTranscriptOpen(!openVideo);
   };
+  const handleToggleVideoKebab = async () => {
+    await toggleCloseToolbar("Kebab");
+    setDescriptionKebabOpen(!openDescriptionKebab);
+  };
+
   const handleKebobChange = (e) => {
     e.stopPropagation();
     console.log(e.target.value);
   };
 
+  const handleBrightcoveSelect = (e) => {
+    e.stopPropagation();
+    setSelectBrightcove(!selectBrightcove);
+  };
+
+  const handleYoutubeSelect = (e) => {
+    e.stopPropagation();
+    setSelectYoutube(!selectYoutube);
+  };
+
+  // ? Main Toolbar
   function handleListKeyDown(event) {
     if (event.key === "Tab") {
       event.preventDefault();
@@ -516,27 +523,67 @@ const CustomToolBar = ({
                 {({ TransitionProps }) => (
                   <Grow {...TransitionProps}>
                     <Paper>
-                      <ClickAwayListener onClickAway={handleCloseVideo}>
-                        <StyledMenu
-                          autoFocusItem={openVideo}
-                          data-testid="video-select-dropdown"
-                          aria-labelledby={t("Video Drop Down")}
-                          onKeyDown={handleListKeyDown}
-                        >
+                      <StyledMenu
+                        autoFocusItem={openVideo}
+                        data-testid="video-select-dropdown"
+                        aria-labelledby={t("Video Drop Down")}
+                        onKeyDown={handleListKeyDown}
+                      >
+                        {!selectYoutube && !selectBrightcove && (
+                          <>
+                            <StyledVideoMenuItem
+                              key={"brightcove-select"}
+                              onClick={(e) => handleBrightcoveSelect(e)}
+                              data-testid={`brightcove select button`}
+                              aria-labelledby={`brightcove select button`}
+                            >
+                              <BrightspaceSVG />
+                              <span style={{ marginLeft: "33.66px" }}>
+                                Add from Brightcove
+                              </span>
+                            </StyledVideoMenuItem>
+                            <StyledVideoMenuItem
+                              key={"youtube-select"}
+                              onClick={(e) => handleYoutubeSelect(e)}
+                              data-testid={`youtube select button`}
+                              aria-labelledby={`youtube select button`}
+                            >
+                              <YoutubeSVG />
+                              <span style={{ marginLeft: "33.66px" }}>
+                                Add from YouTube
+                              </span>
+                            </StyledVideoMenuItem>
+                          </>
+                        )}
+                        {selectBrightcove && (
                           <StyledVideoMenuItem>
-                            <BrightspaceSVG />
-                            <span style={{ marginLeft: "33.66px" }}>
-                              Add from Brightcove
-                            </span>
+                            <Input
+                              data-testid={`brightcove input`}
+                              aria-labelledby={`brightcove input`}
+                              type="text"
+                              // onClick={(e) => stopPropagation(e)}
+                              // onChange={(e) => handleBrightcoveInput(e)}
+                              required
+                              focused
+                            />
+                            <Button type="submit">Add</Button>
                           </StyledVideoMenuItem>
+                        )}
+                        {selectYoutube && (
                           <StyledVideoMenuItem>
-                            <YoutubeSVG />
-                            <span style={{ marginLeft: "33.66px" }}>
-                              Add from YouTube
-                            </span>
+                            <Input
+                              data-testid={`youtube input`}
+                              aria-labelledby={`youtube input`}
+                              type="text"
+                              // onClick={(e) => stopPropagation(e)}
+                              // onChange={(e) => handleYoutubeInput(e)}
+                              required
+                              focused
+                            />
+                            <Button type="submit">Add</Button>
                           </StyledVideoMenuItem>
-                        </StyledMenu>
-                      </ClickAwayListener>
+                        )}
+                      </StyledMenu>
                     </Paper>
                   </Grow>
                 )}
@@ -891,57 +938,55 @@ const CustomToolBar = ({
                     {({ TransitionProps }) => (
                       <Grow {...TransitionProps}>
                         <Paper>
-                          <ClickAwayListener onClickAway={handleCloseVideo}>
-                            <StyledKebabMenu
-                              // autoFocusItem={openDescriptionKebab}
-                              data-testid="video-select-dropdown"
-                              aria-labelledby={t("Video Drop Down")}
-                              onKeyDown={handleListKeyDown}
-                            >
-                              <FormGroup sx={{ gap: "14px" }}>
-                                <FormControl onClick={handleKebobChange}>
-                                  <StyledFormControlLabel
-                                    control={
-                                      <Checkbox
-                                        sx={{
-                                          "&:hover": {
-                                            bgcolor: "transparent",
-                                            color: "rgba(21, 101, 192, 1)",
-                                          },
-                                          "&.Mui-checked": {
-                                            bgcolor: "transparent",
-                                            color: "rgba(21, 101, 192, 1)",
-                                          },
-                                        }}
-                                      />
-                                    }
-                                    label="Show description"
-                                    size="small"
-                                  />
-                                </FormControl>
-                                <FormControl onClick={handleKebobChange}>
-                                  <StyledFormControlLabel
-                                    control={
-                                      <Checkbox
-                                        sx={{
-                                          "&:hover": {
-                                            bgcolor: "transparent",
-                                            color: "rgba(21, 101, 192, 1)",
-                                          },
-                                          "&.Mui-checked": {
-                                            bgcolor: "transparent",
-                                            color: "rgba(21, 101, 192, 1)",
-                                          },
-                                        }}
-                                      />
-                                    }
-                                    label="Show credit"
-                                    size="small"
-                                  />
-                                </FormControl>
-                              </FormGroup>
-                            </StyledKebabMenu>
-                          </ClickAwayListener>
+                          <StyledKebabMenu
+                            // autoFocusItem={openDescriptionKebab}
+                            data-testid="video-select-dropdown"
+                            aria-labelledby={t("Video Drop Down")}
+                            onKeyDown={handleListKeyDown}
+                          >
+                            <FormGroup sx={{ gap: "14px" }}>
+                              <FormControl onClick={handleKebobChange}>
+                                <StyledFormControlLabel
+                                  control={
+                                    <Checkbox
+                                      sx={{
+                                        "&:hover": {
+                                          bgcolor: "transparent",
+                                          color: "rgba(21, 101, 192, 1)",
+                                        },
+                                        "&.Mui-checked": {
+                                          bgcolor: "transparent",
+                                          color: "rgba(21, 101, 192, 1)",
+                                        },
+                                      }}
+                                    />
+                                  }
+                                  label="Show description"
+                                  size="small"
+                                />
+                              </FormControl>
+                              <FormControl onClick={handleKebobChange}>
+                                <StyledFormControlLabel
+                                  control={
+                                    <Checkbox
+                                      sx={{
+                                        "&:hover": {
+                                          bgcolor: "transparent",
+                                          color: "rgba(21, 101, 192, 1)",
+                                        },
+                                        "&.Mui-checked": {
+                                          bgcolor: "transparent",
+                                          color: "rgba(21, 101, 192, 1)",
+                                        },
+                                      }}
+                                    />
+                                  }
+                                  label="Show credit"
+                                  size="small"
+                                />
+                              </FormControl>
+                            </FormGroup>
+                          </StyledKebabMenu>
                         </Paper>
                       </Grow>
                     )}
