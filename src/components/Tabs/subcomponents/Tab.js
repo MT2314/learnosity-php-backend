@@ -50,6 +50,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       if (item.within && components.length !== 0) return;
       if (monitor.didDrop()) return;
       if (acceptListComp(item)) {
+        console.log(item);
         dispatch({
           func: "ADD_COMPONENT",
           tabIndex: activeTab,

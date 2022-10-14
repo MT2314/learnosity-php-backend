@@ -265,7 +265,7 @@ const NestedComponentWrapper = ({
   return (
     <>
       <div
-        data-test-id="div-before-drop-indicator"
+        data-testid="div-before-drop-indicator"
         key={`nested-component-${compIndex}`}
         ref={dropRef}
         onMouseEnter={() => !draggingOver && setIsHover(true)}
@@ -280,7 +280,7 @@ const NestedComponentWrapper = ({
       >
         <div>
           <DropIndicator
-            data-test-id="drop-indicator"
+            data-testid="drop-indicator"
             offsetLine={dropIndexOffset}
             showLine={dropIndexOffset === 1 && isOver}
             item={getItem}
@@ -423,7 +423,7 @@ const NestedComponentWrapper = ({
             />
           </BlueBox>
           <DropIndicator
-            data-test-id="drop-indicator"
+            data-testid="drop-indicator"
             offsetLine={dropIndexOffset}
             showLine={dropIndexOffset === 0 && isOver}
             item={getItem}
