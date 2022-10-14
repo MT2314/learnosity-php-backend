@@ -78,13 +78,14 @@ const StyledPaper = styled(Paper)({
 });
 
 const StyledVideoDescriptionContainer = styled("div")({
-  marginTop: "0px",
+  marginTop: "22px",
   display: "flex",
   gap: "30px",
   marginBottom: "30px",
 });
 
 const DescriptionCreditContainer = styled("div")({
+  marginTop: "-20px",
   display: "flex",
   flexDirection: "column",
   gap: "10px",
