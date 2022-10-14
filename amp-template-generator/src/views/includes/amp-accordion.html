@@ -51,13 +51,13 @@
                 on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
     
                 {%comment%}Pane Heading:{%endcomment%}
-                <header id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading p2" aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ pane.heading.processed }}">
-                    <span class="flexDisplay">
-                        <span class="underText">
+                <header id="{{ accordionId }}_heading{{ forloop.index0 }}" class="accordion-pane p2" aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ pane.heading.processed }}">
+                    <span class="accordion-title-container">
+                        <span class="accordion-title">
                             {{ tab.title }}
                         </span>
-                        <i class="chevronDown" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'hiddenIcon' : 'chevronDown'" aria-hidden="true">&#x22;</i>
-                        <i class="hiddenIcon" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'chevronUp' : 'hiddenIcon'" aria-hidden="true">&#xe800;</i>
+                        <i class="chevron-down" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'hidden-icon' : 'chevron-down'" aria-hidden="true">&#xe800;</i>
+                        <i class="hidden-icon" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'chevron-up' : 'hidden-icon'" aria-hidden="true">&#x22;</i>
                     </span>
                 </header>
     
