@@ -27,7 +27,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [inContainer, setInContainer] = useState(null);
   const [droppedIndex, setDroppedIndex] = useState(null);
-  const [ activeComp, setActiveComp] = useState(null);
+  const [activeComp, setActiveComp] = useState(null);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
@@ -50,6 +50,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       if (item.within && components.length !== 0) return;
       if (monitor.didDrop()) return;
       if (acceptListComp(item)) {
+        console.log(item);
         dispatch({
           func: "ADD_COMPONENT",
           tabIndex: activeTab,
@@ -101,7 +102,6 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
 
   drop(dropRef);
 
-
   return (
     <>
       <StyleTabBody
@@ -121,7 +121,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
             {components.map((component, compIndex) => {
               return (
                 <NestedComponentWrapper
-                  componentType='tabs'
+                  componentType="tabs"
                   key={`key-component-${compIndex}`}
                   numOfComponent={components.length}
                   componentProps={component.componentProps}

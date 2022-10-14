@@ -97,7 +97,6 @@ const NestedComponentWrapper = ({
   const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
   const [tabActive, setTabActive] = useState(false);
-
   //get the matching component from the componentIndex
   const componentDetails = componentIndex[component.componentName];
 
@@ -140,7 +139,6 @@ const NestedComponentWrapper = ({
     }),
     drop: async (item, monitor) => {
       const currentTab = item?.tabIndex === tabIndex;
-
       const hoverIndex = currentTab
         ? dropIndexOffset === 0
           ? item.compIndex < compIndex
@@ -154,7 +152,6 @@ const NestedComponentWrapper = ({
         : compIndex;
 
       const dragIndex = currentTab ? item?.compIndex : undefined;
-
       if (acceptListComp(item)) {
         setDroppedIndex(hoverIndex);
         setDropIndexOffset(null);
@@ -234,6 +231,7 @@ const NestedComponentWrapper = ({
           func: "DELETE_COMPONENT",
           tabIndex,
           compIndex,
+          addRemove: true,
         });
       },
       within: true,
@@ -267,7 +265,7 @@ const NestedComponentWrapper = ({
   return (
     <>
       <div
-        data-test-id="div-before-drop-indicator"
+        data-testid="div-before-drop-indicator"
         key={`nested-component-${compIndex}`}
         ref={dropRef}
         onMouseEnter={() => !draggingOver && setIsHover(true)}
@@ -282,7 +280,7 @@ const NestedComponentWrapper = ({
       >
         <div>
           <DropIndicator
-            data-test-id="drop-indicator"
+            data-testid="drop-indicator"
             offsetLine={dropIndexOffset}
             showLine={dropIndexOffset === 1 && isOver}
             item={getItem}
@@ -425,7 +423,7 @@ const NestedComponentWrapper = ({
             />
           </BlueBox>
           <DropIndicator
-            data-test-id="drop-indicator"
+            data-testid="drop-indicator"
             offsetLine={dropIndexOffset}
             showLine={dropIndexOffset === 0 && isOver}
             item={getItem}
