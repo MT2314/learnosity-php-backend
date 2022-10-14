@@ -51,7 +51,7 @@
                 on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
     
                 {%comment%}Pane Heading:{%endcomment%}
-                <header id="{{ accordionId }}_heading{{ forloop.index0 }}" class="accordion-pane p2" aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ pane.heading.processed }}">
+                <header id="{{ accordionId }}_heading{{ forloop.index0 }}" class="accordion-pane p2" role="button" aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ pane.heading.processed }}">
                     <span class="accordion-title-container">
                         <span class="accordion-title">
                             {{ tab.title }}
