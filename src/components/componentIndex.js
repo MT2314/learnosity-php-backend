@@ -6,8 +6,7 @@ import QuoteBox, {
   defaultProps as quoteBoxDefaultProps,
 } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
-import Video, { defaultProps as videoDefaultProps } from "./Video/Video";
-import VideoConfig from "./Video/VideoConfig";
+import Video, { defaultProps as videoDefaultProps } from "../components/Video/Video"
 import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
 import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
@@ -83,15 +82,6 @@ const componentIndex = {
     category: categories.text,
     componentIcon: defaultComponentIcon,
   },
-  Video: {
-    Component: Video,
-    readableName: "Video",
-    defaultProps: videoDefaultProps,
-    version: "0.0.1",
-    ConfigPanel: VideoConfig,
-    category: categories.media,
-    componentIcon: defaultComponentIcon,
-  },
   IFrame: {
     Component: IFrame,
     readableName: "iFrame",
@@ -115,6 +105,14 @@ const componentIndex = {
     defaultProps: testAccordionDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
+    componentIcon: defaultComponentIcon,
+  },
+  Video: {
+    Component: Video,
+    defaultProps: videoDefaultProps,
+    readableName: "Video",
+    version: "0.0.1",
+    category: categories.media,
     componentIcon: defaultComponentIcon,
   },
 };

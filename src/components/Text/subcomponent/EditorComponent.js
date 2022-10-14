@@ -42,14 +42,21 @@ const Delta = Quill.import("delta");
 Quill.register("formats/mathpix", MathPixMarkdown);
 
 const StyledConfigBar = styled("div")(
-  ({ editorIsFocus, isInfoBox, infoAreaFocused }) => {
-    const display = isInfoBox
-      ? infoAreaFocused
+  ({
+    editorIsFocus,
+    isInfoBox,
+    isVideo,
+    infoAreaFocused,
+    videoAreaFocused,
+  }) => {
+    const display =
+      isInfoBox || isVideo
+        ? infoAreaFocused || videoAreaFocused
+          ? "flex"
+          : "none"
+        : editorIsFocus
         ? "flex"
-        : "none"
-      : editorIsFocus
-      ? "flex"
-      : "none";
+        : "none";
 
     const configBarStyles = {
       display: display,
@@ -75,9 +82,13 @@ const EditorComponent = ({
   isInfoBox,
   infoAreaFocused,
   infoHasFocus,
+  isVideo,
+  videoAreaFocused,
+  videoHasFocus,
   selectedIcon,
   setSelectedIcon,
   setInfoHasFocus,
+  setVideoHasFocus,
   setTextRef,
   setTabActive,
 }) => {
@@ -112,12 +123,12 @@ const EditorComponent = ({
   }, [editorIsFocus]);
 
   useOnClickOutside(textRef, () => {
-    if (!showMath && !keepEditor && !isInfoBox) {
+    if (!showMath && !keepEditor && !isInfoBox && !isVideo) {
       alignmentObserver?.disconnect();
       setEditorIsFocus(false);
       setShowEditor(false);
       setActiveComponent(false);
-      setTabActive(false)
+      setTabActive(false);
     }
   });
 
@@ -134,11 +145,11 @@ const EditorComponent = ({
     //check for formulas
     FormulaEvents(toolbarId);
     // on render editor is focused
-    showEditor && !isInfoBox && focusRef.current.focus();
+    showEditor && !isInfoBox && !isVideo && focusRef.current.focus();
     //on render toolbar appears
-    showEditor && !isInfoBox && setEditorIsFocus(true);
+    showEditor && !isInfoBox && !isVideo && setEditorIsFocus(true);
     //on mount pass back focusRef
-    isInfoBox &&
+    (isInfoBox || isVideo) &&
       setTextRef({ text: textRef.current, quill: focusRef?.current });
   }, []);
 
@@ -294,13 +305,14 @@ const EditorComponent = ({
           (!relatedTarget ||
             (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
           !showMath &&
-          !isInfoBox
+          !isInfoBox &&
+          !isVideo
         ) {
           alignmentObserver?.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
           setActiveComponent(false);
-          setTabActive(false)
+          setTabActive(false);
         }
       }}
       className="text-editor"
@@ -310,7 +322,9 @@ const EditorComponent = ({
       <StyledConfigBar
         editorIsFocus={editorIsFocus}
         isInfoBox={isInfoBox}
+        isVideo={isVideo}
         infoAreaFocused={infoAreaFocused}
+        videoAreaFocused={videoAreaFocused}
       >
         <CustomToolBar
           toolbarId={toolbarId}
@@ -320,7 +334,9 @@ const EditorComponent = ({
           activeDropDownAlignItem={activeDropDownAlignItem}
           setActiveDropDownAlignItem={setActiveDropDownAlignItem}
           isInfoBox={isInfoBox}
+          isVideo={isVideo}
           infoHasFocus={infoHasFocus}
+          videoHasFocus={videoHasFocus}
           selectedIcon={selectedIcon}
           setSelectedIcon={setSelectedIcon}
         />
@@ -332,10 +348,14 @@ const EditorComponent = ({
         scrollingContainer="html"
         formats={formats}
         theme="snow"
-        placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        placeholder={
+          isVideo
+            ? "Video description"
+            : `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
           enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat."
+          nisi ut aliquip ex ea commodo consequat.`
+        }
         className="quillEditor"
         onChange={handleDataChange}
         defaultValue={body}
@@ -346,7 +366,10 @@ const EditorComponent = ({
         onFocus={() => {
           setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
-          infoHasFocus && setInfoHasFocus(false);
+          if (infoHasFocus || videoHasFocus) {
+            setInfoHasFocus(false);
+            setVideoHasFocus(false);
+          }
         }}
         onKeyDown={(e) => {
           onKeyDropDown(e);

@@ -7,7 +7,7 @@ import "./styles/Text.scss";
 import PopupDialogs from "./dialogs/PopupDialogs";
 
 import { CssBaseline } from "@mui/material";
-import DragLabel from "../../Utility/DragLabel"
+import DragLabel from "../../Utility/DragLabel";
 // import { ThemeProvider } from "@mui/material/styles";
 
 //? PP Imports
@@ -25,9 +25,13 @@ const Text = ({
   isInfoBox = false,
   infoAreaFocused = false,
   infoHasFocus = false,
+  isVideo = false,
+  videoHasFocus = false,
+  videoAreaFocused = false,
   selectedIcon = null,
   setSelectedIcon = () => {},
   setInfoHasFocus = () => {},
+  setVideoHasFocus = () => {},
   setTextRef = () => {},
 }) => {
   const [showEditor, setShowEditor] = useState(false);
@@ -36,25 +40,26 @@ const Text = ({
   // const textTheme = createMFTheme();
 
   useEffect(() => {
-    if (isInfoBox) {
+    if (isInfoBox || isVideo) {
       setShowEditor(true);
     }
   }, []);
 
   return (
     <>
-    {/* on drag <DragLabel/> shows the components name */}
-      <DragLabel/>
+      {/* on drag <DragLabel/> shows the components name */}
+      <DragLabel />
       <CssBaseline />
       {/* <ThemeProvider theme={textTheme}> */}
-      <ReactQuillContainer isInfoBox={isInfoBox}>
+      <ReactQuillContainer isInfoBox={isInfoBox} isVideo={isVideo}>
         {((!showEditor && body === null) ||
           (!showEditor && !body.ops) ||
           (!showEditor && body.ops[0].insert === "")) &&
-        !isInfoBox ? (
+        !isInfoBox &&
+        !isVideo ? (
           <div
             onClick={() => {
-              setShowEditor(true)
+              setShowEditor(true);
               setTabActive(true);
             }}
             className="mainContainer"
@@ -78,10 +83,14 @@ const Text = ({
               setActiveComponent={setActiveComponent}
               isActiveComponent={isActiveComponent}
               isInfoBox={isInfoBox}
+              isVideo={isVideo}
               infoAreaFocused={infoAreaFocused}
+              videoAreaFocused={videoAreaFocused}
               selectedIcon={selectedIcon}
               infoHasFocus={infoHasFocus}
+              videoHasFocus={videoHasFocus}
               setInfoHasFocus={setInfoHasFocus}
+              setVideoHasFocus={setVideoHasFocus}
               setSelectedIcon={setSelectedIcon}
               setTextRef={setTextRef}
               setTabActive={setTabActive}
