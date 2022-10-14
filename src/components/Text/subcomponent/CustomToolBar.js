@@ -139,37 +139,41 @@ const StyledVideoMenuItem = styled(MenuItem)({
   },
 });
 
-const StyledKebabButton = styled(IconButton)(({ disabled }) => ({
-  display: "flex !important",
-  height: "30px",
-  width: "30px",
-  padding: "5px",
-  margin: "0px",
-  color: "#232323",
-  backgroundColor: "none",
-  borderRadius: "4px !important",
+const StyledKebabButton = styled(IconButton)(
+  ({ disabled, openDescriptionKebab, checked }) => ({
+    display: "flex !important",
+    height: "30px",
+    width: "30px",
+    padding: "5px",
+    margin: "0px",
+    color: "#232323",
+    backgroundColor: "none",
+    borderRadius: "4px !important",
 
-  "& svg": {
-    color: "#000",
-    ...(disabled && { opacity: 0.3 }),
-  },
-  "&:hover": {
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    "& svg": {
-      color: "rgba(21, 101, 192, 1)",
-    },
-  },
-  "&:active": {
-    cursor: "pointer",
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    "& svg": {
-      color: "rgba(21, 101, 192, 1)",
-    },
-  },
-  "&:focus-visible": {
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-  },
-}));
+    // "& svg": {
+    //   color: "#000",
+    //   ...(disabled && { opacity: 0.3 }),
+    // },
+    // "&:hover": {
+    //   backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    //   "& svg": {
+    //     color: "rgba(21, 101, 192, 1)",
+    //   },
+    // },
+    ...(openDescriptionKebab && {
+      cursor: "pointer",
+      backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+      // "& svg": {
+      //   color: "#000",
+      //   backgroundColor: "none",
+      //   ...(disabled && { opacity: 0.3 }),
+      // },
+    }),
+    // "&:focus-visible": {
+    //   backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    // },
+  })
+);
 const StyledFormControlLabel = styled(FormControlLabel)(({ isVideo }) => ({
   height: "24px",
   whiteSpace: "nowrap",
@@ -179,7 +183,7 @@ const StyledFormControlLabel = styled(FormControlLabel)(({ isVideo }) => ({
   lineHeight: "1.5rem",
   letterSpacing: "0.009375rem",
 }));
-const StyledKebabMenu = styled(MenuList)({
+const StyledKebabMenu = styled(MenuList)(({}) => ({
   background: "#FFFFFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
@@ -190,7 +194,7 @@ const StyledKebabMenu = styled(MenuList)({
   paddingLeft: "27.5px",
   paddingTop: "23px",
   paddingBottom: "23px",
-});
+}));
 
 // Info Box
 const StyledIconDropdownButton = styled(Button)({
@@ -869,10 +873,11 @@ const CustomToolBar = ({
                 <StyledKebabButton
                   ref={DescriptionKebab}
                   id="Video Settings"
-                  // aria-controls={openVideo ? t("Add Video") : undefined}
-                  // aria-expanded={openVideo ? "true" : undefined}
-                  // variant="contained"
-                  // fullWidth
+                  aria-controls={openVideo ? t("Add Video") : undefined}
+                  aria-expanded={openVideo ? "true" : undefined}
+                  variant="contained"
+                  openDescriptionKebab={openDescriptionKebab}
+                  fullWidth
                   disableElevation
                   disableRipple
                   disableFocusRipple
@@ -892,7 +897,7 @@ const CustomToolBar = ({
                         <Paper>
                           <ClickAwayListener onClickAway={handleCloseVideo}>
                             <StyledKebabMenu
-                              autoFocusItem={openDescriptionKebab}
+                              // autoFocusItem={openDescriptionKebab}
                               data-testid="video-select-dropdown"
                               aria-labelledby={t("Video Drop Down")}
                               onKeyDown={handleListKeyDown}
@@ -900,14 +905,40 @@ const CustomToolBar = ({
                               <FormGroup sx={{ gap: "14px" }}>
                                 <FormControl onClick={handleKebobChange}>
                                   <StyledFormControlLabel
-                                    control={<Checkbox />}
+                                    control={
+                                      <Checkbox
+                                        sx={{
+                                          "&:hover": {
+                                            bgcolor: "transparent",
+                                            color: "rgba(21, 101, 192, 1)",
+                                          },
+                                          "&.Mui-checked": {
+                                            bgcolor: "transparent",
+                                            color: "rgba(21, 101, 192, 1)",
+                                          },
+                                        }}
+                                      />
+                                    }
                                     label="Show description"
                                     size="small"
                                   />
                                 </FormControl>
                                 <FormControl onClick={handleKebobChange}>
                                   <StyledFormControlLabel
-                                    control={<Checkbox />}
+                                    control={
+                                      <Checkbox
+                                        sx={{
+                                          "&:hover": {
+                                            bgcolor: "transparent",
+                                            color: "rgba(21, 101, 192, 1)",
+                                          },
+                                          "&.Mui-checked": {
+                                            bgcolor: "transparent",
+                                            color: "rgba(21, 101, 192, 1)",
+                                          },
+                                        }}
+                                      />
+                                    }
                                     label="Show credit"
                                     size="small"
                                   />
