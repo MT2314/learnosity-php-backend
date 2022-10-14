@@ -25,7 +25,7 @@
   }
 
   .vertical-bar {
-    color: $button-disabled;
+    color: $vertical-line;
   }
 
   .accordion {
@@ -33,30 +33,19 @@
 
     section {
       &:first-child {
-        .heading {
+        .accordion-pane {
           border-radius: 0.625rem 0.625rem 0 0;
         }
       }
 
       &:last-child {
-        .heading {
+        .accordion-pane {
           border-radius: 0 0 0.625rem 0.625rem;
           border-bottom: 0.0625rem solid $component-border;
         }
       }
 
-      &[expanded] {
-        .heading {
-          border-bottom: 0.0625rem solid $component-border;
-
-          &:focus-visible {
-            outline: 0.0625rem solid $tab-focus;
-            z-index: 99;
-          }
-        }
-      }
-
-      .heading {
+      .accordion-pane {
         background-color: $inactive-bg;
         border: 0.0625rem solid $component-border;
         border-bottom: none;
@@ -65,54 +54,75 @@
         font-size: 1.125rem;
         letter-spacing: 0.03em;
         line-height: 1.6875rem;
+        padding: 1.0625rem 1.5rem;
 
-        .flexDisplay {
-            display: flex;
-            align-items: center;
-        }
-        i {
+        .accordion-title-container {
+          display: flex;
+          align-items: center;
+            
+          span.accordion-title {
+            width: calc(100% - 1.75rem);
+            margin-right: 1.75rem;
+          }
+
+          i {
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: $amp-icons-font;
             font-style: normal;
             font-weight: normal;
+            color: $chevron-color;
             /* Font smoothing. That was taken from TWBS */
             -webkit-font-smoothing: antialiased;
             border-radius: 50%;
             height: 2.5rem;
             width: 2.5rem;
-            &:before {
-                position: relative;
-                top: 2px;
-            }
-        }
-        .hiddenIcon {
-            display: none;
-        }
-        .chevronUp {
-            background-color: $brand-500;
-            color: $white;
-        }
 
-        span {
-          width: calc(100% - 0.5rem);
+            &:before {
+              position: relative;
+              top: 2px;
+            }
+          }
+
+          .hidden-icon {
+            display: none;
+          }
         }
 
         &:hover {
-          background-color: $active-bg;
-          .underText {
+          background-color: $hover-bg;
+
+          .accordion-title {
             text-decoration-line: underline;
-            }
-            .chevronDown {
-                background-color: $active-bg;
-            }
+          }
+
+          .chevron-down {
+            background-color: $active-bg;
+          }
         }
 
         &:focus-visible {
           outline: 0.125rem solid $tab-focus;
           outline-offset: 0.125rem;
           z-index: 99;
+        }
+      }
+
+      &[expanded] {
+        .accordion-pane {
+          border-bottom: 0.0625rem solid $component-border;
+
+          &:focus-visible {
+            outline: 0.125rem solid $tab-focus;
+            outline-offset: 0.125rem;
+            z-index: 99;
+          }
+
+          .chevron-up {
+            background-color: $brand-500;
+            color: $white;
+          }
         }
       }
 
@@ -142,11 +152,11 @@
 }
 
 /*! purgecss start ignore */
-.wrapper.accordion-component .accordion section[expanded] .heading {
+.wrapper.accordion-component .accordion section[expanded] .accordion-pane {
   background-color: $active-bg;
 }
 
-.wrapper.accordion-component .accordion section:last-child[expanded] .heading {
+.wrapper.accordion-component .accordion section:last-child[expanded] .accordion-pane {
   border-radius: 0;
 }
 
