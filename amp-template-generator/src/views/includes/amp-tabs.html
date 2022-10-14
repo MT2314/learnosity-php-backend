@@ -7,7 +7,7 @@
 
     {%- for tab in data.props.layoutState -%}
 
-        <div id="{{tabListId}}_tab{{forloop.index}}"
+        <header id="{{tabListId}}_tab{{forloop.index}}"
             role="tab"
             aria-controls="{{tabListId}}_tabpanel{{forloop.index}}"
             class="p1"
@@ -33,7 +33,7 @@
             </span>
         {%- endif -%}
         
-        </div>
+        </header>
 
 
         <div id="{{tabListId}}_tabpanel{{forloop.index}}"
