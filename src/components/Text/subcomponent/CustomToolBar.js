@@ -3,13 +3,12 @@ import { useSetShowMath, useShowMath, useBoldRef } from "../Provider";
 import styled from "@emotion/styled";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useTranslation } from "react-i18next";
-
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 // ? InfoBox imports
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { iconDropdownOptions } from "../../InfoBox/icons/infoBoxIcons";
 
 // ? Video imports
-import Menu from "@mui/material/Menu";
 import Input from "@mui/material/Input";
 import FormGroup from "@mui/material/FormGroup";
 import FormControl from "@mui/material/FormControl";
@@ -160,7 +159,7 @@ const StyledKebabButton = styled(IconButton)(
     }),
   })
 );
-const StyledFormControlLabel = styled(FormControlLabel)(({ isVideo }) => ({
+const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
   height: "24px",
   whiteSpace: "nowrap",
   fontFamily: `"Inter", sans-serif`,
@@ -180,6 +179,23 @@ const StyledKebabMenu = styled(MenuList)(({}) => ({
   paddingLeft: "27.5px",
   paddingTop: "23px",
   paddingBottom: "23px",
+}));
+const StyledInput = styled(Input)(({}) => ({
+  background: "#FFFFFF",
+  borderTopStyle: "hidden",
+  borderRightStyle: "hidden",
+  borderLeftStyle: "hidden",
+  borderBottom: "none",
+  outline: "none",
+  padding: "0px",
+  "&:hover": { background: "#FFFFFF" },
+  "&:focus": { background: "#FFFFFF" },
+  "&&&:before": {
+    borderBottom: "none",
+  },
+  "&&:after": {
+    borderBottom: "none",
+  },
 }));
 
 // Info Box
@@ -309,6 +325,7 @@ const CustomToolBar = ({
 
   const [activeDirection, setActiveDirection] = useState("left");
 
+  const AppBar = useRef(null);
   //focus to the list and align. Bold Ref is found in EditorComponent.js
   const listRef = useRef(null);
   const alignRef = useRef(null);
@@ -319,26 +336,30 @@ const CustomToolBar = ({
   const TranscriptVideo = useRef(null);
   const DescriptionKebab = useRef(null);
 
+  useOnClickOutside(AppBar, () => {
+    toggleCloseToolbar(["Video", "Kebab"]);
+    setInfoHasFocus(false);
+    setInfoAreaFocused(false);
+  });
+
   const toggleCloseToolbar = (source) => {
+    if (source.includes("Kebab") || source.includes("Transcript")) {
+      setVideoOpen(false);
+    }
+    if (source.includes("Video")) {
+      setDescriptionKebabOpen(false);
+    }
     setActiveTopMenu("");
     setActiveDropDownItem("");
     setBoldVisibility(false);
     setListVisibility(false);
     setAlignVisibility(false);
-    if (source !== "Video") {
-      setSelectBrightcove(false);
-      setVideoOpen(false);
-      setSelectYoutube(false);
-    }
-    if (source !== "Kebab") {
-      setDescriptionKebabOpen(false);
-    }
+    setSelectYoutube(false);
     setSelectBrightcove(false);
   };
 
   // ? InfoBox Toolbar
-  const handleToggleInfo = async (e) => {
-    await toggleCloseToolbar();
+  const handleToggleInfo = (e) => {
     e.target.contains(IconDropDown.current) && setIconOpen(!openIcon);
   };
 
@@ -376,7 +397,6 @@ const CustomToolBar = ({
 
   const handleBrightcoveSelect = (e) => {
     e.stopPropagation();
-    setSelectBrightcove(!selectBrightcove);
   };
 
   const handleYoutubeSelect = (e) => {
@@ -424,11 +444,7 @@ const CustomToolBar = ({
 
   useEffect(() => {
     if (infoHasFocus || videoHasFocus) {
-      setActiveTopMenu("");
-      setActiveDropDownItem("");
-      setBoldVisibility(false);
-      setListVisibility(false);
-      setAlignVisibility(false);
+      toggleCloseToolbar(["Video", "Kebab"]);
     }
   }, [infoHasFocus, videoHasFocus]);
 
@@ -437,7 +453,7 @@ const CustomToolBar = ({
       onClick={(e) => e.stopPropagation()}
       onFocus={(e) => e.stopPropagation()}
     >
-      <StyledAppbar position="static">
+      <StyledAppbar position="static" ref={AppBar}>
         {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
         {isInfoBox && (
           <StyledIconDropdownButton
@@ -541,10 +557,13 @@ const CustomToolBar = ({
                         onKeyDown={handleListKeyDown}
                       >
                         {!selectYoutube && !selectBrightcove && (
-                          <>
+                          <div>
                             <StyledVideoMenuItem
                               key={"brightcove-select"}
-                              onClick={(e) => handleBrightcoveSelect(e)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectBrightcove(true);
+                              }}
                               data-testid={`brightcove select button`}
                               aria-labelledby={`brightcove select button`}
                             >
@@ -555,7 +574,10 @@ const CustomToolBar = ({
                             </StyledVideoMenuItem>
                             <StyledVideoMenuItem
                               key={"youtube-select"}
-                              onClick={(e) => handleYoutubeSelect(e)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectYoutube(true);
+                              }}
                               data-testid={`youtube select button`}
                               aria-labelledby={`youtube select button`}
                             >
@@ -564,34 +586,42 @@ const CustomToolBar = ({
                                 Add from YouTube
                               </span>
                             </StyledVideoMenuItem>
-                          </>
+                          </div>
                         )}
                         {selectBrightcove && (
                           <StyledVideoMenuItem>
-                            <Input
+                            <StyledInput
                               data-testid={`brightcove input`}
                               aria-labelledby={`brightcove input`}
                               type="text"
-                              // onClick={(e) => stopPropagation(e)}
+                              placeholder="Paste unique identifier"
+                              onClick={(e) => e.stopPropagation()}
                               // onChange={(e) => handleBrightcoveInput(e)}
-                              required
-                              focused
                             />
-                            <Button type="submit">Add</Button>
+                            <Button
+                              type="submit"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Add
+                            </Button>
                           </StyledVideoMenuItem>
                         )}
                         {selectYoutube && (
                           <StyledVideoMenuItem>
-                            <Input
+                            <StyledInput
                               data-testid={`youtube input`}
                               aria-labelledby={`youtube input`}
                               type="text"
-                              // onClick={(e) => stopPropagation(e)}
+                              placeholder="Paste unique identifier"
+                              onClick={(e) => e.stopPropagation()}
                               // onChange={(e) => handleYoutubeInput(e)}
-                              required
-                              focused
                             />
-                            <Button type="submit">Add</Button>
+                            <Button
+                              type="submit"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Add
+                            </Button>
                           </StyledVideoMenuItem>
                         )}
                       </StyledMenu>
