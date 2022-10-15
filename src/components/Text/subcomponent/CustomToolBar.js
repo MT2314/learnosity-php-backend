@@ -68,6 +68,7 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   display: "flex",
   justifyContent: "space-between",
   ...((isInfoBox || isVideo) && { borderLeft: "none !important" }),
+  height: "40px !important",
   minHeight: "40px !important",
   width: isInfoBox
     ? "160px"
@@ -82,6 +83,9 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   "& .MuiToolbar-gutters": {
     paddingLeft: 0,
     paddingRight: 0,
+  },
+  "& .MuiPaper-root ": {
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
   },
 }));
 
@@ -170,7 +174,7 @@ const StyledKebabMenu = styled(MenuList)(({}) => ({
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
   marginLeft: "0px",
-  marginTop: "12px",
+  marginTop: "11px",
   width: "204px",
   height: "108px",
   paddingLeft: "27.5px",
@@ -228,7 +232,7 @@ const StyledIconButton = styled(IconButton)(({ disabled }) => ({
   height: "30px",
   padding: "7px",
   color: "#232323",
-  backgroundColor: "none",
+  background: "#FFFFFF",
   borderRadius: "4px !important",
 
   "& svg": {
@@ -250,6 +254,13 @@ const StyledIconButton = styled(IconButton)(({ disabled }) => ({
   },
   "&:focus-visible": {
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+  },
+  "& .MuiPaper-root": {
+    backgroundColor: "rgba(255,255,255,1) !important",
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
+  },
+  "& .MuiPaper-root ": {
+    backgroundColor: "rgba(255,255,255,1) !important",
   },
 }));
 
@@ -691,6 +702,8 @@ const CustomToolBar = ({
               onKeyDropDown={(e) => {
                 onKeyDropDown(e, boldRef);
               }}
+              isInfoBox={isInfoBox}
+              isVideo={isVideo}
             ></BoldDropdownButton>
 
             {!isInfoBox && !isVideo && (
