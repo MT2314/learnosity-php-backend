@@ -89,7 +89,7 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
 }));
 
 // Video Styled Components
-const StyledVideoToolbar = styled(Toolbar)(({ isVideo }) => ({
+const StyledVideoToolbar = styled(Toolbar)(({}) => ({
   borderLeft: "4px solid #1565C0",
   display: "flex",
   justifyContent: "space-between",
@@ -130,17 +130,44 @@ const StyledVideoButton = styled(Button)(({ openVideo }) => ({
   },
 }));
 
-const StyledVideoMenuItem = styled(MenuItem)(({ openVideo }) => ({
+const StyledVideoMenu = styled(MenuList)(({}) => ({
+  display: "flex",
+  flexDirection: "row",
+  alignContent: "center",
+  alignItems: "center",
+  background: "#FFFFFF",
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  borderRadius: "4px",
+  marginLeft: "0px",
+  marginTop: "4px",
+  padding: "0px",
+  "&:hover": {
+    backgroundColor: "#FFF",
+  },
+  "&:active": {
+    backgroundColor: "#FFF",
+  },
+}));
+
+const StyledVideoMenuItem = styled(MenuItem)(({}) => ({
   width: "287px",
   padding: "6px 16px",
   height: "36px",
-
   "&:hover": {
     backgroundColor: " rgba(0, 0, 0, 0.04);!important",
   },
   "&:active": {
     backgroundColor: " rgba(0, 0, 0, 0.04);!important",
   },
+}));
+
+const StyledInputItem = styled(MenuItem)(({}) => ({
+  width: "287px",
+  padding: "0px 16px",
+  height: "36px",
+  "&:hover": { background: "#FFFFFF" },
+  "&:focus": { background: "#FFFFFF" },
+  "&:active": { background: "#FFFFFF" },
 }));
 
 const StyledKebabButton = styled(IconButton)(
@@ -550,7 +577,7 @@ const CustomToolBar = ({
                 {({ TransitionProps }) => (
                   <Grow {...TransitionProps}>
                     <Paper>
-                      <StyledMenu
+                      <StyledVideoMenu
                         autoFocusItem={openVideo}
                         data-testid="video-select-dropdown"
                         aria-labelledby={t("Video Drop Down")}
@@ -566,6 +593,7 @@ const CustomToolBar = ({
                               }}
                               data-testid={`brightcove select button`}
                               aria-labelledby={`brightcove select button`}
+                              sx={{ marginTop: "8px" }}
                             >
                               <BrightspaceSVG />
                               <span style={{ marginLeft: "33.66px" }}>
@@ -580,6 +608,7 @@ const CustomToolBar = ({
                               }}
                               data-testid={`youtube select button`}
                               aria-labelledby={`youtube select button`}
+                              sx={{ marginBottom: "8px" }}
                             >
                               <YoutubeSVG />
                               <span style={{ marginLeft: "33.66px" }}>
@@ -589,7 +618,7 @@ const CustomToolBar = ({
                           </div>
                         )}
                         {selectBrightcove && (
-                          <StyledVideoMenuItem>
+                          <StyledInputItem>
                             <StyledInput
                               data-testid={`brightcove input`}
                               aria-labelledby={`brightcove input`}
@@ -604,10 +633,10 @@ const CustomToolBar = ({
                             >
                               Add
                             </Button>
-                          </StyledVideoMenuItem>
+                          </StyledInputItem>
                         )}
                         {selectYoutube && (
-                          <StyledVideoMenuItem>
+                          <StyledInputItem>
                             <StyledInput
                               data-testid={`youtube input`}
                               aria-labelledby={`youtube input`}
@@ -622,9 +651,9 @@ const CustomToolBar = ({
                             >
                               Add
                             </Button>
-                          </StyledVideoMenuItem>
+                          </StyledInputItem>
                         )}
-                      </StyledMenu>
+                      </StyledVideoMenu>
                     </Paper>
                   </Grow>
                 )}
