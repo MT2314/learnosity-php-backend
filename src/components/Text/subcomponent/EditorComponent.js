@@ -91,6 +91,10 @@ const EditorComponent = ({
   setVideoHasFocus,
   setTextRef,
   setTabActive,
+  setVideoAPI,
+  videoAPI,
+  videoTextSettings,
+  setVideoTextSettings,
 }) => {
   //context hooks
   const setQuill = useSetQuill();
@@ -339,6 +343,10 @@ const EditorComponent = ({
           videoHasFocus={videoHasFocus}
           selectedIcon={selectedIcon}
           setSelectedIcon={setSelectedIcon}
+          setVideoAPI={setVideoAPI}
+          videoAPI={videoAPI}
+          videoTextSettings={videoTextSettings}
+          setVideoTextSettings={setVideoTextSettings}
         />
       </StyledConfigBar>
 

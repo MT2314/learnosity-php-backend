@@ -325,6 +325,10 @@ const CustomToolBar = ({
   videoHasFocus,
   selectedIcon,
   setSelectedIcon,
+  setVideoAPI,
+  videoAPI = null,
+  videoTextSettings,
+  setVideoTextSettings,
 }) => {
   const { t } = useTranslation();
 
@@ -345,6 +349,8 @@ const CustomToolBar = ({
   const [openDescriptionKebab, setDescriptionKebabOpen] = useState(false);
   const [selectBrightcove, setSelectBrightcove] = useState(false);
   const [selectYoutube, setSelectYoutube] = useState(false);
+  const [brightcoveID, setBrightcoveID] = useState("");
+  const [youtubeID, setYoutubeID] = useState("");
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
@@ -370,7 +376,13 @@ const CustomToolBar = ({
   });
 
   const toggleCloseToolbar = (source) => {
-    if (source.includes("Kebab") || source.includes("Transcript")) {
+    setSelectYoutube(false);
+    setSelectBrightcove(false);
+    if (
+      source.includes("Kebab") ||
+      source.includes("Transcript") ||
+      source.includes("API")
+    ) {
       setVideoOpen(false);
     }
     if (source.includes("Video")) {
@@ -381,8 +393,6 @@ const CustomToolBar = ({
     setBoldVisibility(false);
     setListVisibility(false);
     setAlignVisibility(false);
-    setSelectYoutube(false);
-    setSelectBrightcove(false);
   };
 
   // ? InfoBox Toolbar
@@ -403,32 +413,35 @@ const CustomToolBar = ({
   };
 
   // ? Video Toolbar
-  const handleToggleVideo = async (e) => {
-    await toggleCloseToolbar("Video");
+  const handleToggleVideo = (e) => {
+    toggleCloseToolbar("Video");
     e.target.contains(AddVideo.current) && setVideoOpen(!openVideo);
   };
 
-  const handleClickTranscript = async (e) => {
-    await toggleCloseToolbar("Transcript");
+  const handleClickTranscript = (e) => {
+    toggleCloseToolbar("Transcript");
     e.target.contains(TranscriptVideo.current) && setTranscriptOpen(!openVideo);
   };
-  const handleToggleVideoKebab = async () => {
-    await toggleCloseToolbar("Kebab");
+  const handleToggleVideoKebab = () => {
+    toggleCloseToolbar("Kebab");
     setDescriptionKebabOpen(!openDescriptionKebab);
   };
 
-  const handleKebobChange = (e) => {
+  const handleVideoAPI = (e, source) => {
     e.stopPropagation();
-    console.log(e.target.value);
+    setVideoAPI((videoAPI) => ({
+      ...videoAPI,
+      videoSource: source,
+      videoId: source === "brightcove" ? brightcoveID : youtubeID,
+    }));
+    toggleCloseToolbar("API");
   };
-
-  const handleBrightcoveSelect = (e) => {
+  const handleTextSettings = (e, source) => {
     e.stopPropagation();
-  };
-
-  const handleYoutubeSelect = (e) => {
-    e.stopPropagation();
-    setSelectYoutube(!selectYoutube);
+    setVideoTextSettings((videoTextSettings) => ({
+      ...videoTextSettings,
+      [source]: e.target.checked,
+    }));
   };
 
   // ? Main Toolbar
@@ -469,11 +482,14 @@ const CustomToolBar = ({
     }
   }, [showMath]);
 
-  useEffect(() => {
-    if (infoHasFocus || videoHasFocus) {
-      toggleCloseToolbar(["Video", "Kebab"]);
-    }
-  }, [infoHasFocus, videoHasFocus]);
+  // useEffect(() => {
+  //   if (infoHasFocus || videoHasFocus) {
+  //     toggleCloseToolbar(["Video", "Kebab"]);
+  //   }
+  // }, [infoHasFocus, videoHasFocus]);
+  // useEffect(() => {
+  //   console.table({ activeDropDownItem });
+  // }, [activeDropDownItem, activeTopMenu]);
 
   return (
     <Container
@@ -559,7 +575,6 @@ const CustomToolBar = ({
               aria-expanded={openVideo ? "true" : undefined}
               variant="contained"
               openVideo={openVideo}
-              fullWidth
               disableElevation
               disableRipple
               disableFocusRipple
@@ -572,16 +587,23 @@ const CustomToolBar = ({
                 placement="bottom-start"
                 transition
                 disablePortal
-                sx={{ marginLeft: "-10px !important" }}
+                modifiers={[
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [-10, 0],
+                    },
+                  },
+                ]}
               >
                 {({ TransitionProps }) => (
                   <Grow {...TransitionProps}>
                     <Paper>
                       <StyledVideoMenu
-                        autoFocusItem={openVideo}
                         data-testid="video-select-dropdown"
                         aria-labelledby={t("Video Drop Down")}
                         onKeyDown={handleListKeyDown}
+                        sx={{ display: "flex", flexDirection: "column" }}
                       >
                         {!selectYoutube && !selectBrightcove && (
                           <div>
@@ -618,18 +640,21 @@ const CustomToolBar = ({
                           </div>
                         )}
                         {selectBrightcove && (
-                          <StyledInputItem>
+                          <StyledInputItem
+                            aria-labelledby={t("Brightcove input ")}
+                          >
                             <StyledInput
-                              data-testid={`brightcove input`}
-                              aria-labelledby={`brightcove input`}
+                              data-testid={`brightcove-input-field`}
+                              aria-labelledby={`brightcove input field`}
                               type="text"
-                              placeholder="Paste unique identifier"
+                              placeholder={"Paste unique identifier"}
+                              value={brightcoveID === null ? "" : brightcoveID}
                               onClick={(e) => e.stopPropagation()}
-                              // onChange={(e) => handleBrightcoveInput(e)}
+                              onChange={(e) => setBrightcoveID(e.target.value)}
                             />
                             <Button
                               type="submit"
-                              onClick={(e) => e.stopPropagation()}
+                              onClick={(e) => handleVideoAPI(e, "brightcove")}
                             >
                               Add
                             </Button>
@@ -641,13 +666,14 @@ const CustomToolBar = ({
                               data-testid={`youtube input`}
                               aria-labelledby={`youtube input`}
                               type="text"
-                              placeholder="Paste unique identifier"
+                              placeholder={"Paste unique identifier"}
+                              value={youtubeID === null ? "" : youtubeID}
                               onClick={(e) => e.stopPropagation()}
-                              // onChange={(e) => handleYoutubeInput(e)}
+                              onChange={(e) => setYoutubeID(e.target.value)}
                             />
                             <Button
                               type="submit"
-                              onClick={(e) => e.stopPropagation()}
+                              onClick={(e) => handleVideoAPI(e, "youtube")}
                             >
                               Add
                             </Button>
@@ -1011,16 +1037,18 @@ const CustomToolBar = ({
                       <Grow {...TransitionProps}>
                         <Paper>
                           <StyledKebabMenu
-                            // autoFocusItem={openDescriptionKebab}
                             data-testid="video-select-dropdown"
                             aria-labelledby={t("Video Drop Down")}
                             onKeyDown={handleListKeyDown}
                           >
                             <FormGroup sx={{ gap: "14px" }}>
-                              <FormControl onClick={handleKebobChange}>
+                              <FormControl>
                                 <StyledFormControlLabel
                                   control={
                                     <Checkbox
+                                      onClick={(e) =>
+                                        handleTextSettings(e, "description")
+                                      }
                                       sx={{
                                         "&:hover": {
                                           bgcolor: "transparent",
@@ -1037,10 +1065,13 @@ const CustomToolBar = ({
                                   size="small"
                                 />
                               </FormControl>
-                              <FormControl onClick={handleKebobChange}>
+                              <FormControl>
                                 <StyledFormControlLabel
                                   control={
                                     <Checkbox
+                                      onClick={(e) =>
+                                        handleTextSettings(e, "credit")
+                                      }
                                       sx={{
                                         "&:hover": {
                                           bgcolor: "transparent",
