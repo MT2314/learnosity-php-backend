@@ -69,6 +69,11 @@ const VideoDescriptionCredit = (props) => {
   const videoBodyRef = useRef();
   const placeholderRef = useRef();
 
+  const [videoTextSettings, setVideoTextSettings] = useState({
+    description: null,
+    credit: null,
+  });
+
   const updateBody = useCallback((body) => {
     dispatch({ func: "CHANGE_BODY", body: body.body });
   });
@@ -101,12 +106,21 @@ const VideoDescriptionCredit = (props) => {
       setTextFocused(false);
     }
   }, [props.videoAreaFocused]);
+
+  useEffect(() => {
+    console.table(videoTextSettings);
+  }, [videoTextSettings]);
+
   return (
     <div ref={videoBodyRef} style={{ position: "relative" }}>
       <Text
         body={stateBody}
         setProp={updateBody}
         setTextRef={setTextRef}
+        setVideoAPI={props.setVideoAPI}
+        videoAPI={props.videoAPI}
+        videoTextSettings={videoTextSettings}
+        setVideoTextSettings={setVideoTextSettings}
         {...props}
       />
       <DescriptionInput
@@ -134,14 +148,3 @@ const VideoDescriptionCredit = (props) => {
 };
 
 export default VideoDescriptionCredit;
-
-{
-  /* <Body
-isVideo={isVideo}
-videoHasFocus={videoHasFocus}
-videoAreaFocused={videoAreaFocused}
-setVideoHasFocus={setVideoHasFocus}
-setVideoBody={setVideoBody}
-setPlaceHolder={setPlaceHolder}
-t={t} />*/
-}

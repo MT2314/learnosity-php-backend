@@ -33,11 +33,12 @@ const Text = ({
   setInfoHasFocus = () => {},
   setVideoHasFocus = () => {},
   setTextRef = () => {},
+  setVideoAPI = () => {},
+  setVideoTextSettings = () => {},
+  videoAPI = {},
+  videoTextSettings = {},
 }) => {
   const [showEditor, setShowEditor] = useState(false);
-
-  //* Creating theme
-  // const textTheme = createMFTheme();
 
   useEffect(() => {
     if (isInfoBox || isVideo) {
@@ -94,6 +95,10 @@ const Text = ({
               setSelectedIcon={setSelectedIcon}
               setTextRef={setTextRef}
               setTabActive={setTabActive}
+              setVideoAPI={setVideoAPI}
+              videoAPI={videoAPI}
+              videoTextSettings={videoTextSettings}
+              setVideoTextSettings={setVideoTextSettings}
             />
           </Provider>
         )}

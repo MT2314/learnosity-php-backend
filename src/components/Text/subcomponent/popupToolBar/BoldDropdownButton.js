@@ -5,10 +5,28 @@ import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core";
 import icons from "../../assets/icons";
 
-const BoldDropdownButton = ({ show, onKeyDropDown }) => {
+import styled from "@emotion/styled";
+
+const StyleCard = styled(Card)(({ show, isInfoBox, isVideo }) => ({
+  position: "absolute",
+  zIndex: 25,
+  left: isInfoBox ? "0px" : isVideo ? "0px" : "-4px",
+  bottom: "-32.5px",
+  padding: "3px",
+  display: show ? "block" : "none",
+  ".ql-active": {
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    svg: { ".svg-fill": { fill: "#1565c0" } },
+  },
+}));
+
+const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
   return (
     <>
-      <Card
+      <StyleCard
+        show={show}
+        isInfoBox={isInfoBox}
+        isVideo={isVideo}
         className={show ? "bold-dropdown show" : "bold-dropdown hide"}
         onKeyDown={onKeyDropDown}
       >
@@ -144,7 +162,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown }) => {
             {icons["super"]}
           </button>
         </Tooltip>
-      </Card>
+      </StyleCard>
     </>
   );
 };

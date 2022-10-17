@@ -8,15 +8,13 @@ import icons from "../../assets/icons";
 
 import styled from "@emotion/styled";
 
-const StyleCard = styled(Card)(({ show, isInfoBox }) => ({
-  maxWidth: "150px",
+const StyleCard = styled(Card)(({ show, isInfoBox, isVideo }) => ({
   position: "absolute",
   zIndex: 25,
-  left: isInfoBox ? "70px" : "90px",
-  bottom: "-32px",
+  left: isInfoBox ? "76.5px" : isVideo ? "74px" : "105px",
+  bottom: "-32.5px",
   padding: "3px",
   display: show ? "block" : "none",
-  svg: { ".svg-fill": { fill: "#232323" } },
   ".ql-active": {
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
     svg: { ".svg-fill": { fill: "#1565c0" } },
@@ -29,10 +27,16 @@ const ListDropdownButton = ({
   activeDropDownItem,
   setActiveDropDownListItem,
   onKeyDropDown,
+  isVideo,
 }) => {
   return (
     <>
-      <StyleCard show={show} isInfoBox={isInfoBox} onKeyDown={onKeyDropDown}>
+      <StyleCard
+        show={show}
+        isInfoBox={isInfoBox}
+        isVideo={isVideo}
+        onKeyDown={onKeyDropDown}
+      >
         <Tooltip
           aria-label="bullets"
           title="bullets"

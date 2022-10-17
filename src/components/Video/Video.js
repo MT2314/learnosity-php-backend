@@ -1,9 +1,8 @@
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "@emotion/styled";
 
 // Interal Imports
-import Body from "./subcomponents/Body";
 import VideoDescriptionCredit from "./subcomponents/VideoDescriptionCredit";
 import TriangleIcon from "./assets/Triangle.png";
 // MUI/@emotion imports
@@ -36,15 +35,6 @@ const StyledVideoDefaultContainer = styled("div")({
   alignItems: "center",
 });
 
-const StyledContainer = styled("div")({
-  width: "100%",
-  maxWidth: "60.5rem",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
 const StyledCircleContainer = styled("div")({
   width: "200px",
   height: "200px",
@@ -65,16 +55,6 @@ const StyledVideoContainer = styled("div")({
 
 const StyledTriangleImage = styled("img")({
   paddingLeft: "20px",
-});
-
-// Styled components begin
-const StyledPaper = styled(Paper)({
-  background: "rgb(236, 236, 236)",
-  width: "968px",
-  fontFamily: `"Inter", sans-serif`,
-  padding: "40px 104px",
-  display: "flex",
-  background: "#FAFAFA",
 });
 
 const StyledVideoDescriptionContainer = styled("div")({
@@ -103,13 +83,6 @@ const TranscriptButtonContainer = styled("button")({
   color: "#929292",
 });
 
-const StyledTextContainer = styled("div")({
-  display: "flex",
-  flexDirection: "column",
-  width: "650px",
-  marginLeft: "2.029rem",
-});
-
 // InfoBox component
 const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
   // Localization
@@ -120,6 +93,11 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
 
   const [videoBody, setVideoBody] = useState(null);
   const [placeHolder, setPlaceHolder] = useState(null);
+
+  const [videoAPI, setVideoAPI] = useState({
+    videoSource: "",
+    videoId: null,
+  });
 
   const isVideo = useMemo(() => true, []);
   const videoRef = useRef();
@@ -135,6 +113,10 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
       setVideoHasFocus(true);
     }
   };
+
+  useEffect(() => {
+    console.table(videoAPI);
+  }, [videoAPI]);
 
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
@@ -162,6 +144,8 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
                 setVideoHasFocus={setVideoHasFocus}
                 setVideoBody={setVideoBody}
                 setPlaceHolder={setPlaceHolder}
+                setVideoAPI={setVideoAPI}
+                videoAPI={videoAPI}
                 t={t}
               />
             </DescriptionCreditContainer>
