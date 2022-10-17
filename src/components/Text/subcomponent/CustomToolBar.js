@@ -581,30 +581,30 @@ const CustomToolBar = ({
               onClick={handleToggleVideo}
             >
               Add Video
-              <Popper
-                open={openVideo}
-                anchorEl={AddVideo.current}
-                placement="bottom-start"
-                transition
-                disablePortal
-                modifiers={[
-                  {
-                    name: "offset",
-                    options: {
-                      offset: [-10, 0],
+              {!selectYoutube && !selectBrightcove && (
+                <Popper
+                  open={openVideo}
+                  anchorEl={AddVideo.current}
+                  placement="bottom-start"
+                  transition
+                  disablePortal
+                  modifiers={[
+                    {
+                      name: "offset",
+                      options: {
+                        offset: [-10, 0],
+                      },
                     },
-                  },
-                ]}
-              >
-                {({ TransitionProps }) => (
-                  <Grow {...TransitionProps}>
-                    <Paper>
-                      <StyledVideoMenu
-                        data-testid="video-select-dropdown"
-                        aria-labelledby={t("Video Drop Down")}
-                        onKeyDown={handleListKeyDown}
-                      >
-                        {!selectYoutube && !selectBrightcove && (
+                  ]}
+                >
+                  {({ TransitionProps }) => (
+                    <Grow {...TransitionProps}>
+                      <Paper>
+                        <StyledVideoMenu
+                          data-testid="video-select-dropdown"
+                          aria-labelledby={t("Video Drop Down")}
+                          onKeyDown={handleListKeyDown}
+                        >
                           <div>
                             <StyledVideoMenuItem
                               key={"brightcove-select"}
@@ -637,8 +637,36 @@ const CustomToolBar = ({
                               </span>
                             </StyledVideoMenuItem>
                           </div>
-                        )}
-                        {selectBrightcove && (
+                        </StyledVideoMenu>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              )}
+              {selectBrightcove && (
+                <Popper
+                  open={openVideo}
+                  anchorEl={AddVideo.current}
+                  placement="bottom-start"
+                  transition
+                  disablePortal
+                  modifiers={[
+                    {
+                      name: "offset",
+                      options: {
+                        offset: [-10, 0],
+                      },
+                    },
+                  ]}
+                >
+                  {({ TransitionProps }) => (
+                    <Grow {...TransitionProps}>
+                      <Paper>
+                        <StyledVideoMenu
+                          data-testid="video-select-dropdown"
+                          aria-labelledby={t("Video Drop Down")}
+                          onKeyDown={handleListKeyDown}
+                        >
                           <StyledInputItem
                             aria-labelledby={t("Brightcove input ")}
                           >
@@ -662,8 +690,32 @@ const CustomToolBar = ({
                               Add
                             </Button>
                           </StyledInputItem>
-                        )}
-                        {selectYoutube && (
+                        </StyledVideoMenu>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              )}
+              {selectYoutube && (
+                <Popper
+                  open={openVideo}
+                  anchorEl={AddVideo.current}
+                  placement="bottom-start"
+                  transition
+                  disablePortal
+                  modifiers={[
+                    {
+                      name: "offset",
+                      options: {
+                        offset: [-10, 0],
+                      },
+                    },
+                  ]}
+                >
+                  {({ TransitionProps }) => (
+                    <Grow {...TransitionProps}>
+                      <Paper>
+                        <StyledVideoMenu>
                           <StyledInputItem>
                             <StyledInput
                               data-testid={`youtube input`}
@@ -685,12 +737,12 @@ const CustomToolBar = ({
                               Add
                             </Button>
                           </StyledInputItem>
-                        )}
-                      </StyledVideoMenu>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
+                        </StyledVideoMenu>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
+              )}
             </StyledVideoButton>
             <Divider />
 
