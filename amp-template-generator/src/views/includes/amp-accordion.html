@@ -17,6 +17,7 @@
             Expand / Collapse Buttons:
             Both of these buttons are hidden from screen readers because of concerns about confusing non-sighted users.
         {%endcomment%}
+        {%- if data.props.layoutState.length > 1 -%}
         <div class="right pb1" aria-hidden="true">
             <button
                 id="{{ accordionId }}_expandAll"
@@ -37,6 +38,7 @@
                 <span class="bold">Collapse All</span>
             </button>
         </div>
+        {%- endif -%}
     
         {%comment%}Actual Accordion:{%endcomment%}
         <amp-accordion
