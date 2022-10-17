@@ -89,13 +89,12 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
 }));
 
 // Video Styled Components
-const StyledVideoToolbar = styled(Toolbar)(({}) => ({
+const StyledVideoToolbar = styled(Toolbar)(({ selected }) => ({
   borderLeft: "4px solid #1565C0",
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: selected ? "space-around" : "space-evenly",
   minHeight: "40px !important",
-  width: "200px !important",
-  paddingRight: "0px",
+  minWidth: selected ? "310px" : "200px",
   margin: "10px, 7px",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -326,7 +325,6 @@ const CustomToolBar = ({
   setSelectedIcon,
   setVideoAPI,
   videoAPI = null,
-  videoTextSettings,
   setVideoTextSettings,
 }) => {
   const { t } = useTranslation();
@@ -480,6 +478,12 @@ const CustomToolBar = ({
     }
   }, [showMath]);
 
+  useEffect(() => {
+    if (videoAPI.videoId) {
+      videoAPI.videoSource === "brightcove" && setSelectBrightcove(true);
+      videoAPI.videoSource === "youtube" && setSelectYoutube(true);
+    }
+  });
   // useEffect(() => {
   //   if (infoHasFocus || videoHasFocus) {
   //     toggleCloseToolbar(["Video", "Kebab"]);
@@ -568,19 +572,20 @@ const CustomToolBar = ({
           </StyledIconDropdownButton>
         )}
         {isVideo && (
-          <StyledVideoToolbar position="static">
+          <StyledVideoToolbar position="static" selected={videoAPI.videoId}>
             <StyledVideoButton
               ref={AddVideo}
               id="AddVideo"
               aria-controls={openVideo ? t("Add Video") : undefined}
               aria-expanded={openVideo ? "true" : undefined}
+              sx={{ width: "100%" }}
               variant="contained"
               openVideo={openVideo}
               disableRipple
               disableFocusRipple
               onClick={handleToggleVideo}
             >
-              Add Video
+              {videoAPI.videoId ? "Change Video" : "Add Video"}
               {!selectYoutube && !selectBrightcove && (
                 <Popper
                   open={openVideo}
@@ -592,7 +597,7 @@ const CustomToolBar = ({
                     {
                       name: "offset",
                       options: {
-                        offset: [-10, 0],
+                        offset: videoAPI.videoId ? [-55, 0] : [-10, 0],
                       },
                     },
                   ]}
@@ -654,7 +659,7 @@ const CustomToolBar = ({
                     {
                       name: "offset",
                       options: {
-                        offset: [-10, 0],
+                        offset: videoAPI.videoId ? [-40, 0] : [-10, 0],
                       },
                     },
                   ]}
@@ -735,8 +740,9 @@ const CustomToolBar = ({
               disableRipple
               disableFocusRipple
               onClick={handleClickTranscript}
+              sx={videoAPI.videoId ? { width: "159px" } : { width: "78px" }}
             >
-              Transcript
+              {videoAPI.videoId ? "Download Transcript" : "Transcript"}
             </StyledVideoButton>
           </StyledVideoToolbar>
         )}
@@ -1070,8 +1076,8 @@ const CustomToolBar = ({
                       <Grow {...TransitionProps}>
                         <Paper>
                           <StyledKebabMenu
-                            data-testid="video-select-dropdown"
-                            aria-labelledby={t("Video Drop Down")}
+                            data-testid="video-description-settings-dropdown"
+                            aria-labelledby="Video Description Settings"
                             onKeyDown={handleListKeyDown}
                           >
                             <FormGroup sx={{ gap: "14px" }}>
@@ -1094,7 +1100,7 @@ const CustomToolBar = ({
                                       }}
                                     />
                                   }
-                                  label="Show description"
+                                  label="Show description checkbox"
                                   size="small"
                                 />
                               </FormControl>
@@ -1117,7 +1123,7 @@ const CustomToolBar = ({
                                       }}
                                     />
                                   }
-                                  label="Show credit"
+                                  label="Show credit checkbox"
                                   size="small"
                                 />
                               </FormControl>
