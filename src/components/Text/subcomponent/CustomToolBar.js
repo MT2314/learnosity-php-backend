@@ -170,22 +170,20 @@ const StyledInputItem = styled(MenuItem)(({}) => ({
   "&:active": { background: "#FFFFFF" },
 }));
 
-const StyledKebabButton = styled(IconButton)(
-  ({ disabled, openDescriptionKebab, checked }) => ({
-    display: "flex !important",
-    height: "30px",
-    width: "30px",
-    padding: "5px",
-    margin: "0px",
-    color: "#232323",
-    backgroundColor: "none",
-    borderRadius: "4px !important",
-    ...(openDescriptionKebab && {
-      cursor: "pointer",
-      backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    }),
-  })
-);
+const StyledKebabButton = styled(IconButton)(({ disabled, open, checked }) => ({
+  display: "flex !important",
+  height: "30px",
+  width: "30px",
+  padding: "5px",
+  margin: "0px",
+  color: "#232323",
+  backgroundColor: "none",
+  borderRadius: "4px !important",
+  ...(open && {
+    cursor: "pointer",
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+  }),
+}));
 const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
   height: "24px",
   whiteSpace: "nowrap",
@@ -227,21 +225,22 @@ const StyledInput = styled(Input)(({}) => ({
 
 // Info Box
 const StyledIconDropdownButton = styled(Button)({
+  display: "flex",
+  flexDirection: "row",
+  alignContent: "space-between",
   borderLeft: "4px solid #1565C0",
-  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  width: "140px",
+  padding: "8px 22px 8px 14.5px",
   backgroundColor: "#FFF",
   color: "#232323",
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   fontFamily: `"Inter", sans-serif`,
+  textAlign: "center",
   fontSize: "1rem",
   fontWeight: "400",
   lineHeight: "1.5rem",
   letterSpacing: "0.009375rem",
-  width: "100%",
-  padding: "8px 22px",
-  display: "flex",
-  flexDirection: "row",
   whiteSpace: "nowrap",
-  textAlign: "center",
   textTransform: "none",
 
   "&:hover": {
@@ -371,13 +370,9 @@ const CustomToolBar = ({
 
   useOnClickOutside(AppBar, () => {
     toggleCloseToolbar(["Video", "Kebab"]);
-    setInfoHasFocus(false);
-    setInfoAreaFocused(false);
   });
 
   const toggleCloseToolbar = (source) => {
-    setSelectYoutube(false);
-    setSelectBrightcove(false);
     if (
       source.includes("Kebab") ||
       source.includes("Transcript") ||
@@ -393,6 +388,8 @@ const CustomToolBar = ({
     setBoldVisibility(false);
     setListVisibility(false);
     setAlignVisibility(false);
+    setSelectYoutube(false);
+    setSelectBrightcove(false);
   };
 
   // ? InfoBox Toolbar
@@ -419,6 +416,7 @@ const CustomToolBar = ({
   };
 
   const handleClickTranscript = (e) => {
+    setVideoOpen(false);
     toggleCloseToolbar("Transcript");
     e.target.contains(TranscriptVideo.current) && setTranscriptOpen(!openVideo);
   };
@@ -505,23 +503,26 @@ const CustomToolBar = ({
             aria-controls={openIcon ? t("Infobox Select Icon") : undefined}
             aria-expanded={openIcon ? "true" : undefined}
             variant="contained"
-            fullWidth
-            disableElevation
             disableRipple
             disableFocusRipple
             onClick={handleToggleInfo}
-            startIcon={
-              openIcon ? (
-                <ExpandMoreIcon
-                  sx={{
-                    transform: "rotate(180deg)",
-                  }}
-                />
-              ) : (
-                <ExpandMoreIcon />
-              )
-            }
           >
+            {openIcon ? (
+              <ExpandMoreIcon
+                sx={{
+                  marginRight: "9.5px",
+                  transform: "rotate(180deg)",
+                  pointerEvents: "none",
+                }}
+              />
+            ) : (
+              <ExpandMoreIcon
+                sx={{
+                  marginRight: "9.5px",
+                  pointerEvents: "none",
+                }}
+              />
+            )}
             {selectedIcon === null
               ? t("Infobox Select Icon")
               : t(`${selectedIcon}`)}
@@ -575,7 +576,6 @@ const CustomToolBar = ({
               aria-expanded={openVideo ? "true" : undefined}
               variant="contained"
               openVideo={openVideo}
-              disableElevation
               disableRipple
               disableFocusRipple
               onClick={handleToggleVideo}
@@ -603,7 +603,6 @@ const CustomToolBar = ({
                         data-testid="video-select-dropdown"
                         aria-labelledby={t("Video Drop Down")}
                         onKeyDown={handleListKeyDown}
-                        sx={{ display: "flex", flexDirection: "column" }}
                       >
                         {!selectYoutube && !selectBrightcove && (
                           <div>
@@ -648,7 +647,11 @@ const CustomToolBar = ({
                               aria-labelledby={`brightcove input field`}
                               type="text"
                               placeholder={"Paste unique identifier"}
-                              value={brightcoveID === null ? "" : brightcoveID}
+                              defaultValue={
+                                videoAPI.videoSource === "brightcove"
+                                  ? videoAPI.videoId
+                                  : null
+                              }
                               onClick={(e) => e.stopPropagation()}
                               onChange={(e) => setBrightcoveID(e.target.value)}
                             />
@@ -667,7 +670,11 @@ const CustomToolBar = ({
                               aria-labelledby={`youtube input`}
                               type="text"
                               placeholder={"Paste unique identifier"}
-                              value={youtubeID === null ? "" : youtubeID}
+                              defaultValue={
+                                videoAPI.videoSource === "youtube"
+                                  ? videoAPI.videoId
+                                  : null
+                              }
                               onClick={(e) => e.stopPropagation()}
                               onChange={(e) => setYoutubeID(e.target.value)}
                             />
@@ -695,8 +702,6 @@ const CustomToolBar = ({
               }
               aria-expanded={openTranscript ? "true" : undefined}
               variant="contained"
-              fullWidth
-              disableElevation
               disableRipple
               disableFocusRipple
               onClick={handleClickTranscript}
@@ -1017,9 +1022,7 @@ const CustomToolBar = ({
                   aria-controls={openVideo ? t("Add Video") : undefined}
                   aria-expanded={openVideo ? "true" : undefined}
                   variant="contained"
-                  openDescriptionKebab={openDescriptionKebab}
-                  fullWidth
-                  disableElevation
+                  open={openDescriptionKebab}
                   disableRipple
                   disableFocusRipple
                   onClick={handleToggleVideoKebab}
