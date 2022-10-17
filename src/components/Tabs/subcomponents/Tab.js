@@ -9,8 +9,6 @@ import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
 
-import DropIndicator from "../../../Utility/DropIndicator";
-
 // NOTE: We can use theme once it is set it up end to end
 const StyleTabBody = styled("div")(({ isDragging }) => ({
   padding: "0.625rem",
