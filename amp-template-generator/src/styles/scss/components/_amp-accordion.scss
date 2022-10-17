@@ -32,16 +32,36 @@
     clear: right;
 
     section {
+      border-radius: 0.625rem 0.625rem 0.625rem 0.625rem;
+
       &:first-child {
         .accordion-pane {
           border-radius: 0.625rem 0.625rem 0 0;
+        }
+
+        &[expanded] {
+          .accordion-pane {
+            border-radius: 0.625rem 0.625rem 0 0;
+          }
         }
       }
 
       &:last-child {
         .accordion-pane {
-          border-radius: 0 0 0.625rem 0.625rem;
+          border-bottom-left-radius: 0.625rem;
+          border-bottom-right-radius: 0.625rem;
           border-bottom: 0.0625rem solid $component-border;
+        }
+
+        .section-content {
+          border-radius: 0 0 0.625rem 0.625rem;
+        }
+
+        &[expanded] {
+          .accordion-pane {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+          }
         }
       }
 
@@ -154,10 +174,6 @@
 /*! purgecss start ignore */
 .wrapper.accordion-component .accordion section[expanded] .accordion-pane {
   background-color: $active-bg;
-}
-
-.wrapper.accordion-component .accordion section:last-child[expanded] .accordion-pane {
-  border-radius: 0;
 }
 
 .wrapper.accordion-component .accordion section:last-child[expanded] .section-content {
