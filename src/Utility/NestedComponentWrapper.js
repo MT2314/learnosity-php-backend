@@ -87,7 +87,6 @@ const NestedComponentWrapper = ({
   draggingOver,
   setActiveComp,
   activeComp,
-  compLength,
 }) => {
   const dropRef = useRef(null);
 
@@ -423,15 +422,16 @@ const NestedComponentWrapper = ({
               }}
             />
           </BlueBox>
-          {compIndex + 1 === compLength.length &&
-          <DropIndicator
-            data-testid="drop-indicator"
-            offsetLine={dropIndexOffset}
-            showLine={dropIndexOffset === 0 && isOver}
-            item={getItem}
-            offsetDown={0}
-            offsetUp={compIndex != numOfComponent - 1 ? 15 : 5}
-          />}
+          {compIndex + 1 === numOfComponent && 
+            <DropIndicator
+              data-testid="drop-indicator"
+              offsetLine={dropIndexOffset}
+              showLine={dropIndexOffset === 0 && isOver}
+              item={getItem}
+              offsetDown={0}
+              offsetUp={compIndex != numOfComponent - 1 ? 15 : 5}
+            />
+          }
         </div>
       </div>
     </>

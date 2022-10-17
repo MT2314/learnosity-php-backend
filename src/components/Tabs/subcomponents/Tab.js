@@ -120,7 +120,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
           <Placeholder isOver={isOver} showError={showError} />
         ) : (
           <div role="list" isOver={isOver}>
-            {components.map((component, compIndex, compLength) => {
+            {components.map((component, compIndex) => {
               return (
                 <NestedComponentWrapper
                   componentType="tabs"
@@ -137,7 +137,6 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
                   droppedIndex={droppedIndex}
                   setActiveComp={setActiveComp}
                   activeComp={activeComp}
-                  compLength={compLength}
                 />
               );
             })}
