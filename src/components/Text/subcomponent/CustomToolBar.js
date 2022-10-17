@@ -643,7 +643,7 @@ const CustomToolBar = ({
                   )}
                 </Popper>
               )}
-              {selectBrightcove && (
+              {(selectBrightcove || selectYoutube) && (
                 <Popper
                   open={openVideo}
                   anchorEl={AddVideo.current}
@@ -663,76 +663,54 @@ const CustomToolBar = ({
                     <Grow {...TransitionProps}>
                       <Paper>
                         <StyledVideoMenu
-                          data-testid="video-select-dropdown"
-                          aria-labelledby={t("Video Drop Down")}
+                          data-testid={`${
+                            selectBrightcove ? "brightcove" : "youtube"
+                          } video-select-dropdown`}
+                          aria-labelledby={`${
+                            selectBrightcove ? "brightcove" : "youtube"
+                          } video-select-dropdown`}
                           onKeyDown={handleListKeyDown}
                         >
                           <StyledInputItem
-                            aria-labelledby={t("Brightcove input ")}
+                            aria-labelledby={`${
+                              selectBrightcove ? "brightcove" : "youtube"
+                            } input`}
                           >
                             <StyledInput
-                              data-testid={`brightcove-input-field`}
-                              aria-labelledby={`brightcove input field`}
+                              data-testid={`${
+                                selectBrightcove ? "brightcove" : "youtube"
+                              } input-field`}
+                              aria-labelledby={`${
+                                selectBrightcove ? "brightcove" : "youtube"
+                              } input field`}
                               type="text"
                               placeholder={"Paste unique identifier"}
                               defaultValue={
-                                videoAPI.videoSource === "brightcove"
+                                videoAPI.videoSource === "brightcove" &&
+                                selectBrightcove
+                                  ? videoAPI.videoId
+                                  : videoAPI.videoSource === "youtube" &&
+                                    selectYoutube
                                   ? videoAPI.videoId
                                   : null
                               }
                               onClick={(e) => e.stopPropagation()}
-                              onChange={(e) => setBrightcoveID(e.target.value)}
+                              onChange={(e) => {
+                                selectBrightcove
+                                  ? setBrightcoveID(e.target.value)
+                                  : setYoutubeID(e.target.value);
+                              }}
                             />
                             <Button
                               type="submit"
-                              onClick={(e) => handleVideoAPI(e, "brightcove")}
-                            >
-                              Add
-                            </Button>
-                          </StyledInputItem>
-                        </StyledVideoMenu>
-                      </Paper>
-                    </Grow>
-                  )}
-                </Popper>
-              )}
-              {selectYoutube && (
-                <Popper
-                  open={openVideo}
-                  anchorEl={AddVideo.current}
-                  placement="bottom-start"
-                  transition
-                  disablePortal
-                  modifiers={[
-                    {
-                      name: "offset",
-                      options: {
-                        offset: [-10, 0],
-                      },
-                    },
-                  ]}
-                >
-                  {({ TransitionProps }) => (
-                    <Grow {...TransitionProps}>
-                      <Paper>
-                        <StyledVideoMenu>
-                          <StyledInputItem>
-                            <StyledInput
-                              data-testid={`youtube input`}
-                              aria-labelledby={`youtube input`}
-                              type="text"
-                              placeholder={"Paste unique identifier"}
-                              defaultValue={
-                                videoAPI.videoSource === "youtube"
-                                  ? videoAPI.videoId
-                                  : null
+                              data-testid={`${videoAPI.videoSource}-submit-button`}
+                              aria-label={`${videoAPI.videoSource} id submit button`}
+                              onClick={(e) =>
+                                handleVideoAPI(
+                                  e,
+                                  selectBrightcove ? "brightcove" : "youtube"
+                                )
                               }
-                              onClick={(e) => e.stopPropagation()}
-                              onChange={(e) => setYoutubeID(e.target.value)}
-                            />
-                            <Button
-                              type="submit"
-                              onClick={(e) => handleVideoAPI(e, "youtube")}
                             >
                               Add
                             </Button>
