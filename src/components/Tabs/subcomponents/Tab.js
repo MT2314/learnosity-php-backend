@@ -9,6 +9,8 @@ import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
 
+import DropIndicator from "../../../Utility/DropIndicator";
+
 // NOTE: We can use theme once it is set it up end to end
 const StyleTabBody = styled("div")(({ isDragging }) => ({
   padding: "0.625rem",
@@ -118,7 +120,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
           <Placeholder isOver={isOver} showError={showError} />
         ) : (
           <div role="list" isOver={isOver}>
-            {components.map((component, compIndex) => {
+            {components.map((component, compIndex, compLength) => {
               return (
                 <NestedComponentWrapper
                   componentType="tabs"
@@ -135,6 +137,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
                   droppedIndex={droppedIndex}
                   setActiveComp={setActiveComp}
                   activeComp={activeComp}
+                  compLength={compLength}
                 />
               );
             })}
