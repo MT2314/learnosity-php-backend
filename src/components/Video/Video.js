@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "@emotion/styled";
+import ReactPlayerLoader from "@brightcove/react-player-loader";
 
 // Interal Imports
 import VideoDescriptionCredit from "./subcomponents/VideoDescriptionCredit";
 import TriangleIcon from "./assets/Triangle.png";
-// MUI/@emotion imports
-import { Paper } from "@mui/material";
+
 
 // ?Provider
 import { VideoProvider } from "./VideoContext";
@@ -84,7 +84,7 @@ const TranscriptButtonContainer = styled("button")({
 });
 
 // InfoBox component
-const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
+const Video = ({ videoState = defaultProps, setProp = () => { } }) => {
   // Localization
   const { t } = useTranslation();
 
@@ -114,8 +114,22 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
     }
   };
 
+  let headers = {
+    "BCOV-Policy": process.env.BRIGHTCOVE_POLICY_KEY
+  }
+
+  const BRIGHTCOVE_API = "https://edge.api.brightcove.com/playback/v1/accounts"
+  const BRIGHTCOVE_ACCOUNT_ID = process.env.BRIGHTCOVE_ACCOUNT_ID
+
   useEffect(() => {
-    console.table(videoAPI);
+    const loadVideo = async (accountId, tenantId) => {
+      const objectUrl = `${BRIGHTCOVE_API}/${accountId}/videos/${tenantId}`
+      const result = await fetch(objectUrl, { headers })
+      const videoData = await result.json()
+      console.log(videoData)
+    }
+
+    loadVideo(BRIGHTCOVE_ACCOUNT_ID, videoAPI.videoId)
   }, [videoAPI]);
 
   return (
@@ -127,31 +141,39 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
         onClick={(e) => videoFocused(e)}
         onFocus={(e) => videoFocused(e)}
       >
-        <StyledVideoContainer>
-          <StyledVideoDefaultContainer>
-            <StyledCircleContainer>
-              <StyledTriangleImage src={TriangleIcon} />
-            </StyledCircleContainer>
-          </StyledVideoDefaultContainer>
-        </StyledVideoContainer>
-        <StyledVideoContainer>
-          <StyledVideoDescriptionContainer>
-            <DescriptionCreditContainer>
-              <VideoDescriptionCredit
-                isVideo={isVideo}
-                videoHasFocus={videoHasFocus}
-                videoAreaFocused={videoAreaFocused}
-                setVideoHasFocus={setVideoHasFocus}
-                setVideoBody={setVideoBody}
-                setPlaceHolder={setPlaceHolder}
-                setVideoAPI={setVideoAPI}
-                videoAPI={videoAPI}
-                t={t}
-              />
-            </DescriptionCreditContainer>
-            <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
-          </StyledVideoDescriptionContainer>
-        </StyledVideoContainer>
+        {videoAPI.videoId == null && (
+          <>
+            <StyledVideoContainer>
+              <StyledVideoDefaultContainer>
+                <StyledCircleContainer>
+                  <StyledTriangleImage src={TriangleIcon} />
+                </StyledCircleContainer>
+              </StyledVideoDefaultContainer>
+            </StyledVideoContainer>
+            <StyledVideoContainer>
+              <StyledVideoDescriptionContainer>
+                <DescriptionCreditContainer>
+                  <VideoDescriptionCredit
+                    isVideo={isVideo}
+                    videoHasFocus={videoHasFocus}
+                    videoAreaFocused={videoAreaFocused}
+                    setVideoHasFocus={setVideoHasFocus}
+                    setVideoBody={setVideoBody}
+                    setPlaceHolder={setPlaceHolder}
+                    setVideoAPI={setVideoAPI}
+                    videoAPI={videoAPI}
+                    t={t}
+                  />
+                </DescriptionCreditContainer>
+                <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
+              </StyledVideoDescriptionContainer>
+            </StyledVideoContainer>
+          </>
+        )}
+
+        {videoAPI.videoId !== null && (
+          <ReactPlayerLoader accountId={BRIGHTCOVE_ACCOUNT_ID} videoId={videoAPI.videoId} />
+        )}
       </div>
     </VideoProvider>
   );
