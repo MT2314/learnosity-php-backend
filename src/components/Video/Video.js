@@ -51,6 +51,7 @@ const StyledVideoContainer = styled("div")({
   display: "flex",
   marginLeft: "104px",
   marginRight: "104px",
+  paddingTop: "30px",
 });
 
 const StyledTriangleImage = styled("img")({
