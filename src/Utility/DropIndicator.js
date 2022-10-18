@@ -33,6 +33,7 @@ const DropIndicator = styled("div")(
       borderTop: `3px dashed ${dashColor}`,
       transition: "top 1s linear, bottom 1s linear, position 1s linear",
       "&::before": {
+        overflow: "visible",
         content: "''",
         position: "absolute",
         borderStyle: "solid",
@@ -48,6 +49,7 @@ const DropIndicator = styled("div")(
         zIndex: "1",
       },
       "&::after": {
+        overflow: "visible",
         content: "''",
         position: "absolute",
         borderStyle: "solid",

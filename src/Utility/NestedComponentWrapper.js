@@ -126,9 +126,11 @@ const NestedComponentWrapper = ({
       "Video",
       "Table",
       "InfoBox",
-      "Tab",
       "QuoteBox",
       "IFrame",
+      "Accordion",
+      "Tab",
+      "section",
     ],
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),

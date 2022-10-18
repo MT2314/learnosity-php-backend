@@ -23,7 +23,7 @@ const StyledAccordionDetails = styled(AccordionDetails)(
         : "#ffffff",
     borderWidth: "1px",
     margin: "10px ,0px",
-    padding: "8px",
+    padding: "10px",
     borderStyle: "solid",
     borderColor: "#BDBDBD",
   })
