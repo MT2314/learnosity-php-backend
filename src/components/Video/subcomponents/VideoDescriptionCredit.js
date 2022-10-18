@@ -74,6 +74,8 @@ const VideoDescriptionCredit = (props) => {
     credit: null,
   });
 
+
+  console.log(props.videoDesctiption)
   const updateBody = useCallback((body) => {
     dispatch({ func: "CHANGE_BODY", body: body.body });
   });
