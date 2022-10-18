@@ -13,13 +13,13 @@ import PlaceholderError from "./PlaceholderError";
 // NOTE: We can use theme once it is set it up end to end
 const StyleTabBody = styled("div")(({ isDragging, isOver, showError }) => ({
   // backgroundColor: isDragging ? "#F6F9FC" : "white",
-  backgroundColor: isOver
-    ? showError
-      ? "rgba(211, 47, 47, 0.04)"
-      : "#ffffff"
+  backgroundColor: showError
+    ? "rgba(211, 47, 47, 0.04)"
     : isOver
     ? "rgba(21, 101, 192, 0.04)"
     : "#ffffff",
+  borderWidth: "1px",
+
   margin: "10px ,0px",
   padding: "8px",
   borderStyle: "solid",
@@ -69,7 +69,6 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       if (item.within && components.length !== 0) return;
       if (monitor.didDrop()) return;
       if (acceptListComp(item)) {
-        console.log(item);
         dispatch({
           func: "ADD_COMPONENT",
           tabIndex: activeTab,
