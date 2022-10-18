@@ -83,6 +83,12 @@ const TranscriptButtonContainer = styled("button")({
   color: "#929292",
 });
 
+const PlayerContainer = styled("div")({
+  width: "80%", 
+  padding: "30px auto"
+
+});
+
 // InfoBox component
 const Video = ({ videoState = defaultProps, setProp = () => { } }) => {
   // Localization
@@ -98,6 +104,8 @@ const Video = ({ videoState = defaultProps, setProp = () => { } }) => {
     videoSource: "",
     videoId: null,
   });
+
+  const [videoData, setVideoData] = useState(null)
 
   const isVideo = useMemo(() => true, []);
   const videoRef = useRef();
@@ -125,12 +133,13 @@ const Video = ({ videoState = defaultProps, setProp = () => { } }) => {
     const loadVideo = async (accountId, tenantId) => {
       const objectUrl = `${BRIGHTCOVE_API}/${accountId}/videos/${tenantId}`
       const result = await fetch(objectUrl, { headers })
-      const videoData = await result.json()
-      console.log(videoData)
+      setVideoData(await result.json())
     }
 
     loadVideo(BRIGHTCOVE_ACCOUNT_ID, videoAPI.videoId)
   }, [videoAPI]);
+
+  console.log(videoData)
 
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
@@ -163,6 +172,7 @@ const Video = ({ videoState = defaultProps, setProp = () => { } }) => {
                     setVideoAPI={setVideoAPI}
                     videoAPI={videoAPI}
                     t={t}
+                    videoDesctiption={videoAPI.videoId !== null?.videoData.description}
                   />
                 </DescriptionCreditContainer>
                 <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
@@ -172,7 +182,16 @@ const Video = ({ videoState = defaultProps, setProp = () => { } }) => {
         )}
 
         {videoAPI.videoId !== null && (
-          <ReactPlayerLoader accountId={BRIGHTCOVE_ACCOUNT_ID} videoId={videoAPI.videoId} />
+          <PlayerContainer>
+            <ReactPlayerLoader
+              aria-label="Video player"
+              accountId={BRIGHTCOVE_ACCOUNT_ID}
+              // playerId={process.env.REACT_APP_BRIGHTCOVE_PLAYER_KEY}
+              embedOptions={{ responsive: true }}
+              embedType="iframe"
+              videoId={videoAPI.videoId}
+            />
+          </PlayerContainer>
         )}
       </div>
     </VideoProvider>
