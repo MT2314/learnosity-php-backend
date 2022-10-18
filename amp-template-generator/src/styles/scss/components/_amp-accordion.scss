@@ -69,18 +69,23 @@
         border-bottom: none;
         font-family: $component-main-font;
         font-weight: 600;
+        -webkit-font-smoothing: antialiased;
         font-size: 1.125rem;
         letter-spacing: 0.03em;
         line-height: 1.6875rem;
         padding: 1.0625rem 1.5rem;
+
+        @media only screen and (max-width: 345px) {
+          padding: 1.5rem 1rem;
+        }
 
         .accordion-title-container {
           display: flex;
           align-items: center;
             
           span.accordion-title {
-            width: calc(100% - 1.75rem);
-            margin-right: 1.75rem;
+            width: calc(100% - 1.08rem);
+            margin-right: 1.08rem;
           }
 
           i {

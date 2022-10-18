@@ -45,6 +45,7 @@
           overflow-y: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
+          -webkit-font-smoothing: antialiased;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           margin: 0;
