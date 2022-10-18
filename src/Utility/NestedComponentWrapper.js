@@ -239,6 +239,7 @@ const NestedComponentWrapper = ({
       within: true,
       new: true,
       source: "component",
+      type: component.componentName,
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
