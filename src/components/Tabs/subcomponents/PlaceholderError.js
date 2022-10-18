@@ -8,7 +8,6 @@ const Paragraph = styled("p")({
   display: "flex",
   alignItems: "center",
   height: "48px",
-  padding: "6px, 16px",
   margin: "0px",
   padding: "15px 17px",
   backgroundColor: "rgba(211, 47, 47, 0.04)",
