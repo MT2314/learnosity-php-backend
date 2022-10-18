@@ -23,8 +23,8 @@ const DropIndicator = styled("div")(
     const style = {
       position: "relative",
       display: showLine ? "block" : "none",
-      left: "2px",
-      right: "2px",
+      left: "20px",
+      width: "calc(100% - 40px)",
       height: "0px",
       // Caution: Magic numbers
       top: offsetLine === 0 ? `${offsetUp}px` : null,
@@ -33,6 +33,7 @@ const DropIndicator = styled("div")(
       borderTop: `3px dashed ${dashColor}`,
       transition: "top 1s linear, bottom 1s linear, position 1s linear",
       "&::before": {
+        overflow: "visible",
         content: "''",
         position: "absolute",
         borderStyle: "solid",
@@ -43,11 +44,12 @@ const DropIndicator = styled("div")(
         display: "block",
         width: "10px",
         height: "10px",
-        left: "0px",
+        left: "-15px",
         top: "-7px",
-        zIndex: "10000",
+        zIndex: "1",
       },
       "&::after": {
+        overflow: "visible",
         content: "''",
         position: "absolute",
         borderStyle: "solid",
@@ -58,9 +60,9 @@ const DropIndicator = styled("div")(
         display: "block",
         width: "10px",
         height: "10px",
-        right: "0px",
+        right: "-15px",
         top: "-7px",
-        zIndex: "10000",
+        zIndex: "1",
       },
     };
 

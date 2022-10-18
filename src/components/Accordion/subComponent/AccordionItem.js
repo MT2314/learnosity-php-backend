@@ -13,12 +13,21 @@ import PlaceHolder from "../subComponent/PlaceHolder";
 import PlaceholderError from "./PlaceholderError";
 import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 
-const StyledAccordionDetails = styled(AccordionDetails)(({ isOver }) => ({
-  backgroundColor: isOver ? "rgba(21, 101, 192, 0.04)" : "#ffffff",
-  borderWidth: "1px",
-  borderStyle: "solid",
-  borderColor: "#BDBDBD",
-}));
+const StyledAccordionDetails = styled(AccordionDetails)(
+  ({ isOver, showError, empty }) => ({
+    backgroundColor:
+      showError && empty
+        ? "rgba(211, 47, 47, 0.04)"
+        : isOver && empty
+        ? "rgba(21, 101, 192, 0.04)"
+        : "#ffffff",
+    borderWidth: "1px",
+    margin: "10px ,0px",
+    padding: "10px",
+    borderStyle: "solid",
+    borderColor: "#BDBDBD",
+  })
+);
 
 const AccordionItem = ({
   accordion,
@@ -41,7 +50,15 @@ const AccordionItem = ({
     return ["Text", "Table", "Video", "Image"].indexOf(item.componentName) >= 0;
   };
 
+  // ? Error Message
+  const [showError, setShowError] = useState();
   const [showDropError, setShowDropError] = useState();
+
+  useOnClickOutside(paneRef, () => {
+    setShowError(false), true;
+    setShowDropError(false), true;
+  });
+
   const [{ isOver, getItem }, drop] = useDrop(
     () => ({
       accept: [
@@ -52,6 +69,9 @@ const AccordionItem = ({
         "InfoBox",
         "QuoteBox",
         "IFrame",
+        "Accordion",
+        "Tab",
+        "section",
       ],
       drop: async (item, monitor) => {
         if (!acceptListComp(item) && components.length !== 0)
@@ -86,19 +106,18 @@ const AccordionItem = ({
         return "iFrame";
       case "InfoBox":
         return "InfoBox";
+      case "NONLEARNING":
+        return "Descriptive Container";
+      case "LEARNING":
+        return "Learning Container";
       default:
         return item.replace(/([A-Z])/g, " $1").trim();
     }
   };
 
-  useOnClickOutside(paneRef, () => setShowError(false), true);
-
-  // ? Error Message
-  // Error message stays. This gives the user time to read and learn.
-  const [showError, setShowError] = useState();
   useEffect(() => {
     if (isOver && !acceptListComp(getItem)) {
-      setShowError(trimCap(getItem.componentName));
+      setShowError(trimCap(getItem.componentName || getItem.type));
     } else if (isOver) {
       setShowError();
       setShowDropError(false);
@@ -117,6 +136,8 @@ const AccordionItem = ({
     <StyledAccordionDetails
       data-testid="accordion-dropzone"
       isOver={isOver}
+      showError={showError}
+      empty={components.length == 0}
       ref={drop}
       onDragLeave={() => setInContainer(false)}
       onDragOver={() => setInContainer(true)}

@@ -126,9 +126,11 @@ const NestedComponentWrapper = ({
       "Video",
       "Table",
       "InfoBox",
-      "Tab",
       "QuoteBox",
       "IFrame",
+      "Accordion",
+      "Tab",
+      "section",
     ],
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -422,7 +424,7 @@ const NestedComponentWrapper = ({
               }}
             />
           </BlueBox>
-          {compIndex + 1 === numOfComponent && 
+          {compIndex + 1 === numOfComponent && (
             <DropIndicator
               data-testid="drop-indicator"
               offsetLine={dropIndexOffset}
@@ -431,7 +433,7 @@ const NestedComponentWrapper = ({
               offsetDown={0}
               offsetUp={compIndex != numOfComponent - 1 ? 15 : 5}
             />
-          }
+          )}
         </div>
       </div>
     </>
