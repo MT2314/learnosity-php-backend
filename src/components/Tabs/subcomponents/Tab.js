@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { useDrop } from "react-dnd";
 import styled from "@emotion/styled";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 import { TabContext, LayoutContext } from "../TabContext";
 import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
@@ -10,12 +11,19 @@ import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
 
 // NOTE: We can use theme once it is set it up end to end
-const StyleTabBody = styled("div")(({ isDragging }) => ({
-  padding: "0.625rem",
-  borderColor: "#bdbdbd",
+const StyleTabBody = styled("div")(({ isDragging, isOver, showError }) => ({
+  // backgroundColor: isDragging ? "#F6F9FC" : "white",
+  backgroundColor: isOver
+    ? showError
+      ? "rgba(211, 47, 47, 0.04)"
+      : "#ffffff"
+    : isOver
+    ? "rgba(21, 101, 192, 0.04)"
+    : "#ffffff",
+  margin: "10px ,0px",
+  padding: "8px",
   borderStyle: "solid",
-  borderWidth: "0 1px 1px 1px",
-  backgroundColor: isDragging ? "#F6F9FC" : "white",
+  borderColor: "#BDBDBD",
 }));
 
 const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
@@ -34,7 +42,15 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
     return ["Text", "Table", "Video", "Image"].indexOf(item.componentName) >= 0;
   };
 
+  // ? Error Message
+  const [showError, setShowError] = useState();
   const [showDropError, setShowDropError] = useState();
+
+  useOnClickOutside(dropRef, () => {
+    setShowError(false), true;
+    setShowDropError(false), true;
+  });
+
   const [{ isOver, getItem }, drop] = useDrop(() => ({
     accept: [
       "Text",
@@ -44,6 +60,9 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       "InfoBox",
       "QuoteBox",
       "IFrame",
+      "Accordion",
+      "Tab",
+      "section",
     ],
     drop: async (item, monitor) => {
       if (!acceptListComp(item)) setShowDropError(true);
@@ -76,16 +95,18 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         return "iFrame";
       case "InfoBox":
         return "InfoBox";
+      case "NONLEARNING":
+        return "Descriptive Container";
+      case "LEARNING":
+        return "Learning Container";
       default:
         return item.replace(/([A-Z])/g, " $1").trim();
     }
   };
 
-  // Error message stays. This gives the user time to read and learn.
-  const [showError, setShowError] = useState();
   useEffect(() => {
     if (isOver && !acceptListComp(getItem)) {
-      setShowError(trimCap(getItem.componentName));
+      setShowError(trimCap(getItem.componentName || getItem.type));
     } else if (isOver) {
       setShowError();
       setShowDropError(false);
@@ -113,6 +134,8 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         key={id}
         data-testid="tab-drop-zone"
         isDragging={isDragging}
+        isOver={isOver}
+        showError={showError}
       >
         {activeTab === tabIndex && components.length === 0 ? (
           <Placeholder isOver={isOver} showError={showError} />

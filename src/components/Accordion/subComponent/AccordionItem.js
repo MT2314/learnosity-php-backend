@@ -132,7 +132,7 @@ const AccordionItem = ({
   }, [isOver]);
 
   useEffect(() => {
-    setShowError(false);
+    setShowError();
     setRemoveError(false);
   }, [removeError]);
 
