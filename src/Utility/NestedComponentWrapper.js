@@ -422,7 +422,7 @@ const NestedComponentWrapper = ({
               }}
             />
           </BlueBox>
-          {compIndex + 1 === numOfComponent && 
+          {compIndex + 1 === numOfComponent && (
             <DropIndicator
               data-testid="drop-indicator"
               offsetLine={dropIndexOffset}
@@ -431,7 +431,7 @@ const NestedComponentWrapper = ({
               offsetDown={0}
               offsetUp={compIndex != numOfComponent - 1 ? 15 : 5}
             />
-          }
+          )}
         </div>
       </div>
     </>

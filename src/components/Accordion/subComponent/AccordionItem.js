@@ -14,12 +14,13 @@ import PlaceholderError from "./PlaceholderError";
 import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 
 const StyledAccordionDetails = styled(AccordionDetails)(
-  ({ isOver, showError }) => ({
-    backgroundColor: showError
-      ? "rgba(211, 47, 47, 0.04)"
-      : isOver
-      ? "rgba(21, 101, 192, 0.04)"
-      : "#ffffff",
+  ({ isOver, showError, empty }) => ({
+    backgroundColor:
+      showError && empty
+        ? "rgba(211, 47, 47, 0.04)"
+        : isOver && empty
+        ? "rgba(21, 101, 192, 0.04)"
+        : "#ffffff",
     borderWidth: "1px",
     margin: "10px ,0px",
     padding: "8px",
@@ -136,6 +137,7 @@ const AccordionItem = ({
       data-testid="accordion-dropzone"
       isOver={isOver}
       showError={showError}
+      empty={components.length == 0}
       ref={drop}
       onDragLeave={() => setInContainer(false)}
       onDragOver={() => setInContainer(true)}

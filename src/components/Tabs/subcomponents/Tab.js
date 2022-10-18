@@ -11,13 +11,13 @@ import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
 
 // NOTE: We can use theme once it is set it up end to end
-const StyleTabBody = styled("div")(({ isDragging, isOver, showError }) => ({
-  // backgroundColor: isDragging ? "#F6F9FC" : "white",
-  backgroundColor: showError
-    ? "rgba(211, 47, 47, 0.04)"
-    : isOver
-    ? "rgba(21, 101, 192, 0.04)"
-    : "#ffffff",
+const StyleTabBody = styled("div")(({ isOver, showError, empty }) => ({
+  backgroundColor:
+    showError && empty
+      ? "rgba(211, 47, 47, 0.04)"
+      : isOver && empty
+      ? "rgba(21, 101, 192, 0.04)"
+      : "#ffffff",
   borderWidth: "1px",
 
   margin: "10px ,0px",
@@ -132,8 +132,8 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         ref={dropRef}
         key={id}
         data-testid="tab-drop-zone"
-        isDragging={isDragging}
         isOver={isOver}
+        empty={components.length == 0}
         showError={showError}
       >
         {activeTab === tabIndex && components.length === 0 ? (
