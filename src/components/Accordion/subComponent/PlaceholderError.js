@@ -7,8 +7,9 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 const Paragraph = styled("p")({
   display: "flex",
   alignItems: "center",
-  padding: "6px 16px",
-  margin: "15px 0 -10px 0",
+  height: "48px",
+  padding: "6px, 16px",
+  margin: "0px",
   backgroundColor: "rgba(211, 47, 47, 0.04)",
   color: "#d32f2f",
   lineHeight: "143%",

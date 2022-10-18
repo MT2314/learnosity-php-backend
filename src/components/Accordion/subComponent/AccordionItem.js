@@ -16,6 +16,7 @@ import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
 const StyledAccordionDetails = styled(AccordionDetails)(({ isOver }) => ({
   backgroundColor: isOver ? "rgba(21, 101, 192, 0.04)" : "#ffffff",
   borderWidth: "1px",
+  margin: "10px",
   borderStyle: "solid",
   borderColor: "#BDBDBD",
 }));
@@ -54,6 +55,8 @@ const AccordionItem = ({
         "IFrame",
       ],
       drop: async (item, monitor) => {
+        console.log("isOver", isOver);
+        console.log("item", item);
         if (!acceptListComp(item) && components.length !== 0)
           setShowDropError(true);
         if (item.within && components.length !== 0) return;
