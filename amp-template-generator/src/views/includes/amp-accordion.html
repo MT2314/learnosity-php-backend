@@ -60,9 +60,7 @@
                     aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ tab.title }} {{ pane.heading.processed }}"
                 >
                     <span class="accordion-title-container">
-                        <span class="accordion-title">
-                            {{ tab.title }}
-                        </span>
+                        <span class="accordion-title">{{ tab.title }}</span>{%comment%}Please do not pretty/change structure this line.{%endcomment%}
                         <i class="chevron-down" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'hidden-icon' : 'chevron-down'" aria-hidden="true">&#xe800;</i>
                         <i class="hidden-icon" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'chevron-up' : 'hidden-icon'" aria-hidden="true">&#x22;</i>
                     </span>
