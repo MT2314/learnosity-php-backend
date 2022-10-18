@@ -45,7 +45,10 @@
           overflow-y: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: subpixel-antialiased;
           -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           margin: 0;
