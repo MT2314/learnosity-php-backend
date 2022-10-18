@@ -135,6 +135,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         isOver={isOver}
         empty={components.length == 0}
         showError={showError}
+        role="document"
       >
         {activeTab === tabIndex && components.length === 0 ? (
           <Placeholder isOver={isOver} showError={showError} />

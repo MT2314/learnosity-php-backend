@@ -141,6 +141,7 @@ const AccordionItem = ({
       ref={drop}
       onDragLeave={() => setInContainer(false)}
       onDragOver={() => setInContainer(true)}
+      role="document"
     >
       {components.length !== 0 ? (
         components.map((component, compIndex) => {

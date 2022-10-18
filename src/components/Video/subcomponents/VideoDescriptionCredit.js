@@ -142,7 +142,7 @@ const VideoDescriptionCredit = (props) => {
         placeholder="Video description"
       />
 
-      <CreditInput type="text" placeholder="Credit" />
+      <CreditInput type="text" placeholder="Credit" role="textbox" />
     </div>
   );
 };
