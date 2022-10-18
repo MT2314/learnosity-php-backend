@@ -119,7 +119,6 @@ const AccordionItem = ({
   };
 
   useEffect(() => {
-    console.log(isOver, getItem);
     if (isOver && !acceptListComp(getItem)) {
       setShowError(trimCap(getItem.componentName || getItem.type));
     } else if (isOver) {
