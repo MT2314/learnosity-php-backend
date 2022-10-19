@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "@emotion/styled";
-import ReactPlayerLoader from "@brightcove/react-player-loader";
 
-// Interal Imports
+// Internal Imports
 import VideoDescriptionCredit from "./subcomponents/VideoDescriptionCredit";
-import TriangleIcon from "./assets/Triangle.png";
-
+import ReactPlayerLoader from "./subcomponents/Player";
 
 // ?Provider
 import { VideoProvider } from "./VideoContext";
@@ -84,14 +82,8 @@ const TranscriptButtonContainer = styled("button")({
   color: "#929292",
 });
 
-const PlayerContainer = styled("div")({
-  width: "80%", 
-  padding: "30px auto"
-
-});
-
 // InfoBox component
-const Video = ({ videoState = defaultProps, setProp = () => { } }) => {
+const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
   // Localization
   const { t } = useTranslation();
 
@@ -106,7 +98,7 @@ const Video = ({ videoState = defaultProps, setProp = () => { } }) => {
     videoId: null,
   });
 
-  const [videoData, setVideoData] = useState(null)
+  const [videoData, setVideoData] = useState(null);
 
   const isVideo = useMemo(() => true, []);
   const videoRef = useRef();
@@ -124,24 +116,22 @@ const Video = ({ videoState = defaultProps, setProp = () => { } }) => {
   };
 
   let headers = {
-    "BCOV-Policy": process.env.BRIGHTCOVE_POLICY_KEY
-  }
+    "BCOV-Policy": process.env.BRIGHTCOVE_POLICY_KEY,
+  };
 
-  const BRIGHTCOVE_API = "https://edge.api.brightcove.com/playback/v1/accounts"
-  const BRIGHTCOVE_ACCOUNT_ID = process.env.BRIGHTCOVE_ACCOUNT_ID
+  const BRIGHTCOVE_API = "https://edge.api.brightcove.com/playback/v1/accounts";
+  const BRIGHTCOVE_ACCOUNT_ID = process.env.BRIGHTCOVE_ACCOUNT_ID;
 
   useEffect(() => {
     const loadVideo = async (accountId, tenantId) => {
-      const objectUrl = `${BRIGHTCOVE_API}/${accountId}/videos/${tenantId}`
-      const result = await fetch(objectUrl, { headers })
-      setVideoData(await result.json())
-    }
-
-    loadVideo(BRIGHTCOVE_ACCOUNT_ID, videoAPI.videoId)
+      const objectUrl = `${BRIGHTCOVE_API}/${accountId}/videos/${tenantId}`;
+      const result = await fetch(objectUrl, { headers });
+      setVideoData(await result.json());
+    };
+    loadVideo(BRIGHTCOVE_ACCOUNT_ID, videoAPI.videoId);
   }, [videoAPI]);
 
-  console.log(videoData)
-
+  console.log;
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
       <div
@@ -152,48 +142,38 @@ const Video = ({ videoState = defaultProps, setProp = () => { } }) => {
         onFocus={(e) => videoFocused(e)}
       >
         {videoAPI.videoId == null && (
-          <>
-            <StyledVideoContainer>
-              <StyledVideoDefaultContainer>
-                <StyledCircleContainer>
-                  <StyledTriangleImage src={TriangleIcon} />
-                </StyledCircleContainer>
-              </StyledVideoDefaultContainer>
-            </StyledVideoContainer>
-            <StyledVideoContainer>
-              <StyledVideoDescriptionContainer>
-                <DescriptionCreditContainer>
-                  <VideoDescriptionCredit
-                    isVideo={isVideo}
-                    videoHasFocus={videoHasFocus}
-                    videoAreaFocused={videoAreaFocused}
-                    setVideoHasFocus={setVideoHasFocus}
-                    setVideoBody={setVideoBody}
-                    setPlaceHolder={setPlaceHolder}
-                    setVideoAPI={setVideoAPI}
-                    videoAPI={videoAPI}
-                    t={t}
-                    videoDesctiption={videoAPI.videoId !== null?.videoData.description}
-                  />
-                </DescriptionCreditContainer>
-                <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
-              </StyledVideoDescriptionContainer>
-            </StyledVideoContainer>
-          </>
+          <ReactPlayerLoader
+            videoId={""}
+            BRIGHTCOVE_API={BRIGHTCOVE_API}
+            BRIGHTCOVE_ACCOUNT_ID={BRIGHTCOVE_ACCOUNT_ID}
+          />
         )}
-
         {videoAPI.videoId !== null && (
-          <PlayerContainer>
-            <ReactPlayerLoader
-              aria-label="Video player"
-              accountId={BRIGHTCOVE_ACCOUNT_ID}
-              // playerId={process.env.REACT_APP_BRIGHTCOVE_PLAYER_KEY}
-              embedOptions={{ responsive: true }}
-              embedType="iframe"
-              videoId={videoAPI.videoId}
-            />
-          </PlayerContainer>
+          <ReactPlayerLoader
+            videoId={videoAPI.videoId}
+            BRIGHTCOVE_API={BRIGHTCOVE_API}
+            BRIGHTCOVE_ACCOUNT_ID={BRIGHTCOVE_ACCOUNT_ID}
+          />
         )}
+        <StyledVideoContainer>
+          <StyledVideoDescriptionContainer>
+            <DescriptionCreditContainer>
+              <VideoDescriptionCredit
+                isVideo={isVideo}
+                videoHasFocus={videoHasFocus}
+                videoAreaFocused={videoAreaFocused}
+                setVideoHasFocus={setVideoHasFocus}
+                setVideoBody={setVideoBody}
+                setPlaceHolder={setPlaceHolder}
+                setVideoAPI={setVideoAPI}
+                videoAPI={videoAPI}
+                videoData={videoData}
+                t={t}
+              />
+            </DescriptionCreditContainer>
+            <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
+          </StyledVideoDescriptionContainer>
+        </StyledVideoContainer>
       </div>
     </VideoProvider>
   );

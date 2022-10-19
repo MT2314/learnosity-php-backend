@@ -60,11 +60,30 @@ const CreditInput = styled("input")({
   },
 });
 
-const VideoDescriptionCredit = (props) => {
+const VideoDescriptionCredit = ({
+  isVideo,
+  videoHasFocus,
+  videoAreaFocused,
+  setVideoHasFocus,
+  setVideoBody,
+  setPlaceHolder,
+  setVideoAPI,
+  videoAPI,
+  videoData,
+  t,
+}) => {
   const [state, dispatch] = useContext(VideoContext);
-  const stateBody = useMemo(() => state?.body, [state?.body]);
+  // const stateBody = useMemo(() => state?.body, [state?.body]);
+
   const [refs, setTextRef] = useState({ text: null, quill: null });
   const [textFocused, setTextFocused] = useState(false);
+
+  const [videoDescription, setVideoDescription] = useState(videoData ? 3 : 2);
+
+  const getDescriptions = () => {
+    // console.log(props?.videoData?.long_description);
+    return 3;
+  };
 
   const videoBodyRef = useRef();
   const placeholderRef = useRef();
@@ -74,8 +93,23 @@ const VideoDescriptionCredit = (props) => {
     credit: null,
   });
 
+  const stateBody = {
+    description: {
+      ops: [
+        {
+          insert: "Hello World",
+        },
+      ],
+    },
+    credit: {
+      ops: [
+        {
+          insert: videoData?.tags,
+        },
+      ],
+    },
+  };
 
-  console.log(props.videoDesctiption)
   const updateBody = useCallback((body) => {
     dispatch({ func: "CHANGE_BODY", body: body.body });
   });
@@ -88,8 +122,8 @@ const VideoDescriptionCredit = (props) => {
 
   useEffect(() => {
     if (videoBodyRef.current) {
-      props.setVideoBody(videoBodyRef.current);
-      props.setPlaceHolder(placeholderRef.current);
+      setVideoBody(videoBodyRef.current);
+      setPlaceHolder(placeholderRef.current);
     }
   }, []);
 
@@ -97,33 +131,36 @@ const VideoDescriptionCredit = (props) => {
     () =>
       (!stateBody || !stateBody.ops || stateBody.ops[0].insert === "") &&
       !textFocused,
-    [stateBody, textFocused, props.videoAreaFocused]
+    [stateBody, textFocused, videoAreaFocused]
   );
 
   useEffect(() => {
     if (
-      !props.videoAreaFocused &&
+      !videoAreaFocused &&
       (!stateBody || !stateBody.ops || stateBody.ops[0].insert === "")
     ) {
       setTextFocused(false);
     }
-  }, [props.videoAreaFocused]);
-
-  useEffect(() => {
-    console.table(videoTextSettings);
-  }, [videoTextSettings]);
+  }, [videoAreaFocused]);
 
   return (
     <div ref={videoBodyRef} style={{ position: "relative" }}>
       <Text
-        body={stateBody}
+        body={stateBody?.description}
         setProp={updateBody}
         setTextRef={setTextRef}
-        setVideoAPI={props.setVideoAPI}
-        videoAPI={props.videoAPI}
+        setVideoAPI={setVideoAPI}
+        videoAPI={videoAPI}
         videoTextSettings={videoTextSettings}
         setVideoTextSettings={setVideoTextSettings}
-        {...props}
+        isVideo={isVideo}
+        videoHasFocus={videoHasFocus}
+        videoAreaFocused={videoAreaFocused}
+        setVideoHasFocus={setVideoHasFocus}
+        setVideoBody={setVideoBody}
+        setPlaceHolder={setPlaceHolder}
+        videoData={videoData}
+        t={t}
       />
       <DescriptionInput
         ref={placeholderRef}
@@ -139,12 +176,16 @@ const VideoDescriptionCredit = (props) => {
           display: isValid ? "block" : "none",
         }}
         name="infoBoxBody"
-        aria-label={props.t("InfoBox body")}
+        aria-label={t("InfoBox body")}
         aria-multiline="true"
         placeholder="Video description"
       />
 
-      <CreditInput type="text" placeholder="Credit" />
+      <CreditInput
+        type="text"
+        placeholder="Credit"
+        defaultValue={videoData?.tags}
+      />
     </div>
   );
 };
