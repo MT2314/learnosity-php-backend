@@ -185,9 +185,8 @@ const VideoDescriptionCredit = ({
         aria-multiline="true"
         placeholder="Video description"
         defaultValue={
-          videoData?.long_description
-            ? videoData?.long_description.replace(/ /g, "\u00a0")
-            : ""
+          videoData?.long_description &&
+          videoData?.long_description.replace(/ /g, "\u00a0")
         }
       />
 
