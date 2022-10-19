@@ -6,22 +6,22 @@
     font-size: 1rem;
     text-decoration: none;
     text-transform: uppercase;
-  }
 
-  .btn.link:hover {
-    background-color: $body-highlight;
-    color: $hover-dialog-bg;
-  }
+    &:focus-visible {
+      outline: 0.125rem solid $tab-focus;
+      outline-offset: 0.125rem;
+    }
 
-  .btn.link:disabled {
-    opacity: 0.2;
-    box-shadow: none;
-    pointer-events: none;
-  }
+    &:hover {
+      background-color: $body-highlight;
+      color: $hover-dialog-bg;
+    }
 
-  .btn.link:focus-visible {
-    outline: 0.125rem solid $tab-focus;
-    outline-offset: 0.125rem;
+    &:disabled {
+      opacity: 0.2;
+      box-shadow: none;
+      pointer-events: none;
+    }
   }
 
   .vertical-bar {
@@ -35,12 +35,6 @@
       &:first-child {
         .accordion-pane {
           border-radius: 0.625rem 0.625rem 0 0;
-        }
-
-        &[expanded] {
-          .accordion-pane {
-            border-radius: 0.625rem 0.625rem 0 0;
-          }
         }
       }
 
@@ -59,6 +53,10 @@
           .accordion-pane {
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
+          }
+
+          .section-content {
+            border-bottom: 1px solid $component-border;
           }
         }
       }
@@ -137,6 +135,7 @@
 
       &[expanded] {
         .accordion-pane {
+          background-color: $active-bg;
           border-bottom: 0.0625rem solid $component-border;
 
           &:focus-visible {
@@ -176,13 +175,3 @@
     }
   }
 }
-
-/*! purgecss start ignore */
-.wrapper.accordion-component .accordion section[expanded] .accordion-pane {
-  background-color: $active-bg;
-}
-
-.wrapper.accordion-component .accordion section:last-child[expanded] .section-content {
-  border-bottom: 1px solid $component-border;
-}
-/*! purgecss end ignore */
