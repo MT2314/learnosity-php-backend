@@ -1048,7 +1048,7 @@ const CustomToolBar = ({
                 <Divider />
                 <StyledKebabButton
                   ref={DescriptionKebab}
-                  data-video-id="Video Settings"
+                  data-video-id="videoSettings"
                   aria-controls={openVideo ? t("Add Video") : undefined}
                   aria-expanded={openVideo ? "true" : undefined}
                   variant="contained"
