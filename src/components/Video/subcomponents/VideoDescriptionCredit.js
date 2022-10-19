@@ -81,8 +81,7 @@ const VideoDescriptionCredit = ({
   const [videoDescription, setVideoDescription] = useState(videoData ? 3 : 2);
 
   const getDescriptions = () => {
-    // console.log(props?.videoData?.long_description);
-    return 3;
+    console.log(videoData?.long_description);
   };
 
   const videoBodyRef = useRef();
@@ -97,7 +96,9 @@ const VideoDescriptionCredit = ({
     description: {
       ops: [
         {
-          insert: "Hello World",
+          insert: videoData?.long_description
+            ? videoData?.long_description.replace(/ /g, "\u00a0")
+            : "",
         },
       ],
     },
@@ -143,6 +144,10 @@ const VideoDescriptionCredit = ({
     }
   }, [videoAreaFocused]);
 
+  useEffect(() => {
+    console.log(videoData?.long_description);
+  });
+
   return (
     <div ref={videoBodyRef} style={{ position: "relative" }}>
       <Text
@@ -179,6 +184,11 @@ const VideoDescriptionCredit = ({
         aria-label={t("InfoBox body")}
         aria-multiline="true"
         placeholder="Video description"
+        defaultValue={
+          videoData?.long_description
+            ? videoData?.long_description.replace(/ /g, "\u00a0")
+            : ""
+        }
       />
 
       <CreditInput
