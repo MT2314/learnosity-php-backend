@@ -80,12 +80,6 @@ const VideoDescriptionCredit = ({
   const [refs, setTextRef] = useState({ text: null, quill: null });
   const [textFocused, setTextFocused] = useState(false);
 
-  const [videoDescription, setVideoDescription] = useState(videoData ? 3 : 2);
-
-  const getDescriptions = () => {
-    console.log(videoData?.long_description);
-  };
-
   const videoBodyRef = useRef();
   const placeholderRef = useRef();
 
@@ -160,8 +154,6 @@ const VideoDescriptionCredit = ({
         },
       ],
     };
-    // if (stateDescription.length > 0) {
-    // }
 
     dispatch({
       func: "CHANGE_DESCRIPTION",
