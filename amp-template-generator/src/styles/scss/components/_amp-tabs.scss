@@ -45,7 +45,10 @@
           overflow-y: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: subpixel-antialiased;
           -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           margin: 0;
@@ -82,13 +85,13 @@
         }
 
         .hoverTabText2 {
-          width: 49.5%;
+          width: 45.5%;
         }
         .hoverTabText3 {
-          width: 32%;
+          width: 30%;
         }
         .hoverTabText4 {
-          width: 24%;
+          width: 23%;
         }
 
         &:hover,

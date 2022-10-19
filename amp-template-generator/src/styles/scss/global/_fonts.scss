@@ -11,8 +11,8 @@
 
 // Platypus custom in house font used for icons
 @font-face {
-  font-family: "platypus";
-  src: url("https://s3-componentsexperiments-sbx01-cac1-01.s3.ca-central-1.amazonaws.com/AMP/Font+Testing/platypus.ttf");
+  font-family: "platypus-icons";
+  src: url("https://s3-componentsexperiments-sbx01-cac1-01.s3.ca-central-1.amazonaws.com/AMP/Font+Testing/platypus-icons.ttf");
   // Important to note with this font: set the font-weight and font-style to normal when using this font
 }
 
@@ -32,4 +32,4 @@
 // Font families
 $component-main-font: "Lato", sans-serif;
 $text-body-font: "Crimson Pro", serif;
-$amp-icons-font: "platypus";
+$amp-icons-font: "platypus-icons";
