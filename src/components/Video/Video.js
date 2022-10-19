@@ -131,7 +131,6 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
     loadVideo(BRIGHTCOVE_ACCOUNT_ID, videoAPI.videoId);
   }, [videoAPI]);
 
-  console.log;
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
       <div
