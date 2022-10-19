@@ -85,8 +85,8 @@
           align-items: center;
             
           span.accordion-title {
-            width: calc(100% - 1.08rem);
-            margin-right: 1.08rem;
+            width: calc(100% - 1.5rem);
+            margin-right: 1.5rem;
           }
 
           i {
@@ -100,8 +100,7 @@
             /* Font smoothing. That was taken from TWBS */
             -webkit-font-smoothing: antialiased;
             border-radius: 50%;
-            height: 2.5rem;
-            width: 2.5rem;
+            padding: 0.875rem 0.625rem;
 
             &:before {
               position: relative;
