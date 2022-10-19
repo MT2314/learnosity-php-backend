@@ -94,6 +94,8 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         return "iFrame";
       case "InfoBox":
         return "InfoBox";
+      case "Tab":
+        return "Tabs";
       case "NONLEARNING":
         return "Descriptive Container";
       case "LEARNING":
