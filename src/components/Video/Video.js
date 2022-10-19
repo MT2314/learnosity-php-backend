@@ -131,7 +131,7 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
         <StyledVideoContainer>
           <StyledVideoDefaultContainer>
             <StyledCircleContainer>
-              <StyledTriangleImage src={TriangleIcon} />
+              <StyledTriangleImage src={TriangleIcon} alt=""/>
             </StyledCircleContainer>
           </StyledVideoDefaultContainer>
         </StyledVideoContainer>

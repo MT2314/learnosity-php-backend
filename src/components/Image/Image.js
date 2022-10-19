@@ -87,6 +87,7 @@ const Image = ({
           <>
             <div
               data-testid="image-placeholder"
+              role="figure"
               className={styles.placeholderImg}
               tabIndex="0"
             ></div>
