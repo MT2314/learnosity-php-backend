@@ -27,7 +27,7 @@
       text-decoration-color: $link-visited-underline;
     }
 
-    &:focus {
+    &:focus-visible {
       outline: 2px solid $link-focus;
       border-radius: 2px;
     }
