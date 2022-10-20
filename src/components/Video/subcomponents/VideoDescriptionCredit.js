@@ -108,7 +108,7 @@ const VideoDescriptionCredit = ({
   // };
 
   const updateBody = useCallback((body) => {
-    dispatch({ func: "CHANGE_DESCRIPTION", body: body.body });
+    dispatch({ func: "CHANGE_DESCRIPTION", description: body.body });
   });
 
   useEffect(() => {
@@ -154,20 +154,16 @@ const VideoDescriptionCredit = ({
         },
       ],
     };
-
     dispatch({
       func: "CHANGE_DESCRIPTION",
-      body: body,
+      description: body,
     });
   }, [videoData?.long_description]);
 
   return (
-    <div
-      ref={videoBodyRef}
-      style={{ position: "relative", minHeight: "20px", width: "622px" }}
-    >
+    <div ref={videoBodyRef} style={{ position: "relative" }}>
       <Text
-        body={stateDescription}
+        body={state.videoDescription}
         setProp={updateBody}
         setTextRef={setTextRef}
         setVideoAPI={setVideoAPI}

@@ -114,6 +114,8 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
     }
   };
 
+  console.log(videoData);
+
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
       <div
@@ -123,7 +125,11 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
         onClick={(e) => videoFocused(e)}
         onFocus={(e) => videoFocused(e)}
       >
-        <Player videoId={videoAPI.videoId} setVideoData={setVideoData} />
+        <Player
+          videoId={videoAPI.videoId}
+          setVideoData={setVideoData}
+          videoData={videoData}
+        />
         <StyledVideoContainer>
           <StyledVideoDescriptionContainer>
             <DescriptionCreditContainer>

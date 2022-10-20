@@ -10,11 +10,12 @@ export const videoConfig = (draft, action) => {
       return action.data;
     case "CHANGE_URL":
       draft.videoURL = action.data;
+      return draft;
     case "CHANGE_DESCRIPTION":
-      draft.videoDescription = action.data;
+      draft.videoDescription = action.description;
       return draft;
     case "CHANGE_CREDITS":
-      draft.videoCredit = action.data;
+      draft.videoCredit = action.credit;
       return draft;
   }
 };
@@ -24,6 +25,7 @@ export const VideoProvider = ({ children, setProp, videoState }) => {
   const [state, dispatch] = useReducer(produce(videoConfig), videoState);
   const diff = JSON.stringify(state) !== JSON.stringify(videoState);
   const [mounted, setMounted] = useState(false);
+  console.log(state);
   useEffect(() => {
     dispatch({ func: "UPDATE_STATE", data: videoState });
     setMounted(true);
@@ -36,7 +38,6 @@ export const VideoProvider = ({ children, setProp, videoState }) => {
   useEffect(() => {
     diff && mounted && dispatch({ func: "UPDATE_STATE", data: videoState });
   }, [videoState]);
-
   return (
     <VideoContext.Provider value={[state, dispatch]}>
       {children}

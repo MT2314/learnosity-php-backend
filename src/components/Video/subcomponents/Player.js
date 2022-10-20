@@ -7,9 +7,13 @@ const PlayerContainer = styled("div")({
   width: "80%",
   margin: "0 auto",
   paddingTop: "30px",
+  "& .video-js": {
+    width: "760px",
+    height: "427.5px",
+  },
 });
 
-const Player = ({ videoId = null, setVideoData }) => {
+const Player = ({ videoId = null, setVideoData, videoData }) => {
   const [state, dispatch] = useContext(VideoContext);
 
   const BRIGHTCOVE_API = "https://edge.api.brightcove.com/playback/v1/accounts";
@@ -24,16 +28,25 @@ const Player = ({ videoId = null, setVideoData }) => {
         func: "CHANGE_URL",
         data: `${BRIGHTCOVE_API}/${BRIGHTCOVE_ACCOUNT_ID}/videos/${videoId}`,
       });
+      loadVideo();
     }
   }, [videoId]);
 
-  useEffect(() => {
-    const loadVideo = async () => {
-      const result = await fetch(state.videoURL, { headers });
-      setVideoData(await result.json());
-    };
-    videoId !== null && loadVideo();
-  }, [state.videoURL]);
+  const loadVideo = async () => {
+    const result = await fetch(state.videoURL, { headers });
+    setVideoData(await result.json());
+  };
+
+  // useEffect(() => {
+  //   dispatch({
+  //     func: "CHANGE_DESCRIPTION",
+  //     description: videoData?.long_description,
+  //   });
+  //   dispatch({
+  //     func: "CHANGE_CREDITS",
+  //     credit: videoData?.tags[0],
+  //   });
+  // }, [dataSuccess]);
 
   return (
     <PlayerContainer>
