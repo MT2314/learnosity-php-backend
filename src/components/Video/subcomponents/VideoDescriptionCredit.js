@@ -60,9 +60,23 @@ const CreditInput = styled("input")({
   },
 });
 
-const VideoDescriptionCredit = (props) => {
+const VideoDescriptionCredit = ({
+  isVideo,
+  videoHasFocus,
+  videoAreaFocused,
+  setVideoHasFocus,
+  setVideoBody,
+  setPlaceHolder,
+  setVideoAPI,
+  videoAPI,
+  videoData,
+  t,
+}) => {
   const [state, dispatch] = useContext(VideoContext);
-  const stateBody = useMemo(() => state?.body, [state?.body]);
+  const stateDescription = useMemo(
+    () => state?.videoDescription,
+    [state?.videoDescription]
+  );
   const [refs, setTextRef] = useState({ text: null, quill: null });
   const [textFocused, setTextFocused] = useState(false);
 
@@ -74,8 +88,27 @@ const VideoDescriptionCredit = (props) => {
     credit: null,
   });
 
+  // const stateDescription = {
+  //   description: {
+  //     ops: [
+  //       {
+  //         insert: videoData?.long_description
+  //           ? videoData?.long_description.replace(/ /g, "\u00a0")
+  //           : "",
+  //       },
+  //     ],
+  //   },
+  //   credit: {
+  //     ops: [
+  //       {
+  //         insert: videoData?.tags,
+  //       },
+  //     ],
+  //   },
+  // };
+
   const updateBody = useCallback((body) => {
-    dispatch({ func: "CHANGE_BODY", body: body.body });
+    dispatch({ func: "CHANGE_DESCRIPTION", description: body.body });
   });
 
   useEffect(() => {
@@ -86,42 +119,65 @@ const VideoDescriptionCredit = (props) => {
 
   useEffect(() => {
     if (videoBodyRef.current) {
-      props.setVideoBody(videoBodyRef.current);
-      props.setPlaceHolder(placeholderRef.current);
+      setVideoBody(videoBodyRef.current);
+      setPlaceHolder(placeholderRef.current);
     }
   }, []);
 
   const isValid = useMemo(
     () =>
-      (!stateBody || !stateBody.ops || stateBody.ops[0].insert === "") &&
+      (!stateDescription ||
+        !stateDescription.ops ||
+        stateDescription.ops[0].insert === "") &&
       !textFocused,
-    [stateBody, textFocused, props.videoAreaFocused]
+    [stateDescription, textFocused, videoAreaFocused]
   );
 
   useEffect(() => {
     if (
-      !props.videoAreaFocused &&
-      (!stateBody || !stateBody.ops || stateBody.ops[0].insert === "")
+      !videoAreaFocused &&
+      (!stateDescription ||
+        !stateDescription.ops ||
+        stateDescription.ops[0].insert === "")
     ) {
       setTextFocused(false);
     }
-  }, [props.videoAreaFocused]);
+  }, [videoAreaFocused]);
 
   useEffect(() => {
-    console.table(videoTextSettings);
-  }, [videoTextSettings]);
+    let body = {
+      ops: [
+        {
+          insert: videoData?.long_description
+            ? videoData?.long_description.replace(/ /g, "\u00a0")
+            : "",
+        },
+      ],
+    };
+    dispatch({
+      func: "CHANGE_DESCRIPTION",
+      description: body,
+    });
+  }, [videoData?.long_description]);
 
   return (
     <div ref={videoBodyRef} style={{ position: "relative" }}>
       <Text
-        body={stateBody}
+        body={state.videoDescription}
         setProp={updateBody}
         setTextRef={setTextRef}
-        setVideoAPI={props.setVideoAPI}
-        videoAPI={props.videoAPI}
+        setVideoAPI={setVideoAPI}
+        videoAPI={videoAPI}
         videoTextSettings={videoTextSettings}
         setVideoTextSettings={setVideoTextSettings}
-        {...props}
+        isVideo={isVideo}
+        videoHasFocus={videoHasFocus}
+        videoAreaFocused={videoAreaFocused}
+        setVideoHasFocus={setVideoHasFocus}
+        setVideoBody={setVideoBody}
+        setPlaceHolder={setPlaceHolder}
+        videoData={videoData}
+        t={t}
       />
       <DescriptionInput
         ref={placeholderRef}
@@ -137,12 +193,21 @@ const VideoDescriptionCredit = (props) => {
           display: isValid ? "block" : "none",
         }}
         name="infoBoxBody"
-        aria-label={props.t("InfoBox body")}
+        aria-label={t("InfoBox body")}
         aria-multiline="true"
         placeholder="Video description"
+        defaultValue={
+          videoData?.long_description &&
+          videoData?.long_description.replace(/ /g, "\u00a0")
+        }
       />
 
-      <CreditInput type="text" placeholder="Credit" role="textbox" />
+      <CreditInput
+        type="text"
+        placeholder="Credit"
+        role="textbox"
+        defaultValue={videoData?.tags}
+      />
     </div>
   );
 };

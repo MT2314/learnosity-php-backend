@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useSetShowMath, useShowMath, useBoldRef } from "../Provider";
 import styled from "@emotion/styled";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -89,13 +89,12 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
 }));
 
 // Video Styled Components
-const StyledVideoToolbar = styled(Toolbar)(({}) => ({
+const StyledVideoToolbar = styled(Toolbar)(({ selected }) => ({
   borderLeft: "4px solid #1565C0",
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: selected ? "space-around" : "space-evenly",
   minHeight: "40px !important",
-  width: "200px !important",
-  paddingRight: "0px",
+  minWidth: selected ? "310px" : "200px",
   margin: "10px, 7px",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -326,7 +325,6 @@ const CustomToolBar = ({
   setSelectedIcon,
   setVideoAPI,
   videoAPI = null,
-  videoTextSettings,
   setVideoTextSettings,
 }) => {
   const { t } = useTranslation();
@@ -425,14 +423,29 @@ const CustomToolBar = ({
     setDescriptionKebabOpen(!openDescriptionKebab);
   };
 
-  const handleVideoAPI = (e, source) => {
+  const handleVideoAPI = (e, source, action) => {
     e.stopPropagation();
-    setVideoAPI((videoAPI) => ({
-      ...videoAPI,
-      videoSource: source,
-      videoId: source === "brightcove" ? brightcoveID : youtubeID,
-    }));
-    toggleCloseToolbar("API");
+    if (action === "AddVideo") {
+      setVideoAPI((videoAPI) => ({
+        ...videoAPI,
+        videoSource: source,
+        videoId: source === "brightcove" ? brightcoveID : youtubeID,
+      }));
+      toggleCloseToolbar("API");
+    } else if (action === "RemoveVideo") {
+      setVideoAPI((videoAPI) => ({
+        ...videoAPI,
+        videoSource: "",
+        videoId: null,
+      }));
+      toggleCloseToolbar("API");
+    } else if (action === "EditVideo") {
+      setVideoAPI((videoAPI) => ({
+        ...videoAPI,
+        videoSource: source,
+        videoId: null,
+      }));
+    }
   };
   const handleTextSettings = (e, source) => {
     e.stopPropagation();
@@ -480,6 +493,12 @@ const CustomToolBar = ({
     }
   }, [showMath]);
 
+  useEffect(() => {
+    if (videoAPI.videoId) {
+      videoAPI.videoSource === "brightcove" && setSelectBrightcove(true);
+      videoAPI.videoSource === "youtube" && setSelectYoutube(true);
+    }
+  });
   // useEffect(() => {
   //   if (infoHasFocus || videoHasFocus) {
   //     toggleCloseToolbar(["Video", "Kebab"]);
@@ -568,19 +587,20 @@ const CustomToolBar = ({
           </StyledIconDropdownButton>
         )}
         {isVideo && (
-          <StyledVideoToolbar position="static">
+          <StyledVideoToolbar position="static" selected={videoAPI.videoId}>
             <StyledVideoButton
               ref={AddVideo}
               data-addVideoid="AddVideo"
               aria-controls={openVideo ? t("Add Video") : undefined}
               aria-expanded={openVideo ? "true" : undefined}
+              sx={{ width: "100%" }}
               variant="contained"
               openVideo={openVideo}
               disableRipple
               disableFocusRipple
               onClick={handleToggleVideo}
             >
-              Add Video
+              {videoAPI.videoId ? "Change Video" : "Add Video"}
               {!selectYoutube && !selectBrightcove && (
                 <Popper
                   open={openVideo}
@@ -592,7 +612,7 @@ const CustomToolBar = ({
                     {
                       name: "offset",
                       options: {
-                        offset: [-10, 0],
+                        offset: videoAPI.videoId ? [-55, 0] : [-10, 0],
                       },
                     },
                   ]}
@@ -654,7 +674,7 @@ const CustomToolBar = ({
                     {
                       name: "offset",
                       options: {
-                        offset: [-10, 0],
+                        offset: videoAPI.videoId ? [-40, 0] : [-10, 0],
                       },
                     },
                   ]}
@@ -670,11 +690,19 @@ const CustomToolBar = ({
                             selectBrightcove ? "brightcove" : "youtube"
                           } video-select-dropdown`}
                           onKeyDown={handleListKeyDown}
+                          sx={{ height: "40px", width: "256px" }}
                         >
                           <StyledInputItem
                             aria-labelledby={`${
                               selectBrightcove ? "brightcove" : "youtube"
                             } input`}
+                            sx={
+                              videoAPI.videoId
+                                ? {
+                                    paddingRight: "7px !important",
+                                  }
+                                : { paddingRight: "5px !important" }
+                            }
                           >
                             <StyledInput
                               data-testid={`${
@@ -701,19 +729,93 @@ const CustomToolBar = ({
                                   : setYoutubeID(e.target.value);
                               }}
                             />
-                            <Button
-                              type="submit"
-                              data-testid={`${videoAPI.videoSource}-submit-button`}
-                              aria-label={`${videoAPI.videoSource} id submit button`}
-                              onClick={(e) =>
-                                handleVideoAPI(
-                                  e,
-                                  selectBrightcove ? "brightcove" : "youtube"
-                                )
-                              }
-                            >
-                              Add
-                            </Button>
+                            {!videoAPI.videoId ? (
+                              <Button
+                                type="submit"
+                                data-testid={`${videoAPI.videoSource}-submit-button`}
+                                aria-label={`${videoAPI.videoSource} id submit button`}
+                                onClick={(e) =>
+                                  handleVideoAPI(
+                                    e,
+                                    selectBrightcove ? "brightcove" : "youtube",
+                                    "AddVideo"
+                                  )
+                                }
+                                sx={{
+                                  height: "32px",
+                                  minWidth: "39px !important",
+                                  width: "39px !important",
+                                  padding: "4px 5px",
+                                  outline: "inherit",
+                                  borderRadius: "4px",
+                                  "&:hover": {
+                                    cursor: "pointer",
+                                    backgroundColor:
+                                      "rgba(21, 101, 192, 0.12) !important",
+                                    "> svg": {
+                                      color: "black !important",
+                                    },
+                                  },
+                                  "&:active": {
+                                    cursor: "pointer",
+                                    backgroundColor:
+                                      "rgba(21, 101, 192, 0.12) !important",
+                                    "> svg": {
+                                      color: "#1565c0 !important",
+                                    },
+                                  },
+                                }}
+                              >
+                                Add
+                              </Button>
+                            ) : (
+                              <div>
+                                <Tooltip
+                                  aria-label="delete video id"
+                                  title="delete video id"
+                                  placement="top"
+                                  arrow
+                                >
+                                  <button
+                                    aria-label="delete video id"
+                                    className="trashcan"
+                                    onClick={(e) =>
+                                      handleVideoAPI(
+                                        e,
+                                        selectBrightcove
+                                          ? "brightcove"
+                                          : "youtube",
+                                        "RemoveVideo"
+                                      )
+                                    }
+                                  >
+                                    {icons["trashcan"]}
+                                  </button>
+                                </Tooltip>
+
+                                <Tooltip
+                                  arrow
+                                  title="edit video id"
+                                  placement="top"
+                                >
+                                  <button
+                                    aria-label="edit video id"
+                                    className="pencil"
+                                    onClick={(e) =>
+                                      handleVideoAPI(
+                                        e,
+                                        selectBrightcove
+                                          ? "brightcove"
+                                          : "youtube",
+                                        "EditVideo"
+                                      )
+                                    }
+                                  >
+                                    {icons["pencil"]}
+                                  </button>
+                                </Tooltip>
+                              </div>
+                            )}
                           </StyledInputItem>
                         </StyledVideoMenu>
                       </Paper>
@@ -735,8 +837,9 @@ const CustomToolBar = ({
               disableRipple
               disableFocusRipple
               onClick={handleClickTranscript}
+              sx={videoAPI.videoId ? { width: "159px" } : { width: "78px" }}
             >
-              Transcript
+              {videoAPI.videoId ? "Download Transcript" : "Transcript"}
             </StyledVideoButton>
           </StyledVideoToolbar>
         )}
@@ -1042,6 +1145,7 @@ const CustomToolBar = ({
               </StyledIconButton>
             </Tooltip>
             <HiddenQuillBackgroundColorSelector />
+
             {/* {/* Video Kebab */}
             {isVideo && (
               <>
@@ -1070,8 +1174,8 @@ const CustomToolBar = ({
                       <Grow {...TransitionProps}>
                         <Paper>
                           <StyledKebabMenu
-                            data-testid="video-select-dropdown"
-                            aria-labelledby={t("Video Drop Down")}
+                            data-testid="video-description-settings-dropdown"
+                            aria-labelledby="Video Description Settings"
                             onKeyDown={handleListKeyDown}
                           >
                             <FormGroup sx={{ gap: "14px" }}>
@@ -1094,7 +1198,7 @@ const CustomToolBar = ({
                                       }}
                                     />
                                   }
-                                  label="Show description"
+                                  label="Show description checkbox"
                                   size="small"
                                 />
                               </FormControl>
@@ -1117,7 +1221,7 @@ const CustomToolBar = ({
                                       }}
                                     />
                                   }
-                                  label="Show credit"
+                                  label="Show credit checkbox"
                                   size="small"
                                 />
                               </FormControl>

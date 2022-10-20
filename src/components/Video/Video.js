@@ -2,11 +2,9 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "@emotion/styled";
 
-// Interal Imports
+// Internal Imports
 import VideoDescriptionCredit from "./subcomponents/VideoDescriptionCredit";
-import TriangleIcon from "./assets/Triangle.png";
-// MUI/@emotion imports
-import { Paper } from "@mui/material";
+import Player from "./subcomponents/Player";
 
 // ?Provider
 import { VideoProvider } from "./VideoContext";
@@ -49,8 +47,8 @@ const StyledVideoContainer = styled("div")({
   width: "100%",
   maxWidth: "60.5rem",
   display: "flex",
-  marginLeft: "104px",
-  marginRight: "104px",
+  flexDirection: "row",
+  justifyContent: "center",
   paddingTop: "30px",
 });
 
@@ -99,6 +97,7 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
     videoSource: "",
     videoId: null,
   });
+  const [videoData, setVideoData] = useState(null);
 
   const isVideo = useMemo(() => true, []);
   const videoRef = useRef();
@@ -115,9 +114,7 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
     }
   };
 
-  useEffect(() => {
-    console.table(videoAPI);
-  }, [videoAPI]);
+  console.log(videoData);
 
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
@@ -128,13 +125,11 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
         onClick={(e) => videoFocused(e)}
         onFocus={(e) => videoFocused(e)}
       >
-        <StyledVideoContainer>
-          <StyledVideoDefaultContainer>
-            <StyledCircleContainer>
-              <StyledTriangleImage src={TriangleIcon} alt=""/>
-            </StyledCircleContainer>
-          </StyledVideoDefaultContainer>
-        </StyledVideoContainer>
+        <Player
+          videoId={videoAPI.videoId}
+          setVideoData={setVideoData}
+          videoData={videoData}
+        />
         <StyledVideoContainer>
           <StyledVideoDescriptionContainer>
             <DescriptionCreditContainer>
@@ -147,6 +142,7 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
                 setPlaceHolder={setPlaceHolder}
                 setVideoAPI={setVideoAPI}
                 videoAPI={videoAPI}
+                videoData={videoData}
                 t={t}
               />
             </DescriptionCreditContainer>
