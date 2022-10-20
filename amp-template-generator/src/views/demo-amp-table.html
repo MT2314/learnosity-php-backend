@@ -1,0 +1,12 @@
+---
+{
+  "layout": "amp-layout.njk",
+  "permalink": "demo-amp-table.html"
+}
+---
+<h1>{{result.title}} {{projectConfig.version}} - {{projectConfig.date}}</h1>
+{% include amp-table.html data:result.components[0] -%}
+<hr />
+{% include amp-table.html data:result.components[1] -%}
+<hr />
+{% include amp-table.html data:result.components[2] -%}
