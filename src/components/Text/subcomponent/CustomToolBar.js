@@ -675,11 +675,19 @@ const CustomToolBar = ({
                             selectBrightcove ? "brightcove" : "youtube"
                           } video-select-dropdown`}
                           onKeyDown={handleListKeyDown}
+                          sx={{ height: "40px", width: "256px" }}
                         >
                           <StyledInputItem
                             aria-labelledby={`${
                               selectBrightcove ? "brightcove" : "youtube"
                             } input`}
+                            sx={
+                              videoAPI.videoId
+                                ? {
+                                    paddingRight: "7px !important",
+                                  }
+                                : { paddingRight: "5px !important" }
+                            }
                           >
                             <StyledInput
                               data-testid={`${
@@ -706,19 +714,74 @@ const CustomToolBar = ({
                                   : setYoutubeID(e.target.value);
                               }}
                             />
-                            <Button
-                              type="submit"
-                              data-testid={`${videoAPI.videoSource}-submit-button`}
-                              aria-label={`${videoAPI.videoSource} id submit button`}
-                              onClick={(e) =>
-                                handleVideoAPI(
-                                  e,
-                                  selectBrightcove ? "brightcove" : "youtube"
-                                )
-                              }
-                            >
-                              Add
-                            </Button>
+                            {!videoAPI.videoId ? (
+                              <Button
+                                type="submit"
+                                data-testid={`${videoAPI.videoSource}-submit-button`}
+                                aria-label={`${videoAPI.videoSource} id submit button`}
+                                onClick={(e) =>
+                                  handleVideoAPI(
+                                    e,
+                                    selectBrightcove ? "brightcove" : "youtube"
+                                  )
+                                }
+                                sx={{
+                                  height: "32px",
+                                  minWidth: "39px !important",
+                                  width: "39px !important",
+                                  padding: "4px 5px",
+                                  outline: "inherit",
+                                  borderRadius: "4px",
+                                  "&:hover": {
+                                    cursor: "pointer",
+                                    backgroundColor:
+                                      "rgba(21, 101, 192, 0.12) !important",
+                                    "> svg": {
+                                      color: "black !important",
+                                    },
+                                  },
+                                  "&:active": {
+                                    cursor: "pointer",
+                                    backgroundColor:
+                                      "rgba(21, 101, 192, 0.12) !important",
+                                    "> svg": {
+                                      color: "#1565c0 !important",
+                                    },
+                                  },
+                                }}
+                              >
+                                Add
+                              </Button>
+                            ) : (
+                              <div>
+                                <Tooltip
+                                  aria-label="delete video id"
+                                  title="delete video id"
+                                  placement="top"
+                                  arrow
+                                >
+                                  <button
+                                    aria-label="delete video id"
+                                    className="trashcan"
+                                  >
+                                    {icons["trashcan"]}
+                                  </button>
+                                </Tooltip>
+
+                                <Tooltip
+                                  arrow
+                                  title="edit video id"
+                                  placement="top"
+                                >
+                                  <button
+                                    aria-label="edit video id"
+                                    className="pencil"
+                                  >
+                                    {icons["pencil"]}
+                                  </button>
+                                </Tooltip>
+                              </div>
+                            )}
                           </StyledInputItem>
                         </StyledVideoMenu>
                       </Paper>
@@ -1048,6 +1111,7 @@ const CustomToolBar = ({
               </StyledIconButton>
             </Tooltip>
             <HiddenQuillBackgroundColorSelector />
+
             {/* {/* Video Kebab */}
             {isVideo && (
               <>
