@@ -124,6 +124,7 @@
         order: 1;
         border-color: $component-border;
         background: $primary-bg;
+        border-radius: 0 0 0.625rem 0.625rem;
       }
 
       & [role="tab"][selected] + [role="tabpanel"] {
