@@ -36,7 +36,6 @@ const Text = ({
   setVideoTextSettings = () => {},
   videoAPI = {},
   videoTextSettings = {},
-  videoDesctiption
 }) => {
   const [showEditor, setShowEditor] = useState(false);
 
@@ -45,8 +44,6 @@ const Text = ({
       setShowEditor(true);
     }
   }, []);
-
-  console.log(videoDesctiption)
 
   return (
     <>

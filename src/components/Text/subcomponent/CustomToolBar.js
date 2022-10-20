@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useSetShowMath, useShowMath, useBoldRef } from "../Provider";
 import styled from "@emotion/styled";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -423,14 +423,29 @@ const CustomToolBar = ({
     setDescriptionKebabOpen(!openDescriptionKebab);
   };
 
-  const handleVideoAPI = (e, source) => {
+  const handleVideoAPI = (e, source, action) => {
     e.stopPropagation();
-    setVideoAPI((videoAPI) => ({
-      ...videoAPI,
-      videoSource: source,
-      videoId: source === "brightcove" ? brightcoveID : youtubeID,
-    }));
-    toggleCloseToolbar("API");
+    if (action === "AddVideo") {
+      setVideoAPI((videoAPI) => ({
+        ...videoAPI,
+        videoSource: source,
+        videoId: source === "brightcove" ? brightcoveID : youtubeID,
+      }));
+      toggleCloseToolbar("API");
+    } else if (action === "RemoveVideo") {
+      setVideoAPI((videoAPI) => ({
+        ...videoAPI,
+        videoSource: "",
+        videoId: null,
+      }));
+      toggleCloseToolbar("API");
+    } else if (action === "EditVideo") {
+      setVideoAPI((videoAPI) => ({
+        ...videoAPI,
+        videoSource: source,
+        videoId: null,
+      }));
+    }
   };
   const handleTextSettings = (e, source) => {
     e.stopPropagation();
@@ -722,7 +737,8 @@ const CustomToolBar = ({
                                 onClick={(e) =>
                                   handleVideoAPI(
                                     e,
-                                    selectBrightcove ? "brightcove" : "youtube"
+                                    selectBrightcove ? "brightcove" : "youtube",
+                                    "AddVideo"
                                   )
                                 }
                                 sx={{
@@ -763,6 +779,15 @@ const CustomToolBar = ({
                                   <button
                                     aria-label="delete video id"
                                     className="trashcan"
+                                    onClick={(e) =>
+                                      handleVideoAPI(
+                                        e,
+                                        selectBrightcove
+                                          ? "brightcove"
+                                          : "youtube",
+                                        "RemoveVideo"
+                                      )
+                                    }
                                   >
                                     {icons["trashcan"]}
                                   </button>
@@ -776,6 +801,15 @@ const CustomToolBar = ({
                                   <button
                                     aria-label="edit video id"
                                     className="pencil"
+                                    onClick={(e) =>
+                                      handleVideoAPI(
+                                        e,
+                                        selectBrightcove
+                                          ? "brightcove"
+                                          : "youtube",
+                                        "EditVideo"
+                                      )
+                                    }
                                   >
                                     {icons["pencil"]}
                                   </button>

@@ -8,11 +8,13 @@ export const videoConfig = (draft, action) => {
   switch (action.func) {
     case "UPDATE_STATE":
       return action.data;
+    case "CHANGE_URL":
+      draft.videoURL = action.data;
     case "CHANGE_DESCRIPTION":
-      draft.videoDescription = action.body;
+      draft.videoDescription = action.data;
       return draft;
     case "CHANGE_CREDITS":
-      draft.videoLabel = action.label;
+      draft.videoCredit = action.data;
       return draft;
   }
 };
@@ -20,10 +22,8 @@ export const videoConfig = (draft, action) => {
 //video provider wraps the tab component to access reducer
 export const VideoProvider = ({ children, setProp, videoState }) => {
   const [state, dispatch] = useReducer(produce(videoConfig), videoState);
-
   const diff = JSON.stringify(state) !== JSON.stringify(videoState);
   const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
     dispatch({ func: "UPDATE_STATE", data: videoState });
     setMounted(true);

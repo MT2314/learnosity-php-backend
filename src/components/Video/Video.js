@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 
 // Internal Imports
 import VideoDescriptionCredit from "./subcomponents/VideoDescriptionCredit";
-import ReactPlayerLoader from "./subcomponents/Player";
+import Player from "./subcomponents/Player";
 
 // ?Provider
 import { VideoProvider } from "./VideoContext";
@@ -97,7 +97,6 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
     videoSource: "",
     videoId: null,
   });
-
   const [videoData, setVideoData] = useState(null);
 
   const isVideo = useMemo(() => true, []);
@@ -115,22 +114,6 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
     }
   };
 
-  let headers = {
-    "BCOV-Policy": process.env.BRIGHTCOVE_POLICY_KEY,
-  };
-
-  const BRIGHTCOVE_API = "https://edge.api.brightcove.com/playback/v1/accounts";
-  const BRIGHTCOVE_ACCOUNT_ID = process.env.BRIGHTCOVE_ACCOUNT_ID;
-
-  useEffect(() => {
-    const loadVideo = async (accountId, tenantId) => {
-      const objectUrl = `${BRIGHTCOVE_API}/${accountId}/videos/${tenantId}`;
-      const result = await fetch(objectUrl, { headers });
-      setVideoData(await result.json());
-    };
-    loadVideo(BRIGHTCOVE_ACCOUNT_ID, videoAPI.videoId);
-  }, [videoAPI]);
-
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
       <div
@@ -140,20 +123,7 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
         onClick={(e) => videoFocused(e)}
         onFocus={(e) => videoFocused(e)}
       >
-        {videoAPI.videoId == null && (
-          <ReactPlayerLoader
-            videoId={""}
-            BRIGHTCOVE_API={BRIGHTCOVE_API}
-            BRIGHTCOVE_ACCOUNT_ID={BRIGHTCOVE_ACCOUNT_ID}
-          />
-        )}
-        {videoAPI.videoId !== null && (
-          <ReactPlayerLoader
-            videoId={videoAPI.videoId}
-            BRIGHTCOVE_API={BRIGHTCOVE_API}
-            BRIGHTCOVE_ACCOUNT_ID={BRIGHTCOVE_ACCOUNT_ID}
-          />
-        )}
+        <Player videoId={videoAPI.videoId} setVideoData={setVideoData} />
         <StyledVideoContainer>
           <StyledVideoDescriptionContainer>
             <DescriptionCreditContainer>
