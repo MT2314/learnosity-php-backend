@@ -590,7 +590,7 @@ const CustomToolBar = ({
           <StyledVideoToolbar position="static" selected={videoAPI.videoId}>
             <StyledVideoButton
               ref={AddVideo}
-              id="AddVideo"
+              data-addVideoid="AddVideo"
               aria-controls={openVideo ? t("Add Video") : undefined}
               aria-expanded={openVideo ? "true" : undefined}
               sx={{ width: "100%" }}
@@ -828,7 +828,7 @@ const CustomToolBar = ({
 
             <StyledVideoButton
               ref={TranscriptVideo}
-              id="TranscriptVideo"
+              data-tranid="TranscriptVideo"
               aria-controls={
                 openTranscript ? t("Infobox Select Icon") : undefined
               }
@@ -856,7 +856,7 @@ const CustomToolBar = ({
             <button
               style={{ display: "none" }}
               aria-hidden="true"
-              id="alignmentObserver"
+              data-observerid="alignmentObserver"
               onClick={(e) => {
                 const align = e.target.attributes.getNamedItem("data-align")
                   .value
@@ -1019,7 +1019,7 @@ const CustomToolBar = ({
                 }
                 aria-label="alignment buttons dropdown"
                 value={visibleAlignIcon}
-                id="alignment-dropdown"
+                data-alignid="alignment-dropdown"
                 onKeyDown={(e) => {
                   onKeyDropDown(e, alignRef);
                 }}
@@ -1152,7 +1152,7 @@ const CustomToolBar = ({
                 <Divider />
                 <StyledKebabButton
                   ref={DescriptionKebab}
-                  id="Video Settings"
+                  data-videoid="videoSettings"
                   aria-controls={openVideo ? t("Add Video") : undefined}
                   aria-expanded={openVideo ? "true" : undefined}
                   variant="contained"

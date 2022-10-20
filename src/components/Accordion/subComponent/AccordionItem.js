@@ -106,6 +106,8 @@ const AccordionItem = ({
         return "iFrame";
       case "InfoBox":
         return "InfoBox";
+      case "Tab":
+        return "Tabs";
       case "NONLEARNING":
         return "Descriptive Container";
       case "LEARNING":
@@ -141,6 +143,7 @@ const AccordionItem = ({
       ref={drop}
       onDragLeave={() => setInContainer(false)}
       onDragOver={() => setInContainer(true)}
+      role="document"
     >
       {components.length !== 0 ? (
         components.map((component, compIndex) => {

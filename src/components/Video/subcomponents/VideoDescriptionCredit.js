@@ -205,6 +205,7 @@ const VideoDescriptionCredit = ({
       <CreditInput
         type="text"
         placeholder="Credit"
+        role="textbox"
         defaultValue={videoData?.tags}
       />
     </div>

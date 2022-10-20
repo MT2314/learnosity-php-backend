@@ -131,7 +131,6 @@ const EditorComponent = ({
       alignmentObserver?.disconnect();
       setEditorIsFocus(false);
       setShowEditor(false);
-      setActiveComponent(false);
       setTabActive(false);
     }
   });

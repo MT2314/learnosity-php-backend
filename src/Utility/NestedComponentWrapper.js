@@ -320,7 +320,7 @@ const NestedComponentWrapper = ({
                 variant="body2"
                 component="span"
                 sx={{
-                  borderRight: showSelf && "0.5px solid #FFF",
+                  borderRight: showSelf && "0.5px solid rgba(13, 71, 161, 1)",
                   paddingRight: "10px",
                   paddingLeft: "10px",
                   marginRight: "5px",

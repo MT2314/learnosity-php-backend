@@ -62,6 +62,7 @@ const Text = ({
             }}
             className="mainContainer"
             data-testid="text-component"
+            role="text"
             tabIndex="0"
             onFocus={() => {
               setShowEditor(true);

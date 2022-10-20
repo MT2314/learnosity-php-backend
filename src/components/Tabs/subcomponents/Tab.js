@@ -94,6 +94,8 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         return "iFrame";
       case "InfoBox":
         return "InfoBox";
+      case "Tab":
+        return "Tabs";
       case "NONLEARNING":
         return "Descriptive Container";
       case "LEARNING":
@@ -135,6 +137,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         isOver={isOver}
         empty={components.length == 0}
         showError={showError}
+        role="document"
       >
         {activeTab === tabIndex && components.length === 0 ? (
           <Placeholder isOver={isOver} showError={showError} />
