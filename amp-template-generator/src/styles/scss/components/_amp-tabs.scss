@@ -97,10 +97,14 @@
         &:hover,
         &:focus-visible {
           background-color: $primary-bg;
-          text-decoration-line: underline;
+
           .hoverTabText {
             display: block;
           }
+        }
+
+        &:hover {
+          text-decoration-line: underline;
         }
 
         &[selected] {
