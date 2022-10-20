@@ -87,8 +87,12 @@
             background-color: $active-bg;
           }
         }
+
+        &:focus-within {
+          outline: none;
+        }
         
-        &:focus {
+        &:focus-visible {
           outline: 0.125rem solid $tab-focus;
           outline-offset: 0.125rem;
           z-index: 99;
