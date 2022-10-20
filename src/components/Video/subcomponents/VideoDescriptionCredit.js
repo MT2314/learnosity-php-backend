@@ -162,7 +162,10 @@ const VideoDescriptionCredit = ({
   }, [videoData?.long_description]);
 
   return (
-    <div ref={videoBodyRef} style={{ position: "relative" }}>
+    <div
+      ref={videoBodyRef}
+      style={{ position: "relative", minHeight: "20px", width: "622px" }}
+    >
       <Text
         body={stateDescription}
         setProp={updateBody}
