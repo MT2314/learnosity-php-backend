@@ -18,7 +18,7 @@
             Both of these buttons are hidden from screen readers because of concerns about confusing non-sighted users.
         {%endcomment%}
         {%- if data.props.layoutState.length > 1 -%}
-        <div class="right pb1" aria-hidden="true">
+        <div class="right pb1">
             <button
                 id="{{ accordionId }}_expandAll"
                 on="tap:{{ accordionId }}.expand();"
