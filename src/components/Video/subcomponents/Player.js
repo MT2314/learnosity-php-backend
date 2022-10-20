@@ -19,10 +19,12 @@ const Player = ({ videoId = null, setVideoData }) => {
     "BCOV-Policy": process.env.BRIGHTCOVE_POLICY_KEY,
   };
   useEffect(() => {
-    dispatch({
-      func: "CHANGE_URL",
-      data: `${BRIGHTCOVE_API}/${BRIGHTCOVE_ACCOUNT_ID}/videos/${videoId}`,
-    });
+    if (videoId !== null) {
+      dispatch({
+        func: "CHANGE_URL",
+        data: `${BRIGHTCOVE_API}/${BRIGHTCOVE_ACCOUNT_ID}/videos/${videoId}`,
+      });
+    }
   }, [videoId]);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const Player = ({ videoId = null, setVideoData }) => {
       const result = await fetch(state.videoURL, { headers });
       setVideoData(await result.json());
     };
-    loadVideo();
+    videoId !== null && loadVideo();
   }, [state.videoURL]);
 
   return (
