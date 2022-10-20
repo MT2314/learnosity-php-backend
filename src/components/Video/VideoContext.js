@@ -9,7 +9,7 @@ export const videoConfig = (draft, action) => {
     case "UPDATE_STATE":
       return action.data;
     case "CHANGE_DESCRIPTION":
-      draft.body = action.body;
+      draft.videoDescription = action.body;
       return draft;
     case "CHANGE_CREDITS":
       draft.videoLabel = action.label;

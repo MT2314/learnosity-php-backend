@@ -55,8 +55,8 @@ const StyledConfigBar = styled("div")(
           ? "flex"
           : "none"
         : editorIsFocus
-          ? "flex"
-          : "none";
+        ? "flex"
+        : "none";
 
     const configBarStyles = {
       display: display,
@@ -94,7 +94,7 @@ const EditorComponent = ({
   setVideoAPI,
   videoAPI,
   videoTextSettings,
-  setVideoTextSettings
+  setVideoTextSettings,
 }) => {
   //context hooks
   const setQuill = useSetQuill();
@@ -102,7 +102,6 @@ const EditorComponent = ({
   const showMath = useShowMath();
   const keepEditor = useKeepEditor();
   const boldRef = useBoldRef();
-
 
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);

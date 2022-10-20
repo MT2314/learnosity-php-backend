@@ -73,16 +73,12 @@ const VideoDescriptionCredit = ({
   t,
 }) => {
   const [state, dispatch] = useContext(VideoContext);
-  // const stateBody = useMemo(() => state?.body, [state?.body]);
-
+  const stateDescription = useMemo(
+    () => state?.videoDescription,
+    [state?.videoDescription]
+  );
   const [refs, setTextRef] = useState({ text: null, quill: null });
   const [textFocused, setTextFocused] = useState(false);
-
-  const [videoDescription, setVideoDescription] = useState(videoData ? 3 : 2);
-
-  const getDescriptions = () => {
-    console.log(videoData?.long_description);
-  };
 
   const videoBodyRef = useRef();
   const placeholderRef = useRef();
@@ -92,27 +88,27 @@ const VideoDescriptionCredit = ({
     credit: null,
   });
 
-  const stateBody = {
-    description: {
-      ops: [
-        {
-          insert: videoData?.long_description
-            ? videoData?.long_description.replace(/ /g, "\u00a0")
-            : "",
-        },
-      ],
-    },
-    credit: {
-      ops: [
-        {
-          insert: videoData?.tags,
-        },
-      ],
-    },
-  };
+  // const stateDescription = {
+  //   description: {
+  //     ops: [
+  //       {
+  //         insert: videoData?.long_description
+  //           ? videoData?.long_description.replace(/ /g, "\u00a0")
+  //           : "",
+  //       },
+  //     ],
+  //   },
+  //   credit: {
+  //     ops: [
+  //       {
+  //         insert: videoData?.tags,
+  //       },
+  //     ],
+  //   },
+  // };
 
   const updateBody = useCallback((body) => {
-    dispatch({ func: "CHANGE_BODY", body: body.body });
+    dispatch({ func: "CHANGE_DESCRIPTION", body: body.body });
   });
 
   useEffect(() => {
@@ -130,28 +126,48 @@ const VideoDescriptionCredit = ({
 
   const isValid = useMemo(
     () =>
-      (!stateBody || !stateBody.ops || stateBody.ops[0].insert === "") &&
+      (!stateDescription ||
+        !stateDescription.ops ||
+        stateDescription.ops[0].insert === "") &&
       !textFocused,
-    [stateBody, textFocused, videoAreaFocused]
+    [stateDescription, textFocused, videoAreaFocused]
   );
 
   useEffect(() => {
     if (
       !videoAreaFocused &&
-      (!stateBody || !stateBody.ops || stateBody.ops[0].insert === "")
+      (!stateDescription ||
+        !stateDescription.ops ||
+        stateDescription.ops[0].insert === "")
     ) {
       setTextFocused(false);
     }
   }, [videoAreaFocused]);
 
   useEffect(() => {
-    console.log(videoData?.long_description);
-  });
+    let body = {
+      ops: [
+        {
+          insert: videoData?.long_description
+            ? videoData?.long_description.replace(/ /g, "\u00a0")
+            : "",
+        },
+      ],
+    };
+
+    dispatch({
+      func: "CHANGE_DESCRIPTION",
+      body: body,
+    });
+  }, [videoData?.long_description]);
 
   return (
-    <div ref={videoBodyRef} style={{ position: "relative" }}>
+    <div
+      ref={videoBodyRef}
+      style={{ position: "relative", minHeight: "20px", width: "622px" }}
+    >
       <Text
-        body={stateBody?.description}
+        body={stateDescription}
         setProp={updateBody}
         setTextRef={setTextRef}
         setVideoAPI={setVideoAPI}

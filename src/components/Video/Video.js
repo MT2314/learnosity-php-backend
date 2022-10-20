@@ -47,8 +47,8 @@ const StyledVideoContainer = styled("div")({
   width: "100%",
   maxWidth: "60.5rem",
   display: "flex",
-  marginLeft: "104px",
-  marginRight: "104px",
+  flexDirection: "row",
+  justifyContent: "center",
   paddingTop: "30px",
 });
 
@@ -131,7 +131,6 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
     loadVideo(BRIGHTCOVE_ACCOUNT_ID, videoAPI.videoId);
   }, [videoAPI]);
 
-  console.log;
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
       <div
