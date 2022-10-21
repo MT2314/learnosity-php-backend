@@ -92,16 +92,20 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
 const StyledVideoToolbar = styled(Toolbar)(({ selected }) => ({
   borderLeft: "4px solid #1565C0",
   display: "flex",
-  justifyContent: selected ? "space-around" : "space-evenly",
+  justifyContent: "space-evenly",
   minHeight: "40px !important",
   minWidth: selected ? "310px" : "200px",
   margin: "10px, 7px",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
+  paddingLeft: "0px",
+  paddingRight: "0px",
+  paddingLeft: "0px!important",
+  paddingRight: "0px!important",
   "& .MuiToolbar-gutters": {
-    paddingLeft: 0,
-    paddingRight: 0,
+    paddingLeft: "0px",
+    paddingRight: "0px",
   },
 }));
 const StyledVideoButton = styled(Button)(({ openVideo }) => ({
@@ -119,6 +123,7 @@ const StyledVideoButton = styled(Button)(({ openVideo }) => ({
   whiteSpace: "nowrap",
   textAlign: "center",
   textTransform: "none",
+  boxShadow: "none",
   ...(openVideo && {
     cursor: "pointer",
     color: "rgba(21, 101, 192, 1)",
@@ -241,7 +246,8 @@ const StyledIconDropdownButton = styled(Button)({
   letterSpacing: "0.009375rem",
   whiteSpace: "nowrap",
   textTransform: "none",
-
+  paddingLeft: "10px!important",
+  paddingRight: "10px!important",
   "&:hover": {
     background: "#FFF",
     color: "#1565C0",
@@ -593,7 +599,13 @@ const CustomToolBar = ({
               data-addVideoid="AddVideo"
               aria-controls={openVideo ? t("Add Video") : undefined}
               aria-expanded={openVideo ? "true" : undefined}
-              sx={{ width: "100%" }}
+              sx={
+                ({ width: "100%" },
+                videoAPI.videoId && {
+                  width: "107px !important",
+                  flexGrow: "1",
+                })
+              }
               variant="contained"
               openVideo={openVideo}
               disableRipple
@@ -674,7 +686,7 @@ const CustomToolBar = ({
                     {
                       name: "offset",
                       options: {
-                        offset: videoAPI.videoId ? [-40, 0] : [-10, 0],
+                        offset: videoAPI.videoId ? [0, 0] : [-10, 0],
                       },
                     },
                   ]}
@@ -778,7 +790,8 @@ const CustomToolBar = ({
                                 >
                                   <button
                                     aria-label="delete video id"
-                                    className="trashcan"
+                                    className="video trashcan"
+                                    sx={{ marginRight: "2px !important" }}
                                     onClick={(e) =>
                                       handleVideoAPI(
                                         e,
@@ -800,7 +813,8 @@ const CustomToolBar = ({
                                 >
                                   <button
                                     aria-label="edit video id"
-                                    className="pencil"
+                                    className="video pencil"
+                                    sx={{ marginLeft: "2px !important" }}
                                     onClick={(e) =>
                                       handleVideoAPI(
                                         e,
@@ -837,7 +851,11 @@ const CustomToolBar = ({
               disableRipple
               disableFocusRipple
               onClick={handleClickTranscript}
-              sx={videoAPI.videoId ? { width: "159px" } : { width: "78px" }}
+              sx={
+                videoAPI.videoId
+                  ? { width: "159px", flexGrow: "5" }
+                  : { width: "78px" }
+              }
             >
               {videoAPI.videoId ? "Download Transcript" : "Transcript"}
             </StyledVideoButton>
@@ -1198,7 +1216,7 @@ const CustomToolBar = ({
                                       }}
                                     />
                                   }
-                                  label="Show description checkbox"
+                                  label="Show description"
                                   size="small"
                                 />
                               </FormControl>
@@ -1221,7 +1239,7 @@ const CustomToolBar = ({
                                       }}
                                     />
                                   }
-                                  label="Show credit checkbox"
+                                  label="Show credit"
                                   size="small"
                                 />
                               </FormControl>
