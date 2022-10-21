@@ -37,7 +37,7 @@ module.exports = async function () {
                 components: [
                   {
                     componentName: "Table",
-                    props: '{}',
+                    props: '{"caption":"Table Caption"}',
                     locked: false,
                   },
                 ],
