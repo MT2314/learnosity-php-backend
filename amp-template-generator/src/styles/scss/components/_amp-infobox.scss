@@ -27,15 +27,17 @@
     }
     
     .co-cell:first-child {
-        padding-right: 0.5rem;
+        background-color: $brand-50;
+        width: 199px;
+
+        p {
+            text-align: center;
+        }
     }
 
     .icon {
-        width: 36px;
-        height: 36px;
-        margin-top: auto;
-        margin-bottom: auto;
-        padding: 0;
+        margin: auto;
+        margin-top: 42px;
     }
     .icon-quote {
         width: 30px;
@@ -47,14 +49,14 @@
 
     @media(min-width: 640px) {
         .max-content {
-            padding: 1.5rem 1.5rem;
+            padding: 0;
         }
     }
     
     @media(min-width: 832px) {
         .icon {
-            width: 76px;
-            height: 76px;
+            width: 118px;
+            height: 115px;
         }
         .icon-quote {
             width: 50px;
