@@ -8,9 +8,11 @@ export const videoConfig = (draft, action) => {
   switch (action.func) {
     case "UPDATE_STATE":
       return action.data;
-    case "CHANGE_URL":
+    case "UPDATE_URL_DATA":
       draft.videoURL = action.data;
+      draft.videoId = action.videoId;
       return draft;
+
     case "CHANGE_DESCRIPTION":
       draft.videoDescription = action.description;
       return draft;
@@ -33,6 +35,7 @@ export const VideoProvider = ({ children, setProp, videoState }) => {
 
   useEffect(() => {
     diff && mounted && setProp({ videoState: state });
+    console.log(state);
   }, [state]);
 
   useEffect(() => {

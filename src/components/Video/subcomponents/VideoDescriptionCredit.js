@@ -70,10 +70,12 @@ const VideoDescriptionCredit = ({
   setVideoAPI,
   videoAPI,
   videoData,
+  description,
+  credit,
   t,
 }) => {
   const [state, dispatch] = useContext(VideoContext);
-  const stateDescription = useMemo(
+  const stateDescription = useState(
     () => state?.videoDescription,
     [state?.videoDescription]
   );
@@ -87,25 +89,6 @@ const VideoDescriptionCredit = ({
     description: null,
     credit: null,
   });
-
-  // const stateDescription = {
-  //   description: {
-  //     ops: [
-  //       {
-  //         insert: videoData?.long_description
-  //           ? videoData?.long_description.replace(/ /g, "\u00a0")
-  //           : "",
-  //       },
-  //     ],
-  //   },
-  //   credit: {
-  //     ops: [
-  //       {
-  //         insert: videoData?.tags,
-  //       },
-  //     ],
-  //   },
-  // };
 
   const updateBody = useCallback((body) => {
     dispatch({ func: "CHANGE_DESCRIPTION", description: body.body });
@@ -143,22 +126,6 @@ const VideoDescriptionCredit = ({
       setTextFocused(false);
     }
   }, [videoAreaFocused]);
-
-  useEffect(() => {
-    let body = {
-      ops: [
-        {
-          insert: videoData?.long_description
-            ? videoData?.long_description.replace(/ /g, "\u00a0")
-            : "",
-        },
-      ],
-    };
-    dispatch({
-      func: "CHANGE_DESCRIPTION",
-      description: body,
-    });
-  }, [videoData?.long_description]);
 
   return (
     <div ref={videoBodyRef} style={{ position: "relative" }}>

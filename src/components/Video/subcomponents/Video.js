@@ -1,27 +1,19 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "@emotion/styled";
 
 // Internal Imports
-import VideoDescriptionCredit from "./subcomponents/VideoDescriptionCredit";
-import Player from "./subcomponents/Player";
+import VideoDescriptionCredit from "./VideoDescriptionCredit";
+import Player from "./Player";
 
 // ?Provider
-import { VideoProvider } from "./VideoContext";
+import { VideoProvider } from "../VideoContext";
 
 // Hook/utilities imports
-import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 // Localization import
 import { useTranslation, Trans } from "react-i18next";
-
-// Default props
-export const defaultProps = {
-  id: uuidv4(),
-  type: "",
-  videoURL: "",
-  videoDescription: "",
-  videoCredit: "",
-};
+import { VideoContext } from "../VideoContext";
 
 //styled components for Accordion styles
 const StyledVideoDefaultContainer = styled("div")({
@@ -83,10 +75,11 @@ const TranscriptButtonContainer = styled("button")({
 });
 
 // InfoBox component
-const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
+const Video = () => {
   // Localization
   const { t } = useTranslation();
 
+  const [state, dispatch] = useContext(VideoContext);
   const [videoHasFocus, setVideoHasFocus] = useState(false);
   const [videoAreaFocused, setVideoAreaFocused] = useState(false);
 
@@ -114,43 +107,41 @@ const Video = ({ videoState = defaultProps, setProp = () => {} }) => {
     }
   };
 
-  console.log(videoData);
-
   return (
-    <VideoProvider videoState={videoState} setProp={setProp}>
-      <div
-        aria-label={t("Video")}
-        data-testid="video-container"
-        ref={videoRef}
-        onClick={(e) => videoFocused(e)}
-        onFocus={(e) => videoFocused(e)}
-      >
-        <Player
-          videoId={videoAPI.videoId}
-          setVideoData={setVideoData}
-          videoData={videoData}
-        />
-        <StyledVideoContainer>
-          <StyledVideoDescriptionContainer>
-            <DescriptionCreditContainer>
-              <VideoDescriptionCredit
-                isVideo={isVideo}
-                videoHasFocus={videoHasFocus}
-                videoAreaFocused={videoAreaFocused}
-                setVideoHasFocus={setVideoHasFocus}
-                setVideoBody={setVideoBody}
-                setPlaceHolder={setPlaceHolder}
-                setVideoAPI={setVideoAPI}
-                videoAPI={videoAPI}
-                videoData={videoData}
-                t={t}
-              />
-            </DescriptionCreditContainer>
-            <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
-          </StyledVideoDescriptionContainer>
-        </StyledVideoContainer>
-      </div>
-    </VideoProvider>
+    <div
+      aria-label={t("Video")}
+      data-testid="video-container"
+      ref={videoRef}
+      onClick={(e) => videoFocused(e)}
+      onFocus={(e) => videoFocused(e)}
+    >
+      <Player
+        videoId={videoAPI.videoId}
+        setVideoData={setVideoData}
+        videoData={videoData}
+      />
+      <StyledVideoContainer>
+        <StyledVideoDescriptionContainer>
+          <DescriptionCreditContainer>
+            <VideoDescriptionCredit
+              isVideo={isVideo}
+              videoHasFocus={videoHasFocus}
+              videoAreaFocused={videoAreaFocused}
+              setVideoHasFocus={setVideoHasFocus}
+              setVideoBody={setVideoBody}
+              setPlaceHolder={setPlaceHolder}
+              setVideoAPI={setVideoAPI}
+              videoAPI={videoAPI}
+              videoData={videoData}
+              description={state.videoDescription}
+              credit={state.videoCredit}
+              t={t}
+            />
+          </DescriptionCreditContainer>
+          <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
+        </StyledVideoDescriptionContainer>
+      </StyledVideoContainer>
+    </div>
   );
 };
 
