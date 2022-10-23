@@ -27,7 +27,6 @@ export const VideoProvider = ({ children, setProp, videoState }) => {
   const [state, dispatch] = useReducer(produce(videoConfig), videoState);
   const diff = JSON.stringify(state) !== JSON.stringify(videoState);
   const [mounted, setMounted] = useState(false);
-  console.log(state);
   useEffect(() => {
     dispatch({ func: "UPDATE_STATE", data: videoState });
     setMounted(true);

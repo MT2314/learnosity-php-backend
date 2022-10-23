@@ -132,6 +132,7 @@ const StyledVideoButton = styled(Button)(({ openVideo }) => ({
     background: "#FFF",
     color: "#1565C0",
   },
+  "&:disabled": { background: "none" },
 }));
 
 const StyledVideoMenu = styled(MenuList)(({}) => ({
@@ -143,25 +144,24 @@ const StyledVideoMenu = styled(MenuList)(({}) => ({
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
   marginLeft: "0px",
-  marginTop: "4px",
+  marginTop: "2px",
   padding: "0px",
-  "&:hover": {
-    backgroundColor: "#FFF",
-  },
-  "&:active": {
-    backgroundColor: "#FFF",
-  },
 }));
 
 const StyledVideoMenuItem = styled(MenuItem)(({}) => ({
   width: "287px",
   padding: "6px 16px",
   height: "36px",
+  borderRadius: "4px",
+
   "&:hover": {
     backgroundColor: " rgba(0, 0, 0, 0.04);!important",
   },
   "&:active": {
     backgroundColor: " rgba(0, 0, 0, 0.04);!important",
+  },
+  "& span": {
+    "& :hover": { height: "24px" },
   },
 }));
 
@@ -209,8 +209,12 @@ const StyledKebabMenu = styled(MenuList)(({}) => ({
   paddingTop: "23px",
   paddingBottom: "23px",
 }));
-const StyledInput = styled(Input)(({}) => ({
+const StyledInput = styled(Input)(({ invalidid }) => ({
+  fontSize: "14px",
+  lineHeight: "20px",
+  letterSpacing: "0.15000000596046448px",
   background: "#FFFFFF",
+  color: invalidid && "rgba(211, 47, 47, 1)",
   borderTopStyle: "hidden",
   borderRightStyle: "hidden",
   borderLeftStyle: "hidden",
@@ -259,7 +263,7 @@ const StyledMenu = styled(MenuList)({
   boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
   marginLeft: "0px",
-  marginTop: "4px",
+  marginTop: "2px",
 });
 const StyledMenuItem = styled(MenuItem)({
   width: "109px",
@@ -352,8 +356,8 @@ const CustomToolBar = ({
   const [openDescriptionKebab, setDescriptionKebabOpen] = useState(false);
   const [selectBrightcove, setSelectBrightcove] = useState(false);
   const [selectYoutube, setSelectYoutube] = useState(false);
-  const [brightcoveID, setBrightcoveID] = useState("");
-  const [youtubeID, setYoutubeID] = useState("");
+  const [videoEdit, setVideoEdit] = useState(false);
+  const [invalidVideoInput, setInvalidVideoInput] = useState(false);
 
   const [activeDropDownItem, setActiveDropDownItem] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
@@ -371,6 +375,8 @@ const CustomToolBar = ({
   const AddVideo = useRef(null);
   const TranscriptVideo = useRef(null);
   const DescriptionKebab = useRef(null);
+  const inputId = useRef(null);
+  const inputError = useRef(null);
 
   useOnClickOutside(AppBar, () => {
     toggleCloseToolbar(["Video", "Kebab"]);
@@ -387,6 +393,7 @@ const CustomToolBar = ({
     if (source.includes("Video")) {
       setDescriptionKebabOpen(false);
     }
+    setInvalidVideoInput(false);
     setActiveTopMenu("");
     setActiveDropDownItem("");
     setBoldVisibility(false);
@@ -431,13 +438,27 @@ const CustomToolBar = ({
 
   const handleVideoAPI = (e, source, action) => {
     e.stopPropagation();
+    let inputValue = inputId.current.value;
     if (action === "AddVideo") {
-      setVideoAPI((videoAPI) => ({
-        ...videoAPI,
-        videoSource: source,
-        videoId: source === "brightcove" ? brightcoveID : youtubeID,
-      }));
-      toggleCloseToolbar("API");
+      if (inputValue.length === 13) {
+        setVideoAPI((videoAPI) => ({
+          ...videoAPI,
+          videoSource: source,
+          videoId: inputValue,
+        }));
+        toggleCloseToolbar("API");
+        setVideoEdit(false);
+        setInvalidVideoInput(false);
+      } else if (inputValue.length === 0) {
+        handleVideoAPI(
+          e,
+          selectBrightcove ? "brightcove" : "youtube",
+          "RemoveVideo"
+        );
+      } else {
+        console.log("Invalid input");
+        setInvalidVideoInput(true);
+      }
     } else if (action === "RemoveVideo") {
       setVideoAPI((videoAPI) => ({
         ...videoAPI,
@@ -445,14 +466,12 @@ const CustomToolBar = ({
         videoId: null,
       }));
       toggleCloseToolbar("API");
+      setVideoEdit(false);
     } else if (action === "EditVideo") {
-      setVideoAPI((videoAPI) => ({
-        ...videoAPI,
-        videoSource: source,
-        videoId: null,
-      }));
+      setVideoEdit(true);
     }
   };
+
   const handleTextSettings = (e, source) => {
     e.stopPropagation();
     setVideoTextSettings((videoTextSettings) => ({
@@ -594,6 +613,7 @@ const CustomToolBar = ({
         )}
         {isVideo && (
           <StyledVideoToolbar position="static" selected={videoAPI.videoId}>
+            {/* Add Video Drop Down */}
             <StyledVideoButton
               ref={AddVideo}
               data-addVideoid="AddVideo"
@@ -613,6 +633,8 @@ const CustomToolBar = ({
               onClick={handleToggleVideo}
             >
               {videoAPI.videoId ? "Change Video" : "Add Video"}
+
+              {/* Select Brightspace OR Youtube Dropdown */}
               {!selectYoutube && !selectBrightcove && (
                 <Popper
                   open={openVideo}
@@ -675,6 +697,7 @@ const CustomToolBar = ({
                   )}
                 </Popper>
               )}
+              {/* Add , Edit , Delete ID Dropdown */}
               {(selectBrightcove || selectYoutube) && (
                 <Popper
                   open={openVideo}
@@ -703,6 +726,7 @@ const CustomToolBar = ({
                           } video-select-dropdown`}
                           onKeyDown={handleListKeyDown}
                           sx={{ height: "40px", width: "256px" }}
+                          ref={inputError}
                         >
                           <StyledInputItem
                             aria-labelledby={`${
@@ -716,7 +740,9 @@ const CustomToolBar = ({
                                 : { paddingRight: "5px !important" }
                             }
                           >
+                            {/* Add Video */}
                             <StyledInput
+                              inputRef={inputId}
                               data-testid={`${
                                 selectBrightcove ? "brightcove" : "youtube"
                               } input-field`}
@@ -734,14 +760,14 @@ const CustomToolBar = ({
                                   ? videoAPI.videoId
                                   : null
                               }
+                              disabled={
+                                videoAPI.videoId && !videoEdit ? true : false
+                              }
                               onClick={(e) => e.stopPropagation()}
-                              onChange={(e) => {
-                                selectBrightcove
-                                  ? setBrightcoveID(e.target.value)
-                                  : setYoutubeID(e.target.value);
-                              }}
+                              onChange={() => setInvalidVideoInput(false)}
+                              invalidid={invalidVideoInput}
                             />
-                            {!videoAPI.videoId ? (
+                            {!videoAPI.videoId || videoEdit ? (
                               <Button
                                 type="submit"
                                 data-testid={`${videoAPI.videoSource}-submit-button`}
@@ -754,6 +780,10 @@ const CustomToolBar = ({
                                   )
                                 }
                                 sx={{
+                                  fontSize: "14px",
+                                  fontWeight: "500",
+                                  lineHeight: "24px",
+                                  letterSpacing: "0.4px",
                                   height: "32px",
                                   minWidth: "39px !important",
                                   width: "39px !important",
@@ -781,6 +811,7 @@ const CustomToolBar = ({
                                 Add
                               </Button>
                             ) : (
+                              // Edit / Delete Video
                               <div>
                                 <Tooltip
                                   aria-label="delete video id"
@@ -837,9 +868,72 @@ const CustomToolBar = ({
                   )}
                 </Popper>
               )}
+              {/* Invalid Id Error */}
+              <Popper
+                open={invalidVideoInput}
+                anchorEl={inputError.current}
+                placement="bottom-start"
+                transition
+                disablePortal
+                sx={{ pointerEvents: "none" }}
+              >
+                {({ TransitionProps }) => (
+                  <Grow {...TransitionProps}>
+                    <Paper
+                      sx={{
+                        backgroundColor: "rgb(251, 234, 234) !important",
+                        marginTop: "2px",
+                        width: "256px",
+                        height: "30px",
+                        cursorEvents: "none",
+                      }}
+                    >
+                      <div
+                        data-testid={`input-invalid-error`}
+                        aria-labelledby={`input-invalid-error`}
+                        style={{
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          height: "100%",
+                        }}
+                      >
+                        {/* Input Error*/}
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          style={{ margin: "5.83px 11.83px" }}
+                        >
+                          <path
+                            d="M9.96083 1.66667C5.3875 1.66667 1.66667 5.405 1.66667 10C1.66667 14.595 5.405 18.3333 10 18.3333C14.595 18.3333 18.3333 14.595 18.3333 10C18.3333 5.405 14.5775 1.66667 9.96083 1.66667ZM10 16.6667C6.32417 16.6667 3.33333 13.6758 3.33333 10C3.33333 6.32417 6.30583 3.33333 9.96083 3.33333C13.6592 3.33333 16.6667 6.32417 16.6667 10C16.6667 13.6758 13.6758 16.6667 10 16.6667Z"
+                            fill="#D32F2F"
+                          />
+                          <path
+                            d="M9.16667 5.83334H10.8333V11.6667H9.16667V5.83334ZM9.16667 12.5H10.8333V14.1667H9.16667V12.5Z"
+                            fill="#D32F2F"
+                          />
+                        </svg>
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: "400",
+                            lineHeight: "20px",
+                            letterSpacing: "0.4000000059604645px",
+                          }}
+                        >
+                          Invalid URL
+                        </span>
+                      </div>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
             </StyledVideoButton>
             <Divider />
-
+            {/* Download Transcript Button */}
             <StyledVideoButton
               ref={TranscriptVideo}
               data-tranid="TranscriptVideo"
@@ -856,6 +950,7 @@ const CustomToolBar = ({
                   ? { width: "159px", flexGrow: "5" }
                   : { width: "78px" }
               }
+              disabled={!videoAPI.videoId}
             >
               {videoAPI.videoId ? "Download Transcript" : "Transcript"}
             </StyledVideoButton>
