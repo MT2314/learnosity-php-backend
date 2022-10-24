@@ -6,6 +6,7 @@
   padding: 4px 9px;
   outline: inherit;
   border-radius: 4px;
+
   &:hover {
     cursor: pointer;
     background-color: rgba(21, 101, 192, 0.12) !important;
@@ -19,6 +20,9 @@
     > svg {
       color: #1565c0 !important;
     }
+  }
+  &.video {
+    margin-right: 2px;
   }
 }
 
@@ -30,6 +34,7 @@
   padding: 4px 6px;
   outline: inherit;
   border-radius: 4px;
+
   &:hover {
     cursor: pointer;
     background-color: rgba(21, 101, 192, 0.12) !important;
@@ -43,5 +48,8 @@
     > svg {
       color: #1565c0 !important;
     }
+  }
+  &.video {
+    margin-left: 2px;
   }
 }

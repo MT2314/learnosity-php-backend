@@ -25,8 +25,9 @@ const Player = ({ videoId = null, setVideoData, videoData }) => {
   useEffect(() => {
     if (videoId !== null) {
       dispatch({
-        func: "CHANGE_URL",
+        func: "UPDATE_URL_DATA",
         data: `${BRIGHTCOVE_API}/${BRIGHTCOVE_ACCOUNT_ID}/videos/${videoId}`,
+        videoId: videoId,
       });
       loadVideo();
     }
@@ -37,16 +38,26 @@ const Player = ({ videoId = null, setVideoData, videoData }) => {
     setVideoData(await result.json());
   };
 
-  // useEffect(() => {
-  //   dispatch({
-  //     func: "CHANGE_DESCRIPTION",
-  //     description: videoData?.long_description,
-  //   });
-  //   dispatch({
-  //     func: "CHANGE_CREDITS",
-  //     credit: videoData?.tags[0],
-  //   });
-  // }, [dataSuccess]);
+  const updateBody = () => {
+    let body = {
+      ops: [
+        {
+          insert: videoData?.long_description
+            ? videoData?.long_description.replace(/ /g, "\u00a0")
+            : "",
+        },
+      ],
+    };
+
+    dispatch({
+      func: "CHANGE_DESCRIPTION",
+      description: body,
+    });
+    dispatch({
+      func: "CHANGE_CREDITS",
+      credit: videoData?.tags[0],
+    });
+  };
 
   return (
     <PlayerContainer>
@@ -60,7 +71,7 @@ const Player = ({ videoId = null, setVideoData, videoData }) => {
       )}
       {videoId !== null && (
         <ReactPlayerLoader
-          videoId={videoId}
+          videoId={state.videoId}
           BRIGHTCOVE_API={BRIGHTCOVE_API}
           BRIGHTCOVE_ACCOUNT_ID={BRIGHTCOVE_ACCOUNT_ID}
           accountId={BRIGHTCOVE_ACCOUNT_ID}
