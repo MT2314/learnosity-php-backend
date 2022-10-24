@@ -8,8 +8,7 @@
     text-transform: uppercase;
 
     &:focus-visible {
-      outline: 0.125rem solid $tab-focus;
-      outline-offset: 0.125rem;
+      @include outline-focus;
     }
 
     &:hover {
@@ -65,16 +64,8 @@
         background-color: $inactive-bg;
         border: 0.0625rem solid $component-border;
         border-bottom: none;
-        font-family: $component-main-font;
-        font-weight: 600;
-        text-rendering: optimizeLegibility;
-        -webkit-font-smoothing: subpixel-antialiased;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        font-size: 1.125rem;
-        letter-spacing: 0.03em;
-        line-height: 1.6875rem;
         padding: 1.0625rem 1.5rem;
+        @include text-label;
 
         &:hover {
           background-color: $hover-bg;
@@ -93,8 +84,7 @@
         }
         
         &:focus-visible {
-          outline: 0.125rem solid $tab-focus;
-          outline-offset: 0.125rem;
+          @include outline-focus;
           z-index: 99;
         }
 
@@ -143,8 +133,7 @@
           border-bottom: 0.0625rem solid $component-border;
 
           &:focus-visible {
-            outline: 0.125rem solid $tab-focus;
-            outline-offset: 0.125rem;
+            @include outline-focus;
             z-index: 99;
           }
 
