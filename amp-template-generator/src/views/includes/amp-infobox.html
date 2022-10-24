@@ -1,3 +1,6 @@
+{% if data.body == "<br>" %}
+  {% assign section-content = "Tobi" %}
+{% endif %}
 <div class="callout wrapper bottom-margin">
   <div class="co-table max-content box-shadow">
     <div class="co-row">
@@ -14,11 +17,11 @@
         </amp-img>
         <p class="wrapper">{{ data.infoBoxLabel }}</p>
       </div>
-      <h3 class="info-header">{{ data.infoBoxHeader.heading }}</h3>
-      {% comment %}
-        {%- include amp-heading.html data:data.infoBoxHeader headingClass:'h3 inline' -%}
-      {% endcomment %}
       <div class="section-content">
+        <h3 class="info-header">{{ data.infoBoxHeader.heading }}</h3>
+        {% comment %}
+          {%- include amp-heading.html data:data.infoBoxHeader headingClass:'h3 inline' -%}
+        {% endcomment %}
         {% include amp-text.html data:data %}
       </div>
     </div>
