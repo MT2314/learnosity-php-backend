@@ -14,6 +14,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import BrightspaceSVG from "../../Video/assets/Brightspace";
 import YoutubeSVG from "../../Video/assets/Youtube";
 import KebabSVG from "../../Video/assets/Kebab";
@@ -899,23 +900,13 @@ const CustomToolBar = ({
                         }}
                       >
                         {/* Input Error*/}
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          style={{ margin: "5.83px 11.83px" }}
-                        >
-                          <path
-                            d="M9.96083 1.66667C5.3875 1.66667 1.66667 5.405 1.66667 10C1.66667 14.595 5.405 18.3333 10 18.3333C14.595 18.3333 18.3333 14.595 18.3333 10C18.3333 5.405 14.5775 1.66667 9.96083 1.66667ZM10 16.6667C6.32417 16.6667 3.33333 13.6758 3.33333 10C3.33333 6.32417 6.30583 3.33333 9.96083 3.33333C13.6592 3.33333 16.6667 6.32417 16.6667 10C16.6667 13.6758 13.6758 16.6667 10 16.6667Z"
-                            fill="#D32F2F"
-                          />
-                          <path
-                            d="M9.16667 5.83334H10.8333V11.6667H9.16667V5.83334ZM9.16667 12.5H10.8333V14.1667H9.16667V12.5Z"
-                            fill="#D32F2F"
-                          />
-                        </svg>
+                        <ErrorOutlineIcon
+                          color="error"
+                          fontSize="small"
+                          sx={{
+                            margin: "5.83px 11.83px",
+                          }}
+                        />
                         <span
                           style={{
                             fontSize: "12px",
