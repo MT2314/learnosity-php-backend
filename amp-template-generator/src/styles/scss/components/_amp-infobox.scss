@@ -28,16 +28,18 @@
     
     .co-cell:first-child {
         background-color: $brand-50;
-        width: 199px;
+        width: 12.438rem;
 
         p {
+            @include text-label;
             text-align: center;
+            text-transform: uppercase;
+            color: $brand-500;
         }
     }
 
     .icon {
-        margin: auto;
-        margin-top: 42px;
+        margin: 2.625rem auto 1.25rem;
     }
     .icon-quote {
         width: 30px;

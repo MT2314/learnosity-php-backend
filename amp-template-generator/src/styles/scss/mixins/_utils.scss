@@ -10,5 +10,18 @@
 // but this is here in case you need to re-apply this rule because
 // something else (AMP) changes it.
 @mixin outline-focus {
-    outline: $outline-focus solid 3px;
+    outline: 2px solid $link-focus;
+    border-radius: 2px;
+}
+
+@mixin text-label {
+    font-family: $component-main-font;
+    font-weight: 600;
+    font-size: 1.125rem;
+    letter-spacing: 0.03em;
+    line-height: 1.6875rem;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
