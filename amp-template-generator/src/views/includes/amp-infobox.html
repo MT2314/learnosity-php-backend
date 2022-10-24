@@ -14,13 +14,11 @@
         </amp-img>
         <p class="wrapper">{{ data.infoBoxLabel }}</p>
       </div>
-      <div class="co-cell">
+      <h3 class="info-header">{{ data.infoBoxHeader.heading }}</h3>
+      {% comment %}
         {%- include amp-heading.html data:data.infoBoxHeader headingClass:'h3 inline' -%}
-      </div>
-    </div>
-    <div class="co-row">
-      <div class="co-cell"></div>
-      <div class="co-cell">
+      {% endcomment %}
+      <div class="section-content">
         {% include amp-text.html data:data %}
       </div>
     </div>

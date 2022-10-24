@@ -19,17 +19,26 @@
 
     .co-row {
         display: table-row;
+        .info-header {
+            font-family: $component-main-font;
+            font-weight: 600;
+            color: $grey-900;
+            letter-spacing: 0.01em;
+            font-size: 28px;
+            line-height: 2.5rem;
+            margin: 3rem 2.5rem 1.5rem;
+        }
+        .section-content {
+            margin-left: 0.938rem;
+            margin-right: 0.938rem;
+        }
     }
 
     .co-cell {
         display: table-cell;
         vertical-align: middle;
-    }
-    
-    .co-cell:first-child {
         background-color: $brand-50;
         width: 12.438rem;
-
         p {
             @include text-label;
             text-align: center;
@@ -39,7 +48,7 @@
     }
 
     .icon {
-        margin: 2.625rem auto 1.25rem;
+        margin: -3.125rem auto 1.25rem;
     }
     .icon-quote {
         width: 30px;
