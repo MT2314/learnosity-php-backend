@@ -55,11 +55,11 @@ import {
 // ? Styled Container
 const Container = styled("div")({
   display: "block !important",
-  // position: "fixed !important",
-  // top: "80px !important",
-  // left: "50% !important",
-  // transform: "translateX(-50%) !important",
-  // zIndex: 1000,
+  position: "fixed !important",
+  top: "80px !important",
+  left: "50% !important",
+  transform: "translateX(-50%) !important",
+  zIndex: 1000,
   gap: "10px",
   "& .MuiPaper-root": {
     backgroundColor: "transparent",
