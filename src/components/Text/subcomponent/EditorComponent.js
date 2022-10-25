@@ -136,26 +136,10 @@ const EditorComponent = ({
     editorIsFocus && setActiveComponent(true);
   }, [editorIsFocus]);
 
-  // useOnClickOutside(textRef, () => {
-  //   if (!showMath && !keepEditor && !isInfoBox && !isVideo) {
-  //     alignmentObserver?.disconnect();
-  //     setEditorIsFocus(false);
-  //     setShowEditor(false);
-  //     setTabActive(false);
-  //   }
-  // });
-
   useEffect(() => {
-    // const tb =
-    //   textFocused &&
-    //   toolbar?.current?.querySelector(`#custom-toolbar-${toolbarId}`);
-
-    // if (tb) return;
     if (infoHasFocus) return;
     if ((showLink || showMath || keepEditor) && !closeToolBar) return;
     if (!closeToolBar) return;
-
-    console.log("CLOSING");
 
     alignmentObserver?.disconnect();
     setEditorIsFocus(false);
@@ -357,10 +341,6 @@ const EditorComponent = ({
         setTabActive(true);
       }}
       onBlur={(e) => {
-        // const tb =
-        //   textFocused &&
-        //   toolbar?.current?.querySelector(`#custom-toolbar-${toolbarId}`);
-
         const relatedTarget = e.relatedTarget || document.activeElement;
         if (relatedTarget.tagName === "BODY") {
           e.preventDefault();

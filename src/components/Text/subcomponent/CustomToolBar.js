@@ -524,9 +524,7 @@ const CustomToolBar = ({
       setShowMath(true);
     }
     if (activeTopMenu === "link" && !isLink) {
-      console.log(quill.hasFocus());
       const selection = quill.getSelection();
-      console.log("selection", selection);
 
       if (selection?.length > 0) {
         setLinkRange(selection);

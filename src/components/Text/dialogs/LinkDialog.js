@@ -180,7 +180,6 @@ const LinkDialog = () => {
   });
 
   useEffect(() => {
-    console.log("SHOW LINK");
     if (showLink) {
       setScrollTop(quill.scrollingContainer.scrollTop);
       setKeepEditor(true);
@@ -192,7 +191,6 @@ const LinkDialog = () => {
           "#cce0f5"
         );
 
-      console.log("SCROLL TOP ", quill.scrollingContainer.scrollTop);
       const range = quill.getSelection();
       const index = hasLink ? parseInt(editLink?.index) : range?.index;
 
