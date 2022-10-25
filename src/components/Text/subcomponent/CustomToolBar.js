@@ -1,5 +1,15 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { useSetShowMath, useShowMath, useBoldRef } from "../Provider";
+import {
+  useSetShowMath,
+  useShowMath,
+  useBoldRef,
+  useShowLink,
+  useSetShowLink,
+  useQuill,
+  useSetLinkRange,
+  useIsLink,
+  useSetIsLink,
+} from "../Provider";
 import styled from "@emotion/styled";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useTranslation } from "react-i18next";
@@ -45,11 +55,11 @@ import {
 // ? Styled Container
 const Container = styled("div")({
   display: "block !important",
-  position: "fixed !important",
-  top: "80px !important",
-  left: "50% !important",
-  transform: "translateX(-50%) !important",
-  zIndex: 1000,
+  // position: "fixed !important",
+  // top: "80px !important",
+  // left: "50% !important",
+  // transform: "translateX(-50%) !important",
+  // zIndex: 1000,
   gap: "10px",
   "& .MuiPaper-root": {
     backgroundColor: "transparent",
@@ -342,7 +352,13 @@ const CustomToolBar = ({
 
   const setShowMath = useSetShowMath();
   const showMath = useShowMath();
+  const showLink = useShowLink();
+  const setShowLink = useSetShowLink();
+  const quill = useQuill();
   const boldRef = useBoldRef();
+  const setLinkRange = useSetLinkRange();
+  const isLink = useIsLink();
+
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
@@ -507,7 +523,27 @@ const CustomToolBar = ({
     if (activeTopMenu === "math") {
       setShowMath(true);
     }
+    if (activeTopMenu === "link" && !isLink) {
+      console.log(quill.hasFocus());
+      const selection = quill.getSelection();
+      console.log("selection", selection);
+
+      if (selection?.length > 0) {
+        setLinkRange(selection);
+        setShowLink(true);
+      }
+    }
   }, [activeTopMenu]);
+
+  useEffect(() => {
+    if (activeTopMenu === "link" && !showLink) {
+      setActiveDropDownItem("");
+      setActiveTopMenu("");
+    }
+    if (activeTopMenu === "" && (showLink || isLink)) {
+      setActiveTopMenu("link");
+    }
+  }, [showLink, isLink]);
 
   useEffect(() => {
     if (activeTopMenu === "math" && !showMath) {

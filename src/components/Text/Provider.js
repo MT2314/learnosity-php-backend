@@ -6,8 +6,13 @@ const useStore = () => {
   const [quill, setQuill] = useState(null);
   const [uniqueId, setUniqueId] = useState(null);
   const [showMath, setShowMath] = useState(false);
-  const [showMathRef, setShowMathRef] = useState(null);
+  const [showLink, setShowLink] = useState(false);
+  const [linkRange, setLinkRange] = useState(null);
+  const [editorPos, setEditorPos] = useState(null);
   const [keepEditor, setKeepEditor] = useState(false);
+  const [showMathRef, setShowMathRef] = useState(null);
+  const [isLink, setIsLink] = useState(false);
+  const [mathId, setMathId] = useState(null);
 
   const [editFormula, setEditFormula] = useState({
     value: null,
@@ -21,6 +26,12 @@ const useStore = () => {
     clientY: null,
   });
 
+  const [editLink, setEditLink] = useState({
+    index: null,
+    text: null,
+    link: null,
+  });
+
   return {
     quill,
     uniqueId,
@@ -29,6 +40,12 @@ const useStore = () => {
     showMathRef,
     editFormula,
     keepEditor,
+    showLink,
+    linkRange,
+    editorPos,
+    editLink,
+    isLink,
+    mathId,
     boldRef,
     setQuill,
     setUniqueId,
@@ -37,6 +54,12 @@ const useStore = () => {
     setShowMathRef,
     setEditFormula,
     setKeepEditor,
+    setShowLink,
+    setLinkRange,
+    setEditorPos,
+    setEditLink,
+    setIsLink,
+    setMathId,
   };
 };
 
@@ -60,6 +83,12 @@ export const useShowMath = () => getState("showMath");
 export const useShowMathRef = () => getState("showMathRef");
 export const useEditFormula = () => getState("editFormula");
 export const useKeepEditor = () => getState("keepEditor");
+export const useShowLink = () => getState("showLink");
+export const useEditorPos = () => getState("editorPos");
+export const useLinkRange = () => getState("linkRange");
+export const useEditLink = () => getState("editLink");
+export const useIsLink = () => getState("isLink");
+export const useMathId = () => getState("mathId");
 
 //Set States
 export const useSetQuill = () => getState("setQuill");
@@ -69,3 +98,9 @@ export const useSetShowMath = () => getState("setShowMath");
 export const useSetShowMathRef = () => getState("setShowMathRef");
 export const useSetEditFormula = () => getState("setEditFormula");
 export const useSetKeepEditor = () => getState("setKeepEditor");
+export const useSetShowLink = () => getState("setShowLink");
+export const useSetEditorPos = () => getState("setEditorPos");
+export const useSetLinkRange = () => getState("setLinkRange");
+export const useSetEditLink = () => getState("setEditLink");
+export const useSetIsLink = () => getState("setIsLink");
+export const useSetMathId = () => getState("setMathId");
