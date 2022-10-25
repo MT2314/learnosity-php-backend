@@ -6,6 +6,8 @@ const headingsConverter = require("./headings-converter");
 const lessons = [];
 
 const dataConversionFunction = (data) => {
+  // reset lessons array on each request
+  lessons.length = 0;
   // Parsing the original data object to convert parts of it that we received as strings into JSON format
   parseData.transformComponentPropsRecursive(data);
 
