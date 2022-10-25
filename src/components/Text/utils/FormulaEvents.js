@@ -24,3 +24,12 @@ export const FormulaEvents = (id) => {
     });
   });
 };
+
+export const linkClickEvent = (id, index, text, link) => {
+  const linkPlaceHolder = document.getElementById(`link-placeholder-${id}`);
+
+  linkPlaceHolder.setAttribute("data-text", text);
+  linkPlaceHolder.setAttribute("data-index", index);
+  linkPlaceHolder.setAttribute("data-link", link);
+  link && linkPlaceHolder.click();
+};
