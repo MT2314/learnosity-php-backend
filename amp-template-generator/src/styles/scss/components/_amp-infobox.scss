@@ -1,15 +1,10 @@
-/* styles for callout and quote */
-.wrapper.callout {
-
-    /* override user agent */
-    blockquote {
-        margin: 0;
-    }
-
+/* styles for infobox and quote */
+.wrapper.infobox {    
     .max-content {
         // Setting max-width to 2 allows the infobox to fill the wrapper width
         @include max-width-2;
-        background-color: $callout-bg;
+        background-color: $transparent-grey-50;
+        border-radius: 0 10px 10px 0;
     }
 
     // Display: table doesn't allow the infobox to stretch across inside the wrapper class
@@ -31,7 +26,7 @@
                 letter-spacing: 0.01em;
                 font-size: 28px;
                 line-height: 2.5rem;
-                margin: 0 1.562rem 1.5rem;
+                margin-bottom: 1.5rem;
             }
             .label-without-icon {
                 display: none;
@@ -47,6 +42,7 @@
         vertical-align: middle;
         background-color: $brand-50;
         width: 12.438rem;
+        border-radius: 10px 0 0 10px;
         p {
             @include text-label;
             text-align: center;
@@ -75,13 +71,6 @@
     .icon {
         margin: 42px auto 1.25rem;
     }
-    .icon-quote {
-        width: 30px;
-        height: 21px;
-        margin-top: auto;
-        margin-bottom: auto;
-        padding: 0;
-    }
 
     @media(min-width: 640px) {
         .max-content {
@@ -94,13 +83,5 @@
             width: 118px;
             height: 115px;
         }
-        .icon-quote {
-            width: 50px;
-            height: 35px;
-            padding-left: 0.5rem;
-        }
-    }
-    cite {
-        font-style: normal;
     }
 }
