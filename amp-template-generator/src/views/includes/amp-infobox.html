@@ -1,10 +1,17 @@
 {% assign info-header-center = '' %}
+{% assign no-icon = '' %}
+
 {% if data.body == "<br>" %}
   {% assign info-header-center = "info-header-center" %}
 {% endif %}
+
+{% if data.infoBoxIcon == "No icon" %}
+  {% assign no-icon = "no-icon" %}
+{% endif %}
+
 <div class="callout wrapper bottom-margin">
   <div class="co-table max-content box-shadow">
-    <div class="co-row">
+    <div class="co-row {{ no-icon }}">
       <div class="co-cell">
         <amp-img
           width="118"
@@ -19,6 +26,7 @@
         <p class="wrapper">{{ data.infoBoxLabel }}</p>
       </div>
       <div class="section-content {{ info-header-center }}">
+        <p class="label-without-icon">{{ data.infoBoxLabel }}</p>
         <h3 class="info-header">{{ data.infoBoxHeader.heading }}</h3>
         {% comment %}
           {%- include amp-heading.html data:data.infoBoxHeader headingClass:'h3 inline' -%}

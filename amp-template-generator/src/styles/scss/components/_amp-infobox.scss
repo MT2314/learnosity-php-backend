@@ -33,6 +33,9 @@
                 line-height: 2.5rem;
                 margin: 0 1.562rem 1.5rem;
             }
+            .label-without-icon {
+                display: none;
+            }
         }
         .info-header-center {
             top: 6.813rem;
@@ -50,6 +53,22 @@
             text-transform: uppercase;
             color: $brand-500;
             margin-bottom: 6.688rem;
+        }
+    }
+
+    .no-icon {
+        .co-cell {
+            display: none;
+        }
+        .section-content {
+            padding-bottom: 2.5rem;
+            .label-without-icon {
+                display: block;
+                @include text-label;
+                margin: 0 1.5rem 0.906rem;
+                text-transform: uppercase;
+                color: $brand-500;
+            }
         }
     }
 
