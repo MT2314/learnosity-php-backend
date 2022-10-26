@@ -8,6 +8,7 @@ import Player from "./Player";
 
 // ?Provider
 import { VideoProvider } from "../VideoContext";
+import Toolbar from "./Toolbar";
 
 // Hook/utilities imports
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
@@ -90,6 +91,12 @@ const Video = () => {
     videoSource: "",
     videoId: null,
   });
+
+  const [videoTextSettings, setVideoTextSettings] = useState({
+    description: null,
+    credit: null,
+  });
+
   const [videoData, setVideoData] = useState(null);
 
   const isVideo = useMemo(() => true, []);
@@ -115,6 +122,13 @@ const Video = () => {
       onClick={(e) => videoFocused(e)}
       onFocus={(e) => videoFocused(e)}
     >
+      <Toolbar
+        isVideo={isVideo}
+        videoHasFocus={videoHasFocus}
+        setVideoAPI={setVideoAPI}
+        videoAPI={videoAPI}
+        setVideoTextSettings={setVideoTextSettings}
+      />
       <Player
         videoId={videoAPI.videoId}
         setVideoData={setVideoData}
