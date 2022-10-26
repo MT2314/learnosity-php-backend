@@ -17,6 +17,7 @@
         .section-content {
             margin-left: 0.938rem;
             margin-right: 0.938rem;
+            margin-bottom: 2rem;
             position: relative;
             top: 2.563rem;
             .info-header {
@@ -31,6 +32,12 @@
             .label-without-icon {
                 display: none;
             }
+            .wrapper {
+                &:last-child.bottom-margin {
+                  // This clears the bottom-margin that is added to text/other components
+                  margin-bottom: 0;
+                }
+              }
         }
         .info-header-center {
             top: 6.813rem;
@@ -53,11 +60,11 @@
     }
 
     @media(max-width: 375px) {
+        .max-content {
+            border-radius: 0 0 10px 10px;
+        }
         .co-row {
             display: block;
-            .section-content {
-                position: static;
-            }
             .co-cell {
                 display: block;
                 width: 100%;
@@ -67,14 +74,26 @@
                     display: inline-block;
                     width: 75px;
                     height: 75px;
-                    margin: 26px 0 0 24px;
+                    margin: 26px 0 12px 24px;
                 }
                 p {
                     font-size: 16px;
                     line-height: 22px;
                     text-align: left;
                     padding-top: 0;
+                    padding-left: 27px;
                 }
+            }
+            .section-content {
+                position: static;
+                padding-bottom: 1px;
+                margin: 0;
+            }
+            .label-without-icon {
+                padding-top: 30px;
+            }
+            .info-header {
+                margin-top: 21px;
             }
         }
     }
@@ -91,6 +110,14 @@
                 margin: 0 1.5rem 0.906rem;
                 text-transform: uppercase;
                 color: $brand-500;
+            }
+        }
+    }
+
+    @media(max-width: 375px) {
+        .no-icon {
+            .section-content {
+                padding-bottom: 0.063rem;
             }
         }
     }
