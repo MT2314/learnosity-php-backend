@@ -12,7 +12,7 @@ const StyledLabelInput = styled("input")({
   width: "40.625rem",
   height: "1.25rem",
   background: "#FAFAFA",
-  letterSpacing: "0.15px",
+  letterSpacing: "0.009375rem",
   border: "none",
   padding: 0,
 
