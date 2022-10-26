@@ -80,31 +80,12 @@ const StyledAppbar = styled(AppBar)({
 });
 
 // ? Styled Text Toolbar (Possibly Temp)
-const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
-  display: "flex",
-  justifyContent: "space-evenly",
-  minHeight: "40px !important",
-  width: "156px",
-  margin: "10px, 8px",
-  backgroundColor: "#FFF",
-  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-  borderRadius: "4px",
-  "& .MuiToolbar-gutters": {
-    paddingLeft: 0,
-    paddingRight: 0,
-  },
+const StyledToolbar = styled(Toolbar)(({ isVideo }) => ({
   // display: "flex",
-  // justifyContent: "space-between",
-  // ...((isInfoBox || isVideo) && { borderLeft: "none !important" }),
-  // height: "40px !important",
+  justifyContent: "space-evenly",
   // minHeight: "40px !important",
-  // width: isInfoBox
-  //   ? "160px"
-  //   : isVideo
-  //   ? "196px !important"
-  //   : "184px !important",
+  // width: "156px",
   // margin: "10px, 8px",
-  // paddingRight: "0px !important",
   // backgroundColor: "#FFF",
   // boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
   // borderRadius: "4px",
@@ -112,9 +93,24 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   //   paddingLeft: 0,
   //   paddingRight: 0,
   // },
-  // "& .MuiPaper-root ": {
-  //   boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
-  // },
+  display: "flex",
+  // justifyContent: "space-between",
+  ...(isVideo && { borderLeft: "none !important" }),
+  height: "40px !important",
+  minHeight: "40px !important",
+  width: isVideo ? "196px !important" : "184px !important",
+  margin: "10px, 8px",
+  backgroundColor: "#FFF",
+  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  borderRadius: "4px",
+  paddingRight: "45px",
+  "& .MuiToolbar-gutters": {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+  "& .MuiPaper-root ": {
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
+  },
 }));
 
 // Video Styled Components
@@ -261,12 +257,15 @@ const StyledInput = styled(Input)(({ invalidid }) => ({
 }));
 
 const StyledIconButton = styled(IconButton)({
+  display: "flex !important",
+
   width: "30px",
   height: "30px",
   padding: "7px",
-  color: "#000",
-  backgroundColor: "none",
-  borderRadius: "4px!important",
+  color: "#232323",
+  background: "#FFFFFF",
+  borderRadius: "4px !important",
+
   "& svg": {
     fill: "#000",
   },
@@ -280,14 +279,18 @@ const StyledIconButton = styled(IconButton)({
     cursor: "pointer",
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
     "& svg": {
-      fill: "rgba(21, 101, 192, 1)",
+      color: "rgba(21, 101, 192, 1)",
     },
   },
-  "&:disabled": {
-    backgroundColor: "rgba(255, 255, 255, 1) !important",
-    "& svg": {
-      fill: "rgba(0, 0, 0, 0.38)",
-    },
+  "&:focus-visible": {
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+  },
+  "& .MuiPaper-root": {
+    backgroundColor: "rgba(255,255,255,1) !important",
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
+  },
+  "& .MuiPaper-root ": {
+    backgroundColor: "rgba(255,255,255,1) !important",
   },
 });
 
@@ -746,38 +749,59 @@ const ToolBar = ({
           <div>
             {/* {!textMounted && ( */}
             <StyledToolbar
+              isVideo={isVideo}
+              className="toolbarContainer"
               variant="dense"
               disableGutters
               test-id="infoBox-toolbar"
             >
-              <StyledTooltip title="Bold" arrow placement="top">
-                <StyledIconButton
-                  disableRipple
-                  color="inherit"
-                  onClick={() => console.log("works bold")}
-                >
-                  {icons["bold"]}
-                </StyledIconButton>
-              </StyledTooltip>
-              <StyledTooltip title="Align" arrow placement="top">
-                <StyledIconButton disableRipple color="inherit">
-                  {icons["align"]}
-                </StyledIconButton>
-              </StyledTooltip>
-              <StyledTooltip title="List" arrow placement="top">
-                <StyledIconButton disableRipple color="inherit">
-                  {icons["bullet"]}
-                </StyledIconButton>
-              </StyledTooltip>
-              <StyledTooltip title="Link" arrow placement="top">
-                <StyledIconButton disableRipple color="inherit">
-                  {icons["link"]}
-                </StyledIconButton>
-              </StyledTooltip>
+              <StyledIconButton disableRipple color="inherit">
+                {icons["bold"]}
+              </StyledIconButton>
+              {/* alignment dropdown */}
+              <StyledIconButton
+                disableRipple
+                color="inherit"
+                className={"align-button"}
+                aria-label="alignment buttons dropdown"
+                data-alignid="alignment-dropdown"
+              >
+                {icons["align"]}
+              </StyledIconButton>
+
+              {/* bullets drowdown starts */}
+
+              <StyledIconButton disableRipple color="inherit">
+                {icons["bullet"]}
+              </StyledIconButton>
+
+              {/* link btn and divider */}
+              <Divider />
+              <StyledIconButton
+                disableRipple
+                color="inherit"
+                sx={{
+                  padding: "3px 5px !important",
+                  width: "28px !important",
+                  height: "100% !important",
+                }}
+              >
+                {icons["link"]}
+              </StyledIconButton>
             </StyledToolbar>
           </div>
           {/* {/* Video Kebab */}
-          <>
+          <div
+            style={{
+              position: "absolute",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              right: "10px",
+              top: "7px",
+              width: "40px",
+            }}
+          >
             <Divider />
             <StyledKebabButton
               ref={DescriptionKebab}
@@ -860,7 +884,7 @@ const ToolBar = ({
                 )}
               </Popper>
             </StyledKebabButton>
-          </>
+          </div>
         </StyledAppbar>
       </Container>
     </>

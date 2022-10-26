@@ -5,7 +5,6 @@ const KebabSVG = (props) => (
     width={4}
     height={14}
     fill="none"
-    style={{ marginTop: "3px" }}
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >

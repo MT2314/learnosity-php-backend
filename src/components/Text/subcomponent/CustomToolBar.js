@@ -13,21 +13,10 @@ import {
 import styled from "@emotion/styled";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useTranslation } from "react-i18next";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 // ? InfoBox imports
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { iconDropdownOptions } from "../../InfoBox/icons/infoBoxIcons";
 
-// ? Video imports
-import Input from "@mui/material/Input";
-import FormGroup from "@mui/material/FormGroup";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import BrightspaceSVG from "../../Video/assets/Brightspace";
-import YoutubeSVG from "../../Video/assets/Youtube";
-import KebabSVG from "../../Video/assets/Kebab";
 // ? Text Toolbar imports
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
