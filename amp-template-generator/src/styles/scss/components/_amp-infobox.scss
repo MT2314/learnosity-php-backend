@@ -7,19 +7,10 @@
         border-radius: 0 10px 10px 0;
     }
 
-    // Display: table doesn't allow the infobox to stretch across inside the wrapper class
-    // .co-table {
-    //     display: table;
-    // }
-
     .co-row {
-        display: table-row;
+        display: flex;
         .section-content {
-            margin-left: 0.938rem;
-            margin-right: 0.938rem;
-            margin-bottom: 2rem;
-            position: relative;
-            top: 2.563rem;
+            margin: 3rem 0.938rem 2rem;
             .info-header {
                 font-family: $component-main-font;
                 font-weight: 600;
@@ -45,10 +36,8 @@
     }
 
     .co-cell {
-        display: table-cell;
-        vertical-align: middle;
         background-color: $brand-50;
-        width: 12.438rem;
+        width: 16.563rem;
         border-radius: 10px 0 0 10px;
         p {
             @include text-label;
@@ -103,7 +92,6 @@
             display: none;
         }
         .section-content {
-            padding-bottom: 2.5rem;
             .label-without-icon {
                 display: block;
                 @include text-label;
