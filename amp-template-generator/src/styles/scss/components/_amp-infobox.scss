@@ -1,8 +1,7 @@
 /* styles for infobox and quote */
 .wrapper.infobox {    
     .max-content {
-        // Setting max-width to 2 allows the infobox to fill the wrapper width
-        @include max-width-2;
+        @include max-width-2; // Setting max-width to 2 allows the infobox to fill the wrapper width
         background-color: $transparent-grey-50;
         border-radius: 0 10px 10px 0;
     }
@@ -12,11 +11,6 @@
         .section-content {
             margin: 3rem 0.938rem 2rem;
             .info-header {
-                font-family: $component-main-font;
-                font-weight: 600;
-                color: $grey-900;
-                letter-spacing: 0.01em;
-                font-size: 28px;
                 line-height: 2.5rem;
                 margin-bottom: 1.5rem;
             }
@@ -25,13 +19,12 @@
             }
             .wrapper {
                 &:last-child.bottom-margin {
-                  // This clears the bottom-margin that is added to text/other components
-                  margin-bottom: 0;
+                  margin-bottom: 0; // This clears the bottom-margin that is added to text/other components
                 }
               }
         }
-        .info-header-center {
-            top: 6.813rem;
+        .info-header-vertical-center { 
+            margin: auto; // No paragraph in the infobox. Center the title
         }
     }
 
@@ -98,14 +91,6 @@
                 margin: 0 1.5rem 0.906rem;
                 text-transform: uppercase;
                 color: $brand-500;
-            }
-        }
-    }
-
-    @media(max-width: 375px) {
-        .no-icon {
-            .section-content {
-                padding-bottom: 0.063rem;
             }
         }
     }
