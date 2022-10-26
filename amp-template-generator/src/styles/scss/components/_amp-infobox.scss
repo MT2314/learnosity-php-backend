@@ -111,15 +111,8 @@
     }
 
     .icon {
-        margin: 42px auto 1.25rem;
+        margin: 2.625rem auto 1.25rem;
         width: 118px;
         height: 115px;
-    }
-
-    @media(min-width: 640px) {
-        .max-content {
-            padding: 0;
-        }
-    }
-    
+    }    
 }
