@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { useDrop } from "react-dnd";
 import styled from "@emotion/styled";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 import { TabContext, LayoutContext } from "../TabContext";
 import NestedComponentWrapper from "../../../Utility/NestedComponentWrapper";
@@ -10,12 +11,19 @@ import Placeholder from "./Placeholder";
 import PlaceholderError from "./PlaceholderError";
 
 // NOTE: We can use theme once it is set it up end to end
-const StyleTabBody = styled("div")(({ isDragging }) => ({
-  padding: "0.625rem",
-  borderColor: "#bdbdbd",
+const StyleTabBody = styled("div")(({ isOver, showError, empty }) => ({
+  backgroundColor:
+    showError && empty
+      ? "rgba(211, 47, 47, 0.04)"
+      : isOver && empty
+      ? "rgba(21, 101, 192, 0.04)"
+      : "#ffffff",
+  borderWidth: "1px",
+
+  margin: "10px ,0px",
+  padding: "10px",
   borderStyle: "solid",
-  borderWidth: "0 1px 1px 1px",
-  backgroundColor: isDragging ? "#F6F9FC" : "white",
+  borderColor: "#BDBDBD",
 }));
 
 const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
@@ -27,14 +35,22 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [inContainer, setInContainer] = useState(null);
   const [droppedIndex, setDroppedIndex] = useState(null);
-  const [ activeComp, setActiveComp] = useState(null);
+  const [activeComp, setActiveComp] = useState(null);
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
     return ["Text", "Table", "Video", "Image"].indexOf(item.componentName) >= 0;
   };
 
+  // ? Error Message
+  const [showError, setShowError] = useState();
   const [showDropError, setShowDropError] = useState();
+
+  useOnClickOutside(dropRef, () => {
+    setShowError(false), true;
+    setShowDropError(false), true;
+  });
+
   const [{ isOver, getItem }, drop] = useDrop(() => ({
     accept: [
       "Text",
@@ -44,6 +60,9 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
       "InfoBox",
       "QuoteBox",
       "IFrame",
+      "Accordion",
+      "Tab",
+      "section",
     ],
     drop: async (item, monitor) => {
       if (!acceptListComp(item)) setShowDropError(true);
@@ -75,16 +94,20 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         return "iFrame";
       case "InfoBox":
         return "InfoBox";
+      case "Tab":
+        return "Tabs";
+      case "NONLEARNING":
+        return "Descriptive Container";
+      case "LEARNING":
+        return "Learning Container";
       default:
         return item.replace(/([A-Z])/g, " $1").trim();
     }
   };
 
-  // Error message stays. This gives the user time to read and learn.
-  const [showError, setShowError] = useState();
   useEffect(() => {
     if (isOver && !acceptListComp(getItem)) {
-      setShowError(trimCap(getItem.componentName));
+      setShowError(trimCap(getItem.componentName || getItem.type));
     } else if (isOver) {
       setShowError();
       setShowDropError(false);
@@ -101,7 +124,6 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
 
   drop(dropRef);
 
-
   return (
     <>
       <StyleTabBody
@@ -112,7 +134,10 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
         ref={dropRef}
         key={id}
         data-testid="tab-drop-zone"
-        isDragging={isDragging}
+        isOver={isOver}
+        empty={components.length == 0}
+        showError={showError}
+        role="document"
       >
         {activeTab === tabIndex && components.length === 0 ? (
           <Placeholder isOver={isOver} showError={showError} />
@@ -121,7 +146,7 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
             {components.map((component, compIndex) => {
               return (
                 <NestedComponentWrapper
-                  componentType='tabs'
+                  componentType="tabs"
                   key={`key-component-${compIndex}`}
                   numOfComponent={components.length}
                   componentProps={component.componentProps}

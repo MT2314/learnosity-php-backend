@@ -1,6 +1,6 @@
 const exposedVersion = {
   stage: `${process.env.APP_STAGE}`,
-  version: "26.0.7",
+  version: "27.0.3",
 };
 
 export default exposedVersion;

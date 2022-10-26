@@ -10,23 +10,25 @@ import "../styles/EditorComponent.scss";
 import { v4 as uuidv4 } from "uuid";
 
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import {
-  AddLinkEvents,
-  handleSelection,
-  checkTextForUrl,
-} from "../utils/HandleLinks";
+import { checkTextForUrl } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
-import { FormulaEvents } from "../utils/FormulaEvents";
+import { FormulaEvents, linkClickEvent } from "../utils/FormulaEvents";
 import setAlignment from "../utils/setAlignment";
 
 import MathPixMarkdown from "../blots/MathPixMarkdown";
 
 import {
+  useMathId,
   useSetQuill,
   useSetUniqueId,
   useShowMath,
   useKeepEditor,
   useBoldRef,
+  useSetEditorPos,
+  useShowLink,
+  useSetShowLink,
+  useIsLink,
+  useSetIsLink,
 } from "../Provider";
 
 import { matchMsWordList, maybeMatchMsWordList } from "../matchers/pasteLists";
@@ -42,14 +44,21 @@ const Delta = Quill.import("delta");
 Quill.register("formats/mathpix", MathPixMarkdown);
 
 const StyledConfigBar = styled("div")(
-  ({ editorIsFocus, isInfoBox, infoAreaFocused }) => {
-    const display = isInfoBox
-      ? infoAreaFocused
+  ({
+    editorIsFocus,
+    isInfoBox,
+    isVideo,
+    infoAreaFocused,
+    videoAreaFocused,
+  }) => {
+    const display =
+      isInfoBox || isVideo
+        ? infoAreaFocused || videoAreaFocused
+          ? "flex"
+          : "none"
+        : editorIsFocus
         ? "flex"
-        : "none"
-      : editorIsFocus
-      ? "flex"
-      : "none";
+        : "none";
 
     const configBarStyles = {
       display: display,
@@ -75,18 +84,34 @@ const EditorComponent = ({
   isInfoBox,
   infoAreaFocused,
   infoHasFocus,
+  isVideo,
+  videoAreaFocused,
+  videoHasFocus,
   selectedIcon,
   setSelectedIcon,
   setInfoHasFocus,
+  setVideoHasFocus,
   setTextRef,
   setTabActive,
+  setVideoAPI,
+  videoAPI,
+  videoTextSettings,
+  setVideoTextSettings,
+  closeToolBar,
+  setCloseToolBar,
 }) => {
   //context hooks
-  const setQuill = useSetQuill();
-  const setUniqueId = useSetUniqueId();
-  const showMath = useShowMath();
-  const keepEditor = useKeepEditor();
+  const mathId = useMathId();
   const boldRef = useBoldRef();
+  const setQuill = useSetQuill();
+  const showMath = useShowMath();
+  const showLink = useShowLink();
+  const setShowLink = useSetShowLink();
+  const keepEditor = useKeepEditor();
+  const setUniqueId = useSetUniqueId();
+  const setEditorPos = useSetEditorPos();
+  const isLink = useIsLink();
+  const setIsLink = useSetIsLink();
 
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
@@ -111,15 +136,25 @@ const EditorComponent = ({
     editorIsFocus && setActiveComponent(true);
   }, [editorIsFocus]);
 
-  useOnClickOutside(textRef, () => {
-    if (!showMath && !keepEditor && !isInfoBox) {
-      alignmentObserver?.disconnect();
-      setEditorIsFocus(false);
-      setShowEditor(false);
-      setActiveComponent(false);
-      setTabActive(false)
-    }
-  });
+  useEffect(() => {
+    if (infoHasFocus) return;
+    if ((showLink || showMath || keepEditor) && !closeToolBar) return;
+    if (!closeToolBar) return;
+
+    alignmentObserver?.disconnect();
+    setEditorIsFocus(false);
+    setShowEditor(false);
+    setTabActive(false);
+    setCloseToolBar(false);
+    setTabActive(false);
+  }, [
+    showMath,
+    keepEditor,
+    showLink,
+    infoHasFocus,
+    closeToolBar,
+    editorIsFocus,
+  ]);
 
   useEffect(() => {
     //set quill instance
@@ -127,18 +162,15 @@ const EditorComponent = ({
     //set unique id instance
     setUniqueId(toolbarId);
     //extend default link functionality on mount
-    ExtendLinkFunctionality(
-      `toolbar-${toolbarId}`,
-      focusRef?.current?.getEditor()
-    );
+    ExtendLinkFunctionality(toolbarId);
     //check for formulas
     FormulaEvents(toolbarId);
     // on render editor is focused
-    showEditor && !isInfoBox && focusRef.current.focus();
+    showEditor && !isInfoBox && !isVideo && focusRef.current.focus();
     //on render toolbar appears
-    showEditor && !isInfoBox && setEditorIsFocus(true);
+    showEditor && !isInfoBox && !isVideo && setEditorIsFocus(true);
     //on mount pass back focusRef
-    isInfoBox &&
+    (isInfoBox || isVideo) &&
       setTextRef({ text: textRef.current, quill: focusRef?.current });
   }, []);
 
@@ -168,17 +200,41 @@ const EditorComponent = ({
   }, [body]);
 
   // Set formating - align & list  @ current focus
-  const formatSelection = (quillRef) => {
+  const formatSelection = (range, quillRef) => {
     if (quillRef !== null && editorIsFocus) {
       const quill = quillRef.getEditor();
       if (quill.hasFocus()) {
         const currentFormat = quill.getFormat();
+        const nexFormat = quill.getFormat(range.index, range.length + 1);
         currentFormat?.list
           ? setActiveDropDownListItem(currentFormat.list)
           : setActiveDropDownListItem("");
         currentFormat?.align
           ? setActiveDropDownAlignItem(currentFormat.align)
           : setActiveDropDownAlignItem("left");
+
+        if ((currentFormat?.link || nexFormat?.link) && range.length < 1) {
+          const [blot, offset] = quill.getLeaf(range.index);
+          const index = quill.getIndex(blot);
+          const delta = quill.getContents(index);
+
+          const opIndex = Object.keys(currentFormat).length !== 0 ? 0 : 1;
+
+          const link = delta.ops[opIndex].attributes.link;
+          const text = delta.ops[opIndex].insert;
+
+          text.length !== offset
+            ? linkClickEvent(toolbarId, index, text, link)
+            : showLink && setShowLink(false);
+        } else {
+          showLink && setShowLink(false);
+        }
+
+        if (currentFormat?.link && range.length > 0) {
+          setIsLink(true);
+        } else {
+          isLink && setIsLink(false);
+        }
       }
     }
   };
@@ -203,7 +259,7 @@ const EditorComponent = ({
     }
 
     // add eventListeners to editor
-    AddLinkEvents(`toolbar-${toolbarId}`);
+    // AddLinkEvents(`toolbar-${toolbarId}`);
 
     //check for selection with highlights
     const noHighlights = CheckHighlights(editorContent);
@@ -290,17 +346,25 @@ const EditorComponent = ({
           e.preventDefault();
           return;
         }
+
+        if (toolbar?.current?.contains(relatedTarget)) {
+          e.preventDefault();
+          return;
+        }
+
         if (
           (!relatedTarget ||
             (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
           !showMath &&
-          !isInfoBox
+          !showLink &&
+          !infoHasFocus
         ) {
           alignmentObserver?.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
           setActiveComponent(false);
-          setTabActive(false)
+          setTabActive(false);
+          setCloseToolBar(false);
         }
       }}
       className="text-editor"
@@ -310,7 +374,9 @@ const EditorComponent = ({
       <StyledConfigBar
         editorIsFocus={editorIsFocus}
         isInfoBox={isInfoBox}
+        isVideo={isVideo}
         infoAreaFocused={infoAreaFocused}
+        videoAreaFocused={videoAreaFocused}
       >
         <CustomToolBar
           toolbarId={toolbarId}
@@ -320,9 +386,15 @@ const EditorComponent = ({
           activeDropDownAlignItem={activeDropDownAlignItem}
           setActiveDropDownAlignItem={setActiveDropDownAlignItem}
           isInfoBox={isInfoBox}
+          isVideo={isVideo}
           infoHasFocus={infoHasFocus}
+          videoHasFocus={videoHasFocus}
           selectedIcon={selectedIcon}
           setSelectedIcon={setSelectedIcon}
+          setVideoAPI={setVideoAPI}
+          videoAPI={videoAPI}
+          videoTextSettings={videoTextSettings}
+          setVideoTextSettings={setVideoTextSettings}
         />
       </StyledConfigBar>
 
@@ -332,21 +404,28 @@ const EditorComponent = ({
         scrollingContainer="html"
         formats={formats}
         theme="snow"
-        placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        placeholder={
+          isVideo
+            ? "Video description"
+            : `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
           enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat."
+          nisi ut aliquip ex ea commodo consequat.`
+        }
         className="quillEditor"
         onChange={handleDataChange}
         defaultValue={body}
         onChangeSelection={(range, source, editor) => {
-          handleSelection(range, `toolbar-${toolbarId}`, focusRef.current);
-          formatSelection(focusRef.current);
+          // handleSelection(range, `toolbar-${toolbarId}`, focusRef.current);
+          formatSelection(range, focusRef.current);
         }}
         onFocus={() => {
           setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
-          infoHasFocus && setInfoHasFocus(false);
+          if (infoHasFocus || videoHasFocus) {
+            setInfoHasFocus(false);
+            setVideoHasFocus(false);
+          }
         }}
         onKeyDown={(e) => {
           onKeyDropDown(e);

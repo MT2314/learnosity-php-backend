@@ -8,11 +8,11 @@ import icons from "../../assets/icons";
 
 import styled from "@emotion/styled";
 
-const StyleCard = styled(Card)(({ show, isInfoBox }) => ({
+const StyleCard = styled(Card)(({ show, isInfoBox, isVideo }) => ({
   position: "absolute",
-  left: isInfoBox ? "40px" : "70px",
+  left: isInfoBox ? "40.5px" : isVideo ? "40px" : "71px",
   zIndex: 25,
-  bottom: "-32px",
+  bottom: "-34px",
   padding: "3px",
   display: show ? "block" : "none",
   ".ql-active": {
@@ -23,6 +23,7 @@ const StyleCard = styled(Card)(({ show, isInfoBox }) => ({
 
 const AlignDropdownButton = ({
   isInfoBox,
+  isVideo,
   show,
   activeDropDownItem,
   setActiveDropDownItem,
@@ -32,7 +33,12 @@ const AlignDropdownButton = ({
 }) => {
   return (
     <>
-      <StyleCard show={show} isInfoBox={isInfoBox} onKeyDown={onKeyDropDown}>
+      <StyleCard
+        show={show}
+        isInfoBox={isInfoBox}
+        isVideo={isVideo}
+        onKeyDown={onKeyDropDown}
+      >
         <span className="ql-formats">
           <Tooltip
             aria-label="align left"

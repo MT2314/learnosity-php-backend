@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
 import { Provider } from "./Provider";
@@ -7,12 +7,13 @@ import "./styles/Text.scss";
 import PopupDialogs from "./dialogs/PopupDialogs";
 
 import { CssBaseline } from "@mui/material";
-import DragLabel from "../../Utility/DragLabel"
 // import { ThemeProvider } from "@mui/material/styles";
 
 //? PP Imports
 // import createMFTheme from "../../theme/index";
 import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
+
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 export const defaultProps = { body: null };
 
@@ -25,40 +26,53 @@ const Text = ({
   isInfoBox = false,
   infoAreaFocused = false,
   infoHasFocus = false,
+  isVideo = false,
+  videoHasFocus = false,
+  videoAreaFocused = false,
   selectedIcon = null,
   setSelectedIcon = () => {},
   setInfoHasFocus = () => {},
+  setVideoHasFocus = () => {},
   setTextRef = () => {},
+  setVideoAPI = () => {},
+  setVideoTextSettings = () => {},
+  videoAPI = {},
+  videoTextSettings = {},
+  toolbar = null,
 }) => {
   const [showEditor, setShowEditor] = useState(false);
+  const [closeToolBar, setCloseToolBar] = useState(false);
 
-  //* Creating theme
-  // const textTheme = createMFTheme();
+  const containerRef = useRef(null);
+
+  useOnClickOutside(containerRef, () => {
+    setCloseToolBar(true);
+  });
 
   useEffect(() => {
-    if (isInfoBox) {
+    if (isInfoBox || isVideo) {
       setShowEditor(true);
     }
   }, []);
 
   return (
     <>
-    {/* on drag <DragLabel/> shows the components name */}
-      <DragLabel/>
       <CssBaseline />
       {/* <ThemeProvider theme={textTheme}> */}
-      <ReactQuillContainer isInfoBox={isInfoBox}>
+      <ReactQuillContainer isInfoBox={isInfoBox} isVideo={isVideo}>
         {((!showEditor && body === null) ||
           (!showEditor && !body.ops) ||
           (!showEditor && body.ops[0].insert === "")) &&
-        !isInfoBox ? (
+        !isInfoBox &&
+        !isVideo ? (
           <div
             onClick={() => {
-              setShowEditor(true)
+              setShowEditor(true);
               setTabActive(true);
             }}
             className="mainContainer"
             data-testid="text-component"
+            role="text"
             tabIndex="0"
             onFocus={() => {
               setShowEditor(true);
@@ -78,13 +92,24 @@ const Text = ({
               setActiveComponent={setActiveComponent}
               isActiveComponent={isActiveComponent}
               isInfoBox={isInfoBox}
+              isVideo={isVideo}
               infoAreaFocused={infoAreaFocused}
+              videoAreaFocused={videoAreaFocused}
               selectedIcon={selectedIcon}
               infoHasFocus={infoHasFocus}
+              videoHasFocus={videoHasFocus}
               setInfoHasFocus={setInfoHasFocus}
+              setVideoHasFocus={setVideoHasFocus}
               setSelectedIcon={setSelectedIcon}
               setTextRef={setTextRef}
               setTabActive={setTabActive}
+              setVideoAPI={setVideoAPI}
+              videoAPI={videoAPI}
+              videoTextSettings={videoTextSettings}
+              setVideoTextSettings={setVideoTextSettings}
+              toolbar={toolbar}
+              closeToolBar={closeToolBar}
+              setCloseToolBar={setCloseToolBar}
             />
           </Provider>
         )}
