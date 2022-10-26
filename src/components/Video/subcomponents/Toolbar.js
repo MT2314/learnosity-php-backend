@@ -769,6 +769,40 @@ const ToolBar = ({
               </StyledVideoButton>
             </StyledVideoToolbar>
           )}
+
+          <div>
+            {/* {!textMounted && ( */}
+            <StyledToolbar
+              variant="dense"
+              disableGutters
+              test-id="infoBox-toolbar"
+            >
+              <StyledTooltip title="Bold" arrow placement="top">
+                <StyledIconButton
+                  disableRipple
+                  color="inherit"
+                  onClick={() => console.log("works bold")}
+                >
+                  {icons["bold"]}
+                </StyledIconButton>
+              </StyledTooltip>
+              <StyledTooltip title="Align" arrow placement="top">
+                <StyledIconButton disableRipple color="inherit">
+                  {icons["align"]}
+                </StyledIconButton>
+              </StyledTooltip>
+              <StyledTooltip title="List" arrow placement="top">
+                <StyledIconButton disableRipple color="inherit">
+                  {icons["bullet"]}
+                </StyledIconButton>
+              </StyledTooltip>
+              <StyledTooltip title="Link" arrow placement="top">
+                <StyledIconButton disableRipple color="inherit">
+                  {icons["link"]}
+                </StyledIconButton>
+              </StyledTooltip>
+            </StyledToolbar>
+          </div>
         </StyledAppbar>
       </Container>
     </>
