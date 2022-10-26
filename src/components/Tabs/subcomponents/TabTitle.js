@@ -48,6 +48,7 @@ const StyledInput = styled(TextareaAutosize)(({ activeTab, tabIndexProp }) => ({
   padding: "0",
   fontSize: "18px",
   fontWeight: 500,
+  lineHeight: "1.575rem",
   width: "100%",
   minHeight: "25px",
   maxHeight: "50px",
