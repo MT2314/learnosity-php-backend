@@ -5,7 +5,7 @@
   {% assign info-header-center = "info-header-center" %}
 {% endif %}
 
-{% if data.infoBoxIcon == "No icon" %}
+{% if data.infoBoxIcon == "No icon" or data.infoBoxIcon == null %}
   {% assign no-icon = "no-icon" %}
 {% endif %}
 
@@ -14,8 +14,6 @@
     <div class="co-row {{ no-icon }}">
       <div class="co-cell">
         <amp-img
-          width="118"
-          height="115"
           alt=""
           layout="responsive"
           aria-hidden="true"
