@@ -256,9 +256,8 @@ const StyledInput = styled(Input)(({ invalidid }) => ({
   },
 }));
 
-const StyledIconButton = styled(IconButton)({
+const StyledIconButton = styled(IconButton)(({ disabled }) => ({
   display: "flex !important",
-
   width: "30px",
   height: "30px",
   padding: "7px",
@@ -268,6 +267,7 @@ const StyledIconButton = styled(IconButton)({
 
   "& svg": {
     fill: "#000",
+    ...(disabled && { opacity: 0.3 }),
   },
   "&:hover": {
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
@@ -292,7 +292,7 @@ const StyledIconButton = styled(IconButton)({
   "& .MuiPaper-root ": {
     backgroundColor: "rgba(255,255,255,1) !important",
   },
-});
+}));
 
 const Divider = styled("div")(({}) => ({
   width: "1px",
@@ -755,12 +755,13 @@ const ToolBar = ({
               disableGutters
               test-id="infoBox-toolbar"
             >
-              <StyledIconButton disableRipple color="inherit">
+              <StyledIconButton disableRipple disabled>
                 {icons["bold"]}
               </StyledIconButton>
               {/* alignment dropdown */}
               <StyledIconButton
                 disableRipple
+                disabled
                 color="inherit"
                 className={"align-button"}
                 aria-label="alignment buttons dropdown"
@@ -771,7 +772,7 @@ const ToolBar = ({
 
               {/* bullets drowdown starts */}
 
-              <StyledIconButton disableRipple color="inherit">
+              <StyledIconButton disableRipple disabled>
                 {icons["bullet"]}
               </StyledIconButton>
 
@@ -779,7 +780,7 @@ const ToolBar = ({
               <Divider />
               <StyledIconButton
                 disableRipple
-                color="inherit"
+                disabled
                 sx={{
                   padding: "3px 5px !important",
                   width: "28px !important",
@@ -797,8 +798,8 @@ const ToolBar = ({
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-evenly",
-              right: "10px",
-              top: "7px",
+              right: "9px",
+              top: "6px",
               width: "40px",
             }}
           >
