@@ -75,6 +75,17 @@
         </div>
     {%- endif -%}
 
+    {% if data.videoDescription %}
+    
+    <div class="description container">
+        <p class="description">
+            {{data.videoDescription}}
+        </p>
+        <button>Transcript</button>
+    </div>
+    
+    {% endif %}
+
     {% if data.caption %}
 
         <figure class="figure">
