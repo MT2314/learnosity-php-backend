@@ -53,6 +53,24 @@ const Container = styled("div")({
     backgroundColor: "transparent",
   },
 });
+// ? Styled Tooltip
+const StyledTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(() => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "rgba(97, 97, 97, 0.9)",
+    border: "4px",
+    color: "#fff",
+    height: "22px",
+    padding: "4px, 8px, 4px, 8px",
+    fontSize: "10px",
+    lineHeight: "14px",
+    fontWeight: "500",
+    "& .MuiTooltip-arrow": {
+      color: "rgba(97, 97, 97, 0.9)",
+    },
+  },
+}));
 // ? Styled Appbar
 const StyledAppbar = styled(AppBar)({
   display: "flex",
