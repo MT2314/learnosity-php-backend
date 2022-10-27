@@ -30,7 +30,7 @@ const Text = ({
   setSelectedIcon = () => {},
   setInfoHasFocus = () => {},
   setTextRef = () => {},
-  portal = {},
+  portal = null,
 }) => {
   const [showEditor, setShowEditor] = useState(false);
   const [closeToolBar, setCloseToolBar] = useState(false);
