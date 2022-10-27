@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 
 export const ReactQuillContainer = styled("div")(
   ({ theme, isInfoBox, isVideo }) => ({
+    position: "relative",
     "& .ql-container": {
       background: !isInfoBox ? "rgba(255, 255, 255, 1)" : "#FAFAFA",
       padding:

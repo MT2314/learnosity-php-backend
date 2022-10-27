@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
 import { Provider } from "./Provider";
@@ -12,6 +12,8 @@ import { CssBaseline } from "@mui/material";
 //? PP Imports
 // import createMFTheme from "../../theme/index";
 import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
+
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 export const defaultProps = { body: null };
 
@@ -36,8 +38,16 @@ const Text = ({
   setVideoTextSettings = () => {},
   videoAPI = {},
   videoTextSettings = {},
+  toolbar = null,
 }) => {
   const [showEditor, setShowEditor] = useState(false);
+  const [closeToolBar, setCloseToolBar] = useState(false);
+
+  const containerRef = useRef(null);
+
+  useOnClickOutside(containerRef, () => {
+    setCloseToolBar(true);
+  });
 
   useEffect(() => {
     if (isInfoBox || isVideo) {
@@ -97,6 +107,9 @@ const Text = ({
               videoAPI={videoAPI}
               videoTextSettings={videoTextSettings}
               setVideoTextSettings={setVideoTextSettings}
+              toolbar={toolbar}
+              closeToolBar={closeToolBar}
+              setCloseToolBar={setCloseToolBar}
             />
           </Provider>
         )}

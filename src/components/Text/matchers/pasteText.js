@@ -4,7 +4,6 @@ const Delta = Quill.import("delta");
 //WIP
 export const matchText = (node, delta) => {
   if (typeof node.data !== "string") {
-    console.log("Not a string");
     return;
   }
 
@@ -24,7 +23,6 @@ export const matchText = (node, delta) => {
       let urlResult = urlRegExp.exec(data);
       if (urlResult !== null) {
         const match = urlResult[0];
-        console.log("MATH:", match);
         if (text) {
           ops.push({ insert: text + " " });
           text = "";
