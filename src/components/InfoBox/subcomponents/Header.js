@@ -6,16 +6,16 @@ import { InfoBoxContext } from "../InfoBoxContext";
 import { TextareaAutosize } from "@material-ui/core";
 
 const StyledHeaderInput = styled(TextareaAutosize)({
-  width: "650px",
-  height: "40px",
+  width: "40.625rem",
+  height: "2.5rem",
   margin: 0,
   padding: 0,
   border: "none",
   resize: "none",
-  lineHeight: "40px",
+  lineHeight: "2.48rem",
   background: "#FAFAFA",
   fontFamily: `"Inter", sans-serif`,
-  fontSize: "34px",
+  fontSize: "2.125rem",
   fontWeight: "500",
   color: "rgba(35, 35, 35, 1)",
   "&::placeholder": {
