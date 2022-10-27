@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useRef, useMemo, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useContext,
+  useCallback,
+} from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "@emotion/styled";
 
@@ -86,6 +93,7 @@ const Video = () => {
 
   const [videoBody, setVideoBody] = useState(null);
   const [placeHolder, setPlaceHolder] = useState(null);
+  const [toolbar, setToolbar] = useState(null);
 
   const [videoAPI, setVideoAPI] = useState({
     videoSource: "",
@@ -108,11 +116,14 @@ const Video = () => {
   });
 
   const videoFocused = (e) => {
+    console.log("VIDEO FOCUSED CLICKED/FOCUSED");
     setVideoAreaFocused(true);
-    if (!videoBody.contains(e.target) && e.target !== placeHolder) {
-      setVideoHasFocus(true);
-    }
   };
+
+  const handleTextClick = useCallback((e) => {
+    e.stopPropagation();
+    setVideoAreaFocused(false);
+  }, []);
 
   return (
     <div
@@ -121,13 +132,15 @@ const Video = () => {
       ref={videoRef}
       onClick={(e) => videoFocused(e)}
       onFocus={(e) => videoFocused(e)}
+      onBlur={(e) => e.stopPropagation()}
     >
       <Toolbar
         isVideo={isVideo}
-        videoHasFocus={videoHasFocus}
+        videoAreaFocused={videoAreaFocused}
         setVideoAPI={setVideoAPI}
         videoAPI={videoAPI}
         setVideoTextSettings={setVideoTextSettings}
+        setToolbar={setToolbar}
       />
       <Player
         videoId={videoAPI.videoId}
@@ -137,20 +150,31 @@ const Video = () => {
       <StyledVideoContainer>
         <StyledVideoDescriptionContainer>
           <DescriptionCreditContainer>
-            <VideoDescriptionCredit
-              isVideo={isVideo}
-              videoHasFocus={videoHasFocus}
-              videoAreaFocused={videoAreaFocused}
-              setVideoHasFocus={setVideoHasFocus}
-              setVideoBody={setVideoBody}
-              setPlaceHolder={setPlaceHolder}
-              setVideoAPI={setVideoAPI}
-              videoAPI={videoAPI}
-              videoData={videoData}
-              description={state.videoDescription}
-              credit={state.videoCredit}
-              t={t}
-            />
+            <div
+              onClick={(e) => {
+                handleTextClick(e);
+              }}
+              onFocus={(e) => {
+                handleTextClick(e);
+              }}
+            >
+              <VideoDescriptionCredit
+                isVideo={isVideo}
+                videoHasFocus={videoHasFocus}
+                videoAreaFocused={videoAreaFocused}
+                setVideoHasFocus={setVideoHasFocus}
+                setVideoBody={setVideoBody}
+                setPlaceHolder={setPlaceHolder}
+                setVideoAPI={setVideoAPI}
+                videoAPI={videoAPI}
+                videoData={videoData}
+                description={state.videoDescription}
+                credit={state.videoCredit}
+                toolbar={toolbar}
+                setVideoAreaFocused={setVideoAreaFocused}
+                t={t}
+              />
+            </div>
           </DescriptionCreditContainer>
           <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
         </StyledVideoDescriptionContainer>

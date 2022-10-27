@@ -302,10 +302,11 @@ const Divider = styled("div")(({}) => ({
 
 const ToolBar = ({
   isVideo,
-  videoHasFocus,
+  videoAreaFocused,
   setVideoAPI,
   videoAPI = null,
   setVideoTextSettings,
+  setToolbar,
 }) => {
   const { t } = useTranslation();
 
@@ -324,6 +325,7 @@ const ToolBar = ({
   const DescriptionKebab = useRef(null);
   const inputId = useRef(null);
   const inputError = useRef(null);
+  const portalToolbarRef = useRef(null);
 
   useOnClickOutside(AppBar, () => {
     toggleCloseToolbar(["Video", "Kebab"]);
@@ -409,6 +411,10 @@ const ToolBar = ({
       videoAPI.videoSource === "youtube" && setSelectYoutube(true);
     }
   });
+
+  useEffect(() => {
+    setToolbar(portalToolbarRef.current);
+  }, []);
   return (
     <>
       <Container
@@ -746,50 +752,51 @@ const ToolBar = ({
             </StyledVideoButton>
           </StyledVideoToolbar>
 
-          <div>
+          <div ref={portalToolbarRef}>
             {/* {!textMounted && ( */}
-            <StyledToolbar
-              isVideo={isVideo}
-              className="toolbarContainer"
-              variant="dense"
-              disableGutters
-              test-id="infoBox-toolbar"
-            >
-              <StyledIconButton disableRipple disabled>
-                {icons["bold"]}
-              </StyledIconButton>
-              {/* alignment dropdown */}
-              <StyledIconButton
-                disableRipple
-                disabled
-                color="inherit"
-                className={"align-button"}
-                aria-label="alignment buttons dropdown"
-                data-alignid="alignment-dropdown"
+            {videoAreaFocused && (
+              <StyledToolbar
+                isVideo={isVideo}
+                variant="dense"
+                disableGutters
+                test-id="infoBox-toolbar"
               >
-                {icons["align"]}
-              </StyledIconButton>
+                <StyledIconButton disableRipple disabled>
+                  {icons["bold"]}
+                </StyledIconButton>
+                {/* alignment dropdown */}
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  color="inherit"
+                  className={"align-button"}
+                  aria-label="alignment buttons dropdown"
+                  data-alignid="alignment-dropdown"
+                >
+                  {icons["align"]}
+                </StyledIconButton>
 
-              {/* bullets drowdown starts */}
+                {/* bullets drowdown starts */}
 
-              <StyledIconButton disableRipple disabled>
-                {icons["bullet"]}
-              </StyledIconButton>
+                <StyledIconButton disableRipple disabled>
+                  {icons["bullet"]}
+                </StyledIconButton>
 
-              {/* link btn and divider */}
-              <Divider />
-              <StyledIconButton
-                disableRipple
-                disabled
-                sx={{
-                  padding: "3px 5px !important",
-                  width: "28px !important",
-                  height: "100% !important",
-                }}
-              >
-                {icons["link"]}
-              </StyledIconButton>
-            </StyledToolbar>
+                {/* link btn and divider */}
+                <Divider />
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  sx={{
+                    padding: "3px 5px !important",
+                    width: "28px !important",
+                    height: "100% !important",
+                  }}
+                >
+                  {icons["link"]}
+                </StyledIconButton>
+              </StyledToolbar>
+            )}
           </div>
           {/* {/* Video Kebab */}
           <div
@@ -798,8 +805,15 @@ const ToolBar = ({
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-evenly",
-              right: "9px",
-              top: "6px",
+              right: !videoAreaFocused ? "-35px" : "9px",
+              ...(!videoAreaFocused && {
+                backgroundColor: "white",
+                height: "40px",
+                borderRadiusTopRight: "5px",
+                borderRadiusBottomRight: "5px",
+              }),
+
+              top: !videoAreaFocused ? "0px" : "6px",
               width: "40px",
             }}
           >

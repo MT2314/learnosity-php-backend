@@ -6,6 +6,7 @@ import React, {
   useState,
   useRef,
 } from "react";
+
 import { VideoContext } from "../VideoContext";
 
 import styled from "@emotion/styled";
@@ -61,17 +62,10 @@ const CreditInput = styled("input")({
 });
 
 const VideoDescriptionCredit = ({
-  isVideo,
-  videoHasFocus,
   videoAreaFocused,
-  setVideoHasFocus,
   setVideoBody,
-  setPlaceHolder,
-  setVideoAPI,
-  videoAPI,
-  videoData,
-  description,
-  credit,
+  toolbar,
+  setVideoAreaFocused,
   t,
 }) => {
   const [state, dispatch] = useContext(VideoContext);
@@ -79,103 +73,84 @@ const VideoDescriptionCredit = ({
     () => state?.videoDescription,
     [state?.videoDescription]
   );
-  const [refs, setTextRef] = useState({ text: null, quill: null });
-  const [textFocused, setTextFocused] = useState(false);
 
-  const videoBodyRef = useRef();
-  const placeholderRef = useRef();
+  const [descriptionFocused, setDescriptionFocused] = useState(false);
+  const [creditFocused, setCreditFocused] = useState(false);
 
-  const [videoTextSettings, setVideoTextSettings] = useState({
-    description: null,
-    credit: null,
-  });
+  const descriptionRef = useRef();
+  const creditRef = useRef();
 
   const updateBody = useCallback((body) => {
     dispatch({ func: "CHANGE_DESCRIPTION", description: body.body });
   });
 
   useEffect(() => {
-    if (!refs?.text?.contains(document.activeElement)) {
-      setTextFocused(false);
-    }
-  }, [document.activeElement]);
-
-  useEffect(() => {
-    if (videoBodyRef.current) {
-      setVideoBody(videoBodyRef.current);
-      setPlaceHolder(placeholderRef.current);
+    if (descriptionRef.current) {
+      setVideoBody(descriptionRef.current);
     }
   }, []);
 
-  const isValid = useMemo(
-    () =>
-      (!stateDescription ||
-        !stateDescription.ops ||
-        stateDescription.ops[0].insert === "") &&
-      !textFocused,
-    [stateDescription, textFocused, videoAreaFocused]
-  );
+  const portalDescription = useMemo(() => {
+    return {
+      parentComponent: "video",
+      placeholder: "Video Description",
+      toolbarReference: toolbar,
+      shouldPortal: !videoAreaFocused && !creditFocused,
+      disabledButtons: [],
+      setParentFocused: (result) => setVideoAreaFocused(result),
+    };
+  }, [toolbar, videoAreaFocused, creditFocused]);
 
-  useEffect(() => {
-    if (
-      !videoAreaFocused &&
-      (!stateDescription ||
-        !stateDescription.ops ||
-        stateDescription.ops[0].insert === "")
-    ) {
-      setTextFocused(false);
-    }
-  }, [videoAreaFocused]);
+  const portalCredit = useMemo(() => {
+    return {
+      parentComponent: "video",
+      placeholder: "Credit",
+      toolbarReference: toolbar,
+      shouldPortal: !videoAreaFocused && !descriptionFocused,
+      disabledButtons: [],
+      setParentFocused: (result) => setVideoAreaFocused(result),
+    };
+  }, [toolbar, videoAreaFocused, descriptionFocused]);
+
+  const handleDescriptionClick = useCallback((e) => {
+    setDescriptionFocused(true);
+    setCreditFocused(false);
+  }, []);
+  const handleCreditClick = useCallback((e) => {
+    setCreditFocused(true);
+    setDescriptionFocused(false);
+  }, []);
 
   return (
-    <div ref={videoBodyRef} style={{ position: "relative" }}>
-      <Text
-        body={state.videoDescription}
-        setProp={updateBody}
-        setTextRef={setTextRef}
-        setVideoAPI={setVideoAPI}
-        videoAPI={videoAPI}
-        videoTextSettings={videoTextSettings}
-        setVideoTextSettings={setVideoTextSettings}
-        isVideo={isVideo}
-        videoHasFocus={videoHasFocus}
-        videoAreaFocused={videoAreaFocused}
-        setVideoHasFocus={setVideoHasFocus}
-        setVideoBody={setVideoBody}
-        setPlaceHolder={setPlaceHolder}
-        videoData={videoData}
-        t={t}
-      />
-      <DescriptionInput
-        ref={placeholderRef}
-        onFocus={(e) => {
-          e.preventDefault();
-          refs.quill.focus();
-          setTextFocused(true);
-        }}
-        style={{
-          position: "absolute",
-          top: "0",
-          left: "0",
-          display: isValid ? "block" : "none",
-        }}
-        name="infoBoxBody"
-        aria-label={t("InfoBox body")}
-        aria-multiline="true"
-        placeholder="Video description"
-        defaultValue={
-          videoData?.long_description &&
-          videoData?.long_description.replace(/ /g, "\u00a0")
-        }
-      />
+    <>
+      <div
+        ref={descriptionRef}
+        style={{ position: "relative", minHeight: "20px", width: "622px" }}
+        onClick={handleDescriptionClick}
+        onFocus={handleDescriptionClick}
+      >
+        <Text
+          body={state.videoDescription}
+          setProp={updateBody}
+          portal={portalDescription}
+          t={t}
+        />
+      </div>
 
-      <CreditInput
-        type="text"
-        placeholder="Credit"
-        role="textbox"
-        defaultValue={videoData?.tags}
-      />
-    </div>
+      <div
+        ref={creditRef}
+        style={{ position: "relative", minHeight: "20px", width: "622px" }}
+        onClick={handleCreditClick}
+        onFocus={handleCreditClick}
+      >
+        <Text
+          // body={state.videoDescription}
+          // setProp={updateBody} --> Add updateCredit
+          portal={portalCredit}
+          t={t}
+        />
+      </div>
+    </>
   );
 };
 

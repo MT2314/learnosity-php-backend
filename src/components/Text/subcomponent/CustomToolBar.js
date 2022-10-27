@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import ReactDOM from "react-dom";
+
 import {
   useSetShowMath,
   useShowMath,
@@ -11,6 +13,8 @@ import {
   useSetIsLink,
 } from "../Provider";
 import styled from "@emotion/styled";
+import Portal from "@mui/base/Portal";
+
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useTranslation } from "react-i18next";
 // ? InfoBox imports
@@ -43,13 +47,13 @@ import {
 
 // ? Styled Container
 const Container = styled("div")({
-  display: "block !important",
-  position: "fixed !important",
-  top: "80px !important",
-  left: "50% !important",
-  transform: "translateX(-50%) !important",
-  zIndex: 1000,
-  gap: "10px",
+  // display: "block !important",
+  // position: "fixed !important",
+  // top: "80px !important",
+  // left: "50% !important",
+  // transform: "translateX(-50%) !important",
+  // zIndex: 1000,
+  // gap: "10px",
   "& .MuiPaper-root": {
     backgroundColor: "transparent",
   },
@@ -174,7 +178,22 @@ const Divider = styled("div")(({}) => ({
   backgroundColor: "#E0E0E0 !important",
 }));
 
-const CustomToolBar = ({
+const CustomToolBar = (props) => {
+  return (
+    <>
+      {props?.portal?.shouldPortal ? (
+        ReactDOM.createPortal(
+          <ToolBar {...props} />,
+          props?.portal?.toolbarReference
+        )
+      ) : (
+        <ToolBar {...props} />
+      )}
+    </>
+  );
+};
+
+const ToolBar = ({
   toolbarId,
   activeDropDownListItem,
   setActiveDropDownListItem,
@@ -182,9 +201,9 @@ const CustomToolBar = ({
   setActiveDropDownAlignItem,
   isInfoBox,
   infoHasFocus,
-  videoHasFocus,
   selectedIcon,
   setSelectedIcon,
+  portal,
 }) => {
   const { t } = useTranslation();
 
@@ -290,22 +309,22 @@ const CustomToolBar = ({
   }, [showMath]);
 
   // useEffect(() => {
-  //   if (infoHasFocus || videoHasFocus) {
+  //   if (infoHasFocus ) {
   //     toggleCloseToolbar(["Video", "Kebab"]);
   //   }
-  // }, [infoHasFocus, videoHasFocus]);
+  // }, [infoHasFocus, ]);
   // useEffect(() => {
   //   console.table({ activeDropDownItem });
   // }, [activeDropDownItem, activeTopMenu]);
 
   return (
     <Container
-      onClick={(e) => e.stopPropagation()}
-      onFocus={(e) => e.stopPropagation()}
+    // onClick={(e) => e.stopPropagation()}
+    // onFocus={(e) => e.stopPropagation()}
     >
       <StyledAppbar position="static" ref={AppBar}>
         {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
-        {isInfoBox && (
+        {/* {isInfoBox && (
           <StyledIconDropdownButton
             ref={IconDropDown}
             id="iconToolBar"
@@ -375,11 +394,11 @@ const CustomToolBar = ({
               )}
             </Popper>
           </StyledIconDropdownButton>
-        )}
+        )} */}
         <div>
           <StyledToolbar
             id={toolbarId}
-            isInfoBox={isInfoBox}
+            isInfoBox={isInfoBox || portal?.parentComponent}
             className="toolbarContainer"
             variant="dense"
             disableGutters
@@ -420,7 +439,7 @@ const CustomToolBar = ({
             >
               <StyledIconButton
                 ref={boldRef}
-                disabled={infoHasFocus || videoHasFocus}
+                disabled={infoHasFocus}
                 disableRipple
                 color="inherit"
                 onClick={() => {
@@ -487,7 +506,7 @@ const CustomToolBar = ({
                   aria-label="math equation button"
                   disableRipple
                   color="inherit"
-                  disabled={infoHasFocus || videoHasFocus}
+                  disabled={infoHasFocus}
                   onClick={() => {
                     setAlignVisibility(false);
                     setBoldVisibility(false);
@@ -525,7 +544,7 @@ const CustomToolBar = ({
             >
               <StyledIconButton
                 ref={alignRef}
-                disabled={infoHasFocus || videoHasFocus}
+                disabled={infoHasFocus}
                 disableRipple
                 color="inherit"
                 onClick={() => {
@@ -589,7 +608,7 @@ const CustomToolBar = ({
             >
               <StyledIconButton
                 ref={listRef}
-                disabled={infoHasFocus || videoHasFocus}
+                disabled={infoHasFocus}
                 disableRipple
                 color="inherit"
                 onClick={() => {
@@ -648,7 +667,7 @@ const CustomToolBar = ({
               }}
             >
               <StyledIconButton
-                disabled={infoHasFocus || videoHasFocus}
+                disabled={infoHasFocus}
                 disableRipple
                 color="inherit"
                 aria-label="add link button"

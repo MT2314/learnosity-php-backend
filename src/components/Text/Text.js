@@ -26,19 +26,11 @@ const Text = ({
   isInfoBox = false,
   infoAreaFocused = false,
   infoHasFocus = false,
-  isVideo = false,
-  videoHasFocus = false,
-  videoAreaFocused = false,
   selectedIcon = null,
   setSelectedIcon = () => {},
   setInfoHasFocus = () => {},
-  setVideoHasFocus = () => {},
   setTextRef = () => {},
-  setVideoAPI = () => {},
-  setVideoTextSettings = () => {},
-  videoAPI = {},
-  videoTextSettings = {},
-  toolbar = null,
+  portal = {},
 }) => {
   const [showEditor, setShowEditor] = useState(false);
   const [closeToolBar, setCloseToolBar] = useState(false);
@@ -50,7 +42,7 @@ const Text = ({
   });
 
   useEffect(() => {
-    if (isInfoBox || isVideo) {
+    if (isInfoBox) {
       setShowEditor(true);
     }
   }, []);
@@ -59,18 +51,23 @@ const Text = ({
     <>
       <CssBaseline />
       {/* <ThemeProvider theme={textTheme}> */}
-      <ReactQuillContainer isInfoBox={isInfoBox} isVideo={isVideo}>
+      <ReactQuillContainer
+        isInfoBox={isInfoBox}
+        isVideo={portal?.parentComponent === "video"}
+        ref={containerRef}
+      >
         {((!showEditor && body === null) ||
           (!showEditor && !body.ops) ||
           (!showEditor && body.ops[0].insert === "")) &&
-        !isInfoBox &&
-        !isVideo ? (
+        !isInfoBox ? (
           <div
             onClick={() => {
               setShowEditor(true);
               setTabActive(true);
             }}
-            className="mainContainer"
+            className={
+              portal?.parentComponent === "video" ? "" : "mainContainer"
+            }
             data-testid="text-component"
             role="text"
             tabIndex="0"
@@ -79,7 +76,7 @@ const Text = ({
               setTabActive(true);
             }}
           >
-            <DefaultText />
+            <DefaultText portal={portal} />
           </div>
         ) : (
           <Provider>
@@ -92,24 +89,16 @@ const Text = ({
               setActiveComponent={setActiveComponent}
               isActiveComponent={isActiveComponent}
               isInfoBox={isInfoBox}
-              isVideo={isVideo}
               infoAreaFocused={infoAreaFocused}
-              videoAreaFocused={videoAreaFocused}
               selectedIcon={selectedIcon}
               infoHasFocus={infoHasFocus}
-              videoHasFocus={videoHasFocus}
               setInfoHasFocus={setInfoHasFocus}
-              setVideoHasFocus={setVideoHasFocus}
               setSelectedIcon={setSelectedIcon}
               setTextRef={setTextRef}
               setTabActive={setTabActive}
-              setVideoAPI={setVideoAPI}
-              videoAPI={videoAPI}
-              videoTextSettings={videoTextSettings}
-              setVideoTextSettings={setVideoTextSettings}
-              toolbar={toolbar}
               closeToolBar={closeToolBar}
               setCloseToolBar={setCloseToolBar}
+              portal={portal}
             />
           </Provider>
         )}

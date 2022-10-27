@@ -1,12 +1,18 @@
 import React from "react";
 import "../styles/DefaultText.scss";
 
-const DefaultText = () => (
+const DefaultText = ({ portal }) => (
   <>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat.
+    {portal ? (
+      <div>{portal?.placeholder}</div>
+    ) : (
+      <div>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat.
+      </div>
+    )}
   </>
 );
 
