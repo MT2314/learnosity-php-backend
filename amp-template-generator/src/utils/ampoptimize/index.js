@@ -12,7 +12,7 @@ module.exports = async function (file, config, cb) {
     // console.log('welcome to amp optimizer', config, typeof file);
     const ampOptimizer = AmpOptimizer.create(config); 
     var data = file;
-    var ampResult = ampOptimizer.transformHtml(data);
+    var ampResult = await ampOptimizer.transformHtml(data);
     // return the file string back to callback
     return ampResult;
 };
