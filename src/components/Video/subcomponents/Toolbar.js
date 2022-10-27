@@ -426,51 +426,64 @@ const ToolBar = ({
 
           <StyledVideoToolbar position="static" selected={videoAPI.videoId}>
             {/* Add Video Drop Down */}
-            <StyledVideoButton
-              ref={AddVideo}
-              data-addVideoid="AddVideo"
-              aria-controls={openVideo ? t("Add Video") : undefined}
-              aria-expanded={openVideo ? "true" : undefined}
-              sx={
-                ({ width: "100%" },
-                videoAPI.videoId && {
-                  width: "107px !important",
-                  flexGrow: "1",
-                })
-              }
-              variant="contained"
-              openVideo={openVideo}
-              disableRipple
-              disableFocusRipple
-              onClick={handleToggleVideo}
+            <Tooltip
+              aria-label={videoAPI.videoId ? "change video" : "add video"}
+              title={videoAPI.videoId ? "change video" : "add video"}
+              placement="top"
+              arrow
             >
-              {videoAPI.videoId ? "Change Video" : "Add Video"}
-
-              {/* Select Brightspace OR Youtube Dropdown */}
-              {!selectYoutube && !selectBrightcove && (
-                <Popper
-                  open={openVideo}
-                  anchorEl={AddVideo.current}
-                  placement="bottom-start"
-                  transition
-                  disablePortal
-                  modifiers={[
-                    {
-                      name: "offset",
-                      options: {
-                        offset: videoAPI.videoId ? [-55, 0] : [-10, 0],
-                      },
+              <StyledVideoButton
+                ref={AddVideo}
+                data-addVideoid="AddVideo"
+                aria-controls={openVideo ? t("Add Video") : undefined}
+                aria-expanded={openVideo ? "true" : undefined}
+                sx={
+                  ({ width: "100%" },
+                  videoAPI.videoId && {
+                    width: "107px !important",
+                    flexGrow: "1",
+                  })
+                }
+                variant="contained"
+                openVideo={openVideo}
+                disableRipple
+                disableFocusRipple
+                onClick={handleToggleVideo}
+              >
+                {videoAPI.videoId ? "Change Video" : "Add Video"}
+              </StyledVideoButton>
+            </Tooltip>
+            {/* Select Brightspace OR Youtube Dropdown */}
+            {!selectYoutube && !selectBrightcove && (
+              <Popper
+                open={openVideo}
+                anchorEl={AddVideo.current}
+                placement="bottom-start"
+                transition
+                disablePortal
+                modifiers={[
+                  {
+                    name: "offset",
+                    options: {
+                      offset: videoAPI.videoId ? [-55, 0] : [-10, 0],
                     },
-                  ]}
-                >
-                  {({ TransitionProps }) => (
-                    <Grow {...TransitionProps}>
-                      <Paper>
-                        <StyledVideoMenu
-                          data-testid="video-select-dropdown"
-                          aria-labelledby={t("Video Drop Down")}
-                        >
-                          <div>
+                  },
+                ]}
+              >
+                {({ TransitionProps }) => (
+                  <Grow {...TransitionProps}>
+                    <Paper>
+                      <StyledVideoMenu
+                        data-testid="video-select-dropdown"
+                        aria-labelledby={t("Video Drop Down")}
+                      >
+                        <div>
+                          <Tooltip
+                            aria-label="add brightspace video"
+                            title="add brightspace video"
+                            placement="top"
+                            arrow
+                          >
                             <StyledVideoMenuItem
                               key={"brightcove-select"}
                               onClick={(e) => {
@@ -486,6 +499,13 @@ const ToolBar = ({
                                 Add from Brightcove
                               </span>
                             </StyledVideoMenuItem>
+                          </Tooltip>
+                          <Tooltip
+                            aria-label="add brightspace video"
+                            title="add brightspace video"
+                            placement="top"
+                            arrow
+                          >
                             <StyledVideoMenuItem
                               key={"youtube-select"}
                               onClick={(e) => {
@@ -501,83 +521,90 @@ const ToolBar = ({
                                 Add from YouTube
                               </span>
                             </StyledVideoMenuItem>
-                          </div>
-                        </StyledVideoMenu>
-                      </Paper>
-                    </Grow>
-                  )}
-                </Popper>
-              )}
-              {/* Add , Edit , Delete ID Dropdown */}
-              {(selectBrightcove || selectYoutube) && (
-                <Popper
-                  open={openVideo}
-                  anchorEl={AddVideo.current}
-                  placement="bottom-start"
-                  transition
-                  disablePortal
-                  modifiers={[
-                    {
-                      name: "offset",
-                      options: {
-                        offset: videoAPI.videoId ? [0, 0] : [-10, 0],
-                      },
+                          </Tooltip>
+                        </div>
+                      </StyledVideoMenu>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            )}
+            {/* Add , Edit , Delete ID Dropdown */}
+            {(selectBrightcove || selectYoutube) && (
+              <Popper
+                open={openVideo}
+                anchorEl={AddVideo.current}
+                placement="bottom-start"
+                transition
+                disablePortal
+                modifiers={[
+                  {
+                    name: "offset",
+                    options: {
+                      offset: videoAPI.videoId ? [0, 0] : [-10, 0],
                     },
-                  ]}
-                >
-                  {({ TransitionProps }) => (
-                    <Grow {...TransitionProps}>
-                      <Paper>
-                        <StyledVideoMenu
-                          data-testid={`${
-                            selectBrightcove ? "brightcove" : "youtube"
-                          } video-select-dropdown`}
+                  },
+                ]}
+              >
+                {({ TransitionProps }) => (
+                  <Grow {...TransitionProps}>
+                    <Paper>
+                      <StyledVideoMenu
+                        data-testid={`${
+                          selectBrightcove ? "brightcove" : "youtube"
+                        } video-select-dropdown`}
+                        aria-labelledby={`${
+                          selectBrightcove ? "brightcove" : "youtube"
+                        } video-select-dropdown`}
+                        sx={{ height: "40px", width: "256px" }}
+                        ref={inputError}
+                      >
+                        <StyledInputItem
                           aria-labelledby={`${
                             selectBrightcove ? "brightcove" : "youtube"
-                          } video-select-dropdown`}
-                          sx={{ height: "40px", width: "256px" }}
-                          ref={inputError}
+                          } input`}
+                          sx={
+                            videoAPI.videoId
+                              ? {
+                                  paddingRight: "7px !important",
+                                }
+                              : { paddingRight: "5px !important" }
+                          }
                         >
-                          <StyledInputItem
+                          {/* Add Video */}
+                          <StyledInput
+                            inputRef={inputId}
+                            data-testid={`${
+                              selectBrightcove ? "brightcove" : "youtube"
+                            } input-field`}
                             aria-labelledby={`${
                               selectBrightcove ? "brightcove" : "youtube"
-                            } input`}
-                            sx={
-                              videoAPI.videoId
-                                ? {
-                                    paddingRight: "7px !important",
-                                  }
-                                : { paddingRight: "5px !important" }
+                            } input field`}
+                            type="text"
+                            placeholder={"Paste unique identifier"}
+                            defaultValue={
+                              videoAPI.videoSource === "brightcove" &&
+                              selectBrightcove
+                                ? videoAPI.videoId
+                                : videoAPI.videoSource === "youtube" &&
+                                  selectYoutube
+                                ? videoAPI.videoId
+                                : null
                             }
-                          >
-                            {/* Add Video */}
-                            <StyledInput
-                              inputRef={inputId}
-                              data-testid={`${
-                                selectBrightcove ? "brightcove" : "youtube"
-                              } input-field`}
-                              aria-labelledby={`${
-                                selectBrightcove ? "brightcove" : "youtube"
-                              } input field`}
-                              type="text"
-                              placeholder={"Paste unique identifier"}
-                              defaultValue={
-                                videoAPI.videoSource === "brightcove" &&
-                                selectBrightcove
-                                  ? videoAPI.videoId
-                                  : videoAPI.videoSource === "youtube" &&
-                                    selectYoutube
-                                  ? videoAPI.videoId
-                                  : null
-                              }
-                              disabled={
-                                videoAPI.videoId && !videoEdit ? true : false
-                              }
-                              onClick={(e) => e.stopPropagation()}
-                              onChange={() => setInvalidVideoInput(false)}
-                              invalidid={invalidVideoInput}
-                            />
-                            {!videoAPI.videoId || videoEdit ? (
+                            disabled={
+                              videoAPI.videoId && !videoEdit ? true : false
+                            }
+                            onClick={(e) => e.stopPropagation()}
+                            onChange={() => setInvalidVideoInput(false)}
+                            invalidid={invalidVideoInput}
+                          />
+                          {!videoAPI.videoId || videoEdit ? (
+                            <Tooltip
+                              aria-label="add video id"
+                              title="add video id"
+                              placement="top"
+                              arrow
+                            >
                               <Button
                                 type="submit"
                                 data-testid={`${videoAPI.videoSource}-submit-button`}
@@ -620,136 +647,144 @@ const ToolBar = ({
                               >
                                 Add
                               </Button>
-                            ) : (
-                              // Edit / Delete Video
-                              <div>
-                                <Tooltip
+                            </Tooltip>
+                          ) : (
+                            // Edit / Delete Video
+                            <div>
+                              <Tooltip
+                                aria-label="delete video id"
+                                title="delete video id"
+                                placement="top"
+                                arrow
+                              >
+                                <button
                                   aria-label="delete video id"
-                                  title="delete video id"
-                                  placement="top"
-                                  arrow
+                                  className="video trashcan"
+                                  sx={{ marginRight: "2px !important" }}
+                                  onClick={(e) =>
+                                    handleVideoAPI(
+                                      e,
+                                      selectBrightcove
+                                        ? "brightcove"
+                                        : "youtube",
+                                      "RemoveVideo"
+                                    )
+                                  }
                                 >
-                                  <button
-                                    aria-label="delete video id"
-                                    className="video trashcan"
-                                    sx={{ marginRight: "2px !important" }}
-                                    onClick={(e) =>
-                                      handleVideoAPI(
-                                        e,
-                                        selectBrightcove
-                                          ? "brightcove"
-                                          : "youtube",
-                                        "RemoveVideo"
-                                      )
-                                    }
-                                  >
-                                    {icons["trashcan"]}
-                                  </button>
-                                </Tooltip>
+                                  {icons["trashcan"]}
+                                </button>
+                              </Tooltip>
 
-                                <Tooltip
-                                  arrow
-                                  title="edit video id"
-                                  placement="top"
+                              <Tooltip
+                                arrow
+                                title="edit video id"
+                                placement="top"
+                              >
+                                <button
+                                  aria-label="edit video id"
+                                  className="video pencil"
+                                  sx={{ marginLeft: "2px !important" }}
+                                  onClick={(e) =>
+                                    handleVideoAPI(
+                                      e,
+                                      selectBrightcove
+                                        ? "brightcove"
+                                        : "youtube",
+                                      "EditVideo"
+                                    )
+                                  }
                                 >
-                                  <button
-                                    aria-label="edit video id"
-                                    className="video pencil"
-                                    sx={{ marginLeft: "2px !important" }}
-                                    onClick={(e) =>
-                                      handleVideoAPI(
-                                        e,
-                                        selectBrightcove
-                                          ? "brightcove"
-                                          : "youtube",
-                                        "EditVideo"
-                                      )
-                                    }
-                                  >
-                                    {icons["pencil"]}
-                                  </button>
-                                </Tooltip>
-                              </div>
-                            )}
-                          </StyledInputItem>
-                        </StyledVideoMenu>
-                      </Paper>
-                    </Grow>
-                  )}
-                </Popper>
-              )}
-              {/* Invalid Id Error */}
-              <Popper
-                open={invalidVideoInput}
-                anchorEl={inputError.current}
-                placement="bottom-start"
-                transition
-                disablePortal
-                sx={{ pointerEvents: "none" }}
-              >
-                {({ TransitionProps }) => (
-                  <Grow {...TransitionProps}>
-                    <Paper
-                      sx={{
-                        backgroundColor: "rgb(251, 234, 234) !important",
-                        marginTop: "2px",
-                        width: "256px",
-                        height: "30px",
-                        cursorEvents: "none",
-                      }}
-                    >
-                      <div
-                        data-testid={`input-invalid-error`}
-                        aria-labelledby={`input-invalid-error`}
-                        style={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          alignItems: "center",
-                          height: "100%",
-                        }}
-                      >
-                        {/* Input Error*/}
-                        <ErrorOutlineIcon
-                          color="error"
-                          fontSize="small"
-                          sx={{
-                            margin: "5.83px 11.83px",
-                          }}
-                        />
-                        <span
-                          style={{
-                            fontSize: "12px",
-                            fontWeight: "400",
-                            lineHeight: "20px",
-                            letterSpacing: "0.4000000059604645px",
-                          }}
-                        >
-                          Invalid URL
-                        </span>
-                      </div>
+                                  {icons["pencil"]}
+                                </button>
+                              </Tooltip>
+                            </div>
+                          )}
+                        </StyledInputItem>
+                      </StyledVideoMenu>
                     </Paper>
                   </Grow>
                 )}
               </Popper>
-            </StyledVideoButton>
+            )}
+            {/* Invalid Id Error */}
+            <Popper
+              open={invalidVideoInput}
+              anchorEl={inputError.current}
+              placement="bottom-start"
+              transition
+              disablePortal
+              sx={{ pointerEvents: "none" }}
+            >
+              {({ TransitionProps }) => (
+                <Grow {...TransitionProps}>
+                  <Paper
+                    sx={{
+                      backgroundColor: "rgb(251, 234, 234) !important",
+                      marginTop: "2px",
+                      width: "256px",
+                      height: "30px",
+                      cursorEvents: "none",
+                    }}
+                  >
+                    <div
+                      data-testid={`input-invalid-error`}
+                      aria-labelledby={`input-invalid-error`}
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "100%",
+                      }}
+                    >
+                      {/* Input Error*/}
+                      <ErrorOutlineIcon
+                        color="error"
+                        fontSize="small"
+                        sx={{
+                          margin: "5.83px 11.83px",
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: "400",
+                          lineHeight: "20px",
+                          letterSpacing: "0.4000000059604645px",
+                        }}
+                      >
+                        Invalid URL
+                      </span>
+                    </div>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+
             <Divider />
             {/* Download Transcript Button */}
-            <StyledVideoButton
-              ref={TranscriptVideo}
-              aria-expanded={openTranscript ? "true" : undefined}
-              variant="contained"
-              disableRipple
-              disableFocusRipple
-              onClick={handleClickTranscript}
-              sx={
-                videoAPI.videoId
-                  ? { width: "159px", flexGrow: "5" }
-                  : { width: "78px" }
-              }
-              disabled={!videoAPI.videoId}
+            <Tooltip
+              aria-label="download transcript"
+              title="download transcript"
+              placement="top"
+              arrow
             >
-              {videoAPI.videoId ? "Download Transcript" : "Transcript"}
-            </StyledVideoButton>
+              <StyledVideoButton
+                ref={TranscriptVideo}
+                aria-expanded={openTranscript ? "true" : undefined}
+                variant="contained"
+                disableRipple
+                disableFocusRipple
+                onClick={handleClickTranscript}
+                sx={
+                  videoAPI.videoId
+                    ? { width: "159px", flexGrow: "5" }
+                    : { width: "78px" }
+                }
+                disabled={!videoAPI.videoId}
+              >
+                {videoAPI.videoId ? "Download Transcript" : "Transcript"}
+              </StyledVideoButton>
+            </Tooltip>
           </StyledVideoToolbar>
 
           <div ref={portalToolbarRef}>
