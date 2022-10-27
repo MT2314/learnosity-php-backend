@@ -424,18 +424,6 @@ const ToolBar = ({
               title="font styles"
               placement="top"
               arrow
-              PopperProps={{
-                disablePortal: true,
-                popperOptions: {
-                  positionFixed: true,
-                  modifiers: {
-                    preventOverflow: {
-                      enabled: true,
-                      boundariesElement: "window", // where "window" is the boundary
-                    },
-                  },
-                },
-              }}
             >
               <StyledIconButton
                 ref={boldRef}
@@ -483,18 +471,6 @@ const ToolBar = ({
                 title="equation"
                 placement="top"
                 arrow
-                PopperProps={{
-                  disablePortal: true,
-                  popperOptions: {
-                    positionFixed: true,
-                    modifiers: {
-                      preventOverflow: {
-                        enabled: true,
-                        boundariesElement: "window", // where "window" is the boundary
-                      },
-                    },
-                  },
-                }}
               >
                 <StyledIconButton
                   className={
@@ -529,18 +505,6 @@ const ToolBar = ({
               title="alignment"
               placement="top"
               arrow
-              PopperProps={{
-                disablePortal: true,
-                popperOptions: {
-                  positionFixed: true,
-                  modifiers: {
-                    preventOverflow: {
-                      enabled: true,
-                      boundariesElement: "window", // where "window" is the boundary
-                    },
-                  },
-                },
-              }}
             >
               <StyledIconButton
                 ref={alignRef}
@@ -593,18 +557,6 @@ const ToolBar = ({
               title="add list"
               placement="top"
               arrow
-              PopperProps={{
-                disablePortal: true,
-                popperOptions: {
-                  positionFixed: true,
-                  modifiers: {
-                    preventOverflow: {
-                      enabled: true,
-                      boundariesElement: "window", // where "window" is the boundary
-                    },
-                  },
-                },
-              }}
             >
               <StyledIconButton
                 ref={listRef}
@@ -648,24 +600,7 @@ const ToolBar = ({
             {/* link btn and divider */}
             <Divider />
             <HiddenQuillLinkButton />
-            <Tooltip
-              aria-label="link"
-              title="link"
-              placement="top"
-              arrow
-              PopperProps={{
-                disablePortal: true,
-                popperOptions: {
-                  positionFixed: true,
-                  modifiers: {
-                    preventOverflow: {
-                      enabled: true,
-                      boundariesElement: "window", // where "window" is the boundary
-                    },
-                  },
-                },
-              }}
-            >
+            <Tooltip aria-label="link" title="link" placement="top" arrow>
               <StyledIconButton
                 disabled={infoHasFocus}
                 disableRipple
