@@ -27,20 +27,15 @@ const StyledAccordionSummary = styled(AccordionSummary)(
     backgroundColor: isActive
       ? "rgba(21, 101, 192, 0.12) !important"
       : "#fff !important", //!important overrides the MUI grey background.
-    borderWidth: isActive
-      ? "0.0625rem 0.0625rem 0.1875rem 0.0625rem"
-      : "0.0625rem",
+    borderWidth: isActive ? "0.1875rem 0" : "0.0625rem 0.0625rem", // I am overiding the top. Top doesn't matter here.
+    borderTopWidth: accordionIndex === 0 ? "0.0625rem" : "0",
     borderStyle: "solid",
     borderColor: isActive ? "#232323" : "#BDBDBD",
     borderRadius: accordionIndex === 0 ? "0.625rem 0.625rem 0 0" : "none",
 
-    "&:focus": {
+    "&:focus, &:hover": {
       backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    },
-
-    "&:hover": {
-      backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    },
+    }
   })
 );
 

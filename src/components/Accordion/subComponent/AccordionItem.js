@@ -26,6 +26,7 @@ const StyledAccordionDetails = styled(AccordionDetails)(
     padding: "10px",
     borderStyle: "solid",
     borderColor: "#BDBDBD",
+    borderWidth: "0 0.0625rem 0.0625rem 0.0625rem",
   })
 );
 
