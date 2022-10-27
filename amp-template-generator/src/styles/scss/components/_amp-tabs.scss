@@ -9,12 +9,7 @@
     margin: 0;
   }
 
-  .wrapper {
-    &:last-child.bottom-margin {
-      // This clears the bottom-margin that is added to text/other components
-      margin-bottom: 0;
-    }
-  }
+  @include remove-last-child-btm; // This clears the bottom-margin that is added to text/other components
 
   .tabs {
     &[role="tablist"] {

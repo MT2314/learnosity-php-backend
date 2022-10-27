@@ -3,7 +3,7 @@
     .max-content {
         @include max-width-2; // Setting max-width to 2 allows the infobox to fill the wrapper width
         background-color: $transparent-grey-50;
-        border-radius: 0 10px 10px 0;
+        border-radius: 0 0.625rem 0.625rem 0;
     }
 
     .co-row {
@@ -17,11 +17,7 @@
             .label-without-icon {
                 display: none;
             }
-            .wrapper {
-                &:last-child.bottom-margin {
-                  margin-bottom: 0; // This clears the bottom-margin that is added to text/other components
-                }
-              }
+            @include remove-last-child-btm; // This clears the bottom-margin that is added to text/other components
         }
         .info-header-vertical-center { 
             margin: auto; // No paragraph in the infobox. Center the title
@@ -31,7 +27,7 @@
     .co-cell {
         background-color: $brand-50;
         width: 16.563rem;
-        border-radius: 10px 0 0 10px;
+        border-radius: 0.625rem 0 0 0.625rem;
         p {
             @include text-label;
             text-align: center;
@@ -43,39 +39,37 @@
 
     @media(max-width: 375px) {
         .max-content {
-            border-radius: 0 0 10px 10px;
+            border-radius: 0.625rem;
         }
         .co-row {
             display: block;
             .co-cell {
-                display: block;
                 width: 100%;
-                height: 156px;
-                border-radius: 10px 10px 0px 0px;
+                border-radius: 0.625rem 0.625rem 0 0;
                 .icon {
                     display: inline-block;
-                    width: 75px;
-                    height: 75px;
-                    margin: 26px 0 12px 24px;
+                    width: 4.688rem;
+                    height: 4.688rem;
+                    margin: 1.625rem 0 0.75rem 1.5rem;
                 }
                 p {
-                    font-size: 16px;
-                    line-height: 22px;
+                    font-size: 1rem;
+                    line-height: 1.375rem;
                     text-align: left;
-                    padding-top: 0;
-                    padding-left: 27px;
+                    padding: 0 1.688rem 1.313rem;
+                    margin-bottom: 0;
                 }
             }
             .section-content {
                 position: static;
-                padding-bottom: 1px;
+                padding-bottom: 0.063rem;
                 margin: 0;
             }
             .label-without-icon {
-                padding-top: 30px;
+                padding-top: 30;
             }
             .info-header {
-                margin-top: 21px;
+                margin-top: 1.313rem;
             }
         }
     }
@@ -97,7 +91,7 @@
 
     .icon {
         margin: 2.625rem auto 1.25rem;
-        width: 118px;
-        height: 115px;
+        width: 7.375rem;
+        height: 7.188rem;
     }    
 }
