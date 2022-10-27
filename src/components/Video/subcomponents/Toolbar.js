@@ -431,6 +431,16 @@ const ToolBar = ({
               title={videoAPI.videoId ? "change video" : "add video"}
               placement="top"
               arrow
+              PopperProps={{
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [0, -7],
+                    },
+                  },
+                ],
+              }}
             >
               <StyledVideoButton
                 ref={AddVideo}
@@ -483,6 +493,16 @@ const ToolBar = ({
                             title="add brightspace video"
                             placement="top"
                             arrow
+                            PopperProps={{
+                              modifiers: [
+                                {
+                                  name: "offset",
+                                  options: {
+                                    offset: [0, -7],
+                                  },
+                                },
+                              ],
+                            }}
                           >
                             <StyledVideoMenuItem
                               key={"brightcove-select"}
@@ -505,6 +525,16 @@ const ToolBar = ({
                             title="add brightspace video"
                             placement="top"
                             arrow
+                            PopperProps={{
+                              modifiers: [
+                                {
+                                  name: "offset",
+                                  options: {
+                                    offset: [0, -7],
+                                  },
+                                },
+                              ],
+                            }}
                           >
                             <StyledVideoMenuItem
                               key={"youtube-select"}
@@ -604,6 +634,16 @@ const ToolBar = ({
                               title="add video id"
                               placement="top"
                               arrow
+                              PopperProps={{
+                                modifiers: [
+                                  {
+                                    name: "offset",
+                                    options: {
+                                      offset: [0, -7],
+                                    },
+                                  },
+                                ],
+                              }}
                             >
                               <Button
                                 type="submit"
@@ -656,6 +696,16 @@ const ToolBar = ({
                                 title="delete video id"
                                 placement="top"
                                 arrow
+                                PopperProps={{
+                                  modifiers: [
+                                    {
+                                      name: "offset",
+                                      options: {
+                                        offset: [0, -7],
+                                      },
+                                    },
+                                  ],
+                                }}
                               >
                                 <button
                                   aria-label="delete video id"
@@ -679,6 +729,16 @@ const ToolBar = ({
                                 arrow
                                 title="edit video id"
                                 placement="top"
+                                PopperProps={{
+                                  modifiers: [
+                                    {
+                                      name: "offset",
+                                      options: {
+                                        offset: [0, -7],
+                                      },
+                                    },
+                                  ],
+                                }}
                               >
                                 <button
                                   aria-label="edit video id"
@@ -853,35 +913,68 @@ const ToolBar = ({
             }}
           >
             <Divider />
-            <StyledKebabButton
-              ref={DescriptionKebab}
-              data-videoid="videoSettings"
-              aria-controls={openVideo ? t("Add Video") : undefined}
-              aria-expanded={openVideo ? "true" : undefined}
-              variant="contained"
-              open={openDescriptionKebab}
-              disableRipple
-              disableFocusRipple
-              onClick={handleToggleVideoKebab}
+            <Tooltip
+              aria-label="configure video description"
+              title="configure video description"
+              placement="top"
+              arrow
+              PopperProps={{
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [0, -7],
+                    },
+                  },
+                ],
+              }}
             >
-              <KebabSVG />
-
-              <Popper
+              <StyledKebabButton
+                ref={DescriptionKebab}
+                data-videoid="videoSettings"
+                aria-controls={openVideo ? t("Add Video") : undefined}
+                aria-expanded={openVideo ? "true" : undefined}
+                variant="contained"
                 open={openDescriptionKebab}
-                anchorEl={DescriptionKebab.current}
-                placement="bottom-start"
-                transition
-                disablePortal
+                disableRipple
+                disableFocusRipple
+                onClick={handleToggleVideoKebab}
               >
-                {({ TransitionProps }) => (
-                  <Grow {...TransitionProps}>
-                    <Paper>
-                      <StyledKebabMenu
-                        data-testid="video-description-settings-dropdown"
-                        aria-labelledby="Video Description Settings"
-                      >
-                        <FormGroup sx={{ gap: "14px" }}>
-                          <FormControl>
+                <KebabSVG />
+              </StyledKebabButton>
+            </Tooltip>
+            <Popper
+              open={openDescriptionKebab}
+              anchorEl={DescriptionKebab.current}
+              placement="bottom-start"
+              transition
+              disablePortal
+            >
+              {({ TransitionProps }) => (
+                <Grow {...TransitionProps}>
+                  <Paper>
+                    <StyledKebabMenu
+                      data-testid="video-description-settings-dropdown"
+                      aria-labelledby="Video Description Settings"
+                    >
+                      <FormGroup sx={{ gap: "14px" }}>
+                        <FormControl>
+                          <Tooltip
+                            aria-label="show description"
+                            title="show description"
+                            placement="top"
+                            arrow
+                            PopperProps={{
+                              modifiers: [
+                                {
+                                  name: "offset",
+                                  options: {
+                                    offset: [0, -7],
+                                  },
+                                },
+                              ],
+                            }}
+                          >
                             <StyledFormControlLabel
                               control={
                                 <Checkbox
@@ -903,8 +996,25 @@ const ToolBar = ({
                               label="Show description"
                               size="small"
                             />
-                          </FormControl>
-                          <FormControl>
+                          </Tooltip>
+                        </FormControl>
+                        <FormControl>
+                          <Tooltip
+                            aria-label="show credit"
+                            title="show credit"
+                            placement="top"
+                            arrow
+                            PopperProps={{
+                              modifiers: [
+                                {
+                                  name: "offset",
+                                  options: {
+                                    offset: [0, -7],
+                                  },
+                                },
+                              ],
+                            }}
+                          >
                             <StyledFormControlLabel
                               control={
                                 <Checkbox
@@ -926,14 +1036,14 @@ const ToolBar = ({
                               label="Show credit"
                               size="small"
                             />
-                          </FormControl>
-                        </FormGroup>
-                      </StyledKebabMenu>
-                    </Paper>
-                  </Grow>
-                )}
-              </Popper>
-            </StyledKebabButton>
+                          </Tooltip>
+                        </FormControl>
+                      </FormGroup>
+                    </StyledKebabMenu>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
           </div>
         </StyledAppbar>
       </Container>
