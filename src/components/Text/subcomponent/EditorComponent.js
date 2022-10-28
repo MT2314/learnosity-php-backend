@@ -107,8 +107,6 @@ const EditorComponent = ({
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
 
-  const [toolbarNode, setToolbarNode] = useState();
-
   //alignment observer
   const [alignmentObserver, setAlignmentObserver] = useState(null);
 
@@ -390,7 +388,6 @@ const EditorComponent = ({
           selectedIcon={selectedIcon}
           setSelectedIcon={setSelectedIcon}
           portal={portal}
-          setToolbarNode={setToolbarNode}
         />
       </StyledConfigBar>
 

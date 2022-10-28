@@ -212,7 +212,6 @@ const ToolBar = ({
   selectedIcon,
   setSelectedIcon,
   portal,
-  setToolbarNode,
 }) => {
   const { t } = useTranslation();
 
@@ -245,8 +244,6 @@ const ToolBar = ({
   const alignRef = useRef(null);
   // ? IconBox refs
   const IconDropDown = useRef(null);
-
-  const toolbarRef = useRef(null);
 
   // ? InfoBox Toolbar
   const handleToggleInfo = (e) => {
@@ -318,10 +315,6 @@ const ToolBar = ({
       setActiveTopMenu("math");
     }
   }, [showMath]);
-
-  useEffect(() => {
-    setToolbarNode(toolbarRef.current);
-  }, []);
 
   // useEffect(() => {
   //   if (infoHasFocus ) {
@@ -417,7 +410,6 @@ const ToolBar = ({
         <div>
           <StyledToolbar
             id={toolbarId}
-            ref={toolbarRef}
             isInfoBox={isInfoBox || portal?.parentComponent}
             className="toolbarContainer ql-toolbar ql-snow"
             variant="dense"
