@@ -1,0 +1,69 @@
+.wrapper.bottom-margin.video-component {
+
+  p {
+    margin: 0;
+  }
+  
+  // .brightcove {
+
+  // }
+
+  // .youTube {
+
+  // }
+
+  .description-container {
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+    font-family: $component-main-font;
+
+    .description-flex-container {
+      display: flex;
+    
+      .description-text {
+        color: $grey-700;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+        margin-right: 1.875rem;
+      }
+
+      .transcript-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // width: 11.75rem;
+        height: 2.875rem;
+        padding: 0.75rem 1.9375rem;
+        color: $grey-900;
+        text-transform: uppercase;
+        font-weight: 700;
+        line-height: 1.375rem;
+        letter-spacing: 0.02em;
+        text-align: center;
+        background: $transparent-grey-100;
+        border: none;
+        border-radius: 0.3125rem;
+
+        svg {
+          margin-right: 0.4375rem;
+          height: 1rem;
+          width: 1.0625rem;
+        }
+      }
+    }
+  }
+
+  .show-more-button {
+    text-transform: uppercase;
+    color: $grey-700;
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    letter-spacing: 0.0em;
+    margin: 0.625rem 0 0 0;
+    padding: 0;
+    border: none;
+    background: none;
+  }
+}
