@@ -19,9 +19,6 @@
             }
             @include remove-last-child-btm; // This clears the bottom-margin that is added to text/other components
         }
-        .info-header-vertical-center { 
-            margin: auto; // No paragraph in the infobox. Center the title
-        }
     }
 
     .co-cell {
