@@ -89,6 +89,8 @@ function parse(entity) {
     }
   } else if (entity.componentName === "InfoBox") {
     entity.props.infoBoxState.body = _setHtml(entity.props.infoBoxState.body);
+  } else if (entity.componentName === "Video") {
+    entity.props.videoDescription = _setHtml(entity.props.videoDescription);
   }
 
   return entity;
