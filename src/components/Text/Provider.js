@@ -13,6 +13,7 @@ const useStore = () => {
   const [showMathRef, setShowMathRef] = useState(null);
   const [isLink, setIsLink] = useState(false);
   const [mathId, setMathId] = useState(null);
+  const [format, setFormat] = useState(null);
 
   const [editFormula, setEditFormula] = useState({
     value: null,
@@ -46,6 +47,7 @@ const useStore = () => {
     editLink,
     isLink,
     mathId,
+    format,
     boldRef,
     setQuill,
     setUniqueId,
@@ -60,6 +62,7 @@ const useStore = () => {
     setEditLink,
     setIsLink,
     setMathId,
+    setFormat,
   };
 };
 
@@ -89,6 +92,7 @@ export const useLinkRange = () => getState("linkRange");
 export const useEditLink = () => getState("editLink");
 export const useIsLink = () => getState("isLink");
 export const useMathId = () => getState("mathId");
+export const useFormat = () => getState("format");
 
 //Set States
 export const useSetQuill = () => getState("setQuill");
@@ -104,3 +108,4 @@ export const useSetLinkRange = () => getState("setLinkRange");
 export const useSetEditLink = () => getState("setEditLink");
 export const useSetIsLink = () => getState("setIsLink");
 export const useSetMathId = () => getState("setMathId");
+export const useSetFormat = () => getState("setFormat");

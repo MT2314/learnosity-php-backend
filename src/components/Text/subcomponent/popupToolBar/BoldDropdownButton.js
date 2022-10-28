@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import "../../styles/BoldDropdownButton.scss";
 import { Card } from "@mui/material";
@@ -7,7 +7,7 @@ import icons from "../../assets/icons";
 
 import styled from "@emotion/styled";
 
-import { useQuill } from "../../Provider";
+import { useQuill, useFormat } from "../../Provider";
 
 const StyleCard = styled(Card)(({ show, isInfoBox, isVideo }) => ({
   position: "absolute",
@@ -24,28 +24,55 @@ const StyleCard = styled(Card)(({ show, isInfoBox, isVideo }) => ({
 
 const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
   const quill = useQuill();
+  const format = useFormat();
 
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState({
+    bold: false,
+    italic: false,
+    underline: false,
+    strike: false,
+    sub: false,
+    super: false,
+  });
+
+  useEffect(() => {
+    let formatList = [];
+    format &&
+      Object.keys(format).forEach((key) => {
+        key === "script"
+          ? formatList.push(format.script)
+          : formatList.push(key);
+      });
+
+    Object.keys(active).forEach((key) =>
+      setActive((prev) => ({ ...prev, [key]: formatList.includes(key) }))
+    );
+  }, [format]);
 
   const quillFormatClick = (e, type) => {
-    if (active === type) {
-      setActive("");
+    if (["sub", "super"].includes(type)) {
+      if (type === "sub") {
+        if (active.super) {
+          quill.format("script", false);
+          setActive((prev) => ({ ...prev, super: false }));
+        }
+      } else {
+        if (active.sub) {
+          quill.format("script", false);
+          setActive((prev) => ({ ...prev, sub: false }));
+        }
+      }
+    }
+    if (active[type]) {
+      setActive({ ...active, [type]: false });
+      ["sub", "super"].includes(type) && quill.format("script", false);
       quill.format(type, false);
     } else {
-      e.preventDefault();
-      e.stopPropagation();
-      setActive(type);
+      setActive({ ...active, [type]: true });
       const range = quill.getSelection();
       if (range) {
-        const [line, offset] = quill.getLine(range.index);
-        const formats = line.formats();
-        if (formats.bold) {
-          console.log("BOLD False");
-          quill.format(type, false);
-        } else {
-          console.log("BOLD True");
-          quill.format(type, true);
-        }
+        ["sub", "super"].includes(type) && quill.format("script", type);
+        quill.format(type, true);
       }
     }
   };
@@ -79,7 +106,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
           <button
             aria-label="bold"
             className={
-              active === "bold" ? "ql-bold ql-selected ql-active" : "ql-bold"
+              active.bold ? "ql-bold ql-selected ql-active" : "ql-bold"
             }
             onClick={(e) => quillFormatClick(e, "bold")}
           >
@@ -104,7 +131,13 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             },
           }}
         >
-          <button aria-label="italic" className="ql-italic">
+          <button
+            aria-label="italic"
+            className={
+              active.italic ? "ql-italic ql-selected ql-active" : "ql-italic"
+            }
+            onClick={(e) => quillFormatClick(e, "italic")}
+          >
             {icons["italic"]}
           </button>
         </Tooltip>
@@ -126,7 +159,15 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             },
           }}
         >
-          <button aria-label="underline" className="ql-underline">
+          <button
+            aria-label="underline"
+            className={
+              active.underline
+                ? "ql-underline ql-selected ql-active"
+                : "ql-underline"
+            }
+            onClick={(e) => quillFormatClick(e, "underline")}
+          >
             {icons["underline"]}
           </button>
         </Tooltip>
@@ -148,7 +189,13 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             },
           }}
         >
-          <button aria-label="strike" className="ql-strike">
+          <button
+            aria-label="strike"
+            className={
+              active.strike ? "ql-strike ql-selected ql-active" : "ql-strike"
+            }
+            onClick={(e) => quillFormatClick(e, "strike")}
+          >
             {icons["strike"]}
           </button>
         </Tooltip>
@@ -170,7 +217,14 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             },
           }}
         >
-          <button aria-label="sub script" className="ql-script" value="sub">
+          <button
+            aria-label="sub script"
+            className={
+              active.sub ? "ql-script ql-selected ql-active" : "ql-script"
+            }
+            onClick={(e) => quillFormatClick(e, "sub")}
+            value="sub"
+          >
             {icons["script"]}
           </button>
         </Tooltip>
@@ -192,7 +246,14 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             },
           }}
         >
-          <button aria-label="super script" className="ql-script" value="super">
+          <button
+            aria-label="super script"
+            className={
+              active.super ? "ql-script ql-selected ql-active" : "ql-script"
+            }
+            onClick={(e) => quillFormatClick(e, "super")}
+            value="super"
+          >
             {icons["super"]}
           </button>
         </Tooltip>

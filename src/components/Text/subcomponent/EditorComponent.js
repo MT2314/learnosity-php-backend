@@ -29,6 +29,7 @@ import {
   useSetShowLink,
   useIsLink,
   useSetIsLink,
+  useSetFormat,
 } from "../Provider";
 
 import { matchMsWordList, maybeMatchMsWordList } from "../matchers/pasteLists";
@@ -98,6 +99,7 @@ const EditorComponent = ({
   const setEditorPos = useSetEditorPos();
   const isLink = useIsLink();
   const setIsLink = useSetIsLink();
+  const setFormat = useSetFormat();
 
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
@@ -198,6 +200,7 @@ const EditorComponent = ({
       const quill = quillRef.getEditor();
       if (quill.hasFocus()) {
         const currentFormat = quill.getFormat();
+        setFormat(currentFormat);
         const nexFormat = quill.getFormat(range.index, range.length + 1);
         currentFormat?.list
           ? setActiveDropDownListItem(currentFormat.list)
