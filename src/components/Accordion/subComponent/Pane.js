@@ -35,7 +35,10 @@ const StyledAccordionSummary = styled(AccordionSummary)(
 
     "&:focus, &:hover": {
       backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    }
+    },
+    ".MuiAccordionSummary-expandIconWrapper": {
+      alignSelf: "start",
+    },
   })
 );
 

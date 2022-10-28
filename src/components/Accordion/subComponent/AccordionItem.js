@@ -100,7 +100,7 @@ const AccordionItem = ({
     [components]
   );
 
-  // Adding space between Cap except iFrame
+  // Adjust item name for better viewing
   const trimCap = (item) => {
     switch (item) {
       case "IFrame":
