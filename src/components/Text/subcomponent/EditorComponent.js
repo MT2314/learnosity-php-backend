@@ -105,6 +105,8 @@ const EditorComponent = ({
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
 
+  const [toolbarNode, setToolbarNode] = useState();
+
   //alignment observer
   const [alignmentObserver, setAlignmentObserver] = useState(null);
 
@@ -299,9 +301,7 @@ const EditorComponent = ({
 
   const modules = useMemo(
     () => ({
-      toolbar: {
-        container: `#${toolbarId}`,
-      },
+      toolbar: false,
       keyboard: { bindings: { tab: false } },
       clipboard: {
         matchVisual: false,
@@ -387,6 +387,7 @@ const EditorComponent = ({
           selectedIcon={selectedIcon}
           setSelectedIcon={setSelectedIcon}
           portal={portal}
+          setToolbarNode={setToolbarNode}
         />
       </StyledConfigBar>
 
@@ -404,7 +405,7 @@ const EditorComponent = ({
           formatSelection(range, focusRef.current);
         }}
         onFocus={() => {
-          setAlignmentObserver(new setAlignment(toolbarId));
+          // setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
           if (infoHasFocus) {
             setInfoHasFocus(false);

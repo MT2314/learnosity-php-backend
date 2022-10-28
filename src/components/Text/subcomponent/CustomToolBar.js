@@ -14,7 +14,6 @@ import {
 } from "../Provider";
 import styled from "@emotion/styled";
 import Portal from "@mui/base/Portal";
-
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useTranslation } from "react-i18next";
 // ? InfoBox imports
@@ -180,16 +179,24 @@ const Divider = styled("div")(({}) => ({
 }));
 
 const CustomToolBar = (props) => {
+  console.log(props?.portal?.shouldPortal && props?.portal?.toolbarReference);
   return (
     <>
-      {props?.portal?.shouldPortal ? (
+      {props?.portal?.shouldPortal && props?.portal?.toolbarReference ? (
+        <Portal container={props?.portal?.toolbarReference}>
+          <ToolBar {...props} />
+        </Portal>
+      ) : (
+        <ToolBar {...props} />
+      )}
+      {/* {props?.portal?.shouldPortal && props?.portal?.toolbarReference ? (
         ReactDOM.createPortal(
           <ToolBar {...props} />,
           props?.portal?.toolbarReference
         )
       ) : (
         <ToolBar {...props} />
-      )}
+      )} */}
     </>
   );
 };
@@ -205,6 +212,7 @@ const ToolBar = ({
   selectedIcon,
   setSelectedIcon,
   portal,
+  setToolbarNode,
 }) => {
   const { t } = useTranslation();
 
@@ -237,6 +245,8 @@ const ToolBar = ({
   const alignRef = useRef(null);
   // ? IconBox refs
   const IconDropDown = useRef(null);
+
+  const toolbarRef = useRef(null);
 
   // ? InfoBox Toolbar
   const handleToggleInfo = (e) => {
@@ -309,6 +319,10 @@ const ToolBar = ({
     }
   }, [showMath]);
 
+  useEffect(() => {
+    setToolbarNode(toolbarRef.current);
+  }, []);
+
   // useEffect(() => {
   //   if (infoHasFocus ) {
   //     toggleCloseToolbar(["Video", "Kebab"]);
@@ -323,7 +337,11 @@ const ToolBar = ({
     // onClick={(e) => e.stopPropagation()}
     // onFocus={(e) => e.stopPropagation()}
     >
-      <StyledAppbar position="static" ref={AppBar}>
+      <StyledAppbar
+        position="static"
+        ref={AppBar}
+        className="ql-toolbar ql-snow"
+      >
         {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
         {/* {isInfoBox && (
           <StyledIconDropdownButton
@@ -399,8 +417,9 @@ const ToolBar = ({
         <div>
           <StyledToolbar
             id={toolbarId}
+            ref={toolbarRef}
             isInfoBox={isInfoBox || portal?.parentComponent}
-            className="toolbarContainer"
+            className="toolbarContainer ql-toolbar ql-snow"
             variant="dense"
             disableGutters
             test-id="infoBox-toolbar"

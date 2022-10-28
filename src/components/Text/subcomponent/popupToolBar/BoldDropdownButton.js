@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import "../../styles/BoldDropdownButton.scss";
 import { Card } from "@mui/material";
@@ -6,6 +6,8 @@ import { Tooltip } from "@material-ui/core";
 import icons from "../../assets/icons";
 
 import styled from "@emotion/styled";
+
+import { useQuill } from "../../Provider";
 
 const StyleCard = styled(Card)(({ show, isInfoBox, isVideo }) => ({
   position: "absolute",
@@ -21,6 +23,32 @@ const StyleCard = styled(Card)(({ show, isInfoBox, isVideo }) => ({
 }));
 
 const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
+  const quill = useQuill();
+
+  const [active, setActive] = useState("");
+
+  const quillFormatClick = (e, type) => {
+    if (active === type) {
+      setActive("");
+      quill.format(type, false);
+    } else {
+      e.preventDefault();
+      e.stopPropagation();
+      setActive(type);
+      const range = quill.getSelection();
+      if (range) {
+        const [line, offset] = quill.getLine(range.index);
+        const formats = line.formats();
+        if (formats.bold) {
+          console.log("BOLD False");
+          quill.format(type, false);
+        } else {
+          console.log("BOLD True");
+          quill.format(type, true);
+        }
+      }
+    }
+  };
   return (
     <>
       <StyleCard
@@ -48,7 +76,13 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             },
           }}
         >
-          <button aria-label="bold" className="ql-bold">
+          <button
+            aria-label="bold"
+            className={
+              active === "bold" ? "ql-bold ql-selected ql-active" : "ql-bold"
+            }
+            onClick={(e) => quillFormatClick(e, "bold")}
+          >
             {icons["bold"]}
           </button>
         </Tooltip>
