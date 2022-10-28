@@ -3,7 +3,7 @@
     .max-content {
         @include max-width-2; // Setting max-width to 2 allows the infobox to fill the wrapper width
         background-color: $transparent-grey-50;
-        border-radius: 0 0.625rem 0.625rem 0;
+        border-radius: 0.625rem;
     }
 
     .co-row {
@@ -66,7 +66,7 @@
                 margin: 0;
             }
             .label-without-icon {
-                padding-top: 30;
+                padding-top: 1.875rem;
             }
             .info-header {
                 margin-top: 1.313rem;
