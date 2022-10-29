@@ -36,46 +36,54 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
   });
 
   useEffect(() => {
-    let formatList = [];
-    format &&
+    if (format) {
+      let formatList = [];
+
       Object.keys(format).forEach((key) => {
         key === "script"
           ? formatList.push(format.script)
           : formatList.push(key);
       });
 
-    Object.keys(active).forEach((key) =>
-      setActive((prev) => ({ ...prev, [key]: formatList.includes(key) }))
-    );
+      Object.keys(active).forEach((key) =>
+        setActive((prev) => ({ ...prev, [key]: formatList.includes(key) }))
+      );
+    }
   }, [format]);
 
-  const quillFormatClick = (e, type) => {
-    if (["sub", "super"].includes(type)) {
-      if (type === "sub") {
-        if (active.super) {
-          quill.format("script", false);
-          setActive((prev) => ({ ...prev, super: false }));
-        }
-      } else {
-        if (active.sub) {
-          quill.format("script", false);
-          setActive((prev) => ({ ...prev, sub: false }));
-        }
-      }
+  const handleFormat = (type) => {
+    /* Creating a copy of the active object. */
+    let temp = { ...active };
+
+    /* Checking if the type is either sub or super. */
+    const isScript = ["sub", "super"].includes(type);
+
+    /* Checking if the type is either sub or super. */
+    if (isScript) {
+      /* Setting the sub and super to true or false depending on the type. */
+      temp.sub = type === "sub";
+      temp.super = type === "super";
+
+      /* Setting the script to false. */
+      quill.format("script", false);
     }
-    if (active[type]) {
-      setActive({ ...active, [type]: false });
-      ["sub", "super"].includes(type) && quill.format("script", false);
-      quill.format(type, false);
-    } else {
-      setActive({ ...active, [type]: true });
-      const range = quill.getSelection();
-      if (range) {
-        ["sub", "super"].includes(type) && quill.format("script", type);
-        quill.format(type, true);
-      }
-    }
+
+    /* Checking if the type is active. */
+    const isActive = active[type];
+
+    /* Creating a copy of the active object and then setting the type to the opposite of what it was. */
+    temp = { ...temp, [type]: !isActive };
+
+    /* Checking if the type is either sub or super. If it is, it is setting the script to false. */
+    isScript && quill.format("script", isActive ? false : type);
+
+    /* Formatting the text. */
+    quill.format(type, !isActive);
+
+    /* Setting the state of the active object. */
+    setActive(temp);
   };
+
   return (
     <>
       <StyleCard
@@ -108,7 +116,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             className={
               active.bold ? "ql-bold ql-selected ql-active" : "ql-bold"
             }
-            onClick={(e) => quillFormatClick(e, "bold")}
+            onClick={(e) => handleFormat("bold")}
           >
             {icons["bold"]}
           </button>
@@ -136,7 +144,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             className={
               active.italic ? "ql-italic ql-selected ql-active" : "ql-italic"
             }
-            onClick={(e) => quillFormatClick(e, "italic")}
+            onClick={(e) => handleFormat("italic")}
           >
             {icons["italic"]}
           </button>
@@ -166,7 +174,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
                 ? "ql-underline ql-selected ql-active"
                 : "ql-underline"
             }
-            onClick={(e) => quillFormatClick(e, "underline")}
+            onClick={(e) => handleFormat("underline")}
           >
             {icons["underline"]}
           </button>
@@ -194,7 +202,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             className={
               active.strike ? "ql-strike ql-selected ql-active" : "ql-strike"
             }
-            onClick={(e) => quillFormatClick(e, "strike")}
+            onClick={(e) => handleFormat("strike")}
           >
             {icons["strike"]}
           </button>
@@ -222,7 +230,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             className={
               active.sub ? "ql-script ql-selected ql-active" : "ql-script"
             }
-            onClick={(e) => quillFormatClick(e, "sub")}
+            onClick={(e) => handleFormat("sub")}
             value="sub"
           >
             {icons["script"]}
@@ -251,7 +259,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             className={
               active.super ? "ql-script ql-selected ql-active" : "ql-script"
             }
-            onClick={(e) => quillFormatClick(e, "super")}
+            onClick={(e) => handleFormat("super")}
             value="super"
           >
             {icons["super"]}

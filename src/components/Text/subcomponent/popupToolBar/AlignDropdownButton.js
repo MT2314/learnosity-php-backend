@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core";
+
+import { useQuill, useFormat } from "../../Provider";
 
 import "../../styles/AlignDropdownButton.scss";
 import icons from "../../assets/icons";
@@ -29,8 +31,20 @@ const AlignDropdownButton = ({
   setActiveDropDownItem,
   setVisibleAlignIcon,
   onKeyDropDown,
-  activeDirection,
 }) => {
+  const quill = useQuill();
+  const format = useFormat();
+
+  useEffect(() => {
+    if (format?.align) {
+      setActiveDropDownItem(format.align);
+      setVisibleAlignIcon(icons[format.align]);
+    } else {
+      setActiveDropDownItem("left");
+      setVisibleAlignIcon(icons["align"]);
+    }
+  }, [format]);
+
   return (
     <>
       <StyleCard
@@ -63,6 +77,7 @@ const AlignDropdownButton = ({
               onClick={() => {
                 setActiveDropDownItem("left");
                 setVisibleAlignIcon(icons["align"]);
+                quill.format("align", false);
               }}
               className={
                 activeDropDownItem === "left"
@@ -101,15 +116,14 @@ const AlignDropdownButton = ({
               }
               value="center"
               onClick={() => {
-                if (
-                  activeDropDownItem === "center" ||
-                  activeDirection !== "center"
-                ) {
+                if (activeDropDownItem === "center") {
                   setActiveDropDownItem("left");
                   setVisibleAlignIcon(icons["align"]);
+                  quill.format("align", false);
                 } else {
                   setActiveDropDownItem("center");
                   setVisibleAlignIcon(icons["center"]);
+                  quill.format("align", "center");
                 }
               }}
             >
@@ -143,15 +157,14 @@ const AlignDropdownButton = ({
               }
               value="right"
               onClick={() => {
-                if (
-                  activeDropDownItem === "right" ||
-                  activeDirection !== "right"
-                ) {
+                if (activeDropDownItem === "right") {
                   setActiveDropDownItem("left");
                   setVisibleAlignIcon(icons["align"]);
+                  quill.format("align", false);
                 } else {
                   setActiveDropDownItem("right");
                   setVisibleAlignIcon(icons["right"]);
+                  quill.format("align", "right");
                 }
               }}
             >

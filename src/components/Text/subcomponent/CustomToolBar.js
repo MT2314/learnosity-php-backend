@@ -236,8 +236,6 @@ const ToolBar = ({
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
-  const [activeDirection, setActiveDirection] = useState("left");
-
   const AppBar = useRef(null);
   //focus to the list and align. Bold Ref is found in EditorComponent.js
   const listRef = useRef(null);
@@ -330,11 +328,7 @@ const ToolBar = ({
     // onClick={(e) => e.stopPropagation()}
     // onFocus={(e) => e.stopPropagation()}
     >
-      <StyledAppbar
-        position="static"
-        ref={AppBar}
-        className="ql-toolbar ql-snow"
-      >
+      <StyledAppbar position="static" ref={AppBar}>
         {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
         {/* {isInfoBox && (
           <StyledIconDropdownButton
@@ -416,21 +410,6 @@ const ToolBar = ({
             disableGutters
             test-id="infoBox-toolbar"
           >
-            <button
-              style={{ display: "none" }}
-              aria-hidden="true"
-              data-observerid="alignmentObserver"
-              onClick={(e) => {
-                const align = e.target.attributes.getNamedItem("data-align")
-                  .value
-                  ? e.target.attributes.getNamedItem("data-align").value
-                  : "align";
-                setVisibleAlignIcon(icons[align]);
-                setActiveDirection(align === "align" ? "left" : align);
-              }}
-              className={`alignment-${toolbarId}`}
-            />
-
             <Tooltip
               aria-label="font styles"
               title="font styles"
@@ -557,7 +536,6 @@ const ToolBar = ({
               activeDropDownItem={activeDropDownAlignItem}
               setActiveDropDownItem={setActiveDropDownAlignItem}
               setVisibleAlignIcon={setVisibleAlignIcon}
-              activeDirection={activeDirection}
               onKeyDropDown={(e) => {
                 onKeyDropDown(e, alignRef);
               }}
@@ -602,8 +580,6 @@ const ToolBar = ({
               isInfoBox={isInfoBox}
               className="dropdown-content"
               aria-label="list buttons dropdown"
-              activeDropDownItem={activeDropDownListItem}
-              setActiveDropDownItem={setActiveDropDownListItem}
               onKeyDropDown={(e) => {
                 onKeyDropDown(e, listRef);
               }}
@@ -611,7 +587,6 @@ const ToolBar = ({
 
             {/* link btn and divider */}
             <Divider />
-            <HiddenQuillLinkButton />
             <Tooltip aria-label="link" title="link" placement="top" arrow>
               <StyledIconButton
                 disabled={infoHasFocus}
@@ -631,24 +606,11 @@ const ToolBar = ({
                 {icons["link"]}
               </StyledIconButton>
             </Tooltip>
-            <HiddenQuillBackgroundColorSelector />
           </StyledToolbar>
         </div>
       </StyledAppbar>
     </Container>
   );
-};
-
-const HiddenQuillBackgroundColorSelector = () => {
-  return (
-    <span className="ql-formats" style={{ display: "none" }}>
-      <select className="ql-background" style={{ display: "none" }}></select>
-    </span>
-  );
-};
-
-const HiddenQuillLinkButton = () => {
-  return <button className="ql-link" style={{ display: "none" }}></button>;
 };
 
 export default CustomToolBar;
