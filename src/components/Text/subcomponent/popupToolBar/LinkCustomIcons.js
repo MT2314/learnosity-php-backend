@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Tooltip } from "@material-ui/core";
 
-import "../../styles/ListDropdownButton.scss";
+import "../../styles/Toolbar.scss";
 import icons from "../../assets/icons";
 
 export const TrashcanTooltip = () => {

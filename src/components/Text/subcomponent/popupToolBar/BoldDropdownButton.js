@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
-import "../../styles/StyledComponents.scss";
 import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core";
 import icons from "../../assets/icons";
+import "../../styles/Toolbar.scss";
 
 import { useQuill, useFormat } from "../../Provider";
 

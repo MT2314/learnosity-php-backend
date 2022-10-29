@@ -27,7 +27,7 @@ import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
 
 import icons from "../assets/icons";
 import "react-quill/dist/quill.snow.css";
-import "../styles/CustomToolBar.scss";
+import "../styles/Toolbar.scss";
 
 import {
   Popper,
@@ -45,31 +45,30 @@ import {
 // * Styled Components
 
 // ? Styled Container
-const Container = styled("div")({
-  display: "block !important",
-  position: "fixed !important",
-  top: "80px !important",
-  left: "50% !important",
-  transform: "translateX(-50%) !important",
-  zIndex: 1000,
-  gap: "10px",
-  "& .MuiPaper-root": {
-    backgroundColor: "transparent",
-  },
-});
+// const Container = styled("div")({
+//   display: "block !important",
+//   position: "fixed !important",
+//   top: "80px !important",
+//   left: "50% !important",
+//   transform: "translateX(-50%) !important",
+//   zIndex: 1000,
+//   "& .MuiPaper-root": {
+//     backgroundColor: "transparent",
+//   },
+// });
 // ? Styled Appbar
 const StyledAppbar = styled(AppBar)({
   display: "flex",
   flexDirection: "row",
   minHeight: "40px !important",
   gap: "10px",
+  boxShadow: "none !important",
 });
 
 // ? Styled Text Toolbar (Possibly Temp)
 const StyledToolbar = styled(Toolbar)(({ isInfoBox }) => ({
   display: "flex",
   justifyContent: "space-between",
-  border: "none",
 
   ...(isInfoBox
     ? { borderLeft: "none !important" }
@@ -80,8 +79,9 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox }) => ({
   width: isInfoBox ? "160px" : "184px !important",
   margin: "10px, 8px",
   paddingRight: "0px !important",
+  paddingLeft: "3px !important",
   backgroundColor: "#FFF",
-  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  boxShadow: "0px 0px 10px 0 rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
   "& .MuiToolbar-gutters": {
     paddingLeft: 0,
@@ -331,16 +331,17 @@ const ToolBar = ({
   // }, [activeDropDownItem, activeTopMenu]);
 
   return (
-    <Container
-    // onClick={(e) => e.stopPropagation()}
-    // onFocus={(e) => e.stopPropagation()}
+    <div
+      className="Toolbar-Container"
+      // onClick={(e) => e.stopPropagation()}
+      // onFocus={(e) => e.stopPropagation()}
     >
-      <StyledAppbar position="static" ref={AppBar}>
+      <StyledAppbar className="Style-Appbar" position="static" ref={AppBar}>
         <div>
           <StyledToolbar
             id={toolbarId}
             isInfoBox={isInfoBox || portal?.parentComponent}
-            className="toolbarContainer ql-toolbar ql-snow"
+            className="ql-toolbar ql-snow"
             variant="dense"
             disableGutters
             test-id="infoBox-toolbar"
@@ -564,7 +565,7 @@ const ToolBar = ({
           </StyledToolbar>
         </div>
       </StyledAppbar>
-    </Container>
+    </div>
   );
 };
 

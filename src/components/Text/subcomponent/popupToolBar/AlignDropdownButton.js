@@ -2,7 +2,7 @@ import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core";
-import "../../styles/StyledComponents.scss";
+import "../../styles/Toolbar.scss";
 
 import icons from "../../assets/icons";
 

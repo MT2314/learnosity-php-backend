@@ -7,10 +7,7 @@ import "./styles/Text.scss";
 import PopupDialogs from "./dialogs/PopupDialogs";
 
 import { CssBaseline } from "@mui/material";
-// import { ThemeProvider } from "@mui/material/styles";
 
-//? PP Imports
-// import createMFTheme from "../../theme/index";
 import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
 
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
@@ -50,7 +47,6 @@ const Text = ({
   return (
     <>
       <CssBaseline />
-      {/* <ThemeProvider theme={textTheme}> */}
       <ReactQuillContainer
         isInfoBox={isInfoBox}
         isVideo={portal?.parentComponent === "video"}

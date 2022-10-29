@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/DefaultText.scss";
+import "../styles/Text.scss";
 
 const DefaultText = ({ portal }) => (
   <>
