@@ -5,8 +5,6 @@ import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core";
 import icons from "../../assets/icons";
 
-import styled from "@emotion/styled";
-
 import { useQuill, useFormat } from "../../Provider";
 
 const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
@@ -73,29 +71,13 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
           show ? "bold-dropdown show" : "bold-dropdown hide"
         } StyledCard`}
         style={{
-          "--card-display": show ? "block" : "none",
+          "--card-display": show ? "flex" : "none",
           "--left": isInfoBox ? "0px" : isVideo ? "0px" : "-4px",
+          "--width": "214px",
         }}
         onKeyDown={onKeyDropDown}
       >
-        <Tooltip
-          aria-label="bold"
-          title="bold"
-          placement="top"
-          arrow
-          PopperProps={{
-            disablePortal: true,
-            popperOptions: {
-              positionFixed: true,
-              modifiers: {
-                preventOverflow: {
-                  enabled: true,
-                  boundariesElement: "window", // where "window" is the boundary
-                },
-              },
-            },
-          }}
-        >
+        <Tooltip aria-label="bold" title="bold" placement="top" arrow>
           <button
             aria-label="bold"
             className={
@@ -106,24 +88,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             {icons["bold"]}
           </button>
         </Tooltip>
-        <Tooltip
-          aria-label="italic"
-          title="italic"
-          placement="top"
-          arrow
-          PopperProps={{
-            disablePortal: true,
-            popperOptions: {
-              positionFixed: true,
-              modifiers: {
-                preventOverflow: {
-                  enabled: true,
-                  boundariesElement: "window", // where "window" is the boundary
-                },
-              },
-            },
-          }}
-        >
+        <Tooltip aria-label="italic" title="italic" placement="top" arrow>
           <button
             aria-label="italic"
             className={
@@ -134,24 +99,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             {icons["italic"]}
           </button>
         </Tooltip>
-        <Tooltip
-          aria-label="underline"
-          title="underline"
-          placement="top"
-          arrow
-          PopperProps={{
-            disablePortal: true,
-            popperOptions: {
-              positionFixed: true,
-              modifiers: {
-                preventOverflow: {
-                  enabled: true,
-                  boundariesElement: "window", // where "window" is the boundary
-                },
-              },
-            },
-          }}
-        >
+        <Tooltip aria-label="underline" title="underline" placement="top" arrow>
           <button
             aria-label="underline"
             className={
@@ -169,18 +117,6 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
           title="strikethrough"
           placement="top"
           arrow
-          PopperProps={{
-            disablePortal: true,
-            popperOptions: {
-              positionFixed: true,
-              modifiers: {
-                preventOverflow: {
-                  enabled: true,
-                  boundariesElement: "window", // where "window" is the boundary
-                },
-              },
-            },
-          }}
         >
           <button
             aria-label="strike"
@@ -192,24 +128,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             {icons["strike"]}
           </button>
         </Tooltip>
-        <Tooltip
-          aria-label="subscript"
-          title="subscript"
-          placement="top"
-          arrow
-          PopperProps={{
-            disablePortal: true,
-            popperOptions: {
-              positionFixed: true,
-              modifiers: {
-                preventOverflow: {
-                  enabled: true,
-                  boundariesElement: "window", // where "window" is the boundary
-                },
-              },
-            },
-          }}
-        >
+        <Tooltip aria-label="subscript" title="subscript" placement="top" arrow>
           <button
             aria-label="sub script"
             className={
@@ -226,18 +145,6 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
           title="superscript"
           placement="top"
           arrow
-          PopperProps={{
-            disablePortal: true,
-            popperOptions: {
-              positionFixed: true,
-              modifiers: {
-                preventOverflow: {
-                  enabled: true,
-                  boundariesElement: "window", // where "window" is the boundary
-                },
-              },
-            },
-          }}
         >
           <button
             aria-label="super script"

@@ -1,19 +1,20 @@
 .StyledCard {
   position: absolute;
-  z-index: 25;
-  left: var(--left);
-  bottom: -32.5px;
-  padding: 3px;
-  width: 180px;
   display: var(--card-display);
-  & .hide {
-    display: none;
-  }
-  & svg {
-    & .svg-fill {
-      fill: "#232323";
+  justify-content: center;
+  align-items: center;
+  width: var(--width);
+  height: 40px !important;
+  left: var(--left);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  bottom: -43px;
+  z-index: 25;
+  svg {
+    .svg-fill {
+      fill: #232323;
     }
   }
+
   .ql-active {
     background-color: rgba(21, 101, 192, 0.12) !important;
     svg {
@@ -22,21 +23,12 @@
       }
     }
   }
-  & .ql-active .ql-selected {
-    background-color: rgba(21, 101, 192, 0.12) !important;
-    svg {
-      & .svg-fill {
-        fill: #1565c0;
-      }
-    }
-  }
-  & button {
+  button {
     display: flex !important;
-    justify-content: "center";
-    align-items: "center";
-    border-radius: "4px";
-    & :hover {
-      background-color: rgba(21, 101, 192, 0.12);
-    }
+    margin: 2px;
+    width: 30px !important;
+    height: 30px !important;
+    justify-content: center;
+    align-items: center;
   }
 }

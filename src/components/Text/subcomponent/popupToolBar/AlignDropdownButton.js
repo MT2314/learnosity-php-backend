@@ -2,24 +2,9 @@ import React from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core";
+import "../../styles/StyledComponents.scss";
 
-import "../../styles/AlignDropdownButton.scss";
 import icons from "../../assets/icons";
-
-import styled from "@emotion/styled";
-
-const StyleCard = styled(Card)(({ show, isInfoBox, isVideo }) => ({
-  position: "absolute",
-  left: isInfoBox ? "40.5px" : isVideo ? "40px" : "71px",
-  zIndex: 25,
-  bottom: "-34px",
-  padding: "3px",
-  display: show ? "block" : "none",
-  ".ql-active": {
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    svg: { ".svg-fill": { fill: "#1565c0" } },
-  },
-}));
 
 const AlignDropdownButton = ({
   isInfoBox,
@@ -33,11 +18,17 @@ const AlignDropdownButton = ({
 }) => {
   return (
     <>
-      <StyleCard
+      <Card
         show={show}
         isInfoBox={isInfoBox}
         isVideo={isVideo}
         onKeyDown={onKeyDropDown}
+        className="StyledCard"
+        style={{
+          "--card-display": show ? "flex" : "none",
+          "--left": isInfoBox ? "40.5px" : isVideo ? "40px" : "71px",
+          "--width": "112px",
+        }}
       >
         <span className="ql-formats">
           <Tooltip
@@ -45,18 +36,6 @@ const AlignDropdownButton = ({
             title="align left"
             placement="top"
             arrow
-            PopperProps={{
-              disablePortal: true,
-              popperOptions: {
-                positionFixed: true,
-                modifiers: {
-                  preventOverflow: {
-                    enabled: true,
-                    boundariesElement: "window", // where "window" is the boundary
-                  },
-                },
-              },
-            }}
           >
             <button
               aria-label="left align"
@@ -79,18 +58,6 @@ const AlignDropdownButton = ({
             title="centre text"
             placement="top"
             arrow
-            PopperProps={{
-              disablePortal: true,
-              popperOptions: {
-                positionFixed: true,
-                modifiers: {
-                  preventOverflow: {
-                    enabled: true,
-                    boundariesElement: "window", // where "window" is the boundary
-                  },
-                },
-              },
-            }}
           >
             <button
               aria-label="align center"
@@ -121,18 +88,6 @@ const AlignDropdownButton = ({
             title="align right"
             placement="top"
             arrow
-            PopperProps={{
-              disablePortal: true,
-              popperOptions: {
-                positionFixed: true,
-                modifiers: {
-                  preventOverflow: {
-                    enabled: true,
-                    boundariesElement: "window", // where "window" is the boundary
-                  },
-                },
-              },
-            }}
           >
             <button
               aria-label="right align"
@@ -159,7 +114,7 @@ const AlignDropdownButton = ({
             </button>
           </Tooltip>
         </span>
-      </StyleCard>
+      </Card>
     </>
   );
 };
