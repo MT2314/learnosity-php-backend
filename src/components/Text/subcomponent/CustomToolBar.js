@@ -46,13 +46,13 @@ import {
 
 // ? Styled Container
 const Container = styled("div")({
-  // display: "block !important",
-  // position: "fixed !important",
-  // top: "80px !important",
-  // left: "50% !important",
-  // transform: "translateX(-50%) !important",
-  // zIndex: 1000,
-  // gap: "10px",
+  display: "block !important",
+  position: "fixed !important",
+  top: "80px !important",
+  left: "50% !important",
+  transform: "translateX(-50%) !important",
+  zIndex: 1000,
+  gap: "10px",
   "& .MuiPaper-root": {
     backgroundColor: "transparent",
   },
@@ -69,7 +69,12 @@ const StyledAppbar = styled(AppBar)({
 const StyledToolbar = styled(Toolbar)(({ isInfoBox }) => ({
   display: "flex",
   justifyContent: "space-between",
-  ...(isInfoBox && { borderLeft: "none !important" }),
+  border: "none",
+
+  ...(isInfoBox
+    ? { borderLeft: "none !important" }
+    : { borderLeft: "4px solid #1565c0 !important" }),
+
   height: "40px !important",
   minHeight: "40px !important",
   width: isInfoBox ? "160px" : "184px !important",
@@ -330,83 +335,7 @@ const ToolBar = ({
     // onClick={(e) => e.stopPropagation()}
     // onFocus={(e) => e.stopPropagation()}
     >
-      <StyledAppbar
-        position="static"
-        ref={AppBar}
-        className="ql-toolbar ql-snow"
-      >
-        {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
-        {/* {isInfoBox && (
-          <StyledIconDropdownButton
-            ref={IconDropDown}
-            id="iconToolBar"
-            aria-controls={openIcon ? t("Infobox Select Icon") : undefined}
-            aria-expanded={openIcon ? "true" : undefined}
-            variant="contained"
-            disableRipple
-            disableFocusRipple
-            onClick={handleToggleInfo}
-          >
-            {openIcon ? (
-              <ExpandMoreIcon
-                sx={{
-                  marginRight: "9.5px",
-                  transform: "rotate(180deg)",
-                  pointerEvents: "none",
-                }}
-              />
-            ) : (
-              <ExpandMoreIcon
-                sx={{
-                  marginRight: "9.5px",
-                  pointerEvents: "none",
-                }}
-              />
-            )}
-            {selectedIcon === null
-              ? t("Infobox Select Icon")
-              : t(`${selectedIcon}`)}
-            <Popper
-              open={openIcon}
-              anchorEl={IconDropDown.current}
-              placement="bottom-start"
-              transition
-              disablePortal
-            >
-              {({ TransitionProps }) => (
-                <Grow {...TransitionProps}>
-                  <Paper>
-                    <ClickAwayListener onClickAway={handleCloseIcon}>
-                      <StyledMenu
-                        autoFocusItem={openIcon}
-                        data-testid="icon-select-dropdown"
-                        aria-labelledby={t("Infobox Icon Drop Down")}
-                        onKeyDown={handleListKeyDown}
-                      >
-                        {iconDropdownOptions.map((infoBox, index) => {
-                          return (
-                            <StyledMenuItem
-                              key={infoBox.id}
-                              value={infoBox.type}
-                              selected={index === selectedIndex}
-                              onClick={(e) => handleIconMenuItemClick(e, index)}
-                              data-testid={`${infoBox.type} icon`}
-                              aria-labelledby={`${t(infoBox.type)} ${t(
-                                "Icon"
-                              )}`}
-                            >
-                              {t(infoBox.type)}
-                            </StyledMenuItem>
-                          );
-                        })}
-                      </StyledMenu>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-          </StyledIconDropdownButton>
-        )} */}
+      <StyledAppbar position="static" ref={AppBar}>
         <div>
           <StyledToolbar
             id={toolbarId}

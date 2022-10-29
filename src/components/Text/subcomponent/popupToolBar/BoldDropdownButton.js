@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
-import "../../styles/BoldDropdownButton.scss";
+import "../../styles/StyledComponents.scss";
 import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core";
 import icons from "../../assets/icons";
@@ -8,19 +8,6 @@ import icons from "../../assets/icons";
 import styled from "@emotion/styled";
 
 import { useQuill, useFormat } from "../../Provider";
-
-const StyleCard = styled(Card)(({ show, isInfoBox, isVideo }) => ({
-  position: "absolute",
-  zIndex: 25,
-  left: isInfoBox ? "0px" : isVideo ? "0px" : "-4px",
-  bottom: "-32.5px",
-  padding: "3px",
-  display: show ? "block" : "none",
-  ".ql-active": {
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    svg: { ".svg-fill": { fill: "#1565c0" } },
-  },
-}));
 
 const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
   const quill = useQuill();
@@ -78,11 +65,17 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
   };
   return (
     <>
-      <StyleCard
+      <Card
         show={show}
         isInfoBox={isInfoBox}
         isVideo={isVideo}
-        className={show ? "bold-dropdown show" : "bold-dropdown hide"}
+        className={`${
+          show ? "bold-dropdown show" : "bold-dropdown hide"
+        } StyledCard`}
+        style={{
+          "--card-display": show ? "block" : "none",
+          "--left": isInfoBox ? "0px" : isVideo ? "0px" : "-4px",
+        }}
         onKeyDown={onKeyDropDown}
       >
         <Tooltip
@@ -257,7 +250,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             {icons["super"]}
           </button>
         </Tooltip>
-      </StyleCard>
+      </Card>
     </>
   );
 };
