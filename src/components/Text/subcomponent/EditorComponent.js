@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
 
@@ -13,7 +12,6 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import { checkTextForUrl } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 import { FormulaEvents, linkClickEvent } from "../utils/FormulaEvents";
-import setAlignment from "../utils/setAlignment";
 
 import MathPixMarkdown from "../blots/MathPixMarkdown";
 
@@ -107,9 +105,6 @@ const EditorComponent = ({
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
 
-  //alignment observer
-  const [alignmentObserver, setAlignmentObserver] = useState(null);
-
   //add focus to editor
   const focusRef = useRef(null);
 
@@ -133,7 +128,6 @@ const EditorComponent = ({
     if ((showLink || showMath || keepEditor) && !closeToolBar) return;
     if (!closeToolBar) return;
 
-    alignmentObserver?.disconnect();
     setEditorIsFocus(false);
     setShowEditor(false);
     setTabActive(false);
@@ -154,8 +148,6 @@ const EditorComponent = ({
     setQuill(focusRef?.current?.getEditor());
     //set unique id instance
     setUniqueId(toolbarId);
-    //extend default link functionality on mount
-    ExtendLinkFunctionality(toolbarId);
     //check for formulas
     FormulaEvents(toolbarId);
     // on render editor is focused
@@ -359,7 +351,6 @@ const EditorComponent = ({
       //     !showLink &&
       //     !infoHasFocus
       //   ) {
-      //     alignmentObserver?.disconnect();
       //     setEditorIsFocus(false);
       //     setShowEditor(false);
       //     setActiveComponent(false);
@@ -405,7 +396,6 @@ const EditorComponent = ({
           formatSelection(range, focusRef.current);
         }}
         onFocus={() => {
-          // setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
           if (infoHasFocus) {
             setInfoHasFocus(false);
