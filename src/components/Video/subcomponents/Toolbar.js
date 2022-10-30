@@ -897,13 +897,7 @@ const ToolBar = ({
               borderRadiusBottomRight: "5px",
               borderRadius: "0px 4px 4px 0px",
               backgroundColor: "white",
-              // justifyContent: "space-evenly",
-              // // right: !videoAreaFocused ? "-35px" : "9px",
-              // ...(!videoAreaFocused && {
-              //   height: "40px",
-              // }),
-
-              // top: !videoAreaFocused ? "0px" : "6px",
+              boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px",
             }}
           >
             <Divider style={{ float: "left" }} />
