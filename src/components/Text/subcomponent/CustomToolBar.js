@@ -240,8 +240,6 @@ const ToolBar = ({
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
 
-  const [activeDirection, setActiveDirection] = useState("left");
-
   const AppBar = useRef(null);
   //focus to the list and align. Bold Ref is found in EditorComponent.js
   const listRef = useRef(null);
@@ -336,6 +334,78 @@ const ToolBar = ({
       // onFocus={(e) => e.stopPropagation()}
     >
       <StyledAppbar className="Style-Appbar" position="static" ref={AppBar}>
+        {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
+        {/* {isInfoBox && (
+          <StyledIconDropdownButton
+            ref={IconDropDown}
+            id="iconToolBar"
+            aria-controls={openIcon ? t("Infobox Select Icon") : undefined}
+            aria-expanded={openIcon ? "true" : undefined}
+            variant="contained"
+            disableRipple
+            disableFocusRipple
+            onClick={handleToggleInfo}
+          >
+            {openIcon ? (
+              <ExpandMoreIcon
+                sx={{
+                  marginRight: "9.5px",
+                  transform: "rotate(180deg)",
+                  pointerEvents: "none",
+                }}
+              />
+            ) : (
+              <ExpandMoreIcon
+                sx={{
+                  marginRight: "9.5px",
+                  pointerEvents: "none",
+                }}
+              />
+            )}
+            {selectedIcon === null
+              ? t("Infobox Select Icon")
+              : t(`${selectedIcon}`)}
+            <Popper
+              open={openIcon}
+              anchorEl={IconDropDown.current}
+              placement="bottom-start"
+              transition
+              disablePortal
+            >
+              {({ TransitionProps }) => (
+                <Grow {...TransitionProps}>
+                  <Paper>
+                    <ClickAwayListener onClickAway={handleCloseIcon}>
+                      <StyledMenu
+                        autoFocusItem={openIcon}
+                        data-testid="icon-select-dropdown"
+                        aria-labelledby={t("Infobox Icon Drop Down")}
+                        onKeyDown={handleListKeyDown}
+                      >
+                        {iconDropdownOptions.map((infoBox, index) => {
+                          return (
+                            <StyledMenuItem
+                              key={infoBox.id}
+                              value={infoBox.type}
+                              selected={index === selectedIndex}
+                              onClick={(e) => handleIconMenuItemClick(e, index)}
+                              data-testid={`${infoBox.type} icon`}
+                              aria-labelledby={`${t(infoBox.type)} ${t(
+                                "Icon"
+                              )}`}
+                            >
+                              {t(infoBox.type)}
+                            </StyledMenuItem>
+                          );
+                        })}
+                      </StyledMenu>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
+          </StyledIconDropdownButton>
+        )} */}
         <div>
           <StyledToolbar
             id={toolbarId}
@@ -345,21 +415,6 @@ const ToolBar = ({
             disableGutters
             test-id="infoBox-toolbar"
           >
-            <button
-              style={{ display: "none" }}
-              aria-hidden="true"
-              data-observerid="alignmentObserver"
-              onClick={(e) => {
-                const align = e.target.attributes.getNamedItem("data-align")
-                  .value
-                  ? e.target.attributes.getNamedItem("data-align").value
-                  : "align";
-                setVisibleAlignIcon(icons[align]);
-                setActiveDirection(align === "align" ? "left" : align);
-              }}
-              className={`alignment-${toolbarId}`}
-            />
-
             <Tooltip
               aria-label="font styles"
               title="font styles"
@@ -488,7 +543,6 @@ const ToolBar = ({
               activeDropDownItem={activeDropDownAlignItem}
               setActiveDropDownItem={setActiveDropDownAlignItem}
               setVisibleAlignIcon={setVisibleAlignIcon}
-              activeDirection={activeDirection}
               onKeyDropDown={(e) => {
                 onKeyDropDown(e, alignRef);
               }}
@@ -534,8 +588,6 @@ const ToolBar = ({
               isVideo={portal?.parentComponent === "video"}
               className="dropdown-content"
               aria-label="list buttons dropdown"
-              activeDropDownItem={activeDropDownListItem}
-              setActiveDropDownItem={setActiveDropDownListItem}
               onKeyDropDown={(e) => {
                 onKeyDropDown(e, listRef);
               }}
@@ -543,7 +595,6 @@ const ToolBar = ({
 
             {/* link btn and divider */}
             <Divider />
-            <HiddenQuillLinkButton />
             <Tooltip aria-label="link" title="link" placement="top" arrow>
               <StyledIconButton
                 disabled={infoHasFocus}
@@ -564,24 +615,11 @@ const ToolBar = ({
                 {icons["link"]}
               </StyledIconButton>
             </Tooltip>
-            <HiddenQuillBackgroundColorSelector />
           </StyledToolbar>
         </div>
       </StyledAppbar>
     </div>
   );
-};
-
-const HiddenQuillBackgroundColorSelector = () => {
-  return (
-    <span className="ql-formats" style={{ display: "none" }}>
-      <select className="ql-background" style={{ display: "none" }}></select>
-    </span>
-  );
-};
-
-const HiddenQuillLinkButton = () => {
-  return <button className="ql-link" style={{ display: "none" }}></button>;
 };
 
 export default CustomToolBar;

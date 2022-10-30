@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "react-quill/dist/quill.snow.css";
 import { Card } from "@mui/material";
 import { Tooltip } from "@material-ui/core";
+
+import { useQuill, useFormat } from "../../Provider";
+
 import icons from "../../assets/icons";
 import "../../styles/Toolbar.scss";
 
-const ListDropdownButton = ({
-  isInfoBox,
-  show,
-  activeDropDownItem,
-  setActiveDropDownListItem,
-  onKeyDropDown,
-  isVideo,
-}) => {
+const ListDropdownButton = ({ isInfoBox, show, onKeyDropDown, isVideo }) => {
+  const quill = useQuill();
+  const format = useFormat();
+
+  const [activeDropDownList, setActiveDropDownList] = useState("");
+
+  useEffect(() => {
+    format?.list
+      ? setActiveDropDownList(format.list)
+      : setActiveDropDownList("");
+  }, [format]);
   return (
     <>
       <Card
@@ -31,16 +37,18 @@ const ListDropdownButton = ({
           <button
             aria-label="bullet list"
             className={
-              activeDropDownItem === "bullet"
+              activeDropDownList === "bullet"
                 ? "ql-list ql-selected ql-active"
                 : "ql-list"
             }
             value="bullet"
             onClick={() => {
-              if (activeDropDownItem === "bullet") {
-                setActiveDropDownListItem("");
+              if (activeDropDownList === "bullet") {
+                setActiveDropDownList("");
+                quill.format("list", false);
               } else {
-                setActiveDropDownListItem("bullet");
+                setActiveDropDownList("bullet");
+                quill.format("list", "bullet");
               }
             }}
           >
@@ -52,16 +60,18 @@ const ListDropdownButton = ({
           <button
             aria-label="numbered list"
             className={
-              activeDropDownItem === "ordered"
+              activeDropDownList === "ordered"
                 ? "ql-list ql-selected ql-active"
                 : "ql-list"
             }
             value="ordered"
             onClick={() => {
-              if (activeDropDownItem === "ordered") {
-                setActiveDropDownListItem("");
+              if (activeDropDownList === "ordered") {
+                setActiveDropDownList("");
+                quill.format("list", false);
               } else {
-                setActiveDropDownListItem("ordered");
+                setActiveDropDownList("ordered");
+                quill.format("list", "ordered");
               }
             }}
           >
