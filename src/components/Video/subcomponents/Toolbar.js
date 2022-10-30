@@ -420,6 +420,7 @@ const ToolBar = ({
       <Container
         onClick={(e) => e.stopPropagation()}
         onFocus={(e) => e.stopPropagation()}
+        className="Toolbar-Container"
       >
         <StyledAppbar position="static">
           {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
@@ -896,23 +897,28 @@ const ToolBar = ({
           {/* {/* Video Kebab */}
           <div
             style={{
-              // position: "absolute",
+              position: "absolute",
               display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              // right: !videoAreaFocused ? "-35px" : "9px",
-              ...(!videoAreaFocused && {
-                backgroundColor: "white",
-                height: "40px",
-                borderRadiusTopRight: "5px",
-                borderRadiusBottomRight: "5px",
-              }),
-
-              top: !videoAreaFocused ? "0px" : "6px",
               width: "40px",
+              height: "40px",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              left: "367px",
+              borderRadiusTopRight: "5px",
+              borderRadiusBottomRight: "5px",
+              borderRadius: "0px 4px 4px 0px",
+              backgroundColor: "white",
+              // justifyContent: "space-evenly",
+              // // right: !videoAreaFocused ? "-35px" : "9px",
+              // ...(!videoAreaFocused && {
+              //   height: "40px",
+              // }),
+
+              // top: !videoAreaFocused ? "0px" : "6px",
             }}
           >
-            <Divider />
+            <Divider style={{ float: "left" }} />
             <Tooltip
               aria-label="configure video description"
               title="configure video description"
@@ -939,6 +945,7 @@ const ToolBar = ({
                 disableRipple
                 disableFocusRipple
                 onClick={handleToggleVideoKebab}
+                sx={{ marginLeft: "2px !important" }}
               >
                 <KebabSVG />
               </StyledKebabButton>

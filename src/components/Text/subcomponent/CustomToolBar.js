@@ -66,17 +66,17 @@ const StyledAppbar = styled(AppBar)({
 });
 
 // ? Styled Text Toolbar (Possibly Temp)
-const StyledToolbar = styled(Toolbar)(({ isInfoBox }) => ({
+const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   display: "flex",
   justifyContent: "space-between",
 
-  ...(isInfoBox
+  ...(isInfoBox || isVideo
     ? { borderLeft: "none !important" }
     : { borderLeft: "4px solid #1565c0 !important" }),
 
   height: "40px !important",
   minHeight: "40px !important",
-  width: isInfoBox ? "160px" : "184px !important",
+  width: isInfoBox || isVideo ? "160px" : "184px !important",
   margin: "10px, 8px",
   paddingRight: "0px !important",
   // ...(isInfoBox ? { paddingLeft: "0px" } : { paddingLeft: "3px !important" }),
@@ -409,7 +409,8 @@ const ToolBar = ({
         <div>
           <StyledToolbar
             id={toolbarId}
-            isInfoBox={isInfoBox || portal?.parentComponent}
+            isInfoBox={isInfoBox}
+            isVideo={portal?.parentComponent === "video"}
             className="ql-toolbar ql-snow"
             variant="dense"
             disableGutters
@@ -462,7 +463,7 @@ const ToolBar = ({
               isInfoBox={isInfoBox}
             ></BoldDropdownButton>
 
-            {!isInfoBox && portal?.parentComponent && (
+            {!isInfoBox && !portal?.parentComponent == "video" && (
               <Tooltip
                 aria-label="equation"
                 title="equation"
