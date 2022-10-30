@@ -463,7 +463,7 @@ const ToolBar = ({
               isInfoBox={isInfoBox}
             ></BoldDropdownButton>
 
-            {!isInfoBox && !portal?.parentComponent == "video" && (
+            {!isInfoBox && portal?.parentComponent !== "video" && (
               <Tooltip
                 aria-label="equation"
                 title="equation"

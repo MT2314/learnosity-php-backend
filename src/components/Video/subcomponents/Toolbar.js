@@ -77,25 +77,13 @@ const StyledAppbar = styled(AppBar)({
   flexDirection: "row",
   minHeight: "40px !important",
   gap: "10px",
+  boxShadow: "none !important",
 });
 
 // ? Styled Text Toolbar (Possibly Temp)
 const StyledToolbar = styled(Toolbar)(({ isVideo }) => ({
-  // display: "flex",
   justifyContent: "space-evenly",
-  // minHeight: "40px !important",
-  // width: "156px",
-  // margin: "10px, 8px",
-  // backgroundColor: "#FFF",
-  // boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-  // borderRadius: "4px",
-  // "& .MuiToolbar-gutters": {
-  //   paddingLeft: 0,
-  //   paddingRight: 0,
-  // },
   display: "flex",
-  // justifyContent: "space-between",
-  ...(isVideo && { borderLeft: "none !important" }),
   height: "40px !important",
   minHeight: "40px !important",
   width: isVideo ? "196px !important" : "184px !important",
