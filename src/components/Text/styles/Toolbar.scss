@@ -1,4 +1,8 @@
 // Formatting buttons for toolbar
+.ql-bold {
+  padding: 3px !important;
+}
+
 .StyledCard {
   position: absolute;
   display: var(--card-display);
@@ -101,14 +105,14 @@
   &:hover {
     background-color: rgba(21, 101, 192, 0.12) !important;
     & svg {
-      color: rgba(21, 101, 192, 1);
+      fill: rgba(21, 101, 192, 1);
     }
   }
   &:active {
     cursor: pointer;
     background-color: rgba(21, 101, 192, 0.12) !important;
     & svg {
-      color: rgba(21, 101, 192, 1);
+      fill: rgba(21, 101, 192, 1);
     }
   }
   &:focus-visible {
@@ -120,23 +124,6 @@
   }
   & .MuiPaper-root {
     background-color: rgba(255, 255, 255, 1) !important;
-  }
-}
-
-.StyleCard {
-  position: absolute;
-  // left: isInfoBox ? 40.5px : isVideo ? 40px : 71px;
-  z-index: 25;
-  bottom: -34px;
-  padding: 3px;
-  // display: show ? block : none;
-  .ql-active {
-    background-color: rgba(21, 101, 192, 0.12) !important;
-    svg {
-      .svg-fill {
-        fill: #1565c0;
-      }
-    }
   }
 }
 
@@ -174,9 +161,6 @@
     svg {
       .svg-fill {
         fill: #1565c0;
-      }
-      .ql-stroke {
-        stroke: #1565c0;
       }
     }
   }

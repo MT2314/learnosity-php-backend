@@ -896,11 +896,11 @@ const ToolBar = ({
           {/* {/* Video Kebab */}
           <div
             style={{
-              position: "absolute",
+              // position: "absolute",
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-evenly",
-              right: !videoAreaFocused ? "-35px" : "9px",
+              // right: !videoAreaFocused ? "-35px" : "9px",
               ...(!videoAreaFocused && {
                 backgroundColor: "white",
                 height: "40px",

@@ -79,7 +79,7 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox }) => ({
   width: isInfoBox ? "160px" : "184px !important",
   margin: "10px, 8px",
   paddingRight: "0px !important",
-  paddingLeft: "3px !important",
+  // ...(isInfoBox ? { paddingLeft: "0px" } : { paddingLeft: "3px !important" }),
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px 0 rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
@@ -184,7 +184,6 @@ const Divider = styled("div")(({}) => ({
 }));
 
 const CustomToolBar = (props) => {
-  console.log(props?.portal?.shouldPortal && props?.portal?.toolbarReference);
   return (
     <>
       {props?.portal?.shouldPortal && props?.portal?.toolbarReference ? (
@@ -219,7 +218,7 @@ const ToolBar = ({
   portal,
 }) => {
   const { t } = useTranslation();
-
+  console.log(portal?.parentComponent);
   const setShowMath = useSetShowMath();
   const showMath = useShowMath();
   const showLink = useShowLink();
@@ -404,10 +403,11 @@ const ToolBar = ({
               onKeyDropDown={(e) => {
                 onKeyDropDown(e, boldRef);
               }}
+              isVideo={portal?.parentComponent === "video"}
               isInfoBox={isInfoBox}
             ></BoldDropdownButton>
 
-            {!isInfoBox && (
+            {!isInfoBox && portal?.parentComponent && (
               <Tooltip
                 aria-label="equation"
                 title="equation"
@@ -482,6 +482,7 @@ const ToolBar = ({
             <AlignDropdownButton
               show={alignVisibility}
               isInfoBox={isInfoBox}
+              isVideo={portal?.parentComponent === "video"}
               className="dropdown-content"
               aria-label="alignment buttons options"
               activeDropDownItem={activeDropDownAlignItem}
@@ -530,6 +531,7 @@ const ToolBar = ({
             <ListDropdownButton
               show={listVisibility}
               isInfoBox={isInfoBox}
+              isVideo={portal?.parentComponent === "video"}
               className="dropdown-content"
               aria-label="list buttons dropdown"
               activeDropDownItem={activeDropDownListItem}
@@ -557,6 +559,7 @@ const ToolBar = ({
                   setActiveTopMenu(activeTopMenu === "link" ? "" : "link");
                 }}
                 sx={{ paddingLeft: "12px", paddingRight: "12px" }}
+                isVideo={portal?.parentComponent === "video"}
               >
                 {icons["link"]}
               </StyledIconButton>

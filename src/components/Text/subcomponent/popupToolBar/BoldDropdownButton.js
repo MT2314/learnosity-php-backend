@@ -85,7 +85,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
             }
             onClick={(e) => quillFormatClick(e, "bold")}
           >
-            {icons["bold"]}
+            {icons["customBold"]}
           </button>
         </Tooltip>
         <Tooltip aria-label="italic" title="italic" placement="top" arrow>
