@@ -836,7 +836,7 @@ const ToolBar = ({
             </Tooltip>
           </StyledVideoToolbar>
 
-          <div ref={portalToolbarRef}>
+          <div ref={portalToolbarRef} style>
             {/* {!textMounted && ( */}
             {videoAreaFocused && (
               <StyledToolbar
@@ -892,12 +892,13 @@ const ToolBar = ({
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              left: "367px",
+              left: "366px",
               borderRadiusTopRight: "5px",
               borderRadiusBottomRight: "5px",
               borderRadius: "0px 4px 4px 0px",
               backgroundColor: "white",
               boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px",
+              clipPath: "inset(-10px -10px -10px 1px)",
             }}
           >
             <Divider style={{ float: "left" }} />
