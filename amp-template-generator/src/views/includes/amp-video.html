@@ -1,5 +1,5 @@
 <div class="wrapper bottom-margin video-component">
-    
+    {%- assign videoId = 'video' | append: data.id -%}
     {% if data.type == "brightcove" -%}
     
         <div class="brightcove">
@@ -56,7 +56,7 @@
     
     <div class="description-container">
         <div class="description-flex-container">
-            <div class="description-text">
+            <div class="description-text-less" id="{{ videoId }}" [class]="{{ videoId }}">
                 {{data.videoDescription}}
             </div>
             <button class="transcript-button">
@@ -70,7 +70,20 @@
                 Transcript
             </button>
         </div>
-        <button class="show-more-button">Show more</button>
+        <button
+            class="show-more-button"
+            on="tap:AMP.setState({ {{ nodeId }}: !{{ nodeId }} })"
+        >
+            Show more
+        </button>
+        <button
+            hidden
+            id="{{ videoId }}"
+            class="show-less-button"
+            [class]="{{ videoId }}.show"
+        >
+            Show less
+        </button>
     </div>
     
     {% endif %}
