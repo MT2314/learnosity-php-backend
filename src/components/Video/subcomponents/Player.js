@@ -53,6 +53,7 @@ const Delta = Quill.import("delta");
 const Player = ({ videoId, videoSource }) => {
   const [state, dispatch] = useContext(VideoContext);
   const [videoData, setVideoData] = useState(null);
+  // Prevent fetch on initial component mount
   const isMounted = useRef(false);
 
   const BRIGHTCOVE_API = "https://edge.api.brightcove.com/playback/v1/accounts";

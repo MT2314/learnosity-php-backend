@@ -79,7 +79,6 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   width: isInfoBox || isVideo ? "160px" : "184px !important",
   margin: "10px, 8px",
   paddingRight: "0px !important",
-  // ...(isInfoBox ? { paddingLeft: "0px" } : { paddingLeft: "3px !important" }),
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px 0 rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",

@@ -44,9 +44,9 @@ import { useTranslation } from "react-i18next";
 const Container = styled("div")({
   display: "block !important",
   position: "fixed !important",
-  top: "80px !important",
-  left: "50% !important",
-  transform: "translateX(-50%) !important",
+  top: "100px !important",
+  left: "30% !important",
+  // transform: "translateX(-50%) !important",
   zIndex: 1000,
   gap: "10px",
   "& .MuiPaper-root": {
@@ -81,23 +81,25 @@ const StyledAppbar = styled(AppBar)({
 });
 
 // ? Styled Text Toolbar (Possibly Temp)
-const StyledToolbar = styled(Toolbar)(({ isVideo }) => ({
-  justifyContent: "space-evenly",
+const StyledToolbar = styled(Toolbar)(({}) => ({
   display: "flex",
+  justifyContent: "space-evenly",
+  borderLeft: "none !important",
   height: "40px !important",
   minHeight: "40px !important",
-  width: isVideo ? "196px !important" : "184px !important",
+  width: "160px",
   margin: "10px, 8px",
+  paddingRight: "0px !important",
   backgroundColor: "#FFF",
-  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+  boxShadow: "0px 0px 10px 0 rgba(0, 0, 0, 0.1)",
   borderRadius: "4px",
-  paddingRight: "45px",
   "& .MuiToolbar-gutters": {
     paddingLeft: 0,
     paddingRight: 0,
   },
   "& .MuiPaper-root ": {
     boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
+    backgroundColor: "#FFF !important",
   },
 }));
 
@@ -248,8 +250,8 @@ const StyledIconButton = styled(IconButton)(({ disabled }) => ({
   display: "flex !important",
   width: "30px",
   height: "30px",
-  padding: "7px",
   color: "#232323",
+  padding: "0px !important",
   background: "#FFFFFF",
   borderRadius: "4px !important",
 
@@ -408,7 +410,7 @@ const ToolBar = ({
       <Container
         onClick={(e) => e.stopPropagation()}
         onFocus={(e) => e.stopPropagation()}
-        className="Toolbar-Container"
+        className="ToolbarDummy-Container"
       >
         <StyledAppbar position="static">
           {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
@@ -844,9 +846,14 @@ const ToolBar = ({
                 variant="dense"
                 disableGutters
                 test-id="infoBox-toolbar"
+                className="StyledDummy-Toolbar"
               >
-                <StyledIconButton disableRipple disabled>
-                  {icons["bold"]}
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  className="bolddummy-dropdown-button"
+                >
+                  {icons["customBold"]}
                 </StyledIconButton>
                 {/* alignment dropdown */}
                 <StyledIconButton
@@ -892,13 +899,14 @@ const ToolBar = ({
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              left: "366px",
+              left: state.videoId ? "475px" : "366px",
               borderRadiusTopRight: "5px",
               borderRadiusBottomRight: "5px",
               borderRadius: "0px 4px 4px 0px",
               backgroundColor: "white",
               boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px",
               clipPath: "inset(-10px -10px -10px 1px)",
+              zIndex: "1000",
             }}
           >
             <Divider style={{ float: "left" }} />

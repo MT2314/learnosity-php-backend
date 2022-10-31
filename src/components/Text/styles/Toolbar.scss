@@ -3,8 +3,11 @@
 
 // Outer Toolbar Container
 .Toolbar-Container {
+  display: block !important;
+
   position: fixed !important;
   z-index: 1000;
+  top: 100px !important;
   .MuiPaper-root {
     background-color: transparent !important;
   }
@@ -154,7 +157,7 @@
 
   .bold-dropdown-button {
     position: relative;
-    padding: 2px !important;
+    padding: 0px !important;
     display: flex !important;
     justify-content: center;
     align-items: center;
