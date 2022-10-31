@@ -59,7 +59,7 @@
     
     <div class="description-container">
         <div class="description-flex-container">
-            <div class="description-text-less" id="{{ videoId }}" [class]="{{ buttonToggleVideo }} ? description-text-more : description-text-less">
+            <div class="description-text-less" id="{{ videoId }}" [class]="buttonToggleVideo ? 'description-text-more' : 'description-text-less'">
                 {{data.videoDescription}}
             </div>
             <button class="transcript-button">
