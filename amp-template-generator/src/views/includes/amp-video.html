@@ -1,5 +1,8 @@
 <div class="wrapper bottom-margin video-component">
     {%- assign videoId = 'video' | append: data.id -%}
+    {%- assign showVideoId = 'showVideoId' | append: data.id -%}
+    {%- assign hideVideoId = 'hideVideoId' | append: data.id -%}
+    {%- assign buttonToggleVideo = false -%}
     {% if data.type == "brightcove" -%}
     
         <div class="brightcove">
@@ -56,7 +59,7 @@
     
     <div class="description-container">
         <div class="description-flex-container">
-            <div class="description-text-less" id="{{ videoId }}" [class]="{{ videoId }}">
+            <div class="description-text-less" id="{{ videoId }}" [class]="{{ buttonToggleVideo }} ? description-text-more : description-text-less">
                 {{data.videoDescription}}
             </div>
             <button class="transcript-button">
@@ -72,15 +75,16 @@
         </div>
         <button
             class="show-more-button"
-            on="tap:AMP.setState({ {{ nodeId }}: !{{ nodeId }} })"
+            id="{{ showVideoId }}"
+            on="tap:{{ showVideoId }}.hide,{{ hideVideoId }}.show, AMP.setState({ buttonToggleVideo: true })"
         >
             Show more
         </button>
         <button
             hidden
-            id="{{ videoId }}"
+            id="{{ hideVideoId }}"
             class="show-less-button"
-            [class]="{{ videoId }}.show"
+            on="tap:{{ showVideoId }}.show,{{ hideVideoId }}.hide,AMP.setState({ buttonToggleVideo: false })"
         >
             Show less
         </button>

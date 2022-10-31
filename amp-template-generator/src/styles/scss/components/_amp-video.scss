@@ -34,6 +34,14 @@
         -webkit-line-clamp: 3;
       }
 
+      .description-text-more {
+        color: $grey-700;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+        margin-right: 1.875rem;
+      }
+
       .transcript-button {
         display: flex;
         justify-content: center;
