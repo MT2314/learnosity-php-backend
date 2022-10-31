@@ -6,20 +6,20 @@ import { VideoProvider } from "./VideoContext";
 import Video from "./subcomponents/Video";
 
 export const defaultProps = {
-  type: "",
-  videoURL: "",
-  videoDescription: "",
-  videoCredit: "",
-  videoId: null,
+  videoState: {
+    videoSource: null,
+    videoURL: null,
+    videoDescription: null,
+    videoCredit: "",
+    videoId: null,
+  },
 };
 
 const VideoMain = ({ videoState = defaultProps, setProp = () => {} }) => {
   return (
-    <DndProvider backend={HTML5Backend}>
-      <VideoProvider videoState={videoState} setProp={setProp}>
-        <Video />
-      </VideoProvider>
-    </DndProvider>
+    <VideoProvider videoState={videoState} setProp={setProp}>
+      <Video />
+    </VideoProvider>
   );
 };
 

@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import styled from "@emotion/styled";
 import ReactPlayerLoader from "@brightcove/react-player-loader";
 import { VideoContext } from "../VideoContext";
+import TriangleIcon from "../assets/Triangle.png";
 
 const PlayerContainer = styled("div")({
   width: "80%",
@@ -13,8 +14,45 @@ const PlayerContainer = styled("div")({
   },
 });
 
-const Player = ({ videoId = null, setVideoData, videoData }) => {
+const StyledVideoDefaultContainer = styled("div")({
+  width: "760px",
+  height: "427.5px",
+  backgroundColor: "#EEEEEE",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+const StyledCircleContainer = styled("div")({
+  width: "200px",
+  height: "200px",
+  outline: "5px solid #E0E0E0",
+  borderRadius: "50%",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
+
+const StyledVideoContainer = styled("div")({
+  width: "100%",
+  maxWidth: "60.5rem",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+  paddingTop: "30px",
+});
+
+const StyledTriangleImage = styled("img")({
+  paddingLeft: "20px",
+});
+
+// WYSIWYG Editor
+import Quill from "quill";
+const Delta = Quill.import("delta");
+
+const Player = ({ videoId, videoSource }) => {
   const [state, dispatch] = useContext(VideoContext);
+  const [videoData, setVideoData] = useState(null);
 
   const BRIGHTCOVE_API = "https://edge.api.brightcove.com/playback/v1/accounts";
   const BRIGHTCOVE_ACCOUNT_ID = process.env.BRIGHTCOVE_ACCOUNT_ID;
@@ -22,56 +60,79 @@ const Player = ({ videoId = null, setVideoData, videoData }) => {
   const headers = {
     "BCOV-Policy": process.env.BRIGHTCOVE_POLICY_KEY,
   };
+
   useEffect(() => {
-    if (videoId !== null) {
+    const saveFetchData = () => {
       dispatch({
         func: "UPDATE_URL_DATA",
-        data: `${BRIGHTCOVE_API}/${BRIGHTCOVE_ACCOUNT_ID}/videos/${videoId}`,
+        videoURL: `${BRIGHTCOVE_API}/${BRIGHTCOVE_ACCOUNT_ID}/videos/${videoId}`,
         videoId: videoId,
+        videoSource: videoSource,
       });
-      loadVideo();
-    }
-  }, [videoId]);
-
-  const loadVideo = async () => {
-    const result = await fetch(state.videoURL, { headers });
-    setVideoData(await result.json());
-  };
-
-  const updateBody = () => {
-    let body = {
-      ops: [
-        {
-          insert: videoData?.long_description
-            ? videoData?.long_description.replace(/ /g, "\u00a0")
-            : "",
-        },
-      ],
     };
+    // Reset URL Data to null when video is deleted
+    if (videoId === null || videoSource === null) {
+      dispatch({
+        func: "UPDATE_URL_DATA",
+        data: null,
+        videoId: null,
+        videoSource: null,
+      });
+      setVideoData(null);
+    } else {
+      saveFetchData();
+    }
+  }, [videoId, videoSource]);
 
-    dispatch({
-      func: "CHANGE_DESCRIPTION",
-      description: body,
-    });
-    dispatch({
-      func: "CHANGE_CREDITS",
-      credit: videoData?.tags[0],
-    });
-  };
+  useEffect(() => {
+    let isSubscribed = true;
+    const apiCall = async () => {
+      const result = await fetch(state.videoURL, { headers });
+      const json = await result.json();
+      if (isSubscribed) {
+        setVideoData(json);
+      }
+    };
+    apiCall();
+    return () => (isSubscribed = false);
+  }, [state.videoURL]);
+
+  // Save Description and Credit to State
+  useEffect(() => {
+    if (videoData !== null) {
+      let parseBody = videoData?.long_description.replace(/ /g, "\u00a0");
+
+      let currentDelta = state.videoDescription
+        ? state.videoDescription.ops[0].insert
+        : null;
+      let delta = new Delta([
+        { insert: `${currentDelta !== null ? currentDelta : ""} ${parseBody}` },
+      ]);
+      dispatch({
+        func: "CHANGE_DESCRIPTION",
+        body: delta,
+      });
+      dispatch({
+        func: "CHANGE_CREDITS",
+        credit: videoData?.tags,
+      });
+    }
+  }, [videoData]);
 
   return (
     <PlayerContainer>
       {videoId == null && (
-        <ReactPlayerLoader
-          videoId={""}
-          BRIGHTCOVE_API={BRIGHTCOVE_API}
-          BRIGHTCOVE_ACCOUNT_ID={BRIGHTCOVE_ACCOUNT_ID}
-          accountId={BRIGHTCOVE_ACCOUNT_ID}
-        />
+        <StyledVideoContainer>
+          <StyledVideoDefaultContainer>
+            <StyledCircleContainer>
+              <StyledTriangleImage src={TriangleIcon} />
+            </StyledCircleContainer>
+          </StyledVideoDefaultContainer>
+        </StyledVideoContainer>
       )}
       {videoId !== null && (
         <ReactPlayerLoader
-          videoId={state.videoId}
+          videoId={videoId}
           BRIGHTCOVE_API={BRIGHTCOVE_API}
           BRIGHTCOVE_ACCOUNT_ID={BRIGHTCOVE_ACCOUNT_ID}
           accountId={BRIGHTCOVE_ACCOUNT_ID}

@@ -1,10 +1,9 @@
 import React, {
   useState,
-  useEffect,
+  useCallback,
   useRef,
   useMemo,
   useContext,
-  useCallback,
 } from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "@emotion/styled";
@@ -12,6 +11,7 @@ import styled from "@emotion/styled";
 // Internal Imports
 import VideoDescriptionCredit from "./VideoDescriptionCredit";
 import Player from "./Player";
+import Checkmark from "../../Video/assets/Checkmark";
 
 // ?Provider
 import Toolbar from "./Toolbar";
@@ -23,36 +23,15 @@ import { useTranslation, Trans } from "react-i18next";
 import { VideoContext } from "../VideoContext";
 
 //styled components for Accordion styles
-const StyledVideoDefaultContainer = styled("div")({
-  width: "760px",
-  height: "427.5px",
-  backgroundColor: "#EEEEEE",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
-const StyledCircleContainer = styled("div")({
-  width: "200px",
-  height: "200px",
-  outline: "5px solid #E0E0E0",
-  borderRadius: "50%",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-});
 
 const StyledVideoContainer = styled("div")({
-  width: "100%",
-  maxWidth: "60.5rem",
+  width: "760px",
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
   paddingTop: "30px",
-});
-
-const StyledTriangleImage = styled("img")({
-  paddingLeft: "20px",
+  marginLeft: "104px",
+  marginRight: "104px",
 });
 
 const StyledVideoDescriptionContainer = styled("div")({
@@ -69,17 +48,24 @@ const DescriptionCreditContainer = styled("div")({
   gap: "10px",
 });
 
-const TranscriptButtonContainer = styled("button")({
-  padding: "7px 12.5px !important",
-  backgroundColor: "#EBEBEB",
+const TranscriptButtonContainer = styled("button")(({ videoData }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "6px",
+  height: "32px",
+  width: "108px !important",
+  padding: !videoData ? "7px 12.5px" : "6px 10px 6px 6px",
+  backgroundColor: videoData ? "rgba(46, 125, 50, 1)" : "rgba(0, 0, 0, 0.08)",
+  color: videoData ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 0.38)",
   border: "none",
   borderRadius: "16px",
-  height: "32px",
   fontWeight: "400",
   fontSize: "13px",
+  lineHeight: "18px",
+  letterSpacing: "0.16px",
   textAlign: "center",
-  color: "#929292",
-});
+}));
 
 // InfoBox component
 const Video = () => {
@@ -104,8 +90,6 @@ const Video = () => {
     credit: null,
   });
 
-  const [videoData, setVideoData] = useState(null);
-
   const isVideo = useMemo(() => true, []);
   const videoRef = useRef();
 
@@ -122,6 +106,17 @@ const Video = () => {
   const handleTextClick = useCallback((e) => {
     e.stopPropagation();
     setVideoAreaFocused(false);
+  }, []);
+
+  // Set videoAPI if value is set in state
+  useMemo(() => {
+    if (state.videoSource && state.videoId) {
+      setVideoAPI({
+        videoSource: state.videoSource,
+        videoId: state.videoId,
+      });
+    }
+    console.log(state.videoId);
   }, []);
 
   return (
@@ -141,11 +136,7 @@ const Video = () => {
         setVideoTextSettings={setVideoTextSettings}
         setToolbar={setToolbar}
       />
-      <Player
-        videoId={videoAPI.videoId}
-        setVideoData={setVideoData}
-        videoData={videoData}
-      />
+      <Player videoId={videoAPI.videoId} videoSource={videoAPI.videoSource} />
       <StyledVideoContainer>
         <StyledVideoDescriptionContainer>
           <DescriptionCreditContainer>
@@ -166,7 +157,6 @@ const Video = () => {
                 setPlaceHolder={setPlaceHolder}
                 setVideoAPI={setVideoAPI}
                 videoAPI={videoAPI}
-                videoData={videoData}
                 description={state.videoDescription}
                 credit={state.videoCredit}
                 toolbar={toolbar}
@@ -175,7 +165,10 @@ const Video = () => {
               />
             </div>
           </DescriptionCreditContainer>
-          <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
+          <TranscriptButtonContainer videoData={state.videoId ? true : false}>
+            {state.videoId && <Checkmark />}
+            <span>{state.videoId ? "Transcript" : "No Transcript"}</span>
+          </TranscriptButtonContainer>
         </StyledVideoDescriptionContainer>
       </StyledVideoContainer>
     </div>
