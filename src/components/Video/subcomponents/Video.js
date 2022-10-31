@@ -14,7 +14,6 @@ import VideoDescriptionCredit from "./VideoDescriptionCredit";
 import Player from "./Player";
 
 // ?Provider
-import { VideoProvider } from "../VideoContext";
 import Toolbar from "./Toolbar";
 
 // Hook/utilities imports

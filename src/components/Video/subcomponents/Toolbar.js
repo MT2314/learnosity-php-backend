@@ -836,7 +836,7 @@ const ToolBar = ({
             </Tooltip>
           </StyledVideoToolbar>
 
-          <div ref={portalToolbarRef} style>
+          <div ref={portalToolbarRef}>
             {/* {!textMounted && ( */}
             {videoAreaFocused && (
               <StyledToolbar
