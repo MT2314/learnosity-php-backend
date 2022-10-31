@@ -20,12 +20,18 @@
     .description-flex-container {
       display: flex;
     
-      .description-text {
+      .description-text-less {
         color: $grey-700;
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.4rem;
         margin-right: 1.875rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        word-wrap: break-word;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
       }
 
       .transcript-button {
@@ -62,7 +68,8 @@
     }
   }
 
-  .show-more-button {
+  .show-more-button,
+  .show-less-button {
     text-transform: uppercase;
     color: $grey-700;
     font-weight: 700;
