@@ -20,7 +20,7 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import BrightspaceSVG from "../assets/Brightspace";
+import BrightcoveSVG from "../assets/Brightcove";
 import YoutubeSVG from "../assets/Youtube";
 import KebabSVG from "../assets/Kebab";
 import {
@@ -503,7 +503,7 @@ const ToolBar = ({
                               aria-labelledby={`brightcove select button`}
                               sx={{ marginTop: "8px" }}
                             >
-                              <BrightspaceSVG />
+                              <BrightcoveSVG />
                               <span style={{ marginLeft: "33.66px" }}>
                                 Add from Brightcove
                               </span>

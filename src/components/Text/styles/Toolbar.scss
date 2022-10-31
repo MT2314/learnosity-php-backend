@@ -4,6 +4,7 @@
 // Outer Toolbar Container
 .Toolbar-Container {
   position: fixed !important;
+  z-index: 1000;
   .MuiPaper-root {
     background-color: transparent !important;
   }

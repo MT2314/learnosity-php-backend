@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import styled from "@emotion/styled";
 import ReactPlayerLoader from "@brightcove/react-player-loader";
 import { VideoContext } from "../VideoContext";
@@ -53,6 +53,7 @@ const Delta = Quill.import("delta");
 const Player = ({ videoId, videoSource }) => {
   const [state, dispatch] = useContext(VideoContext);
   const [videoData, setVideoData] = useState(null);
+  const isMounted = useRef(false);
 
   const BRIGHTCOVE_API = "https://edge.api.brightcove.com/playback/v1/accounts";
   const BRIGHTCOVE_ACCOUNT_ID = process.env.BRIGHTCOVE_ACCOUNT_ID;
@@ -86,14 +87,18 @@ const Player = ({ videoId, videoSource }) => {
 
   useEffect(() => {
     let isSubscribed = true;
-    const apiCall = async () => {
-      const result = await fetch(state.videoURL, { headers });
-      const json = await result.json();
-      if (isSubscribed) {
-        setVideoData(json);
-      }
-    };
-    apiCall();
+    if (isMounted.current) {
+      const apiCall = async () => {
+        const result = await fetch(state.videoURL, { headers });
+        const json = await result.json();
+        if (isSubscribed) {
+          setVideoData(json);
+        }
+      };
+      apiCall();
+    } else {
+      isMounted.current = true;
+    }
     return () => (isSubscribed = false);
   }, [state.videoURL]);
 
@@ -106,18 +111,22 @@ const Player = ({ videoId, videoSource }) => {
         ? state.videoDescription.ops[0].insert
         : null;
       let delta = new Delta([
-        { insert: `${currentDelta !== null ? currentDelta : ""} ${parseBody}` },
+        {
+          insert: `${currentDelta !== null ? currentDelta : ""} ${parseBody}`,
+        },
       ]);
       dispatch({
         func: "CHANGE_DESCRIPTION",
         body: delta,
       });
       dispatch({
-        func: "CHANGE_CREDITS",
+        func: "CHANGE_CREDIT",
         credit: videoData?.tags,
       });
     }
   }, [videoData]);
+
+  // }, [videoData && !state.videoDescription]);
 
   return (
     <PlayerContainer>
@@ -140,6 +149,15 @@ const Player = ({ videoId, videoSource }) => {
       )}
     </PlayerContainer>
   );
+};
+
+export const useDidMountEffect = (func, deps) => {
+  const didMount = useRef(false);
+
+  useEffect(() => {
+    if (didMount.current) func();
+    else didMount.current = true;
+  }, deps);
 };
 
 export default Player;

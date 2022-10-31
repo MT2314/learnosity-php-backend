@@ -218,7 +218,6 @@ const ToolBar = ({
   portal,
 }) => {
   const { t } = useTranslation();
-  console.log(portal?.parentComponent);
   const setShowMath = useSetShowMath();
   const showMath = useShowMath();
   const showLink = useShowLink();
