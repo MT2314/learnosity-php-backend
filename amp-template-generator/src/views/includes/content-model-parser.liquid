@@ -17,7 +17,7 @@
     {%- when "Image" -%}
         {% include amp-image.html data:propName %}
     {%- when "Video" -%}
-        {% include amp-video.html data:propName %}
+        {% include amp-video.html data:propName dataID:item.id %}
     {%- when "Tab" -%}
         {% include amp-tabs.html data:item %}
     {%- when "IFrame" -%}

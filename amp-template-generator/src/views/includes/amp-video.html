@@ -1,7 +1,7 @@
 <div class="wrapper bottom-margin video-component">
-    {%- assign videoId = 'video' | append: data.id -%}
-    {%- assign showVideoId = 'showVideoId' | append: data.id -%}
-    {%- assign hideVideoId = 'hideVideoId' | append: data.id -%}
+    {%- assign videoId = 'video' | append: dataID -%}
+    {%- assign showVideoId = 'showVideoId' | append: dataID -%}
+    {%- assign hideVideoId = 'hideVideoId' | append: dataID -%}
     {%- assign buttonToggleVideo = false -%}
     {% if data.type == "brightcove" -%}
     
