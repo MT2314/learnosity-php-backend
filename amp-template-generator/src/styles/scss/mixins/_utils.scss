@@ -25,3 +25,12 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+@mixin remove-last-child-btm {
+    .wrapper {
+        &:last-child.bottom-margin {
+          // This clears the bottom-margin that is added to text/other components
+          margin-bottom: 0;
+        }
+      }
+}
