@@ -20,26 +20,27 @@
     .description-flex-container {
       display: flex;
     
-      .description-text-less {
-        color: $grey-700;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.4rem;
-        margin-right: 1.875rem;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        word-wrap: break-word;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-      }
-
+      .description-text-less,
       .description-text-more {
         color: $grey-700;
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.4rem;
         margin-right: 1.875rem;
+
+        @media (max-width: 759px) {
+          order: 2;
+          margin-top: 0.625rem;
+        }
+      }
+
+      .description-text-less {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        word-wrap: break-word;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
       }
 
       .transcript-button {
@@ -67,12 +68,24 @@
           @include outline-focus;
         }
 
+        @media (max-width: 759px) {
+          order: 1;
+        }
+
         svg {
           margin-right: 0.4375rem;
           height: 1rem;
           width: 1.0625rem;
         }
       }
+
+      @media (max-width: 759px) {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 759px) {
+      margin-top: 0.965625rem;
     }
   }
 
@@ -97,6 +110,10 @@
 
     &:focus-visible {
       @include outline-focus;
+    }
+
+    @media (max-width: 759px) {
+      order: 3;
     }
   }
 }
