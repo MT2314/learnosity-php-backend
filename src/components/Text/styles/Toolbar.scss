@@ -18,30 +18,11 @@
   min-height: 40px !important;
   height: 40px !important;
   gap: 10px;
+  .MuiPaper-root {
+    background-color: #fff !important;
+  }
 }
 
-// .Styled-Toolbar {
-//   display: flex;
-//   justify-content: space-between;
-//   border-left: var(--blueBorder-left) !important;
-//   width: var(--toolbar-width);
-//   height: 40px !important;
-//   min-height: 40px !important;
-//   margin: 10px 8px;
-//   padding-right: 0px !important;
-//   background-color: #fff;
-//   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-//   clip-path: inset(-10px 0px -10px -10px);
-//   border-radius: 4px;
-//   & .MuiToolbar-gutters {
-//     padding-left: 0;
-//     padding-right: 0;
-//   }
-//   & .MuiPaper-root {
-//     box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important;
-//     background-color: #fff !important;
-//   }
-// }
 .StyledMenu {
   background: #ffffff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
