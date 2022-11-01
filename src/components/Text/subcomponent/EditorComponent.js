@@ -22,6 +22,7 @@ import {
   useShowMath,
   useKeepEditor,
   useBoldRef,
+  useLinkRef,
   useSetEditorPos,
   useShowLink,
   useSetShowLink,
@@ -43,14 +44,16 @@ const Delta = Quill.import("delta");
 Quill.register("formats/mathpix", MathPixMarkdown);
 
 const StyledConfigBar = styled("div")(
-  ({ editorIsFocus, isInfoBox, infoAreaFocused }) => {
-    const display = isInfoBox
+  ({ editorIsFocus, isInfoBox, infoAreaFocused, portal }) => {
+    let display = isInfoBox
       ? infoAreaFocused
         ? "flex"
         : "none"
-      : editorIsFocus
+      : portal?.parentComponent && portal?.shouldPortal
       ? "flex"
       : "none";
+
+    display = !portal?.parentComponent && editorIsFocus ? "flex" : display;
 
     const configBarStyles = {
       display: display,
@@ -88,6 +91,7 @@ const EditorComponent = ({
   //context hooks
   const mathId = useMathId();
   const boldRef = useBoldRef();
+  const linkRef = useLinkRef();
   const setQuill = useSetQuill();
   const showMath = useShowMath();
   const showLink = useShowLink();
@@ -157,6 +161,7 @@ const EditorComponent = ({
     //on mount pass back focusRef
     isInfoBox &&
       setTextRef({ text: textRef.current, quill: focusRef?.current });
+    portal?.setTextRef && portal?.setTextRef(focusRef?.current);
   }, []);
 
   useEffect(() => {
@@ -271,7 +276,14 @@ const EditorComponent = ({
   const onKeyDropDown = (e) => {
     if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
-      boldRef?.current.focus();
+      if (
+        portal?.parentComponent &&
+        !portal?.disabledButtons?.includes("link")
+      ) {
+        linkRef.current.focus();
+      } else {
+        boldRef?.current.focus();
+      }
     }
   };
 
@@ -368,6 +380,7 @@ const EditorComponent = ({
         editorIsFocus={editorIsFocus}
         isInfoBox={isInfoBox}
         infoAreaFocused={infoAreaFocused}
+        portal={portal}
       >
         <CustomToolBar
           toolbarId={toolbarId}
