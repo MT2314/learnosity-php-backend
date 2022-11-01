@@ -1,7 +1,5 @@
 import React from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { v4 as uuidv4 } from "uuid";
+import { TabProvider } from "./subcomponents/TabContext";
 import { VideoProvider } from "./VideoContext";
 import Video from "./subcomponents/Video";
 
@@ -18,7 +16,9 @@ export const defaultProps = {
 const VideoMain = ({ videoState = defaultProps, setProp = () => {} }) => {
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
-      <Video />
+      <TabProvider>
+        <Video />
+      </TabProvider>
     </VideoProvider>
   );
 };

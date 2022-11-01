@@ -13,6 +13,12 @@ import styled from "@emotion/styled";
 import { TextareaAutosize } from "@material-ui/core";
 import Text from "../../Text/Text";
 
+import {
+  useSetFocused,
+  useSetDescriptionRef,
+  useSetCreditRef,
+} from "./TabContext";
+
 const VideoDescriptionCredit = ({
   videoAreaFocused,
   toolbar,
@@ -20,6 +26,11 @@ const VideoDescriptionCredit = ({
   t,
 }) => {
   const [state, dispatch] = useContext(VideoContext);
+
+  const setFocused = useSetFocused();
+  const setDescriptionRef = useSetDescriptionRef();
+  const setCreditRef = useSetCreditRef();
+
   const stateDescription = useState(
     () => state?.videoDescription,
     [state?.videoDescription]
@@ -28,8 +39,8 @@ const VideoDescriptionCredit = ({
   const [descriptionFocused, setDescriptionFocused] = useState(false);
   const [creditFocused, setCreditFocused] = useState(false);
 
-  const descriptionRef = useRef();
-  const creditRef = useRef();
+  const descRef = useRef();
+  const credRef = useRef();
 
   const updateDescription = useCallback((body) => {
     dispatch({ func: "CHANGE_DESCRIPTION", description: body.body });
@@ -47,6 +58,7 @@ const VideoDescriptionCredit = ({
       shouldPortal: !videoAreaFocused && !creditFocused,
       disabledButtons: [],
       setParentFocused: (result) => setVideoAreaFocused(result),
+      setTextRef: (result) => setDescriptionRef(result),
     };
   }, [toolbar, videoAreaFocused, creditFocused]);
 
@@ -56,24 +68,27 @@ const VideoDescriptionCredit = ({
       placeholder: "Credit",
       toolbarReference: toolbar,
       shouldPortal: !videoAreaFocused && !descriptionFocused,
-      disabledButtons: [],
+      disabledButtons: ["bold", "align", "list"],
       setParentFocused: (result) => setVideoAreaFocused(result),
+      setTextRef: (result) => setCreditRef(result),
     };
   }, [toolbar, videoAreaFocused, descriptionFocused]);
 
   const handleDescriptionClick = useCallback((e) => {
     setDescriptionFocused(true);
     setCreditFocused(false);
+    setFocused("Description");
   }, []);
   const handleCreditClick = useCallback((e) => {
     setCreditFocused(true);
     setDescriptionFocused(false);
+    setFocused("Credit");
   }, []);
 
   return (
     <>
       <div
-        ref={descriptionRef}
+        ref={descRef}
         style={{ position: "relative", minHeight: "20px", width: "622px" }}
         onClick={handleDescriptionClick}
         onFocus={handleDescriptionClick}
@@ -87,7 +102,7 @@ const VideoDescriptionCredit = ({
       </div>
 
       <div
-        ref={creditRef}
+        ref={credRef}
         style={{ position: "relative", minHeight: "20px", width: "622px" }}
         onClick={handleCreditClick}
         onFocus={handleCreditClick}

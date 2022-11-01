@@ -8,6 +8,8 @@ import React, {
 } from "react";
 import { VideoContext } from "../VideoContext";
 
+import { useFocused, useDescriptionRef, useCreditRef } from "./TabContext";
+
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import { tooltipClasses } from "@mui/material/Tooltip";
 
@@ -156,6 +158,16 @@ const StyledVideoButton = styled(Button)(({ openVideo }) => ({
     boxShadow: "none",
     color: "#1565C0",
   },
+  "&:active": {
+    background: "transparent",
+    boxShadow: "none",
+    color: "#1565C0",
+  },
+  "&:focus-visible": {
+    background: "transparent",
+    boxShadow: "none",
+    color: "#1565C0",
+  },
   "&:disabled": { background: "none" },
 }));
 
@@ -211,6 +223,26 @@ const StyledKebabButton = styled(IconButton)(({ disabled, open, checked }) => ({
     cursor: "pointer",
     backgroundColor: "rgba(21, 101, 192, 0.12) !important",
   }),
+  "& svg": {
+    fill: "#000",
+    ...(disabled && { opacity: 0.3 }),
+  },
+  "&:hover": {
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    "& svg": {
+      fill: "rgba(21, 101, 192, 1)",
+    },
+  },
+  "&:active": {
+    cursor: "pointer",
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+    "& svg": {
+      color: "rgba(21, 101, 192, 1)",
+    },
+  },
+  "&:focus-visible": {
+    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
+  },
 }));
 const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
   height: "24px",
@@ -312,6 +344,11 @@ const ToolBar = ({
   const { t } = useTranslation();
 
   const [state, dispatch] = useContext(VideoContext);
+
+  const focused = useFocused();
+  const descriptionRef = useDescriptionRef();
+  const creditRef = useCreditRef();
+
   // Video
   const [openVideo, setVideoOpen] = useState(false);
   const [openTranscript, setTranscriptOpen] = useState(false);
@@ -406,6 +443,15 @@ const ToolBar = ({
     }));
   };
 
+  const handleShiftTab = (e) => {
+    if (e.shiftKey && e.key === "Tab") {
+      if (focused === "Credit") {
+        e.preventDefault();
+        descriptionRef.focus();
+      }
+    }
+  };
+
   useEffect(() => {
     if (videoAPI.videoId) {
       videoAPI.videoSource === "brightcove" && setSelectBrightcove(true);
@@ -424,6 +470,7 @@ const ToolBar = ({
         className="ToolbarDummy-Container"
         disconnect={disconnect}
         ref={setMainToolbar}
+        onKeyDown={handleShiftTab}
       >
         <StyledAppbar position="static">
           {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
@@ -850,6 +897,58 @@ const ToolBar = ({
               </StyledVideoButton>
             </Tooltip>
           </StyledVideoToolbar>
+
+          <div ref={portalToolbarRef}>
+            {/* {!textMounted && ( */}
+            {videoAreaFocused && (
+              <StyledToolbar
+                isVideo={isVideo}
+                variant="dense"
+                disableGutters
+                test-id="infoBox-toolbar"
+                className="ql-toolbar ql-snow StyledDummy-Toolbar"
+              >
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  className="bolddummy-dropdown-button"
+                >
+                  {icons["customBold"]}
+                </StyledIconButton>
+                {/* alignment dropdown */}
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  color="inherit"
+                  className={"align-button"}
+                  aria-label="alignment buttons dropdown"
+                  data-alignid="alignment-dropdown"
+                >
+                  {icons["align"]}
+                </StyledIconButton>
+
+                {/* bullets drowdown starts */}
+
+                <StyledIconButton disableRipple disabled>
+                  {icons["bullet"]}
+                </StyledIconButton>
+
+                {/* link btn and divider */}
+                <Divider />
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  sx={{
+                    padding: "3px 5px !important",
+                    width: "28px !important",
+                    height: "100% !important",
+                  }}
+                >
+                  {icons["link"]}
+                </StyledIconButton>
+              </StyledToolbar>
+            )}
+          </div>
           {/* {/* Video Kebab */}
           <div
             style={{
@@ -1001,57 +1100,6 @@ const ToolBar = ({
                 </Grow>
               )}
             </Popper>
-          </div>
-          <div ref={portalToolbarRef}>
-            {/* {!textMounted && ( */}
-            {videoAreaFocused && (
-              <StyledToolbar
-                isVideo={isVideo}
-                variant="dense"
-                disableGutters
-                test-id="infoBox-toolbar"
-                className="ql-toolbar ql-snow StyledDummy-Toolbar"
-              >
-                <StyledIconButton
-                  disableRipple
-                  disabled
-                  className="bolddummy-dropdown-button"
-                >
-                  {icons["customBold"]}
-                </StyledIconButton>
-                {/* alignment dropdown */}
-                <StyledIconButton
-                  disableRipple
-                  disabled
-                  color="inherit"
-                  className={"align-button"}
-                  aria-label="alignment buttons dropdown"
-                  data-alignid="alignment-dropdown"
-                >
-                  {icons["align"]}
-                </StyledIconButton>
-
-                {/* bullets drowdown starts */}
-
-                <StyledIconButton disableRipple disabled>
-                  {icons["bullet"]}
-                </StyledIconButton>
-
-                {/* link btn and divider */}
-                <Divider />
-                <StyledIconButton
-                  disableRipple
-                  disabled
-                  sx={{
-                    padding: "3px 5px !important",
-                    width: "28px !important",
-                    height: "100% !important",
-                  }}
-                >
-                  {icons["link"]}
-                </StyledIconButton>
-              </StyledToolbar>
-            )}
           </div>
         </StyledAppbar>
       </Container>

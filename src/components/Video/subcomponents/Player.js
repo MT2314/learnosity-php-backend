@@ -111,18 +111,15 @@ const Player = ({ videoId, videoSource }) => {
         "\u00a0"
       )}`;
 
-      let parseCredit = `${videoData?.tags[0]}`;
-
-      console.log(parseDescription);
-      console.log(parseCredit);
+      // let parseCredit = `${videoData?.tags[0]}`;
 
       let currentDescription = state.videoDescription
         ? state.videoDescription.ops[0].insert
         : null;
 
-      let currentCredit = state.videoCredit
-        ? state.videoCredit.ops[0].insert
-        : null;
+      // let currentCredit = state.videoCredit
+      //   ? state.videoCredit.ops[0].insert
+      //   : null;
 
       let descriptionDelta = new Delta([
         {
@@ -132,22 +129,20 @@ const Player = ({ videoId, videoSource }) => {
         },
       ]);
 
-      let creditDelta = new Delta([
-        {
-          insert: `${
-            currentCredit !== null ? currentCredit : ""
-          } ${parseCredit}`,
-        },
-      ]);
+      // let creditDelta = new Delta([
+      //   {
+      //     insert: parseCredit,
+      //   },
+      // ]);
 
       dispatch({
         func: "CHANGE_DESCRIPTION",
         description: descriptionDelta,
       });
-      dispatch({
-        func: "CHANGE_CREDIT",
-        credit: creditDelta,
-      });
+      // dispatch({
+      //   func: "CHANGE_CREDIT",
+      //   credit: creditDelta,
+      // });
     }
   }, [videoData]);
 

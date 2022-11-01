@@ -5,6 +5,7 @@ import {
   useSetShowMath,
   useShowMath,
   useBoldRef,
+  useLinkRef,
   useShowLink,
   useSetShowLink,
   useQuill,
@@ -192,14 +193,6 @@ const CustomToolBar = (props) => {
       ) : (
         <ToolBar {...props} />
       )}
-      {/* {props?.portal?.shouldPortal && props?.portal?.toolbarReference ? (
-        ReactDOM.createPortal(
-          <ToolBar {...props} />,
-          props?.portal?.toolbarReference
-        )
-      ) : (
-        <ToolBar {...props} />
-      )} */}
     </>
   );
 };
@@ -223,6 +216,7 @@ const ToolBar = ({
   const setShowLink = useSetShowLink();
   const quill = useQuill();
   const boldRef = useBoldRef();
+  const linkRef = useLinkRef();
   const setLinkRange = useSetLinkRange();
   const isLink = useIsLink();
 
@@ -333,7 +327,7 @@ const ToolBar = ({
     >
       <StyledAppbar className="Style-Appbar" position="static" ref={AppBar}>
         {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
-        {/* {isInfoBox && (
+        {isInfoBox && (
           <StyledIconDropdownButton
             ref={IconDropDown}
             id="iconToolBar"
@@ -403,7 +397,7 @@ const ToolBar = ({
               )}
             </Popper>
           </StyledIconDropdownButton>
-        )} */}
+        )}
         <div>
           <StyledToolbar
             id={toolbarId}
@@ -422,7 +416,9 @@ const ToolBar = ({
             >
               <StyledIconButton
                 ref={boldRef}
-                disabled={infoHasFocus}
+                disabled={
+                  infoHasFocus || portal?.disabledButtons?.includes("bold")
+                }
                 disableRipple
                 color="inherit"
                 onClick={() => {
@@ -504,7 +500,9 @@ const ToolBar = ({
             >
               <StyledIconButton
                 ref={alignRef}
-                disabled={infoHasFocus}
+                disabled={
+                  infoHasFocus || portal?.disabledButtons?.includes("align")
+                }
                 disableRipple
                 color="inherit"
                 onClick={() => {
@@ -556,7 +554,9 @@ const ToolBar = ({
             >
               <StyledIconButton
                 ref={listRef}
-                disabled={infoHasFocus}
+                disabled={
+                  infoHasFocus || portal?.disabledButtons?.includes("list")
+                }
                 disableRipple
                 color="inherit"
                 onClick={() => {
@@ -596,6 +596,7 @@ const ToolBar = ({
             <Divider />
             <Tooltip aria-label="link" title="link" placement="top" arrow>
               <StyledIconButton
+                ref={linkRef}
                 disabled={infoHasFocus}
                 disableRipple
                 color="inherit"
