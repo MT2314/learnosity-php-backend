@@ -125,7 +125,7 @@ const Player = ({ videoId, videoSource }) => {
         {
           insert: `${
             currentDescription !== null ? currentDescription : ""
-          } ${parseDescription}`,
+          } ${parseDescription}\n`,
         },
       ]);
 

@@ -13,6 +13,8 @@ import { useFocused, useDescriptionRef, useCreditRef } from "./TabContext";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import { tooltipClasses } from "@mui/material/Tooltip";
 
+import ClickAwayListener from "@mui/base/ClickAwayListener";
+
 import styled from "@emotion/styled";
 import icons from "../assets/icons";
 // ? Video imports
@@ -365,10 +367,17 @@ const ToolBar = ({
   const inputError = useRef(null);
   const portalToolbarRef = useRef(null);
 
+  const selectRef = useRef(null);
+
   useOnClickOutside(AppBar, () => {
     toggleCloseToolbar(["Video", "Kebab"]);
   });
 
+  useOnClickOutside(selectRef, () => {
+    setVideoOpen(false);
+    setTranscriptOpen(false);
+    setDescriptionKebabOpen(false);
+  });
   const toggleCloseToolbar = (source) => {
     if (
       source.includes("Kebab") ||
@@ -475,7 +484,11 @@ const ToolBar = ({
         <StyledAppbar position="static">
           {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
 
-          <StyledVideoToolbar position="static" selected={videoAPI.videoId}>
+          <StyledVideoToolbar
+            position="static"
+            selected={videoAPI.videoId}
+            ref={selectRef}
+          >
             {/* Add Video Drop Down */}
             <Tooltip
               aria-label={videoAPI.videoId ? "change video" : "add video"}
