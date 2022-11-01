@@ -26,6 +26,7 @@ const StyledAccordionDetails = styled(AccordionDetails)(
     padding: "10px",
     borderStyle: "solid",
     borderColor: "#BDBDBD",
+    borderWidth: "0 0.0625rem 0.0625rem 0.0625rem",
   })
 );
 
@@ -99,7 +100,7 @@ const AccordionItem = ({
     [components]
   );
 
-  // Adding space between Cap except iFrame
+  // Adjust item name for better viewing
   const trimCap = (item) => {
     switch (item) {
       case "IFrame":
