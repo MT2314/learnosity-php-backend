@@ -110,16 +110,9 @@ const Player = ({ videoId, videoSource }) => {
         / /g,
         "\u00a0"
       )}`;
-
-      // let parseCredit = `${videoData?.tags[0]}`;
-
       let currentDescription = state.videoDescription
         ? state.videoDescription.ops[0].insert
         : null;
-
-      // let currentCredit = state.videoCredit
-      //   ? state.videoCredit.ops[0].insert
-      //   : null;
 
       let descriptionDelta = new Delta([
         {
@@ -129,20 +122,10 @@ const Player = ({ videoId, videoSource }) => {
         },
       ]);
 
-      // let creditDelta = new Delta([
-      //   {
-      //     insert: parseCredit,
-      //   },
-      // ]);
-
       dispatch({
         func: "CHANGE_DESCRIPTION",
         description: descriptionDelta,
       });
-      // dispatch({
-      //   func: "CHANGE_CREDIT",
-      //   credit: creditDelta,
-      // });
     }
   }, [videoData]);
 
@@ -167,15 +150,6 @@ const Player = ({ videoId, videoSource }) => {
       )}
     </PlayerContainer>
   );
-};
-
-export const useDidMountEffect = (func, deps) => {
-  const didMount = useRef(false);
-
-  useEffect(() => {
-    if (didMount.current) func();
-    else didMount.current = true;
-  }, deps);
 };
 
 export default Player;

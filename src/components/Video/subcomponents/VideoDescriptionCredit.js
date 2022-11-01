@@ -1,6 +1,5 @@
 import React, {
   useContext,
-  useEffect,
   useCallback,
   useMemo,
   useState,
@@ -9,8 +8,6 @@ import React, {
 
 import { VideoContext } from "../VideoContext";
 
-import styled from "@emotion/styled";
-import { TextareaAutosize } from "@material-ui/core";
 import Text from "../../Text/Text";
 
 import {
@@ -30,11 +27,6 @@ const VideoDescriptionCredit = ({
   const setFocused = useSetFocused();
   const setDescriptionRef = useSetDescriptionRef();
   const setCreditRef = useSetCreditRef();
-
-  const stateDescription = useState(
-    () => state?.videoDescription,
-    [state?.videoDescription]
-  );
 
   const [descriptionFocused, setDescriptionFocused] = useState(false);
   const [creditFocused, setCreditFocused] = useState(false);
@@ -93,6 +85,7 @@ const VideoDescriptionCredit = ({
         onClick={handleDescriptionClick}
         onFocus={handleDescriptionClick}
       >
+        {/* Description Text box */}
         <Text
           body={state.videoDescription}
           setProp={updateDescription}
@@ -107,6 +100,7 @@ const VideoDescriptionCredit = ({
         onClick={handleCreditClick}
         onFocus={handleCreditClick}
       >
+        {/* Credit Text box */}
         <Text
           body={state.videoCredit}
           setProp={updateCredit}

@@ -5,8 +5,9 @@ import React, {
   useMemo,
   useContext,
 } from "react";
-import { v4 as uuidv4 } from "uuid";
 import styled from "@emotion/styled";
+import { useTranslation } from "react-i18next";
+
 
 // Internal Imports
 import VideoDescriptionCredit from "./VideoDescriptionCredit";
@@ -19,7 +20,6 @@ import Toolbar from "./Toolbar";
 // Hook/utilities imports
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 // Localization import
-import { useTranslation, Trans } from "react-i18next";
 import { VideoContext } from "../VideoContext";
 
 import { useSetFocused } from "./TabContext";
@@ -107,7 +107,6 @@ const Video = () => {
   });
 
   const videoFocused = (e) => {
-    if (window.getSelection().toString().length > 0) return;
     setFocused("Video");
     setDisconnect(false);
     setVideoAreaFocused(true);
