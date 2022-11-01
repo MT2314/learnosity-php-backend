@@ -106,28 +106,50 @@ const Player = ({ videoId, videoSource }) => {
   // Save Description and Credit to State
   useEffect(() => {
     if (videoData !== null) {
-      let parseBody = videoData?.long_description.replace(/ /g, "\u00a0");
+      let parseDescription = `${videoData?.long_description.replace(
+        / /g,
+        "\u00a0"
+      )}`;
 
-      let currentDelta = state.videoDescription
+      let parseCredit = `${videoData?.tags[0]}`;
+
+      console.log(parseDescription);
+      console.log(parseCredit);
+
+      let currentDescription = state.videoDescription
         ? state.videoDescription.ops[0].insert
         : null;
-      let delta = new Delta([
+
+      let currentCredit = state.videoCredit
+        ? state.videoCredit.ops[0].insert
+        : null;
+
+      let descriptionDelta = new Delta([
         {
-          insert: `${currentDelta !== null ? currentDelta : ""} ${parseBody}`,
+          insert: `${
+            currentDescription !== null ? currentDescription : ""
+          } ${parseDescription}`,
         },
       ]);
+
+      let creditDelta = new Delta([
+        {
+          insert: `${
+            currentCredit !== null ? currentCredit : ""
+          } ${parseCredit}`,
+        },
+      ]);
+
       dispatch({
         func: "CHANGE_DESCRIPTION",
-        body: delta,
+        description: descriptionDelta,
       });
       dispatch({
         func: "CHANGE_CREDIT",
-        credit: videoData?.tags,
+        credit: creditDelta,
       });
     }
   }, [videoData]);
-
-  // }, [videoData && !state.videoDescription]);
 
   return (
     <PlayerContainer>

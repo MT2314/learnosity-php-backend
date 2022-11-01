@@ -121,7 +121,6 @@ const Video = () => {
         videoId: state.videoId,
       });
     }
-    console.log(state.videoId);
   }, []);
 
   return (

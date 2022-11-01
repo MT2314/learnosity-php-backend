@@ -17,10 +17,12 @@ export const videoConfig = (draft, action) => {
       draft.videoSource = action.videoSource;
       return draft;
     case "CHANGE_DESCRIPTION":
-      draft.videoDescription = action.body;
+      draft.videoDescription = action.description;
       return draft;
     case "CHANGE_CREDIT":
       draft.videoCredit = action.credit;
+      return draft;
+    default:
       return draft;
   }
 };
