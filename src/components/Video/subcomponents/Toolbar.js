@@ -29,7 +29,6 @@ import {
 
 import { useTranslation } from "react-i18next";
 
-
 import BrightcoveSVG from "../assets/Brightcove";
 import YoutubeSVG from "../assets/Youtube";
 import KebabSVG from "../assets/Kebab";
@@ -401,6 +400,13 @@ const ToolBar = ({
     setVideoOpen(false);
     toggleCloseToolbar("Transcript");
     e.target.contains(TranscriptVideo.current) && setTranscriptOpen(!openVideo);
+    const texts = ["line 1 ", "line 2 ", "line 3 "]; // text content
+    const element = document.createElement("a"); // anchor link
+    const file = new Blob(texts, { type: "text/plain" }); // file object
+    element.href = URL.createObjectURL(file);
+    element.download = "100ideas.txt";
+    document.body.appendChild(element); // simulate link click
+    element.click(); // Required for this to work in FireFox
   };
   const handleToggleVideoKebab = () => {
     toggleCloseToolbar("Kebab");
