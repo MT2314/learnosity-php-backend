@@ -2,21 +2,8 @@ import React, {
   useState,
   useEffect,
   useRef,
-  useContext,
-  useCallback,
-  useMemo,
+  useContext
 } from "react";
-import { VideoContext } from "../VideoContext";
-
-import { useFocused, useDescriptionRef, useCreditRef } from "./TabContext";
-
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import { tooltipClasses } from "@mui/material/Tooltip";
-
-import ClickAwayListener from "@mui/base/ClickAwayListener";
-
-import styled from "@emotion/styled";
-import icons from "../assets/icons";
 // ? Video imports
 import Input from "@mui/material/Input";
 import FormGroup from "@mui/material/FormGroup";
@@ -24,9 +11,9 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import BrightcoveSVG from "../assets/Brightcove";
-import YoutubeSVG from "../assets/Youtube";
-import KebabSVG from "../assets/Kebab";
+import { tooltipClasses } from "@mui/material/Tooltip";
+import styled from "@emotion/styled";
+
 import {
   Popper,
   Grow,
@@ -41,6 +28,18 @@ import {
 } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
+
+
+import BrightcoveSVG from "../assets/Brightcove";
+import YoutubeSVG from "../assets/Youtube";
+import KebabSVG from "../assets/Kebab";
+
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
+
+import { VideoContext } from "../VideoContext";
+
+import { useFocused, useDescriptionRef } from "./TabContext";
+import icons from "../assets/icons";
 
 // * Styled Components
 
@@ -60,6 +59,7 @@ const Container = styled("div")(({ disconnect }) => ({
     backgroundColor: "#fff",
   },
 }));
+
 // ? Styled Tooltip
 const StyledTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -345,11 +345,10 @@ const ToolBar = ({
 }) => {
   const { t } = useTranslation();
 
-  const [state, dispatch] = useContext(VideoContext);
+  const [state] = useContext(VideoContext);
 
   const focused = useFocused();
   const descriptionRef = useDescriptionRef();
-  const creditRef = useCreditRef();
 
   // Video
   const [openVideo, setVideoOpen] = useState(false);

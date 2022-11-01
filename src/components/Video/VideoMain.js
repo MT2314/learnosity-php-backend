@@ -1,8 +1,8 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 import { TabProvider } from "./subcomponents/TabContext";
 import { VideoProvider } from "./VideoContext";
 import Video from "./subcomponents/Video";
-import { v4 as uuidv4 } from "uuid";
 
 export const defaultProps = {
   videoState: {
