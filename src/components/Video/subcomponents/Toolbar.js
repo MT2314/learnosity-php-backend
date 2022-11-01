@@ -52,6 +52,9 @@ const Container = styled("div")(({ disconnect }) => ({
   "& .MuiPaper-root": {
     backgroundColor: "transparent",
   },
+  "& .StyledCard .MuiPaper-root": {
+    backgroundColor: "#fff",
+  },
 }));
 // ? Styled Tooltip
 const StyledTooltip = styled(({ className, ...props }) => (
@@ -78,12 +81,15 @@ const StyledAppbar = styled(AppBar)({
   minHeight: "40px !important",
   gap: "10px",
   boxShadow: "none !important",
+  "& .MuiPaper-root": {
+    backgroundColor: "#fff",
+  },
 });
 
 // ? Styled Text Toolbar (Possibly Temp)
 const StyledToolbar = styled(Toolbar)(({}) => ({
   display: "flex",
-  justifyContent: "space-evenly",
+  justifyContent: "space-between",
   borderLeft: "none !important",
   height: "40px !important",
   minHeight: "40px !important",
@@ -92,6 +98,8 @@ const StyledToolbar = styled(Toolbar)(({}) => ({
   paddingRight: "0px !important",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px 0 rgba(0, 0, 0, 0.1)",
+  clipPath: "inset(-10px 0px -10px -10px)",
+
   borderRadius: "4px",
   "& .MuiToolbar-gutters": {
     paddingLeft: 0,
@@ -144,7 +152,8 @@ const StyledVideoButton = styled(Button)(({ openVideo }) => ({
     color: "rgba(21, 101, 192, 1)",
   }),
   "&:hover": {
-    background: "#FFF",
+    background: "transparent",
+    boxShadow: "none",
     color: "#1565C0",
   },
   "&:disabled": { background: "none" },
@@ -850,7 +859,7 @@ const ToolBar = ({
                 variant="dense"
                 disableGutters
                 test-id="infoBox-toolbar"
-                className="StyledDummy-Toolbar"
+                className="ql-toolbar ql-snow StyledDummy-Toolbar"
               >
                 <StyledIconButton
                   disableRipple
@@ -910,7 +919,6 @@ const ToolBar = ({
               backgroundColor: "white",
               boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px",
               clipPath: "inset(-10px -10px -10px 1px)",
-              zIndex: "1000",
             }}
           >
             <Divider style={{ float: "left" }} />
