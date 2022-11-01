@@ -332,32 +332,34 @@ const EditorComponent = ({
         setEditorIsFocus(true);
         setTabActive(true);
       }}
-      // onBlur={(e) => {
-      //   const relatedTarget = e.relatedTarget || document.activeElement;
-      //   if (relatedTarget.tagName === "BODY") {
-      //     e.preventDefault();
-      //     return;
-      //   }
+      onBlur={(e) => {
+        const relatedTarget = e.relatedTarget || document.activeElement;
+        if (relatedTarget.tagName === "BODY") {
+          e.preventDefault();
+          return;
+        }
 
-      //   if (toolbar?.current?.contains(relatedTarget)) {
-      //     e.preventDefault();
-      //     return;
-      //   }
+        if (portal?.shouldPortal) return;
 
-      //   if (
-      //     (!relatedTarget ||
-      //       (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
-      //     !showMath &&
-      //     !showLink &&
-      //     !infoHasFocus
-      //   ) {
-      //     setEditorIsFocus(false);
-      //     setShowEditor(false);
-      //     setActiveComponent(false);
-      //     setTabActive(false);
-      //     setCloseToolBar(false);
-      //   }
-      // }}
+        if (toolbar?.current?.contains(relatedTarget)) {
+          e.preventDefault();
+          return;
+        }
+
+        if (
+          (!relatedTarget ||
+            (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
+          !showMath &&
+          !showLink &&
+          !infoHasFocus
+        ) {
+          setEditorIsFocus(false);
+          setShowEditor(false);
+          setActiveComponent(false);
+          setTabActive(false);
+          setCloseToolBar(false);
+        }
+      }}
       className="text-editor"
       id={`toolbar-${toolbarId}`}
       data-testid="text-editor-component"

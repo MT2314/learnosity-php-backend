@@ -76,9 +76,11 @@ const Video = () => {
   const [videoHasFocus, setVideoHasFocus] = useState(false);
   const [videoAreaFocused, setVideoAreaFocused] = useState(false);
 
-  const [videoBody, setVideoBody] = useState(null);
-  const [placeHolder, setPlaceHolder] = useState(null);
   const [toolbar, setToolbar] = useState(null);
+
+  const [disconnect, setDisconnect] = useState(true);
+
+  const [mainToolbar, setMainToolbar] = useState(null);
 
   const [videoAPI, setVideoAPI] = useState({
     videoSource: "",
@@ -96,15 +98,18 @@ const Video = () => {
   useOnClickOutside(videoRef, () => {
     setVideoHasFocus(false);
     setVideoAreaFocused(false);
+    setDisconnect(true);
   });
 
   const videoFocused = (e) => {
-    console.log("VIDEO FOCUSED CLICKED/FOCUSED");
+    if (window.getSelection().toString().length > 0) return;
+    setDisconnect(false);
     setVideoAreaFocused(true);
   };
 
   const handleTextClick = useCallback((e) => {
     e.stopPropagation();
+    setDisconnect(false);
     setVideoAreaFocused(false);
   }, []);
 
@@ -126,7 +131,34 @@ const Video = () => {
       ref={videoRef}
       onClick={(e) => videoFocused(e)}
       onFocus={(e) => videoFocused(e)}
-      onBlur={(e) => e.stopPropagation()}
+      onBlur={(e) => {
+        const relatedTarget = e.relatedTarget || document.activeElement;
+
+        if (relatedTarget.tagName === "BODY") {
+          e.preventDefault();
+          return;
+        }
+        console.log({
+          relatedTarget,
+          one: Boolean(!toolbar.contains(relatedTarget)),
+          two: Boolean(!relatedTarget?.contains(videoRef?.current)),
+          three: Boolean(!relatedTarget?.classList.contains("ql-editor")),
+          four: Boolean(
+            !relatedTarget?.classList.contains("ToolbarDummy-Container")
+          ),
+        });
+
+        if (
+          !toolbar.contains(relatedTarget) &&
+          !relatedTarget?.contains(videoRef?.current) &&
+          !relatedTarget?.classList.contains("ql-editor") &&
+          !mainToolbar.contains(relatedTarget)
+        ) {
+          console.log("HERE");
+          e.preventDefault();
+          setDisconnect(true);
+        }
+      }}
     >
       <Toolbar
         isVideo={isVideo}
@@ -135,6 +167,8 @@ const Video = () => {
         videoAPI={videoAPI}
         setVideoTextSettings={setVideoTextSettings}
         setToolbar={setToolbar}
+        disconnect={disconnect}
+        setMainToolbar={setMainToolbar}
       />
       <Player videoId={videoAPI.videoId} videoSource={videoAPI.videoSource} />
       <StyledVideoContainer>
@@ -153,8 +187,6 @@ const Video = () => {
                 videoHasFocus={videoHasFocus}
                 videoAreaFocused={videoAreaFocused}
                 setVideoHasFocus={setVideoHasFocus}
-                setVideoBody={setVideoBody}
-                setPlaceHolder={setPlaceHolder}
                 setVideoAPI={setVideoAPI}
                 videoAPI={videoAPI}
                 description={state.videoDescription}

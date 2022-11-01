@@ -41,8 +41,8 @@ import { useTranslation } from "react-i18next";
 // * Styled Components
 
 // ? Styled Container
-const Container = styled("div")({
-  display: "block !important",
+const Container = styled("div")(({ disconnect }) => ({
+  display: disconnect ? "none" : "block !important",
   position: "fixed !important",
   top: "100px !important",
   left: "30% !important",
@@ -52,7 +52,7 @@ const Container = styled("div")({
   "& .MuiPaper-root": {
     backgroundColor: "transparent",
   },
-});
+}));
 // ? Styled Tooltip
 const StyledTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -297,6 +297,8 @@ const ToolBar = ({
   videoAPI = null,
   setVideoTextSettings,
   setToolbar,
+  disconnect,
+  setMainToolbar,
 }) => {
   const { t } = useTranslation();
 
@@ -411,6 +413,8 @@ const ToolBar = ({
         onClick={(e) => e.stopPropagation()}
         onFocus={(e) => e.stopPropagation()}
         className="ToolbarDummy-Container"
+        disconnect={disconnect}
+        ref={setMainToolbar}
       >
         <StyledAppbar position="static">
           {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}

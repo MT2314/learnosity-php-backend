@@ -63,7 +63,6 @@ const CreditInput = styled("input")({
 
 const VideoDescriptionCredit = ({
   videoAreaFocused,
-  setVideoBody,
   toolbar,
   setVideoAreaFocused,
   t,
@@ -83,12 +82,6 @@ const VideoDescriptionCredit = ({
   const updateBody = useCallback((body) => {
     dispatch({ func: "CHANGE_DESCRIPTION", body: body.body });
   });
-
-  useEffect(() => {
-    if (descriptionRef.current) {
-      setVideoBody(descriptionRef.current);
-    }
-  }, []);
 
   const portalDescription = useMemo(() => {
     return {
