@@ -3,6 +3,9 @@ import { createContext, useContextSelector } from "use-context-selector";
 
 const useStore = () => {
   const boldRef = useRef(null);
+  const linkRef = useRef(null);
+
+
   const [quill, setQuill] = useState(null);
   const [uniqueId, setUniqueId] = useState(null);
   const [showMath, setShowMath] = useState(false);
@@ -49,6 +52,7 @@ const useStore = () => {
     mathId,
     format,
     boldRef,
+    linkRef,
     setQuill,
     setUniqueId,
     setEditState,
@@ -77,6 +81,7 @@ const getState = (state) => useContextSelector(StoreContext, (s) => s[state]);
 
 //Refs
 export const useBoldRef = () => getState("boldRef");
+export const useLinkRef = () => getState("linkRef");
 
 //Get States
 export const useQuill = () => getState("quill");

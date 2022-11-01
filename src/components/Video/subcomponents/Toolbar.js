@@ -8,6 +8,8 @@ import React, {
 } from "react";
 import { VideoContext } from "../VideoContext";
 
+import { useFocused, useDescriptionRef, useCreditRef } from "./TabContext";
+
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import { tooltipClasses } from "@mui/material/Tooltip";
 
@@ -312,6 +314,11 @@ const ToolBar = ({
   const { t } = useTranslation();
 
   const [state, dispatch] = useContext(VideoContext);
+
+  const focused = useFocused();
+  const descriptionRef = useDescriptionRef();
+  const creditRef = useCreditRef();
+
   // Video
   const [openVideo, setVideoOpen] = useState(false);
   const [openTranscript, setTranscriptOpen] = useState(false);
@@ -406,6 +413,15 @@ const ToolBar = ({
     }));
   };
 
+  const handleShiftTab = (e) => {
+    if (e.shiftKey && e.key === "Tab") {
+      if (focused === "Credit") {
+        e.preventDefault();
+        descriptionRef.focus();
+      }
+    }
+  };
+
   useEffect(() => {
     if (videoAPI.videoId) {
       videoAPI.videoSource === "brightcove" && setSelectBrightcove(true);
@@ -424,6 +440,7 @@ const ToolBar = ({
         className="ToolbarDummy-Container"
         disconnect={disconnect}
         ref={setMainToolbar}
+        onKeyDown={handleShiftTab}
       >
         <StyledAppbar position="static">
           {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}

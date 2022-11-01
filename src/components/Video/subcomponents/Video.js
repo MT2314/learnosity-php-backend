@@ -22,6 +22,8 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import { useTranslation, Trans } from "react-i18next";
 import { VideoContext } from "../VideoContext";
 
+import { useSetFocused } from "./TabContext";
+
 //styled components for Accordion styles
 
 const StyledVideoContainer = styled("div")({
@@ -73,6 +75,9 @@ const Video = () => {
   const { t } = useTranslation();
 
   const [state, dispatch] = useContext(VideoContext);
+
+  const setFocused = useSetFocused();
+
   const [videoHasFocus, setVideoHasFocus] = useState(false);
   const [videoAreaFocused, setVideoAreaFocused] = useState(false);
 
@@ -103,6 +108,7 @@ const Video = () => {
 
   const videoFocused = (e) => {
     if (window.getSelection().toString().length > 0) return;
+    setFocused("Video");
     setDisconnect(false);
     setVideoAreaFocused(true);
   };
@@ -138,15 +144,6 @@ const Video = () => {
           e.preventDefault();
           return;
         }
-        console.log({
-          relatedTarget,
-          one: Boolean(!toolbar.contains(relatedTarget)),
-          two: Boolean(!relatedTarget?.contains(videoRef?.current)),
-          three: Boolean(!relatedTarget?.classList.contains("ql-editor")),
-          four: Boolean(
-            !relatedTarget?.classList.contains("ToolbarDummy-Container")
-          ),
-        });
 
         if (
           !toolbar.contains(relatedTarget) &&
@@ -154,7 +151,6 @@ const Video = () => {
           !relatedTarget?.classList.contains("ql-editor") &&
           !mainToolbar.contains(relatedTarget)
         ) {
-          console.log("HERE");
           e.preventDefault();
           setDisconnect(true);
         }
