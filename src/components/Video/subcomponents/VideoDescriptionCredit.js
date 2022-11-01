@@ -6,176 +6,115 @@ import React, {
   useState,
   useRef,
 } from "react";
+
 import { VideoContext } from "../VideoContext";
 
 import styled from "@emotion/styled";
 import { TextareaAutosize } from "@material-ui/core";
 import Text from "../../Text/Text";
 
-const DescriptionInput = styled(TextareaAutosize)({
-  width: "622px",
-  border: "none",
-  fontWeight: "400",
-  letterSpacing: "0.4px",
-  fontFamily: `"Inter", sans-serif`,
-  fontSize: "1rem",
-  marginTop: "15px",
-  lineHeight: "1.5rem",
-  color: "#232323",
-  minHeight: "20px",
-  background: "#FFF",
-  resize: "none",
-
-  "&::placeholder": {
-    color: "#232323",
-  },
-
-  "&:focus": {
-    outline: "none",
-
-    "&::placeholder": {
-      color: "rgba(0, 0, 0, 0.12)",
-    },
-  },
-});
-
-const CreditInput = styled("input")({
-  width: "622px",
-  border: "none",
-  height: "16px",
-  fontFamily: "Inter",
-  fontWeight: "400",
-  fontSize: "12px",
-  fontStyle: "italic",
-  "&::placeholder": {
-    color: "#232323",
-  },
-
-  "&:focus": {
-    outline: "none",
-
-    "&::placeholder": {
-      color: "rgba(0, 0, 0, 0.12)",
-    },
-  },
-});
+import {
+  useSetFocused,
+  useSetDescriptionRef,
+  useSetCreditRef,
+} from "./TabContext";
 
 const VideoDescriptionCredit = ({
-  isVideo,
-  videoHasFocus,
   videoAreaFocused,
-  setVideoHasFocus,
-  setVideoBody,
-  setPlaceHolder,
-  setVideoAPI,
-  videoAPI,
-  videoData,
-  description,
-  credit,
+  toolbar,
+  setVideoAreaFocused,
   t,
 }) => {
   const [state, dispatch] = useContext(VideoContext);
+
+  const setFocused = useSetFocused();
+  const setDescriptionRef = useSetDescriptionRef();
+  const setCreditRef = useSetCreditRef();
+
   const stateDescription = useState(
     () => state?.videoDescription,
     [state?.videoDescription]
   );
-  const [refs, setTextRef] = useState({ text: null, quill: null });
-  const [textFocused, setTextFocused] = useState(false);
 
-  const videoBodyRef = useRef();
-  const placeholderRef = useRef();
+  const [descriptionFocused, setDescriptionFocused] = useState(false);
+  const [creditFocused, setCreditFocused] = useState(false);
 
-  const [videoTextSettings, setVideoTextSettings] = useState({
-    description: null,
-    credit: null,
-  });
+  const descRef = useRef();
+  const credRef = useRef();
 
-  const updateBody = useCallback((body) => {
+  const updateDescription = useCallback((body) => {
     dispatch({ func: "CHANGE_DESCRIPTION", description: body.body });
   });
 
-  useEffect(() => {
-    if (!refs?.text?.contains(document.activeElement)) {
-      setTextFocused(false);
-    }
-  }, [document.activeElement]);
+  const updateCredit = useCallback((body) => {
+    dispatch({ func: "CHANGE_CREDIT", credit: body.body });
+  });
 
-  useEffect(() => {
-    if (videoBodyRef.current) {
-      setVideoBody(videoBodyRef.current);
-      setPlaceHolder(placeholderRef.current);
-    }
+  const portalDescription = useMemo(() => {
+    return {
+      parentComponent: "video",
+      placeholder: "Video Description",
+      toolbarReference: toolbar,
+      shouldPortal: !videoAreaFocused && !creditFocused,
+      disabledButtons: [],
+      setParentFocused: (result) => setVideoAreaFocused(result),
+      setTextRef: (result) => setDescriptionRef(result),
+    };
+  }, [toolbar, videoAreaFocused, creditFocused]);
+
+  const portalCredit = useMemo(() => {
+    return {
+      parentComponent: "video",
+      placeholder: "Credit",
+      toolbarReference: toolbar,
+      shouldPortal: !videoAreaFocused && !descriptionFocused,
+      disabledButtons: ["bold", "align", "list"],
+      setParentFocused: (result) => setVideoAreaFocused(result),
+      setTextRef: (result) => setCreditRef(result),
+    };
+  }, [toolbar, videoAreaFocused, descriptionFocused]);
+
+  const handleDescriptionClick = useCallback((e) => {
+    setDescriptionFocused(true);
+    setCreditFocused(false);
+    setFocused("Description");
+  }, []);
+  const handleCreditClick = useCallback((e) => {
+    setCreditFocused(true);
+    setDescriptionFocused(false);
+    setFocused("Credit");
   }, []);
 
-  const isValid = useMemo(
-    () =>
-      (!stateDescription ||
-        !stateDescription.ops ||
-        stateDescription.ops[0].insert === "") &&
-      !textFocused,
-    [stateDescription, textFocused, videoAreaFocused]
-  );
-
-  useEffect(() => {
-    if (
-      !videoAreaFocused &&
-      (!stateDescription ||
-        !stateDescription.ops ||
-        stateDescription.ops[0].insert === "")
-    ) {
-      setTextFocused(false);
-    }
-  }, [videoAreaFocused]);
-
   return (
-    <div ref={videoBodyRef} style={{ position: "relative" }}>
-      <Text
-        body={state.videoDescription}
-        setProp={updateBody}
-        setTextRef={setTextRef}
-        setVideoAPI={setVideoAPI}
-        videoAPI={videoAPI}
-        videoTextSettings={videoTextSettings}
-        setVideoTextSettings={setVideoTextSettings}
-        isVideo={isVideo}
-        videoHasFocus={videoHasFocus}
-        videoAreaFocused={videoAreaFocused}
-        setVideoHasFocus={setVideoHasFocus}
-        setVideoBody={setVideoBody}
-        setPlaceHolder={setPlaceHolder}
-        videoData={videoData}
-        t={t}
-      />
-      <DescriptionInput
-        ref={placeholderRef}
-        onFocus={(e) => {
-          e.preventDefault();
-          refs.quill.focus();
-          setTextFocused(true);
-        }}
-        style={{
-          position: "absolute",
-          top: "0",
-          left: "0",
-          display: isValid ? "block" : "none",
-        }}
-        name="infoBoxBody"
-        aria-label={t("InfoBox body")}
-        aria-multiline="true"
-        placeholder="Video description"
-        defaultValue={
-          videoData?.long_description &&
-          videoData?.long_description.replace(/ /g, "\u00a0")
-        }
-      />
+    <>
+      <div
+        ref={descRef}
+        style={{ position: "relative", minHeight: "20px", width: "622px" }}
+        onClick={handleDescriptionClick}
+        onFocus={handleDescriptionClick}
+      >
+        <Text
+          body={state.videoDescription}
+          setProp={updateDescription}
+          portal={portalDescription}
+          t={t}
+        />
+      </div>
 
-      <CreditInput
-        type="text"
-        placeholder="Credit"
-        role="textbox"
-        defaultValue={videoData?.tags}
-      />
-    </div>
+      <div
+        ref={credRef}
+        style={{ position: "relative", minHeight: "20px", width: "622px" }}
+        onClick={handleCreditClick}
+        onFocus={handleCreditClick}
+      >
+        <Text
+          body={state.videoCredit}
+          setProp={updateCredit}
+          portal={portalCredit}
+          t={t}
+        />
+      </div>
+    </>
   );
 };
 

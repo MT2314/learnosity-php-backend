@@ -2,7 +2,7 @@ import Quill from "quill";
 const Delta = Quill.import("delta");
 
 export const checkTextForUrl = (quill) => {
-  const sel = quill.getSelection();
+  const sel = quill?.getSelection();
   if (!sel) {
     return;
   }

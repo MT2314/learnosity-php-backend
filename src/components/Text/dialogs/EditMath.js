@@ -102,18 +102,6 @@ const EditMath = () => {
             title="delete formula"
             placement="top"
             arrow
-            PopperProps={{
-              disablePortal: true,
-              popperOptions: {
-                positionFixed: true,
-                modifiers: {
-                  preventOverflow: {
-                    enabled: true,
-                    boundariesElement: "window",
-                  },
-                },
-              },
-            }}
           >
             <button
               aria-label="delete formula"

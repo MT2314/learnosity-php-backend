@@ -1,13 +1,20 @@
-import React, { useState, useEffect, useRef, useMemo, useContext } from "react";
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useMemo,
+  useContext,
+} from "react";
 import { v4 as uuidv4 } from "uuid";
 import styled from "@emotion/styled";
 
 // Internal Imports
 import VideoDescriptionCredit from "./VideoDescriptionCredit";
 import Player from "./Player";
+import Checkmark from "../../Video/assets/Checkmark";
 
 // ?Provider
-import { VideoProvider } from "../VideoContext";
+import Toolbar from "./Toolbar";
 
 // Hook/utilities imports
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
@@ -15,37 +22,18 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import { useTranslation, Trans } from "react-i18next";
 import { VideoContext } from "../VideoContext";
 
-//styled components for Accordion styles
-const StyledVideoDefaultContainer = styled("div")({
-  width: "760px",
-  height: "427.5px",
-  backgroundColor: "#EEEEEE",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-});
+import { useSetFocused } from "./TabContext";
 
-const StyledCircleContainer = styled("div")({
-  width: "200px",
-  height: "200px",
-  outline: "5px solid #E0E0E0",
-  borderRadius: "50%",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-});
+//styled components for Accordion styles
 
 const StyledVideoContainer = styled("div")({
-  width: "100%",
-  maxWidth: "60.5rem",
+  width: "760px",
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
   paddingTop: "30px",
-});
-
-const StyledTriangleImage = styled("img")({
-  paddingLeft: "20px",
+  marginLeft: "104px",
+  marginRight: "104px",
 });
 
 const StyledVideoDescriptionContainer = styled("div")({
@@ -62,17 +50,24 @@ const DescriptionCreditContainer = styled("div")({
   gap: "10px",
 });
 
-const TranscriptButtonContainer = styled("button")({
-  padding: "7px 12.5px !important",
-  backgroundColor: "#EBEBEB",
+const TranscriptButtonContainer = styled("button")(({ videoData }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: "6px",
+  height: "32px",
+  width: "108px !important",
+  padding: !videoData ? "7px 12.5px" : "6px 10px 6px 6px",
+  backgroundColor: videoData ? "rgba(46, 125, 50, 1)" : "rgba(0, 0, 0, 0.08)",
+  color: videoData ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 0.38)",
   border: "none",
   borderRadius: "16px",
-  height: "32px",
   fontWeight: "400",
   fontSize: "13px",
+  lineHeight: "18px",
+  letterSpacing: "0.16px",
   textAlign: "center",
-  color: "#929292",
-});
+}));
 
 // InfoBox component
 const Video = () => {
@@ -80,17 +75,27 @@ const Video = () => {
   const { t } = useTranslation();
 
   const [state, dispatch] = useContext(VideoContext);
+
+  const setFocused = useSetFocused();
+
   const [videoHasFocus, setVideoHasFocus] = useState(false);
   const [videoAreaFocused, setVideoAreaFocused] = useState(false);
 
-  const [videoBody, setVideoBody] = useState(null);
-  const [placeHolder, setPlaceHolder] = useState(null);
+  const [toolbar, setToolbar] = useState(null);
+
+  const [disconnect, setDisconnect] = useState(true);
+
+  const [mainToolbar, setMainToolbar] = useState(null);
 
   const [videoAPI, setVideoAPI] = useState({
     videoSource: "",
     videoId: null,
   });
-  const [videoData, setVideoData] = useState(null);
+
+  const [videoTextSettings, setVideoTextSettings] = useState({
+    description: null,
+    credit: null,
+  });
 
   const isVideo = useMemo(() => true, []);
   const videoRef = useRef();
@@ -98,14 +103,31 @@ const Video = () => {
   useOnClickOutside(videoRef, () => {
     setVideoHasFocus(false);
     setVideoAreaFocused(false);
+    setDisconnect(true);
   });
 
   const videoFocused = (e) => {
+    if (window.getSelection().toString().length > 0) return;
+    setFocused("Video");
+    setDisconnect(false);
     setVideoAreaFocused(true);
-    if (!videoBody.contains(e.target) && e.target !== placeHolder) {
-      setVideoHasFocus(true);
-    }
   };
+
+  const handleTextClick = useCallback((e) => {
+    e.stopPropagation();
+    setDisconnect(false);
+    setVideoAreaFocused(false);
+  }, []);
+
+  // Set videoAPI if value is set in state
+  useMemo(() => {
+    if (state.videoSource && state.videoId) {
+      setVideoAPI({
+        videoSource: state.videoSource,
+        videoId: state.videoId,
+      });
+    }
+  }, []);
 
   return (
     <div
@@ -114,31 +136,66 @@ const Video = () => {
       ref={videoRef}
       onClick={(e) => videoFocused(e)}
       onFocus={(e) => videoFocused(e)}
+      onBlur={(e) => {
+        const relatedTarget = e.relatedTarget || document.activeElement;
+
+        if (relatedTarget.tagName === "BODY") {
+          e.preventDefault();
+          return;
+        }
+
+        if (
+          !toolbar.contains(relatedTarget) &&
+          !relatedTarget?.contains(videoRef?.current) &&
+          !relatedTarget?.classList.contains("ql-editor") &&
+          !mainToolbar.contains(relatedTarget)
+        ) {
+          e.preventDefault();
+          setDisconnect(true);
+        }
+      }}
     >
-      <Player
-        videoId={videoAPI.videoId}
-        setVideoData={setVideoData}
-        videoData={videoData}
+      <Toolbar
+        isVideo={isVideo}
+        videoAreaFocused={videoAreaFocused}
+        setVideoAPI={setVideoAPI}
+        videoAPI={videoAPI}
+        setVideoTextSettings={setVideoTextSettings}
+        setToolbar={setToolbar}
+        disconnect={disconnect}
+        setMainToolbar={setMainToolbar}
       />
+      <Player videoId={videoAPI.videoId} videoSource={videoAPI.videoSource} />
       <StyledVideoContainer>
         <StyledVideoDescriptionContainer>
           <DescriptionCreditContainer>
-            <VideoDescriptionCredit
-              isVideo={isVideo}
-              videoHasFocus={videoHasFocus}
-              videoAreaFocused={videoAreaFocused}
-              setVideoHasFocus={setVideoHasFocus}
-              setVideoBody={setVideoBody}
-              setPlaceHolder={setPlaceHolder}
-              setVideoAPI={setVideoAPI}
-              videoAPI={videoAPI}
-              videoData={videoData}
-              description={state.videoDescription}
-              credit={state.videoCredit}
-              t={t}
-            />
+            <div
+              onClick={(e) => {
+                handleTextClick(e);
+              }}
+              onFocus={(e) => {
+                handleTextClick(e);
+              }}
+            >
+              <VideoDescriptionCredit
+                isVideo={isVideo}
+                videoHasFocus={videoHasFocus}
+                videoAreaFocused={videoAreaFocused}
+                setVideoHasFocus={setVideoHasFocus}
+                setVideoAPI={setVideoAPI}
+                videoAPI={videoAPI}
+                description={state.videoDescription}
+                credit={state.videoCredit}
+                toolbar={toolbar}
+                setVideoAreaFocused={setVideoAreaFocused}
+                t={t}
+              />
+            </div>
           </DescriptionCreditContainer>
-          <TranscriptButtonContainer>No Transcript</TranscriptButtonContainer>
+          <TranscriptButtonContainer videoData={state.videoId ? true : false}>
+            {state.videoId && <Checkmark />}
+            <span>{state.videoId ? "Transcript" : "No Transcript"}</span>
+          </TranscriptButtonContainer>
         </StyledVideoDescriptionContainer>
       </StyledVideoContainer>
     </div>

@@ -3,6 +3,9 @@ import { createContext, useContextSelector } from "use-context-selector";
 
 const useStore = () => {
   const boldRef = useRef(null);
+  const linkRef = useRef(null);
+
+
   const [quill, setQuill] = useState(null);
   const [uniqueId, setUniqueId] = useState(null);
   const [showMath, setShowMath] = useState(false);
@@ -13,6 +16,7 @@ const useStore = () => {
   const [showMathRef, setShowMathRef] = useState(null);
   const [isLink, setIsLink] = useState(false);
   const [mathId, setMathId] = useState(null);
+  const [format, setFormat] = useState(null);
 
   const [editFormula, setEditFormula] = useState({
     value: null,
@@ -46,7 +50,9 @@ const useStore = () => {
     editLink,
     isLink,
     mathId,
+    format,
     boldRef,
+    linkRef,
     setQuill,
     setUniqueId,
     setEditState,
@@ -60,6 +66,7 @@ const useStore = () => {
     setEditLink,
     setIsLink,
     setMathId,
+    setFormat,
   };
 };
 
@@ -74,6 +81,7 @@ const getState = (state) => useContextSelector(StoreContext, (s) => s[state]);
 
 //Refs
 export const useBoldRef = () => getState("boldRef");
+export const useLinkRef = () => getState("linkRef");
 
 //Get States
 export const useQuill = () => getState("quill");
@@ -89,6 +97,7 @@ export const useLinkRange = () => getState("linkRange");
 export const useEditLink = () => getState("editLink");
 export const useIsLink = () => getState("isLink");
 export const useMathId = () => getState("mathId");
+export const useFormat = () => getState("format");
 
 //Set States
 export const useSetQuill = () => getState("setQuill");
@@ -104,3 +113,4 @@ export const useSetLinkRange = () => getState("setLinkRange");
 export const useSetEditLink = () => getState("setEditLink");
 export const useSetIsLink = () => getState("setIsLink");
 export const useSetMathId = () => getState("setMathId");
+export const useSetFormat = () => getState("setFormat");
