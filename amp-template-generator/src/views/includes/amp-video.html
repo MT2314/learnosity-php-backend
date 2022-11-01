@@ -3,7 +3,13 @@
     {%- assign showVideoId = 'showVideoId' | append: dataID -%}
     {%- assign hideVideoId = 'hideVideoId' | append: dataID -%}
     {%- assign buttonToggleVideo = false -%}
-    {% if data.type == "brightcove" -%}
+    {%- assign videoDescription = data.videoDescription | strip_html -%}
+
+    {% if data.videoCredit.length > 0 %}
+        {%- assign creditPlaceholder = data.videoCredit | prepend: "Credit: " | strip_html -%}
+    {% endif %}
+
+    {% if data.videoSource == "brightcove" -%}
     
         <div class="brightcove">
             <amp-brightcove
@@ -24,7 +30,7 @@
             </amp-brightcove>
         </div>
    
-    {% elsif data.type == "youTube" %}
+    {% elsif data.videoSource == "youTube" %}
     
     {%- assign videoId = data.videoId | split: '=' | last -%}
     
@@ -54,52 +60,42 @@
 
         </div>
     {%- endif -%}
-
-    {% if data.videoDescription %}
     
     <div class="description-container">
         <div class="description-flex-container">
             <div class="description-text-less" id="{{ videoId }}" [class]="buttonToggleVideo ? 'description-text-more' : 'description-text-less'">
-                {{data.videoDescription}}
+                {% if data.videoDescription.length > 0 %}
+                    {{videoDescription}}
+                {% endif %}
+                {% if data.videoCredit.length > 0 and data.videoCredit != null %}
+                    <p class="video-credit">{{creditPlaceholder}}</p>
+                {% endif %}
             </div>
             <button class="transcript-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
-                    <path d="M1.007 13.997v1.974l13.986.005v-1.974" stroke="#292929" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                    <path d="M8.003 11.998v-10" stroke="#292929" stroke-width="2" stroke-linecap="round" />
-                    <path d="m3.006 8.248 4.997 4 4.998-4" stroke="#292929" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg>
+                <path d="M1.007 13.997v1.974l13.986.005v-1.974" stroke="#292929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M8.003 11.998v-10" stroke="#292929" stroke-width="2" stroke-linecap="round" />
+                <path d="m3.006 8.248 4.997 4 4.998-4" stroke="#292929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
                 Transcript
             </button>
         </div>
-        <button
-            class="show-more-button"
-            id="{{ showVideoId }}"
-            on="tap:{{ showVideoId }}.hide,{{ hideVideoId }}.show, AMP.setState({ buttonToggleVideo: true })"
-        >
-            Show more
-        </button>
-        <button
-            hidden
-            id="{{ hideVideoId }}"
-            class="show-less-button"
-            on="tap:{{ showVideoId }}.show,{{ hideVideoId }}.hide,AMP.setState({ buttonToggleVideo: false })"
-        >
-            Show less
-        </button>
+        {% if data.videoDescription.length > 204 %}
+            <button
+                class="show-more-button"
+                id="{{ showVideoId }}"
+                on="tap:{{ showVideoId }}.hide,{{ hideVideoId }}.show, AMP.setState({ buttonToggleVideo: true })"
+            >
+                Show more
+            </button>
+            <button
+                hidden
+                id="{{ hideVideoId }}"
+                class="show-less-button"
+                on="tap:{{ showVideoId }}.show,{{ hideVideoId }}.hide,AMP.setState({ buttonToggleVideo: false })"
+            >
+                Show less
+            </button>
+        {% endif %}
     </div>
-    
-    {% endif %}
-
-    <!-- {% if data.caption %}
-
-        <figure class="figure">
-            <figcaption class="caption center pt2 italic">
-                {{data.caption}}
-            </figcaption>
-        </figure>
-    
-    {% endif %} -->
-
 </div>
