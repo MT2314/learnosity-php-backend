@@ -106,8 +106,7 @@ const Player = ({ videoId, videoSource }) => {
   // Save Description and Credit to State
   useEffect(() => {
     if (videoData !== null) {
-      console.log(videoData);
-      let parseDescription = `\n${videoData?.long_description.replace(
+      let parseDescription = `${videoData?.long_description.replace(
         / /g,
         "\u00a0"
       )}`;
