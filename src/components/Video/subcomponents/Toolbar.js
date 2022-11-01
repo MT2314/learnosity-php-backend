@@ -47,7 +47,7 @@ const Container = styled("div")(({ disconnect }) => ({
   display: disconnect ? "none" : "block !important",
   position: "fixed !important",
   top: "100px !important",
-  left: "30% !important",
+  left: "36% !important",
   // transform: "translateX(-50%) !important",
   zIndex: 1000,
   gap: "10px",
