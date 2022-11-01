@@ -19,6 +19,7 @@
 
     .description-flex-container {
       display: flex;
+      justify-content: space-between;
     
       .description-text-less,
       .description-text-more {
@@ -31,6 +32,15 @@
         @media (max-width: 759px) {
           order: 2;
           margin-top: 0.625rem;
+        }
+
+        .video-credit {
+          margin-top: 0.625rem;
+          color: $grey-600;
+        }
+
+        .display-none {
+          display: none;
         }
       }
 
@@ -116,4 +126,10 @@
       order: 3;
     }
   }
+}
+
+.wrapper {
+  @media (max-width: 375px) {
+      padding: 0 1rem;
+    }
 }
