@@ -850,58 +850,6 @@ const ToolBar = ({
               </StyledVideoButton>
             </Tooltip>
           </StyledVideoToolbar>
-
-          <div ref={portalToolbarRef}>
-            {/* {!textMounted && ( */}
-            {videoAreaFocused && (
-              <StyledToolbar
-                isVideo={isVideo}
-                variant="dense"
-                disableGutters
-                test-id="infoBox-toolbar"
-                className="ql-toolbar ql-snow StyledDummy-Toolbar"
-              >
-                <StyledIconButton
-                  disableRipple
-                  disabled
-                  className="bolddummy-dropdown-button"
-                >
-                  {icons["customBold"]}
-                </StyledIconButton>
-                {/* alignment dropdown */}
-                <StyledIconButton
-                  disableRipple
-                  disabled
-                  color="inherit"
-                  className={"align-button"}
-                  aria-label="alignment buttons dropdown"
-                  data-alignid="alignment-dropdown"
-                >
-                  {icons["align"]}
-                </StyledIconButton>
-
-                {/* bullets drowdown starts */}
-
-                <StyledIconButton disableRipple disabled>
-                  {icons["bullet"]}
-                </StyledIconButton>
-
-                {/* link btn and divider */}
-                <Divider />
-                <StyledIconButton
-                  disableRipple
-                  disabled
-                  sx={{
-                    padding: "3px 5px !important",
-                    width: "28px !important",
-                    height: "100% !important",
-                  }}
-                >
-                  {icons["link"]}
-                </StyledIconButton>
-              </StyledToolbar>
-            )}
-          </div>
           {/* {/* Video Kebab */}
           <div
             style={{
@@ -917,8 +865,9 @@ const ToolBar = ({
               borderRadiusBottomRight: "5px",
               borderRadius: "0px 4px 4px 0px",
               backgroundColor: "white",
-              boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px",
-              clipPath: "inset(-10px -10px -10px 1px)",
+              zIndex: "1",
+              // boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px",
+              // clipPath: "inset(-10px -10px -10px 1px)",
             }}
           >
             <Divider style={{ float: "left" }} />
@@ -1054,6 +1003,57 @@ const ToolBar = ({
                 </Grow>
               )}
             </Popper>
+          </div>
+          <div ref={portalToolbarRef}>
+            {/* {!textMounted && ( */}
+            {videoAreaFocused && (
+              <StyledToolbar
+                isVideo={isVideo}
+                variant="dense"
+                disableGutters
+                test-id="infoBox-toolbar"
+                className="ql-toolbar ql-snow StyledDummy-Toolbar"
+              >
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  className="bolddummy-dropdown-button"
+                >
+                  {icons["customBold"]}
+                </StyledIconButton>
+                {/* alignment dropdown */}
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  color="inherit"
+                  className={"align-button"}
+                  aria-label="alignment buttons dropdown"
+                  data-alignid="alignment-dropdown"
+                >
+                  {icons["align"]}
+                </StyledIconButton>
+
+                {/* bullets drowdown starts */}
+
+                <StyledIconButton disableRipple disabled>
+                  {icons["bullet"]}
+                </StyledIconButton>
+
+                {/* link btn and divider */}
+                <Divider />
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  sx={{
+                    padding: "3px 5px !important",
+                    width: "28px !important",
+                    height: "100% !important",
+                  }}
+                >
+                  {icons["link"]}
+                </StyledIconButton>
+              </StyledToolbar>
+            )}
           </div>
         </StyledAppbar>
       </Container>
