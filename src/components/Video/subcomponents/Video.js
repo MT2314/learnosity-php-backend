@@ -92,6 +92,8 @@ const Video = () => {
     videoId: null,
   });
 
+  const [videoData, setVideoData] = useState(null);
+
   const [videoTextSettings, setVideoTextSettings] = useState({
     description: null,
     credit: null,
@@ -163,8 +165,14 @@ const Video = () => {
         setToolbar={setToolbar}
         disconnect={disconnect}
         setMainToolbar={setMainToolbar}
+        videoData={videoData}
       />
-      <Player videoId={videoAPI.videoId} videoSource={videoAPI.videoSource} />
+      <Player 
+        videoId={videoAPI.videoId} 
+        videoSource={videoAPI.videoSource} 
+        videoData={videoData}
+        setVideoData={setVideoData}
+      />
       <StyledVideoContainer>
         <StyledVideoDescriptionContainer>
           <DescriptionCreditContainer>

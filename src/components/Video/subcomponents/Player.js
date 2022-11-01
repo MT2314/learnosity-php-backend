@@ -50,9 +50,9 @@ const StyledTriangleImage = styled("img")({
 import Quill from "quill";
 const Delta = Quill.import("delta");
 
-const Player = ({ videoId, videoSource }) => {
+const Player = ({ videoId, videoSource, videoData, setVideoData }) => {
   const [state, dispatch] = useContext(VideoContext);
-  const [videoData, setVideoData] = useState(null);
+  // const [videoData, setVideoData] = useState(null);
   // Prevent fetch on initial component mount
   const isMounted = useRef(false);
 

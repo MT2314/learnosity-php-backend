@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useContext
-} from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 // ? Video imports
 import Input from "@mui/material/Input";
 import FormGroup from "@mui/material/FormGroup";
@@ -341,6 +336,7 @@ const ToolBar = ({
   setToolbar,
   disconnect,
   setMainToolbar,
+  videoData,
 }) => {
   const { t } = useTranslation();
 
@@ -400,13 +396,24 @@ const ToolBar = ({
     setVideoOpen(false);
     toggleCloseToolbar("Transcript");
     e.target.contains(TranscriptVideo.current) && setTranscriptOpen(!openVideo);
-    const texts = ["line 1 ", "line 2 ", "line 3 "]; // text content
-    const element = document.createElement("a"); // anchor link
-    const file = new Blob(texts, { type: "text/plain" }); // file object
-    element.href = URL.createObjectURL(file);
-    element.download = "100ideas.txt";
-    document.body.appendChild(element); // simulate link click
-    element.click(); // Required for this to work in FireFox
+    
+
+    if (videoData) {
+      
+      const chosenTrack = videoData.text_tracks[0].src;
+      console.log("Wilson chosenTrack", chosenTrack);
+      const colonLocation = chosenTrack.indexOf(":");
+      const url = chosenTrack.substr(colonLocation + 1);
+      console.log("Wilson url", url);
+
+      const texts = [videoData.text_tracks[0].src]; // text content
+      const element = document.createElement("a"); // anchor link
+      const file = new Blob(texts, { type: "text/plain" }); // file object
+      element.href = URL.createObjectURL(file);
+      element.download = "100ideas.txt";
+      document.body.appendChild(element); // simulate link click
+      element.click(); // Required for this to work in FireFox
+    }
   };
   const handleToggleVideoKebab = () => {
     toggleCloseToolbar("Kebab");
