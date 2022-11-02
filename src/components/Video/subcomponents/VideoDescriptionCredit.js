@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useState,
   useRef,
+  useEffect,
 } from "react";
 
 import { VideoContext } from "../VideoContext";
@@ -21,6 +22,7 @@ const VideoDescriptionCredit = ({
   toolbar,
   setVideoAreaFocused,
   t,
+  videoTextSettings,
 }) => {
   const [state, dispatch] = useContext(VideoContext);
 
@@ -77,37 +79,45 @@ const VideoDescriptionCredit = ({
     setFocused("Credit");
   }, []);
 
+  useEffect(() => {
+    videoTextSettings.description === false && setVideoAreaFocused(true);
+    videoTextSettings.credit === false && setVideoAreaFocused(true);
+  }, [videoTextSettings]);
+
   return (
     <>
-      <div
-        ref={descRef}
-        style={{ position: "relative", minHeight: "20px", width: "622px" }}
-        onClick={handleDescriptionClick}
-        onFocus={handleDescriptionClick}
-      >
-        {/* Description Text box */}
-        <Text
-          body={state.videoDescription}
-          setProp={updateDescription}
-          portal={portalDescription}
-          t={t}
-        />
-      </div>
-
-      <div
-        ref={credRef}
-        style={{ position: "relative", minHeight: "20px", width: "622px" }}
-        onClick={handleCreditClick}
-        onFocus={handleCreditClick}
-      >
-        {/* Credit Text box */}
-        <Text
-          body={state.videoCredit}
-          setProp={updateCredit}
-          portal={portalCredit}
-          t={t}
-        />
-      </div>
+      {videoTextSettings.description === true && (
+        <div
+          ref={descRef}
+          style={{ position: "relative", minHeight: "20px", width: "622px" }}
+          onClick={handleDescriptionClick}
+          onFocus={handleDescriptionClick}
+        >
+          {/* Description Text box */}
+          <Text
+            body={state.videoDescription}
+            setProp={updateDescription}
+            portal={portalDescription}
+            t={t}
+          />
+        </div>
+      )}
+      {videoTextSettings.credit === true && (
+        <div
+          ref={credRef}
+          style={{ position: "relative", minHeight: "20px", width: "622px" }}
+          onClick={handleCreditClick}
+          onFocus={handleCreditClick}
+        >
+          {/* Credit Text box */}
+          <Text
+            body={state.videoCredit}
+            setProp={updateCredit}
+            portal={portalCredit}
+            t={t}
+          />
+        </div>
+      )}
     </>
   );
 };

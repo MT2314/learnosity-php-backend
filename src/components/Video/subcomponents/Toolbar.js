@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useContext
-} from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 // ? Video imports
 import Input from "@mui/material/Input";
 import FormGroup from "@mui/material/FormGroup";
@@ -28,7 +23,6 @@ import {
 } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
-
 
 import BrightcoveSVG from "../assets/Brightcove";
 import YoutubeSVG from "../assets/Youtube";
@@ -339,6 +333,7 @@ const ToolBar = ({
   setVideoAPI,
   videoAPI = null,
   setVideoTextSettings,
+  videoTextSettings,
   setToolbar,
   disconnect,
   setMainToolbar,
@@ -367,6 +362,7 @@ const ToolBar = ({
   const portalToolbarRef = useRef(null);
 
   const selectRef = useRef(null);
+  const kebabselectRef = useRef(null);
 
   useOnClickOutside(AppBar, () => {
     toggleCloseToolbar(["Video", "Kebab"]);
@@ -375,8 +371,12 @@ const ToolBar = ({
   useOnClickOutside(selectRef, () => {
     setVideoOpen(false);
     setTranscriptOpen(false);
+    // setDescriptionKebabOpen(false);
+  });
+  useOnClickOutside(kebabselectRef, () => {
     setDescriptionKebabOpen(false);
   });
+
   const toggleCloseToolbar = (source) => {
     if (
       source.includes("Kebab") ||
@@ -910,7 +910,7 @@ const ToolBar = ({
             </Tooltip>
           </StyledVideoToolbar>
 
-          <div ref={portalToolbarRef}>
+          <div ref={portalToolbarRef} style={{ zIndex: "3" }}>
             {/* {!textMounted && ( */}
             {videoAreaFocused && (
               <StyledToolbar
@@ -963,6 +963,7 @@ const ToolBar = ({
           </div>
           {/* {/* Video Kebab */}
           <div
+            ref={kebabselectRef}
             style={{
               position: "absolute",
               display: "flex",
@@ -976,7 +977,7 @@ const ToolBar = ({
               backgroundColor: "white",
               zIndex: "1",
               boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px",
-              clipPath: "inset(-10px -10px -10px 1px)",
+              // clipPath: "inset(-10px -10px -10px 1px)",
             }}
           >
             <Divider style={{ float: "left" }} />
@@ -1046,9 +1047,11 @@ const ToolBar = ({
                             <StyledFormControlLabel
                               control={
                                 <Checkbox
-                                  onClick={(e) =>
-                                    handleTextSettings(e, "description")
-                                  }
+                                  checked={videoTextSettings.description}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleTextSettings(e, "description");
+                                  }}
                                   sx={{
                                     "&:hover": {
                                       bgcolor: "transparent",
@@ -1086,6 +1089,7 @@ const ToolBar = ({
                             <StyledFormControlLabel
                               control={
                                 <Checkbox
+                                  checked={videoTextSettings.credit}
                                   onClick={(e) =>
                                     handleTextSettings(e, "credit")
                                   }
