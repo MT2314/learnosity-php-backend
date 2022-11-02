@@ -17,6 +17,10 @@
     padding: 0 1rem;
     font-family: $component-main-font;
 
+    @media (max-width: 759px) {
+      padding: 0;
+    }
+
     .description-flex-container {
       display: flex;
       justify-content: space-between;
@@ -133,6 +137,6 @@
 
 .wrapper {
   @media (max-width: 375px) {
-      padding: 0 1rem;
-    }
+    padding: 0 1rem;
+  }
 }
