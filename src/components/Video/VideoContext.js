@@ -39,7 +39,6 @@ export const VideoProvider = ({ children, setProp, videoState }) => {
 
   useEffect(() => {
     diff && mounted && setProp({ videoState: state });
-    console.log(state);
   }, [state]);
 
   useEffect(() => {

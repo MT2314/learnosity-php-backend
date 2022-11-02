@@ -460,6 +460,7 @@ const ToolBar = ({
     }
   };
 
+  // Checbox state
   useEffect(() => {
     if (videoAPI.videoId) {
       videoAPI.videoSource === "brightcove" && setSelectBrightcove(true);
