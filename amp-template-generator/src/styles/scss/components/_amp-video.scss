@@ -136,6 +136,10 @@
 }
 
 .wrapper {
+  @media (max-width: 759px) {
+    padding: 0 3.125rem;
+  }
+
   @media (max-width: 375px) {
     padding: 0 1rem;
   }
