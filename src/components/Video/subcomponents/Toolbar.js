@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useContext
-} from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 // ? Video imports
 import Input from "@mui/material/Input";
 import FormGroup from "@mui/material/FormGroup";
@@ -28,7 +23,6 @@ import {
 } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
-
 
 import BrightcoveSVG from "../assets/Brightcove";
 import YoutubeSVG from "../assets/Youtube";
@@ -386,6 +380,8 @@ const ToolBar = ({
       setVideoOpen(false);
     }
     if (source.includes("Video")) {
+      setSelectYoutube(false);
+      setSelectBrightcove(false);
       setDescriptionKebabOpen(false);
     }
     setInvalidVideoInput(false);
