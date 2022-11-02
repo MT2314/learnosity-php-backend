@@ -6,7 +6,7 @@
     {%- assign videoDescription = data.videoDescription | strip_html -%}
 
     {% if data.videoCredit.length > 0 %}
-        {%- assign creditPlaceholder = data.videoCredit | prepend: "Credit: " | strip_html -%}
+        {%- assign videoCredit = data.videoCredit | prepend: "Credit: " | strip_html -%}
     {% endif %}
 
     {% if data.videoSource == "brightcove" -%}
@@ -68,7 +68,7 @@
                     {{videoDescription}}
                 {% endif %}
                 {% if data.videoCredit.length > 0 and data.videoCredit != null %}
-                    <p class="video-credit">{{creditPlaceholder}}</p>
+                    <p class="video-credit">{{videoCredit}}</p>
                 {% endif %}
             </div>
             <button class="transcript-button">
