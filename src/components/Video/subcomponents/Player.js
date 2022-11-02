@@ -133,7 +133,7 @@ const Player = ({ videoId, videoSource }) => {
     <PlayerContainer>
       {videoId == null && (
         <StyledVideoContainer>
-          <StyledVideoDefaultContainer>
+          <StyledVideoDefaultContainer data-testid="video">
             <StyledCircleContainer>
               <StyledTriangleImage src={TriangleIcon} />
             </StyledCircleContainer>
