@@ -111,14 +111,13 @@ const Player = ({ videoId, videoSource }) => {
         "\u00a0"
       )}`;
       let currentDescription = state.videoDescription
-        ? state.videoDescription.ops[0].insert
+        ? state.videoDescription.ops
         : null;
 
       let descriptionDelta = new Delta([
+        ...(currentDescription && currentDescription),
         {
-          insert: `${
-            currentDescription !== null ? currentDescription : ""
-          } ${parseDescription}\n`,
+          insert: `${parseDescription}\n`,
         },
       ]);
 
