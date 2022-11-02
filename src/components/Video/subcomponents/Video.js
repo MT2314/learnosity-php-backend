@@ -8,7 +8,6 @@ import React, {
 import styled from "@emotion/styled";
 import { useTranslation } from "react-i18next";
 
-
 // Internal Imports
 import VideoDescriptionCredit from "./VideoDescriptionCredit";
 import Player from "./Player";
