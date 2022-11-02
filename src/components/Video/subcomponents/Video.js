@@ -1,5 +1,6 @@
 import React, {
   useState,
+  useEffect,
   useCallback,
   useRef,
   useMemo,
@@ -92,8 +93,8 @@ const Video = () => {
   });
 
   const [videoTextSettings, setVideoTextSettings] = useState({
-    description: null,
-    credit: null,
+    description: true,
+    credit: true,
   });
 
   const isVideo = useMemo(() => true, []);
@@ -159,6 +160,7 @@ const Video = () => {
         setVideoAPI={setVideoAPI}
         videoAPI={videoAPI}
         setVideoTextSettings={setVideoTextSettings}
+        videoTextSettings={videoTextSettings}
         setToolbar={setToolbar}
         disconnect={disconnect}
         setMainToolbar={setMainToolbar}
@@ -176,14 +178,10 @@ const Video = () => {
               }}
             >
               <VideoDescriptionCredit
-                isVideo={isVideo}
+                videoTextSettings={videoTextSettings}
                 videoHasFocus={videoHasFocus}
                 videoAreaFocused={videoAreaFocused}
                 setVideoHasFocus={setVideoHasFocus}
-                setVideoAPI={setVideoAPI}
-                videoAPI={videoAPI}
-                description={state.videoDescription}
-                credit={state.videoCredit}
                 toolbar={toolbar}
                 setVideoAreaFocused={setVideoAreaFocused}
                 t={t}
