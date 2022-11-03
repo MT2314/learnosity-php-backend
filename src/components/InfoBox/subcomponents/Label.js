@@ -5,14 +5,14 @@ import styled from "@emotion/styled";
 import { InfoBoxContext } from "../InfoBoxContext";
 
 const StyledLabelInput = styled("input")({
-  fontSize: "14px",
+  fontSize: "0.875rem",
   fontWeight: "400",
-  lineHeight: "20.02px",
+  lineHeight: "1.25125rem",
   color: "rgba(99, 99, 99, 1)",
-  width: "650px",
-  height: "20px",
+  width: "40.625rem",
+  height: "1.25rem",
   background: "#FAFAFA",
-  letterSpacing: "0.15px",
+  letterSpacing: "0.009375rem",
   border: "none",
   padding: 0,
 

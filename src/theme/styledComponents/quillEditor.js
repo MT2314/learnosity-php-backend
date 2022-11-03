@@ -16,7 +16,7 @@ export const ReactQuillContainer = styled("div")(
       ...(isInfoBox && { margin: "0px 0px 0px -15px !important" }),
     },
     "& .ql-editor": {
-      minHeight: !isVideo ? "100px" : "20px",
+      minHeight: isVideo ? "20px" : isInfoBox ? "48px" : "72px",
       // height: isVideo && "20px",
       padding: !isInfoBox && !isVideo ? "0 15px" : "0px",
       ...(isVideo && { paddingBottom: "20px" }),
@@ -36,7 +36,10 @@ export const ReactQuillContainer = styled("div")(
     "& .ql-editor.ql-blank::before": {
       padding: !isInfoBox && !isVideo ? "0px 104px" : "0px !important",
       background: isVideo && "rgba(255, 255, 255, 1)",
-      ...(isVideo && { left: "1px !important" }),
+      ...(isVideo && {
+        left: "-4px !important",
+        marginLeft: "5px",
+      }),
     },
     "& .ql-editor.ql-blank::after": {
       background: isVideo && "rgba(255, 255, 255, 1)",

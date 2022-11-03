@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
 
@@ -13,7 +12,6 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import { checkTextForUrl } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
 import { FormulaEvents, linkClickEvent } from "../utils/FormulaEvents";
-import setAlignment from "../utils/setAlignment";
 
 import MathPixMarkdown from "../blots/MathPixMarkdown";
 
@@ -24,11 +22,13 @@ import {
   useShowMath,
   useKeepEditor,
   useBoldRef,
+  useLinkRef,
   useSetEditorPos,
   useShowLink,
   useSetShowLink,
   useIsLink,
   useSetIsLink,
+  useSetFormat,
 } from "../Provider";
 
 import { matchMsWordList, maybeMatchMsWordList } from "../matchers/pasteLists";
@@ -44,21 +44,16 @@ const Delta = Quill.import("delta");
 Quill.register("formats/mathpix", MathPixMarkdown);
 
 const StyledConfigBar = styled("div")(
-  ({
-    editorIsFocus,
-    isInfoBox,
-    isVideo,
-    infoAreaFocused,
-    videoAreaFocused,
-  }) => {
-    const display =
-      isInfoBox || isVideo
-        ? infoAreaFocused || videoAreaFocused
-          ? "flex"
-          : "none"
-        : editorIsFocus
+  ({ editorIsFocus, isInfoBox, infoAreaFocused, portal }) => {
+    let display = isInfoBox
+      ? infoAreaFocused
         ? "flex"
-        : "none";
+        : "none"
+      : portal?.parentComponent && portal?.shouldPortal
+      ? "flex"
+      : "none";
+
+    display = !portal?.parentComponent && editorIsFocus ? "flex" : display;
 
     const configBarStyles = {
       display: display,
@@ -84,25 +79,19 @@ const EditorComponent = ({
   isInfoBox,
   infoAreaFocused,
   infoHasFocus,
-  isVideo,
-  videoAreaFocused,
-  videoHasFocus,
   selectedIcon,
   setSelectedIcon,
   setInfoHasFocus,
-  setVideoHasFocus,
   setTextRef,
   setTabActive,
-  setVideoAPI,
-  videoAPI,
-  videoTextSettings,
-  setVideoTextSettings,
   closeToolBar,
   setCloseToolBar,
+  portal,
 }) => {
   //context hooks
   const mathId = useMathId();
   const boldRef = useBoldRef();
+  const linkRef = useLinkRef();
   const setQuill = useSetQuill();
   const showMath = useShowMath();
   const showLink = useShowLink();
@@ -112,15 +101,13 @@ const EditorComponent = ({
   const setEditorPos = useSetEditorPos();
   const isLink = useIsLink();
   const setIsLink = useSetIsLink();
+  const setFormat = useSetFormat();
 
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
-
-  //alignment observer
-  const [alignmentObserver, setAlignmentObserver] = useState(null);
 
   //add focus to editor
   const focusRef = useRef(null);
@@ -137,11 +124,14 @@ const EditorComponent = ({
   }, [editorIsFocus]);
 
   useEffect(() => {
+    const tb = portal?.shouldPortal;
+    // &&portal?.toolbarReference?.querySelector(`#custom-toolbar-${toolbarId}`);
+
+    if (tb) return;
     if (infoHasFocus) return;
     if ((showLink || showMath || keepEditor) && !closeToolBar) return;
     if (!closeToolBar) return;
 
-    alignmentObserver?.disconnect();
     setEditorIsFocus(false);
     setShowEditor(false);
     setTabActive(false);
@@ -154,6 +144,7 @@ const EditorComponent = ({
     infoHasFocus,
     closeToolBar,
     editorIsFocus,
+    portal?.shouldPortal,
   ]);
 
   useEffect(() => {
@@ -161,17 +152,16 @@ const EditorComponent = ({
     setQuill(focusRef?.current?.getEditor());
     //set unique id instance
     setUniqueId(toolbarId);
-    //extend default link functionality on mount
-    ExtendLinkFunctionality(toolbarId);
     //check for formulas
     FormulaEvents(toolbarId);
     // on render editor is focused
-    showEditor && !isInfoBox && !isVideo && focusRef.current.focus();
+    showEditor && !isInfoBox && focusRef.current.focus();
     //on render toolbar appears
-    showEditor && !isInfoBox && !isVideo && setEditorIsFocus(true);
+    showEditor && !isInfoBox && setEditorIsFocus(true);
     //on mount pass back focusRef
-    (isInfoBox || isVideo) &&
+    isInfoBox &&
       setTextRef({ text: textRef.current, quill: focusRef?.current });
+    portal?.setTextRef && portal?.setTextRef(focusRef?.current);
   }, []);
 
   useEffect(() => {
@@ -205,6 +195,7 @@ const EditorComponent = ({
       const quill = quillRef.getEditor();
       if (quill.hasFocus()) {
         const currentFormat = quill.getFormat();
+        setFormat(currentFormat);
         const nexFormat = quill.getFormat(range.index, range.length + 1);
         currentFormat?.list
           ? setActiveDropDownListItem(currentFormat.list)
@@ -285,7 +276,14 @@ const EditorComponent = ({
   const onKeyDropDown = (e) => {
     if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
-      boldRef?.current.focus();
+      if (
+        portal?.parentComponent &&
+        !portal?.disabledButtons?.includes("link")
+      ) {
+        linkRef.current.focus();
+      } else {
+        boldRef?.current.focus();
+      }
     }
   };
 
@@ -308,9 +306,7 @@ const EditorComponent = ({
 
   const modules = useMemo(
     () => ({
-      toolbar: {
-        container: `#${toolbarId}`,
-      },
+      toolbar: false,
       keyboard: { bindings: { tab: false } },
       clipboard: {
         matchVisual: false,
@@ -328,6 +324,14 @@ const EditorComponent = ({
     }),
     []
   );
+
+  const placeholder = () => {
+    if (portal?.parentComponent === "video") return portal?.placeholder;
+    return `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+          enim ad minim veniam, quis nostrud exercitation ullamco laboris
+          nisi ut aliquip ex ea commodo consequat.`;
+  };
 
   return (
     <div
@@ -347,6 +351,8 @@ const EditorComponent = ({
           return;
         }
 
+        if (portal?.shouldPortal) return;
+
         if (toolbar?.current?.contains(relatedTarget)) {
           e.preventDefault();
           return;
@@ -359,7 +365,6 @@ const EditorComponent = ({
           !showLink &&
           !infoHasFocus
         ) {
-          alignmentObserver?.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
           setActiveComponent(false);
@@ -374,9 +379,8 @@ const EditorComponent = ({
       <StyledConfigBar
         editorIsFocus={editorIsFocus}
         isInfoBox={isInfoBox}
-        isVideo={isVideo}
         infoAreaFocused={infoAreaFocused}
-        videoAreaFocused={videoAreaFocused}
+        portal={portal}
       >
         <CustomToolBar
           toolbarId={toolbarId}
@@ -386,15 +390,10 @@ const EditorComponent = ({
           activeDropDownAlignItem={activeDropDownAlignItem}
           setActiveDropDownAlignItem={setActiveDropDownAlignItem}
           isInfoBox={isInfoBox}
-          isVideo={isVideo}
           infoHasFocus={infoHasFocus}
-          videoHasFocus={videoHasFocus}
           selectedIcon={selectedIcon}
           setSelectedIcon={setSelectedIcon}
-          setVideoAPI={setVideoAPI}
-          videoAPI={videoAPI}
-          videoTextSettings={videoTextSettings}
-          setVideoTextSettings={setVideoTextSettings}
+          portal={portal}
         />
       </StyledConfigBar>
 
@@ -404,28 +403,19 @@ const EditorComponent = ({
         scrollingContainer="html"
         formats={formats}
         theme="snow"
-        placeholder={
-          isVideo
-            ? "Video description"
-            : `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-          enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat.`
-        }
+        placeholder={placeholder()}
         className="quillEditor"
         onChange={handleDataChange}
         defaultValue={body}
         onChangeSelection={(range, source, editor) => {
-          // handleSelection(range, `toolbar-${toolbarId}`, focusRef.current);
           formatSelection(range, focusRef.current);
         }}
         onFocus={() => {
-          setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
-          if (infoHasFocus || videoHasFocus) {
+          if (infoHasFocus) {
             setInfoHasFocus(false);
-            setVideoHasFocus(false);
           }
+          portal?.setParentFocused(false);
         }}
         onKeyDown={(e) => {
           onKeyDropDown(e);
