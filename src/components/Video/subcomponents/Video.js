@@ -92,6 +92,8 @@ const Video = () => {
     videoId: null,
   });
 
+  const [videoData, setVideoData] = useState(null);
+
   const [videoTextSettings, setVideoTextSettings] = useState({
     description: true,
     credit: true,
@@ -167,8 +169,14 @@ const Video = () => {
         setToolbar={setToolbar}
         disconnect={disconnect}
         setMainToolbar={setMainToolbar}
+        videoData={videoData}
       />
-      <Player videoId={videoAPI.videoId} videoSource={videoAPI.videoSource} />
+      <Player 
+        videoId={videoAPI.videoId} 
+        videoSource={videoAPI.videoSource} 
+        videoData={videoData}
+        setVideoData={setVideoData}
+      />
       <StyledVideoContainer>
         <StyledVideoDescriptionContainer>
           <DescriptionCreditContainer>
@@ -191,9 +199,11 @@ const Video = () => {
               />
             </div>
           </DescriptionCreditContainer>
-          <TranscriptButtonContainer videoData={state.videoId ? true : false}>
-            {state.videoId && <Checkmark />}
-            <span>{state.videoId ? "Transcript" : "No Transcript"}</span>
+          <TranscriptButtonContainer videoData={state.videoId && state.videoTranscript !== "" ? true : false}>
+            {state.videoId !== null && state.videoTranscript !== "" ? <Checkmark /> : ""}
+            <span>
+              {state.videoId && state.videoTranscript !== "" ? "Transcript" : "No Transcript"}
+            </span>
           </TranscriptButtonContainer>
         </StyledVideoDescriptionContainer>
       </StyledVideoContainer>

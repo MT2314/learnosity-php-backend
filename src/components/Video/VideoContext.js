@@ -22,6 +22,8 @@ export const videoConfig = (draft, action) => {
     case "CHANGE_CREDIT":
       draft.videoCredit = action.credit;
       return draft;
+    case "CHANGE_TRANSCRIPT":
+      draft.videoTranscript = action.transcript;
     case "CHANGE_TEXT_SETTINGS":
       draft.videoTextSettings = action.textSettings;
       return draft;

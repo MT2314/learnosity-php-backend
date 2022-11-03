@@ -337,6 +337,7 @@ const ToolBar = ({
   setToolbar,
   disconnect,
   setMainToolbar,
+  videoData,
 }) => {
   const { t } = useTranslation();
 
@@ -403,6 +404,14 @@ const ToolBar = ({
     setVideoOpen(false);
     toggleCloseToolbar("Transcript");
     e.target.contains(TranscriptVideo.current) && setTranscriptOpen(!openVideo);
+
+    const texts = [state.videoTranscript]; // text content
+    const element = document.createElement("a"); // anchor link
+    const file = new Blob(texts, { type: "text/plain" }); // file object
+    element.href = URL.createObjectURL(file);
+    element.download = state.videoDescription.ops[0].insert + ".txt";
+    document.body.appendChild(element); // simulate link click
+    element.click(); // Required for this to work in FireFox
   };
   const handleToggleVideoKebab = () => {
     toggleCloseToolbar("Kebab");
@@ -907,9 +916,9 @@ const ToolBar = ({
                     ? { width: "159px", flexGrow: "5" }
                     : { width: "78px" }
                 }
-                disabled={!videoAPI.videoId}
+                disabled={!videoAPI.videoId || state.videoTranscript == ""}
               >
-                {videoAPI.videoId ? "Download Transcript" : "Transcript"}
+                {videoAPI.videoId && state.videoTranscript !== "" ? "Download Transcript" : "Transcript"}
               </StyledVideoButton>
             </Tooltip>
           </StyledVideoToolbar>
