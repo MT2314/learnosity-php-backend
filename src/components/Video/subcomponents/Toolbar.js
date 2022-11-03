@@ -392,24 +392,70 @@ const ToolBar = ({
     e.target.contains(AddVideo.current) && setVideoOpen(!openVideo);
   };
 
+  const getFile = (url, callback) => {
+    var httpRequest = new XMLHttpRequest(),
+      response,
+      // response handler
+      getResponse = function () {
+        try {
+          if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+              response = httpRequest.responseText;
+              // some API requests return '{null}' for empty responses - breaks JSON.parse
+              if (response === "{null}") {
+                response = null;
+              }
+              // return the response
+              callback(response);
+            } else {
+              callback(null);
+            }
+          }
+        } catch (e) {
+          callback(null);
+        }
+      };
+    /**
+     * set up request data
+     */
+    // set response handler
+    httpRequest.onreadystatechange = getResponse;
+    // open the request
+    httpRequest.open("GET", url);
+    // open and send request
+    httpRequest.send();
+  };
+
   const handleClickTranscript = (e) => {
     setVideoOpen(false);
     toggleCloseToolbar("Transcript");
     e.target.contains(TranscriptVideo.current) && setTranscriptOpen(!openVideo);
+    var responseEdited = '';
 
     if (videoData) {
-      
       const chosenTrack = videoData.text_tracks[0].src;
       const colonLocation = chosenTrack.indexOf(":");
       const url = chosenTrack.substr(colonLocation + 1);
 
-      const texts = [videoData.text_tracks[0].src]; // text content
-      const element = document.createElement("a"); // anchor link
-      const file = new Blob(texts, { type: "text/plain" }); // file object
-      element.href = URL.createObjectURL(file);
-      element.download = state.videoDescription.ops[0].insert + ".txt";
-      document.body.appendChild(element); // simulate link click
-      element.click(); // Required for this to work in FireFox
+      getFile(url, function(response) {
+        console.log("What happen to response", response)
+
+        const texts = [response]; // text content
+        const element = document.createElement("a"); // anchor link
+        const file = new Blob(texts, { type: "text/plain" }); // file object
+        element.href = URL.createObjectURL(file);
+        element.download = state.videoDescription.ops[0].insert + ".txt";
+        document.body.appendChild(element); // simulate link click
+        element.click(); // Required for this to work in FireFox
+
+        // if (response) {
+        //     responseEdited = response.replace(regex,'');
+        //     responseEdited = responseEdited.replace('WEBVTT','');
+        //     console.log("What happen to responseEdited", responseEdited)
+        // }
+      });
+
+
     }
   };
   const handleToggleVideoKebab = () => {
