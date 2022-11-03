@@ -1,68 +1,94 @@
-/* styles for callout and quote */
-.wrapper.callout {
-
-    /* override user agent */
-    blockquote {
-        margin: 0;
-    }
-
+/* styles for infobox and quote */
+.wrapper.infobox {    
     .max-content {
-        // Setting max-width to 2 allows the infobox to fill the wrapper width
-        @include max-width-2;
-        background-color: $callout-bg;
+        @include max-width-2; // Setting max-width to 2 allows the infobox to fill the wrapper width
+        background-color: $transparent-grey-50;
+        border-radius: 0.625rem;
     }
-
-    // Display: table doesn't allow the infobox to stretch across inside the wrapper class
-    // .co-table {
-    //     display: table;
-    // }
 
     .co-row {
-        display: table-row;
+        display: flex;
+        .section-content {
+            margin: 3rem 0.938rem 2rem;
+            .info-header {
+                line-height: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .label-without-icon {
+                display: none;
+            }
+            @include remove-last-child-btm; // This clears the bottom-margin that is added to text/other components
+        }
     }
 
     .co-cell {
-        display: table-cell;
-        vertical-align: middle;
+        background-color: $brand-50;
+        width: 16.563rem;
+        border-radius: 0.625rem 0 0 0.625rem;
+        p {
+            @include text-label;
+            text-align: center;
+            text-transform: uppercase;
+            color: $brand-500;
+            margin-bottom: 2.75rem;
+        }
     }
-    
-    .co-cell:first-child {
-        padding-right: 0.5rem;
+
+    @media(max-width: 759px) {
+        .max-content {
+            border-radius: 0.625rem;
+        }
+        .co-row {
+            display: block;
+            .co-cell {
+                width: 100%;
+                border-radius: 0.625rem 0.625rem 0 0;
+                .icon {
+                    display: inline-block;
+                    width: 4.688rem;
+                    height: 4.688rem;
+                    margin: 1.625rem 0 0.75rem 1.5rem;
+                }
+                p {
+                    font-size: 1rem;
+                    line-height: 1.375rem;
+                    text-align: left;
+                    padding: 0 1.688rem 1.313rem;
+                    margin-bottom: 0;
+                }
+            }
+            .section-content {
+                position: static;
+                padding-bottom: 0.063rem;
+                margin: 0;
+            }
+            .label-without-icon {
+                padding-top: 1.875rem;
+            }
+            .info-header {
+                margin-top: 1.313rem;
+            }
+        }
+    }
+
+    .no-icon {
+        .co-cell {
+            display: none;
+        }
+        .section-content {
+            .label-without-icon {
+                display: block;
+                @include text-label;
+                margin: 0 1.5rem 0.906rem;
+                text-transform: uppercase;
+                color: $brand-500;
+            }
+        }
     }
 
     .icon {
-        width: 36px;
-        height: 36px;
-        margin-top: auto;
-        margin-bottom: auto;
-        padding: 0;
-    }
-    .icon-quote {
-        width: 30px;
-        height: 21px;
-        margin-top: auto;
-        margin-bottom: auto;
-        padding: 0;
-    }
-
-    @media(min-width: 640px) {
-        .max-content {
-            padding: 1.5rem 1.5rem;
-        }
-    }
-    
-    @media(min-width: 832px) {
-        .icon {
-            width: 76px;
-            height: 76px;
-        }
-        .icon-quote {
-            width: 50px;
-            height: 35px;
-            padding-left: 0.5rem;
-        }
-    }
-    cite {
-        font-style: normal;
-    }
+        margin: 2.625rem auto 1.25rem;
+        width: 7.375rem;
+        height: 7.188rem;
+    }    
 }

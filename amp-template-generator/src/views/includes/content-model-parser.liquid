@@ -25,7 +25,9 @@
     {%- when "InfoBox" -%}
         {% include amp-infobox.html data:propName.infoBoxState %}
     {%- when "Accordion" -%}
-        {% include amp-accordion.html data:item %}        
+        {% include amp-accordion.html data:item %}    
+    {%- when "Table" -%}
+        {% include amp-table.html data:item %}    
     {%comment%} Not using below. {%endcomment%}
     {%- when "formatted_text_no_heading" -%}
         {% include amp-formatted-text.html data:item %}
@@ -41,8 +43,6 @@
         {% include amp-youtube-video.html data:item %}
     {%- when "question_and_answer" -%}
         {% include amp-question-and-answer.html data:item %}
-    {%- when "table" -%}
-        {% include amp-table.html data:item %}
     {%- when "carousel" -%}
         {% include amp-carousel.html data:item %} 
     {%- when "quiz" -%}

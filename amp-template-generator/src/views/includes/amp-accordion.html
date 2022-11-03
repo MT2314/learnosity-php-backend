@@ -1,4 +1,4 @@
-<div class="accordion wrapper bottom-margin">
+<div class="accordion-component wrapper bottom-margin">
     {%- assign accordionId = 'accordion' | append: data.id -%}
     {%- assign ariaControls = '' -%}
     {%- assign btnExpandHidden = '' -%}
@@ -17,7 +17,8 @@
             Expand / Collapse Buttons:
             Both of these buttons are hidden from screen readers because of concerns about confusing non-sighted users.
         {%endcomment%}
-        <div class="right pb1" aria-hidden="true">
+        {%- if data.props.layoutState.length > 1 -%}
+        <div class="right pb1">
             <button
                 id="{{ accordionId }}_expandAll"
                 on="tap:{{ accordionId }}.expand();"
@@ -26,6 +27,7 @@
             >
                 <span class="bold">Expand All</span>
             </button>
+                <span class="vertical-bar">|</span>
             <button
                 id="{{ accordionId }}_collapseAll"
                 on="tap:{{ accordionId }}.collapse();"
@@ -33,14 +35,14 @@
                 [disabled]="{{ btnCollapseHidden }}"
                 class="btn link"
             >
-                <span class="bold">Close All</span>
+                <span class="bold">Collapse All</span>
             </button>
         </div>
+        {%- endif -%}
     
         {%comment%}Actual Accordion:{%endcomment%}
         <amp-accordion
             disable-session-states
-            animate
             id="{{ accordionId }}"
             class="accordion"
             aria-label="Accordion with {{ data.props.layoutState.length }} sections"
@@ -51,14 +53,30 @@
                 on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
     
                 {%comment%}Pane Heading:{%endcomment%}
-                <h4 id="{{ accordionId }}_heading{{ forloop.index0 }}" class="heading h4 p2" aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ pane.heading.processed }}">
-                    <span class="inline-block">
-                        {{ tab.title }}
+                <header
+                    id="{{ accordionId }}_heading{{ forloop.index0 }}"
+                    class="accordion-pane p2"
+                    role="button"
+                    aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ tab.title }} {{ pane.heading.processed }}"
+                >
+                    <span class="accordion-title-container">
+                        <span class="accordion-title">{{ tab.title }}</span>{%comment%}Please leave this as single line of code - No Prettier/ESLint on this line{%endcomment%}
+                        <i class="chevron-down" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'hidden-icon' : 'chevron-down'" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="11" viewBox="0 0 19 11" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M0.49968 0.896287C0.890205 0.505762 1.52337 0.505762 1.91389 0.896287L9.20679 8.18918L16.4997 0.896287C16.8902 0.505762 17.5234 0.505762 17.9139 0.896287C18.3044 1.28681 18.3044 1.91998 17.9139 2.3105L9.91389 10.3105C9.52337 10.701 8.89021 10.701 8.49968 10.3105L0.49968 2.3105C0.109156 1.91998 0.109156 1.28681 0.49968 0.896287Z"
+                                    fill="black" fill-opacity="0.55" />
+                            </svg>
+                        </i>
+                        <i class="hidden-icon" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'chevron-up' : 'hidden-icon'" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M17.7071 9.70711C17.3166 10.0976 16.6834 10.0976 16.2929 9.70711L9 2.41421L1.70711 9.70711C1.31658 10.0976 0.683416 10.0976 0.292892 9.70711C-0.0976314 9.31658 -0.0976313 8.68342 0.292893 8.29289L8.29289 0.292893C8.68342 -0.0976323 9.31658 -0.0976322 9.70711 0.292893L17.7071 8.29289C18.0976 8.68342 18.0976 9.31658 17.7071 9.70711Z"
+                                    fill="white" />
+                            </svg>
+                        </i>
                     </span>
-                    <i class="fa fa-chevron-down fa-pull-right m0" 
-                       [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'fa fa-chevron-up fa-pull-right m0' : 'fa fa-chevron-down fa-pull-right m0'"
-                       aria-hidden="true"></i>
-                </h4>
+                </header>
     
                 {%comment%}Pane Body:{%endcomment%}
                 <div class="section-content border-left border-right px3 pt3" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">

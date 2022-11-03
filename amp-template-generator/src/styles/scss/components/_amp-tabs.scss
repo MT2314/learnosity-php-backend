@@ -1,8 +1,16 @@
-.wrapper.tabs {
+@import '_amp-accordion';
+
+.wrapper.tabs-component {
   // Brightcove videos inside tabs are too wide to fit on small
   // viewports with the default padding. This reduces the outer
   // padding between the tab border and the viewport to 5px to
   // alleviate the problem.
+  p {
+    margin: 0;
+  }
+
+  @include remove-last-child-btm; // This clears the bottom-margin that is added to text/other components
+
   .tabs {
     &[role="tablist"] {
       /* Styles for the flex layout based tabs */
@@ -19,21 +27,11 @@
         width: min-content;
         height: 4.625rem;
         border-left-width: 0;
-        background-color: $inactive-tab-bg;
-
-        &:focus-visible {
-          margin: 0.0625rem;
-          outline: 0.0625rem solid $tab-focus;
-        }
+        background-color: $inactive-bg;
 
         p {
-          font-weight: 400;
-          font-family: "Lato", sans-serif;
           font-style: normal;
-          font-size: 1.125rem;
           text-align: center;
-          line-height: 1.6875rem;
-          letter-spacing: 0.03em;
           word-wrap: break-word;
           overflow-x: hidden;
           overflow-y: hidden;
@@ -42,6 +40,7 @@
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
           margin: 0;
+          @include text-label;
         }
 
         &:first-child {
@@ -54,57 +53,84 @@
         }
 
         .hoverTabText {
+          font-family: $component-main-font;
+          font-size: 1.125rem;
+          font-weight: 600;
+          line-height: 1.6875rem;
           position: absolute;
           display: none;
-          background: #404040;
+          background: $grey-800;
           border-radius: 0.375rem;
           width: min-content;
-          color: white;
-          padding: 1rem 0.625rem;
+          color: $white;
+          padding: 0.625rem 1rem;
           top: 4.6875rem;
           z-index: 99;
+
+          &::selection {
+            color: $primary-body-text;
+          }
         }
 
         .hoverTabText2 {
-          width: 49.5%;
+          width: 45.5%;
         }
         .hoverTabText3 {
-          width: 32%;
+          width: 30%;
         }
         .hoverTabText4 {
-          width: 24%;
+          width: 23%;
         }
 
-        &:hover {
-          background-color: $primary-tab-bg;
+        &:hover,
+        &:focus-visible {
+          background-color: $primary-bg;
+
           .hoverTabText {
             display: block;
           }
         }
 
-        &[selected] {
-          background-color: $active-tab-bg;
-          border-bottom: 0.25rem solid $tab-active-border-top;
-          color: black;
+        &:hover {
+          text-decoration-line: underline;
         }
 
-        // AMP's CSS diminishes the focus outline, so this
-        // re-applies our focus rule
-        // &[selected]:focus {
-        //   @include outline-focus;
-        // }
+        &[selected] {
+          background-color: $active-bg;
+          border-bottom: 0.25rem solid $tab-border-bottom;
+          color: $grey-900;
+
+          &:hover {
+            text-decoration-line: none;
+          }
+        }
       }
 
       & [role="tabpanel"] {
         display: none;
         width: 100%;
         order: 1;
-        border-color: $border-color;
-        background: $primary-tab-bg;
+        border-color: $component-border;
+        background: $primary-bg;
+        border-radius: 0 0 0.625rem 0.625rem;
       }
 
       & [role="tab"][selected] + [role="tabpanel"] {
         display: block;
+        margin: 0;
+        padding: 1.25rem 1.5rem 1.5rem 1.5rem;
+      }
+
+      & [role="tab"],
+      & [role="tabpanel"] {
+        &:focus-within {
+          outline: none;
+        }
+
+        &:focus-visible {
+          @include outline-focus;
+          z-index: 99;
+        }
       }
     }
 
@@ -128,11 +154,11 @@
   display: none;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 759px) {
   .hideAccordion {
     display: block;
   }
-  .wrapper.tabs {
+  .wrapper.tabs-component {
     display: none;
   }
 }
