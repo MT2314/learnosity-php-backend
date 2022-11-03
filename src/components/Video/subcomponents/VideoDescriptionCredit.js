@@ -37,11 +37,7 @@ const VideoDescriptionCredit = ({
   const credRef = useRef();
 
   const updateDescription = useCallback((body) => {
-    if (body.body.length > 0) {
-      dispatch({ func: "CHANGE_DESCRIPTION", description: body.body });
-    } else {
-      dispatch({ func: "CHANGE_DESCRIPTION", description: null });
-    }
+    dispatch({ func: "CHANGE_DESCRIPTION", description: body.body });
   });
 
   const updateCredit = useCallback((body) => {
