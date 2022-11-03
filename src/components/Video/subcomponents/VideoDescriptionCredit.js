@@ -41,11 +41,7 @@ const VideoDescriptionCredit = ({
   });
 
   const updateCredit = useCallback((body) => {
-    if (body.body.length > 0) {
-      dispatch({ func: "CHANGE_CREDIT", credit: body.body });
-    } else {
-      dispatch({ func: "CHANGE_CREDIT", credit: null });
-    }
+    dispatch({ func: "CHANGE_CREDIT", credit: body.body });
   });
 
   const portalDescription = useMemo(() => {
