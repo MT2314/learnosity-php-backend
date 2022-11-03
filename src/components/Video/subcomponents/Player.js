@@ -138,14 +138,13 @@ const Player = ({ videoId, videoSource, videoData, setVideoData }) => {
         "\u00a0"
       )}`;
       let currentDescription = state.videoDescription
-        ? state.videoDescription.ops[0].insert
+        ? state.videoDescription.ops
         : null;
 
       let descriptionDelta = new Delta([
+        ...(currentDescription ? currentDescription : []),
         {
-          insert: `${
-            currentDescription !== null ? currentDescription : ""
-          } ${parseDescription}\n`,
+          insert: `${parseDescription}\n`,
         },
       ]);
 
@@ -179,7 +178,7 @@ const Player = ({ videoId, videoSource, videoData, setVideoData }) => {
     <PlayerContainer>
       {videoId == null && (
         <StyledVideoContainer>
-          <StyledVideoDefaultContainer>
+          <StyledVideoDefaultContainer data-testid="video">
             <StyledCircleContainer>
               <StyledTriangleImage src={TriangleIcon} />
             </StyledCircleContainer>

@@ -18,12 +18,10 @@ const StyleTabBody = styled("div")(({ isOver, showError, empty }) => ({
       : isOver && empty
       ? "rgba(21, 101, 192, 0.04)"
       : "#ffffff",
-  borderWidth: "1px",
-
   margin: "10px ,0px",
   padding: "10px",
-  borderStyle: "solid",
-  borderColor: "#BDBDBD",
+  border: "0.0625rem solid #BDBDBD",
+  borderTop: "none",
 }));
 
 const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {

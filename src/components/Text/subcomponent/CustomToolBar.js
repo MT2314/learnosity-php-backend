@@ -82,7 +82,7 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   paddingRight: "0px !important",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px 0 rgba(0, 0, 0, 0.1)",
-  borderRadius: isVideo ? "4px 0px 4px 0px" : "4px",
+  borderRadius: isVideo ? "4px 0px 0px 4px" : "4px",
   "& .MuiToolbar-gutters": {
     paddingLeft: 0,
     paddingRight: 0,

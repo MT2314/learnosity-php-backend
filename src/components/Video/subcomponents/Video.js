@@ -1,5 +1,6 @@
 import React, {
   useState,
+  useEffect,
   useCallback,
   useRef,
   useMemo,
@@ -7,7 +8,6 @@ import React, {
 } from "react";
 import styled from "@emotion/styled";
 import { useTranslation } from "react-i18next";
-
 
 // Internal Imports
 import VideoDescriptionCredit from "./VideoDescriptionCredit";
@@ -95,8 +95,8 @@ const Video = () => {
   const [videoData, setVideoData] = useState(null);
 
   const [videoTextSettings, setVideoTextSettings] = useState({
-    description: null,
-    credit: null,
+    description: true,
+    credit: true,
   });
 
   const isVideo = useMemo(() => true, []);
@@ -162,6 +162,7 @@ const Video = () => {
         setVideoAPI={setVideoAPI}
         videoAPI={videoAPI}
         setVideoTextSettings={setVideoTextSettings}
+        videoTextSettings={videoTextSettings}
         setToolbar={setToolbar}
         disconnect={disconnect}
         setMainToolbar={setMainToolbar}
@@ -185,14 +186,10 @@ const Video = () => {
               }}
             >
               <VideoDescriptionCredit
-                isVideo={isVideo}
+                videoTextSettings={videoTextSettings}
                 videoHasFocus={videoHasFocus}
                 videoAreaFocused={videoAreaFocused}
                 setVideoHasFocus={setVideoHasFocus}
-                setVideoAPI={setVideoAPI}
-                videoAPI={videoAPI}
-                description={state.videoDescription}
-                credit={state.videoCredit}
                 toolbar={toolbar}
                 setVideoAreaFocused={setVideoAreaFocused}
                 t={t}
