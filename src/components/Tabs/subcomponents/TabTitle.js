@@ -40,6 +40,7 @@ const StyledPlaceholder = styled("div")(({ activeTab, tabIndexProp }) => ({
   display: "-webkit-box",
   WebkitBoxOrient: "vertical",
   WebkitLineClamp: activeTab == tabIndexProp ? "unset" : 2,
+  lineHeight: "1.575rem"
 }));
 
 const StyledInput = styled(TextareaAutosize)(({ activeTab, tabIndexProp }) => ({
