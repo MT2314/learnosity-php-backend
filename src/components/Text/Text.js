@@ -60,6 +60,7 @@ const Text = ({
             onClick={() => {
               setShowEditor(true);
               setTabActive(true);
+              setCloseToolBar(false);
             }}
             className={
               portal?.parentComponent === "video" ? "" : "mainContainer"
@@ -70,6 +71,7 @@ const Text = ({
             onFocus={() => {
               setShowEditor(true);
               setTabActive(true);
+              setCloseToolBar(false);
             }}
           >
             <DefaultText portal={portal} />
