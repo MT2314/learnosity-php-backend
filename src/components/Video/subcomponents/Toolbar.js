@@ -474,11 +474,10 @@ const ToolBar = ({
   // Source state state
   useEffect(() => {
     if (videoAPI.videoId) {
-      videoAPI.videoSource === "brightcove"
-        ? setSelectBrightcove(true)
-        : videoAPI.videoSource === "youtube" && setSelectYoutube(true);
+      videoAPI.videoSource === "brightcove" && setSelectBrightcove(true);
+      videoAPI.videoSource === "youtube" && setSelectYoutube(true);
     }
-  }, [state.videoSource]);
+  });
 
   useEffect(() => {
     setToolbar(portalToolbarRef.current);
