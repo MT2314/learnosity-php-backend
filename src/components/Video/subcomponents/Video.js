@@ -126,6 +126,9 @@ const Video = () => {
         videoId: state.videoId,
       });
     }
+    if (state.videoTextSettings) {
+      setVideoTextSettings(state.videoTextSettings);
+    }
   }, []);
 
   return (
