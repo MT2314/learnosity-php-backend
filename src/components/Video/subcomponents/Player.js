@@ -115,7 +115,7 @@ const Player = ({ videoId, videoSource }) => {
         : null;
 
       let descriptionDelta = new Delta([
-        ...(currentDescription && currentDescription),
+        ...(currentDescription ? currentDescription : []),
         {
           insert: `${parseDescription}\n`,
         },
