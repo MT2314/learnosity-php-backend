@@ -81,13 +81,12 @@ const VideoDescriptionCredit = ({
 
   useEffect(() => {
     setVideoAreaFocused(true);
-    console.log("description: ", videoTextSettings);
     dispatch({ func: "CHANGE_TEXT_SETTINGS", textSettings: videoTextSettings });
   }, [videoTextSettings]);
 
   return (
     <>
-      {state.videoTextSettings?.description === true && (
+      {videoTextSettings.description === true && (
         <div
           ref={descRef}
           style={{ position: "relative", minHeight: "20px", width: "622px" }}
@@ -103,7 +102,7 @@ const VideoDescriptionCredit = ({
           />
         </div>
       )}
-      {state.videoTextSettings?.credit === true && (
+      {videoTextSettings.credit === true && (
         <div
           ref={credRef}
           style={{ position: "relative", minHeight: "20px", width: "622px" }}

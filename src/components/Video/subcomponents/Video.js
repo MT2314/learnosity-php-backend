@@ -126,10 +126,9 @@ const Video = () => {
         videoId: state.videoId,
       });
     }
-    setVideoTextSettings({
-      description: state.videoTextSettings.description,
-      credit: state.videoTextSettings.credit,
-    });
+    if (state.videoTextSettings) {
+      setVideoTextSettings(state.videoTextSettings);
+    }
   }, []);
 
   return (
