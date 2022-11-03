@@ -423,29 +423,13 @@ const ToolBar = ({
     toggleCloseToolbar("Transcript");
     e.target.contains(TranscriptVideo.current) && setTranscriptOpen(!openVideo);
 
-    if (videoData) {
-      var responseEdited = '';
-      var regex = /\d\d:\d\d\.\d\d\d\s+-->\s+\d\d:\d\d\.\d\d\d.*\n/ig
-      const chosenTrack = videoData.text_tracks[0].src;
-      const colonLocation = chosenTrack.indexOf(":");
-      const url = chosenTrack.substr(colonLocation + 1);
-
-      getFile(url, function(response) {
-        if (response) {
-            responseEdited = response.replace(regex,'');
-            responseEdited = responseEdited.replace('WEBVTT','');
-        }
-        const texts = [responseEdited]; // text content
-        const element = document.createElement("a"); // anchor link
-        const file = new Blob(texts, { type: "text/plain" }); // file object
-        element.href = URL.createObjectURL(file);
-        element.download = state.videoDescription.ops[0].insert + ".txt";
-        document.body.appendChild(element); // simulate link click
-        element.click(); // Required for this to work in FireFox
-      });
-
-
-    }
+    const texts = [state.videoTranscript]; // text content
+    const element = document.createElement("a"); // anchor link
+    const file = new Blob(texts, { type: "text/plain" }); // file object
+    element.href = URL.createObjectURL(file);
+    element.download = state.videoDescription.ops[0].insert + ".txt";
+    document.body.appendChild(element); // simulate link click
+    element.click(); // Required for this to work in FireFox
   };
   const handleToggleVideoKebab = () => {
     toggleCloseToolbar("Kebab");
