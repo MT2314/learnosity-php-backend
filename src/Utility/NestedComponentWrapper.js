@@ -31,7 +31,7 @@ const BlueBox = styled("div")(({ draggingSelf, showSelf, hoverActive }) => ({
       : hoverActive && !draggingSelf
       ? `3px solid #DAE3EE`
       : null,
-  borderRadius: "4px",
+  borderRadius: "0rem 0.25rem 0.25rem 0.25rem",
   opacity: draggingSelf ? 0.4 : 1,
   '& [data-id="callout"]': {
     margin: 0,
@@ -61,7 +61,7 @@ export const ComponentLabelContainer = styled("div")(
       background: showSelf && "#1466C0",
       display: "flex",
       width: "fit-content",
-      marginLeft: "-3px",
+      marginLeft: showSelf ? "-3px" : hoverActive ? "-4px" : "-3px",
       padding: "0 1px",
       color: showSelf ? "#FFF" : "#1466C0",
       borderRadius: "4px 4px 0px 0px",

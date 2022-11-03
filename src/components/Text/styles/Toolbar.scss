@@ -1,23 +1,134 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+// Formatting buttons for toolbar
 
-// .ql-toolbar.ql-snow {
-//   border: none;
-//   border-left: 4px solid #1565c0;
-// }
+// Outer Toolbar Container
+.Toolbar-Container {
+  display: block !important;
+  position: fixed !important;
+  top: 100px !important;
+  .MuiPaper-root {
+    background-color: transparent !important;
+  }
+}
 
-.ql-snow.ql-toolbar.toolbarContainer {
-  button {
-    border-radius: 4px;
-    &:hover {
-      background-color: rgb(226, 236, 245) !important;
+.Style-Appbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 40px !important;
+  height: 40px !important;
+  gap: 10px;
+  .MuiPaper-root {
+    background-color: #fff !important;
+  }
+}
+
+.StyledMenu {
+  background: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin-left: 0px;
+  margin-top: 2px;
+}
+
+.StyledMenuItem {
+  width: 109px;
+  padding: 6px 16px;
+  height: 36px;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+  }
+  &:active {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+  }
+}
+
+// Dropdown Card
+.StyledCard {
+  position: absolute;
+  display: var(--card-display);
+  justify-content: center;
+  align-items: center;
+  width: var(--width);
+  height: 40px !important;
+  left: var(--left);
+  background-color: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  bottom: -43px;
+  z-index: 25;
+  .ql-active {
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    svg {
+      .svg-fill {
+        fill: #1565c0;
+      }
     }
+  }
+  button {
+    display: flex !important;
+    margin: 2px;
+    width: 30px !important;
+    height: 30px !important;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.StyledIconButton {
+  display: flex !important;
+  width: 30px;
+  height: 30px;
+  padding: 7px;
+  color: #232323;
+  background: #ffffff;
+  border-radius: 4px !important;
+
+  & svg {
+    fill: #000;
+    //   ...(disabled && { opacity: 0.3 }),
+  }
+  &:hover {
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    & svg {
+      fill: rgba(21, 101, 192, 1);
+    }
+  }
+  &:active {
+    cursor: pointer;
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    & svg {
+      fill: rgba(21, 101, 192, 1);
+    }
+  }
+  &:focus-visible {
+    background-color: rgba(21, 101, 192, 0.12) !important;
+  }
+  & .MuiPaper-root {
+    background-color: rgba(255, 255, 255, 1) !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important;
+  }
+  & .MuiPaper-root {
+    background-color: rgba(255, 255, 255, 1) !important;
+  }
+}
+
+.ql-bold {
+  padding: 3px !important;
+}
+
+.ql-snow.ql-toolbar {
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  margin: 0px;
+  button {
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 4px;
 
     svg {
       .svg-fill {
         fill: #232323;
-      }
-      .ql-stroke {
-        stroke: #232323;
       }
     }
   }
@@ -35,9 +146,6 @@
     svg {
       .svg-fill {
         fill: #1565c0;
-      }
-      .ql-stroke {
-        stroke: #1565c0;
       }
     }
   }
@@ -58,10 +166,6 @@
 
   .ql-toolbar.ql-snow .ql-formats {
     margin-right: 0px;
-  }
-
-  .ql-toolbar button {
-    border-radius: 4px;
   }
 }
 

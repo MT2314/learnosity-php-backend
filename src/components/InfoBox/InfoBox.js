@@ -35,10 +35,9 @@ export const defaultProps = {
 
 // Styled components begin
 const StyledPaper = styled(Paper)({
-  background: "rgb(236, 236, 236)",
-  width: "968px",
+  width: "100%",
   fontFamily: `"Inter", sans-serif`,
-  padding: "40px 104px",
+  padding: "2.5rem 6.5rem 1.5625rem 6.5625rem",
   display: "flex",
   background: "#FAFAFA",
 });

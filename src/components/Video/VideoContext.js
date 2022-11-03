@@ -8,16 +8,21 @@ export const videoConfig = (draft, action) => {
   switch (action.func) {
     case "UPDATE_STATE":
       return action.data;
-    case "UPDATE_URL_DATA":
-      draft.videoURL = action.data;
+    case "SET_VIDEO_ID":
       draft.videoId = action.videoId;
       return draft;
-
+    case "UPDATE_URL_DATA":
+      draft.videoURL = action.videoURL;
+      draft.videoId = action.videoId;
+      draft.videoSource = action.videoSource;
+      return draft;
     case "CHANGE_DESCRIPTION":
       draft.videoDescription = action.description;
       return draft;
-    case "CHANGE_CREDITS":
+    case "CHANGE_CREDIT":
       draft.videoCredit = action.credit;
+      return draft;
+    default:
       return draft;
   }
 };
@@ -34,12 +39,12 @@ export const VideoProvider = ({ children, setProp, videoState }) => {
 
   useEffect(() => {
     diff && mounted && setProp({ videoState: state });
-    console.log(state);
   }, [state]);
 
   useEffect(() => {
     diff && mounted && dispatch({ func: "UPDATE_STATE", data: videoState });
   }, [videoState]);
+
   return (
     <VideoContext.Provider value={[state, dispatch]}>
       {children}
