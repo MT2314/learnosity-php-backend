@@ -3,10 +3,7 @@
     {%- assign showVideoId = 'showVideoId' | append: dataID -%}
     {%- assign hideVideoId = 'hideVideoId' | append: dataID -%}
     {%- assign videoDescription = data.videoDescription | strip_html | strip -%}
-
-    {% if data.videoCredit.length > 0 %}
-        {%- assign videoCredit = data.videoCredit | prepend: "Credit: " | strip_html -%}
-    {% endif %}
+    {%- assign videoCredit = data.videoCredit | prepend: "Credit: " | strip_html -%}
 
     {% if data.videoSource == "brightcove" -%}
     
@@ -65,13 +62,17 @@
             <div class="description-text-less" id="{{ videoId }}" [class]="buttonToggleVideo_{{ videoId }} ? 'description-text-more' : 'description-text-less'">
                 {%- if videoDescription.length > 0 -%}
                     {% if videoDescription != " " %}
-                    <p class="description">
-                        {{videoDescription}}
+                    <p
+                        class="description"
+                    >
+                            {{videoDescription}}
                     </p>
                     {% endif %}
                 {%- endif -%}
-                {% if data.videoCredit.length > 0 and data.videoCredit != null %}
-                    <p class="video-credit">{{videoCredit}}</p>
+                {% if videoCredit.length > 0 and videoCredit != null %}
+                    {% if videoCredit != "<br>" %}
+                        <p class="video-credit">{{videoCredit}}</p>
+                    {% endif %}
                 {% endif %}
             </div>
             <button class="transcript-button">
@@ -88,6 +89,7 @@
                 class="show-more-button"
                 id="{{ showVideoId }}"
                 on="tap:{{ showVideoId }}.hide,{{ hideVideoId }}.show, AMP.setState({ buttonToggleVideo_{{ videoId }}: true })"
+                aria-hidden="true"
             >
                 Show more
             </button>
@@ -96,6 +98,7 @@
                 id="{{ hideVideoId }}"
                 class="show-less-button"
                 on="tap:{{ showVideoId }}.show,{{ hideVideoId }}.hide,AMP.setState({ buttonToggleVideo_{{ videoId }}: false })"
+                aria-hidden="true"
             >
                 Show less
             </button>
