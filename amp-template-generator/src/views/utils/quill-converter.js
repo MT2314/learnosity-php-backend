@@ -115,6 +115,10 @@ function _setHtml(quill) {
   // Replacing nest <br> tags
   converted = converted.replace(/<p><br><\/p>/g, "<br>");
 
+  if (converted === "<br>") {
+    return null;
+  }
+
   // Wrapping the contents of li tags with span tags
   converted = converted.replace(/<li>/g, "<li><span>");
 
