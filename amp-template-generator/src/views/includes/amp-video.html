@@ -3,10 +3,7 @@
     {%- assign showVideoId = 'showVideoId' | append: dataID -%}
     {%- assign hideVideoId = 'hideVideoId' | append: dataID -%}
     {%- assign videoDescription = data.videoDescription | strip_html | strip -%}
-    
-    {% if videoCredit.length > 0 and videoCredit != null %}
-        {%- assign videoCredit = data.videoCredit | prepend: "Credit: " | strip_html -%}
-    {% endif %}
+    {%- assign videoCredit = data.videoCredit | strip_html -%}
 
     {% if data.videoSource == "brightcove" -%}
     
@@ -69,9 +66,9 @@
                     {% endif %}
                 {%- endif -%}
                 {% if videoCredit.length > 0 and videoCredit != null %}
-                    <!-- {% if videoCredit != "" %} -->
-                        <p class="video-credit">{{videoCredit}}</p>
-                    <!-- {% endif %} -->
+                    {% if videoCredit != " " %}
+                        <p class="video-credit">Credit: {{videoCredit}}</p>
+                    {% endif %}
                 {% endif %}
             </div>
             <button class="transcript-button">
