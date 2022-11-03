@@ -22,6 +22,9 @@ export const videoConfig = (draft, action) => {
     case "CHANGE_CREDIT":
       draft.videoCredit = action.credit;
       return draft;
+    case "CHANGE_TEXT_SETTINGS":
+      draft.videoTextSettings = action.textSettings;
+      return draft;
     default:
       return draft;
   }
@@ -39,6 +42,7 @@ export const VideoProvider = ({ children, setProp, videoState }) => {
 
   useEffect(() => {
     diff && mounted && setProp({ videoState: state });
+    console.log(state);
   }, [state]);
 
   useEffect(() => {
