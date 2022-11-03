@@ -1,0 +1,16 @@
+---
+{
+  "layout": "amp-layout.njk",
+  "permalink": "demo-amp-table.html"
+}
+---
+<strong>Table Component {{projectConfig.version}} - {{projectConfig.date}}</strong>
+
+{% for table in componentTable %}
+    {% if table.name == "Table Component"  %}
+        {%- assign components = table.componentContainer.sections[1].components -%}
+        {% for tableComponent in components %}
+            {% include amp-table.html data:tableComponent.props -%}
+        {% endfor %}
+    {% endif %}
+{% endfor %}

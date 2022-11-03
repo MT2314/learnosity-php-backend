@@ -10,5 +10,27 @@
 // but this is here in case you need to re-apply this rule because
 // something else (AMP) changes it.
 @mixin outline-focus {
-    outline: $outline-focus solid 3px;
+    outline: 0.125rem solid $tab-focus;
+    outline-offset: 0.125rem;
+}
+
+@mixin text-label {
+    font-family: $component-main-font;
+    font-weight: 600;
+    font-size: 1.125rem;
+    letter-spacing: 0.03em;
+    line-height: 1.6875rem;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin remove-last-child-btm {
+    .wrapper {
+        &:last-child.bottom-margin {
+          // This clears the bottom-margin that is added to text/other components
+          margin-bottom: 0;
+        }
+      }
 }

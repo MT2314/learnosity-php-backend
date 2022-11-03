@@ -102,11 +102,14 @@ function _setHtml(quill) {
   // Adding sr-only text to links after quill conversion
   converted = converted.replace(
     /<\/a>/g,
-    "<span class='sr-only'>(Opens in a new window)</span></a>"
+    "<span><i class='anchor-icon'>&#xe802;</i></span><span class='sr-only'>(Opens in a new window)</span></a>"
   );
 
   // Replacing nest <br> tags
   converted = converted.replace(/<p><br><\/p>/g, "<br>");
+
+  // Wrapping the contents of li tags with span tags
+  converted = converted.replace(/<li>/g, "<li><span>");
 
   return converted;
 }

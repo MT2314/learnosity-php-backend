@@ -1,6 +1,6 @@
 {
   "name": "template-ilc-amp",
-  "version": "3.0.2",
+  "version": "2.0.0",
   "description": "Google AMP templates for ILC Courseware",
   "main": "index.js",
   "scripts": {

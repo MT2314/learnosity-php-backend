@@ -1,60 +1,170 @@
-.wrapper.accordion {
-    .btn.link:hover {
-        background-color: $accordion-btn-link-bg-hover;
-        color: $accordion-btn-link-text-hover;
-        box-shadow: none;
+.wrapper.accordion-component {
+  .btn.link {
+    color: $button-active;
+    font-family: $component-main-font;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &:focus-visible {
+      @include outline-focus;
     }
-    .btn.link:disabled {
-        opacity: 0.2;
+
+    &:hover {
+      background-color: $body-highlight;
+      color: $hover-dialog-bg;
     }
 
-    .accordion {
-        clear: right;
+    &:disabled {
+      opacity: 0.2;
+      box-shadow: none;
+      pointer-events: none;
+    }
+  }
 
-        .heading {
-            background-color: $accordion-heading-bg;
-            border-color: $border-color;
-            
-            &:hover {
-                background-color: $accordion-heading-bg-hover;
-            }
+  .vertical-bar {
+    color: $vertical-line;
+  }
 
-            span {
-                width: calc(100% - 1.5rem);
-            }
+  .accordion {
+    clear: right;
+
+    section {
+      &:first-child {
+        .accordion-pane {
+          border-radius: 0.625rem 0.625rem 0 0;
         }
-        
+      }
+
+      &:last-child {
+        .accordion-pane {
+          border-bottom-left-radius: 0.625rem;
+          border-bottom-right-radius: 0.625rem;
+          border-bottom: 0.0625rem solid $component-border;
+        }
+
         .section-content {
-            border-color: $border-color;
+          border-radius: 0 0 0.625rem 0.625rem;
         }
 
-        section {
-            &:first-child {
-                .heading {
-                    border-radius: 6px 6px 0 0;
-                }
-            }
+        &[expanded] {
+          .accordion-pane {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+          }
+
+          .section-content {
+            border-bottom: 1px solid $component-border;
+          }
+        }
+      }
+
+      .accordion-pane {
+        background-color: $inactive-bg;
+        border: 0.0625rem solid $component-border;
+        border-bottom: none;
+        padding: 1.0625rem 1.5rem;
+        @include text-label;
+
+        &:hover {
+          background-color: $hover-bg;
+      
+          .accordion-title {
+            text-decoration-line: underline;
+          }
+      
+          .chevron-down {
+            background-color: $active-bg;
+          }
+        }
+
+        &:focus-within {
+          outline: none;
+        }
         
-            &:last-child {
-                .heading {
-                    border-radius: 0 0 6px 6px;
-                }
-            }
+        &:focus-visible {
+          @include outline-focus;
+          z-index: 99;
         }
+
+        @media only screen and (max-width: 345px) {
+          padding: 1.5rem 1rem;
+        }
+
+        .accordion-title-container {
+          display: flex;
+          align-items: center;
+            
+          span.accordion-title {
+            width: calc(100% - 1.5rem);
+            margin-right: 1.5rem;
+            white-space: pre-line;
+          }
+
+          i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: $amp-icons-font;
+            font-style: normal;
+            font-weight: normal;
+            color: $chevron-color;
+            /* Font smoothing. That was taken from TWBS */
+            -webkit-font-smoothing: antialiased;
+            border-radius: 50%;
+            padding: 0.875rem 0.625rem;
+
+            &:before {
+              position: relative;
+              top: 2px;
+            }
+          }
+
+          .hidden-icon {
+            display: none;
+          }
+        }
+      }
+
+      &[expanded] {
+        .accordion-pane {
+          background-color: $active-bg;
+          border-bottom: 0.0625rem solid $component-border;
+
+          &:focus-visible {
+            @include outline-focus;
+            z-index: 99;
+          }
+
+          .chevron-up {
+            background-color: $brand-500;
+            color: $white;
+          }
+        }
+      }
+
+      .section-content {
+        border-color: $component-border;
+        background-color: $primary-bg;
+        padding: 1.5rem;
+
+        // This strips paragraph tags of global styles for nesting inside other components
+        p {
+          margin: 0;
+        }
+
+        .text-component {
+          padding: 0;
+        }
+
+        .wrapper {
+          &:nth-last-child(2).bottom-margin {
+            // This clears the bottom-margin that is added to text/other components
+            margin-bottom: 0;
+          }
+        }
+      }
     }
+  }
 }
-
-/*! purgecss start ignore */
-.wrapper.accordion .accordion section[expanded] .heading {
-    background-color: $accordion-heading-active-bg;
-    border-color: $accordion-heading-active-border;
-}
-
-.wrapper.accordion .accordion section:last-child[expanded] .heading {
-    border-radius: 0;
-}
-
-.wrapper.accordion .accordion section:last-child[expanded] .section-content {
-    border-bottom: 1px solid $border-color;
-}
-/*! purgecss end ignore */

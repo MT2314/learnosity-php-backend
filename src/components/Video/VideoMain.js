@@ -13,6 +13,10 @@ export const defaultProps = {
     videoCredit: null,
     videoId: null,
     videoTranscript: null,
+    videoTextSettings: {
+      description: true,
+      credit: true,
+    },
   },
 };
 

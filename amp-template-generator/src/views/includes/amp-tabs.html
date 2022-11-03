@@ -1,4 +1,4 @@
-<div class="tabs wrapper bottom-margin">
+<div class="tabs-component wrapper bottom-margin">
     {%- assign tabListId = 'tablist' | append: data.id -%}
     <amp-selector class="tabs"
         role="tablist"
@@ -7,7 +7,7 @@
 
     {%- for tab in data.props.layoutState -%}
 
-        <div id="{{tabListId}}_tab{{forloop.index}}"
+        <header id="{{tabListId}}_tab{{forloop.index}}"
             role="tab"
             aria-controls="{{tabListId}}_tabpanel{{forloop.index}}"
             class="p1"
@@ -20,20 +20,20 @@
                 {{tab.title}}
             </p>
         {% if tab.title.length > 84 and data.props.layoutState.length == 2 -%}
-            <span class="hoverTabText hoverTabText2">
+            <span class="hoverTabText hoverTabText2" aria-hidden="true">
                 {{tab.title}}
             </span>
         {% elsif tab.title.length > 46 and data.props.layoutState.length == 3 -%}
-            <span class="hoverTabText hoverTabText3">
+            <span class="hoverTabText hoverTabText3" aria-hidden="true">
                 {{tab.title}}
             </span>
         {% elsif tab.title.length > 33 and data.props.layoutState.length == 4 -%}
-            <span class="hoverTabText hoverTabText4">
+            <span class="hoverTabText hoverTabText4" aria-hidden="true">
                 {{tab.title}}
             </span>
         {%- endif -%}
         
-        </div>
+        </header>
 
 
         <div id="{{tabListId}}_tabpanel{{forloop.index}}"
@@ -53,5 +53,5 @@
 </div>
 
 <div class="hideAccordion">
-    {% include amp-accordion.html data:data %}    
+    {% include amp-accordion.html data:data %}
 </div>

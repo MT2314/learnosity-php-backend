@@ -80,8 +80,8 @@ const VideoDescriptionCredit = ({
   }, []);
 
   useEffect(() => {
-    videoTextSettings.description === false && setVideoAreaFocused(true);
-    videoTextSettings.credit === false && setVideoAreaFocused(true);
+    setVideoAreaFocused(true);
+    dispatch({ func: "CHANGE_TEXT_SETTINGS", textSettings: videoTextSettings });
   }, [videoTextSettings]);
 
   return (

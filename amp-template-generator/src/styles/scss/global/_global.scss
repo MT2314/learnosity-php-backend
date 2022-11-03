@@ -1,10 +1,16 @@
 html {
-  font: 16px/20px Inter, sans-serif;
+  font-family: $text-body-font;
+  font-size: 16px;
+  color: $primary-body-text;
 }
 
 body {
-  color: $text-body;
   background-color: $page-background;
+
+  // Changes the highlight background color
+  ::selection {
+    background: $body-highlight;
+  }
 }
 
 // *:focus {
@@ -35,7 +41,8 @@ h5,
 .h5,
 h6,
 .h6 {
-  font-weight: bold;
+  font-family: $component-main-font;
+  font-weight: 600;
   margin-top: 0;
 
   &.border-bottom {
@@ -74,19 +81,6 @@ h6,
 .h6,
 .font-smallest {
   @include font-smallest;
-}
-
-p {
-  margin: 0 0 1.25rem 0;
-  font-weight: 400;
-  line-height: 1.5rem;
-  letter-spacing: 0.009375rem;
-  color: #232323;
-}
-
-a {
-  color: $link-color;
-  font-style: normal;
 }
 
 .pointer {
@@ -133,4 +127,8 @@ a {
 // Use this for Font-Awesome icons that want to be positioned "beside" text as if there is a space.
 .fa.left-space {
   padding-left: 0.25rem;
+}
+
+.textHeading {
+  white-space: pre-line;
 }
