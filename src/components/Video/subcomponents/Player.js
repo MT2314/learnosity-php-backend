@@ -165,6 +165,7 @@ const Player = ({ videoId, videoSource, videoData, setVideoData }) => {
         if (response) {
             responseEdited = response.replace(regex,'');
             responseEdited = responseEdited.replace('WEBVTT','');
+            responseEdited = responseEdited.replace('X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0','');
         }
         dispatch({
           func: "CHANGE_TRANSCRIPT",
