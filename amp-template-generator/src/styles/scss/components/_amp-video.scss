@@ -74,6 +74,7 @@
         text-align: center;
         background: $transparent-grey-100;
         border: none;
+        position: relative;
         border-radius: 0.3125rem;
         cursor: pointer;
 
@@ -82,7 +83,19 @@
         }
 
         &:focus-visible {
-          @include outline-focus;
+          outline: none; 
+        }
+        
+        // This resolves outline issue in Safari
+        &:focus-visible::before {
+          content: "";
+          position: absolute;
+          top: -0.25rem; // border: 2px + offset: 2px
+          right: -0.25rem; // border: 2px + offset: 2px
+          bottom: -0.25rem; // border: 2px + offset: 2px
+          left: -0.25rem; // border: 2px + offset: 2px
+          border: 0.125rem solid $tab-focus;
+          border-radius: 0.5rem; // border—radius: 8px + offset: 2px
         }
 
         @media (max-width: 759px) {
@@ -118,6 +131,7 @@
     padding: 0;
     border: none;
     border-radius: 0.125rem;
+    position: relative;
     background: none;
 
     &:hover {
@@ -126,7 +140,19 @@
     }
 
     &:focus-visible {
-      @include outline-focus;
+      outline: none;
+    }
+
+    // This resolves outline issue in Safari
+    &:focus-visible::before {
+      content: "";
+      position: absolute;
+      top: -0.25rem; // border: 2px + offset: 2px
+      right: -0.25rem; // border: 2px + offset: 2px
+      bottom: -0.25rem; // border: 2px + offset: 2px
+      left: -0.25rem; // border: 2px + offset: 2px
+      border: 0.125rem solid $tab-focus;
+      border-radius: 0.125rem; // border—radius: 2px + offset: 1px
     }
 
     @media (max-width: 759px) {
