@@ -3,7 +3,10 @@
     {%- assign showVideoId = 'showVideoId' | append: dataID -%}
     {%- assign hideVideoId = 'hideVideoId' | append: dataID -%}
     {%- assign videoDescription = data.videoDescription | strip_html | strip -%}
-    {%- assign videoCredit = data.videoCredit | prepend: "Credit: " | strip_html -%}
+    
+    {% if videoCredit.length > 0 and videoCredit != null %}
+        {%- assign videoCredit = data.videoCredit | prepend: "Credit: " | strip_html -%}
+    {% endif %}
 
     {% if data.videoSource == "brightcove" -%}
     
@@ -62,17 +65,13 @@
             <div class="description-text-less" id="{{ videoId }}" [class]="buttonToggleVideo_{{ videoId }} ? 'description-text-more' : 'description-text-less'">
                 {%- if videoDescription.length > 0 -%}
                     {% if videoDescription != " " %}
-                    <p
-                        class="description"
-                    >
-                            {{videoDescription}}
-                    </p>
+                    <p class="description">{{videoDescription}}</p>
                     {% endif %}
                 {%- endif -%}
                 {% if videoCredit.length > 0 and videoCredit != null %}
-                    {% if videoCredit != "<br>" %}
+                    <!-- {% if videoCredit != "" %} -->
                         <p class="video-credit">{{videoCredit}}</p>
-                    {% endif %}
+                    <!-- {% endif %} -->
                 {% endif %}
             </div>
             <button class="transcript-button">
