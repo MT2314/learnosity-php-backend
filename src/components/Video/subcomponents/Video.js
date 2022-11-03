@@ -196,9 +196,11 @@ const Video = () => {
               />
             </div>
           </DescriptionCreditContainer>
-          <TranscriptButtonContainer videoData={state.videoId ? true : false}>
-            {state.videoId && <Checkmark />}
-            <span>{state.videoTranscript == null ? "No Transcript" : "Transcript"}</span>
+          <TranscriptButtonContainer videoData={state.videoId && state.videoTranscript !== "" ? true : false}>
+            {state.videoId !== null && state.videoTranscript !== "" ? <Checkmark /> : ""}
+            <span>
+              {state.videoId && state.videoTranscript !== "" ? "Transcript" : "No Transcript"}
+            </span>
           </TranscriptButtonContainer>
         </StyledVideoDescriptionContainer>
       </StyledVideoContainer>
