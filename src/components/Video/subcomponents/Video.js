@@ -115,10 +115,14 @@ const Video = () => {
     setVideoAreaFocused(true);
   };
 
-  const handleTextClick = useCallback((e) => {
-    setDisconnect(false);
-    setVideoAreaFocused(false);
-  }, []);
+  const handleTextClick = useCallback(
+    (e) => {
+      !disconnect && e.stopPropagation();
+      setDisconnect(false);
+      setVideoAreaFocused(false);
+    },
+    [disconnect]
+  );
 
   // Set videoAPI if value is set in state
   useMemo(() => {
