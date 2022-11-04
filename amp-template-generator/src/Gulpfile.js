@@ -464,7 +464,6 @@ var build = gulp.series(
   _deleteBuildFolder,
   buildCss,
   gulp.parallel(_copyFiles, _copyStyles),
-  _installBuild,
   _zipBuild
 );
 build.description = "Creates build folder output, for use as lambda layer";
