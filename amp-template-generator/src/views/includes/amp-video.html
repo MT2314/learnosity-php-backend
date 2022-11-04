@@ -60,16 +60,16 @@
     <div class="description-container">
         <div class="description-flex-container">
             <div class="description-text-less" id="{{ videoId }}" [class]="buttonToggleVideo_{{ videoId }} ? 'description-text-more' : 'description-text-less'">
-                {%- if videoDescription.length > 0 -%}
+                {%- if videoDescription.length > 0 and data.videoTextSettings.description == true -%}
                     {% if videoDescription != " " %}
-                    <p class="description">{{videoDescription}}</p>
+                        <p class="description">{{videoDescription}}</p>
                     {% endif %}
                 {%- endif -%}
                 {% if videoCredit.length > 0 and videoCredit != null %}
                     {% if videoCredit != " " %}
-                    {% if data.videoDescription.length > 204 %}
+                    {% if data.videoDescription.length > 204 and data.videoTextSettings.description == true and data.videoTextSettings.credit == true %}
                         <p [class]="buttonToggleVideo_{{ videoId }} ? 'video-credit' : 'video-credit sr-only'">Credit: {{videoCredit}}</p>
-                    {% else %}
+                    {% elsif data.videoTextSettings.credit == true  %}
                         <p class="video-credit">Credit: {{videoCredit}}</p>
                     {%- endif -%}
                     {% endif %}
@@ -87,7 +87,7 @@
                 Transcript
             </button>
         </div>
-        {% if data.videoDescription.length > 204 %}
+        {% if data.videoDescription.length > 204 and data.videoTextSettings.description == true %}
             <button
                 class="show-more-button"
                 id="{{ showVideoId }}"
