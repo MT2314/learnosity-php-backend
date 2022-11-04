@@ -105,7 +105,6 @@ const _replaceLineBreak = (text) => {
   if (text === "<br>") {
     text.replace("<br>", null);
   }
-  console.log(text);
   return text;
 };
 
