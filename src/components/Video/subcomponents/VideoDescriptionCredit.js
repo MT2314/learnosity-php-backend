@@ -10,12 +10,22 @@ import React, {
 import { VideoContext } from "../VideoContext";
 
 import Text from "../../Text/Text";
+import styled from "@emotion/styled";
 
 import {
   useSetFocused,
   useSetDescriptionRef,
   useSetCreditRef,
 } from "./TabContext";
+import Quill from "quill";
+const Delta = Quill.import("delta");
+
+const TextContainer = styled("div")({
+  position: "relative",
+  minHeight: "20px",
+  width: "622px",
+  marginBottom: "10px",
+});
 
 const VideoDescriptionCredit = ({
   videoAreaFocused,
@@ -25,7 +35,7 @@ const VideoDescriptionCredit = ({
   videoTextSettings,
 }) => {
   const [state, dispatch] = useContext(VideoContext);
-
+  // WYSIWYG Editor
   const setFocused = useSetFocused();
   const setDescriptionRef = useSetDescriptionRef();
   const setCreditRef = useSetCreditRef();
@@ -57,6 +67,12 @@ const VideoDescriptionCredit = ({
   }, [toolbar, videoAreaFocused, creditFocused]);
 
   const portalCredit = useMemo(() => {
+    let creditPlaceholder = new Delta([
+      {
+        insert: `Credit\n`,
+        attributes: { italic: true },
+      },
+    ]);
     return {
       parentComponent: "video",
       placeholder: "Credit",
@@ -87,11 +103,11 @@ const VideoDescriptionCredit = ({
   return (
     <>
       {videoTextSettings.description === true && (
-        <div
+        <TextContainer
           ref={descRef}
-          style={{ position: "relative", minHeight: "20px", width: "622px" }}
           onClick={handleDescriptionClick}
           onFocus={handleDescriptionClick}
+          className={"videoDescription"}
         >
           {/* Description Text box */}
           <Text
@@ -100,7 +116,7 @@ const VideoDescriptionCredit = ({
             portal={portalDescription}
             t={t}
           />
-        </div>
+        </TextContainer>
       )}
       {videoTextSettings.credit === true && (
         <div

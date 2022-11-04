@@ -7,7 +7,6 @@ import TriangleIcon from "../assets/Triangle.png";
 const PlayerContainer = styled("div")({
   width: "80%",
   margin: "0 auto",
-  paddingTop: "30px",
   "& .video-js": {
     width: "760px",
     height: "427.5px",
@@ -21,6 +20,7 @@ const StyledVideoDefaultContainer = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  marginTop: "30px",
 });
 
 const StyledCircleContainer = styled("div")({
@@ -39,7 +39,6 @@ const StyledVideoContainer = styled("div")({
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
-  paddingTop: "30px",
 });
 
 const StyledTriangleImage = styled("img")({

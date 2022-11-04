@@ -603,8 +603,8 @@ const ToolBar = ({
                             </StyledVideoMenuItem>
                           </Tooltip>
                           <Tooltip
-                            aria-label="add brightspace video"
-                            title="add brightspace video"
+                            aria-label="add youtube video"
+                            title="add youtube video"
                             placement="top"
                             arrow
                             PopperProps={{
@@ -1012,16 +1012,6 @@ const ToolBar = ({
               title="configure video description"
               placement="top"
               arrow
-              PopperProps={{
-                modifiers: [
-                  {
-                    name: "offset",
-                    options: {
-                      offset: [0, -7],
-                    },
-                  },
-                ],
-              }}
             >
               <StyledKebabButton
                 ref={DescriptionKebab}
