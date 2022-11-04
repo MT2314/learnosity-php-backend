@@ -33,13 +33,13 @@
         .description {
           margin-bottom: 0.625rem;
         }
+        
+        .description-only {
+          margin-bottom: 0;
+        }
 
         .video-credit {
           color: $grey-600;
-        }
-
-        .display-none {
-          display: none;
         }
       }
 
