@@ -946,6 +946,7 @@ const ToolBar = ({
                   disableRipple
                   disabled
                   className="bolddummy-dropdown-button"
+                  aria-label="disabled bold dropdown button"
                 >
                   {icons["customBold"]}
                 </StyledIconButton>
@@ -953,17 +954,19 @@ const ToolBar = ({
                 <StyledIconButton
                   disableRipple
                   disabled
-                  color="inherit"
                   className={"align-button"}
-                  aria-label="alignment buttons dropdown"
-                  data-alignid="alignment-dropdown"
+                  aria-label="disabled allignment dropdown button"
                 >
                   {icons["align"]}
                 </StyledIconButton>
 
                 {/* bullets drowdown starts */}
 
-                <StyledIconButton disableRipple disabled>
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  aria-label="disabled list dropdown button"
+                >
                   {icons["bullet"]}
                 </StyledIconButton>
 
@@ -972,6 +975,7 @@ const ToolBar = ({
                 <StyledIconButton
                   disableRipple
                   disabled
+                  aria-label="disabled link button"
                   sx={{
                     padding: "3px 5px !important",
                     width: "28px !important",
