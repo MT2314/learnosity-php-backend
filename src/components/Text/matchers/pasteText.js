@@ -20,7 +20,7 @@ export const matchText = (node, delta) => {
 
   links &&
     splitData.forEach((data) => {
-      let urlResult = urlRegExp.exec(data);
+      let urlResult = data.match(urlRegExp);
       if (urlResult !== null) {
         const match = urlResult[0];
         if (text) {
