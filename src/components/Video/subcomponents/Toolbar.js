@@ -337,7 +337,6 @@ const ToolBar = ({
   setToolbar,
   disconnect,
   setMainToolbar,
-  videoData,
 }) => {
   const { t } = useTranslation();
 
@@ -370,6 +369,8 @@ const ToolBar = ({
   });
 
   useOnClickOutside(selectRef, () => {
+    setVideoEdit(false);
+    setInvalidVideoInput(false);
     setVideoOpen(false);
     setTranscriptOpen(false);
     // setDescriptionKebabOpen(false);
@@ -378,7 +379,10 @@ const ToolBar = ({
     setDescriptionKebabOpen(false);
   });
 
+  // Video Close Toolbar
   const toggleCloseToolbar = (source) => {
+    setInvalidVideoInput(false);
+    setVideoEdit(false);
     if (
       source.includes("Kebab") ||
       source.includes("Transcript") ||
@@ -391,7 +395,6 @@ const ToolBar = ({
       setSelectBrightcove(false);
       setDescriptionKebabOpen(false);
     }
-    setInvalidVideoInput(false);
   };
 
   // ? Video Toolbar
@@ -400,24 +403,83 @@ const ToolBar = ({
     e.target.contains(AddVideo.current) && setVideoOpen(!openVideo);
   };
 
+  // get file from a URL link
+  const getFile = (url, callback) => {
+    var httpRequest = new XMLHttpRequest(),
+      response,
+      getResponse = function () {
+        // response handler
+        try {
+          if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+              response = httpRequest.responseText;
+              if (response === "{null}") {
+                // some API requests return '{null}' will breaks JSON.parse
+                response = null;
+              }
+              callback(response); // return the response
+            } else {
+              callback(null);
+            }
+          }
+        } catch (e) {
+          callback(null);
+        }
+      };
+    // set up request data
+    httpRequest.onreadystatechange = getResponse; // set response handler
+    httpRequest.open("GET", url); // open the request
+    httpRequest.send(); // open and send request
+  };
+
+  const headers = {
+    "BCOV-Policy": process.env.BRIGHTCOVE_POLICY_KEY,
+  };
+
+  const apiCall = async () => {
+    const result = await fetch(state.videoURL, { headers });
+    const json = await result.json();
+    var responseEdited = "";
+    var regex = /\d\d:\d\d\.\d\d\d\s+-->\s+\d\d:\d\d\.\d\d\d.*\n/gi;
+    const chosenTrack = json.text_tracks[0].src;
+    const colonLocation = chosenTrack.indexOf(":");
+    const url = chosenTrack.substr(colonLocation + 1);
+
+    getFile(url, function (response) {
+      if (response) {
+        responseEdited = response.replace(regex, "");
+        responseEdited = responseEdited.replace("WEBVTT", "");
+        responseEdited = responseEdited.replace(
+          "X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0",
+          ""
+        );
+        responseEdited = responseEdited.replace(/^(?:[\t ]*(?:\r?\n|\r))+/,'');
+      }
+      const texts = [responseEdited]; // text content
+      const element = document.createElement("a"); // anchor link
+      const file = new Blob(texts, { type: "text/plain" }); // file object
+      element.href = URL.createObjectURL(file);
+      element.download = json.name + ".txt";
+      document.body.appendChild(element); // simulate link click
+      element.click(); // Required for this to work in FireFox
+    });
+  };
+
+  // Download transcript button
   const handleClickTranscript = (e) => {
     setVideoOpen(false);
     toggleCloseToolbar("Transcript");
     e.target.contains(TranscriptVideo.current) && setTranscriptOpen(!openVideo);
 
-    const texts = [state.videoTranscript]; // text content
-    const element = document.createElement("a"); // anchor link
-    const file = new Blob(texts, { type: "text/plain" }); // file object
-    element.href = URL.createObjectURL(file);
-    element.download = videoData.name + ".txt";
-    document.body.appendChild(element); // simulate link click
-    element.click(); // Required for this to work in FireFox
+    apiCall();
   };
+  // Toggle Kebab Dropdown
   const handleToggleVideoKebab = () => {
     toggleCloseToolbar("Kebab");
     setDescriptionKebabOpen(!openDescriptionKebab);
   };
 
+  // ? Video API Select Toolbar (Brightcove, Youtube) and Video Add/Edit / Delete
   const handleVideoAPI = (e, source, action) => {
     e.stopPropagation();
     let inputValue = inputId.current.value;
@@ -453,6 +515,7 @@ const ToolBar = ({
     }
   };
 
+  // ? Video Text Settings
   const handleTextSettings = (e, source) => {
     e.stopPropagation();
     setVideoTextSettings((videoTextSettings) => ({
@@ -595,8 +658,8 @@ const ToolBar = ({
                             </StyledVideoMenuItem>
                           </Tooltip>
                           <Tooltip
-                            aria-label="add brightspace video"
-                            title="add brightspace video"
+                            aria-label="add youtube video"
+                            title="add youtube video"
                             placement="top"
                             arrow
                             PopperProps={{
@@ -841,59 +904,60 @@ const ToolBar = ({
               </Popper>
             )}
             {/* Invalid Id Error */}
-            <Popper
-              open={invalidVideoInput}
-              anchorEl={inputError.current}
-              placement="bottom-start"
-              transition
-              disablePortal
-              sx={{ pointerEvents: "none" }}
-            >
-              {({ TransitionProps }) => (
-                <Grow {...TransitionProps}>
-                  <Paper
-                    sx={{
-                      backgroundColor: "rgb(251, 234, 234) !important",
-                      marginTop: "2px",
-                      width: "256px",
-                      height: "30px",
-                      cursorEvents: "none",
-                    }}
-                  >
-                    <div
-                      data-testid={`input-invalid-error`}
-                      aria-labelledby={`input-invalid-error`}
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        height: "100%",
+            {invalidVideoInput && (
+              <Popper
+                open={invalidVideoInput}
+                anchorEl={inputError.current}
+                placement="bottom-start"
+                transition
+                disablePortal
+                sx={{ pointerEvents: "none" }}
+              >
+                {({ TransitionProps }) => (
+                  <Grow {...TransitionProps}>
+                    <Paper
+                      sx={{
+                        backgroundColor: "rgb(251, 234, 234) !important",
+                        marginTop: "2px",
+                        width: "256px",
+                        height: "30px",
+                        cursorEvents: "none",
                       }}
                     >
-                      {/* Input Error*/}
-                      <ErrorOutlineIcon
-                        color="error"
-                        fontSize="small"
-                        sx={{
-                          margin: "5.83px 11.83px",
-                        }}
-                      />
-                      <span
+                      <div
+                        data-testid={`input-invalid-error`}
+                        aria-labelledby={`input-invalid-error`}
                         style={{
-                          fontSize: "12px",
-                          fontWeight: "400",
-                          lineHeight: "20px",
-                          letterSpacing: "0.4000000059604645px",
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          height: "100%",
                         }}
                       >
-                        Invalid URL
-                      </span>
-                    </div>
-                  </Paper>
-                </Grow>
-              )}
-            </Popper>
-
+                        {/* Input Error*/}
+                        <ErrorOutlineIcon
+                          color="error"
+                          fontSize="small"
+                          sx={{
+                            margin: "5.83px 11.83px",
+                          }}
+                        />
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: "400",
+                            lineHeight: "20px",
+                            letterSpacing: "0.4000000059604645px",
+                          }}
+                        >
+                          Invalid URL
+                        </span>
+                      </div>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            )}
             <Divider />
             {/* Download Transcript Button */}
             <Tooltip
@@ -917,7 +981,9 @@ const ToolBar = ({
                 }
                 disabled={!videoAPI.videoId || state.videoTranscript == ""}
               >
-                {videoAPI.videoId && state.videoTranscript !== "" ? "Download Transcript" : "Transcript"}
+                {videoAPI.videoId && state.videoTranscript !== ""
+                  ? "Download Transcript"
+                  : "Transcript"}
               </StyledVideoButton>
             </Tooltip>
           </StyledVideoToolbar>
@@ -936,6 +1002,7 @@ const ToolBar = ({
                   disableRipple
                   disabled
                   className="bolddummy-dropdown-button"
+                  aria-label="disabled bold dropdown button"
                 >
                   {icons["customBold"]}
                 </StyledIconButton>
@@ -943,17 +1010,19 @@ const ToolBar = ({
                 <StyledIconButton
                   disableRipple
                   disabled
-                  color="inherit"
                   className={"align-button"}
-                  aria-label="alignment buttons dropdown"
-                  data-alignid="alignment-dropdown"
+                  aria-label="disabled allignment dropdown button"
                 >
                   {icons["align"]}
                 </StyledIconButton>
 
                 {/* bullets drowdown starts */}
 
-                <StyledIconButton disableRipple disabled>
+                <StyledIconButton
+                  disableRipple
+                  disabled
+                  aria-label="disabled list dropdown button"
+                >
                   {icons["bullet"]}
                 </StyledIconButton>
 
@@ -962,6 +1031,7 @@ const ToolBar = ({
                 <StyledIconButton
                   disableRipple
                   disabled
+                  aria-label="disabled link button"
                   sx={{
                     padding: "3px 5px !important",
                     width: "28px !important",
@@ -998,16 +1068,6 @@ const ToolBar = ({
               title="configure video description"
               placement="top"
               arrow
-              PopperProps={{
-                modifiers: [
-                  {
-                    name: "offset",
-                    options: {
-                      offset: [0, -7],
-                    },
-                  },
-                ],
-              }}
             >
               <StyledKebabButton
                 ref={DescriptionKebab}

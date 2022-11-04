@@ -42,6 +42,7 @@ const Text = ({
     if (isInfoBox) {
       setShowEditor(true);
     }
+    console.log(portal);
   }, []);
 
   return (
