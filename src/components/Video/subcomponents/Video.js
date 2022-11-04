@@ -113,11 +113,14 @@ const Video = () => {
     setVideoAreaFocused(true);
   };
 
-  const handleTextClick = useCallback((e) => {
-    e.stopPropagation();
-    setDisconnect(false);
-    setVideoAreaFocused(false);
-  }, []);
+  const handleTextClick = useCallback(
+    (e) => {
+      !disconnect && e.stopPropagation();
+      setDisconnect(false);
+      setVideoAreaFocused(false);
+    },
+    [disconnect]
+  );
 
   // Set videoAPI if value is set in state
   useMemo(() => {
@@ -137,7 +140,7 @@ const Video = () => {
       aria-label={t("Video")}
       data-testid="video-container"
       ref={videoRef}
-      onClick={(e) => videoFocused(e)}
+      onMouseDown={(e) => videoFocused(e)}
       onFocus={(e) => videoFocused(e)}
       onBlur={(e) => {
         const relatedTarget = e.relatedTarget || document.activeElement;
@@ -177,7 +180,7 @@ const Video = () => {
         <StyledVideoDescriptionContainer>
           <DescriptionCreditContainer>
             <div
-              onClick={(e) => {
+              onMouseDown={(e) => {
                 handleTextClick(e);
               }}
               onFocus={(e) => {
