@@ -49,9 +49,9 @@ const StyledTriangleImage = styled("img")({
 import Quill from "quill";
 const Delta = Quill.import("delta");
 
-const Player = ({ videoId, videoSource, videoData, setVideoData }) => {
+const Player = ({ videoId, videoSource }) => {
   const [state, dispatch] = useContext(VideoContext);
-  // const [videoData, setVideoData] = useState(null);
+  const [videoData, setVideoData] = useState(null);
   // Prevent fetch on initial component mount
   const isMounted = useRef(false);
 
@@ -152,28 +152,6 @@ const Player = ({ videoId, videoSource, videoData, setVideoData }) => {
       dispatch({
         func: "CHANGE_DESCRIPTION",
         description: descriptionDelta,
-      });
-    }
-    if (videoData) {
-      var responseEdited = "";
-      var regex = /\d\d:\d\d\.\d\d\d\s+-->\s+\d\d:\d\d\.\d\d\d.*\n/gi;
-      const chosenTrack = videoData.text_tracks[0].src;
-      const colonLocation = chosenTrack.indexOf(":");
-      const url = chosenTrack.substr(colonLocation + 1);
-
-      getFile(url, function (response) {
-        if (response) {
-          responseEdited = response.replace(regex, "");
-          responseEdited = responseEdited.replace("WEBVTT", "");
-          responseEdited = responseEdited.replace(
-            "X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0",
-            ""
-          );
-        }
-        dispatch({
-          func: "CHANGE_TRANSCRIPT",
-          transcript: responseEdited,
-        });
       });
     }
   }, [videoData]);
