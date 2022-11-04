@@ -967,6 +967,7 @@ const ToolBar = ({
               arrow
             >
               <StyledVideoButton
+                data-testid="download-transcript"
                 ref={TranscriptVideo}
                 aria-expanded={openTranscript ? "true" : undefined}
                 variant="contained"
