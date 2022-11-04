@@ -370,6 +370,7 @@ const ToolBar = ({
   });
 
   useOnClickOutside(selectRef, () => {
+    setVideoEdit(false);
     setInvalidVideoInput(false);
     setVideoOpen(false);
     setTranscriptOpen(false);
@@ -381,6 +382,8 @@ const ToolBar = ({
 
   // Video Close Toolbar
   const toggleCloseToolbar = (source) => {
+    setInvalidVideoInput(false);
+    setVideoEdit(false);
     if (
       source.includes("Kebab") ||
       source.includes("Transcript") ||
