@@ -93,13 +93,21 @@ function parse(entity) {
     entity.props.videoState.videoDescription = _setHtml(
       entity.props.videoState.videoDescription
     );
-    entity.props.videoState.videoCredit = _setHtml(
-      entity.props.videoState.videoCredit
-    );
+    // Replace line breaks before setting HTML
+    noBreakCredit = _replaceLineBreak(entity.props.videoState.videoCredit);
+    entity.props.videoState.videoCredit = _setHtml(noBreakCredit);
   }
 
   return entity;
 }
+
+const _replaceLineBreak = (text) => {
+  if (text === "<br>") {
+    text.replace("<br>", null);
+  }
+  console.log(text);
+  return text;
+};
 
 // Converts the quill data into a html element
 function _setHtml(quill) {
@@ -114,10 +122,6 @@ function _setHtml(quill) {
 
   // Replacing nest <br> tags
   converted = converted.replace(/<p><br><\/p>/g, "<br>");
-
-  if (converted === "<br>") {
-    return null;
-  }
 
   // Wrapping the contents of li tags with span tags
   converted = converted.replace(/<li>/g, "<li><span>");
