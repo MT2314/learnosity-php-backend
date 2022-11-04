@@ -413,7 +413,7 @@ const ToolBar = ({
     const element = document.createElement("a"); // anchor link
     const file = new Blob(texts, { type: "text/plain" }); // file object
     element.href = URL.createObjectURL(file);
-    element.download = state.videoDescription.ops[0].insert + ".txt";
+    element.download = videoData.name + ".txt";
     document.body.appendChild(element); // simulate link click
     element.click(); // Required for this to work in FireFox
   };
@@ -444,7 +444,6 @@ const ToolBar = ({
           "RemoveVideo"
         );
       } else {
-        console.log("Invalid input");
         setInvalidVideoInput(true);
       }
     } else if (action === "RemoveVideo") {
