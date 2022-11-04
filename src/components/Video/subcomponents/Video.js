@@ -31,20 +31,19 @@ const StyledVideoContainer = styled("div")({
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
-  paddingTop: "30px",
   marginLeft: "104px",
   marginRight: "104px",
+  paddingBottom: "30px",
 });
 
 const StyledVideoDescriptionContainer = styled("div")({
-  marginTop: "22px",
+  width: "760px",
+  marginTop: "15px",
   display: "flex",
-  gap: "30px",
   marginBottom: "30px",
 });
 
 const DescriptionCreditContainer = styled("div")({
-  marginTop: "-20px",
   display: "flex",
   flexDirection: "column",
   gap: "10px",
@@ -52,6 +51,8 @@ const DescriptionCreditContainer = styled("div")({
 
 const TranscriptButtonContainer = styled("button")(({ videoData }) => ({
   display: "flex",
+  position: "absolute !important",
+  right: "104px",
   alignItems: "center",
   justifyContent: "space-between",
   gap: "6px",
@@ -171,9 +172,9 @@ const Video = () => {
         setMainToolbar={setMainToolbar}
         videoData={videoData}
       />
-      <Player 
-        videoId={videoAPI.videoId} 
-        videoSource={videoAPI.videoSource} 
+      <Player
+        videoId={videoAPI.videoId}
+        videoSource={videoAPI.videoSource}
         videoData={videoData}
         setVideoData={setVideoData}
       />
@@ -199,10 +200,20 @@ const Video = () => {
               />
             </div>
           </DescriptionCreditContainer>
-          <TranscriptButtonContainer videoData={state.videoId && state.videoTranscript !== "" ? true : false}>
-            {state.videoId !== null && state.videoTranscript !== "" ? <Checkmark /> : ""}
+          <TranscriptButtonContainer
+            videoData={
+              state.videoId && state.videoTranscript !== "" ? true : false
+            }
+          >
+            {state.videoId !== null && state.videoTranscript !== "" ? (
+              <Checkmark />
+            ) : (
+              ""
+            )}
             <span>
-              {state.videoId && state.videoTranscript !== "" ? "Transcript" : "No Transcript"}
+              {state.videoId && state.videoTranscript !== ""
+                ? "Transcript"
+                : "No Transcript"}
             </span>
           </TranscriptButtonContainer>
         </StyledVideoDescriptionContainer>

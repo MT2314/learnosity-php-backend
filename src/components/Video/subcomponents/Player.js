@@ -7,7 +7,6 @@ import TriangleIcon from "../assets/Triangle.png";
 const PlayerContainer = styled("div")({
   width: "80%",
   margin: "0 auto",
-  paddingTop: "30px",
   "& .video-js": {
     width: "760px",
     height: "427.5px",
@@ -21,6 +20,7 @@ const StyledVideoDefaultContainer = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  marginTop: "30px",
 });
 
 const StyledCircleContainer = styled("div")({
@@ -39,7 +39,6 @@ const StyledVideoContainer = styled("div")({
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
-  paddingTop: "30px",
 });
 
 const StyledTriangleImage = styled("img")({
@@ -107,12 +106,14 @@ const Player = ({ videoId, videoSource, videoData, setVideoData }) => {
   const getFile = (url, callback) => {
     var httpRequest = new XMLHttpRequest(),
       response,
-      getResponse = function () { // response handler
+      getResponse = function () {
+        // response handler
         try {
           if (httpRequest.readyState === 4) {
             if (httpRequest.status === 200) {
               response = httpRequest.responseText;
-              if (response === "{null}") { // some API requests return '{null}' will breaks JSON.parse
+              if (response === "{null}") {
+                // some API requests return '{null}' will breaks JSON.parse
                 response = null;
               }
               callback(response); // return the response
@@ -126,7 +127,7 @@ const Player = ({ videoId, videoSource, videoData, setVideoData }) => {
       };
     // set up request data
     httpRequest.onreadystatechange = getResponse; // set response handler
-    httpRequest.open("GET", url);  // open the request
+    httpRequest.open("GET", url); // open the request
     httpRequest.send(); // open and send request
   };
 
@@ -154,17 +155,20 @@ const Player = ({ videoId, videoSource, videoData, setVideoData }) => {
       });
     }
     if (videoData) {
-      var responseEdited = '';
-      var regex = /\d\d:\d\d\.\d\d\d\s+-->\s+\d\d:\d\d\.\d\d\d.*\n/ig
+      var responseEdited = "";
+      var regex = /\d\d:\d\d\.\d\d\d\s+-->\s+\d\d:\d\d\.\d\d\d.*\n/gi;
       const chosenTrack = videoData.text_tracks[0].src;
       const colonLocation = chosenTrack.indexOf(":");
       const url = chosenTrack.substr(colonLocation + 1);
 
-      getFile(url, function(response) {
+      getFile(url, function (response) {
         if (response) {
-            responseEdited = response.replace(regex,'');
-            responseEdited = responseEdited.replace('WEBVTT','');
-            responseEdited = responseEdited.replace('X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0','');
+          responseEdited = response.replace(regex, "");
+          responseEdited = responseEdited.replace("WEBVTT", "");
+          responseEdited = responseEdited.replace(
+            "X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0",
+            ""
+          );
         }
         dispatch({
           func: "CHANGE_TRANSCRIPT",
@@ -180,7 +184,7 @@ const Player = ({ videoId, videoSource, videoData, setVideoData }) => {
         <StyledVideoContainer>
           <StyledVideoDefaultContainer data-testid="video">
             <StyledCircleContainer>
-              <StyledTriangleImage src={TriangleIcon} />
+              <StyledTriangleImage src={TriangleIcon} alt="Play Img" />
             </StyledCircleContainer>
           </StyledVideoDefaultContainer>
         </StyledVideoContainer>
