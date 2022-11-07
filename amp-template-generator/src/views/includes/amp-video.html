@@ -4,6 +4,8 @@
     {%- assign hideVideoId = 'hideVideoId' | append: dataID -%}
     {%- assign videoDescription = data.videoDescription | strip_html | strip -%}
     {%- assign videoCredit = data.videoCredit | strip_html -%}
+    {%- assign displayDescription = data.videoTextSettings.description -%}
+    {%- assign displayCredit = data.videoTextSettings.credit -%}
 
     {% if data.videoSource == "brightcove" -%}
     
@@ -59,19 +61,19 @@
     
     <div class="description-container">
         <div class="description-flex-container">
-            <div class="description-text-less" id="{{ videoId }}" [class]="buttonToggleVideo_{{ videoId }} ? 'description-text-more' : 'description-text-less'">
-                {%- if videoDescription.length > 0 and data.videoTextSettings.description == true -%}
+            <div class="description-text-less" id="{{videoId}}" [class]="buttonToggleVideo_{{videoId}} ? 'description-text-more' : 'description-text-less'">
+                {%- if videoDescription.length > 0 and displayDescription == true -%}
                     {% if videoDescription != " " %}
-                        <p class="description">{{videoDescription}}</p>
+                        <p [class]="{{displayCredit}} ? 'description' : 'description-only'">
+                            {{videoDescription}}
+                        </p>
                     {% endif %}
                 {%- endif -%}
-                {% if videoCredit.length > 0 and videoCredit != null %}
-                    {% if videoCredit != " " %}
-                    {% if data.videoDescription.length > 204 and data.videoTextSettings.description == true and data.videoTextSettings.credit == true %}
-                        <p [class]="buttonToggleVideo_{{ videoId }} ? 'video-credit' : 'video-credit sr-only'">Credit: {{videoCredit}}</p>
-                    {% elsif data.videoTextSettings.credit == true  %}
+                {% if videoCredit.length > 0 and videoCredit != null and displayCredit == true %}
+                    {% if videoDescription.length > 204 %}
+                        <p [class]="buttonToggleVideo_{{ videoId }} ? 'video-credit' : 'sr-only'">Credit: {{videoCredit}}</p>
+                    {% else %}
                         <p class="video-credit">Credit: {{videoCredit}}</p>
-                    {%- endif -%}
                     {% endif %}
                 {% endif %}
             </div>
@@ -87,7 +89,7 @@
                 Transcript
             </button>
         </div>
-        {% if data.videoDescription.length > 204 and data.videoTextSettings.description == true %}
+        {% if videoDescription.length > 204 and displayDescription != false %}
             <button
                 class="show-more-button"
                 id="{{ showVideoId }}"

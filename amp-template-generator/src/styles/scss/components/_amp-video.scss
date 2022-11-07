@@ -16,6 +16,8 @@
     .description-flex-container {
       display: flex;
       justify-content: space-between;
+      // height: 4.2rem;
+      // width: 100%;
     
       .description-text-less,
       .description-text-more {
@@ -44,13 +46,16 @@
       }
 
       .description-text-less {
-        max-height: 4.2rem;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         word-wrap: break-word;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
+
+        p {
+          max-height: 4.2rem;
+        }
       }
 
       .transcript-button {
