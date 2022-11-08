@@ -80,7 +80,7 @@
     "mathlive": "^0.78.1",
     "mathpix-markdown-it": "^1.0.76",
     "node-polyfill-webpack-plugin": "^2.0.1",
-    "node-sass": "^7.0.1",
+    "node-sass": "^7.0.3",
     "quill": "^1.3.7",
     "react": "^17.0.2",
     "react-cropper": "^2.1.8",
