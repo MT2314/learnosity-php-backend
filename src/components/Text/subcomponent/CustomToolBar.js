@@ -11,7 +11,7 @@ import {
   useQuill,
   useSetLinkRange,
   useIsLink,
-  useSetIsLink,
+  useFormat,
 } from "../Provider";
 import styled from "@emotion/styled";
 import Portal from "@mui/base/Portal";
@@ -219,6 +219,7 @@ const ToolBar = ({
   const linkRef = useLinkRef();
   const setLinkRange = useSetLinkRange();
   const isLink = useIsLink();
+  const format = useFormat();
 
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
@@ -606,6 +607,12 @@ const ToolBar = ({
                   setAlignVisibility(false);
                   setBoldVisibility(false);
                   setListVisibility(false);
+
+                  if (format?.link && activeTopMenu === "link") {
+                    const selection = quill.getSelection();
+                    quill.formatText(selection, "link", false);
+                    return;
+                  }
 
                   setActiveTopMenu(activeTopMenu === "link" ? "" : "link");
                 }}
