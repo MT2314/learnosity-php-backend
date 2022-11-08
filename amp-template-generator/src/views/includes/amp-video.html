@@ -77,7 +77,7 @@
                     {% endif %}
                 {% endif %}
             </div>
-            <amp-script data-ampdevmode layout="fixed-height" height="36" script="time-script" class="sample">
+            <amp-script data-ampdevmode layout="fixed-height" height="36" script="api-script" class="sample">
                 <button
                     class="transcript-button"
                     aria-label="Download transcript"
@@ -113,7 +113,7 @@
     </div>
 </div>
 
-<script id="time-script" type="text/plain" target="amp-script">
+<script id="api-script" type="text/plain" target="amp-script">
 
     // get file from a URL link
     const getFile = (url, callback) => {
@@ -140,7 +140,6 @@
         };
       // set up request data
       httpRequest.onreadystatechange = getResponse; // set response handler
-      console.log("Wilson Just before open", url);
       httpRequest.open("GET", url); // open the request
       httpRequest.send(); // open and send request
     };
@@ -155,11 +154,8 @@
       var responseEdited = "";
       var regex = /\d\d:\d\d\.\d\d\d\s+-->\s+\d\d:\d\d\.\d\d\d.*\n/gi;
       const chosenTrack = data.text_tracks[0].src;
-      const colonLocation = chosenTrack.indexOf(":");
-      const url = chosenTrack.substr(colonLocation + 1);
-        
 
-      getFile(url, function (response) {
+      getFile(chosenTrack, function (response) {
         if (response) {
           responseEdited = response.replace(regex, "");
           responseEdited = responseEdited.replace("WEBVTT", "");
@@ -168,11 +164,9 @@
             ""
           );
           responseEdited = responseEdited.replace(/^(?:[\t ]*(?:\r?\n|\r))+/,'');
+          console.log("Wilson responseEdited", responseEdited);
         }
-        const texts = [responseEdited]; // text content
-        console.log(texts)
       });
     }
-
     fetchAPI();
   </script>
