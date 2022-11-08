@@ -75,7 +75,6 @@ exports.reset = reset;
 function _sass() {
   return (
     gulp
-      // .src("../../src/templates/scss/styles.scss")
       .src("styles/scss/styles.scss")
       .pipe(
         sass({
@@ -85,7 +84,7 @@ function _sass() {
       // Validate the input and attach the validation result to the "amp" property
       // of the file object.
       .pipe(gulpReplaceImportant())
-      .pipe(gulp.dest(dirs.cssStaging))
+      .pipe(gulp.dest("styles/"))
   );
 }
 
@@ -397,6 +396,7 @@ function _copyFiles() {
         ".eleventy.js",
         "index.js",
         "styles/fonts/*",
+        "styles/styles.css",
       ],
       {
         base: "./",
@@ -460,12 +460,27 @@ function _zipBuild() {
   });
 }
 
+/**
+ * Runs gulp tasks and generates nodejs.zip (remotely on AWS codepipeline)
+ *
+ */
 var build = gulp.series(
   _deleteBuildFolder,
-  buildCss,
-  gulp.parallel(_copyFiles, _copyStyles),
-  _installBuild,
+  gulp.parallel(_copyFiles),
   _zipBuild
 );
 build.description = "Creates build folder output, for use as lambda layer";
 exports.build = build;
+
+/**
+ * Runs gulp tasks and generates nodejs.zip (locally for testing)
+ *
+ */
+var buildlocal = gulp.series(
+  _deleteBuildFolder,
+  buildCss,
+  gulp.parallel(_copyFiles, _copyStyles),
+  _zipBuild
+);
+buildlocal.description = "Creates build folder output, for use as lambda layer (local)";
+exports.buildlocal = buildlocal;

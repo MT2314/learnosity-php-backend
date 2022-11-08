@@ -150,6 +150,7 @@ const LinkDialog = () => {
 
   const reset = () => {
     setShowLink(false);
+    console.log("removeBackground ", !hasLink);
     !hasLink &&
       quill.formatText(linkRange.index, linkRange.length, "background", false);
 

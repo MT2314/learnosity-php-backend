@@ -7,7 +7,6 @@ import TriangleIcon from "../assets/Triangle.png";
 const PlayerContainer = styled("div")({
   width: "80%",
   margin: "0 auto",
-  paddingTop: "30px",
   "& .video-js": {
     width: "760px",
     height: "427.5px",
@@ -21,6 +20,7 @@ const StyledVideoDefaultContainer = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  marginTop: "30px",
 });
 
 const StyledCircleContainer = styled("div")({
@@ -39,7 +39,6 @@ const StyledVideoContainer = styled("div")({
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
-  paddingTop: "30px",
 });
 
 const StyledTriangleImage = styled("img")({
@@ -103,7 +102,36 @@ const Player = ({ videoId, videoSource }) => {
     return () => (isSubscribed = false);
   }, [state.videoURL]);
 
-  // Save Description and Credit to State
+  // get file from a URL link
+  const getFile = (url, callback) => {
+    var httpRequest = new XMLHttpRequest(),
+      response,
+      getResponse = function () {
+        // response handler
+        try {
+          if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+              response = httpRequest.responseText;
+              if (response === "{null}") {
+                // some API requests return '{null}' will breaks JSON.parse
+                response = null;
+              }
+              callback(response); // return the response
+            } else {
+              callback(null);
+            }
+          }
+        } catch (e) {
+          callback(null);
+        }
+      };
+    // set up request data
+    httpRequest.onreadystatechange = getResponse; // set response handler
+    httpRequest.open("GET", url); // open the request
+    httpRequest.send(); // open and send request
+  };
+
+  // Save Description, Credit, and Transcript to State
   useEffect(() => {
     if (videoData !== null) {
       let parseDescription = `${videoData?.long_description.replace(
@@ -115,9 +143,9 @@ const Player = ({ videoId, videoSource }) => {
         : null;
 
       let descriptionDelta = new Delta([
-        ...(currentDescription && currentDescription),
+        ...(currentDescription ? currentDescription : []),
         {
-          insert: `${parseDescription}\n`,
+          insert: `\n${parseDescription}\n`,
         },
       ]);
 
@@ -134,7 +162,7 @@ const Player = ({ videoId, videoSource }) => {
         <StyledVideoContainer>
           <StyledVideoDefaultContainer data-testid="video">
             <StyledCircleContainer>
-              <StyledTriangleImage src={TriangleIcon} />
+              <StyledTriangleImage src={TriangleIcon} alt="Play Img" />
             </StyledCircleContainer>
           </StyledVideoDefaultContainer>
         </StyledVideoContainer>
