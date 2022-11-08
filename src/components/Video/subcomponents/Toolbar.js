@@ -199,6 +199,10 @@ const StyledVideoMenuItem = styled(MenuItem)(({}) => ({
 }));
 
 const StyledInputItem = styled(MenuItem)(({}) => ({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "space-between",
   width: "287px",
   padding: "0px 16px",
   height: "36px",
@@ -454,7 +458,7 @@ const ToolBar = ({
           "X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0",
           ""
         );
-        responseEdited = responseEdited.replace(/^(?:[\t ]*(?:\r?\n|\r))+/,'');
+        responseEdited = responseEdited.replace(/^(?:[\t ]*(?:\r?\n|\r))+/, "");
       }
       const texts = [responseEdited]; // text content
       const element = document.createElement("a"); // anchor link
