@@ -1,58 +1,69 @@
-{%comment%} This block is for toggling "demo wrapper" labels in the showcase demo {%endcomment%}
+{%comment%}
+  This block is for toggling "demo wrapper" labels in the showcase demo
+{%endcomment%}
 {%- if projectConfig.showcaseWrapper -%}
-    <div class="demo-wrapper">
-        <p class="demo-wrapper-title">{{item.type}}</p>
-{%- endif -%}
+  <div class="demo-wrapper">
+    <p class="demo-wrapper-title">{{item.type}}</p>
+  {%- endif -%}
 
-{% if item.props %} 
-    {% assign propName = item.props %} 
-{% elsif item.componentProps %} 
-    {% assign propName = item.componentProps %} 
-{% endif %}
+  {% if item.props %}
+    {% assign propName = item.props %}
+  {% elsif item.componentProps %}
+    {% assign propName = item.componentProps %}
+  {% endif %}
 
-{%comment%} Main Content Model Parser block {%endcomment%}
-{%- case item.componentName -%}
+  {%comment%}
+    Main Content Model Parser block
+  {%endcomment%}
+  {%- case item.componentName -%}
     {%- when "Text" -%}
-        {% include amp-text.html data:propName %}
+      {% include amp-text.html data:propName %}
     {%- when "Image" -%}
-        {% include amp-image.html data:propName %}
+      {% include amp-image.html data:propName %}
     {%- when "Video" -%}
-        {% include amp-video.html data:propName %}
+      {% include amp-video.html data:propName.videoState dataID:item.id %}
     {%- when "Tab" -%}
-        {% include amp-tabs.html data:item %}
+      {% include amp-tabs.html data:item %}
     {%- when "IFrame" -%}
-        {% include amp-iframe.html data:propName %}
+      {% include amp-iframe.html data:propName %}
     {%- when "InfoBox" -%}
-        {% include amp-infobox.html data:propName.infoBoxState %}
+      {% include amp-infobox.html data:propName.infoBoxState %}
     {%- when "Accordion" -%}
-        {% include amp-accordion.html data:item %}    
+      {% include amp-accordion.html data:item %}
     {%- when "Table" -%}
-        {% include amp-table.html data:item %}    
-    {%comment%} Not using below. {%endcomment%}
+      {% include amp-table.html data:item %}
+      {%comment%}
+        Not using below.
+      {%endcomment%}
     {%- when "formatted_text_no_heading" -%}
-        {% include amp-formatted-text.html data:item %}
+      {% include amp-formatted-text.html data:item %}
     {%- when "formatted_text" -%}
-        {% include amp-formatted-text.html data:item %}
+      {% include amp-formatted-text.html data:item %}
     {%- when "quote_box" -%}
-        {% include amp-quote.html data:item %}
+      {% include amp-quote.html data:item %}
     {%- when "audio" -%}
-        {% include amp-audio.html data:item %}
+      {% include amp-audio.html data:item %}
     {%- when "image" -%}
-        {% include amp-image.html data:item %}
+      {% include amp-image.html data:item %}
     {%- when "youtube_video" -%}
-        {% include amp-youtube-video.html data:item %}
+      {% include amp-youtube-video.html data:item %}
     {%- when "question_and_answer" -%}
-        {% include amp-question-and-answer.html data:item %}
+      {% include amp-question-and-answer.html data:item %}
     {%- when "carousel" -%}
-        {% include amp-carousel.html data:item %} 
+      {% include amp-carousel.html data:item %}
     {%- when "quiz" -%}
-        {% include amp-quiz.html data:item %}
-{%- endcase -%}
-{%comment%} End Main Content Model Parser block {%endcomment%}
+      {% include amp-quiz.html data:item %}
+  {%- endcase -%}
+  {%comment%}
+    End Main Content Model Parser block
+  {%endcomment%}
 
 
-{%comment%} This block is for toggling "demo wrapper" labels in the showcase demo {%endcomment%}
-{%- if projectConfig.showcaseWrapper -%}
-        <p class="demo-wrapper-end">end {{item.type}}</p>
-    </div><!-- /.demo-wrapper -->
+  {%comment%}
+    This block is for toggling "demo wrapper" labels in the showcase demo
+  {%endcomment%}
+  {%- if projectConfig.showcaseWrapper -%}
+    <p class="demo-wrapper-end">end {{item.type}}</p>
+  </div>
+  <!-- /.demo-wrapper -->
 {%- endif -%}
