@@ -147,26 +147,27 @@
     const fetchAPI = async () => {
         const headers = {
             "BCOV-Policy": 'BCpkADawqM1XplIzTT5iB8WK5oNDPzQsM2CDxSACIVrgtdNB-PRZjMuDeSgYSpdK1dkvswBpDnEoxoAtwa1u9AYhNqX8LemUJQGTksH9e5M5QlElWJy6ygFINKA',
-          };
+            };
       const result = await fetch("{{ data.videoURL }}", { headers });
       const data = await result.json();
 
       var responseEdited = "";
-      var regex = /\d\d:\d\d\.\d\d\d\s+-->\s+\d\d:\d\d\.\d\d\d.*\n/gi;
-      const chosenTrack = data.text_tracks[0].src;
+      const chosenTrack = data.text_tracks[1].src;
 
       getFile(chosenTrack, function (response) {
         if (response) {
-          responseEdited = response.replace(regex, "");
-          responseEdited = responseEdited.replace("WEBVTT", "");
-          responseEdited = responseEdited.replace(
-            "X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0",
-            ""
-          );
-          responseEdited = responseEdited.replace(/^(?:[\t ]*(?:\r?\n|\r))+/,'');
-          console.log("Wilson responseEdited", responseEdited);
+            responseEdited = response.replace(
+                "X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0",
+                ""
+              );
+            responseEdited = responseEdited.replace("WEBVTT", "");
+            responseEdited = responseEdited.replace("00:00.000 --> 01:00:00.000", "");
+            responseEdited = responseEdited.replace(/^(?:[\t ]*(?:\r?\n|\r))+/,'');
+            responseEdited = responseEdited.replace(/<br \/>/g,'');
+            console.log("transcript content", responseEdited);
         }
       });
     }
-    fetchAPI();
+    const button = document.getElementsByTagName('button')[0];
+    button.addEventListener('click', fetchAPI);
   </script>
