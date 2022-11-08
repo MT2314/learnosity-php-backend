@@ -89,10 +89,24 @@ function parse(entity) {
     }
   } else if (entity.componentName === "InfoBox") {
     entity.props.infoBoxState.body = _setHtml(entity.props.infoBoxState.body);
+  } else if (entity.componentName === "Video") {
+    entity.props.videoState.videoDescription = _setHtml(
+      entity.props.videoState.videoDescription
+    );
+    // Replace line breaks before setting HTML
+    noBreakCredit = _replaceLineBreak(entity.props.videoState.videoCredit);
+    entity.props.videoState.videoCredit = _setHtml(noBreakCredit);
   }
 
   return entity;
 }
+
+const _replaceLineBreak = (text) => {
+  if (text === "<br>") {
+    text.replace("<br>", null);
+  }
+  return text;
+};
 
 // Converts the quill data into a html element
 function _setHtml(quill) {

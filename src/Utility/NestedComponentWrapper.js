@@ -31,7 +31,7 @@ const BlueBox = styled("div")(({ draggingSelf, showSelf, hoverActive }) => ({
       : hoverActive && !draggingSelf
       ? `3px solid #DAE3EE`
       : null,
-  borderRadius: "4px",
+  borderRadius: "0rem 0.25rem 0.25rem 0.25rem",
   opacity: draggingSelf ? 0.4 : 1,
   '& [data-id="callout"]': {
     margin: 0,
@@ -61,7 +61,7 @@ export const ComponentLabelContainer = styled("div")(
       background: showSelf && "#1466C0",
       display: "flex",
       width: "fit-content",
-      marginLeft: "-3px",
+      marginLeft: showSelf ? "-3px" : hoverActive ? "-4px" : "-3px",
       padding: "0 1px",
       color: showSelf ? "#FFF" : "#1466C0",
       borderRadius: "4px 4px 0px 0px",
@@ -97,7 +97,6 @@ const NestedComponentWrapper = ({
   const [isHover, setIsHover] = useState(false);
   const [dropIndexOffset, setDropIndexOffset] = useState(null);
   const [tabActive, setTabActive] = useState(false);
-
   //get the matching component from the componentIndex
   const componentDetails = componentIndex[component.componentName];
 
@@ -127,9 +126,11 @@ const NestedComponentWrapper = ({
       "Video",
       "Table",
       "InfoBox",
-      "Tab",
       "QuoteBox",
       "IFrame",
+      "Accordion",
+      "Tab",
+      "section",
     ],
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -140,7 +141,6 @@ const NestedComponentWrapper = ({
     }),
     drop: async (item, monitor) => {
       const currentTab = item?.tabIndex === tabIndex;
-
       const hoverIndex = currentTab
         ? dropIndexOffset === 0
           ? item.compIndex < compIndex
@@ -154,7 +154,6 @@ const NestedComponentWrapper = ({
         : compIndex;
 
       const dragIndex = currentTab ? item?.compIndex : undefined;
-
       if (acceptListComp(item)) {
         setDroppedIndex(hoverIndex);
         setDropIndexOffset(null);
@@ -234,11 +233,13 @@ const NestedComponentWrapper = ({
           func: "DELETE_COMPONENT",
           tabIndex,
           compIndex,
+          addRemove: true,
         });
       },
       within: true,
       new: true,
       source: "component",
+      type: component.componentName,
     }),
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -267,7 +268,7 @@ const NestedComponentWrapper = ({
   return (
     <>
       <div
-        data-test-id="div-before-drop-indicator"
+        data-testid="div-before-drop-indicator"
         key={`nested-component-${compIndex}`}
         ref={dropRef}
         onMouseEnter={() => !draggingOver && setIsHover(true)}
@@ -275,10 +276,14 @@ const NestedComponentWrapper = ({
         onFocus={() => setShowSelf(true)}
         onBlur={() => setShowSelf(false)}
         onClick={() => setShowSelf(true)}
+        style={{
+          paddingBottom: "0.4rem",
+          paddingTop: "0.4rem",
+        }}
       >
         <div>
           <DropIndicator
-            data-test-id="drop-indicator"
+            data-testid="drop-indicator"
             offsetLine={dropIndexOffset}
             showLine={dropIndexOffset === 1 && isOver}
             item={getItem}
@@ -315,7 +320,7 @@ const NestedComponentWrapper = ({
                 variant="body2"
                 component="span"
                 sx={{
-                  borderRight: showSelf && "0.5px solid #FFF",
+                  borderRight: showSelf && "0.5px solid rgba(13, 71, 161, 1)",
                   paddingRight: "10px",
                   paddingLeft: "10px",
                   marginRight: "5px",
@@ -420,14 +425,16 @@ const NestedComponentWrapper = ({
               }}
             />
           </BlueBox>
-          <DropIndicator
-            data-test-id="drop-indicator"
-            offsetLine={dropIndexOffset}
-            showLine={dropIndexOffset === 0 && isOver}
-            item={getItem}
-            offsetDown={0}
-            offsetUp={compIndex != numOfComponent - 1 ? 15 : 5}
-          />
+          {compIndex + 1 === numOfComponent && (
+            <DropIndicator
+              data-testid="drop-indicator"
+              offsetLine={dropIndexOffset}
+              showLine={dropIndexOffset === 0 && isOver}
+              item={getItem}
+              offsetDown={0}
+              offsetUp={compIndex != numOfComponent - 1 ? 15 : 5}
+            />
+          )}
         </div>
       </div>
     </>

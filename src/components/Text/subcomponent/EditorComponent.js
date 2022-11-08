@@ -3,30 +3,32 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-import ExtendLinkFunctionality from "./popupToolBar/ExtendLinkFunctionality";
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
 
 import { v4 as uuidv4 } from "uuid";
 
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
-import {
-  AddLinkEvents,
-  handleSelection,
-  checkTextForUrl,
-} from "../utils/HandleLinks";
+import { checkTextForUrl } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";
-import { FormulaEvents } from "../utils/FormulaEvents";
-import setAlignment from "../utils/setAlignment";
+import { FormulaEvents, linkClickEvent } from "../utils/FormulaEvents";
 
 import MathPixMarkdown from "../blots/MathPixMarkdown";
 
 import {
+  useMathId,
   useSetQuill,
   useSetUniqueId,
   useShowMath,
   useKeepEditor,
   useBoldRef,
+  useLinkRef,
+  useSetEditorPos,
+  useShowLink,
+  useSetShowLink,
+  useIsLink,
+  useSetIsLink,
+  useSetFormat,
 } from "../Provider";
 
 import { matchMsWordList, maybeMatchMsWordList } from "../matchers/pasteLists";
@@ -42,14 +44,16 @@ const Delta = Quill.import("delta");
 Quill.register("formats/mathpix", MathPixMarkdown);
 
 const StyledConfigBar = styled("div")(
-  ({ editorIsFocus, isInfoBox, infoAreaFocused }) => {
-    const display = isInfoBox
+  ({ editorIsFocus, isInfoBox, infoAreaFocused, portal }) => {
+    let display = isInfoBox
       ? infoAreaFocused
         ? "flex"
         : "none"
-      : editorIsFocus
+      : portal?.parentComponent && portal?.shouldPortal
       ? "flex"
       : "none";
+
+    display = !portal?.parentComponent && editorIsFocus ? "flex" : display;
 
     const configBarStyles = {
       display: display,
@@ -80,22 +84,30 @@ const EditorComponent = ({
   setInfoHasFocus,
   setTextRef,
   setTabActive,
+  closeToolBar,
+  setCloseToolBar,
+  portal,
 }) => {
   //context hooks
-  const setQuill = useSetQuill();
-  const setUniqueId = useSetUniqueId();
-  const showMath = useShowMath();
-  const keepEditor = useKeepEditor();
+  const mathId = useMathId();
   const boldRef = useBoldRef();
+  const linkRef = useLinkRef();
+  const setQuill = useSetQuill();
+  const showMath = useShowMath();
+  const showLink = useShowLink();
+  const setShowLink = useSetShowLink();
+  const keepEditor = useKeepEditor();
+  const setUniqueId = useSetUniqueId();
+  const setEditorPos = useSetEditorPos();
+  const isLink = useIsLink();
+  const setIsLink = useSetIsLink();
+  const setFormat = useSetFormat();
 
   //generate a unique id for toolbar and keep it from changing with useMemo
   const toolbarId = useMemo(() => `unique-id-${uuidv4()}`, []);
 
   //state to hide toolbar if clicked outside text component
   const [editorIsFocus, setEditorIsFocus] = useState(false);
-
-  //alignment observer
-  const [alignmentObserver, setAlignmentObserver] = useState(null);
 
   //add focus to editor
   const focusRef = useRef(null);
@@ -111,26 +123,35 @@ const EditorComponent = ({
     editorIsFocus && setActiveComponent(true);
   }, [editorIsFocus]);
 
-  useOnClickOutside(textRef, () => {
-    if (!showMath && !keepEditor && !isInfoBox) {
-      alignmentObserver?.disconnect();
-      setEditorIsFocus(false);
-      setShowEditor(false);
-      setActiveComponent(false);
-      setTabActive(false)
-    }
-  });
+  useEffect(() => {
+    const tb = portal?.shouldPortal;
+    // &&portal?.toolbarReference?.querySelector(`#custom-toolbar-${toolbarId}`);
+
+    if (tb) return;
+    if (infoHasFocus) return;
+    if ((showLink || showMath || keepEditor) && !closeToolBar) return;
+    if (!closeToolBar) return;
+
+    setEditorIsFocus(false);
+    setShowEditor(false);
+    setTabActive(false);
+    setCloseToolBar(false);
+    setTabActive(false);
+  }, [
+    showMath,
+    keepEditor,
+    showLink,
+    infoHasFocus,
+    closeToolBar,
+    editorIsFocus,
+    portal?.shouldPortal,
+  ]);
 
   useEffect(() => {
     //set quill instance
     setQuill(focusRef?.current?.getEditor());
     //set unique id instance
     setUniqueId(toolbarId);
-    //extend default link functionality on mount
-    ExtendLinkFunctionality(
-      `toolbar-${toolbarId}`,
-      focusRef?.current?.getEditor()
-    );
     //check for formulas
     FormulaEvents(toolbarId);
     // on render editor is focused
@@ -140,6 +161,7 @@ const EditorComponent = ({
     //on mount pass back focusRef
     isInfoBox &&
       setTextRef({ text: textRef.current, quill: focusRef?.current });
+    portal?.setTextRef && portal?.setTextRef(focusRef?.current);
   }, []);
 
   useEffect(() => {
@@ -168,17 +190,42 @@ const EditorComponent = ({
   }, [body]);
 
   // Set formating - align & list  @ current focus
-  const formatSelection = (quillRef) => {
+  const formatSelection = (range, quillRef) => {
     if (quillRef !== null && editorIsFocus) {
       const quill = quillRef.getEditor();
       if (quill.hasFocus()) {
         const currentFormat = quill.getFormat();
+        setFormat(currentFormat);
+        const nexFormat = quill.getFormat(range.index, range.length + 1);
         currentFormat?.list
           ? setActiveDropDownListItem(currentFormat.list)
           : setActiveDropDownListItem("");
         currentFormat?.align
           ? setActiveDropDownAlignItem(currentFormat.align)
           : setActiveDropDownAlignItem("left");
+
+        if ((currentFormat?.link || nexFormat?.link) && range.length < 1) {
+          const [blot, offset] = quill.getLeaf(range.index);
+          const index = quill.getIndex(blot);
+          const delta = quill.getContents(index);
+
+          const opIndex = Object.keys(currentFormat).length !== 0 ? 0 : 1;
+
+          const link = delta.ops[opIndex].attributes.link;
+          const text = delta.ops[opIndex].insert;
+
+          text.length !== offset
+            ? linkClickEvent(toolbarId, index, text, link)
+            : showLink && setShowLink(false);
+        } else {
+          showLink && setShowLink(false);
+        }
+
+        if (currentFormat?.link && range.length > 0) {
+          setIsLink(true);
+        } else {
+          isLink && setIsLink(false);
+        }
       }
     }
   };
@@ -203,7 +250,7 @@ const EditorComponent = ({
     }
 
     // add eventListeners to editor
-    AddLinkEvents(`toolbar-${toolbarId}`);
+    // AddLinkEvents(`toolbar-${toolbarId}`);
 
     //check for selection with highlights
     const noHighlights = CheckHighlights(editorContent);
@@ -229,7 +276,14 @@ const EditorComponent = ({
   const onKeyDropDown = (e) => {
     if (e.shiftKey && e.key === "Tab") {
       e.preventDefault();
-      boldRef?.current.focus();
+      if (
+        portal?.parentComponent &&
+        !portal?.disabledButtons?.includes("link")
+      ) {
+        linkRef.current.focus();
+      } else {
+        boldRef?.current.focus();
+      }
     }
   };
 
@@ -252,9 +306,7 @@ const EditorComponent = ({
 
   const modules = useMemo(
     () => ({
-      toolbar: {
-        container: `#${toolbarId}`,
-      },
+      toolbar: false,
       keyboard: { bindings: { tab: false } },
       clipboard: {
         matchVisual: false,
@@ -273,6 +325,14 @@ const EditorComponent = ({
     []
   );
 
+  const placeholder = () => {
+    if (portal?.parentComponent === "video") return portal?.placeholder;
+    return `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+          enim ad minim veniam, quis nostrud exercitation ullamco laboris
+          nisi ut aliquip ex ea commodo consequat.`;
+  };
+
   return (
     <div
       ref={textRef}
@@ -290,17 +350,26 @@ const EditorComponent = ({
           e.preventDefault();
           return;
         }
+
+        if (portal?.shouldPortal) return;
+
+        if (toolbar?.current?.contains(relatedTarget)) {
+          e.preventDefault();
+          return;
+        }
+
         if (
           (!relatedTarget ||
             (!e.currentTarget.contains(relatedTarget) && !keepEditor)) &&
           !showMath &&
-          !isInfoBox
+          !showLink &&
+          !infoHasFocus
         ) {
-          alignmentObserver?.disconnect();
           setEditorIsFocus(false);
           setShowEditor(false);
           setActiveComponent(false);
-          setTabActive(false)
+          setTabActive(false);
+          setCloseToolBar(false);
         }
       }}
       className="text-editor"
@@ -311,6 +380,7 @@ const EditorComponent = ({
         editorIsFocus={editorIsFocus}
         isInfoBox={isInfoBox}
         infoAreaFocused={infoAreaFocused}
+        portal={portal}
       >
         <CustomToolBar
           toolbarId={toolbarId}
@@ -323,6 +393,7 @@ const EditorComponent = ({
           infoHasFocus={infoHasFocus}
           selectedIcon={selectedIcon}
           setSelectedIcon={setSelectedIcon}
+          portal={portal}
         />
       </StyledConfigBar>
 
@@ -332,21 +403,19 @@ const EditorComponent = ({
         scrollingContainer="html"
         formats={formats}
         theme="snow"
-        placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-          enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat."
+        placeholder={placeholder()}
         className="quillEditor"
         onChange={handleDataChange}
         defaultValue={body}
         onChangeSelection={(range, source, editor) => {
-          handleSelection(range, `toolbar-${toolbarId}`, focusRef.current);
-          formatSelection(focusRef.current);
+          formatSelection(range, focusRef.current);
         }}
         onFocus={() => {
-          setAlignmentObserver(new setAlignment(toolbarId));
           FormulaEvents(toolbarId);
-          infoHasFocus && setInfoHasFocus(false);
+          if (infoHasFocus) {
+            setInfoHasFocus(false);
+          }
+          portal?.setParentFocused(false);
         }}
         onKeyDown={(e) => {
           onKeyDropDown(e);

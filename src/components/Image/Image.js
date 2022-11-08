@@ -2,7 +2,6 @@ import React from "react";
 import { Paper } from "@mui/material";
 import styles from "./styles/Image.module.scss";
 import FormattedText from "../FormattedText";
-import DragLabel from "../../Utility/DragLabel";
 
 export const defaultProps = {
   imgSize: "default",
@@ -13,7 +12,6 @@ export const defaultProps = {
   caption: null,
   credit: null,
 };
-
 
 const Image = ({
   setProp,
@@ -47,8 +45,6 @@ const Image = ({
 
   return (
     <>
-      {/* on drag <DragLabel/> shows the components name */}
-      <DragLabel/>
       <Paper
         data-testid="image-container"
         className={styles.imageContainer}
@@ -91,6 +87,7 @@ const Image = ({
           <>
             <div
               data-testid="image-placeholder"
+              role="figure"
               className={styles.placeholderImg}
               tabIndex="0"
             ></div>

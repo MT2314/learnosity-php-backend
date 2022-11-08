@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   useUniqueId,
   useSetEditState,
   useShowMath,
   useSetKeepEditor,
+  useEditLink,
+  useSetEditLink,
 } from "../Provider";
 import MathPopup from "../subcomponent/popupToolBar/math/MathPopup";
 import EditMath from "./EditMath";
+import LinkDialog from "./LinkDialog";
 
 const PopupDialogs = () => {
   return (
     <>
       <MathEditDialog />
       <MathPopupDialog />
+      <LinkDialog />
+      <LinkEditDialog />
     </>
   );
 };
@@ -21,6 +26,7 @@ const MathEditDialog = () => {
   const setEditState = useSetEditState();
   const uniqueId = useUniqueId();
   const setKeepEditor = useSetKeepEditor();
+
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -40,6 +46,34 @@ const MathEditDialog = () => {
         <>
           <div id={`mathpix-placeholder-${uniqueId}`} onClick={handleClick} />
           <EditMath />
+        </>
+      )}
+    </>
+  );
+};
+
+const LinkEditDialog = () => {
+  const uniqueId = useUniqueId();
+
+  const setEditLink = useSetEditLink();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    e.target.attributes.getNamedItem("data-text").value &&
+      setEditLink({
+        index: e.target.attributes.getNamedItem("data-index").value,
+        text: e.target.attributes.getNamedItem("data-text").value,
+        link: e.target.attributes.getNamedItem("data-link").value,
+      });
+  };
+
+  return (
+    <>
+      {uniqueId && (
+        <>
+          <div id={`link-placeholder-${uniqueId}`} onClick={handleClick} />
         </>
       )}
     </>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DefaultText from "./subcomponent/DefaultText";
 import EditorComponent from "./subcomponent/EditorComponent";
 import { Provider } from "./Provider";
@@ -7,12 +7,10 @@ import "./styles/Text.scss";
 import PopupDialogs from "./dialogs/PopupDialogs";
 
 import { CssBaseline } from "@mui/material";
-import DragLabel from "../../Utility/DragLabel"
-// import { ThemeProvider } from "@mui/material/styles";
 
-//? PP Imports
-// import createMFTheme from "../../theme/index";
 import ReactQuillContainer from "../../theme/styledComponents/quillEditor";
+
+import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 export const defaultProps = { body: null };
 
@@ -29,11 +27,16 @@ const Text = ({
   setSelectedIcon = () => {},
   setInfoHasFocus = () => {},
   setTextRef = () => {},
+  portal = null,
 }) => {
   const [showEditor, setShowEditor] = useState(false);
+  const [closeToolBar, setCloseToolBar] = useState(false);
 
-  //* Creating theme
-  // const textTheme = createMFTheme();
+  const containerRef = useRef(null);
+
+  useOnClickOutside(containerRef, () => {
+    setCloseToolBar(true);
+  });
 
   useEffect(() => {
     if (isInfoBox) {
@@ -43,29 +46,35 @@ const Text = ({
 
   return (
     <>
-    {/* on drag <DragLabel/> shows the components name */}
-      <DragLabel/>
       <CssBaseline />
-      {/* <ThemeProvider theme={textTheme}> */}
-      <ReactQuillContainer isInfoBox={isInfoBox}>
+      <ReactQuillContainer
+        isInfoBox={isInfoBox}
+        isVideo={portal?.parentComponent === "video"}
+        ref={containerRef}
+      >
         {((!showEditor && body === null) ||
           (!showEditor && !body.ops) ||
           (!showEditor && body.ops[0].insert === "")) &&
         !isInfoBox ? (
           <div
             onClick={() => {
-              setShowEditor(true)
+              setShowEditor(true);
               setTabActive(true);
+              setCloseToolBar(false);
             }}
-            className="mainContainer"
+            className={
+              portal?.parentComponent === "video" ? "" : "mainContainer"
+            }
             data-testid="text-component"
+            role="text"
             tabIndex="0"
             onFocus={() => {
               setShowEditor(true);
               setTabActive(true);
+              setCloseToolBar(false);
             }}
           >
-            <DefaultText />
+            <DefaultText portal={portal} />
           </div>
         ) : (
           <Provider>
@@ -85,6 +94,9 @@ const Text = ({
               setSelectedIcon={setSelectedIcon}
               setTextRef={setTextRef}
               setTabActive={setTabActive}
+              closeToolBar={closeToolBar}
+              setCloseToolBar={setCloseToolBar}
+              portal={portal}
             />
           </Provider>
         )}

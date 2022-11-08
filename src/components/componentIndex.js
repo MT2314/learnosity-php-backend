@@ -6,8 +6,9 @@ import QuoteBox, {
   defaultProps as quoteBoxDefaultProps,
 } from "./QuoteBox/QuoteBox";
 import ImageConfig from "./Image/ImageConfig";
-import Video, { defaultProps as videoDefaultProps } from "./Video/Video";
-import VideoConfig from "./Video/VideoConfig";
+import VideoMain, {
+  defaultProps as videoDefaultProps,
+} from "../components/Video/VideoMain";
 import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
 import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
@@ -25,8 +26,6 @@ import textCategoryIcon from "../Icons/categoriesIcons/text.png";
 import tabsComponentIcon from "../Icons/componentIcons/tabsIcon.png";
 import textComponentIcon from "../Icons/componentIcons/textIcon.png";
 import defaultComponentIcon from "../Icons/componentIcons/defaultIcon.png";
-
-
 
 import exposedVersion from "../../exposedStage";
 
@@ -83,15 +82,6 @@ const componentIndex = {
     category: categories.text,
     componentIcon: defaultComponentIcon,
   },
-  Video: {
-    Component: Video,
-    readableName: "Video",
-    defaultProps: videoDefaultProps,
-    version: "0.0.1",
-    ConfigPanel: VideoConfig,
-    category: categories.media,
-    componentIcon: defaultComponentIcon,
-  },
   IFrame: {
     Component: IFrame,
     readableName: "iFrame",
@@ -99,7 +89,7 @@ const componentIndex = {
     version: "0.0.1",
     ConfigPanel: IFrameConfig,
     category: categories.media,
-    componentIcon: defaultComponentIcon
+    componentIcon: defaultComponentIcon,
   },
   Tab: {
     Component: TabsMain,
@@ -107,7 +97,7 @@ const componentIndex = {
     defaultProps: testTabDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
-    componentIcon: tabsComponentIcon
+    componentIcon: tabsComponentIcon,
   },
   Accordion: {
     Component: AccordionMain,
@@ -115,6 +105,14 @@ const componentIndex = {
     defaultProps: testAccordionDefaultProps,
     version: "0.0.1",
     category: categories.interactive,
+    componentIcon: defaultComponentIcon,
+  },
+  Video: {
+    Component: VideoMain,
+    defaultProps: videoDefaultProps,
+    readableName: "Video",
+    version: "0.0.1",
+    category: categories.media,
     componentIcon: defaultComponentIcon,
   },
 };
