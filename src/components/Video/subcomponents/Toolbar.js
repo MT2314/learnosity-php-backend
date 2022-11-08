@@ -598,9 +598,9 @@ const ToolBar = ({
                 }
                 variant="contained"
                 openVideo={openVideo}
+                onClick={handleToggleVideo}
                 disableRipple
                 disableFocusRipple
-                onClick={handleToggleVideo}
               >
                 {videoAPI.videoId ? "Change Video" : "Add Video"}
               </StyledVideoButton>
@@ -655,6 +655,8 @@ const ToolBar = ({
                               data-testid={`brightcove select button`}
                               aria-labelledby={`brightcove select button`}
                               sx={{ marginTop: "8px" }}
+                              disableRipple
+                              disableFocusRipple
                             >
                               <BrightcoveSVG />
                               <span style={{ marginLeft: "33.66px" }}>
@@ -687,6 +689,8 @@ const ToolBar = ({
                               data-testid={`youtube select button`}
                               aria-labelledby={`youtube select button`}
                               sx={{ marginBottom: "8px" }}
+                              disableRipple
+                              disableFocusRipple
                             >
                               <YoutubeSVG />
                               <span style={{ marginLeft: "33.66px" }}>
@@ -742,6 +746,8 @@ const ToolBar = ({
                                 }
                               : { paddingRight: "5px !important" }
                           }
+                          disableRipple
+                          disableFocusRipple
                         >
                           {/* Add Video */}
                           <StyledInput
@@ -826,6 +832,8 @@ const ToolBar = ({
                                     },
                                   },
                                 }}
+                                disableRipple
+                                disableFocusRipple
                               >
                                 Add
                               </Button>
