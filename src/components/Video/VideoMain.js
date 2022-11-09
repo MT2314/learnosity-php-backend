@@ -20,11 +20,19 @@ export const defaultProps = {
   },
 };
 
-const VideoMain = ({ videoState = defaultProps, setProp = () => {} }) => {
+const VideoMain = ({
+  videoState = defaultProps,
+  setProp = () => {},
+  setTabActive = () => {},
+  setActiveComponent = () => {},
+}) => {
   return (
     <VideoProvider videoState={videoState} setProp={setProp}>
       <TabProvider>
-        <Video />
+        <Video
+          setTabActive={setTabActive}
+          setActiveComponent={setActiveComponent}
+        />
       </TabProvider>
     </VideoProvider>
   );

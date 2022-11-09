@@ -11,12 +11,12 @@ import MathPopup from "../subcomponent/popupToolBar/math/MathPopup";
 import EditMath from "./EditMath";
 import LinkDialog from "./LinkDialog";
 
-const PopupDialogs = () => {
+const PopupDialogs = (props) => {
   return (
     <>
       <MathEditDialog />
-      <MathPopupDialog />
-      <LinkDialog />
+      <MathPopupDialog {...props} />
+      <LinkDialog {...props} />
       <LinkEditDialog />
     </>
   );

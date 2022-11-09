@@ -32,17 +32,28 @@ const Text = ({
   const [showEditor, setShowEditor] = useState(false);
   const [closeToolBar, setCloseToolBar] = useState(false);
 
+  const [closeText, setCloseText] = useState(true);
+
   const containerRef = useRef(null);
 
-  useOnClickOutside(containerRef, () => {
-    setCloseToolBar(true);
-  });
+  useEffect(() => {
+    if (!portal?.shouldPortal) {
+      setCloseToolBar(true);
+    }
+  }, [portal?.shouldPortal]);
+
+  !portal &&
+    useOnClickOutside(containerRef, () => {
+      setCloseToolBar(true);
+    });
 
   useEffect(() => {
     if (isInfoBox) {
       setShowEditor(true);
     }
-    console.log(portal);
+    if (portal) {
+      portal?.setTextContainer(containerRef.current);
+    }
   }, []);
 
   return (
@@ -62,6 +73,7 @@ const Text = ({
               setShowEditor(true);
               setTabActive(true);
               setCloseToolBar(false);
+              setCloseText(false);
             }}
             className={
               portal?.parentComponent === "video" ? "" : "mainContainer"
@@ -73,13 +85,14 @@ const Text = ({
               setShowEditor(true);
               setTabActive(true);
               setCloseToolBar(false);
+              setCloseText(false);
             }}
           >
             <DefaultText portal={portal} />
           </div>
         ) : (
           <Provider>
-            <PopupDialogs />
+            <PopupDialogs closeToolBar={closeToolBar} />
             <EditorComponent
               body={body}
               setProp={setProp}
@@ -98,6 +111,7 @@ const Text = ({
               closeToolBar={closeToolBar}
               setCloseToolBar={setCloseToolBar}
               portal={portal}
+              setCloseText={setCloseText}
             />
           </Provider>
         )}

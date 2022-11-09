@@ -32,7 +32,7 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 import { VideoContext } from "../VideoContext";
 
-import { useFocused, useDescriptionRef } from "./TabContext";
+import { useFocused, useDescriptionRef, useCreditRef } from "./TabContext";
 import icons from "../assets/icons";
 
 // * Styled Components
@@ -378,7 +378,6 @@ const ToolBar = ({
     setInvalidVideoInput(false);
     setVideoOpen(false);
     setTranscriptOpen(false);
-    // setDescriptionKebabOpen(false);
   });
   useOnClickOutside(kebabselectRef, () => {
     setDescriptionKebabOpen(false);

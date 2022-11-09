@@ -9,6 +9,8 @@ import React, {
 import styled from "@emotion/styled";
 import { useTranslation } from "react-i18next";
 
+import { useFocused, useDescriptionRef, useCreditRef } from "./TabContext";
+
 // Internal Imports
 import VideoDescriptionCredit from "./VideoDescriptionCredit";
 import Player from "./Player";
@@ -71,7 +73,11 @@ const TranscriptButtonContainer = styled("button")(({ videoData }) => ({
 }));
 
 // InfoBox component
-const Video = () => {
+const Video = ({ setTabActive, setActiveComponent }) => {
+  const focused = useFocused();
+  const descriptionRef = useDescriptionRef();
+  const creditRef = useCreditRef();
+
   // Localization
   const { t } = useTranslation();
 
@@ -87,6 +93,8 @@ const Video = () => {
   const [disconnect, setDisconnect] = useState(true);
 
   const [mainToolbar, setMainToolbar] = useState(null);
+
+  const [test, setTest] = useState(false);
 
   const [videoAPI, setVideoAPI] = useState({
     videoSource: "",
@@ -104,13 +112,16 @@ const Video = () => {
   useOnClickOutside(videoRef, () => {
     setVideoHasFocus(false);
     setVideoAreaFocused(false);
-    setDisconnect(true);
+    !disconnect && setDisconnect(true);
+    setTabActive(false);
   });
 
   const videoFocused = (e) => {
+    setActiveComponent(true);
     setFocused("Video");
     setDisconnect(false);
     setVideoAreaFocused(true);
+    setTabActive(true);
   };
 
   const handleTextClick = useCallback(
@@ -158,6 +169,8 @@ const Video = () => {
         ) {
           e.preventDefault();
           setDisconnect(true);
+          setActiveComponent(false);
+          setTabActive(false);
         }
       }}
     >
@@ -172,10 +185,7 @@ const Video = () => {
         disconnect={disconnect}
         setMainToolbar={setMainToolbar}
       />
-      <Player
-        videoId={videoAPI.videoId}
-        videoSource={videoAPI.videoSource}
-      />
+      <Player videoId={videoAPI.videoId} videoSource={videoAPI.videoSource} />
       <StyledVideoContainer>
         <StyledVideoDescriptionContainer>
           <DescriptionCreditContainer>
@@ -194,12 +204,22 @@ const Video = () => {
                 setVideoHasFocus={setVideoHasFocus}
                 toolbar={toolbar}
                 setVideoAreaFocused={setVideoAreaFocused}
+                disconnect={disconnect}
                 t={t}
               />
             </div>
           </DescriptionCreditContainer>
-          <TranscriptButtonContainer data-testid="transcript" videoData={state.videoId && state.videoTranscript !== "" ? true : false}>
-            {state.videoId !== null && state.videoTranscript !== "" ? <Checkmark /> : ""}
+          <TranscriptButtonContainer
+            data-testid="transcript"
+            videoData={
+              state.videoId && state.videoTranscript !== "" ? true : false
+            }
+          >
+            {state.videoId !== null && state.videoTranscript !== "" ? (
+              <Checkmark />
+            ) : (
+              ""
+            )}
             <span>
               {state.videoId && state.videoTranscript !== ""
                 ? "Transcript"

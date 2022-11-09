@@ -87,6 +87,8 @@ const NestedComponentWrapper = ({
   draggingOver,
   setActiveComp,
   activeComp,
+  setShowError,
+  setShowDropError,
 }) => {
   const dropRef = useRef(null);
 
@@ -103,7 +105,11 @@ const NestedComponentWrapper = ({
   const { Component } = componentDetails;
 
   //remove active border and label if you click outside component
-  useOnClickOutside(dropRef, () => setShowSelf(false));
+  useOnClickOutside(dropRef, () => {
+    setShowSelf(false);
+    setShowError(false);
+    setShowDropError(false);
+  });
 
   //on first click of text component the active state wrapper shows
   useEffect(() => {
