@@ -16,13 +16,10 @@ export function useOnClickOutside(ref, handler, useFocus) {
     //focusin event captures if focus is outside the ref. Add 'true' argument when function is called to use the focus outside feature
     useFocus && document.addEventListener("focusin", listener);
 
-
     return () => {
       document.removeEventListener("mousedown", listener);
       document.removeEventListener("touchstart", listener);
-      useFocus && document.removeEventListener('focusin', listener);
-
+      useFocus && document.removeEventListener("focusin", listener);
     };
   }, [ref, handler]);
 }
-

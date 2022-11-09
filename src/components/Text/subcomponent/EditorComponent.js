@@ -87,6 +87,7 @@ const EditorComponent = ({
   closeToolBar,
   setCloseToolBar,
   portal,
+  setCloseText,
 }) => {
   //context hooks
   const mathId = useMathId();
@@ -137,6 +138,8 @@ const EditorComponent = ({
     setTabActive(false);
     setCloseToolBar(false);
     setTabActive(false);
+    setCloseText(true);
+    showLink && setShowLink(false);
   }, [
     showMath,
     keepEditor,
@@ -370,6 +373,7 @@ const EditorComponent = ({
           setActiveComponent(false);
           setTabActive(false);
           setCloseToolBar(false);
+          setCloseText(true);
         }
       }}
       className="text-editor"

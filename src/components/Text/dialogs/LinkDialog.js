@@ -19,7 +19,6 @@ import {
   useSetEditLink,
   useSetKeepEditor,
 } from "../Provider";
-import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 const MainContainer = styled("div")(({ bounds }) => ({
   position: "absolute",
@@ -125,7 +124,7 @@ const StyledLink = styled("a")({
 const linkValidityRegex =
   /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|[a-zA-Z0-9-]+[a-zA-Z0-9]?\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
-const LinkDialog = () => {
+const LinkDialog = ({ closeToolBar }) => {
   const showLink = useShowLink();
   const setShowLink = useSetShowLink();
   const quill = useQuill();
@@ -143,6 +142,7 @@ const LinkDialog = () => {
   const [preview, setPreview] = useState(false);
   const [value, setValue] = useState("");
   const [remove, setRemove] = useState(false);
+  const [close, setClose] = useState(false);
 
   const [scrollTop, setScrollTop] = useState(null);
 
@@ -150,12 +150,10 @@ const LinkDialog = () => {
 
   const reset = () => {
     setShowLink(false);
-    console.log("removeBackground ", !hasLink);
+
     !hasLink &&
       quill.formatText(linkRange.index, linkRange.length, "background", false);
 
-    quill.focus();
-    quill.scrollingContainer.scrollTop = scrollTop;
     quill.setSelection(linkRange.index, linkRange.length);
 
     setRemove(false);
@@ -168,17 +166,21 @@ const LinkDialog = () => {
     setScrollTop(null);
   };
 
-  useOnClickOutside(containerRef, () => {
-    remove &&
-      quill.formatText(
-        parseInt(editLink.index),
-        editLink.text.length,
-        "link",
-        false
-      );
+  useEffect(() => {
+    if (closeToolBar) {
+      setShowLink(false);
+      setClose(true);
+    }
+  }, [closeToolBar]);
 
-    reset();
-  });
+  useEffect(() => {
+    if (editLink) {
+      const range = quill?.getSelection();
+      const index = hasLink ? parseInt(editLink?.index) : range?.index;
+
+      !isNaN(index) && setBounds(quill.getBounds(index));
+    }
+  }, [editLink]);
 
   useEffect(() => {
     if (showLink) {
@@ -197,6 +199,26 @@ const LinkDialog = () => {
 
       !isNaN(index) && setBounds(quill.getBounds(index));
     } else {
+      if (remove) {
+        quill.formatText(
+          parseInt(editLink.index),
+          editLink.text.length,
+          "link",
+          false
+        );
+      }
+
+      if (!hasLink && linkRange) {
+        quill.formatText(
+          linkRange.index,
+          linkRange.length,
+          "background",
+          false
+        );
+        !close && quill.setSelection(linkRange.index, linkRange.length);
+        close && quill.blur();
+      }
+
       setRemove(false);
       setHasLink(false);
       setBounds(null);
@@ -204,6 +226,8 @@ const LinkDialog = () => {
       setEditLink(null);
       setKeepEditor(false);
       setValue("");
+      setScrollTop(null);
+      setClose(false);
     }
   }, [showLink]);
 
@@ -268,6 +292,9 @@ const LinkDialog = () => {
             newValue
           )
         : quill.formatText(linkRange.index, linkRange.length, "link", newValue);
+
+      quill.focus();
+      quill.scrollingContainer.scrollTop = scrollTop;
 
       reset();
     } else {
