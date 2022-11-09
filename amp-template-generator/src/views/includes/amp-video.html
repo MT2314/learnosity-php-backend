@@ -77,10 +77,11 @@
                     {% endif %}
                 {% endif %}
             </div>
-            <amp-script data-ampdevmode layout="fixed-height" height="36" script="api-script" class="sample">
+            <amp-script data-ampdevmode layout="fixed-height" script="api-script" class="sample">
                 <button
                     class="transcript-button"
                     aria-label="Download transcript"
+                    [text]="transcriptContent"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
                         <path d="M1.007 13.997v1.974l13.986.005v-1.974" stroke="#292929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -90,6 +91,14 @@
                     Transcript
                 </button>
             </amp-script>
+                <a href="transcriptContent" download="wilson.txt" class="transcript-button" aria-label="Download transcript">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
+                        <path d="M1.007 13.997v1.974l13.986.005v-1.974" stroke="#292929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M8.003 11.998v-10" stroke="#292929" stroke-width="2" stroke-linecap="round"/>
+                        <path d="m3.006 8.248 4.997 4 4.998-4" stroke="#292929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                        Transcript
+                </a>
         </div>
         {% if videoDescription.length > 204 and displayDescription != false %}
             <button
@@ -164,10 +173,11 @@
             responseEdited = responseEdited.replace("00:00.000 --> 01:00:00.000", "");
             responseEdited = responseEdited.replace(/^(?:[\t ]*(?:\r?\n|\r))+/,'');
             responseEdited = responseEdited.replace(/<br \/>/g,'');
+            responseEdited = 'data:text/plain;charset=utf-8,' + encodeURIComponent(responseEdited)
             console.log("transcript content", responseEdited);
+            AMP.setState({'transcriptContent': responseEdited});
         }
       });
     }
-    const button = document.getElementsByTagName('button')[0];
-    button.addEventListener('click', fetchAPI);
+    fetchAPI()
   </script>
