@@ -47,7 +47,7 @@ const SelectFormat = styled("div")(() => ({
   marginLeft: "4px",
   marginTop: "8px",
 
-  "& span": {
+  "& label": {
     marginLeft: "8px",
   },
 }));
@@ -73,9 +73,30 @@ const StyledCreateButton = styled("button")(() => ({
   color: "#1565C0",
 }));
 
-const Modal = ({ setShowModal }) => {
+const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
+  const [numberRow, setNumberRow] = React.useState(2);
+  const [numberCol, setNumberCol] = React.useState(2);
   const closeModal = (e) => {
     setShowModal(false);
+  };
+  const createTable = (e) => {
+    const numberRowStore = []
+    const numberColStore = []
+
+    for (let i = 0; i < numberRow; i++) {
+      numberRowStore.push({id: i})
+    }
+
+    for (let i = 0; i < numberCol; i++) {
+      numberColStore.push({
+        accessorKey: "Name",
+        id: "Name",
+        header: "Name",
+      })
+    }
+
+    setNumberColRow([numberRowStore, numberColStore])
+    setShowTable(true);
   };
   return (
     <Container>
@@ -86,26 +107,26 @@ const Modal = ({ setShowModal }) => {
       <SelectContainer>
         <div>
           <span>Columns</span>
-          <SelectNumber />
+          <SelectNumber number={numberCol} setNumber={setNumberCol}/>
         </div>
         <div>
           <span>Rows</span>
-          <SelectNumber />
+          <SelectNumber number={numberRow} setNumber={setNumberRow}/>
         </div>
       </SelectContainer>
       <FormatContainer>
         <span>Table Format</span>
         <SelectFormat>
-          <input type="radio" />
-          <span>Top header</span>
+          <input type="radio" name="select-radio-header" id="top-header" />
+          <label for="top-header">Top header</label>
         </SelectFormat>
         <SelectFormat>
-          <input type="radio" />
-          <span>Side header</span>
+          <input type="radio" name="select-radio-header" id="side-header" />
+          <label for="side-header">Side header</label>
         </SelectFormat>
       </FormatContainer>
       <FooterContainer>
-        <StyledCreateButton>Create</StyledCreateButton>
+        <StyledCreateButton onClick={createTable}>Create</StyledCreateButton>
       </FooterContainer>
     </Container>
   );
@@ -125,8 +146,8 @@ const StyledSelectNumber = styled("div")(() => ({
   marginTop: "16px",
 }));
 
-const SelectNumber = () => {
-  const [number, setNumber] = React.useState(2);
+const SelectNumber = ({number, setNumber}) => {
+  
   return (
     <StyledSelectNumber>
       <RemoveIcon
