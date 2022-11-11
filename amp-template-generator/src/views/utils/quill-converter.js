@@ -96,10 +96,22 @@ function parse(entity) {
     // Replace line breaks before setting HTML
     noBreakCredit = _replaceLineBreak(entity.props.videoState.videoCredit);
     entity.props.videoState.videoCredit = _setHtml(noBreakCredit);
+    _callapi(entity.props.videoState);
   }
 
   return entity;
 }
+
+const _callapi = async (state) => {
+  const headers = {
+    "BCOV-Policy": process.env.BRIGHTCOVE_POLICY_KEY,
+  };
+
+  // const result = await fetch(state.videoURL, { headers });
+  // const json = await result.json();
+  // console.log(json);
+
+};
 
 const _replaceLineBreak = (text) => {
   if (text === "<br>") {
