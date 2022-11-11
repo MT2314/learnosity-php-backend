@@ -10,8 +10,9 @@ import HeaderToolbar from "./subcomponents/HeaderToolbar";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 export const defaultProps = {
-  headerSize: "large",
-  headerAlign: "left",
+  size: "large",
+  alignment: "left",
+  heading: "",
 };
 
 const StyledPaper = styled(Paper)({
@@ -40,10 +41,10 @@ export const headerConfig = (draft, action) => {
     case "UPDATE_STATE":
       return draft.action;
     case "CHANGE_SIZE":
-      draft.headerSize = action.headerSize;
+      draft.headerSize = action.size;
       return draft;
     case "CHANGE_ALIGNMENT":
-      draft.headerAlign = action.headerAlign;
+      draft.headerAlign = action.alignment;
       return draft;
     default:
       return draft;
@@ -65,7 +66,11 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
 
   return (
     <>
-      <HeaderToolbar disconnect={disconnect} headerHasFocus={headerHasFocus} />
+      <HeaderToolbar
+        disconnect={disconnect}
+        headerHasFocus={headerHasFocus}
+        headerState={headerState}
+      />
       <StyledPaper elevation="0" ref={headerRef}>
         <StyledHeaderInput
           placeholder="Type your header here..."
