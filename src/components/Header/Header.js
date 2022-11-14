@@ -15,6 +15,7 @@ export const defaultProps = {
   heading: "",
 };
 
+// Styled components
 const StyledPaper = styled(Paper)({
   width: "100%",
   padding: "1.25rem 6.5rem",
