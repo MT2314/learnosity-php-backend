@@ -23,21 +23,26 @@ const HeaderContainer = styled("div")(() => ({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
-  alignItems: "space-between",
   padding: "16px",
   borderBottom: "1px solid #E0E0E0",
+  "& span": {
+    marginTop: "4px",
+    fontSize: "16px",
+    color: "#000000",
+  },
 }));
 
 const SelectContainer = styled("div")(() => ({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
-  alignItems: "center",
   padding: "16px",
 }));
 const FormatContainer = styled("div")(() => ({
   display: "flex",
   flexDirection: "column",
+  justifyContent: "flex-start",
+  alignItems: "flex-start",
   padding: "16px",
 }));
 
@@ -80,11 +85,11 @@ const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
     setShowModal(false);
   };
   const createTable = (e) => {
-    const numberRowStore = []
-    const numberColStore = []
+    const numberRowStore = [];
+    const numberColStore = [];
 
     for (let i = 0; i < numberRow; i++) {
-      numberRowStore.push({id: i})
+      numberRowStore.push({ id: i });
     }
 
     for (let i = 0; i < numberCol; i++) {
@@ -92,10 +97,10 @@ const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
         accessorKey: "Name",
         id: "Name",
         header: "Name",
-      })
+      });
     }
 
-    setNumberColRow([numberRowStore, numberColStore])
+    setNumberColRow([numberRowStore, numberColStore]);
     setShowTable(true);
   };
   return (
@@ -107,11 +112,11 @@ const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
       <SelectContainer>
         <div>
           <span>Columns</span>
-          <SelectNumber number={numberCol} setNumber={setNumberCol}/>
+          <SelectNumber number={numberCol} setNumber={setNumberCol} />
         </div>
         <div>
           <span>Rows</span>
-          <SelectNumber number={numberRow} setNumber={setNumberRow}/>
+          <SelectNumber number={numberRow} setNumber={setNumberRow} />
         </div>
       </SelectContainer>
       <FormatContainer>
@@ -146,8 +151,7 @@ const StyledSelectNumber = styled("div")(() => ({
   marginTop: "16px",
 }));
 
-const SelectNumber = ({number, setNumber}) => {
-  
+const SelectNumber = ({ number, setNumber }) => {
   return (
     <StyledSelectNumber>
       <RemoveIcon

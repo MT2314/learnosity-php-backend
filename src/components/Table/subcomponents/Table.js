@@ -39,7 +39,7 @@ const StyledButton = styled("button")(() => ({
 const Table = () => {
   const [showModal, setShowModal] = useState(false);
   const [showTable, setShowTable] = useState(false);
-  const [numberColRow, setNumberColRow] = useState([2,2]);
+  const [numberColRow, setNumberColRow] = useState([2, 2]);
 
   const createTable = (e) => {
     setShowModal(true);
@@ -47,14 +47,15 @@ const Table = () => {
 
   return (
     <>
-    {showTable ? (<TableComponent numberColRow={numberColRow}/>) : (
+      {/* {showTable ? (<TableComponent numberColRow={numberColRow}/>) : (
       <Container>
         {showModal && <Modal setShowModal={setShowModal} setShowTable={setShowTable} setNumberColRow={setNumberColRow}/>}
         <ButtonContainer>
           <StyledButton onClick={createTable}>Create a Table</StyledButton>
         </ButtonContainer>
       </Container>
-    )}
+    )} */}
+      <TableComponent />
     </>
   );
 };
