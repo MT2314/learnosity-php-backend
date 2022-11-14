@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useRef } from "react";
+import React, { useState, useEffect, useReducer, useRef } from "react";
 import produce from "immer";
 // MUI
 import { Paper } from "@material-ui/core";
@@ -41,10 +41,13 @@ export const headerConfig = (draft, action) => {
     case "UPDATE_STATE":
       return draft.action;
     case "CHANGE_SIZE":
-      draft.headerSize = action.size;
+      draft.size = action.size;
       return draft;
     case "CHANGE_ALIGNMENT":
-      draft.headerAlign = action.alignment;
+      draft.alignment = action.alignment;
+      return draft;
+    case "CHANGE_HEADING":
+      draft.heading = action.heading;
       return draft;
     default:
       return draft;
@@ -57,6 +60,18 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
   const [disconnect, setDisconnect] = useState(true);
   const [headerHasFocus, setHeaderHasFocus] = useState(false);
 
+  const diff = JSON.stringify(state) !== JSON.stringify(headerState);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    dispatch({ func: "UPDATE_STATE", data: headerState });
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    diff && mounted && setProp({ headerState: state });
+  }, [state]);
+
   const headerRef = useRef();
 
   useOnClickOutside(headerRef, () => {
@@ -64,17 +79,27 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
     setDisconnect(true);
   });
 
+  const handleHeadingChange = (e) => {
+    dispatch({
+      func: "CHANGE_HEADING",
+      heading: e.target.value,
+    });
+  };
+
   return (
     <>
       <HeaderToolbar
         disconnect={disconnect}
         headerHasFocus={headerHasFocus}
-        headerState={headerState}
+        state={state}
+        dispatch={dispatch}
       />
       <StyledPaper elevation="0" ref={headerRef}>
         <StyledHeaderInput
           placeholder="Type your header here..."
           disableUnderline="true"
+          onChange={handleHeadingChange}
+          value={state.heading}
         />
       </StyledPaper>
     </>

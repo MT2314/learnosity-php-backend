@@ -72,13 +72,23 @@ const leftAlignSVG = (
   </svg>
 );
 
-const HeaderToolbar = ({ disconnect, headerHasFocus, headerState }) => {
+const HeaderToolbar = ({ disconnect, headerHasFocus, dispatch, state }) => {
   const classes = useStyles();
+
+  const handleSizeSelect = (e) => {
+    dispatch({
+      func: "CHANGE_SIZE",
+      size: e.target.value,
+    });
+  };
+
+  console.log(state);
 
   return (
     <StyledToolbarContainer>
       <StyledHeaderSizeMenu
         defaultValue="large"
+        value={state.size}
         variant="standard"
         disableUnderline
         disableRipple
@@ -89,6 +99,7 @@ const HeaderToolbar = ({ disconnect, headerHasFocus, headerState }) => {
           select: classes.select,
           input: classes.input,
         }}
+        onChange={handleSizeSelect}
       >
         <MenuItem value="large">Large</MenuItem>
         <MenuItem value="medium">Medium</MenuItem>
