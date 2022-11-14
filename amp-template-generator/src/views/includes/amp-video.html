@@ -102,7 +102,6 @@
     
     <amp-script data-ampdevmode layout="responsive" script="api-script{{ videoId }}">
         <div class="transcript">
-            <p [text]="transcriptContent{{ videoId }}">i</p>
         </div>
     </amp-script>
 
@@ -165,7 +164,6 @@
                 p.textContent = splitted[i];
                 divBody.appendChild(p);
             }
-            AMP.setState({'transcriptContentvideo636e8bcf26ae42ef982d4ba6': "" });
         }
       });
     }
