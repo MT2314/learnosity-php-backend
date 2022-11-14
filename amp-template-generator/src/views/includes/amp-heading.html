@@ -1,2 +1,11 @@
-<{{ data.headingLevel }} class="textHeading {{headingClass}} wrapper bottom-margin">{{ data.heading }}</{{ data.headingLevel }}>
-{%comment%}Please leave this as single line of code - No Prettier/ESLint on this line{%endcomment%}
+{% assign headingSize = data.size %}
+{% assign headingAlignment = data.alignment %}
+{%- assign heading = data.heading -%}
+
+<h1 class="header-component {{headingSize}} {{headingAlignment}} wrapper bottom-margin">
+  {{heading}}
+</h1>
+  {%comment%}Please leave this as single line of code - No Prettier/ESLint on this line{%endcomment%}
+
+
+
