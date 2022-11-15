@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+// Formatting buttons for toolbar
+
+// Outer Toolbar Container
+
+// Dropdown Card
+.StyledHeaderCard {
+  position: absolute;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 112px;
+  height: 40px !important;
+  left: 70px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  bottom: -43px;
+  z-index: 25;
+  .ql-active {
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    svg {
+      .svg-fill {
+        fill: #1565c0;
+      }
+    }
+  }
+  button {
+    display: flex !important;
+    margin: 2px;
+    width: 30px !important;
+    height: 30px !important;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.StyledHeaderIconButton {
+  display: flex !important;
+  width: 30px;
+  height: 30px;
+  padding: 7px;
+  color: #232323;
+  background: #ffffff;
+  border-radius: 4px !important;
+
+  & svg {
+    fill: #000;
+    //   ...(disabled && { opacity: 0.3 }),
+  }
+  &:hover {
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    & svg {
+      fill: rgba(21, 101, 192, 1);
+    }
+  }
+  &:active {
+    cursor: pointer;
+    background-color: rgba(21, 101, 192, 0.12) !important;
+    & svg {
+      fill: rgba(21, 101, 192, 1);
+    }
+  }
+  &:focus-visible {
+    background-color: rgba(21, 101, 192, 0.12) !important;
+  }
+  & .MuiPaper-root {
+    background-color: rgba(255, 255, 255, 1) !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important;
+  }
+  & .MuiPaper-root {
+    background-color: rgba(255, 255, 255, 1) !important;
+  }
+}

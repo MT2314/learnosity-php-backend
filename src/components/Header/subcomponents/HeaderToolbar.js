@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import "../styles/Toolbar.scss";
 
 // MUI
 import {
@@ -12,6 +13,8 @@ import {
   IconButton,
   Popper,
   Grow,
+  Tooltip,
+  Card,
   MenuList,
 } from "@mui/material";
 
@@ -170,6 +173,8 @@ const StyledIconButton = styled(IconButton)(({ disabled }) => ({
   },
 }));
 
+// ? Alignment Dropdown Button
+
 // Header Size Options
 const headerSizeDropdownOptions = [
   { value: "large", label: "Large" },
@@ -177,14 +182,24 @@ const headerSizeDropdownOptions = [
   { value: "small", label: "Small" },
 ];
 
-const HeaderToolbar = ({ toolbar, dispatch, state, setHeaderLevel }) => {
+const HeaderToolbar = ({
+  toolbar,
+  dispatch,
+  state,
+  setHeaderLevel,
+  setAlignment,
+}) => {
   // ? Header Size Dropdown Open/Close State
   const [openHeader, setHeaderOpen] = useState(false);
   // ? Header Size Dropdown Selection State
   const [selectedHeader, setSelectedHeader] = useState(null);
+  // ? Alignment Dropdown Button Icon
+  const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
+  const [activeDropDownItem, setActiveDropDownItem] = useState("left");
 
   // Refrence for Header Size Dropdown
   const HeaderDropDown = useRef(null);
+  const alignRef = useRef(null);
 
   // Save Header Size Dropdown Selection
   const handleSizeSelect = (value) => {
@@ -196,8 +211,17 @@ const HeaderToolbar = ({ toolbar, dispatch, state, setHeaderLevel }) => {
       size: value,
     });
   };
+  // Handle Toolbar State Change
+  const handleAlignmentChange = (alignment) => {
+    dispatch({
+      func: "CHANGE_ALIGNMENT",
+      alignment: `${alignment}-align`,
+    });
+  };
 
-  console.log(state);
+  useEffect(() => {
+    handleAlignmentChange(activeDropDownItem);
+  }, [activeDropDownItem]);
 
   return (
     <StyledToolbarContainer
@@ -251,9 +275,8 @@ const HeaderToolbar = ({ toolbar, dispatch, state, setHeaderLevel }) => {
                         autoFocusItem={openHeader}
                         data-testid="header-select-dropdown"
                         aria-labelledby="Header Drop Down"
-                        // onKeyDown={handleListKeyDown}
                       >
-                        {headerSizeDropdownOptions.map((size, index) => {
+                        {headerSizeDropdownOptions.map((size) => {
                           let value = size.value;
                           let label = size.label;
                           return (
@@ -261,7 +284,7 @@ const HeaderToolbar = ({ toolbar, dispatch, state, setHeaderLevel }) => {
                               key={`${value} header`}
                               value={value}
                               selected={label === selectedHeader}
-                              onClick={(e) => handleSizeSelect(label)}
+                              onClick={() => handleSizeSelect(label)}
                               data-testid={`${value} header`}
                               aria-labelledby={label}
                             >
@@ -283,14 +306,39 @@ const HeaderToolbar = ({ toolbar, dispatch, state, setHeaderLevel }) => {
             variant="middle"
             flexItem
           />
-          <StyledIconButton
-            disableRipple
-            disabled
-            className={"align-button"}
-            aria-label="disabled allignment dropdown button"
+          <Tooltip
+            aria-label="alignment"
+            title="alignment"
+            placement="top"
+            arrow
           >
-            {icons["align"]}
-          </StyledIconButton>
+            <StyledIconButton
+              ref={alignRef}
+              disableRipple
+              color="inherit"
+              onClick={() => {
+                if (activeTopMenu === "align") {
+                  setActiveTopMenu("");
+                } else {
+                  setActiveTopMenu("align");
+                }
+                setActiveDropDownItem("");
+              }}
+              className={"align-button ql-selected ql-active"}
+              aria-label="alignment buttons dropdown"
+              value={visibleAlignIcon}
+              data-alignid="alignment-dropdown"
+            >
+              {visibleAlignIcon}
+            </StyledIconButton>
+          </Tooltip>
+          <AlignDropdownButton
+            aria-label="alignment buttons options"
+            activeDropDownItem={activeDropDownItem}
+            setActiveDropDownItem={setActiveDropDownItem}
+            setAlignment={setAlignment}
+            setVisibleAlignIcon={setVisibleAlignIcon}
+          />
         </StyledToolbar>
       </StyledAppbar>
     </StyledToolbarContainer>
@@ -298,3 +346,93 @@ const HeaderToolbar = ({ toolbar, dispatch, state, setHeaderLevel }) => {
 };
 
 export default HeaderToolbar;
+
+const AlignDropdownButton = ({
+  activeDropDownItem,
+  setActiveDropDownItem,
+  setVisibleAlignIcon,
+  setAlignment,
+}) => {
+  return (
+    <>
+      <Card className="StyledHeaderCard">
+        <Tooltip
+          aria-label="align left"
+          title="align left"
+          placement="top"
+          arrow
+        >
+          <button
+            aria-label="left align"
+            onClick={() => {
+              setActiveDropDownItem("left");
+              setVisibleAlignIcon(icons["align"]);
+            }}
+            className={
+              activeDropDownItem === "left"
+                ? "ql-align ql-selected ql-active"
+                : "ql-align"
+            }
+            value=""
+          >
+            {icons["align"]}
+          </button>
+        </Tooltip>
+        <Tooltip
+          aria-label="centre text"
+          title="centre text"
+          placement="top"
+          arrow
+        >
+          <button
+            aria-label="align center"
+            className={
+              activeDropDownItem === "center"
+                ? "ql-align ql-selected ql-active"
+                : "ql-align"
+            }
+            value="center"
+            onClick={() => {
+              if (activeDropDownItem === "center") {
+                setActiveDropDownItem("left");
+                setVisibleAlignIcon(icons["align"]);
+              } else {
+                setActiveDropDownItem("center");
+                setVisibleAlignIcon(icons["center"]);
+              }
+            }}
+          >
+            {icons["center"]}
+          </button>
+        </Tooltip>
+        <Tooltip
+          aria-label="align right"
+          title="align right"
+          placement="top"
+          arrow
+        >
+          <button
+            aria-label="right align"
+            className={
+              activeDropDownItem === "right"
+                ? "ql-align ql-selected ql-active"
+                : "ql-align"
+            }
+            value="right"
+            onClick={() => {
+              if (activeDropDownItem === "right") {
+                setActiveDropDownItem("left");
+                setVisibleAlignIcon(icons["align"]);
+              } else {
+                setActiveDropDownItem("right");
+                setVisibleAlignIcon(icons["right"]);
+              }
+            }}
+          >
+            {icons["right"]}
+          </button>
+        </Tooltip>
+      </Card>
+    </>
+  );
+};

@@ -24,19 +24,19 @@ const StyledPaper = styled(Paper)({
 });
 
 // ? Styled Text Input
-const StyledHeaderInput = styled("input")(({ headerLevel }) => ({
+const StyledHeaderInput = styled("input")(({ headerLevel, alignment }) => ({
   width: "100%",
   border: "none",
   fontFamily: `"Inter", sans-serif`,
   fontWeight: "300",
+  textAlign:
+    alignment == "center-align"
+      ? "center"
+      : alignment == "right-align"
+      ? "right"
+      : "left",
   fontSize:
-    headerLevel == "Large"
-      ? "42px"
-      : headerLevel == "Medium"
-      ? "36px"
-      : headerLevel == "Small"
-      ? "34px"
-      : "42px",
+    headerLevel == "Medium" ? "36px" : headerLevel == "Small" ? "34px" : "42px",
 
   "&::placeholder": {
     color: "rgba(35, 35, 35, 1)",
@@ -73,6 +73,8 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
   const [toolbar, setToolbar] = useState(false);
   // Header Level State
   const [headerLevel, setHeaderLevel] = useState("large");
+  // Alignment State
+  const [alignment, setAlignment] = useState("left");
 
   // Check for difference in Header and Component Mount State
   const diff = JSON.stringify(state) !== JSON.stringify(headerState);
@@ -104,6 +106,9 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
       heading: e.target.value,
     });
   };
+
+  console.log(state);
+
   return (
     <div
       onClick={(e) => setToolbar(true)}
@@ -115,6 +120,7 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
         state={state}
         dispatch={dispatch}
         setHeaderLevel={setHeaderLevel}
+        setAlignment={setAlignment}
       />
 
       <StyledPaper elevation="0">
@@ -123,6 +129,7 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
           disableUnderline="true"
           onChange={handleHeadingChange}
           value={state.heading}
+          alignment={state.alignment}
           headerLevel={headerLevel}
         />
       </StyledPaper>
