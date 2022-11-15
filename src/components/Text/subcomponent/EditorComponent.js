@@ -63,7 +63,7 @@ const StyledConfigBar = styled("div")(
       transform: "translateX(-50%)",
       zIndex: 1000,
       justifyContent: "center",
-      backgroundColor: "#fff",
+      backgroundColor: "transparent",
     };
     return configBarStyles;
   }

@@ -4,11 +4,14 @@
 // Outer Toolbar Container
 .Toolbar-Container {
   display: block !important;
+  width: 100%;
+  gap: 4px;
   .MuiPaper-root {
     background-color: transparent !important;
   }
 }
 
+// Entire Toolbar *Appbar*
 .Style-Appbar {
   display: flex;
   flex-direction: row;
@@ -21,6 +24,7 @@
   }
 }
 
+// InfoBox Icon Select Toolbar
 .StyledMenu {
   background: #ffffff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -29,6 +33,7 @@
   margin-top: 2px;
 }
 
+// InfoBox Icon Selections
 .StyledMenuItem {
   width: 109px;
   padding: 6px 16px;
@@ -41,10 +46,17 @@
   }
 }
 
-// Dropdown Card
+// // InfoBox Toolbar *First Level* (Bold, Italic, etc.)
+// .InfoBox-Toolbar {
+//   width: 156px;
+//   gap: 2.5px;
+// }
+
+// Dropdown for all formatting options (bold, italic, etc.) *Second Level* Popper
 .StyledCard {
   position: absolute;
   display: var(--card-display);
+  flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   width: var(--width);
@@ -64,12 +76,8 @@
     }
   }
   button {
-    // display: flex !important;
-    // margin: 2px;
-    // width: 30px !important;
-    // height: 30px !important;
-    // justify-content: center;
-    // align-items: center;
+    width: 30px !important;
+    height: 30px !important;
     display: flex !important;
     justify-content: center;
     align-items: center;
@@ -79,12 +87,14 @@
     // margin: 2px;
     border: none;
     border-radius: 4px;
-    padding: 1px 3px;
+    padding: 1px 2px;
     & svg {
       fill: #000;
       //   ...(disabled && { opacity: 0.3 }),
     }
     &:hover {
+      border-radius: 4px;
+
       background-color: rgba(21, 101, 192, 0.12) !important;
       & svg {
         fill: rgba(21, 101, 192, 1);
@@ -110,6 +120,7 @@
   }
 }
 
+// Dropdown format options individual icons
 .StyledIconButton {
   // display: flex !important;
   // width: 30px;
@@ -117,16 +128,17 @@
   padding: 7px;
   // color: #232323;
   // background: #ffffff;
-  // border-radius: 4px !important;
+  justify-content: space-evenly;
+  border-radius: 4px !important;
   display: flex !important;
   justify-content: center;
   align-items: center;
   background: #fff;
   width: 30px !important;
   height: 30px !important;
-  margin: 2px;
   border: none;
-  border-radius: 4px;
+  border-radius: 4px !important;
+  gap: 0px;
   // padding: 1px 3px;
 
   & svg {
@@ -158,11 +170,32 @@
   }
 }
 
-.ql-bold {
-  padding: 2px 4px;
+// Bold Icon weird 2 SVGs in one)
+.bold {
+  margin-left: 3px;
+  padding: 2px 0px;
   height: 30px;
   width: 30px;
 }
+// List Icon (7px padding on other icons)
+// 5px on link icon + 2px on each side * adding up to 7
+.list {
+  padding: 5px;
+  margin: 2px;
+}
+
+// Link Icon (7px padding on other icons.
+// 5px on link icon + 4px on right side * adding up to 7)
+.link {
+  padding: 5px;
+  margin-right: 4px;
+}
+
+// .ql-bold {
+//   padding: 2px 4px;
+//   height: 30px;
+//   width: 30px;
+// }
 
 // .ql-snow.ql-toolbar {
 //   //   border-top: none;

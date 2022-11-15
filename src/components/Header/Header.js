@@ -130,7 +130,7 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
           onChange={handleHeadingChange}
           value={state.heading}
           alignment={state.alignment}
-          headerLevel={headerLevel}
+          headerLevel={state.size}
         />
       </StyledPaper>
     </div>

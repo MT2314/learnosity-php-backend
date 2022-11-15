@@ -57,7 +57,7 @@ const StyledAppbar = styled(AppBar)({
 // ? Toolbar
 const StyledToolbar = styled(Toolbar)(({}) => ({
   display: "flex",
-  justifyContent: "space-between",
+  justifyContent: "space-evenly",
   height: "40px !important",
   minHeight: "40px !important",
   width: "8.4375rem",
@@ -90,15 +90,14 @@ const StyledMenu = styled(MenuList)({
 
 // ? Header Size Dropdown Menu Item
 const StyledIconDropdownButton = styled(Button)({
-  padding: "0px",
-  display: "inline-grid",
-  gridAutoFlow: "column",
+  // display: "inline-grid",
+  // gridAutoFlow: "column",
+  // width: "77px",
   // display: "flex",
-  // flexDirection: "row",
-  alignContent: "space-between",
-  padding: "8px 22px 8px 14.5px",
+  flexDirection: "row",
+  alignContent: "space-around",
   backgroundColor: "transparent",
-  boxShadow: "none",
+  boxShadow: "none !important ",
   color: "#232323",
   fontFamily: `"Inter", sans-serif`,
   textAlign: "center",
@@ -108,14 +107,19 @@ const StyledIconDropdownButton = styled(Button)({
   letterSpacing: "0.009375rem",
   whiteSpace: "nowrap",
   textTransform: "none",
-  paddingLeft: "10px!important",
-  paddingRight: "10px!important",
+  // marginLeft: "10px!important",
+  // marginRight: "10px!important",
+  padding: "0px",
   "&:hover": {
-    background: "#FFF",
     color: "#1565C0",
+    backgroundColor: "transparent",
   },
   "& .MuiSvgIcon-root": {
     marginRight: "0px",
+  },
+  "& svg": {
+    marginLeft: "10px",
+    padding: "4px",
   },
 });
 
@@ -145,8 +149,8 @@ const StyledIconButton = styled(IconButton)(({ disabled }) => ({
   margin: "0px",
   color: "#232323",
   backgroundColor: "none",
-  borderRadius: "4px !important",
-  marginRight: "14px !important",
+  borderRadius: "4px",
+  marginRight: "7px",
   // ...(open && {
   //   cursor: "pointer",
   //   backgroundColor: "rgba(21, 101, 192, 0.12) !important",
@@ -195,6 +199,9 @@ const HeaderToolbar = ({
   const [selectedHeader, setSelectedHeader] = useState(null);
   // ? Alignment Dropdown Button Icon
   const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
+  // ? Alignment Dropdown Open/Close State
+  const [activeTopMenu, setActiveTopMenu] = useState(false);
+
   const [activeDropDownItem, setActiveDropDownItem] = useState("left");
 
   // Refrence for Header Size Dropdown
@@ -301,7 +308,7 @@ const HeaderToolbar = ({
           </StyledIconDropdownButton>
 
           <Divider
-            sx={{ marginLeft: "10px", marginRight: "10px" }}
+            sx={{ marginLeft: "7px", marginRight: "7px" }}
             orientation="vertical"
             variant="middle"
             flexItem
@@ -324,7 +331,7 @@ const HeaderToolbar = ({
                 }
                 setActiveDropDownItem("");
               }}
-              className={"align-button ql-selected ql-active"}
+              // className={"align-button ql-selected ql-active"}
               aria-label="alignment buttons dropdown"
               value={visibleAlignIcon}
               data-alignid="alignment-dropdown"
@@ -334,6 +341,7 @@ const HeaderToolbar = ({
           </Tooltip>
           <AlignDropdownButton
             aria-label="alignment buttons options"
+            activeTopMenu={activeTopMenu}
             activeDropDownItem={activeDropDownItem}
             setActiveDropDownItem={setActiveDropDownItem}
             setAlignment={setAlignment}
@@ -348,6 +356,7 @@ const HeaderToolbar = ({
 export default HeaderToolbar;
 
 const AlignDropdownButton = ({
+  activeTopMenu,
   activeDropDownItem,
   setActiveDropDownItem,
   setVisibleAlignIcon,
@@ -355,7 +364,14 @@ const AlignDropdownButton = ({
 }) => {
   return (
     <>
-      <Card className="StyledHeaderCard">
+      <Card
+        className="StyledCard"
+        style={{
+          "--card-display": activeTopMenu ? "flex" : "none",
+          "--left": "79.5px",
+          "--width": "112px",
+        }}
+      >
         <Tooltip
           aria-label="align left"
           title="align left"
@@ -368,11 +384,6 @@ const AlignDropdownButton = ({
               setActiveDropDownItem("left");
               setVisibleAlignIcon(icons["align"]);
             }}
-            className={
-              activeDropDownItem === "left"
-                ? "ql-align ql-selected ql-active"
-                : "ql-align"
-            }
             value=""
           >
             {icons["align"]}
@@ -386,11 +397,6 @@ const AlignDropdownButton = ({
         >
           <button
             aria-label="align center"
-            className={
-              activeDropDownItem === "center"
-                ? "ql-align ql-selected ql-active"
-                : "ql-align"
-            }
             value="center"
             onClick={() => {
               if (activeDropDownItem === "center") {
@@ -413,11 +419,6 @@ const AlignDropdownButton = ({
         >
           <button
             aria-label="right align"
-            className={
-              activeDropDownItem === "right"
-                ? "ql-align ql-selected ql-active"
-                : "ql-align"
-            }
             value="right"
             onClick={() => {
               if (activeDropDownItem === "right") {
