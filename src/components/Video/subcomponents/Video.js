@@ -212,16 +212,16 @@ const Video = ({ setTabActive, setActiveComponent }) => {
           <TranscriptButtonContainer
             data-testid="transcript"
             videoData={
-              state.videoId && state.videoTranscript !== "" ? true : false
+              state.videoId ? true : false
             }
           >
-            {state.videoId !== null && state.videoTranscript !== "" ? (
+            {state.videoId !== null ? (
               <Checkmark />
             ) : (
               ""
             )}
             <span>
-              {state.videoId && state.videoTranscript !== ""
+              {state.videoId
                 ? "Transcript"
                 : "No Transcript"}
             </span>
