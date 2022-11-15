@@ -18,6 +18,8 @@
   {%- case item.componentName -%}
     {%- when "Text" -%}
       {% include amp-text.html data:propName %}
+    {%- when "Header" -%}
+      {% include amp-heading.html data:propName.headerState %}
     {%- when "Image" -%}
       {% include amp-image.html data:propName %}
     {%- when "Video" -%}
