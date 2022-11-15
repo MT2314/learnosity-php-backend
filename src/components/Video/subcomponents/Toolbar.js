@@ -445,19 +445,23 @@ const ToolBar = ({
     const json = await result.json();
     var responseEdited = "";
     var regex = /\d\d:\d\d\.\d\d\d\s+-->\s+\d\d:\d\d\.\d\d\d.*\n/gi;
-    const chosenTrack = json.text_tracks[0].src;
+    const chosenTrack = json.text_tracks[1].src;
     const colonLocation = chosenTrack.indexOf(":");
     const url = chosenTrack.substr(colonLocation + 1);
 
     getFile(url, function (response) {
       if (response) {
-        responseEdited = response.replace(regex, "");
-        responseEdited = responseEdited.replace("WEBVTT", "");
-        responseEdited = responseEdited.replace(
+        responseEdited = response.replace(
           "X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0",
           ""
         );
-        responseEdited = responseEdited.replace(/^(?:[\t ]*(?:\r?\n|\r))+/, "");
+      responseEdited = responseEdited.replace(regex, "");
+      responseEdited = responseEdited.replace("WEBVTT", "");
+      responseEdited = responseEdited.replace("00:00.000 --> 01:00:00.000", "");
+      responseEdited = responseEdited.replace(/^(?:[\t ]*(?:\r?\n|\r))+/, "");
+      responseEdited = responseEdited.replaceAll("<br />", '');
+      responseEdited = responseEdited.replaceAll("&quot;", '"');
+      responseEdited = responseEdited.replaceAll("&apos;", "'");
       }
       const texts = [responseEdited]; // text content
       const element = document.createElement("a"); // anchor link

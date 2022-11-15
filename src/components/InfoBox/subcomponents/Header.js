@@ -47,6 +47,7 @@ const Header = ({ t }) => {
       aria-multiline="true"
       value={state.infoBoxHeader.heading}
       onChange={handleHeaderChange}
+      onKeyDown={(e) => e.key === "Enter" && e.preventDefault()} // Prevent new line break
     />
   );
 };
