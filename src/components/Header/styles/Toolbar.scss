@@ -35,43 +35,32 @@
     margin: 2px;
     border: none;
     border-radius: 4px;
-  }
-}
-
-.StyledHeaderIconButton {
-  display: flex !important;
-  width: 30px;
-  height: 30px;
-  padding: 7px;
-  color: #232323;
-  background: #ffffff;
-  border-radius: 4px !important;
-
-  & svg {
-    fill: #000;
-    //   ...(disabled && { opacity: 0.3 }),
-  }
-  &:hover {
-    background-color: rgba(21, 101, 192, 0.12) !important;
     & svg {
-      fill: rgba(21, 101, 192, 1);
+      fill: #000;
+      //   ...(disabled && { opacity: 0.3 }),
     }
-  }
-  &:active {
-    cursor: pointer;
-    background-color: rgba(21, 101, 192, 0.12) !important;
-    & svg {
-      fill: rgba(21, 101, 192, 1);
+    &:hover {
+      background-color: rgba(21, 101, 192, 0.12) !important;
+      & svg {
+        fill: rgba(21, 101, 192, 1);
+      }
     }
-  }
-  &:focus-visible {
-    background-color: rgba(21, 101, 192, 0.12) !important;
-  }
-  & .MuiPaper-root {
-    background-color: rgba(255, 255, 255, 1) !important;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important;
-  }
-  & .MuiPaper-root {
-    background-color: rgba(255, 255, 255, 1) !important;
+    &:active {
+      cursor: pointer;
+      background-color: rgba(21, 101, 192, 0.12) !important;
+      & svg {
+        fill: rgba(21, 101, 192, 1);
+      }
+    }
+    &:focus-visible {
+      background-color: rgba(21, 101, 192, 0.12) !important;
+    }
+    & .MuiPaper-root {
+      background-color: rgba(255, 255, 255, 1) !important;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important;
+    }
+    & .MuiPaper-root {
+      background-color: rgba(255, 255, 255, 1) !important;
+    }
   }
 }
