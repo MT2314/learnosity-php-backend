@@ -4,6 +4,11 @@
     margin: 0;
   }
 
+  .transcript {
+    overflow-y: scroll;
+    height: 90px;
+  }
+
   .description-container {
     margin-top: 1.5rem;
     padding: 0 1rem;

@@ -6,6 +6,7 @@
     {%- assign videoCredit = data.videoCredit | strip_html -%}
     {%- assign displayDescription = data.videoTextSettings.description -%}
     {%- assign displayCredit = data.videoTextSettings.credit -%}
+    {%- assign dataText = "data:text/plain;charset=utf-8,(music%20plays)%0A%0AA%20man%20practises%20snowboard.%0A%0AA%20Female%20Narrator%20says%20THIS%20PHOTOGRAPHER%0AWILL%20USE%20RATE%2C%0ARATIO%2C%20AND%20PROPORTION%2C%0AWHEN%20TAKING%20PHOTOGRAPHS.%0A%0AA%20man%20in%20his%20thirties%20adjusts%20the%20lens%20of%20his%20camera%20in%20a%20snowed%20field.%0A%0AShe%20continues%20HE%20NEEDS%20TO%20ESTIMATE%20THE%20RATE%20AT%0AWHICH%20THE%20SUBJECT%20IS%20MOVING%0ATO%20DETERMINE%0ATHE%20SHUTTER%20SPEED.%0ASHUTTER%20SPEED%0AIS%20A%20RATIO.%0AA%20FAST%20SHUTTER%20SPEED%0AOF%201%20TWO%20THOUSANDTH%20OF%20A%20SECOND%0AWILL%20FREEZE%20ACTION.%0A%0AA%20caption%20reads%20%26quot%3BRate%20equals%2020%20kilometers%20per%20hour.%20Rate%20equals%206%20meters%20per%20second.%26quot%3B%0A%0AThe%20photographer%20takes%20pictures%20of%20the%20man%20snowboarding.%0A%0AShe%20continues%20WHILE%20A%20SLOW%20SHUTTER%20SPEED%20OF%0A1%20TWO%20THOUSANDTH%20OF%20A%20SECOND%0AWILL%20BLUR%20THE%20ACTION.%0APHOTOGRAPHS%20ARE%20ENLARGED%0APROPORTIONALLY%2C%0AAND%20THEN%20CROPPED%20TO%20FIT%20THE%0ASTANDARD%20PAPER%20SIZES.%0A%0AAgainst%20people%20skiing%2C%20a%20clip%20shows%20pictures%20being%20measured.%0A%0AShe%20continues%20RATE%2C%20RATIO%2C%0AAND%20PROPORTION%0AALLOW%20PHOTOGRAPHERS%20TO%0AMANIPULATE%20THE%20IMAGE%0AAND%20SHOOT%20WITH%20CONFIDENCE.%0A%0A" -%}
 
     {% if data.videoSource == "brightcove" -%}
     
@@ -77,17 +78,6 @@
                     {% endif %}
                 {% endif %}
             </div>
-            <button
-                class="transcript-button"
-                aria-label="Download transcript"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="17" viewBox="0 0 16 17" fill="none">
-                    <path d="M1.007 13.997v1.974l13.986.005v-1.974" stroke="#292929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M8.003 11.998v-10" stroke="#292929" stroke-width="2" stroke-linecap="round" />
-                    <path d="m3.006 8.248 4.997 4 4.998-4" stroke="#292929" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-                Transcript
-            </button>
         </div>
         {% if videoDescription.length > 204 and displayDescription != false %}
             <button
@@ -109,4 +99,73 @@
             </button>
         {% endif %}
     </div>
+    
+    <amp-script data-ampdevmode layout="responsive" script="api-script{{ videoId }}">
+        <div class="transcript">
+        </div>
+    </amp-script>
+
 </div>
+
+<script id="api-script{{ videoId }}" type="text/plain" target="amp-script">
+
+    // get file from a URL link
+    const getFile = (url, callback) => {
+      var httpRequest = new XMLHttpRequest(),
+        response,
+        getResponse = function () {
+          // response handler
+          try {
+            if (httpRequest.readyState === 4) {
+              if (httpRequest.status === 200) {
+                response = httpRequest.responseText;
+                if (response === "{null}") {
+                  // some API requests return '{null}' will breaks JSON.parse
+                  response = null;
+                }
+                callback(response); // return the response
+              } else {
+                callback(null);
+              }
+            }
+          } catch (e) {
+            callback(null);
+          }
+        };
+      // set up request data
+      httpRequest.onreadystatechange = getResponse; // set response handler
+      httpRequest.open("GET", url); // open the request
+      httpRequest.send(); // open and send request
+    };
+
+    const fetchAPI = async () => {
+        const headers = {
+            "BCOV-Policy": 'BCpkADawqM1XplIzTT5iB8WK5oNDPzQsM2CDxSACIVrgtdNB-PRZjMuDeSgYSpdK1dkvswBpDnEoxoAtwa1u9AYhNqX8LemUJQGTksH9e5M5QlElWJy6ygFINKA',
+            };
+      const result = await fetch("{{ data.videoURL }}", { headers });
+      const data = await result.json();
+
+      var responseEdited = "";
+      const chosenTrack = data.text_tracks[1].src;
+
+      getFile(chosenTrack, function (response) {
+        if (response) {
+            responseEdited = response.replace(
+                "X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0",
+                ""
+              );
+            responseEdited = responseEdited.replace("WEBVTT", "");
+            responseEdited = responseEdited.replace("00:00.000 --> 01:00:00.000", "");
+            responseEdited = responseEdited.replaceAll("&quot;", '"');
+            const splitted = responseEdited.split("<br \/>");
+            const divBody = document.querySelector('div');
+            for (let i = 0; i < splitted.length; i++) {
+                const p = document.createElement('p');
+                p.textContent = splitted[i];
+                divBody.appendChild(p);
+            }
+        }
+      });
+    }
+    fetchAPI();
+  </script>
