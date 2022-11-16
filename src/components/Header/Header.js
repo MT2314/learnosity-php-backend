@@ -11,7 +11,7 @@ import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 export const defaultProps = {
   size: "large",
-  alignment: "left",
+  alignment: null,
   heading: "",
 };
 
@@ -72,9 +72,10 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
   // Toolbar Active State
   const [toolbar, setToolbar] = useState(false);
   // Header Level State
-  const [headerLevel, setHeaderLevel] = useState("large");
-  // Alignment State
-  const [alignment, setAlignment] = useState("left");
+  const [headerLevel, setHeaderLevel] = useState();
+
+  // Refrences
+  const headerRef = useRef();
 
   // Check for difference in Header and Component Mount State
   const diff = JSON.stringify(state) !== JSON.stringify(headerState);
@@ -82,24 +83,21 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
 
   // Update Header State on Mount
   useEffect(() => {
-    dispatch({ func: "UPDATE_STATE", data: headerState });
-    setMounted(true);
-  }, []);
-
-  // Update Header State on Change
-  useEffect(() => {
     diff && mounted && setProp({ headerState: state });
   }, [state]);
 
-  // Refrences
-  const headerRef = useRef();
+  // Update Header State on Change
+  useEffect(() => {
+    dispatch({ func: "UPDATE_STATE", data: headerState });
+    setMounted(true);
+  }, []);
 
   // Close Toolbar on Click Outside
   useOnClickOutside(headerRef, () => {
     setToolbar(false);
   });
 
-  // Handle Toolbar State Change
+  // Header Text Input Change Handler - Save to State
   const handleHeadingChange = (e) => {
     dispatch({
       func: "CHANGE_HEADING",
@@ -120,7 +118,6 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
         state={state}
         dispatch={dispatch}
         setHeaderLevel={setHeaderLevel}
-        setAlignment={setAlignment}
       />
 
       <StyledPaper elevation="0">
