@@ -36,11 +36,11 @@ const ListDropdownButton = ({ isInfoBox, show, onKeyDropDown, isVideo }) => {
         <Tooltip aria-label="bullets" title="bullets" placement="top" arrow>
           <button
             aria-label="bullet list"
-            // className={
-            //   activeDropDownList === "bullet"
-            //     ? "ql-list ql-selected ql-active"
-            //     : "ql-list"
-            // }
+            className={
+              activeDropDownList === "bullet"
+                ? "ql-list ql-selected ql-active"
+                : "ql-list"
+            }
             value="bullet"
             onClick={() => {
               if (activeDropDownList === "bullet") {
@@ -59,11 +59,11 @@ const ListDropdownButton = ({ isInfoBox, show, onKeyDropDown, isVideo }) => {
         <Tooltip aria-label="numbering" title="numbering" placement="top" arrow>
           <button
             aria-label="numbered list"
-            // className={
-            //   activeDropDownList === "ordered"
-            //     ? "ql-list ql-selected ql-active"
-            //     : "ql-list"
-            // }
+            className={
+              activeDropDownList === "ordered"
+                ? "ql-list ql-selected ql-active"
+                : "ql-list"
+            }
             value="ordered"
             onClick={() => {
               if (activeDropDownList === "ordered") {

@@ -10,7 +10,7 @@ import HeaderToolbar from "./subcomponents/HeaderToolbar";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 export const defaultProps = {
-  size: "large",
+  size: null,
   alignment: null,
   heading: "",
 };
@@ -125,6 +125,7 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
           placeholder="Type your header here..."
           disableUnderline="true"
           onChange={handleHeadingChange}
+          onKeyDown={(e) => e.key === "Enter" && e.preventDefault()} // Prevent new line break
           value={state.heading}
           alignment={state.alignment}
           headerLevel={state.size}

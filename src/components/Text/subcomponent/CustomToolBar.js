@@ -69,7 +69,7 @@ const StyledAppbar = styled(AppBar)({
 // ? Styled Text Toolbar (Possibly Temp)
 const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
   display: "flex",
-  justifyContent: "space-evenly",
+  justifyContent: "space-between",
 
   ...(isInfoBox || isVideo
     ? { borderLeft: "none !important" }
@@ -77,13 +77,12 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
 
   height: "40px !important",
   minHeight: "40px !important",
-  width: isInfoBox || isVideo ? "156px" : "184px !important",
+  width: isInfoBox || isVideo ? "160px" : "184px !important",
   margin: "10px, 8px",
   paddingRight: "0px !important",
   backgroundColor: "#FFF",
   boxShadow: "0px 0px 10px 0 rgba(0, 0, 0, 0.1)",
   borderRadius: isVideo ? "4px 0px 0px 4px" : "4px",
-  gap: "2.5px",
   "& .MuiToolbar-gutters": {
     paddingLeft: 0,
     paddingRight: 0,
@@ -98,7 +97,7 @@ const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
 const StyledIconDropdownButton = styled(Button)({
   display: "flex",
   flexDirection: "row",
-  alignContent: "space-evenly",
+  alignContent: "space-between",
   borderLeft: "4px solid #1565C0",
   width: "140px",
   padding: "8px 22px 8px 14.5px",
@@ -141,15 +140,13 @@ const StyledMenuItem = styled(MenuItem)({
 });
 
 const StyledIconButton = styled(IconButton)(({ disabled }) => ({
-  // display: "flex !important",
-  // width: "30px",
-  // height: "30px",
-  // padding: "7px",
-  // color: "#232323",
-  // background: "#FFFFFF",
-  // padding: "3px 3px",
-  // marginLeft: "3px",
-  // borderRadius: "4px !important",
+  display: "flex !important",
+  width: "30px",
+  height: "30px",
+  padding: "7px",
+  color: "#232323",
+  background: "#FFFFFF",
+  borderRadius: "4px !important",
 
   "& svg": {
     color: "#000",
@@ -402,232 +399,231 @@ const ToolBar = ({
             </Popper>
           </StyledIconDropdownButton>
         )}
-        {/* <div> */}
-        <StyledToolbar
-          id={toolbarId}
-          isInfoBox={isInfoBox}
-          isVideo={portal?.parentComponent === "video"}
-          className="InfoBox-Toolbar"
-          // className="ql-toolbar ql-snow"
-          variant="dense"
-          disableGutters
-          test-id="infoBox-toolbar"
-        >
-          <Tooltip
-            aria-label="font styles"
-            title="font styles"
-            placement="top"
-            arrow
-          >
-            <StyledIconButton
-              ref={boldRef}
-              className="StyledIconButton bold"
-              disabled={
-                infoHasFocus || portal?.disabledButtons?.includes("bold")
-              }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                setBoldVisibility(!boldVisibility);
-                setAlignVisibility(false);
-                setListVisibility(false);
-                if (activeTopMenu === "bold") {
-                  setActiveTopMenu("");
-                } else {
-                  setActiveTopMenu("bold");
-                }
-                setActiveDropDownItem("");
-              }}
-              onKeyDown={(e) => {
-                onKeyDropDown(e, boldRef);
-              }}
-              id={`bold-${toolbarId}`}
-              aria-label="formatting button dropdown"
-              // className={
-              //   activeTopMenu === "bold"
-              //     ? "bold-dropdown-button ql-selected ql-active"
-              //     : "bold-dropdown-button"
-              // }
-            >
-              {icons["customBold"]}
-            </StyledIconButton>
-          </Tooltip>
-          <BoldDropdownButton
-            show={boldVisibility}
-            aria-label="formatting options select dropdown"
-            // className="dropdown-content"
-            onKeyDropDown={(e) => {
-              onKeyDropDown(e, boldRef);
-            }}
-            isVideo={portal?.parentComponent === "video"}
+        <div>
+          <StyledToolbar
+            id={toolbarId}
             isInfoBox={isInfoBox}
-          ></BoldDropdownButton>
-
-          {!isInfoBox && portal?.parentComponent !== "video" && (
+            isVideo={portal?.parentComponent === "video"}
+            className="ql-toolbar ql-snow"
+            variant="dense"
+            disableGutters
+            test-id="infoBox-toolbar"
+          >
             <Tooltip
-              aria-label="equation"
-              title="equation"
+              aria-label="font styles"
+              title="font styles"
               placement="top"
               arrow
             >
               <StyledIconButton
-                className="StyledIconButton math"
-                // className={
-                //   activeTopMenu === "math"
-                //     ? "ql-formula ql-selected ql-active"
-                //     : "ql-formula"
-                // }
-                // style={{ display: isInfoBox ? "none" : "block" }}
-                aria-label="math equation button"
+                ref={boldRef}
+                disabled={
+                  infoHasFocus || portal?.disabledButtons?.includes("bold")
+                }
                 disableRipple
                 color="inherit"
+                onClick={() => {
+                  setBoldVisibility(!boldVisibility);
+                  setAlignVisibility(false);
+                  setListVisibility(false);
+                  if (activeTopMenu === "bold") {
+                    setActiveTopMenu("");
+                  } else {
+                    setActiveTopMenu("bold");
+                  }
+                  setActiveDropDownItem("");
+                }}
+                onKeyDown={(e) => {
+                  onKeyDropDown(e, boldRef);
+                }}
+                id={`bold-${toolbarId}`}
+                aria-label="formatting button dropdown"
+                className={
+                  activeTopMenu === "bold"
+                    ? "bold-dropdown-button ql-selected ql-active"
+                    : "bold-dropdown-button"
+                }
+              >
+                {icons["customBold"]}
+              </StyledIconButton>
+            </Tooltip>
+            <BoldDropdownButton
+              show={boldVisibility}
+              aria-label="formatting options select dropdown"
+              className="dropdown-content"
+              onKeyDropDown={(e) => {
+                onKeyDropDown(e, boldRef);
+              }}
+              isVideo={portal?.parentComponent === "video"}
+              isInfoBox={isInfoBox}
+            ></BoldDropdownButton>
+
+            {!isInfoBox && portal?.parentComponent !== "video" && (
+              <Tooltip
+                aria-label="equation"
+                title="equation"
+                placement="top"
+                arrow
+              >
+                <StyledIconButton
+                  className={
+                    activeTopMenu === "math"
+                      ? "ql-formula ql-selected ql-active"
+                      : "ql-formula"
+                  }
+                  // style={{ display: isInfoBox ? "none" : "block" }}
+                  aria-label="math equation button"
+                  disableRipple
+                  color="inherit"
+                  disabled={infoHasFocus}
+                  onClick={() => {
+                    setAlignVisibility(false);
+                    setBoldVisibility(false);
+                    setListVisibility(false);
+                    if (activeTopMenu === "math") {
+                      setActiveTopMenu("");
+                    } else {
+                      setActiveTopMenu("math");
+                    }
+                  }}
+                >
+                  {icons["formula"]}
+                </StyledIconButton>
+              </Tooltip>
+            )}
+
+            {/* alignment dropdown */}
+            <Tooltip
+              aria-label="alignment"
+              title="alignment"
+              placement="top"
+              arrow
+            >
+              <StyledIconButton
+                ref={alignRef}
+                disabled={
+                  infoHasFocus || portal?.disabledButtons?.includes("align")
+                }
+                disableRipple
+                color="inherit"
+                onClick={() => {
+                  setAlignVisibility(!alignVisibility);
+                  setBoldVisibility(false);
+                  setListVisibility(false);
+                  if (activeTopMenu === "align") {
+                    setActiveTopMenu("");
+                  } else {
+                    setActiveTopMenu("align");
+                  }
+                  setActiveDropDownItem("");
+                }}
+                className={
+                  activeTopMenu === "align"
+                    ? "align-button ql-selected ql-active"
+                    : "align-button"
+                }
+                aria-label="alignment buttons dropdown"
+                value={visibleAlignIcon}
+                data-alignid="alignment-dropdown"
+                onKeyDown={(e) => {
+                  onKeyDropDown(e, alignRef);
+                }}
+              >
+                {visibleAlignIcon}
+              </StyledIconButton>
+            </Tooltip>
+            <AlignDropdownButton
+              show={alignVisibility}
+              isInfoBox={isInfoBox}
+              isVideo={portal?.parentComponent === "video"}
+              className="dropdown-content"
+              aria-label="alignment buttons options"
+              activeDropDownItem={activeDropDownAlignItem}
+              setActiveDropDownItem={setActiveDropDownAlignItem}
+              setVisibleAlignIcon={setVisibleAlignIcon}
+              onKeyDropDown={(e) => {
+                onKeyDropDown(e, alignRef);
+              }}
+            />
+
+            {/* bullets drowdown starts */}
+            <Tooltip
+              aria-label="add list"
+              title="add list"
+              placement="top"
+              arrow
+            >
+              <StyledIconButton
+                ref={listRef}
+                disabled={
+                  infoHasFocus || portal?.disabledButtons?.includes("list")
+                }
+                disableRipple
+                color="inherit"
+                onClick={() => {
+                  setListVisibility(!listVisibility);
+                  setAlignVisibility(false);
+                  setBoldVisibility(false);
+                  if (activeTopMenu === "lists") {
+                    setActiveTopMenu("");
+                  } else {
+                    setActiveTopMenu("lists");
+                  }
+                }}
+                className={
+                  activeTopMenu === "lists" ? "ql-selected ql-active" : null
+                }
+                value="bullet"
+                aria-label="list options select group"
+                onKeyDown={(e) => {
+                  onKeyDropDown(e, listRef);
+                }}
+              >
+                {icons["bullet"]}
+              </StyledIconButton>
+            </Tooltip>
+            <ListDropdownButton
+              show={listVisibility}
+              isInfoBox={isInfoBox}
+              isVideo={portal?.parentComponent === "video"}
+              className="dropdown-content"
+              aria-label="list buttons dropdown"
+              onKeyDropDown={(e) => {
+                onKeyDropDown(e, listRef);
+              }}
+            ></ListDropdownButton>
+
+            {/* link btn and divider */}
+            <Divider />
+            <Tooltip aria-label="link" title="link" placement="top" arrow>
+              <StyledIconButton
+                ref={linkRef}
                 disabled={infoHasFocus}
+                disableRipple
+                color="inherit"
+                aria-label="add link button"
+                className="al-link"
                 onClick={() => {
                   setAlignVisibility(false);
                   setBoldVisibility(false);
                   setListVisibility(false);
-                  if (activeTopMenu === "math") {
-                    setActiveTopMenu("");
-                  } else {
-                    setActiveTopMenu("math");
+
+                  if (format?.link && activeTopMenu === "link") {
+                    const selection = quill.getSelection();
+                    quill.formatText(selection, "link", false);
+                    return;
                   }
+
+                  setActiveTopMenu(activeTopMenu === "link" ? "" : "link");
                 }}
+                sx={{ paddingLeft: "12px", paddingRight: "12px" }}
+                isVideo={portal?.parentComponent === "video"}
               >
-                {icons["formula"]}
+                {icons["link"]}
               </StyledIconButton>
             </Tooltip>
-          )}
-
-          {/* alignment dropdown */}
-          <Tooltip
-            aria-label="alignment"
-            title="alignment"
-            placement="top"
-            arrow
-          >
-            <StyledIconButton
-              ref={alignRef}
-              disabled={
-                infoHasFocus || portal?.disabledButtons?.includes("align")
-              }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                setAlignVisibility(!alignVisibility);
-                setBoldVisibility(false);
-                setListVisibility(false);
-                if (activeTopMenu === "align") {
-                  setActiveTopMenu("");
-                } else {
-                  setActiveTopMenu("align");
-                }
-                setActiveDropDownItem("");
-              }}
-              className="StyledIconButton align"
-              // className={
-              //   activeTopMenu === "align"
-              //     ? "align-button ql-selected ql-active"
-              //     : "align-button"
-              // }
-              aria-label="alignment buttons dropdown"
-              value={visibleAlignIcon}
-              data-alignid="alignment-dropdown"
-              onKeyDown={(e) => {
-                onKeyDropDown(e, alignRef);
-              }}
-            >
-              {visibleAlignIcon}
-            </StyledIconButton>
-          </Tooltip>
-          <AlignDropdownButton
-            show={alignVisibility}
-            isInfoBox={isInfoBox}
-            isVideo={portal?.parentComponent === "video"}
-            // className="dropdown-content"
-            aria-label="alignment buttons options"
-            activeDropDownItem={activeDropDownAlignItem}
-            setActiveDropDownItem={setActiveDropDownAlignItem}
-            setVisibleAlignIcon={setVisibleAlignIcon}
-            onKeyDropDown={(e) => {
-              onKeyDropDown(e, alignRef);
-            }}
-          />
-
-          {/* bullets drowdown starts */}
-          <Tooltip aria-label="add list" title="add list" placement="top" arrow>
-            <StyledIconButton
-              ref={listRef}
-              disabled={
-                infoHasFocus || portal?.disabledButtons?.includes("list")
-              }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                setListVisibility(!listVisibility);
-                setAlignVisibility(false);
-                setBoldVisibility(false);
-                if (activeTopMenu === "lists") {
-                  setActiveTopMenu("");
-                } else {
-                  setActiveTopMenu("lists");
-                }
-              }}
-              className="StyledIconButton list"
-              // className={
-              //   activeTopMenu === "lists" ? "ql-selected ql-active" : null
-              // }
-              value="bullet"
-              aria-label="list options select group"
-              onKeyDown={(e) => {
-                onKeyDropDown(e, listRef);
-              }}
-            >
-              {icons["bullet"]}
-            </StyledIconButton>
-          </Tooltip>
-          <ListDropdownButton
-            show={listVisibility}
-            isInfoBox={isInfoBox}
-            isVideo={portal?.parentComponent === "video"}
-            // className="dropdown-content"
-            aria-label="list buttons dropdown"
-            onKeyDropDown={(e) => {
-              onKeyDropDown(e, listRef);
-            }}
-            className="StyledIconButton list"
-          ></ListDropdownButton>
-
-          {/* link btn and divider */}
-          <Divider />
-          <Tooltip aria-label="link" title="link" placement="top" arrow>
-            <StyledIconButton
-              ref={linkRef}
-              disabled={infoHasFocus}
-              disableRipple
-              color="inherit"
-              aria-label="add link button"
-              className="StyledIconButton link"
-              onClick={() => {
-                setAlignVisibility(false);
-                setBoldVisibility(false);
-                setListVisibility(false);
-
-                if (format?.link && activeTopMenu === "link") {
-                  const selection = quill.getSelection();
-                  quill.formatText(selection, "link", false);
-                  return;
-                }
-
-                setActiveTopMenu(activeTopMenu === "link" ? "" : "link");
-              }}
-              sx={{ paddingLeft: "12px", paddingRight: "12px" }}
-              isVideo={portal?.parentComponent === "video"}
-            >
-              {icons["link"]}
-            </StyledIconButton>
-          </Tooltip>
-        </StyledToolbar>
-        {/* </div> */}
+          </StyledToolbar>
+        </div>
       </StyledAppbar>
     </div>
   );

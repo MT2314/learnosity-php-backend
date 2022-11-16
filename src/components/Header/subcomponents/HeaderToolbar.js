@@ -268,7 +268,7 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
                 }}
               />
             )}
-            {selectedHeader === null ? "Large" : selectedHeader}
+            {state.size === null ? "Large" : state.size}
             <Popper
               open={openHeader}
               anchorEl={HeaderDropDown.current}
@@ -338,10 +338,24 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
               }}
               // className={"align-button ql-selected ql-active"}
               aria-label="alignment buttons dropdown"
-              value={visibleAlignIcon}
+              value={
+                state.alignment === "left-align"
+                  ? icons["align"]
+                  : state.alignment === "center-align"
+                  ? icons["center"]
+                  : state.alignment === "right-align"
+                  ? icons["right"]
+                  : icons["align"]
+              }
               data-alignid="alignment-dropdown"
             >
-              {visibleAlignIcon}
+              {state.alignment === "left-align"
+                ? icons["align"]
+                : state.alignment === "center-align"
+                ? icons["center"]
+                : state.alignment === "right-align"
+                ? icons["right"]
+                : icons["align"]}
             </StyledIconButton>
           </Tooltip>
           <AlignDropdownButton
