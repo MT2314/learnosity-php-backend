@@ -995,9 +995,9 @@ const ToolBar = ({
                     ? { width: "159px", flexGrow: "5" }
                     : { width: "78px" }
                 }
-                disabled={!videoAPI.videoId || state.videoTranscript == ""}
+                disabled={!videoAPI.videoId}
               >
-                {videoAPI.videoId && state.videoTranscript !== ""
+                {videoAPI.videoId
                   ? "Download Transcript"
                   : "Transcript"}
               </StyledVideoButton>
