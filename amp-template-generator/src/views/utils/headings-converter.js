@@ -10,7 +10,7 @@
  */
 
 // lesson level
-function parse(entity, level = 0) {
+function parse(entity, level = -1) {
   /**
    * Internal callback to recursively call self at the next level. Called by
    * forEach loops.
@@ -63,15 +63,40 @@ function parse(entity, level = 0) {
   // nothing to do here, because anything else doesn't have a fancy heading.
   // }
 
+  // const hasHeaderAbove = false;
+
+  // Each lesson starts off with an H1 tag, so we start an array of heading tags containing a 1:
+  const arrayOfHeadingTags = [1];
+
+  // From here we want to check each section and assign an h2 to any heading on the following "level"...
+
+  // Any heading one level down from each h2 heading should be generated as an h3 (for example, the headings in an accordion title or tab title)...
+
+  // After that, any heading possibly existing within a tabs or accordion component should theoretically be rendered as an h4 (note: no components can currently be added to either tabs or accordion that involve headings, but just thinking of future-proofing this function...)
+
+  // There likely won't be too many examples of more nested heading tags, but we can likely account for them here anyhow (again, future-proofing...)
+
+  // We also want to re-assign arrayOfHeadingTags to be its initial state of [1] for each new section found on the page, in order to have each section start appropriately with h2 tags...
+
+  const checkHeadingLevel = () => {
+    const previousHeading = arrayOfHeadingTags[arrayOfHeadingTags.length - 1];
+    console.log(previousHeading);
+    arrayOfHeadingTags.push(previousHeading + 1);
+    console.log(arrayOfHeadingTags);
+    return "h" + (previousHeading + 1);
+  };
+
   if (entity.__typename === "LessonStructureContainer") {
     __parseElement(entity.componentContainer);
-    console.log("entity.componentContainer", entity.componentContainer);
   } else if (entity.__typename === "ComponentContainer") {
     entity.sections.forEach(__parseElement);
-    console.log("entity.sections", entity.sections);
   } else if (entity.__typename === "Section") {
     entity.components.forEach(__parseElement);
-    console.log("entity.components", entity.components);
+  } else if (entity.componentName === "Header") {
+    // entity.props.headerState.headingLevel = checkHeadingLevel();
+    entity.props.headerState = _setHeading(entity.props.headerState, level); // 3 would be 'level'
+    // __parseElement(entity.props.headerState.headingLevel);
+    // entity.forEach(__parseElement);
   } else if (entity.componentName === "InfoBox") {
     entity.props.infoBoxState.infoBoxHeader = _setHeading(
       entity.props.infoBoxState.infoBoxHeader,

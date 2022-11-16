@@ -2,5 +2,7 @@
 {% assign headingAlignment = data.alignment %}
 {% assign heading = data.heading | strip %}
 
-<h1 class="header-component wrapper bottom-margin {{headingSize}} {{headingAlignment}}">{{heading}}</h1>
+<{{data.headingLevel}} class="header-component wrapper bottom-margin {{headingSize}} {{headingAlignment}}">{{heading}}</{{data.headingLevel}}>
 {%comment%}Please leave this as single line of code - No Prettier/ESLint on this line{%endcomment%}
+
+<script>console.log({{ data| json }});</script>
