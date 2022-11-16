@@ -63,14 +63,15 @@ function parse(entity, level = 0) {
   // nothing to do here, because anything else doesn't have a fancy heading.
   // }
 
-  if (entity.__typename === "CourseStructureContainer") {
-    entity.componentContainers.forEach(__parseElement);
-  } else if (entity.__typename === "LessonStructureContainer") {
+  if (entity.__typename === "LessonStructureContainer") {
     __parseElement(entity.componentContainer);
+    console.log("entity.componentContainer", entity.componentContainer);
   } else if (entity.__typename === "ComponentContainer") {
     entity.sections.forEach(__parseElement);
+    console.log("entity.sections", entity.sections);
   } else if (entity.__typename === "Section") {
     entity.components.forEach(__parseElement);
+    console.log("entity.components", entity.components);
   } else if (entity.componentName === "InfoBox") {
     entity.props.infoBoxState.infoBoxHeader = _setHeading(
       entity.props.infoBoxState.infoBoxHeader,
