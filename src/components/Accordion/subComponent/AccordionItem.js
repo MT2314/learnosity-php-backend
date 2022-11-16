@@ -48,7 +48,11 @@ const AccordionItem = ({
 
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
-    return ["Text", "Table", "Video", "Image"].indexOf(item.componentName) >= 0;
+    return (
+      ["Text", "Table", "Video", "Image", "Header"].indexOf(
+        item.componentName
+      ) >= 0
+    );
   };
 
   // ? Error Message
@@ -68,6 +72,7 @@ const AccordionItem = ({
         "Video",
         "Table",
         "InfoBox",
+        "Header",
         "QuoteBox",
         "IFrame",
         "Accordion",

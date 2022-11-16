@@ -115,7 +115,9 @@ const NestedComponentWrapper = ({
   //List of accepted into tab componenets
   const acceptListComp = (item) => {
     return (
-      ["Text", "Table", "Video", "Image"].indexOf(item?.componentName) >= 0
+      ["Text", "Table", "Video", "Image", "Header"].indexOf(
+        item?.componentName
+      ) >= 0
     );
   };
 
@@ -126,6 +128,7 @@ const NestedComponentWrapper = ({
       "Video",
       "Table",
       "InfoBox",
+      "Header",
       "QuoteBox",
       "IFrame",
       "Accordion",
