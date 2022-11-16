@@ -10,9 +10,11 @@ import HeaderToolbar from "./subcomponents/HeaderToolbar";
 import { useOnClickOutside } from "../../hooks/useOnClickOutside";
 
 export const defaultProps = {
-  size: null,
-  alignment: null,
-  heading: "",
+  headerState: {
+    size: "large",
+    alignment: "left-align",
+    heading: "",
+  },
 };
 
 // Styled components
@@ -36,7 +38,7 @@ const StyledHeaderInput = styled("input")(({ headerLevel, alignment }) => ({
       ? "right"
       : "left",
   fontSize:
-    headerLevel == "Medium" ? "36px" : headerLevel == "Small" ? "34px" : "42px",
+    headerLevel == "medium" ? "36px" : headerLevel == "small" ? "34px" : "42px",
 
   "&::placeholder": {
     color: "rgba(35, 35, 35, 1)",
@@ -71,8 +73,6 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
   const [state, dispatch] = useReducer(produce(headerConfig), headerState);
   // Toolbar Active State
   const [toolbar, setToolbar] = useState(false);
-  // Header Level State
-  const [headerLevel, setHeaderLevel] = useState();
 
   // Refrences
   const headerRef = useRef();
@@ -113,12 +113,7 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
       onFocus={(e) => setToolbar(true)}
       ref={headerRef}
     >
-      <HeaderToolbar
-        toolbar={toolbar}
-        state={state}
-        dispatch={dispatch}
-        setHeaderLevel={setHeaderLevel}
-      />
+      <HeaderToolbar toolbar={toolbar} state={state} dispatch={dispatch} />
 
       <StyledPaper elevation="0">
         <StyledHeaderInput

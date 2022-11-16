@@ -191,8 +191,6 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
   const [openHeader, setHeaderOpen] = useState(false);
   // ? Header Size Dropdown Selection State
   const [selectedHeader, setSelectedHeader] = useState(null);
-  // ? Alignment Dropdown Button Icon
-  const [visibleAlignIcon, setVisibleAlignIcon] = useState(icons["align"]);
   // ? Alignment Dropdown Open/Close State
   const [activeTopMenu, setActiveTopMenu] = useState(false);
   //  ? Alignment Dropdown Selection State
@@ -268,7 +266,7 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
                 }}
               />
             )}
-            {state.size === null ? "Large" : state.size}
+            {state.size.charAt(0).toUpperCase() + state.size.slice(1)}
             <Popper
               open={openHeader}
               anchorEl={HeaderDropDown.current}
@@ -295,7 +293,7 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
                               key={`${value} header`}
                               value={value}
                               selected={label === selectedHeader}
-                              onClick={() => handleSizeSelect(label)}
+                              onClick={() => handleSizeSelect(value)}
                               data-testid={`${value} header`}
                               aria-labelledby={label}
                             >
@@ -363,7 +361,6 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
             activeTopMenu={activeTopMenu}
             activeDropDownItem={activeDropDownItem}
             setActiveDropDownItem={setActiveDropDownItem}
-            setVisibleAlignIcon={setVisibleAlignIcon}
           />
         </StyledToolbar>
       </StyledAppbar>
@@ -377,7 +374,6 @@ const AlignDropdownButton = ({
   activeTopMenu,
   activeDropDownItem,
   setActiveDropDownItem,
-  setVisibleAlignIcon,
 }) => {
   return (
     <>
@@ -399,7 +395,6 @@ const AlignDropdownButton = ({
             aria-label="left align"
             onClick={() => {
               setActiveDropDownItem("left-align");
-              setVisibleAlignIcon(icons["align"]);
             }}
             value=""
           >
@@ -418,10 +413,8 @@ const AlignDropdownButton = ({
             onClick={() => {
               if (activeDropDownItem === "center-align") {
                 setActiveDropDownItem("left-align");
-                setVisibleAlignIcon(icons["align"]);
               } else {
                 setActiveDropDownItem("center-align");
-                setVisibleAlignIcon(icons["center"]);
               }
             }}
           >
@@ -440,10 +433,8 @@ const AlignDropdownButton = ({
             onClick={() => {
               if (activeDropDownItem === "right-align") {
                 setActiveDropDownItem("left-align");
-                setVisibleAlignIcon(icons["align"]);
               } else {
                 setActiveDropDownItem("right-align");
-                setVisibleAlignIcon(icons["right"]);
               }
             }}
           >
