@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { LayoutContext } from "../TableContext";
 
 // react-table imports
 import {
@@ -7,6 +8,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
+
+import TextareaAutosize from "@mui/base/TextareaAutosize";
 
 // react-dnd imports
 import { DndProvider, useDrag, useDrop } from "react-dnd";
@@ -40,34 +43,36 @@ const defaultColumns = [
 
 const defaultData = [
   {
-    column1: "row1col1",
-    column2: "row1col2",
-    column3: "row1col3",
-    column4: "row1col4",
+    column1: { value: "", type: "cell" },
+    column2: { value: "", type: "cell" },
+    column3: { value: "", type: "cell" },
+    column4: { value: "", type: "cell" },
   },
   {
-    column1: "row2col1",
-    column2: "row2col2",
-    column3: "row2col3",
-    column4: "row2col4",
+    column1: { value: "", type: "cell" },
+    column2: { value: "", type: "cell" },
+    column3: { value: "", type: "cell" },
+    column4: { value: "", type: "cell" },
   },
   {
-    column1: "row3col1",
-    column2: "row3col2",
-    column3: "row3col3",
-    column4: "row3col4",
+    column1: { value: "", type: "cell" },
+    column2: { value: "", type: "cell" },
+    column3: { value: "", type: "cell" },
+    column4: { value: "", type: "cell" },
   },
   {
-    column1: "row4col1",
-    column2: "row4col2",
-    column3: "row4col3",
-    column4: "row4col4",
+    column1: { value: "", type: "cell" },
+    column2: { value: "", type: "cell" },
+    column3: { value: "", type: "cell" },
+    column4: { value: "", type: "cell" },
   },
 ];
 
 // Styled components
 const StyledTable = styled("table")({
-  border: "0.0625rem solid lightgray",
+  // border: "0.0625rem solid lightgray",
+  borderCollapse: "collapse",
+  borderSpacing: "0",
   tableLayout: "fixed",
   width: "100%",
 });
@@ -77,17 +82,18 @@ const StyledTh = styled("th")({
 });
 
 const StyledTBody = styled("tbody")({
-  borderBottom: "0.0625rem solid lightgray",
+  // borderBottom: "0.0625rem solid lightgray",
 });
 
 const StyledTd = styled("td")({
-  borderRight: "1px solid lightgray",
-  padding: "0.125rem 0.25rem",
+  border: "1px solid black",
+  // padding: "0.125rem 0.25rem",
+  verticalAlign: "top",
   minHeight: "100px",
 
-  "&:last-child": {
-    borderRight: "none",
-  },
+  // "&:last-child": {
+  //   borderRight: "none",
+  // },
 });
 
 const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
@@ -100,6 +106,7 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
 };
 
 const DraggableColumnHeader = ({ header, table, len }) => {
+  const [state, dispatch] = useContext(LayoutContext);
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
   const { column } = header;
@@ -113,7 +120,19 @@ const DraggableColumnHeader = ({ header, table, len }) => {
         columnOrder
       );
       setColumnOrder(newColumnOrder);
-      console.log({ newColumnOrder });
+      // dispatch({
+      //   func: "UPDATE_COLUMN_ORDER",
+      //   draggedColumnIndex: draggedColumn.id,
+      //   targetColumnIndex: column.id,
+      // });
+      dispatch({
+        func: "UPDATE_COLUMN_DATA",
+        column: table.options.columns,
+        data: table.options.data,
+      });
+
+      console.log("log ", table);
+      console.log("log ", table.getAllFlatColumns());
     },
   });
 
@@ -160,12 +179,8 @@ const DraggableColumnHeader = ({ header, table, len }) => {
   );
 };
 
-const renderComponent = (comp) => {
-  const Component = comp.component;
-  return <Component />;
-};
-
 const DraggableRow = ({ row, reorderRow, len }) => {
+  const [state, dispatch] = useContext(LayoutContext);
   const [, dropRef] = useDrop({
     accept: "row",
     drop: (draggedRow) => reorderRow(draggedRow.index, row.index),
@@ -178,6 +193,30 @@ const DraggableRow = ({ row, reorderRow, len }) => {
     item: () => row,
     type: "row",
   });
+
+  const renderTextArea = (value, row, col) => {
+    const onTextChange = (e) => {
+      dispatch({
+        func: "UPDATE_CELL",
+        row,
+        col,
+        value: e.target.value,
+      });
+    };
+    return (
+      <TextareaAutosize
+        value={value || ""}
+        placeholder="Lorem ipsum dolor"
+        onChange={onTextChange}
+        style={{
+          width: "100%",
+          border: "none",
+          outline: "none",
+          resize: "none",
+        }}
+      />
+    );
+  };
 
   return (
     <tr ref={previewRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
@@ -232,10 +271,17 @@ const DraggableRow = ({ row, reorderRow, len }) => {
               </button>
             </span>
           )} */}
-          {typeof cell.row.original[cell.column.id] !== "string"
-            ? renderComponent(cell.row.original[cell.column.id])
+          {/* {console.log({
+            column: parseInt(cell.column.id.replace("column", "")),
+          })} */}
+          {console.log({ index })}
+          {cell.row.original[cell.column.id].type === "cell"
+            ? renderTextArea(
+                cell.row.original[cell.column.id].value,
+                cell.row.index,
+                parseInt(cell.column.id.replace("column", "")) - 1
+              )
             : flexRender(cell.column.columnDef.cell, cell.getContext())}
-          {/* <textarea>placeholder</textarea> */}
         </StyledTd>
       ))}
     </tr>
@@ -243,31 +289,55 @@ const DraggableRow = ({ row, reorderRow, len }) => {
 };
 
 const TableComponent = () => {
-  const [columns] = useState(() => [...defaultColumns]);
-  const [data, setData] = useState(() => [...defaultData]);
+  const [state, dispatch] = useContext(LayoutContext);
 
   const [columnOrder, setColumnOrder] = useState(
-    columns.map((column) => column.id)
+    state.headers.map((column) => column.id)
   );
 
   const reorderRow = (draggedRowIndex, targetRowIndex) => {
-    data.splice(targetRowIndex, 0, data.splice(draggedRowIndex, 1)[0]);
-    setData([...data]);
+    dispatch({
+      func: "UPDATE_ROW",
+      draggedRowIndex,
+      targetRowIndex,
+    });
   };
 
-  const table = useReactTable({
-    data,
-    columns,
-    state: {
-      columnOrder,
+  React.useEffect(() => {
+    console.log("data", state.data);
+  }, []);
+
+  const table = useReactTable(
+    {
+      data: state.data,
+      columns: state.headers,
+      state: {
+        columnOrder,
+      },
+      onColumnOrderChange: setColumnOrder,
+      getCoreRowModel: getCoreRowModel(),
+      getRowId: (row) => row.name,
+      debugTable: true,
+      debugHeaders: true,
+      debugColumns: true,
     },
-    onColumnOrderChange: setColumnOrder,
-    getCoreRowModel: getCoreRowModel(),
-    getRowId: (row) => row.name,
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: true,
-  });
+    [state]
+  );
+
+  React.useEffect(() => {
+    // const diff =
+    //   JSON.stringify(state.data) !== JSON.stringify(table.options.data);
+    // const diff2 =
+    //   JSON.stringify(state.headers) !== JSON.stringify(table.options.columns);
+    // if (diff || diff2) {
+    dispatch({
+      func: "UPDATE_COLUMN_DATA",
+      column: table.options.columns,
+      data: table.options.data,
+    });
+    // }
+    console.log("UPDATING");
+  }, [table]);
 
   return (
     <DndProvider backend={HTML5Backend}>

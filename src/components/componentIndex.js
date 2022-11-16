@@ -13,7 +13,9 @@ import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
 import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
 import TabsMain, { defaultProps as testTabDefaultProps } from "./Tabs/TabsMain";
-import TableMain from "./Table/TableMain";
+import TableMain, {
+  defaultProps as tableDefaultProps,
+} from "./Table/TableMain";
 //Accordion
 import AccordionMain, {
   defaultProps as testAccordionDefaultProps,
@@ -118,7 +120,7 @@ const componentIndex = {
   },
   Table: {
     Component: TableMain,
-    defaultProps: null,
+    defaultProps: tableDefaultProps,
     readableName: "Table",
     version: "0.0.1",
     category: categories.media,
