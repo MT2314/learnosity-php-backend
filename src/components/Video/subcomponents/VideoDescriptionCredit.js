@@ -33,6 +33,7 @@ const VideoDescriptionCredit = ({
   setVideoAreaFocused,
   t,
   videoTextSettings,
+  disconnect,
 }) => {
   const [state, dispatch] = useContext(VideoContext);
   // WYSIWYG Editor
@@ -42,6 +43,9 @@ const VideoDescriptionCredit = ({
 
   const [descriptionFocused, setDescriptionFocused] = useState(false);
   const [creditFocused, setCreditFocused] = useState(false);
+
+  const [creditText, setCreditText] = useState(null);
+  const [descriptionText, setDescriptionText] = useState(null);
 
   const descRef = useRef();
   const credRef = useRef();
@@ -59,30 +63,32 @@ const VideoDescriptionCredit = ({
       parentComponent: "video",
       placeholder: "Video Description",
       toolbarReference: toolbar,
-      shouldPortal: !videoAreaFocused && !creditFocused,
+      shouldPortal: !videoAreaFocused && !creditFocused && !disconnect,
       disabledButtons: [],
       setParentFocused: (result) => setVideoAreaFocused(result),
       setTextRef: (result) => setDescriptionRef(result),
+      setTextContainer: (result) => setDescriptionText(result),
     };
-  }, [toolbar, videoAreaFocused, creditFocused]);
+  }, [toolbar, videoAreaFocused, creditFocused, disconnect]);
 
   const portalCredit = useMemo(() => {
-    let creditPlaceholder = new Delta([
-      {
-        insert: `Credit\n`,
-        attributes: { italic: true },
-      },
-    ]);
+    // let creditPlaceholder = new Delta([
+    //   {
+    //     insert: `Credit\n`,
+    //     attributes: { italic: true },
+    //   },
+    // ]);
     return {
       parentComponent: "video",
       placeholder: "Credit",
       toolbarReference: toolbar,
-      shouldPortal: !videoAreaFocused && !descriptionFocused,
+      shouldPortal: !videoAreaFocused && !descriptionFocused && !disconnect,
       disabledButtons: ["bold", "align", "list"],
       setParentFocused: (result) => setVideoAreaFocused(result),
       setTextRef: (result) => setCreditRef(result),
+      setTextContainer: (result) => setCreditText(result),
     };
-  }, [toolbar, videoAreaFocused, descriptionFocused]);
+  }, [toolbar, videoAreaFocused, descriptionFocused, disconnect]);
 
   const handleDescriptionClick = useCallback((e) => {
     setDescriptionFocused(true);
@@ -107,6 +113,10 @@ const VideoDescriptionCredit = ({
           ref={descRef}
           onClick={handleDescriptionClick}
           onFocus={handleDescriptionClick}
+          onBlur={(e) => {
+            const relatedTarget = e.relatedTarget || document.activeElement;
+            if (descriptionText.contains(relatedTarget)) e.stopPropagation();
+          }}
           className={"videoDescription"}
         >
           {/* Description Text box */}
@@ -124,6 +134,10 @@ const VideoDescriptionCredit = ({
           style={{ position: "relative", minHeight: "20px", width: "622px" }}
           onClick={handleCreditClick}
           onFocus={handleCreditClick}
+          onBlur={(e) => {
+            const relatedTarget = e.relatedTarget || document.activeElement;
+            if (creditText.contains(relatedTarget)) e.stopPropagation();
+          }}
         >
           {/* Credit Text box */}
           <Text

@@ -13,6 +13,7 @@ import IFrame, { defaultProps as iFrameDefaultProps } from "./IFrame/IFrame";
 import IFrameConfig from "./IFrame/IFrameConfig";
 import Text, { defaultProps as quillDefaultProps } from "./Text/Text";
 import TabsMain, { defaultProps as testTabDefaultProps } from "./Tabs/TabsMain";
+import TableMain from "./Table/TableMain";
 //Accordion
 import AccordionMain, {
   defaultProps as testAccordionDefaultProps,
@@ -121,6 +122,14 @@ const componentIndex = {
     Component: VideoMain,
     defaultProps: videoDefaultProps,
     readableName: "Video",
+    version: "0.0.1",
+    category: categories.media,
+    componentIcon: defaultComponentIcon,
+  },
+  Table: {
+    Component: TableMain,
+    defaultProps: null,
+    readableName: "Table",
     version: "0.0.1",
     category: categories.media,
     componentIcon: defaultComponentIcon,

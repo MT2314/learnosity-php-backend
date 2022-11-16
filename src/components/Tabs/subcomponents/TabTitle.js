@@ -155,6 +155,7 @@ const TabTitle = ({ tabTitle, tabPlaceholder, tabIndex, showToolbar }) => {
           value={tabTitle.length > 0 ? tabTitle : ""}
           onBlur={handleTitleBlur}
           ref={inputRef}
+          onKeyDown={(e) => e.key === "Enter" && e.preventDefault()} // Prevent new line break
         />
       ) : (
         <StyledPlaceholder

@@ -101,6 +101,7 @@ const AccordionTitle = ({
           maxRows="2"
           onChange={handleTitleChange}
           value={accordionTitle || ""}
+          onKeyDown={(e) => e.key === "Enter" && e.preventDefault()} // Prevent new line break
         />
       ) : (
         <StyledAccorPlaceholder

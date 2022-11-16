@@ -59,10 +59,10 @@ const AccordionItem = ({
   const [showError, setShowError] = useState();
   const [showDropError, setShowDropError] = useState();
 
-  useOnClickOutside(paneRef, () => {
-    setShowError(false), true;
-    setShowDropError(false), true;
-  });
+  // useOnClickOutside(paneRef, () => {
+  //   setShowError(false), true;
+  //   setShowDropError(false), true;
+  // });
 
   const [{ isOver, getItem }, drop] = useDrop(
     () => ({
@@ -167,6 +167,8 @@ const AccordionItem = ({
               setActiveComp={setActiveComp}
               activeComp={activeComp}
               draggingOver={isOver}
+              setShowError={setShowError}
+              setShowDropError={setShowDropError}
             />
           );
         })

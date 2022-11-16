@@ -48,10 +48,10 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
   const [showError, setShowError] = useState();
   const [showDropError, setShowDropError] = useState();
 
-  useOnClickOutside(dropRef, () => {
-    setShowError(false), true;
-    setShowDropError(false), true;
-  });
+  // useOnClickOutside(dropRef, () => {
+  //   setShowError(false);
+  //   setShowDropError(false);
+  // });
 
   const [{ isOver, getItem }, drop] = useDrop(() => ({
     accept: [
@@ -163,6 +163,8 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
                   droppedIndex={droppedIndex}
                   setActiveComp={setActiveComp}
                   activeComp={activeComp}
+                  setShowError={setShowError}
+                  setShowDropError={setShowDropError}
                 />
               );
             })}
