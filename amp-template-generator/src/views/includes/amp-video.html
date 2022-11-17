@@ -59,10 +59,18 @@
         </div>
     {%- endif -%}
     <amp-script data-ampdevmode layout="responsive" script="api-script_{{ videoId }}" class="row">
-        <div class="hide transcript" [class]="hid_{{ videoId }} ? 'view transcript': 'hide transcript'">
+        <div class="hideview transcript" [class]="hid_{{ videoId }} ? 'view transcript': 'hideview transcript'">
         </div>
         <div class="description-container">
             <div class="description-flex-container">
+                <button
+                class="transcript-button"
+                aria-label="Download transcript"
+                on="tap:AMP.setState({ hid_{{ videoId }}: !hid_{{ videoId }}})"
+                [text]="hid_{{ videoId }} ? 'HIDE TRANSCRIPT': 'VIEW TRANSCRIPT'"
+                >
+                    VIEW TRANSCRIPT
+                </button>
                 <div class="description-text-less" id="{{videoId}}" [class]="buttonToggleVideo_{{videoId}} ? 'description-text-more' : 'description-text-less'">
                     {%- if videoDescription.length > 0 and displayDescription == true -%}
                         {% if videoDescription != " " %}
@@ -79,14 +87,6 @@
                         {% endif %}
                     {% endif %}
                 </div>
-                <button
-                    class="transcript-button"
-                    aria-label="Download transcript"
-                    on="tap:AMP.setState({ hid_{{ videoId }}: !hid_{{ videoId }}})"
-                    [text]="hid_{{ videoId }} ? 'HIDE TRANSCRIPT': 'VIEW TRANSCRIPT'"
-                >
-                    VIEW TRANSCRIPT
-                </button>
             </div>
             {% if videoDescription.length > 204 and displayDescription != false %}
                 <button
