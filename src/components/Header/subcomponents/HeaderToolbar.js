@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import "../styles/Toolbar.scss";
+import { HeaderContext } from "../HeaderContext";
 
 // MUI
 import {
@@ -30,13 +31,8 @@ const headerSizeDropdownOptions = [
   { value: "small", label: "Small" },
 ];
 
-const HeaderToolbar = ({
-  toolbar,
-  dispatch,
-  state,
-  activeTopMenu,
-  setActiveTopMenu,
-}) => {
+const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
+  const [state, dispatch] = useContext(HeaderContext);
   // ? Header Size Dropdown Open/Close State
   const [openHeader, setHeaderOpen] = useState(false);
   // ? Header Size Dropdown Selection State

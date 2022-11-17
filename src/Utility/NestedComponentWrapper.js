@@ -91,7 +91,21 @@ const NestedComponentWrapper = ({
   setShowDropError,
 }) => {
   const dropRef = useRef(null);
-
+  console.log(
+    componentType,
+    component,
+    compIndex,
+    componentProps,
+    tabIndex,
+    numOfComponent,
+    droppedIndex,
+    setDroppedIndex,
+    draggingOver,
+    setActiveComp,
+    activeComp,
+    setShowError,
+    setShowDropError
+  );
   const [, dispatch] = useContext(
     componentType === "accordion" ? AccordionContext : TabContext
   );
