@@ -65,9 +65,6 @@ function parse(entity, level = -1) {
 
   // const hasHeaderAbove = false;
 
-  // Each lesson starts off with an H1 tag, so we start an array of heading tags containing a 1:
-  const arrayOfHeadingTags = [1];
-
   // From here we want to check each section and assign an h2 to any heading on the following "level"...
 
   // Any heading one level down from each h2 heading should be generated as an h3 (for example, the headings in an accordion title or tab title)...
@@ -78,13 +75,18 @@ function parse(entity, level = -1) {
 
   // We also want to re-assign arrayOfHeadingTags to be its initial state of [1] for each new section found on the page, in order to have each section start appropriately with h2 tags...
 
-  const checkHeadingLevel = () => {
-    const previousHeading = arrayOfHeadingTags[arrayOfHeadingTags.length - 1];
-    console.log(previousHeading);
-    arrayOfHeadingTags.push(previousHeading + 1);
-    console.log(arrayOfHeadingTags);
-    return "h" + (previousHeading + 1);
-  };
+  // const checkHeadingLevel = () => {
+  //   const previousHeading = arrayOfHeadingTags[arrayOfHeadingTags.length - 1];
+  //   console.log(previousHeading);
+  //   arrayOfHeadingTags.push(previousHeading + 1);
+  //   console.log(arrayOfHeadingTags);
+  //   return "h" + (previousHeading + 1);
+  // };
+
+  // // Each section starts off with an H1 tag, so we start an array of heading tags containing a 1:
+  // const arrayOfHeadingTags = [1];
+
+  // if this has a heading at this level
 
   if (entity.__typename === "LessonStructureContainer") {
     __parseElement(entity.componentContainer);
@@ -93,14 +95,16 @@ function parse(entity, level = -1) {
   } else if (entity.__typename === "Section") {
     entity.components.forEach(__parseElement);
   } else if (entity.componentName === "Header") {
-    // entity.props.headerState.headingLevel = checkHeadingLevel();
-    entity.props.headerState = _setHeading(entity.props.headerState, level); // 3 would be 'level'
-    // __parseElement(entity.props.headerState.headingLevel);
-    // entity.forEach(__parseElement);
+    entity.props.headerState = _setHeading(entity.props.headerState, level);
   } else if (entity.componentName === "InfoBox") {
-    entity.props.infoBoxState.infoBoxHeader = _setHeading(
-      entity.props.infoBoxState.infoBoxHeader,
-      level
+    // entity.props.infoBoxState.infoBoxHeader = _setHeading(
+    //   entity.props.infoBoxState.infoBoxHeader,
+    //   level + 1 // temporary!
+    // );
+    entity.props.infoBoxState = _setHeading(entity.props.infoBoxState, level);
+  } else if (entity.componentName === "Tabs") {
+    entity.props.layoutState.forEach(
+      _setHeading(entity.props.layoutState, level)
     );
   }
 

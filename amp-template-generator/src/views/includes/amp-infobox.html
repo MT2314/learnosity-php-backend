@@ -22,7 +22,8 @@
       </div>
       <div class="section-content">
         <p class="label-without-icon">{{ data.infoBoxLabel }}</p>
-        {%- include amp-heading.html data:data.infoBoxHeader headingClass:'h3 info-header' -%}
+        {%- include amp-heading.html data:data.infoBoxHeader headingClass:'info-header' -%}
+        <!-- <{{data.headingLevel}} class="info-header">{{data.infoBoxHeader.heading}}</{{data.headingLevel}}> -->
         {% include amp-text.html data:data %}
       </div>
     </div>

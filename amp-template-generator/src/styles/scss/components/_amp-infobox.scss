@@ -19,6 +19,12 @@
             }
             @include remove-last-child-btm; // This clears the bottom-margin that is added to text/other components
         }
+
+        .info-header {
+            font-size: 1.75rem;
+            letter-spacing: 0.01em;
+            padding: 0 1.5rem;
+        }
     }
 
     .co-cell {

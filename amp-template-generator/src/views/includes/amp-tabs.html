@@ -7,7 +7,7 @@
 
     {%- for tab in data.props.layoutState -%}
 
-        <header id="{{tabListId}}_tab{{forloop.index}}"
+        <{{data.headingLevel}} id="{{tabListId}}_tab{{forloop.index}}"
             role="tab"
             aria-controls="{{tabListId}}_tabpanel{{forloop.index}}"
             class="p1"
@@ -16,9 +16,9 @@
             selected
         {%- endif -%}
         >
-            <p>
+            <button>
                 {{tab.title}}
-            </p>
+            </button>
         {% if tab.title.length > 84 and data.props.layoutState.length == 2 -%}
             <span class="hoverTabText hoverTabText2" aria-hidden="true">
                 {{tab.title}}
@@ -33,7 +33,7 @@
             </span>
         {%- endif -%}
         
-        </header>
+        </{{data.headingLevel}}>
 
 
         <div id="{{tabListId}}_tabpanel{{forloop.index}}"
