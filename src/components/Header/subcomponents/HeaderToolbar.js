@@ -153,6 +153,24 @@ const HeaderToolbar = ({
                                     : label === "Medium"
                                     ? "1rem"
                                     : "0.875rem",
+                                "--fontWeight":
+                                  label === "Large"
+                                    ? "300"
+                                    : label === "Medium"
+                                    ? "300"
+                                    : "500",
+                                "--lineHeight":
+                                  label === "Large"
+                                    ? "116.7%"
+                                    : label === "Medium"
+                                    ? "120%"
+                                    : "116.7%",
+                                "--letterSpacing":
+                                  label === "Large"
+                                    ? "-1.5px"
+                                    : label === "Medium"
+                                    ? "-0.5px"
+                                    : "normal",
                               }}
                             >
                               {label}

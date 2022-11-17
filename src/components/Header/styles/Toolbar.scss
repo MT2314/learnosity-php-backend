@@ -124,6 +124,9 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   padding-top: 2px !important;
   padding-bottom: 2px !important;
   font-size: var(--fontSize);
+  font-weight: var(--fontWeight);
+  line-height: var(--lineHeight);
+  letter-spacing: var(--letterSpacing);
   background-color: transparent;
   box-shadow: none;
   &:hover,
