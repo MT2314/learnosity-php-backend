@@ -12,7 +12,6 @@ export const defaultProps = {
     videoDescription: null,
     videoCredit: null,
     videoId: null,
-    videoTranscript: null,
     videoTextSettings: {
       description: true,
       credit: true,
