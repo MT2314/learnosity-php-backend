@@ -58,7 +58,7 @@
 
         </div>
     {%- endif -%}
-    <amp-script data-ampdevmode layout="responsive" script="api-script_{{ videoId }}" class="row">
+    <amp-script data-ampdevmode layout="fill" script="api-script_{{ videoId }}" class="transcript-wrapper">
         <div class="hideview transcript" [class]="hid_{{ videoId }} ? 'view transcript': 'hideview transcript'">
         </div>
         <div class="description-container">
@@ -141,14 +141,14 @@
         const headers = { "BCOV-Policy": 'BCpkADawqM1XplIzTT5iB8WK5oNDPzQsM2CDxSACIVrgtdNB-PRZjMuDeSgYSpdK1dkvswBpDnEoxoAtwa1u9AYhNqX8LemUJQGTksH9e5M5QlElWJy6ygFINKA', };
       const result = await fetch("{{ data.videoURL }}", { headers });
       const data = await result.json();
-      const chosenTrack = data.text_tracks[1].src;
-
+      const chosenTrack = data.text_tracks[1].sources[0].src;
       getFile(chosenTrack, function (response) {
         if (response) {
             var responseEdited = response.replace( "X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0", "");
             responseEdited = responseEdited.replace("WEBVTT", "");
             responseEdited = responseEdited.replace("00:00.000 --> 01:00:00.000", "");
             responseEdited = responseEdited.replaceAll("&quot;", '"');
+            responseEdited = responseEdited.replaceAll("&apos;", "'");
             const splitted = responseEdited.split("<br \/>");
             const divBody = document.querySelector('div');
             for (let i = 0; i < splitted.length; i++) {
