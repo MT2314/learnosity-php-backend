@@ -94,13 +94,14 @@ function parse(entity, level = -1) {
     entity.sections.forEach(__parseElement);
   } else if (entity.__typename === "Section") {
     entity.components.forEach(__parseElement);
+    console.log(entity.components);
   } else if (entity.componentName === "Header") {
     entity.props.headerState = _setHeading(entity.props.headerState, level);
   } else if (entity.componentName === "InfoBox") {
     entity.props.infoBoxState = _setHeading(entity.props.infoBoxState, level);
   } else if (
     entity.componentName === "Accordion" ||
-    entity.componentName === "Tabs"
+    entity.componentName === "Tab"
   ) {
     entity.props.layoutState.forEach((tab) => _setHeading(tab, level));
   }
