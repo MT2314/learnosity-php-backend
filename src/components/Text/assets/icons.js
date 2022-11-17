@@ -136,41 +136,35 @@ icons["align"] = (
     width="16"
     height="16"
     viewBox="0 0 16 16"
-    fill="#000"
+    fill="none"
   >
-    <path
-      d="M10.6667 10.6667H0V12.4444H10.6667V10.6667ZM10.6667 3.55556H0V5.33333H10.6667V3.55556ZM0 8.88889H16V7.11111H0V8.88889ZM0 16H16V14.2222H0V16ZM0 0V1.77778H16V0H0Z"
-      className="svg-fill"
-    />
+    <path d="M10.6667 10.6667H0V12.4444H10.6667V10.6667ZM10.6667 3.55556H0V5.33333H10.6667V3.55556ZM0 8.88889H16V7.11111H0V8.88889ZM0 16H16V14.2222H0V16ZM0 0V1.77778H16V0H0Z" />
   </svg>
 );
 
 icons["center"] = (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
     width="16"
     height="16"
     viewBox="0 0 16 16"
-    fill="#000"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
   >
-    <path
-      d="M3.55556 10.6667V12.4444H12.4444V10.6667H3.55556ZM0 16H16V14.2222H0V16ZM0 8.88889H16V7.11111H0V8.88889ZM3.55556 3.55556V5.33333H12.4444V3.55556H3.55556ZM0 0V1.77778H16V0H0Z"
-      className="svg-fill"
-    />
+    <path d="M3.55556 10.6667V12.4444H12.4444V10.6667H3.55556ZM0 16H16V14.2222H0V16ZM0 8.88889H16V7.11111H0V8.88889ZM3.55556 3.55556V5.33333H12.4444V3.55556H3.55556ZM0 0V1.77778H16V0H0Z" />
   </svg>
 );
 
 icons["right"] = (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="19"
+    width="16"
     height="16"
-    viewBox="0 0 19 16"
-    fill="#000"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
       d="M0 16H16V14.2222H0V16ZM5.33333 12.4444H16V10.6667H5.33333V12.4444ZM0 8.88889H16V7.11111H0V8.88889ZM5.33333 5.33333H16V3.55556H5.33333V5.33333ZM0 0V1.77778H16V0H0Z"
-      className="svg-fill"
+      fill="#232323"
     />
   </svg>
 );
@@ -283,5 +277,19 @@ icons["pencil"] = (
     />
   </svg>
 );
+
+export function Chevron() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="10"
+      height="6"
+      fill="none"
+      viewBox="0 0 10 6"
+    >
+      <path d="M5 .221l-4.5 4.5L1.558 5.78 5 2.344l3.443 3.435L9.5 4.72 5 .221z"></path>
+    </svg>
+  );
+}
 
 export default icons;

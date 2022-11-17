@@ -18,164 +18,8 @@ import {
   MenuList,
 } from "@mui/material";
 
-// Expand Icon for Header Size Dropdown
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-// styles/emotion
-import styled from "@emotion/styled";
-
 // assets
-import icons from "../assets/icons";
-
-// ? Toolbar Container
-const StyledToolbarContainer = styled("div")(({ toolbar }) => ({
-  display: toolbar ? "block !important" : "none",
-  position: "fixed !important",
-  top: "100px !important",
-  left: "50%",
-  transform: "translateX(-50%) !important",
-  zIndex: 1000,
-  gap: "10px",
-  "& .MuiPaper-root": {
-    backgroundColor: "transparent",
-  },
-  "& .StyledCard .MuiPaper-root": {
-    backgroundColor: "#fff",
-  },
-}));
-// ? Appbar
-const StyledAppbar = styled(AppBar)({
-  display: "flex",
-  flexDirection: "row",
-  minHeight: "40px !important",
-  gap: "10px",
-  boxShadow: "none !important",
-  "& .MuiPaper-root": {
-    backgroundColor: "#fff",
-  },
-});
-// ? Toolbar
-const StyledToolbar = styled(Toolbar)(({}) => ({
-  display: "flex",
-  justifyContent: "space-evenly",
-  height: "40px !important",
-  minHeight: "40px !important",
-  width: "8.4375rem",
-  margin: "10px, 8px",
-  paddingRight: "0px !important",
-  paddingLeft: "0px !important",
-  backgroundColor: "#FFF",
-  boxShadow: "0px 0px 10px 0 rgba(0, 0, 0, 0.1)",
-  borderLeft: "0.25rem solid rgba(21, 101, 192, 1)",
-
-  borderRadius: "4px",
-  "& .MuiToolbar-gutters": {
-    paddingLeft: 0,
-    paddingRight: 0,
-  },
-  "& .MuiPaper-root ": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
-    backgroundColor: "#FFF !important",
-  },
-}));
-
-// ? Header Size Dropdown Menu
-const StyledMenu = styled(MenuList)({
-  background: "#FFFFFF",
-  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-  borderRadius: "4px",
-  marginLeft: "0px",
-  marginTop: "2px",
-});
-
-// ? Header Size Dropdown Menu Item
-const StyledHeaderSelectButton = styled(Button)(({}) => ({
-  // display: "inline-grid",
-  // gridAutoFlow: "column",
-  // width: "77px",
-  // display: "flex",
-  flexDirection: "row",
-  alignContent: "space-around",
-  backgroundColor: "transparent",
-  boxShadow: "none !important ",
-  color: "#232323",
-  fontFamily: `"Inter", sans-serif`,
-  textAlign: "center",
-  fontSize: "1rem",
-  fontWeight: "400",
-  lineHeight: "1.5rem",
-  letterSpacing: "0.009375rem",
-  whiteSpace: "nowrap",
-  textTransform: "none",
-  // marginLeft: "10px!important",
-  // marginRight: "10px!important",
-  padding: "0px",
-  "&:hover": {
-    color: "#1565C0",
-    backgroundColor: "transparent",
-  },
-  "& .MuiSvgIcon-root": {
-    marginRight: "0px",
-  },
-  "& svg": {
-    marginLeft: "10px",
-    padding: "4px",
-  },
-}));
-
-// ? Header Size Dropdown Menu Item
-const StyledMenuItem = styled(MenuItem)({
-  backgroundColor: "transparent",
-  width: "109px",
-  padding: "6px 16px",
-  height: "36px",
-  "& .MuiButtonBase-root ": {
-    backgroundColor: "transparent",
-  },
-  "&:hover": {
-    backgroundColor: " rgba(0, 0, 0, 0.04);!important",
-  },
-  "&:active": {
-    backgroundColor: " rgba(0, 0, 0, 0.04);!important",
-  },
-});
-
-// ? Alignment Dropdown Button
-const StyledIconButton = styled(IconButton)(({ disabled }) => ({
-  display: "flex !important",
-  height: "30px",
-  width: "30px",
-  padding: "0px",
-  margin: "0px",
-  color: "#232323",
-  backgroundColor: "none",
-  borderRadius: "4px",
-  marginRight: "7px",
-  // ...(open && {
-  //   cursor: "pointer",
-  //   backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-  // }),
-  "& svg": {
-    fill: "#000",
-    ...(disabled && { opacity: 0.3 }),
-  },
-  "&:hover": {
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    "& svg": {
-      fill: "rgba(21, 101, 192, 1)",
-    },
-  },
-  "&:active": {
-    cursor: "pointer",
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    "& svg": {
-      color: "rgba(21, 101, 192, 1)",
-    },
-  },
-  "&:focus-visible": {
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-  },
-}));
+import icons, { Chevron } from "../../Text/assets/icons";
 
 // ? Alignment Dropdown Button
 
@@ -186,13 +30,18 @@ const headerSizeDropdownOptions = [
   { value: "small", label: "Small" },
 ];
 
-const HeaderToolbar = ({ toolbar, dispatch, state }) => {
+const HeaderToolbar = ({
+  toolbar,
+  dispatch,
+  state,
+  activeTopMenu,
+  setActiveTopMenu,
+}) => {
   // ? Header Size Dropdown Open/Close State
   const [openHeader, setHeaderOpen] = useState(false);
   // ? Header Size Dropdown Selection State
   const [selectedHeader, setSelectedHeader] = useState(null);
-  // ? Alignment Dropdown Open/Close State
-  const [activeTopMenu, setActiveTopMenu] = useState(false);
+
   //  ? Alignment Dropdown Selection State
   const [activeDropDownItem, setActiveDropDownItem] = useState();
 
@@ -224,20 +73,28 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
       alignment: currentAlignment,
     });
   };
-
   useEffect(() => {
     handleAlignmentChange(activeDropDownItem);
   }, [activeDropDownItem]);
 
   return (
-    <StyledToolbarContainer
-      toolbar={toolbar}
+    <div
       onClick={(e) => e.stopPropagation()}
       onFocus={(e) => e.stopPropagation()}
+      className="ToolbarContainer"
+      style={{
+        "--active": toolbar ? "block" : "none",
+      }}
     >
-      <StyledAppbar position="static">
-        <StyledToolbar position="static">
-          <StyledHeaderSelectButton
+      <AppBar position="static" className="StyledAppbar">
+        <Toolbar
+          position="static"
+          className="StyledToolbar"
+          style={{
+            "--width": "8.4375rem",
+          }}
+        >
+          <Button
             ref={HeaderDropDown}
             id="headerToolBar"
             aria-controls={openHeader ? "Header Select" : undefined}
@@ -249,23 +106,14 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
               setHeaderOpen(!openHeader);
               setActiveTopMenu(false);
             }}
+            className="SelectButton"
+            style={{
+              "--active": openHeader ? "rgba(21, 101, 192, 1)" : "#000",
+              "--width": "87px",
+              "--svg": openHeader ? " " : "rotate(180deg)",
+            }}
           >
-            {openHeader ? (
-              <ExpandMoreIcon
-                sx={{
-                  marginRight: "9.5px",
-                  transform: "rotate(180deg)",
-                  pointerEvents: "none",
-                }}
-              />
-            ) : (
-              <ExpandMoreIcon
-                sx={{
-                  marginRight: "9.5px",
-                  pointerEvents: "none",
-                }}
-              />
-            )}
+            <Chevron />
             {state.size.charAt(0).toUpperCase() + state.size.slice(1)}
             <Popper
               open={openHeader}
@@ -276,52 +124,57 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
             >
               {({ TransitionProps }) => (
                 <Grow {...TransitionProps}>
-                  <Paper>
+                  <Paper elevation={0} className="StyledSelectPaper">
                     <ClickAwayListener
                       onClickAway={() => setHeaderOpen(!openHeader)}
                     >
-                      <StyledMenu
+                      <MenuList
                         autoFocusItem={openHeader}
                         data-testid="header-select-dropdown"
                         aria-labelledby="Header Drop Down"
+                        className="StyledMenu"
                       >
                         {headerSizeDropdownOptions.map((size) => {
                           let value = size.value;
                           let label = size.label;
                           return (
-                            <StyledMenuItem
+                            <MenuItem
                               key={`${value} header`}
                               value={value}
                               selected={label === selectedHeader}
                               onClick={() => handleSizeSelect(value)}
                               data-testid={`${value} header`}
                               aria-labelledby={label}
+                              className="StyledMenuItem"
+                              style={{
+                                "--fontSize":
+                                  label === "Large"
+                                    ? "1.375rem"
+                                    : label === "Medium"
+                                    ? "1rem"
+                                    : "0.875rem",
+                              }}
                             >
                               {label}
-                            </StyledMenuItem>
+                            </MenuItem>
                           );
                         })}
-                      </StyledMenu>
+                      </MenuList>
                     </ClickAwayListener>
                   </Paper>
                 </Grow>
               )}
             </Popper>
-          </StyledHeaderSelectButton>
+          </Button>
 
-          <Divider
-            sx={{ marginLeft: "7px", marginRight: "7px" }}
-            orientation="vertical"
-            variant="middle"
-            flexItem
-          />
+          <Divider orientation="vertical" variant="middle" flexItem />
           <Tooltip
             aria-label="alignment"
             title="alignment"
             placement="top"
             arrow
           >
-            <StyledIconButton
+            <IconButton
               ref={alignRef}
               disableRipple
               color="inherit"
@@ -332,9 +185,14 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
                   setActiveTopMenu(true);
                 }
                 setHeaderOpen(false);
-                // setActiveDropDownItem(false);
               }}
-              // className={"align-button ql-selected ql-active"}
+              className={"StyledIconButton"}
+              style={{
+                "--active": activeTopMenu ? "rgba(21, 101, 192, 1)" : "#000",
+                "--background": activeTopMenu
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+              }}
               aria-label="alignment buttons dropdown"
               value={
                 state.alignment === "left-align"
@@ -354,7 +212,7 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
                 : state.alignment === "right-align"
                 ? icons["right"]
                 : icons["align"]}
-            </StyledIconButton>
+            </IconButton>
           </Tooltip>
           <AlignDropdownButton
             aria-label="alignment buttons options"
@@ -362,9 +220,9 @@ const HeaderToolbar = ({ toolbar, dispatch, state }) => {
             activeDropDownItem={activeDropDownItem}
             setActiveDropDownItem={setActiveDropDownItem}
           />
-        </StyledToolbar>
-      </StyledAppbar>
-    </StyledToolbarContainer>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 
@@ -374,14 +232,16 @@ const AlignDropdownButton = ({
   activeTopMenu,
   activeDropDownItem,
   setActiveDropDownItem,
+  setVisibleAlignIcon,
 }) => {
   return (
     <>
       <Card
-        className="StyledCard"
+        elevation={0}
+        className="Styled-Card"
         style={{
           "--card-display": activeTopMenu ? "flex" : "none",
-          "--left": "79.5px",
+          "--left": "91.5px",
           "--width": "112px",
         }}
       >
@@ -391,15 +251,28 @@ const AlignDropdownButton = ({
           placement="top"
           arrow
         >
-          <button
+          <IconButton
+            disableRipple
+            value="left-align"
+            color="inherit"
             aria-label="left align"
             onClick={() => {
               setActiveDropDownItem("left-align");
             }}
-            value=""
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeDropDownItem == "left-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeDropDownItem == "left-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
           >
             {icons["align"]}
-          </button>
+          </IconButton>
         </Tooltip>
         <Tooltip
           aria-label="centre text"
@@ -407,9 +280,10 @@ const AlignDropdownButton = ({
           placement="top"
           arrow
         >
-          <button
+          <IconButton
+            disableRipple
             aria-label="align center"
-            value="center"
+            value="center-align"
             onClick={() => {
               if (activeDropDownItem === "center-align") {
                 setActiveDropDownItem("left-align");
@@ -417,9 +291,20 @@ const AlignDropdownButton = ({
                 setActiveDropDownItem("center-align");
               }
             }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeDropDownItem == "center-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeDropDownItem == "center-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
           >
             {icons["center"]}
-          </button>
+          </IconButton>
         </Tooltip>
         <Tooltip
           aria-label="align right"
@@ -427,9 +312,10 @@ const AlignDropdownButton = ({
           placement="top"
           arrow
         >
-          <button
+          <IconButton
+            disableRipple
             aria-label="right align"
-            value="right"
+            value="right-align"
             onClick={() => {
               if (activeDropDownItem === "right-align") {
                 setActiveDropDownItem("left-align");
@@ -437,9 +323,20 @@ const AlignDropdownButton = ({
                 setActiveDropDownItem("right-align");
               }
             }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeDropDownItem == "right-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeDropDownItem == "right-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
           >
             {icons["right"]}
-          </button>
+          </IconButton>
         </Tooltip>
       </Card>
     </>
