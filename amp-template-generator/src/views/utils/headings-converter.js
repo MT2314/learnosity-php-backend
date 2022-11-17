@@ -103,7 +103,7 @@ function parse(entity, level = -1) {
     entity.componentName === "Accordion" ||
     entity.componentName === "Tab"
   ) {
-    entity.props.layoutState.forEach((tab) => _setHeading(tab, level));
+    entity.props.layoutState.forEach((tab) => __parseElement(tab));
   }
 
   // set this entity's heading level

@@ -49,14 +49,15 @@
                 on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
 
                 {%comment%}Pane Heading:{%endcomment%}
-                <{{tab.headingLevel}}
+                <div
                     id="{{ accordionId }}_heading{{ forloop.index0 }}"
                     class="accordion-pane p2"
                     role="button"
                     aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ tab.title }} {{ pane.heading.processed }}"
                 >
                     <span class="accordion-title-container">
-                        <span class="accordion-title">{{ tab.title }}</span>{%comment%}Please leave this as single line of code - No Prettier/ESLint on this line{%endcomment%}
+                        <!-- <span class="accordion-title">{{ tab.title }}</span>{%comment%}Please leave this as single line of code - No Prettier/ESLint on this line{%endcomment%} -->
+                        {%- include amp-heading.html data:tab.title headingClass:"accordion-title" headingSize:"" headingAlignment:"" -%}
                         <i class="chevron-down" [class]="{{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'hidden-icon' : 'chevron-down'" aria-hidden="true">
                             <svg xmlns="http://www.w3.org/2000/svg" width="19" height="11" viewBox="0 0 19 11" fill="none">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -72,7 +73,7 @@
                             </svg>
                         </i>
                     </span>
-                </{{tab.headingLevel}}>
+                </div>
     
                 {%comment%}Pane Body:{%endcomment%}
                 <div class="section-content border-left border-right px3 pt3" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">
