@@ -21,7 +21,7 @@ export const defaultProps = {
 
 const StyledPaper = styled(Paper)({
   position: "relative",
-  width: "968px",
+  // width: "968px",
   padding: "1.25rem 6.5rem",
   background: "#FFF",
 });
