@@ -20,7 +20,8 @@ export const defaultProps = {
 // Styled components
 
 const StyledPaper = styled(Paper)({
-  width: "968px",
+  position: "relative",
+  // width: "968px",
   padding: "1.25rem 6.5rem",
   background: "#FFF",
 });
@@ -51,10 +52,17 @@ const StyledHeaderInput = styled(TextareaAutosize)(
         : headerLevel == "small"
         ? "34px"
         : "42px",
+    fontWeight: headerLevel == "small" ? "500" : "300",
+    lineHeight:
+      headerLevel == "small" ? "39.68px" : "medium" ? "43.2px" : "49.01px",
+    letterSpacing:
+      headerLevel == "medium" ? "-0.5 px" : "large" ? "-1.5 px" : "normal",
     "&::placeholder": {
       color: "rgba(35, 35, 35, 1)",
     },
-
+    "&:focus::placeholder": {
+      color: "rgba(0, 0, 0, 0.12)",
+    },
     "&:focus-visible": {
       outline: "none",
     },

@@ -48,10 +48,10 @@ const Tab = ({ tab, tabIndex, removeError, setRemoveError }) => {
   const [showError, setShowError] = useState();
   const [showDropError, setShowDropError] = useState();
 
-  // useOnClickOutside(dropRef, () => {
-  //   setShowError(false);
-  //   setShowDropError(false);
-  // });
+  useOnClickOutside(dropRef, () => {
+    setShowError(false);
+    setShowDropError(false);
+  });
 
   const [{ isOver, getItem }, drop] = useDrop(() => ({
     accept: [
