@@ -97,15 +97,12 @@ function parse(entity, level = -1) {
   } else if (entity.componentName === "Header") {
     entity.props.headerState = _setHeading(entity.props.headerState, level);
   } else if (entity.componentName === "InfoBox") {
-    // entity.props.infoBoxState.infoBoxHeader = _setHeading(
-    //   entity.props.infoBoxState.infoBoxHeader,
-    //   level + 1 // temporary!
-    // );
     entity.props.infoBoxState = _setHeading(entity.props.infoBoxState, level);
-  } else if (entity.componentName === "Tabs") {
-    entity.props.layoutState.forEach(
-      _setHeading(entity.props.layoutState, level)
-    );
+  } else if (
+    entity.componentName === "Accordion" ||
+    entity.componentName === "Tabs"
+  ) {
+    entity.props.layoutState.forEach((tab) => _setHeading(tab, level));
   }
 
   // set this entity's heading level
