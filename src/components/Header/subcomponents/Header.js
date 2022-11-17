@@ -90,8 +90,6 @@ const Header = () => {
     });
   };
 
-  console.log(state);
-
   return (
     <div
       onClick={(e) => setToolbar(true)}
@@ -108,7 +106,9 @@ const Header = () => {
 
       <StyledPaper elevation="0">
         <StyledHeaderInput
+          data-id="headerInput"
           placeholder="Type your header here..."
+          aria-label="Header input field"
           disableUnderline="true"
           onChange={handleHeadingChange}
           onKeyDown={(e) => e.key === "Enter" && e.preventDefault()} // Prevent new line break

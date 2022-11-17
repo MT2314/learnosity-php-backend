@@ -92,7 +92,7 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
         >
           <Button
             ref={HeaderDropDown}
-            id="headerToolBar"
+            data-id="headerToolBar"
             aria-controls={openHeader ? "Header Select" : undefined}
             aria-expanded={openHeader ? "true" : undefined}
             variant="contained"
@@ -210,12 +210,12 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
               aria-label="alignment buttons dropdown"
               value={
                 state.alignment === "left-align"
-                  ? icons["align"]
+                  ? "left-align"
                   : state.alignment === "center-align"
-                  ? icons["center"]
+                  ? "center-align"
                   : state.alignment === "right-align"
-                  ? icons["right"]
-                  : icons["align"]
+                  ? "right-align"
+                  : null
               }
               data-alignid="alignment-dropdown"
             >

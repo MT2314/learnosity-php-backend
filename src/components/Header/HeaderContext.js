@@ -8,7 +8,7 @@ export const HeaderContext = createContext();
 export const headerConfig = (draft, action) => {
   switch (action.func) {
     case "UPDATE_STATE":
-      return draft.action;
+      return action.data;
     case "CHANGE_SIZE":
       draft.size = action.size;
       return draft;
@@ -26,8 +26,10 @@ export const headerConfig = (draft, action) => {
 //video provider wraps the tab component to access reducer
 export const HeaderProvider = ({ children, setProp, headerState }) => {
   const [state, dispatch] = useReducer(produce(headerConfig), headerState);
+
   const diff = JSON.stringify(state) !== JSON.stringify(headerState);
   const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
     dispatch({ func: "UPDATE_STATE", data: headerState });
     setMounted(true);

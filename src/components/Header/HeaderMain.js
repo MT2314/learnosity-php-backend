@@ -11,17 +11,10 @@ export const defaultProps = {
   },
 };
 
-const HeaderMain = ({
-  headerState = defaultProps,
-  setProp = () => {},
-  //   setActiveComponent = () => {},
-}) => {
+const HeaderMain = ({ headerState = defaultProps, setProp = () => {} }) => {
   return (
     <HeaderProvider headerState={headerState} setProp={setProp}>
-      <Header
-      //   setTabActive={setTabActive}
-      //   setActiveComponent={setActiveComponent}
-      />
+      <Header />
     </HeaderProvider>
   );
 };
