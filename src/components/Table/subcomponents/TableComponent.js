@@ -87,13 +87,7 @@ const StyledTBody = styled("tbody")({
 
 const StyledTd = styled("td")({
   border: "1px solid black",
-  // padding: "0.125rem 0.25rem",
-  verticalAlign: "top",
   minHeight: "100px",
-
-  // "&:last-child": {
-  //   borderRight: "none",
-  // },
 });
 
 const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
@@ -120,15 +114,10 @@ const DraggableColumnHeader = ({ header, table, len }) => {
         columnOrder
       );
       setColumnOrder(newColumnOrder);
-      // dispatch({
-      //   func: "UPDATE_COLUMN_ORDER",
-      //   draggedColumnIndex: draggedColumn.id,
-      //   targetColumnIndex: column.id,
-      // });
+
       dispatch({
         func: "UPDATE_COLUMN_DATA",
-        column: table.options.columns,
-        data: table.options.data,
+        newColumnOrder,
       });
 
       console.log("log ", table);
@@ -148,7 +137,7 @@ const DraggableColumnHeader = ({ header, table, len }) => {
     <th
       ref={dropRef}
       colSpan={header.colSpan}
-      style={{ opacity: isDragging ? 0.5 : 1, backgroundColor: "lightgray" }}
+      style={{ opacity: isDragging ? 0.5 : 1, backgroundColor: "#DEE7F5" }}
     >
       <div
         ref={previewRef}
@@ -213,6 +202,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
           border: "none",
           outline: "none",
           resize: "none",
+          backgroundColor: "transparent",
         }}
       />
     );
@@ -220,7 +210,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
 
   return (
     <tr ref={previewRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <td style={{ backgroundColor: "lightgray" }}>
+      <td style={{ backgroundColor: "#DEE7F5" }}>
         <span
           ref={dropRef}
           style={{
@@ -245,45 +235,34 @@ const DraggableRow = ({ row, reorderRow, len }) => {
           </button>
         </span>
       </td>
-      {row.getVisibleCells().map((cell, index) => (
-        <StyledTd key={cell.id}>
-          {/* {flexRender(cell.column.columnDef.cell, cell.getContext())} */}
-          {/* {console.log(
-            flexRender(cell.column.columnDef.cell, cell.getContext())
-            cell.column.id
-            cell.row.original[cell.column.id]
-            typeof cell.row.original[cell.column.id]
-          )} */}
-          {/* {index === 0 && (
-            <span ref={dropRef}>
-              <button
-                ref={dragRef}
-                style={{
-                  background: "lightgray",
-                  color: "inherit",
-                  border: "none",
-                  padding: 0,
-                  font: "inherit",
-                  cursor: "pointer",
-                }}
-              >
-                <DragIndicatorIcon />
-              </button>
-            </span>
-          )} */}
-          {/* {console.log({
-            column: parseInt(cell.column.id.replace("column", "")),
-          })} */}
-          {console.log({ index })}
-          {cell.row.original[cell.column.id].type === "cell"
-            ? renderTextArea(
-                cell.row.original[cell.column.id].value,
-                cell.row.index,
-                parseInt(cell.column.id.replace("column", "")) - 1
-              )
-            : flexRender(cell.column.columnDef.cell, cell.getContext())}
-        </StyledTd>
-      ))}
+      {row.getVisibleCells().map((cell) => {
+        const type = cell.row.original[cell.column.id].type;
+        const center = {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        };
+        return (
+          <StyledTd
+            key={cell.id}
+            style={{
+              backgroundColor: type == "title" ? "#EEEEEE" : "#FFFFFF",
+              verticalAlign: type == "title" ? "middle" : "top",
+              // display: "flex",
+              // flexDirection: "column",
+              // justifyContent: "center",
+              // alignItems: "center",
+            }}
+          >
+            {console.log(cell.row.original[cell.column.id].type)}
+            {renderTextArea(
+              cell.row.original[cell.column.id].value,
+              cell.row.index,
+              parseInt(cell.column.id.replace("column", "")) - 1
+            )}
+          </StyledTd>
+        );
+      })}
     </tr>
   );
 };
@@ -324,21 +303,6 @@ const TableComponent = () => {
     [state]
   );
 
-  React.useEffect(() => {
-    // const diff =
-    //   JSON.stringify(state.data) !== JSON.stringify(table.options.data);
-    // const diff2 =
-    //   JSON.stringify(state.headers) !== JSON.stringify(table.options.columns);
-    // if (diff || diff2) {
-    dispatch({
-      func: "UPDATE_COLUMN_DATA",
-      column: table.options.columns,
-      data: table.options.data,
-    });
-    // }
-    console.log("UPDATING");
-  }, [table]);
-
   return (
     <DndProvider backend={HTML5Backend}>
       <StyledTable>
@@ -357,7 +321,7 @@ const TableComponent = () => {
             </tr>
           ))}
         </thead>
-        <StyledTBody>
+        <tbody>
           {table.getRowModel().rows.map((row) => (
             <DraggableRow
               key={row.id}
@@ -365,7 +329,7 @@ const TableComponent = () => {
               reorderRow={reorderRow}
             ></DraggableRow>
           ))}
-        </StyledTBody>
+        </tbody>
       </StyledTable>
     </DndProvider>
   );

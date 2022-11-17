@@ -9,17 +9,15 @@ export const layoutConfig = (draft, action) => {
     case "UPDATE_STATE":
       return action.data;
     case "SET_STATE":
-      draft.headers.push(action.data);
-      draft.data.push(action.data);
+      draft.headers = action.headers;
+      draft.data = action.data;
       return draft;
     case "UPDATE_CELL":
       const temp = Object.keys(draft.data[action.row]);
       draft.data[action.row][temp[action.col]].value = action.value;
       return draft;
     case "UPDATE_COLUMN_DATA":
-      draft.headers = action.column;
-      draft.data = action.data;
-
+      //update column order
       return draft;
     case "UPDATE_ROW":
       draft.data.splice(
@@ -39,7 +37,7 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   const [state, dispatch] = useReducer(produce(layoutConfig), layoutState);
 
   useEffect(() => {
-    console.log("state", state);
+    setProp({ layoutState: state });
   }, [state]);
 
   return (

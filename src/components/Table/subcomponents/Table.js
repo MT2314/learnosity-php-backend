@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { LayoutContext } from "../TableContext";
 
 import Modal from "./Modal";
 import TableComponent from "./TableComponent";
@@ -40,6 +41,8 @@ const Table = () => {
   const [showModal, setShowModal] = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [numberColRow, setNumberColRow] = useState([2, 2]);
+  const [state, dispatch] = useContext(LayoutContext);
+  console.log({ state });
 
   const createTable = (e) => {
     setShowModal(true);
@@ -47,15 +50,22 @@ const Table = () => {
 
   return (
     <>
-      {/* {showTable ? (<TableComponent numberColRow={numberColRow}/>) : (
-      <Container>
-        {showModal && <Modal setShowModal={setShowModal} setShowTable={setShowTable} setNumberColRow={setNumberColRow}/>}
-        <ButtonContainer>
-          <StyledButton onClick={createTable}>Create a Table</StyledButton>
-        </ButtonContainer>
-      </Container>
-    )} */}
-      <TableComponent />
+      {state.data.length !== 0 ? (
+        <TableComponent />
+      ) : (
+        <Container>
+          {showModal && (
+            <Modal
+              setShowModal={setShowModal}
+              setShowTable={setShowTable}
+              setNumberColRow={setNumberColRow}
+            />
+          )}
+          <ButtonContainer>
+            <StyledButton onClick={createTable}>Create a Table</StyledButton>
+          </ButtonContainer>
+        </Container>
+      )}
     </>
   );
 };
