@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer, useRef } from "react";
 import produce from "immer";
 // MUI
-import { Paper } from "@material-ui/core";
+import { Paper, TextareaAutosize } from "@material-ui/core";
 // styles/emotion
 import styled from "@emotion/styled";
 // Toolbar
@@ -20,34 +20,46 @@ export const defaultProps = {
 // Styled components
 
 const StyledPaper = styled(Paper)({
-  width: "100%",
+  width: "968px",
   padding: "1.25rem 6.5rem",
   background: "#FFF",
 });
 
 // ? Styled Text Input
-const StyledHeaderInput = styled("input")(({ headerLevel, alignment }) => ({
-  width: "100%",
-  border: "none",
-  fontFamily: `"Inter", sans-serif`,
-  fontWeight: "300",
-  textAlign:
-    alignment == "center-align"
-      ? "center"
-      : alignment == "right-align"
-      ? "right"
-      : "left",
-  fontSize:
-    headerLevel == "medium" ? "36px" : headerLevel == "small" ? "34px" : "42px",
+const StyledHeaderInput = styled(TextareaAutosize)(
+  ({ headerLevel, alignment }) => ({
+    width: "100%",
+    border: "none",
+    fontFamily: `"Inter", sans-serif`,
+    fontWeight: "300",
+    wordBreak: "break-word",
+    whiteSpace: "pre-line",
+    overflowWrap: "break-word",
+    msWordBreak: "break-word",
+    wordBreak: "break-word",
+    resize: "none",
 
-  "&::placeholder": {
-    color: "rgba(35, 35, 35, 1)",
-  },
+    textAlign:
+      alignment == "center-align"
+        ? "center"
+        : alignment == "right-align"
+        ? "right"
+        : "left",
+    fontSize:
+      headerLevel == "medium"
+        ? "36px"
+        : headerLevel == "small"
+        ? "34px"
+        : "42px",
+    "&::placeholder": {
+      color: "rgba(35, 35, 35, 1)",
+    },
 
-  "&:focus-visible": {
-    outline: "none",
-  },
-}));
+    "&:focus-visible": {
+      outline: "none",
+    },
+  })
+);
 
 // Reducers
 export const headerConfig = (draft, action) => {
@@ -73,6 +85,8 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
   const [state, dispatch] = useReducer(produce(headerConfig), headerState);
   // Toolbar Active State
   const [toolbar, setToolbar] = useState(false);
+  // ? Alignment Dropdown Open/Close State
+  const [activeTopMenu, setActiveTopMenu] = useState(false);
 
   // Refrences
   const headerRef = useRef();
@@ -95,6 +109,7 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
   // Close Toolbar on Click Outside
   useOnClickOutside(headerRef, () => {
     setToolbar(false);
+    setActiveTopMenu(false);
   });
 
   // Header Text Input Change Handler - Save to State
@@ -113,7 +128,13 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
       onFocus={(e) => setToolbar(true)}
       ref={headerRef}
     >
-      <HeaderToolbar toolbar={toolbar} state={state} dispatch={dispatch} />
+      <HeaderToolbar
+        toolbar={toolbar}
+        state={state}
+        dispatch={dispatch}
+        activeTopMenu={activeTopMenu}
+        setActiveTopMenu={setActiveTopMenu}
+      />
 
       <StyledPaper elevation="0">
         <StyledHeaderInput
