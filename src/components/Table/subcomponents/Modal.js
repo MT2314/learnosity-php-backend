@@ -252,7 +252,22 @@ const SelectNumber = ({ number, setNumber }) => {
         }}
         sx={{ cursor: "pointer" }}
       />
-      <span>{number}</span>
+      <input
+        value={number}
+        onChange={(e) => {
+          const value = e.target.value;
+          if (value >= 2 && value <= 6) {
+            setNumber(value);
+          }
+        }}
+        style={{
+          width: "24px",
+          height: "24px",
+          border: "none",
+          outline: "none",
+          textAlign: "center",
+        }}
+      />
       <AddIcon
         onClick={(e) => {
           number < 6 && setNumber((prev) => prev + 1);
