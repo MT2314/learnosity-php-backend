@@ -233,7 +233,19 @@ const StyledSelectNumber = styled("div")(() => ({
 
 const SelectNumber = ({ number, setNumber }) => {
   return (
-    <StyledSelectNumber>
+    <StyledSelectNumber
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.keyCode === 38) {
+          e.preventDefault();
+          number < 6 && setNumber((prev) => prev + 1);
+        }
+        if (e.keyCode === 40) {
+          e.preventDefault();
+          number !== 2 && setNumber((prev) => prev - 1);
+        }
+      }}
+    >
       <RemoveIcon
         onClick={(e) => {
           number !== 2 && setNumber((prev) => prev - 1);
