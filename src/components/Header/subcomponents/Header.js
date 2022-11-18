@@ -1,21 +1,16 @@
-import React, { useState, useEffect, useReducer, useRef } from "react";
+import React, { useState, useContext, useRef } from "react";
 import produce from "immer";
 // MUI
 import { Paper, TextareaAutosize } from "@material-ui/core";
 // styles/emotion
 import styled from "@emotion/styled";
 // Toolbar
-import HeaderToolbar from "./subcomponents/HeaderToolbar";
-// Custom hooks
-import { useOnClickOutside } from "../../hooks/useOnClickOutside";
+import HeaderToolbar from "./HeaderToolbar";
+// Context
+import { HeaderContext } from "../HeaderContext";
 
-export const defaultProps = {
-  headerState: {
-    size: "large",
-    alignment: "left-align",
-    heading: "",
-  },
-};
+// Custom hooks
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 // Styled components
 
@@ -69,28 +64,10 @@ const StyledHeaderInput = styled(TextareaAutosize)(
   })
 );
 
-// Reducers
-export const headerConfig = (draft, action) => {
-  switch (action.func) {
-    case "UPDATE_STATE":
-      return draft.action;
-    case "CHANGE_SIZE":
-      draft.size = action.size;
-      return draft;
-    case "CHANGE_ALIGNMENT":
-      draft.alignment = action.alignment;
-      return draft;
-    case "CHANGE_HEADING":
-      draft.heading = action.heading;
-      return draft;
-    default:
-      return draft;
-  }
-};
-
-const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
+const Header = () => {
   // Header Component State
-  const [state, dispatch] = useReducer(produce(headerConfig), headerState);
+  const [state, dispatch] = useContext(HeaderContext);
+
   // Toolbar Active State
   const [toolbar, setToolbar] = useState(false);
   // ? Alignment Dropdown Open/Close State
@@ -98,21 +75,6 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
 
   // Refrences
   const headerRef = useRef();
-
-  // Check for difference in Header and Component Mount State
-  const diff = JSON.stringify(state) !== JSON.stringify(headerState);
-  const [mounted, setMounted] = useState(false);
-
-  // Update Header State on Mount
-  useEffect(() => {
-    diff && mounted && setProp({ headerState: state });
-  }, [state]);
-
-  // Update Header State on Change
-  useEffect(() => {
-    dispatch({ func: "UPDATE_STATE", data: headerState });
-    setMounted(true);
-  }, []);
 
   // Close Toolbar on Click Outside
   useOnClickOutside(headerRef, () => {
@@ -127,8 +89,6 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
       heading: e.target.value,
     });
   };
-
-  console.log(state);
 
   return (
     <div
@@ -146,7 +106,10 @@ const Header = ({ headerState = defaultProps, setProp = () => {} }) => {
 
       <StyledPaper elevation="0">
         <StyledHeaderInput
+          data-id="headerInput"
           placeholder="Type your header here..."
+          aria-label="Header input field"
+          type="text "
           disableUnderline="true"
           onChange={handleHeadingChange}
           onKeyDown={(e) => e.key === "Enter" && e.preventDefault()} // Prevent new line break

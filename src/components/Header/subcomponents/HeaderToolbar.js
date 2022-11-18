@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import "../styles/Toolbar.scss";
+import { HeaderContext } from "../HeaderContext";
 
 // MUI
 import {
@@ -30,13 +31,8 @@ const headerSizeDropdownOptions = [
   { value: "small", label: "Small" },
 ];
 
-const HeaderToolbar = ({
-  toolbar,
-  dispatch,
-  state,
-  activeTopMenu,
-  setActiveTopMenu,
-}) => {
+const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
+  const [state, dispatch] = useContext(HeaderContext);
   // ? Header Size Dropdown Open/Close State
   const [openHeader, setHeaderOpen] = useState(false);
   // ? Header Size Dropdown Selection State
@@ -96,7 +92,7 @@ const HeaderToolbar = ({
         >
           <Button
             ref={HeaderDropDown}
-            id="headerToolBar"
+            data-id="headerToolBar"
             aria-controls={openHeader ? "Header Select" : undefined}
             aria-expanded={openHeader ? "true" : undefined}
             variant="contained"
@@ -214,12 +210,12 @@ const HeaderToolbar = ({
               aria-label="alignment buttons dropdown"
               value={
                 state.alignment === "left-align"
-                  ? icons["align"]
+                  ? "left-align"
                   : state.alignment === "center-align"
-                  ? icons["center"]
+                  ? "center-align"
                   : state.alignment === "right-align"
-                  ? icons["right"]
-                  : icons["align"]
+                  ? "right-align"
+                  : null
               }
               data-alignid="alignment-dropdown"
             >
