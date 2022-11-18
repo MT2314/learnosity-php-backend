@@ -85,12 +85,13 @@ const StyledTd = styled("td")({
 const StyledInput = styled(TextareaAutosize)(({ type }) => ({
   fontFamily: '"Inter", sans-serif',
   border: "none",
-  padding: "0",
+  padding: "10px",
   fontSize: type === "title" ? "18px" : "16px",
   fontWeight: type === "title" ? "500" : "400",
   lineHeight: "1.575rem",
   width: "100%",
-  minHeight: "25px",
+  minHeight: type === "title" ? "57px" : "25px",
+  height: "auto !important",
   ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
   ...(type === "cell" && { padding: "15px" }),
   resize: "none",
@@ -184,6 +185,7 @@ const DraggableColumnHeader = ({ header, table, setColumnUpdate }) => {
           : flexRender(header.column.columnDef.header, header.getContext())}
         <button
           ref={dragRef}
+          aria-label="Header drag icon button"
           style={{
             background: "none",
             color: "inherit",
@@ -227,6 +229,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
     return (
       <StyledInput
         value={value || ""}
+        aria-label={type === "title" ? `Header input` : "Table cell input"}
         placeholder={
           type === "title"
             ? `Title ${state.headerType === "top-header" ? col + 1 : row + 1}`
