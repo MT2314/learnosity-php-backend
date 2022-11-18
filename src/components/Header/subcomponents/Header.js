@@ -109,6 +109,7 @@ const Header = () => {
           data-id="headerInput"
           placeholder="Type your header here..."
           aria-label="Header input field"
+          type="text "
           disableUnderline="true"
           onChange={handleHeadingChange}
           onKeyDown={(e) => e.key === "Enter" && e.preventDefault()} // Prevent new line break
