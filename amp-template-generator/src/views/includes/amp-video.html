@@ -59,7 +59,7 @@
         </div>
     {%- endif -%}
     <amp-script data-ampdevmode layout="fill" script="api-script_{{ videoId }}" class="transcript-wrapper">
-        <div id="focus-here" tabindex="0" class="hideview transcript" [class]="hid_{{ videoId }} ? 'view transcript': 'hideview transcript'">
+        <div id="focus-here_{{ videoId }}" tabindex="0" class="hideview transcript" [class]="hid_{{ videoId }} ? 'view transcript': 'hideview transcript'">
         </div>
         <div class="description-container">
             <div class="description-flex-container">
@@ -67,7 +67,7 @@
                 class="transcript-button"
                 aria-label="View transcript"
                 [aria-label]="hid_{{ videoId }} ? 'HIDE TRANSCRIPT': 'VIEW TRANSCRIPT'"
-                on="tap:AMP.setState({ hid_{{ videoId }} : !hid_{{ videoId }}}), focus-here.focus"
+                on="tap:AMP.setState({ hid_{{ videoId }} : !hid_{{ videoId }}}), focus-here_{{ videoId }}.focus"
                 [text]="hid_{{ videoId }} ? 'HIDE TRANSCRIPT': 'VIEW TRANSCRIPT'"
                 >
                     VIEW TRANSCRIPT
