@@ -90,6 +90,48 @@ const StyledTd = styled("td")({
   minHeight: "100px",
 });
 
+const StyledInput = styled(TextareaAutosize)(({ type }) => ({
+  fontFamily: '"Inter", sans-serif',
+  border: "none",
+  padding: "0",
+  fontSize: type === "title" ? "18px" : "16px",
+  fontWeight: type === "title" ? "500" : "400",
+  lineHeight: "1.575rem",
+  width: "100%",
+  minHeight: "25px",
+  ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
+  ...(type === "cell" && { padding: "15px" }),
+  resize: "none",
+
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  backgroundColor: "transparent",
+
+  "&::-webkit-scrollbar": {
+    WebkitAppearance: "none",
+    width: "7px",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    borderRadius: "4px",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    boxShadow: "0 0 1px rgba(255, 255, 255, 0.5)",
+    WebkitBoxShadow: "0 0 1px rgba(255, 255, 255, 0.5)",
+  },
+  "&:disabled": {
+    background: "#f5f5f5",
+  },
+  "&::placeholder": {
+    color: "rgba(35,35,35,1)",
+  },
+  "&:focus": {
+    border: "none",
+    outline: "none",
+    "&:: placeholder": {
+      color: "rgba(35, 35, 35, 0.12)",
+    },
+  },
+}));
+
 const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   columnOrder.splice(
     columnOrder.indexOf(targetColumnId),
@@ -181,7 +223,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
     type: "row",
   });
 
-  const renderTextArea = (value, row, col) => {
+  const renderTextArea = (value, row, col, type) => {
     const onTextChange = (e) => {
       dispatch({
         func: "UPDATE_CELL",
@@ -191,17 +233,15 @@ const DraggableRow = ({ row, reorderRow, len }) => {
       });
     };
     return (
-      <TextareaAutosize
+      <StyledInput
         value={value || ""}
-        placeholder="Lorem ipsum dolor"
+        placeholder={
+          type === "title"
+            ? `Title ${state.headerType === "top-header" ? col + 1 : row + 1}`
+            : "Lorem ipsum dolor sit"
+        }
+        type={type}
         onChange={onTextChange}
-        style={{
-          width: "100%",
-          border: "none",
-          outline: "none",
-          resize: "none",
-          backgroundColor: "transparent",
-        }}
       />
     );
   };
@@ -246,16 +286,14 @@ const DraggableRow = ({ row, reorderRow, len }) => {
             style={{
               backgroundColor: type == "title" ? "#EEEEEE" : "#FFFFFF",
               verticalAlign: type == "title" ? "middle" : "top",
-              // display: "flex",
-              // flexDirection: "column",
-              // justifyContent: "center",
-              // alignItems: "center",
             }}
+            align="center"
           >
             {renderTextArea(
               cell.row.original[cell.column.id].value,
               cell.row.index,
-              parseInt(cell.column.id.replace("column", "")) - 1
+              parseInt(cell.column.id.replace("column", "")) - 1,
+              type
             )}
           </StyledTd>
         );
@@ -297,7 +335,7 @@ const TableComponent = () => {
     },
     [state]
   );
-  
+
   return (
     <DndProvider backend={HTML5Backend}>
       <StyledTable>

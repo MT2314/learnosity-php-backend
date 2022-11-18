@@ -52,18 +52,14 @@ const Table = () => {
       {state.data.length !== 0 ? (
         <TableComponent />
       ) : (
-        <Container>
-          {showModal && (
-            <Modal
-              setShowModal={setShowModal}
-              setShowTable={setShowTable}
-              setNumberColRow={setNumberColRow}
-            />
-          )}
-          <ButtonContainer>
-            <StyledButton onClick={createTable}>Create a Table</StyledButton>
-          </ButtonContainer>
-        </Container>
+        <>
+          {showModal && <Modal setShowModal={setShowModal} />}
+          <Container>
+            <ButtonContainer>
+              <StyledButton onClick={createTable}>Create a Table</StyledButton>
+            </ButtonContainer>
+          </Container>
+        </>
       )}
     </>
   );

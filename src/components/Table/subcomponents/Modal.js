@@ -65,11 +65,10 @@ const FooterContainer = styled("div")(() => ({
   paddingRight: "24px",
 }));
 
-const StyledCreateButton = styled("button")(() => ({
+const StyledCreateButton = styled("button")(({ disable }) => ({
   border: "none",
   outline: "none",
   background: "none",
-  cursor: "pointer",
   height: "24px",
   fontFamily: "'Inter'",
   fontStyle: "normal",
@@ -78,6 +77,7 @@ const StyledCreateButton = styled("button")(() => ({
   lineHeight: "24px",
   letterSpacing: "0.4px",
   color: "#1565C0",
+  cursor: disable ? "pointer" : "default",
 }));
 
 const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
@@ -94,13 +94,6 @@ const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
   const createTable = (e) => {
     const headers = [];
     const data = [];
-
-    console.log("headerSelection ", headerSelection);
-    console.log("numberRow ", numberRow);
-    console.log("numberCol ", numberCol);
-
-    // top-header then extra data
-    // side-header then extra column
 
     [...Array(numberCol)].forEach((_, i) => {
       headers.push({
@@ -142,13 +135,11 @@ const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
       data.push(row);
     });
 
-    console.log({ headers });
-    console.log({ data });
-
     dispatch({
       func: "SET_STATE",
       headers,
       data,
+      headerType: headerSelection,
     });
 
     setShowTable(true);
@@ -191,7 +182,13 @@ const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
         </SelectFormat>
       </FormatContainer>
       <FooterContainer>
-        <StyledCreateButton onClick={createTable}>Create</StyledCreateButton>
+        <StyledCreateButton
+          onClick={createTable}
+          disabled={headerSelection == null}
+          disable={headerSelection}
+        >
+          Create
+        </StyledCreateButton>
       </FooterContainer>
     </Container>
   );
@@ -223,7 +220,7 @@ const SelectNumber = ({ number, setNumber }) => {
       <span>{number}</span>
       <AddIcon
         onClick={(e) => {
-          setNumber((prev) => prev + 1);
+          number < 6 && setNumber((prev) => prev + 1);
         }}
         sx={{ cursor: "pointer" }}
       />

@@ -7,6 +7,7 @@ export const defaultProps = {
   layoutState: {
     headers: [],
     data: [],
+    headerType: null
   },
 };
 

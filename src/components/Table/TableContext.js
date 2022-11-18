@@ -11,6 +11,7 @@ export const layoutConfig = (draft, action) => {
     case "SET_STATE":
       draft.headers = action.headers;
       draft.data = action.data;
+      draft.headerType = action.headerType;
       return draft;
     case "UPDATE_CELL":
       const temp = Object.keys(draft.data[action.row]);
@@ -35,7 +36,6 @@ export const layoutConfig = (draft, action) => {
         draft.data.splice(action.draggedRowIndex, 1)[0]
       );
       return draft;
-
     default:
       return draft;
   }
