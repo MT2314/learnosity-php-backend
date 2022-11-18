@@ -230,7 +230,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
         placeholder={
           type === "title"
             ? `Title ${state.headerType === "top-header" ? col + 1 : row + 1}`
-            : "Lorem ipsum dolor sit"
+            : "Lorem ipsum"
         }
         type={type}
         onChange={onTextChange}

@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { LayoutContext } from "../TableContext";
 
 import styled from "@emotion/styled";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
+
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 const Container = styled("div")(() => ({
   position: "fixed",
@@ -76,16 +78,26 @@ const StyledCreateButton = styled("button")(({ disable }) => ({
   fontSize: "14px",
   lineHeight: "24px",
   letterSpacing: "0.4px",
-  color: "#1565C0",
+  color: disable ? "#1565C0" : "#79b0f0",
   cursor: disable ? "pointer" : "default",
 }));
 
-const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
+const Modal = ({ setShowModal, setShowTable }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
   const [numberRow, setNumberRow] = useState(2);
   const [numberCol, setNumberCol] = useState(2);
   const [headerSelection, setHeaderSelection] = useState(null);
+
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    containerRef.current.focus();
+  }, []);
+
+  useOnClickOutside(containerRef, () => {
+    setShowModal(false);
+  });
 
   const closeModal = (e) => {
     setShowModal(false);
@@ -145,7 +157,16 @@ const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
     setShowTable(true);
   };
   return (
-    <Container>
+    <Container
+      ref={containerRef}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") {
+          console.log("Escape");
+          setShowModal(false);
+        }
+      }}
+      tabIndex={0}
+    >
       <HeaderContainer>
         <span>Create a table</span>
         <CloseIcon sx={{ cursor: "pointer" }} onClick={closeModal} />
@@ -168,6 +189,7 @@ const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
             name="select-radio-header"
             id="top-header"
             onChange={() => setHeaderSelection("top-header")}
+            style={{ cursor: "pointer" }}
           />
           <label for="top-header">Top header</label>
         </SelectFormat>
@@ -177,6 +199,7 @@ const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
             name="select-radio-header"
             id="side-header"
             onChange={() => setHeaderSelection("side-header")}
+            style={{ cursor: "pointer" }}
           />
           <label for="side-header">Side header</label>
         </SelectFormat>

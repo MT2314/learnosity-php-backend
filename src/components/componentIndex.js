@@ -135,7 +135,7 @@ const componentIndex = {
     defaultProps: tableDefaultProps,
     readableName: "Table",
     version: "0.0.1",
-    category: categories.media,
+    category: categories.interactive,
     componentIcon: defaultComponentIcon,
   },
 };
