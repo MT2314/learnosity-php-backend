@@ -232,6 +232,9 @@ const StyledSelectNumber = styled("div")(() => ({
 }));
 
 const SelectNumber = ({ number, setNumber }) => {
+  useEffect(() => {
+    console.log(number);
+  }, [number]);
   return (
     <StyledSelectNumber
       tabIndex={0}
@@ -254,8 +257,8 @@ const SelectNumber = ({ number, setNumber }) => {
       />
       <input
         value={number}
-        onChange={(e) => {
-          const value = e.target.value;
+        onInput={(e) => {
+          const value = parseInt(e.target.value);
           if (value >= 2 && value <= 6) {
             setNumber(value);
           }
