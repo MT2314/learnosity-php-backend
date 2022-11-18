@@ -1,23 +1,28 @@
 .wrapper.bottom-margin.video-component {
 
+  max-width: 960px;
+
   p {
     margin: 0;
   }
 
   .transcript-wrapper {
     position: relative;
+    max-width: 760px;
+    margin: auto;
   }
 
   .hideview {
     margin-top: 0.215625rem;
+    visibility: hidden;
   }
 
   .hideview, .view {
     height: 0;
-    -moz-transition: height .5s ease-in-out, margin-top 1s ease-in-out;
-    -o-transition: height .5s ease-in-out, margin-top 1s ease-in-out;
-    -webkit-transition: height .5s ease-in-out, margin-top 1s ease-in-out;
-    transition: height .5s ease-in-out, margin-top 1s ease-in-out;
+    -moz-transition: height .5s ease-in-out, margin-top 1s ease-in-out, visibility 1s ease-in-out;
+    -o-transition: height .5s ease-in-out, margin-top 1s ease-in-out, visibility 1s ease-in-out;
+    -webkit-transition: height .5s ease-in-out, margin-top 1s ease-in-out, visibility 1s ease-in-out;
+    transition: height .5s ease-in-out, margin-top 1s ease-in-out, visibility 1s ease-in-out;
   }
 
   .view {
@@ -26,6 +31,7 @@
     padding: 15px;
     border: 1px solid $component-border;
     border-radius: 9px 9px 0 0;
+    visibility: visible;
   }
 
   .transcript {
@@ -57,11 +63,12 @@
   }
 
   .description-container {
+    padding: 0 0.25rem;
     margin-top: 0.75rem;
     font-family: $component-main-font;
 
     @media (max-width: 759px) {
-      padding: 0;
+      padding: 0 0.25rem;
     }
 
     .description-flex-container {
