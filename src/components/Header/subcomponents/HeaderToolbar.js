@@ -233,6 +233,7 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
             activeTopMenu={activeTopMenu}
             activeDropDownItem={activeDropDownItem}
             setActiveDropDownItem={setActiveDropDownItem}
+            alignment={state.alignment}
           />
         </Toolbar>
       </AppBar>
@@ -246,7 +247,7 @@ const AlignDropdownButton = ({
   activeTopMenu,
   activeDropDownItem,
   setActiveDropDownItem,
-  setVisibleAlignIcon,
+  alignment,
 }) => {
   return (
     <>
@@ -276,13 +277,9 @@ const AlignDropdownButton = ({
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeDropDownItem == "left-align"
-                  ? "rgba(21, 101, 192, 1)"
-                  : "#000",
+                alignment === "left-align" ? "rgba(21, 101, 192, 1)" : "#000",
               "--background":
-                activeDropDownItem == "left-align"
-                  ? "rgba(21, 101, 192, 0.12)"
-                  : "#fff",
+                alignment == "left-align" ? "rgba(21, 101, 192, 0.12)" : "#fff",
             }}
           >
             {icons["align"]}
@@ -308,11 +305,9 @@ const AlignDropdownButton = ({
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeDropDownItem == "center-align"
-                  ? "rgba(21, 101, 192, 1)"
-                  : "#000",
+                alignment === "center-align" ? "rgba(21, 101, 192, 1)" : "#000",
               "--background":
-                activeDropDownItem == "center-align"
+                alignment == "center-align"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
@@ -340,11 +335,9 @@ const AlignDropdownButton = ({
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeDropDownItem == "right-align"
-                  ? "rgba(21, 101, 192, 1)"
-                  : "#000",
+                alignment === "right-align" ? "rgba(21, 101, 192, 1)" : "#000",
               "--background":
-                activeDropDownItem == "right-align"
+                alignment == "right-align"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
