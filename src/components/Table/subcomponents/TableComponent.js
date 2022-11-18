@@ -77,14 +77,6 @@ const StyledTable = styled("table")({
   width: "100%",
 });
 
-const StyledTh = styled("th")({
-  width: "auto",
-});
-
-const StyledTBody = styled("tbody")({
-  // borderBottom: "0.0625rem solid lightgray",
-});
-
 const StyledTd = styled("td")({
   border: "1px solid black",
   minHeight: "100px",
