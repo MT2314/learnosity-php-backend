@@ -2,8 +2,8 @@
     {%- assign videoId = 'video' | append: dataID -%}
     {%- assign showVideoId = 'showVideoId' | append: dataID -%}
     {%- assign hideVideoId = 'hideVideoId' | append: dataID -%}
-    {%- assign videoDescription = data.videoDescription | strip_html | strip -%}
-    {%- assign videoCredit = data.videoCredit | strip_html -%}
+    {%- assign videoDescription = data.videoDescription | remove_first: "<p>" | remove: "</p>" -%}
+    {%- assign videoCredit = data.videoCredit | remove_first: "<p>" | remove: "</p>" -%}
     {%- assign displayDescription = data.videoTextSettings.description -%}
     {%- assign displayCredit = data.videoTextSettings.credit -%}
 
@@ -114,6 +114,7 @@
 
 <script id="api-script_{{ videoId }}" type="text/plain" target="amp-script">
     const getFile = (url, callback) => { // get file from a URL link
+      url = url.replace("http://", "https://");
       var httpRequest = new XMLHttpRequest(),
         response,
         getResponse = function () { // response handler
@@ -142,6 +143,7 @@
       const result = await fetch("{{ data.videoURL }}", { headers });
       const data = await result.json();
       const chosenTrack = data.text_tracks[1].sources[0].src;
+
       getFile(chosenTrack, function (response) {
         if (response) {
             var responseEdited = response.replace( "X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0", "");

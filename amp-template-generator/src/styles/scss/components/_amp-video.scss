@@ -144,7 +144,8 @@
           border-radius: 0.5rem; // border—radius: 8px + offset: 2px
         }
       }
-        flex-direction: column;
+      flex-direction: column;
+      @include a-tag-style;
     }
 
   }
