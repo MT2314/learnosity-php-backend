@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { LayoutContext } from "../TableContext";
+
 import styled from "@emotion/styled";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -63,11 +65,10 @@ const FooterContainer = styled("div")(() => ({
   paddingRight: "24px",
 }));
 
-const StyledCreateButton = styled("button")(() => ({
+const StyledCreateButton = styled("button")(({ disable }) => ({
   border: "none",
   outline: "none",
   background: "none",
-  cursor: "pointer",
   height: "24px",
   fontFamily: "'Inter'",
   fontStyle: "normal",
@@ -76,31 +77,71 @@ const StyledCreateButton = styled("button")(() => ({
   lineHeight: "24px",
   letterSpacing: "0.4px",
   color: "#1565C0",
+  cursor: disable ? "pointer" : "default",
 }));
 
 const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
-  const [numberRow, setNumberRow] = React.useState(2);
-  const [numberCol, setNumberCol] = React.useState(2);
+  const [state, dispatch] = useContext(LayoutContext);
+
+  const [numberRow, setNumberRow] = useState(2);
+  const [numberCol, setNumberCol] = useState(2);
+  const [headerSelection, setHeaderSelection] = useState(null);
+
   const closeModal = (e) => {
     setShowModal(false);
   };
+
   const createTable = (e) => {
-    const numberRowStore = [];
-    const numberColStore = [];
+    const headers = [];
+    const data = [];
 
-    for (let i = 0; i < numberRow; i++) {
-      numberRowStore.push({ id: i });
-    }
-
-    for (let i = 0; i < numberCol; i++) {
-      numberColStore.push({
-        accessorKey: "Name",
-        id: "Name",
-        header: "Name",
+    [...Array(numberCol)].forEach((_, i) => {
+      headers.push({
+        accessorKey: `column${i + 1}`,
+        id: `column${i + 1}`,
+        header: "",
       });
-    }
+    });
 
-    setNumberColRow([numberRowStore, numberColStore]);
+    headerSelection === "side-header" &&
+      headers.push({
+        accessorKey: `column${numberCol + 1}`,
+        id: `column${numberCol + 1}`,
+        header: "",
+      });
+
+    const cols = headerSelection === "side-header" ? numberCol + 1 : numberCol;
+
+    const rows = headerSelection === "top-header" ? numberRow + 1 : numberRow;
+
+    [...Array(rows)].forEach((_, i) => {
+      const row = {};
+      [...Array(cols)].forEach((_, j) => {
+        let type;
+        if (headerSelection === "side-header") {
+          type = j === 0 ? "title" : "cell";
+        }
+
+        if (headerSelection === "top-header") {
+          type = i === 0 ? "title" : "cell";
+        }
+
+        row[`column${j + 1}`] = {
+          value: "",
+          type,
+        };
+      });
+
+      data.push(row);
+    });
+
+    dispatch({
+      func: "SET_STATE",
+      headers,
+      data,
+      headerType: headerSelection,
+    });
+
     setShowTable(true);
   };
   return (
@@ -122,16 +163,32 @@ const Modal = ({ setShowModal, setShowTable, setNumberColRow }) => {
       <FormatContainer>
         <span>Table Format</span>
         <SelectFormat>
-          <input type="radio" name="select-radio-header" id="top-header" />
+          <input
+            type="radio"
+            name="select-radio-header"
+            id="top-header"
+            onChange={() => setHeaderSelection("top-header")}
+          />
           <label for="top-header">Top header</label>
         </SelectFormat>
         <SelectFormat>
-          <input type="radio" name="select-radio-header" id="side-header" />
+          <input
+            type="radio"
+            name="select-radio-header"
+            id="side-header"
+            onChange={() => setHeaderSelection("side-header")}
+          />
           <label for="side-header">Side header</label>
         </SelectFormat>
       </FormatContainer>
       <FooterContainer>
-        <StyledCreateButton onClick={createTable}>Create</StyledCreateButton>
+        <StyledCreateButton
+          onClick={createTable}
+          disabled={headerSelection == null}
+          disable={headerSelection}
+        >
+          Create
+        </StyledCreateButton>
       </FooterContainer>
     </Container>
   );
@@ -163,7 +220,7 @@ const SelectNumber = ({ number, setNumber }) => {
       <span>{number}</span>
       <AddIcon
         onClick={(e) => {
-          setNumber((prev) => prev + 1);
+          number < 6 && setNumber((prev) => prev + 1);
         }}
         sx={{ cursor: "pointer" }}
       />
