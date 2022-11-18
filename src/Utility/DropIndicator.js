@@ -15,7 +15,9 @@ const DropIndicator = styled("div")(
   }) => {
     let dashColor = "#1565C0";
     if (
-      ["Text", "Table", "Video", "Image"].indexOf(item?.componentName) === -1
+      ["Text", "Table", "Video", "Image", "Header"].indexOf(
+        item?.componentName
+      ) === -1
     ) {
       dashColor = "#D32F2F";
     }

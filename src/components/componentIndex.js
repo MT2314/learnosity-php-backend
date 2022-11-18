@@ -20,6 +20,8 @@ import TableMain, {
 import AccordionMain, {
   defaultProps as testAccordionDefaultProps,
 } from "./Accordion/AccordionMain";
+// Header
+import Header, { defaultProps as headerDefaultProps } from "./Header/Header";
 // Category Icons
 import interactiveCategoryIcon from "../Icons/categoriesIcons/interactive.png";
 import mediaCategoryIcon from "../Icons/categoriesIcons/media.png";
@@ -52,6 +54,14 @@ export const categories = {
 };
 
 const componentIndex = {
+  Header: {
+    Component: Header,
+    readableName: "Header",
+    defaultProps: headerDefaultProps,
+    version: "0.0.1",
+    category: categories.text,
+    componentIcon: defaultComponentIcon,
+  },
   InfoBox: {
     Component: InfoBox,
     readableName: "InfoBox",

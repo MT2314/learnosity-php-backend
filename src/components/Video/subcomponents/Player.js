@@ -102,35 +102,6 @@ const Player = ({ videoId, videoSource }) => {
     return () => (isSubscribed = false);
   }, [state.videoURL]);
 
-  // get file from a URL link
-  const getFile = (url, callback) => {
-    var httpRequest = new XMLHttpRequest(),
-      response,
-      getResponse = function () {
-        // response handler
-        try {
-          if (httpRequest.readyState === 4) {
-            if (httpRequest.status === 200) {
-              response = httpRequest.responseText;
-              if (response === "{null}") {
-                // some API requests return '{null}' will breaks JSON.parse
-                response = null;
-              }
-              callback(response); // return the response
-            } else {
-              callback(null);
-            }
-          }
-        } catch (e) {
-          callback(null);
-        }
-      };
-    // set up request data
-    httpRequest.onreadystatechange = getResponse; // set response handler
-    httpRequest.open("GET", url); // open the request
-    httpRequest.send(); // open and send request
-  };
-
   // Save Description, Credit, and Transcript to State
   useEffect(() => {
     if (videoData !== null) {
