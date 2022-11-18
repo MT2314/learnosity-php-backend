@@ -255,6 +255,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
         >
           <button
             ref={dragRef}
+            aria-label="Header drag icon button"
             style={{
               background: "none",
               color: "inherit",
@@ -333,11 +334,15 @@ const TableComponent = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <StyledTable>
+      <StyledTable role="presentation">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              <th style={{ width: "30px" }}></th>
+              <th
+                style={{ width: "30px" }}
+                aria-label=""
+                aria-hidden="true"
+              ></th>
               {headerGroup.headers.map((header) => (
                 <DraggableColumnHeader
                   key={header.id}
