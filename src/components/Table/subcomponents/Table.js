@@ -42,7 +42,6 @@ const Table = () => {
   const [showTable, setShowTable] = useState(false);
   const [numberColRow, setNumberColRow] = useState([2, 2]);
   const [state, dispatch] = useContext(LayoutContext);
-  console.log({ state });
 
   const createTable = (e) => {
     setShowModal(true);

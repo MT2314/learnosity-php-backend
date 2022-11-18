@@ -16,8 +16,17 @@ export const layoutConfig = (draft, action) => {
       const temp = Object.keys(draft.data[action.row]);
       draft.data[action.row][temp[action.col]].value = action.value;
       return draft;
-    case "UPDATE_COLUMN_DATA":
-      //update column order
+    case "UPDATE_COLUMN_ORDER":
+      //update draft.headers order based on targetColumn and draggedColumn
+      const targetColumn =
+        draft.headers[action.targetColumn.replace(/column/, "") - 1];
+      const draggedColumn =
+        draft.headers[action.draggedColumn.replace(/column/, "") - 1];
+
+      draft.headers[action.targetColumn.replace(/column/, "") - 1] =
+        draggedColumn;
+      draft.headers[action.draggedColumn.replace(/column/, "") - 1] =
+        targetColumn;
       return draft;
     case "UPDATE_ROW":
       draft.data.splice(
@@ -37,6 +46,7 @@ export const LayoutProvider = ({ children, setProp, layoutState }) => {
   const [state, dispatch] = useReducer(produce(layoutConfig), layoutState);
 
   useEffect(() => {
+    console.log("state ", state);
     setProp({ layoutState: state });
   }, [state]);
 

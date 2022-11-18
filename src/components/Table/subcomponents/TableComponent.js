@@ -99,7 +99,7 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   return [...columnOrder];
 };
 
-const DraggableColumnHeader = ({ header, table, len }) => {
+const DraggableColumnHeader = ({ header, table, setColumnUpdate }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
@@ -116,12 +116,10 @@ const DraggableColumnHeader = ({ header, table, len }) => {
       setColumnOrder(newColumnOrder);
 
       dispatch({
-        func: "UPDATE_COLUMN_DATA",
-        newColumnOrder,
+        func: "UPDATE_COLUMN_ORDER",
+        draggedColumn: draggedColumn.id,
+        targetColumn: column.id,
       });
-
-      console.log("log ", table);
-      console.log("log ", table.getAllFlatColumns());
     },
   });
 
@@ -254,7 +252,6 @@ const DraggableRow = ({ row, reorderRow, len }) => {
               // alignItems: "center",
             }}
           >
-            {console.log(cell.row.original[cell.column.id].type)}
             {renderTextArea(
               cell.row.original[cell.column.id].value,
               cell.row.index,
@@ -274,6 +271,8 @@ const TableComponent = () => {
     state.headers.map((column) => column.id)
   );
 
+  const [columnUpdate, setColumnUpdate] = useState(false);
+
   const reorderRow = (draggedRowIndex, targetRowIndex) => {
     dispatch({
       func: "UPDATE_ROW",
@@ -281,10 +280,6 @@ const TableComponent = () => {
       targetRowIndex,
     });
   };
-
-  React.useEffect(() => {
-    console.log("data", state.data);
-  }, []);
 
   const table = useReactTable(
     {
@@ -302,7 +297,7 @@ const TableComponent = () => {
     },
     [state]
   );
-
+  
   return (
     <DndProvider backend={HTML5Backend}>
       <StyledTable>
@@ -316,6 +311,7 @@ const TableComponent = () => {
                   len={table.length}
                   header={header}
                   table={table}
+                  setColumnUpdate={setColumnUpdate}
                 />
               ))}
             </tr>
