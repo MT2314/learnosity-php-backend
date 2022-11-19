@@ -15,7 +15,14 @@
   .hideview {
     margin-top: 0.215625rem;
     visibility: hidden;
+  }
+
+  .hideview, .view {
     height: 0;
+    -moz-transition: height .5s ease-in-out;
+    -o-transition: height .5s ease-in-out;
+    -webkit-transition: height .5s ease-in-out;
+    transition: height .5s ease-in-out;
   }
 
   .view {
