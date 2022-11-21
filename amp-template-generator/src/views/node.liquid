@@ -50,25 +50,28 @@ permalink: "{{result.courseCode | default: 'noCourseCode'}}_{{result.lessonPath}
     };
     const result = await fetch(videoURL, {headers});
     const data = await result.json();
-    const chosenTrack = data.text_tracks[1].sources[0].src;
-
-    getFile(chosenTrack, function(response) {
-      if (response) {
-        var responseEdited = response.replace("X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0", "");
-        responseEdited = responseEdited.replace("WEBVTT", "");
-        responseEdited = responseEdited.replace("00:00.000 --> 01:00:00.000", "");
-        responseEdited = responseEdited.replaceAll("&quot;", '"');
-        responseEdited = responseEdited.replaceAll("&apos;", "'");
-        const splitted = responseEdited.split("<br \/>");
-        const divBody = document.querySelector('div');
-        for (let i = 0; i < splitted.length; i++) {
-          const p = document.createElement('p');
-          p.textContent = splitted[i];
-          divBody.appendChild(p);
+    if (data.text_tracks[1].sources === null) {
+      return;
+    } else {
+      const chosenTrack = data.text_tracks[1].sources[0].src;
+      getFile(chosenTrack, function(response) {
+        if (response) {
+          var responseEdited = response.replace("X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0", "");
+          responseEdited = responseEdited.replace("WEBVTT", "");
+          responseEdited = responseEdited.replace("00:00.000 --> 01:00:00.000", "");
+          responseEdited = responseEdited.replaceAll("&quot;", '"');
+          responseEdited = responseEdited.replaceAll("&apos;", "'");
+          const splitted = responseEdited.split("<br \/>");
+          const divBody = document.querySelector('div');
+          for (let i = 0; i < splitted.length; i++) {
+            const p = document.createElement('p');
+            p.textContent = splitted[i];
+            divBody.appendChild(p);
+          }
         }
-      }
-    });
-  } 
+      });
+    }
+  };
   fetchAPI();
   document.querySelector('div').textContent = "";
 </script>
