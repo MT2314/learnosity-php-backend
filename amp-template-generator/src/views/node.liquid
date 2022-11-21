@@ -50,9 +50,7 @@ permalink: "{{result.courseCode | default: 'noCourseCode'}}_{{result.lessonPath}
     };
     const result = await fetch(videoURL, {headers});
     const data = await result.json();
-    if (data.text_tracks[1].sources === null) {
-      return;
-    } else {
+    if (data.text_tracks[1].sources !== null) {
       const chosenTrack = data.text_tracks[1].sources[0].src;
       getFile(chosenTrack, function(response) {
         if (response) {
