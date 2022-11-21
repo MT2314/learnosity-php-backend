@@ -254,8 +254,8 @@ const SelectNumber = ({ number, setNumber }) => {
       />
       <input
         value={number}
-        onChange={(e) => {
-          const value = e.target.value;
+        onInput={(e) => {
+          const value = parseInt(e.target.value);
           if (value >= 2 && value <= 6) {
             setNumber(value);
           }
