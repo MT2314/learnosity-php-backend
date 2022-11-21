@@ -58,8 +58,10 @@
 
   .transcript::-webkit-scrollbar-thumb {
     background:#737272;
-    border-radius: 9px;
-    height: 30%;
+    height: 56px;
+    border-radius: 8px;
+    border: 4px solid transparent;
+    background-clip: content-box;
   }
 
   .description-container {
@@ -127,7 +129,7 @@
         background: $transparent-grey-100;
         border: none;
         position: relative;
-        border-radius: 0.3125rem;
+        border-radius: 0.625rem;
         cursor: pointer;
         margin-bottom: 16px;
 

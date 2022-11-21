@@ -17,6 +17,62 @@ permalink: "{{result.courseCode | default: 'noCourseCode'}}_{{result.lessonPath}
   {%- endfor -%}
 {%- endif %}
 
+<script id="api-script" type="text/plain" target="amp-script">
+  const getFile = (url, callback) => { // get file from a URL link
+    url = url.replace("http://", "https://");
+    var httpRequest = new XMLHttpRequest(),
+      response,
+      getResponse = function() { // response handler
+        try {
+          if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+              response = httpRequest.responseText;
+              if (response === "{null}") { // some API requests return '{null}' will breaks JSON.parse
+                response = null;
+              }
+              callback(response); // return the response
+            } else {
+              callback(null);
+            }
+          }
+        } catch (e) {
+          callback(null);
+        }
+      };
+    httpRequest.onreadystatechange = getResponse; // set response handler
+    httpRequest.open("GET", url); // open the request
+    httpRequest.send(); // open and send request
+  };
+  const fetchAPI = async () => {
+    const videoURL = document.querySelector('div').textContent;
+    const headers = {
+      "BCOV-Policy": 'BCpkADawqM1XplIzTT5iB8WK5oNDPzQsM2CDxSACIVrgtdNB-PRZjMuDeSgYSpdK1dkvswBpDnEoxoAtwa1u9AYhNqX8LemUJQGTksH9e5M5QlElWJy6ygFINKA'
+    };
+    const result = await fetch(videoURL, {headers});
+    const data = await result.json();
+    const chosenTrack = data.text_tracks[1].sources[0].src;
+
+    getFile(chosenTrack, function(response) {
+      if (response) {
+        var responseEdited = response.replace("X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0", "");
+        responseEdited = responseEdited.replace("WEBVTT", "");
+        responseEdited = responseEdited.replace("00:00.000 --> 01:00:00.000", "");
+        responseEdited = responseEdited.replaceAll("&quot;", '"');
+        responseEdited = responseEdited.replaceAll("&apos;", "'");
+        const splitted = responseEdited.split("<br \/>");
+        const divBody = document.querySelector('div');
+        for (let i = 0; i < splitted.length; i++) {
+          const p = document.createElement('p');
+          p.textContent = splitted[i];
+          divBody.appendChild(p);
+        }
+      }
+    });
+  } 
+  fetchAPI();
+  document.querySelector('div').textContent = "";
+</script>
+
 <!-- <script type="text/javascript">
 console.log("Dumping data object here");
 console.log({{ result | json }});
