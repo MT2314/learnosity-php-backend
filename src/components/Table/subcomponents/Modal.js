@@ -232,9 +232,6 @@ const StyledSelectNumber = styled("div")(() => ({
 }));
 
 const SelectNumber = ({ number, setNumber }) => {
-  useEffect(() => {
-    console.log(number);
-  }, [number]);
   return (
     <StyledSelectNumber
       tabIndex={0}
