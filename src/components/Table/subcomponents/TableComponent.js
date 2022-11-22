@@ -305,8 +305,6 @@ const TableComponent = () => {
     state.headers.map((column) => column.id)
   );
 
-  const [newState, setNewState] = useState(state);
-
   const [columnUpdate, setColumnUpdate] = useState(false);
 
   const reorderRow = (draggedRowIndex, targetRowIndex) => {
@@ -325,7 +323,6 @@ const TableComponent = () => {
         columnOrder,
       },
       onColumnOrderChange: setColumnOrder,
-      onStateChange: setNewState,
       getCoreRowModel: getCoreRowModel(),
       getRowId: (row) => row.name,
       debugTable: true,
@@ -334,12 +331,6 @@ const TableComponent = () => {
     },
     [state, columnOrder]
   );
-
-  React.useEffect(() => {
-    console.log("COLUMN ORDER");
-    console.log(columnOrder);
-    console.log(table.options);
-  }, [columnOrder]);
 
   return (
     <DndProvider backend={HTML5Backend}>
