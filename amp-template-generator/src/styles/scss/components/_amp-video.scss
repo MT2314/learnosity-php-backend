@@ -8,7 +8,7 @@
 
   .transcript-wrapper {
     position: relative;
-    max-width: 760px;
+    max-width: 768px;
     margin: auto;
   }
 
@@ -32,6 +32,9 @@
     border: 1px solid $component-border;
     border-radius: 9px 9px 0 0;
     visibility: visible;
+    &:focus-visible {
+      outline: auto 1px;
+    }
   }
 
   .transcript {
