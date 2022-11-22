@@ -115,16 +115,9 @@ const Modal = ({ setShowModal, setShowTable }) => {
       });
     });
 
-    headerSelection === "side-header" &&
-      headers.push({
-        accessorKey: `column${numberCol + 1}`,
-        id: `column${numberCol + 1}`,
-        header: "",
-      });
+    const cols = headerSelection === "side-header" ? numberCol : numberCol;
 
-    const cols = headerSelection === "side-header" ? numberCol + 1 : numberCol;
-
-    const rows = headerSelection === "top-header" ? numberRow + 1 : numberRow;
+    const rows = headerSelection === "top-header" ? numberRow : numberRow;
 
     [...Array(rows)].forEach((_, i) => {
       const row = {};
