@@ -329,7 +329,7 @@ const TableComponent = () => {
       debugHeaders: true,
       debugColumns: true,
     },
-    [state]
+    [state, columnOrder]
   );
 
   return (
