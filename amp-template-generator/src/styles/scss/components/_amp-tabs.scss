@@ -28,8 +28,9 @@
         height: 4.625rem;
         border-left-width: 0;
         background-color: $inactive-bg;
+        margin: 0;
 
-        p {
+        .tab-title {
           font-style: normal;
           text-align: center;
           word-wrap: break-word;

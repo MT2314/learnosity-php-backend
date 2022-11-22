@@ -49,7 +49,7 @@
                 on="expand:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ accordionId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
 
                 {%comment%}Pane Heading:{%endcomment%}
-                <header
+                <{{tab.headingLevel}}
                     id="{{ accordionId }}_heading{{ forloop.index0 }}"
                     class="accordion-pane p2"
                     role="button"
@@ -72,7 +72,7 @@
                             </svg>
                         </i>
                     </span>
-                </header>
+                </{{tab.headingLevel}}>
     
                 {%comment%}Pane Body:{%endcomment%}
                 <div class="section-content border-left border-right px3 pt3" aria-labelledby="{{ accordionId }}_heading{{ forloop.index0 }}">
