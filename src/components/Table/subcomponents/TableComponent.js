@@ -15,6 +15,8 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
+import Toolbar from "./Toolbar";
+
 // Styled import
 import styled from "@emotion/styled";
 
@@ -301,6 +303,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
 
 const TableComponent = () => {
   const [state, dispatch] = useContext(LayoutContext);
+  const [disconnect, setDisconnect] = useState(false);
 
   const [columnOrder, setColumnOrder] = useState(
     state.headers.map((column) => column.id)
@@ -335,6 +338,9 @@ const TableComponent = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
+      <Toolbar
+        disconnect={disconnect}
+       />
       <StyledTable role="presentation">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
