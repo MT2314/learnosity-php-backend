@@ -238,7 +238,7 @@ const SelectNumber = ({ number, setNumber, type }) => {
   return (
     <StyledSelectNumber
       tabIndex={0}
-      data-testid={`select-number"-${type}`}
+      data-testid={`select-number-${type}`}
       onKeyDown={(e) => {
         if (e.keyCode === 38) {
           e.preventDefault();
