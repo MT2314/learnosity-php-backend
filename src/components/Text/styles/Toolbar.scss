@@ -251,9 +251,9 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   top: 100px;
   left: 50%;
   z-index: 1000;
-  // & .MuiPaper-root {
-  //   background-color: transparent;
-  // }
+  & .MuiPaper-root {
+    background-color: transparent;
+  }
 }
 
 // Entire Toolbar *Appbar*
@@ -283,7 +283,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   // box model
   border-left: var(--borderLeft);
   border-radius: 4px;
-  padding: 0px;
+  padding: 0px 3px;
 }
 
 // Header
@@ -449,23 +449,23 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 
 // Bold Icon weird 2 SVGs in one)
 .bold {
-  margin-left: 3px;
-  padding: 2px 0px;
+  // margin-left: 3px;
+  padding: 0px;
   height: 30px;
   width: 30px;
 }
 // List Icon (7px padding on other icons)
 // 5px on link icon + 2px on each side * adding up to 7
 .list {
-  padding: 5px;
-  margin: 2px;
+  padding: 0px;
+  margin: 0px;
 }
 
 // Link Icon (7px padding on other icons.
 // 5px on link icon + 4px on right side * adding up to 7)
 .link {
-  padding: 5px;
-  margin-right: 4px;
+  padding: 0px;
+  // margin-right: 4px;
 }
 
 // // InfoBox Toolbar *First Level* (Bold, Italic, etc.)

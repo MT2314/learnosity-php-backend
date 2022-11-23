@@ -41,7 +41,6 @@ import {
   MenuList,
   IconButton,
   Button,
-  Divider,
   Tooltip,
 } from "@mui/material";
 
@@ -180,13 +179,13 @@ const StyledIconButton = styled(IconButton)(({ disabled }) => ({
   //   backgroundColor: "rgba(255,255,255,1) !important",
   // },
 }));
-
-// const Divider = styled("div")(({}) => ({
-// width: "1px",
-// height: "25px",
-// backgroundColor: "#E0E0E0 !important",
-// }));
-
+const Divider = styled("div")(({}) => ({
+  width: "0.5px",
+  height: "25px",
+  backgroundColor: "#E0E0E0 !important",
+  marginLeft: "3.5px",
+  marginRight: "3.5px",
+}));
 const CustomToolBar = (props) => {
   return (
     <>
@@ -455,10 +454,10 @@ const ToolBar = ({
             }`,
             "--grid-template-columns": `${
               isInfoBox
-                ? "1fr 1fr 1fr auto 1fr"
+                ? "1fr 1fr 1fr 8px 1fr"
                 : portal?.parentComponent === "video"
-                ? "1fr 1fr 1fr auto 1fr"
-                : "1fr 1fr 1fr 1fr auto 1fr"
+                ? "1fr 1fr 1fr 1fr 1fr"
+                : "1fr 1fr 1fr 1fr 9px 1fr"
             }`,
             "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
           }}
@@ -666,7 +665,7 @@ const ToolBar = ({
           ></ListDropdownButton>
 
           {/* link btn and divider */}
-          <Divider orientation="vertical" variant="middle" flexItem />
+          <Divider />
           <Tooltip aria-label="link" title="link" placement="top" arrow>
             <IconButton
               ref={linkRef}
