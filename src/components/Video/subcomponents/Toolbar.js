@@ -890,7 +890,7 @@ const ToolBar = ({
                 onClick={handleClickTranscript}
                 className="SelectButton"
                 style={{
-                  "--active": openVideo ? "rgba(21, 101, 192, 1)" : "#000",
+                  // "--active": openVideo ? "rgba(21, 101, 192, 1)" : "#000",
                   "--width": "100%",
                   "--grid-template-columns": "1fr",
                 }}
