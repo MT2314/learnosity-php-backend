@@ -279,6 +279,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
         return (
           <StyledTd
             key={cell.id}
+            data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
             style={{
               backgroundColor: type == "title" ? "#EEEEEE" : "#FFFFFF",
               verticalAlign: type == "title" ? "middle" : "top",
