@@ -63,7 +63,15 @@ const StyledHeaderInput = styled(TextareaAutosize)(
     },
   })
 );
-
+const StyledConfigBar = styled("div")({
+  position: "fixed",
+  top: "80px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  zIndex: 1000,
+  justifyContent: "center",
+  backgroundColor: "transparent",
+});
 const Header = () => {
   // Header Component State
   const [state, dispatch] = useContext(HeaderContext);
@@ -96,13 +104,15 @@ const Header = () => {
       onFocus={(e) => setToolbar(true)}
       ref={headerRef}
     >
-      <HeaderToolbar
-        toolbar={toolbar}
-        state={state}
-        dispatch={dispatch}
-        activeTopMenu={activeTopMenu}
-        setActiveTopMenu={setActiveTopMenu}
-      />
+      <StyledConfigBar>
+        <HeaderToolbar
+          toolbar={toolbar}
+          state={state}
+          dispatch={dispatch}
+          activeTopMenu={activeTopMenu}
+          setActiveTopMenu={setActiveTopMenu}
+        />
+      </StyledConfigBar>
 
       <StyledPaper elevation="0">
         <StyledHeaderInput

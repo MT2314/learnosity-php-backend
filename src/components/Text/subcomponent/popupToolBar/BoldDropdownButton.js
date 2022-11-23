@@ -75,12 +75,10 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
         show={show}
         isInfoBox={isInfoBox}
         isVideo={isVideo}
-        className={`${
-          show ? "bold-dropdown show" : "bold-dropdown hide"
-        } StyledCard`}
+        className="StyledCard"
         style={{
           "--card-display": show ? "flex" : "none",
-          "--left": isInfoBox ? "0px" : isVideo ? "0px" : "-4px",
+          "--left": isInfoBox ? "151px" : isVideo ? "320px" : "0px",
           "--width": "214px",
         }}
         onKeyDown={onKeyDropDown}
@@ -88,9 +86,11 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
         <Tooltip aria-label="bold" title="bold" placement="top" arrow>
           <button
             aria-label="bold"
-            className={
-              active.bold ? "ql-bold ql-selected ql-active" : "ql-bold"
-            }
+            className={"StyledIconButton bold"}
+            style={{
+              "--active": active.bold ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background": active.bold ? "rgba(21, 101, 192, 0.12)" : "#fff",
+            }}
             onClick={(e) => handleFormat("bold")}
           >
             {icons["customBold"]}
@@ -99,9 +99,13 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
         <Tooltip aria-label="italic" title="italic" placement="top" arrow>
           <button
             aria-label="italic"
-            className={
-              active.italic ? "ql-italic ql-selected ql-active" : "ql-italic"
-            }
+            className={"StyledIconButton"}
+            style={{
+              "--active": active.italic ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background": active.italic
+                ? "rgba(21, 101, 192, 0.12)"
+                : "#fff",
+            }}
             onClick={(e) => handleFormat("italic")}
           >
             {icons["italic"]}
@@ -110,11 +114,13 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
         <Tooltip aria-label="underline" title="underline" placement="top" arrow>
           <button
             aria-label="underline"
-            className={
-              active.underline
-                ? "ql-underline ql-selected ql-active"
-                : "ql-underline"
-            }
+            className={"StyledIconButton"}
+            style={{
+              "--active": active.underline ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background": active.underline
+                ? "rgba(21, 101, 192, 0.12)"
+                : "#fff",
+            }}
             onClick={(e) => handleFormat("underline")}
           >
             {icons["underline"]}
@@ -128,9 +134,13 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
         >
           <button
             aria-label="strike"
-            className={
-              active.strike ? "ql-strike ql-selected ql-active" : "ql-strike"
-            }
+            className={"StyledIconButton"}
+            style={{
+              "--active": active.strike ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background": active.strike
+                ? "rgba(21, 101, 192, 0.12)"
+                : "#fff",
+            }}
             onClick={(e) => handleFormat("strike")}
           >
             {icons["strike"]}
@@ -139,9 +149,11 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
         <Tooltip aria-label="subscript" title="subscript" placement="top" arrow>
           <button
             aria-label="sub script"
-            className={
-              active.sub ? "ql-script ql-selected ql-active" : "ql-script"
-            }
+            className={"StyledIconButton"}
+            style={{
+              "--active": active.sub ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background": active.sub ? "rgba(21, 101, 192, 0.12)" : "#fff",
+            }}
             onClick={(e) => handleFormat("sub")}
             value="sub"
           >
@@ -156,9 +168,13 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
         >
           <button
             aria-label="super script"
-            className={
-              active.super ? "ql-script ql-selected ql-active" : "ql-script"
-            }
+            className={"StyledIconButton"}
+            style={{
+              "--active": active.super ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background": active.super
+                ? "rgba(21, 101, 192, 0.12)"
+                : "#fff",
+            }}
             onClick={(e) => handleFormat("super")}
             value="super"
           >

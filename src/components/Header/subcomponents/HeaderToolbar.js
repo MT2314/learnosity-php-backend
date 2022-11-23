@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import "../styles/Toolbar.scss";
+import "../../Text/styles/Toolbar.scss";
 import { HeaderContext } from "../HeaderContext";
 
 // MUI
@@ -73,6 +73,8 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
     handleAlignmentChange(activeDropDownItem);
   }, [activeDropDownItem]);
 
+  console.log(state.size);
+
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -82,12 +84,28 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
         "--active": toolbar ? "block" : "none",
       }}
     >
-      <AppBar position="static" className="StyledAppbar">
+      <AppBar
+        position="static"
+        className="StyledAppbar"
+        elevation={0}
+        style={{
+          "--display": "flex",
+          "--direction": "row",
+          "--width":
+            state.size == "large"
+              ? "134px"
+              : state.size == "medium"
+              ? "153px"
+              : state.size == "small" && "134px",
+        }}
+      >
         <Toolbar
           position="static"
           className="StyledToolbar"
           style={{
-            "--width": "8.4375rem",
+            "--borderLeft": "4px solid #1565c0",
+            "--grid-template-columns": "3fr 9px 1fr",
+            "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
           }}
         >
           <Button
@@ -105,8 +123,10 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
             className="SelectButton"
             style={{
               "--active": openHeader ? "rgba(21, 101, 192, 1)" : "#000",
-              "--width": "87px",
               "--svg": openHeader ? " " : "rotate(180deg)",
+              "--width": "100%",
+              "--padding": "0 4.5px",
+              "--grid-template-columns": "1fr 3fr",
             }}
           >
             <Chevron />
@@ -120,7 +140,15 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
             >
               {({ TransitionProps }) => (
                 <Grow {...TransitionProps}>
-                  <Paper elevation={0} className="StyledSelectPaper">
+                  <Paper
+                    elevation={0}
+                    className="StyledSelectPaper"
+                    style={{
+                      "--height": "113px",
+                      "--margin-left": "6px",
+                      "--width": "87px",
+                    }}
+                  >
                     <ClickAwayListener
                       onClickAway={() => setHeaderOpen(!openHeader)}
                     >
@@ -143,6 +171,7 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                               aria-labelledby={label}
                               className="StyledMenuItem"
                               style={{
+                                "--gridTemplateRows": "31px 31px 31px",
                                 "--fontSize":
                                   label === "Large"
                                     ? "1.375rem"
@@ -181,7 +210,9 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
             </Popper>
           </Button>
 
-          <Divider orientation="vertical" variant="middle" flexItem />
+          {/* <Divider orientation="vertical" variant="middle" flexItem /> */}
+          <div className="StyledDivider" />
+
           <Tooltip
             aria-label="alignment"
             title="alignment"
@@ -253,10 +284,10 @@ const AlignDropdownButton = ({
     <>
       <Card
         elevation={0}
-        className="Styled-Card"
+        className="StyledCard"
         style={{
           "--card-display": activeTopMenu ? "flex" : "none",
-          "--left": "91.5px",
+          "--left": "112.5px",
           "--width": "112px",
         }}
       >
