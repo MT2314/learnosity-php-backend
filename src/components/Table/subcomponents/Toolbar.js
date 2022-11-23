@@ -113,7 +113,7 @@ const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
   letterSpacing: "0.009375rem",
 }));
 
-const ToolBar = ({ disconnect }) => {
+const ToolBar = ({ disconnect, setZebraStripes, zebraStripes }) => {
   return (
     <Container className="ToolbarDummy-Container" disconnect={disconnect}>
       <StyledAppbar position="static">
@@ -225,6 +225,7 @@ const ToolBar = ({ disconnect }) => {
                   <StyledFormControlLabel
                     control={
                       <Checkbox
+                        onChange={() => setZebraStripes(!zebraStripes)}
                         sx={{
                           "&:hover": {
                             bgcolor: "transparent",

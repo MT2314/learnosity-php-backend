@@ -283,7 +283,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
             key={cell.id}
             data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
             style={{
-              backgroundColor: type == "title" ? "#EEEEEE" : "#FFFFFF",
+              backgroundColor: type == "title" && "#EEEEEE",
               verticalAlign: type == "title" ? "middle" : "top",
             }}
             align="center"
@@ -304,6 +304,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
 const TableComponent = () => {
   const [state, dispatch] = useContext(LayoutContext);
   const [disconnect, setDisconnect] = useState(false);
+  const [zebraStripes, setZebraStripes] = useState(false);
 
   const [columnOrder, setColumnOrder] = useState(
     state.headers.map((column) => column.id)
@@ -335,11 +336,19 @@ const TableComponent = () => {
     },
     [state, columnOrder]
   );
+  
+  const StyledTbody = styled("tbody")(({ stripON }) => ({
+    "tr:nth-child(odd)": {
+      backgroundColor: stripON && "#F5F5F5",
+    }
+  }));
 
   return (
     <DndProvider backend={HTML5Backend}>
       <Toolbar
         disconnect={disconnect}
+        setZebraStripes={setZebraStripes}
+        zebraStripes={zebraStripes}
        />
       <StyledTable role="presentation">
         <thead>
@@ -362,7 +371,7 @@ const TableComponent = () => {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <StyledTbody stripON={zebraStripes}>
           {table.getRowModel().rows.map((row) => (
             <DraggableRow
               key={row.id}
@@ -370,7 +379,7 @@ const TableComponent = () => {
               reorderRow={reorderRow}
             ></DraggableRow>
           ))}
-        </tbody>
+        </StyledTbody>
       </StyledTable>
     </DndProvider>
   );
