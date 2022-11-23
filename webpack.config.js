@@ -36,7 +36,7 @@ module.exports = (_, argv) => {
   console.log(envKeys);
   return {
     output: {
-      filename: 'assets/js/[name].[contenthash:8].js',
+      filename: "assets/js/[name].[contenthash:8].js",
       publicPath:
         argv.mode === "development"
           ? `http://localhost:3001/`
@@ -119,6 +119,7 @@ module.exports = (_, argv) => {
         remotes: {},
         exposes: {
           "./componentIndex": "./src/components/componentIndex.js",
+          "./TenantContext": "./src/Context/TenantContext.js",
         },
         shared: {
           ...deps,
