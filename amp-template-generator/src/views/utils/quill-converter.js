@@ -85,6 +85,22 @@ function parse(entity) {
           _setHtml(
             entity.props.layoutState[i].components[j].componentProps.body
           );
+        if (
+          entity.props.layoutState[i].components[j].componentName === "Video"
+        ) {
+          entity.props.layoutState[i].components[
+            j
+          ].componentProps.videoState.videoDescription = _setHtml(
+            entity.props.layoutState[i].components[j].componentProps.videoState
+              .videoDescription
+          );
+          entity.props.layoutState[i].components[
+            j
+          ].componentProps.videoState.videoCredit = _setHtml(
+            entity.props.layoutState[i].components[j].componentProps.videoState
+              .videoCredit
+          );
+        }
       }
     }
   } else if (entity.componentName === "InfoBox") {
