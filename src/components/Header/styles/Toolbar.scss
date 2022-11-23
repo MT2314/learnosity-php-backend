@@ -1,227 +1,227 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
-// Variables
-// Colors
-$black: rgba(35, 35, 35, 1);
-$white: rgba(255, 255, 255, 1);
-$blue: rgba(21, 101, 192, 1);
-$lightBlue: rgba(21, 101, 192, 0.12);
-// Box Shadows
-$toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+// @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+// // Variables
+// // Colors
+// $black: rgba(35, 35, 35, 1);
+// $white: rgba(255, 255, 255, 1);
+// $blue: rgba(21, 101, 192, 1);
+// $lightBlue: rgba(21, 101, 192, 0.12);
+// // Box Shadows
+// $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 
-// Formatting buttons for toolbar
+// // Formatting buttons for toolbar
 
-// Outer Toolbar Container
-.ToolbarContainer {
-  // positioning
-  display: var(--active);
-  position: fixed;
-  top: 100px;
-  left: 50%;
-  z-index: 1000;
-}
-
-// Entire Toolbar *Appbar*
-.StyledAppbar {
-  box-shadow: $toolbarShadow;
-  border-radius: 4px;
-}
-
-// Toolbar
-.StyledToolbar {
-  // positioning
-  display: grid;
-  grid-template-columns: 91.5px auto 38.5px;
-  justify-items: center;
-  // size
-  width: var(--width);
-  height: 40px !important;
-  min-height: 40px !important;
-  // color
-  box-shadow: none;
-  // box model
-  border-left: 4px solid rgba(21, 101, 192, 1);
-  border-radius: 4px;
-  padding: 0px;
-}
-
-// Header
-.SelectButton {
-  // positioning
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-
-  // size
-  width: var(--width);
-  height: 100%;
-
-  // box model
-  box-shadow: none;
-  padding: 0 5px 0 7px;
-  border: none;
-  border-radius: 4px !important;
-
-  // color
-  color: var(--active);
-  background-color: transparent;
-
-  // formating
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5rem;
-  letter-spacing: 0.009375rem;
-  white-space: nowrap;
-
-  // icon svg
-  & svg {
-    padding: 0px;
-    fill: var(--active);
-    opacity: var(--disabled);
-    justify-self: flex-start;
-    transform: var(--svg);
-  }
-
-  // hover, active, focus states
-  &:hover,
-  &:active,
-  &:focus-visible {
-    background-color: transparent;
-    box-shadow: none;
-    cursor: pointer;
-    color: $blue;
-    & svg {
-      fill: $blue;
-    }
-  }
-  // disabled state
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.3;
-  }
-}
-
-// InfoBox Icon Select / Header Size Select Toolbar Paper
-.StyledSelectPaper {
-  background: #ffffff;
-  box-shadow: $toolbarShadow !important;
-  border-radius: 4px;
-  margin-left: 6px;
-  margin-top: 2px;
-  width: 90px;
-  height: 113px;
-}
-// Menu for Select
-.StyledMenu {
-  display: grid;
-  align-content: space-between;
-  height: 100%;
-  grid-template-rows: 31px 31px 31px;
-}
-
-// Menu Items for Select
-.StyledMenuItem {
-  width: 90px;
-  min-height: 31px !important;
-  padding-top: 2px !important;
-  padding-bottom: 2px !important;
-  font-size: var(--fontSize);
-  font-weight: var(--fontWeight);
-  line-height: var(--lineHeight);
-  letter-spacing: var(--letterSpacing);
-  background-color: transparent;
-  box-shadow: none;
-  &:hover,
-  &:active,
-  &:focus-visible {
-    background-color: rgba(0, 0, 0, 0.04) !important;
-  }
-}
-
-// Dropdown for all formatting options (bold, italic, etc.) *Second Level* Popper
-.Styled-Card {
-  position: absolute;
-  display: var(--card-display);
-  z-index: 25;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  left: var(--left);
-  bottom: -43px;
-  height: 40px !important;
-  width: var(--width);
-  background-color: #fff;
-  box-shadow: $toolbarShadow !important;
-}
-
-// DONE
-// Dropdown format options individual icons (Top Level)
-.StyledIconButton {
-  // positioning
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
-
-  // size
-  width: 30px;
-  height: 30px;
-
-  // box model
-  // margin-right: 7px;
-  padding: 7px;
-
-  // color
-  color: $black;
-  background: var(--background);
-
-  // border
-  border: none;
-  border-radius: 4px !important;
-
-  // icon svg
-  & svg {
-    fill: var(--active);
-    opacity: var(--disabled);
-  }
-
-  // hover, active, focus states
-  &:hover,
-  &:active,
-  &:focus-visible {
-    cursor: pointer;
-    background-color: $lightBlue;
-    & svg {
-      fill: $blue;
-    }
-  }
-  // disabled state
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.3;
-  }
-}
-
-// Bold Icon weird 2 SVGs in one)
-.boldHeader {
-  margin-left: 3px;
-  padding: 2px 0px;
-  height: 30px;
-  width: 30px;
-}
-// List Icon (7px padding on other icons)
-// 5px on link icon + 2px on each side * adding up to 7
-.list {
-  padding: 5px;
-  margin: 2px;
-}
-
-// Link Icon (7px padding on other icons.
-// 5px on link icon + 4px on right side * adding up to 7)
-.link {
-  padding: 5px;
-  margin-right: 4px;
-}
-
-// // InfoBox Toolbar *First Level* (Bold, Italic, etc.)
-// .InfoBox-Toolbar {
-//   width: 156px;
-//   gap: 2.5px;
+// // Outer Toolbar Container
+// .ToolbarContainer {
+//   // positioning
+//   display: var(--active);
+//   position: fixed;
+//   top: 100px;
+//   left: 50%;
+//   z-index: 1000;
 // }
+
+// // Entire Toolbar *Appbar*
+// .StyledAppbar {
+//   box-shadow: $toolbarShadow;
+//   border-radius: 4px;
+// }
+
+// // Toolbar
+// .StyledToolbar {
+//   // positioning
+//   display: grid;
+//   grid-template-columns: 91.5px auto 38.5px;
+//   justify-items: center;
+//   // size
+//   width: var(--width);
+//   height: 40px !important;
+//   min-height: 40px !important;
+//   // color
+//   box-shadow: none;
+//   // box model
+//   border-left: 4px solid rgba(21, 101, 192, 1);
+//   border-radius: 4px;
+//   padding: 0px;
+// }
+
+// // Header
+// .SelectButton {
+//   // positioning
+//   display: grid;
+//   grid-template-columns: 1fr 3fr;
+
+//   // size
+//   width: var(--width);
+//   height: 100%;
+
+//   // box model
+//   box-shadow: none;
+//   padding: 0 5px 0 7px;
+//   border: none;
+//   border-radius: 4px !important;
+
+//   // color
+//   color: var(--active);
+//   background-color: transparent;
+
+//   // formating
+//   font-size: 16px;
+//   font-weight: 400;
+//   line-height: 1.5rem;
+//   letter-spacing: 0.009375rem;
+//   white-space: nowrap;
+
+//   // icon svg
+//   & svg {
+//     padding: 0px;
+//     fill: var(--active);
+//     opacity: var(--disabled);
+//     justify-self: flex-start;
+//     transform: var(--svg);
+//   }
+
+//   // hover, active, focus states
+//   &:hover,
+//   &:active,
+//   &:focus-visible {
+//     background-color: transparent;
+//     box-shadow: none;
+//     cursor: pointer;
+//     color: $blue;
+//     & svg {
+//       fill: $blue;
+//     }
+//   }
+//   // disabled state
+//   &:disabled {
+//     cursor: not-allowed;
+//     opacity: 0.3;
+//   }
+// }
+
+// // InfoBox Icon Select / Header Size Select Toolbar Paper
+// .StyledSelectPaper {
+//   background: #ffffff;
+//   box-shadow: $toolbarShadow !important;
+//   border-radius: 4px;
+//   margin-left: 6px;
+//   margin-top: 2px;
+//   width: 90px;
+//   height: 113px;
+// }
+// // Menu for Select
+// .StyledMenu {
+//   display: grid;
+//   align-content: space-between;
+//   height: 100%;
+//   grid-template-rows: 31px 31px 31px;
+// }
+
+// // Menu Items for Select
+// .StyledMenuItem {
+//   width: 90px;
+//   min-height: 31px !important;
+//   padding-top: 2px !important;
+//   padding-bottom: 2px !important;
+//   font-size: var(--fontSize);
+//   font-weight: var(--fontWeight);
+//   line-height: var(--lineHeight);
+//   letter-spacing: var(--letterSpacing);
+//   background-color: transparent;
+//   box-shadow: none;
+//   &:hover,
+//   &:active,
+//   &:focus-visible {
+//     background-color: rgba(0, 0, 0, 0.04) !important;
+//   }
+// }
+
+// // Dropdown for all formatting options (bold, italic, etc.) *Second Level* Popper
+// .Styled-Card {
+//   position: absolute;
+//   display: var(--card-display);
+//   z-index: 25;
+//   flex-direction: row;
+//   justify-content: space-evenly;
+//   align-items: center;
+//   left: var(--left);
+//   bottom: -43px;
+//   height: 40px !important;
+//   width: var(--width);
+//   background-color: #fff;
+//   box-shadow: $toolbarShadow !important;
+// }
+
+// // DONE
+// // Dropdown format options individual icons (Top Level)
+// .StyledIconButton {
+//   // positioning
+//   display: flex !important;
+//   justify-content: center;
+//   align-items: center;
+
+//   // size
+//   width: 30px;
+//   height: 30px;
+
+//   // box model
+//   // margin-right: 7px;
+//   padding: 7px;
+
+//   // color
+//   color: $black;
+//   background: var(--background);
+
+//   // border
+//   border: none;
+//   border-radius: 4px !important;
+
+//   // icon svg
+//   & svg {
+//     fill: var(--active);
+//     opacity: var(--disabled);
+//   }
+
+//   // hover, active, focus states
+//   &:hover,
+//   &:active,
+//   &:focus-visible {
+//     cursor: pointer;
+//     background-color: $lightBlue;
+//     & svg {
+//       fill: $blue;
+//     }
+//   }
+//   // disabled state
+//   &:disabled {
+//     cursor: not-allowed;
+//     opacity: 0.3;
+//   }
+// }
+
+// // Bold Icon weird 2 SVGs in one)
+// .boldHeader {
+//   margin-left: 3px;
+//   padding: 2px 0px;
+//   height: 30px;
+//   width: 30px;
+// }
+// // List Icon (7px padding on other icons)
+// // 5px on link icon + 2px on each side * adding up to 7
+// .list {
+//   padding: 5px;
+//   margin: 2px;
+// }
+
+// // Link Icon (7px padding on other icons.
+// // 5px on link icon + 4px on right side * adding up to 7)
+// .link {
+//   padding: 5px;
+//   margin-right: 4px;
+// }
+
+// // // InfoBox Toolbar *First Level* (Bold, Italic, etc.)
+// // .InfoBox-Toolbar {
+// //   width: 156px;
+// //   gap: 2.5px;
+// // }

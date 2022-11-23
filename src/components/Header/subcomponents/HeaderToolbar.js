@@ -82,12 +82,22 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
         "--active": toolbar ? "block" : "none",
       }}
     >
-      <AppBar position="static" className="StyledAppbar">
+      <AppBar
+        position="static"
+        className="StyledAppbar"
+        style={{
+          "--background": "rgba(255,255,255,1)",
+          "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
+        }}
+      >
         <Toolbar
           position="static"
           className="StyledToolbar"
           style={{
             "--width": "8.4375rem",
+            "--borderLeft": "4px solid #1565c0",
+            "--grid-template-columns": "91.5px auto 38.5px",
+            "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
           }}
         >
           <Button
@@ -106,6 +116,7 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
             style={{
               "--active": openHeader ? "rgba(21, 101, 192, 1)" : "#000",
               "--width": "87px",
+              "--padding": "0 5px 0 7px",
               "--svg": openHeader ? " " : "rotate(180deg)",
             }}
           >
@@ -120,7 +131,14 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
             >
               {({ TransitionProps }) => (
                 <Grow {...TransitionProps}>
-                  <Paper elevation={0} className="StyledSelectPaper">
+                  <Paper
+                    elevation={0}
+                    className="StyledSelectPaper"
+                    style={{
+                      "--height": "113px",
+                      "--margin-left": "6px",
+                    }}
+                  >
                     <ClickAwayListener
                       onClickAway={() => setHeaderOpen(!openHeader)}
                     >
@@ -143,6 +161,7 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                               aria-labelledby={label}
                               className="StyledMenuItem"
                               style={{
+                                "--gridTemplateRows": "31px 31px 31px",
                                 "--fontSize":
                                   label === "Large"
                                     ? "1.375rem"
@@ -253,7 +272,7 @@ const AlignDropdownButton = ({
     <>
       <Card
         elevation={0}
-        className="Styled-Card"
+        className="StyledCard"
         style={{
           "--card-display": activeTopMenu ? "flex" : "none",
           "--left": "91.5px",
