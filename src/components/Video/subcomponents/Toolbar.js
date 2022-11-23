@@ -39,135 +39,6 @@ import icons from "../assets/icons";
 // * Styled Components
 
 // ? Styled Container
-const Container = styled("div")(({ disconnect }) => ({
-  display: disconnect ? "none" : "block !important",
-  position: "fixed !important",
-  top: "100px !important",
-  // left: "36% !important",
-  left: "50%",
-  transform: "translateX(-50%) !important",
-  zIndex: 1000,
-  gap: "10px",
-  "& .MuiPaper-root": {
-    backgroundColor: "transparent",
-  },
-  "& .StyledCard .MuiPaper-root": {
-    backgroundColor: "#fff",
-  },
-}));
-
-// ? Styled Tooltip
-const StyledTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(() => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: "rgba(97, 97, 97, 0.9)",
-    border: "4px",
-    color: "#fff",
-    height: "22px",
-    padding: "4px, 8px, 4px, 8px",
-    fontSize: "10px",
-    lineHeight: "14px",
-    fontWeight: "500",
-    "& .MuiTooltip-arrow": {
-      color: "rgba(97, 97, 97, 0.9)",
-    },
-  },
-}));
-// ? Styled Appbar
-const StyledAppbar = styled(AppBar)({
-  display: "flex",
-  flexDirection: "row",
-  minHeight: "40px !important",
-  gap: "10px",
-  boxShadow: "none !important",
-  "& .MuiPaper-root": {
-    backgroundColor: "#fff",
-  },
-});
-
-// ? Styled Text Toolbar (Possibly Temp)
-const StyledToolbar = styled(Toolbar)(({}) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  borderLeft: "none !important",
-  height: "40px !important",
-  minHeight: "40px !important",
-  width: "160px",
-  margin: "10px, 8px",
-  paddingRight: "0px !important",
-  backgroundColor: "#FFF",
-  boxShadow: "0px 0px 10px 0 rgba(0, 0, 0, 0.1)",
-  clipPath: "inset(-10px 0px -10px -10px)",
-
-  borderRadius: "4px",
-  "& .MuiToolbar-gutters": {
-    paddingLeft: 0,
-    paddingRight: 0,
-  },
-  "& .MuiPaper-root ": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
-    backgroundColor: "#FFF !important",
-  },
-}));
-
-// Video Styled Components
-const StyledVideoToolbar = styled(Toolbar)(({ selected }) => ({
-  borderLeft: "4px solid #1565C0",
-  display: "flex",
-  justifyContent: "space-evenly",
-  minHeight: "40px !important",
-  minWidth: selected ? "310px" : "200px",
-  margin: "10px, 7px",
-  backgroundColor: "#FFF",
-  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-  borderRadius: "4px",
-  paddingLeft: "0px",
-  paddingRight: "0px",
-  paddingLeft: "0px!important",
-  paddingRight: "0px!important",
-  "& .MuiToolbar-gutters": {
-    paddingLeft: "0px",
-    paddingRight: "0px",
-  },
-}));
-const StyledVideoButton = styled(Button)(({ openVideo }) => ({
-  display: "flex",
-  flexDirection: "row",
-  backgroundColor: "#FFF",
-  color: "#232323",
-  fontFamily: `"Inter", sans-serif`,
-  fontSize: "1rem",
-  fontWeight: "400",
-  lineHeight: "1.5rem",
-  letterSpacing: "0.009375rem",
-  width: "78px",
-  padding: "8px 10px",
-  whiteSpace: "nowrap",
-  textAlign: "center",
-  textTransform: "none",
-  boxShadow: "none",
-  ...(openVideo && {
-    cursor: "pointer",
-    color: "rgba(21, 101, 192, 1)",
-  }),
-  "&:hover": {
-    background: "transparent",
-    boxShadow: "none",
-    color: "#1565C0",
-  },
-  "&:active": {
-    background: "transparent",
-    boxShadow: "none",
-    color: "#1565C0",
-  },
-  "&:focus-visible": {
-    background: "transparent",
-    boxShadow: "none",
-    color: "#1565C0",
-  },
-  "&:disabled": { background: "none" },
-}));
 
 const StyledVideoMenu = styled(MenuList)(({}) => ({
   display: "flex",
@@ -325,12 +196,6 @@ const StyledIconButton = styled(IconButton)(({ disabled }) => ({
   "& .MuiPaper-root ": {
     backgroundColor: "rgba(255,255,255,1) !important",
   },
-}));
-
-const Divider = styled("div")(({}) => ({
-  width: "1px",
-  height: "25px",
-  backgroundColor: "#E0E0E0 !important",
 }));
 
 const ToolBar = ({
@@ -1007,7 +872,7 @@ const ToolBar = ({
                 )}
               </Popper>
             )}
-            <Divider />
+            <div className="StyledDivider" />
             {/* Download Transcript Button */}
             <Tooltip
               aria-label="download transcript"
