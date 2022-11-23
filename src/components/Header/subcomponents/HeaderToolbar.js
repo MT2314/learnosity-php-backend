@@ -73,8 +73,6 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
     handleAlignmentChange(activeDropDownItem);
   }, [activeDropDownItem]);
 
-  console.log(state.size);
-
   return (
     <div
       onClick={(e) => e.stopPropagation()}
