@@ -56,7 +56,12 @@ const Table = () => {
           {showModal && <Modal setShowModal={setShowModal} />}
           <Container>
             <ButtonContainer>
-              <StyledButton onClick={createTable}>Create a Table</StyledButton>
+              <StyledButton
+                onClick={createTable}
+                data-testid="create-a-table-button"
+              >
+                Create a Table
+              </StyledButton>
             </ButtonContainer>
           </Container>
         </>
