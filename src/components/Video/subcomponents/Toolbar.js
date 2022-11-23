@@ -437,7 +437,7 @@ const ToolBar = ({
                   {
                     name: "offset",
                     options: {
-                      offset: videoAPI.videoId ? [-55, 0] : [-10, 0],
+                      offset: videoAPI.videoId ? [-55, 0] : [-5, 0],
                     },
                   },
                 ]}
@@ -449,7 +449,7 @@ const ToolBar = ({
                       className="StyledSelectPaper"
                       style={{
                         "--height": "40px",
-                        // "--margin-left": "6px",
+                        "--margin-left": "6px",
                         "--width": "256px",
                       }}
                     >

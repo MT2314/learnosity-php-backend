@@ -39,7 +39,7 @@ const AlignDropdownButton = ({
         className="StyledCard"
         style={{
           "--card-display": show ? "flex" : "none",
-          "--left": isInfoBox ? "185.5px" : isVideo ? "354px" : "69px",
+          "--left": isInfoBox ? "185.5px" : isVideo ? "244px" : "69px",
           "--width": "112px",
         }}
         onKeyDown={onKeyDropDown}
