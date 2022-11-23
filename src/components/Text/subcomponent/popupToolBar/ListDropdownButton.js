@@ -29,18 +29,24 @@ const ListDropdownButton = ({ isInfoBox, show, onKeyDropDown, isVideo }) => {
         className={`StyledCard`}
         style={{
           "--card-display": show ? "flex" : "none",
-          "--left": isInfoBox ? "73.5px" : isVideo ? "73px" : "102px",
+          "--left": isInfoBox ? "220px" : isVideo ? "278px" : "102px",
           "--width": "78px",
         }}
       >
         <Tooltip aria-label="bullets" title="bullets" placement="top" arrow>
           <button
             aria-label="bullet list"
-            className={
-              activeDropDownList === "bullet"
-                ? "ql-list ql-selected ql-active"
-                : "ql-list"
-            }
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeDropDownList === "bullet"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeDropDownList == "bullet"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
             value="bullet"
             onClick={() => {
               if (activeDropDownList === "bullet") {
@@ -59,11 +65,17 @@ const ListDropdownButton = ({ isInfoBox, show, onKeyDropDown, isVideo }) => {
         <Tooltip aria-label="numbering" title="numbering" placement="top" arrow>
           <button
             aria-label="numbered list"
-            className={
-              activeDropDownList === "ordered"
-                ? "ql-list ql-selected ql-active"
-                : "ql-list"
-            }
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeDropDownList === "ordered"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeDropDownList == "ordered"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
             value="ordered"
             onClick={() => {
               if (activeDropDownList === "ordered") {

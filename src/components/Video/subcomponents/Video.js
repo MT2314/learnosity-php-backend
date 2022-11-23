@@ -72,6 +72,16 @@ const TranscriptButtonContainer = styled("button")(({ videoData }) => ({
   textAlign: "center",
 }));
 
+const StyledConfigBar = styled("div")({
+  position: "fixed",
+  top: "80px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  zIndex: 1000,
+  justifyContent: "center",
+  backgroundColor: "transparent",
+});
+
 // InfoBox component
 const Video = ({ setTabActive, setActiveComponent }) => {
   const focused = useFocused();
@@ -174,17 +184,19 @@ const Video = ({ setTabActive, setActiveComponent }) => {
         }
       }}
     >
-      <Toolbar
-        isVideo={isVideo}
-        videoAreaFocused={videoAreaFocused}
-        setVideoAPI={setVideoAPI}
-        videoAPI={videoAPI}
-        setVideoTextSettings={setVideoTextSettings}
-        videoTextSettings={videoTextSettings}
-        setToolbar={setToolbar}
-        disconnect={disconnect}
-        setMainToolbar={setMainToolbar}
-      />
+      <StyledConfigBar>
+        <Toolbar
+          isVideo={isVideo}
+          videoAreaFocused={videoAreaFocused}
+          setVideoAPI={setVideoAPI}
+          videoAPI={videoAPI}
+          setVideoTextSettings={setVideoTextSettings}
+          videoTextSettings={videoTextSettings}
+          setToolbar={setToolbar}
+          disconnect={disconnect}
+          setMainToolbar={setMainToolbar}
+        />
+      </StyledConfigBar>
       <Player videoId={videoAPI.videoId} videoSource={videoAPI.videoSource} />
       <StyledVideoContainer>
         <StyledVideoDescriptionContainer>
@@ -211,20 +223,10 @@ const Video = ({ setTabActive, setActiveComponent }) => {
           </DescriptionCreditContainer>
           <TranscriptButtonContainer
             data-testid="transcript"
-            videoData={
-              state.videoId ? true : false
-            }
+            videoData={state.videoId ? true : false}
           >
-            {state.videoId !== null ? (
-              <Checkmark />
-            ) : (
-              ""
-            )}
-            <span>
-              {state.videoId
-                ? "Transcript"
-                : "No Transcript"}
-            </span>
+            {state.videoId !== null ? <Checkmark /> : ""}
+            <span>{state.videoId ? "Transcript" : "No Transcript"}</span>
           </TranscriptButtonContainer>
         </StyledVideoDescriptionContainer>
       </StyledVideoContainer>
