@@ -159,6 +159,7 @@ const Modal = ({ setShowModal, setShowTable }) => {
         }
       }}
       tabIndex={0}
+      data-testid="modal"
     >
       <HeaderContainer>
         <span>Create a table</span>
@@ -167,11 +168,19 @@ const Modal = ({ setShowModal, setShowTable }) => {
       <SelectContainer>
         <div>
           <span>Columns</span>
-          <SelectNumber number={numberCol} setNumber={setNumberCol} />
+          <SelectNumber
+            number={numberCol}
+            setNumber={setNumberCol}
+            type="col"
+          />
         </div>
         <div>
           <span>Rows</span>
-          <SelectNumber number={numberRow} setNumber={setNumberRow} />
+          <SelectNumber
+            number={numberRow}
+            setNumber={setNumberRow}
+            type="row"
+          />
         </div>
       </SelectContainer>
       <FormatContainer>
@@ -199,6 +208,7 @@ const Modal = ({ setShowModal, setShowTable }) => {
       </FormatContainer>
       <FooterContainer>
         <StyledCreateButton
+          data-testid="create-table-button"
           onClick={createTable}
           disabled={headerSelection == null}
           disable={headerSelection}
@@ -224,10 +234,11 @@ const StyledSelectNumber = styled("div")(() => ({
   marginTop: "16px",
 }));
 
-const SelectNumber = ({ number, setNumber }) => {
+const SelectNumber = ({ number, setNumber, type }) => {
   return (
     <StyledSelectNumber
       tabIndex={0}
+      data-testid={`select-number"-${type}`}
       onKeyDown={(e) => {
         if (e.keyCode === 38) {
           e.preventDefault();
