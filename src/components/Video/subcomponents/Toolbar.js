@@ -82,41 +82,6 @@ const StyledInputItem = styled(MenuItem)(({}) => ({
   "&:focus": { background: "#FFFFFF" },
   "&:active": { background: "#FFFFFF" },
 }));
-
-const StyledKebabButton = styled(IconButton)(({ disabled, open, checked }) => ({
-  display: "flex !important",
-  height: "30px",
-  width: "30px",
-  padding: "5px",
-  margin: "0px",
-  color: "#232323",
-  backgroundColor: "none",
-  borderRadius: "4px !important",
-  ...(open && {
-    cursor: "pointer",
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-  }),
-  "& svg": {
-    fill: "#000",
-    ...(disabled && { opacity: 0.3 }),
-  },
-  "&:hover": {
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    "& svg": {
-      fill: "rgba(21, 101, 192, 1)",
-    },
-  },
-  "&:active": {
-    cursor: "pointer",
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    "& svg": {
-      color: "rgba(21, 101, 192, 1)",
-    },
-  },
-  "&:focus-visible": {
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-  },
-}));
 const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
   height: "24px",
   whiteSpace: "nowrap",
@@ -157,44 +122,6 @@ const StyledInput = styled(Input)(({ invalidid }) => ({
   },
   "&&:after": {
     borderBottom: "none",
-  },
-}));
-
-const StyledIconButton = styled(IconButton)(({ disabled }) => ({
-  display: "flex !important",
-  width: "30px",
-  height: "30px",
-  color: "#232323",
-  padding: "0px !important",
-  background: "#FFFFFF",
-  borderRadius: "4px !important",
-
-  "& svg": {
-    fill: "#000",
-    ...(disabled && { opacity: 0.3 }),
-  },
-  "&:hover": {
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    "& svg": {
-      fill: "rgba(21, 101, 192, 1)",
-    },
-  },
-  "&:active": {
-    cursor: "pointer",
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-    "& svg": {
-      color: "rgba(21, 101, 192, 1)",
-    },
-  },
-  "&:focus-visible": {
-    backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-  },
-  "& .MuiPaper-root": {
-    backgroundColor: "rgba(255,255,255,1) !important",
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
-  },
-  "& .MuiPaper-root ": {
-    backgroundColor: "rgba(255,255,255,1) !important",
   },
 }));
 
