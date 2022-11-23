@@ -186,7 +186,8 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 
   // box model
   // margin-right: 7px;
-  padding: 7px;
+  padding: 0px;
+  margin: 0px;
 
   // color
   color: $black;
@@ -225,25 +226,4 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 0.5px;
   background-color: #e0e0e0 !important;
   margin: 0 3.5px;
-}
-
-// Bold Icon weird 2 SVGs in one)
-.bold {
-  // margin-left: 3px;
-  padding: 0px;
-  height: 30px;
-  width: 30px;
-}
-// List Icon (7px padding on other icons)
-// 5px on link icon + 2px on each side * adding up to 7
-.list {
-  padding: 0px;
-  margin: 0px;
-}
-
-// Link Icon (7px padding on other icons.
-// 5px on link icon + 4px on right side * adding up to 7)
-.link {
-  padding: 0px;
-  // margin-right: 4px;
 }
