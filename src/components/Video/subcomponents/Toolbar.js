@@ -8,6 +8,7 @@ import Checkbox from "@mui/material/Checkbox";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { tooltipClasses } from "@mui/material/Tooltip";
 import styled from "@emotion/styled";
+import "../../Text/styles/Toolbar.scss";
 
 import {
   Popper,
@@ -557,21 +558,43 @@ const ToolBar = ({
   }, []);
   return (
     <>
-      <Container
+      <div
         onClick={(e) => e.stopPropagation()}
         onFocus={(e) => e.stopPropagation()}
-        className="ToolbarDummy-Container"
+        className="ToolbarContainer"
+        style={{
+          "--active": !disconnect ? "block" : "none",
+        }}
         disconnect={disconnect}
         ref={setMainToolbar}
         onKeyDown={handleShiftTab}
       >
-        <StyledAppbar position="static">
+        <AppBar
+          position="static"
+          className="StyledAppbar"
+          elevation={0}
+          style={{
+            "--display": "flex",
+            "--direction": "row",
+            "--gap": "10px",
+            "--boxShadow": "none !important",
+          }}
+        >
           {/* InfoBox Dropdown, rendered when Text component is inside of infoBox */}
 
-          <StyledVideoToolbar
+          <Toolbar
             position="static"
             selected={videoAPI.videoId}
             ref={selectRef}
+            className="StyledToolbar"
+            style={{
+              "--borderLeft": "4px solid #1565c0",
+              "--grid-template-columns": videoAPI.videoId
+                ? "117px 9px 169px"
+                : "88px 9px 88px",
+              "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
+              "--width": videoAPI.videoId ? "310px" : "200px",
+            }}
           >
             {/* Add Video Drop Down */}
             <Tooltip
@@ -590,26 +613,25 @@ const ToolBar = ({
                 ],
               }}
             >
-              <StyledVideoButton
+              <Button
                 ref={AddVideo}
                 data-addVideoid="AddVideo"
                 aria-controls={openVideo ? t("Add Video") : undefined}
                 aria-expanded={openVideo ? "true" : undefined}
-                sx={
-                  ({ width: "100%" },
-                  videoAPI.videoId && {
-                    width: "107px !important",
-                    flexGrow: "1",
-                  })
-                }
                 variant="contained"
                 openVideo={openVideo}
                 onClick={handleToggleVideo}
                 disableRipple
                 disableFocusRipple
+                className="SelectButton"
+                style={{
+                  "--active": openVideo ? "rgba(21, 101, 192, 1)" : "#000",
+                  "--width": "100%",
+                  "--grid-template-columns": "1fr",
+                }}
               >
                 {videoAPI.videoId ? "Change Video" : "Add Video"}
-              </StyledVideoButton>
+              </Button>
             </Tooltip>
             {/* Select Brightspace OR Youtube Dropdown */}
             {!selectYoutube && !selectBrightcove && (
@@ -630,7 +652,15 @@ const ToolBar = ({
               >
                 {({ TransitionProps }) => (
                   <Grow {...TransitionProps}>
-                    <Paper>
+                    <Paper
+                      elevation={0}
+                      className="StyledSelectPaper"
+                      style={{
+                        "--height": "40px",
+                        // "--margin-left": "6px",
+                        "--width": "256px",
+                      }}
+                    >
                       <StyledVideoMenu
                         data-testid="video-select-dropdown"
                         aria-labelledby={t("Video Drop Down")}
@@ -985,7 +1015,7 @@ const ToolBar = ({
               placement="top"
               arrow
             >
-              <StyledVideoButton
+              <Button
                 data-testid="download-transcript"
                 ref={TranscriptVideo}
                 aria-expanded={openTranscript ? "true" : undefined}
@@ -993,73 +1023,74 @@ const ToolBar = ({
                 disableRipple
                 disableFocusRipple
                 onClick={handleClickTranscript}
-                sx={
-                  videoAPI.videoId
-                    ? { width: "159px", flexGrow: "5" }
-                    : { width: "78px" }
-                }
+                className="SelectButton"
+                style={{
+                  "--active": openVideo ? "rgba(21, 101, 192, 1)" : "#000",
+                  "--width": "100%",
+                  "--grid-template-columns": "1fr",
+                }}
                 disabled={!videoAPI.videoId}
               >
-                {videoAPI.videoId
-                  ? "Download Transcript"
-                  : "Transcript"}
-              </StyledVideoButton>
+                {videoAPI.videoId ? "Download Transcript" : "Transcript"}
+              </Button>
             </Tooltip>
-          </StyledVideoToolbar>
+          </Toolbar>
 
-          <div ref={portalToolbarRef}>
+          <div ref={portalToolbarRef} style={{ position: "static" }}>
             {/* {!textMounted && ( */}
             {videoAreaFocused && (
-              <StyledToolbar
-                isVideo={isVideo}
-                variant="dense"
-                disableGutters
+              <Toolbar
                 test-id="infoBox-toolbar"
-                className="ql-toolbar ql-snow StyledDummy-Toolbar"
+                position="static"
+                className="StyledToolbar"
+                style={{
+                  "--width": "196px",
+                  "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                  "--borderLeft": "none",
+                  "--grid-template-columns": "1fr 1fr 1fr 9px 1fr 9px 1fr",
+                }}
               >
-                <StyledIconButton
+                <IconButton
                   disableRipple
                   disabled
-                  className="bolddummy-dropdown-button"
+                  className="StyledIconButton bold"
                   aria-label="disabled bold dropdown button"
                 >
                   {icons["customBold"]}
-                </StyledIconButton>
+                </IconButton>
                 {/* alignment dropdown */}
-                <StyledIconButton
+                <IconButton
                   disableRipple
                   disabled
-                  className={"align-button"}
+                  className="StyledIconButton"
                   aria-label="disabled allignment dropdown button"
                 >
                   {icons["align"]}
-                </StyledIconButton>
+                </IconButton>
 
                 {/* bullets drowdown starts */}
 
-                <StyledIconButton
+                <IconButton
                   disableRipple
                   disabled
+                  className="StyledIconButton list"
                   aria-label="disabled list dropdown button"
                 >
                   {icons["bullet"]}
-                </StyledIconButton>
+                </IconButton>
 
                 {/* link btn and divider */}
-                <Divider />
-                <StyledIconButton
+                <div className="StyledDivider" />
+
+                <IconButton
                   disableRipple
                   disabled
+                  className="StyledIconButton link"
                   aria-label="disabled link button"
-                  sx={{
-                    padding: "3px 5px !important",
-                    width: "28px !important",
-                    height: "100% !important",
-                  }}
                 >
                   {icons["link"]}
-                </StyledIconButton>
-              </StyledToolbar>
+                </IconButton>
+              </Toolbar>
             )}
           </div>
           {/* {/* Video Kebab */}
@@ -1067,28 +1098,30 @@ const ToolBar = ({
             ref={kebabselectRef}
             style={{
               position: "absolute",
-              display: "flex",
-              width: "40px",
+              display: "grid",
+              gridTemplateColumns: "9px 1fr",
+              // width: "40px",
               height: "40px",
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              left: state.videoId ? "475px" : "366px",
-              borderRadius: "0px 4px 4px 0px",
-              backgroundColor: "white",
+              left: state.videoId ? "471px" : "360px",
+              // borderRadius: "0px 4px 4px 0px",
+              // backgroundColor: "white",
               zIndex: "1",
-              boxShadow:
-                "0 -10px 10px -10px rgba(0, 0, 0, 0.1),  0 10px 10px -10px rgba(0, 0, 0, 0.1), 10px 0 10px -10px rgba(0, 0, 0, 0.1)",
+              // boxShadow:
+              //   "0 -10px 10px -10px rgba(0, 0, 0, 0.1),  0 10px 10px -10px rgba(0, 0, 0, 0.1), 10px 0 10px -10px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <Divider style={{ float: "left" }} />
+            <div className="StyledDivider" />
+
             <Tooltip
               aria-label="configure video description"
               title="configure video description"
               placement="top"
               arrow
             >
-              <StyledKebabButton
+              <IconButton
                 ref={DescriptionKebab}
                 data-videoid="videoSettings"
                 aria-controls={openVideo ? t("Add Video") : undefined}
@@ -1098,10 +1131,19 @@ const ToolBar = ({
                 disableRipple
                 disableFocusRipple
                 onClick={handleToggleVideoKebab}
-                sx={{ marginLeft: "2px !important" }}
+                className="StyledIconButton"
+                style={{
+                  "--active": openDescriptionKebab
+                    ? "rgba(21, 101, 192, 1)"
+                    : "#000",
+                  "--background": openDescriptionKebab
+                    ? "rgba(21, 101, 192, 0.12)"
+                    : "#fff",
+                }}
+                // sx={{ marginLeft: "2px !important" }}
               >
                 <KebabSVG />
-              </StyledKebabButton>
+              </IconButton>
             </Tooltip>
             <Popper
               open={openDescriptionKebab}
@@ -1208,8 +1250,8 @@ const ToolBar = ({
               )}
             </Popper>
           </div>
-        </StyledAppbar>
-      </Container>
+        </AppBar>
+      </div>
     </>
   );
 };

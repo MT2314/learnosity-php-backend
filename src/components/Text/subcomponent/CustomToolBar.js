@@ -32,160 +32,18 @@ import icons, { Chevron } from "../assets/icons";
 import "../styles/Toolbar.scss";
 
 import {
-  Popper,
-  Grow,
-  Paper,
   AppBar,
   Toolbar,
-  MenuItem,
+  Paper,
+  Popper,
+  Grow,
   MenuList,
+  MenuItem,
   IconButton,
   Button,
   Tooltip,
 } from "@mui/material";
 
-// * Styled Components
-
-// ? Styled Container
-// const Container = styled("div")({
-//   display: "block !important",
-//   position: "fixed !important",
-//   top: "80px !important",
-//   left: "50% !important",
-//   transform: "translateX(-50%) !important",
-//   zIndex: 1000,
-//   "& .MuiPaper-root": {
-//     backgroundColor: "transparent",
-//   },
-// });
-// ? Styled Appbar
-const StyledAppbar = styled(AppBar)({
-  display: "flex",
-  flexDirection: "row",
-  minHeight: "40px !important",
-  gap: "10px",
-  boxShadow: "none !important",
-});
-
-// ? Styled Text Toolbar (Possibly Temp)
-const StyledToolbar = styled(Toolbar)(({ isInfoBox, isVideo }) => ({
-  display: "flex",
-  justifyContent: "space-evenly",
-
-  ...(isInfoBox || isVideo
-    ? { borderLeft: "none !important" }
-    : { borderLeft: "4px solid #1565c0 !important" }),
-
-  height: "40px !important",
-  minHeight: "40px !important",
-  width: isInfoBox || isVideo ? "156px" : "184px !important",
-  margin: "10px, 8px",
-  paddingRight: "0px !important",
-  backgroundColor: "#FFF",
-  boxShadow: "0px 0px 10px 0 rgba(0, 0, 0, 0.1)",
-  borderRadius: isVideo ? "4px 0px 0px 4px" : "4px",
-  gap: "2.5px",
-  "& .MuiToolbar-gutters": {
-    paddingLeft: 0,
-    paddingRight: 0,
-  },
-  "& .MuiPaper-root ": {
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
-    backgroundColor: "#FFF !important",
-  },
-}));
-
-// Info Box
-const StyledIconDropdownButton = styled(Button)({
-  display: "flex",
-  flexDirection: "row",
-  alignContent: "space-evenly",
-  borderLeft: "4px solid #1565C0",
-  width: "140px",
-  padding: "8px 22px 8px 14.5px",
-  backgroundColor: "#FFF",
-  color: "#232323",
-  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-  fontFamily: `"Inter", sans-serif`,
-  textAlign: "center",
-  fontSize: "1rem",
-  fontWeight: "400",
-  lineHeight: "1.5rem",
-  letterSpacing: "0.009375rem",
-  whiteSpace: "nowrap",
-  textTransform: "none",
-  paddingLeft: "10px!important",
-  paddingRight: "10px!important",
-  "&:hover": {
-    background: "#FFF",
-    color: "#1565C0",
-  },
-});
-
-const StyledMenu = styled(MenuList)({
-  background: "#FFFFFF",
-  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-  borderRadius: "4px",
-  marginLeft: "0px",
-  marginTop: "2px",
-});
-const StyledMenuItem = styled(MenuItem)({
-  width: "109px",
-  padding: "6px 16px",
-  height: "36px",
-  "&:hover": {
-    backgroundColor: " rgba(0, 0, 0, 0.04);!important",
-  },
-  "&:active": {
-    backgroundColor: " rgba(0, 0, 0, 0.04);!important",
-  },
-});
-
-const StyledIconButton = styled(IconButton)(({ disabled }) => ({
-  // display: "flex !important",
-  // width: "30px",
-  // height: "30px",
-  // padding: "7px",
-  // color: "#232323",
-  // background: "#FFFFFF",
-  // padding: "3px 3px",
-  // marginLeft: "3px",
-  // borderRadius: "4px !important",
-  // "& svg": {
-  //   color: "#000",
-  //   ...(disabled && { opacity: 0.3 }),
-  // },
-  // "&:hover": {
-  //   backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-  //   "& svg": {
-  //     color: "rgba(21, 101, 192, 1)",
-  //   },
-  // },
-  // "&:active": {
-  //   cursor: "pointer",
-  //   backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-  //   "& svg": {
-  //     color: "rgba(21, 101, 192, 1)",
-  //   },
-  // },
-  // "&:focus-visible": {
-  //   backgroundColor: "rgba(21, 101, 192, 0.12) !important",
-  // },
-  // "& .MuiPaper-root": {
-  //   backgroundColor: "rgba(255,255,255,1) !important",
-  //   boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 10px 0px !important",
-  // },
-  // "& .MuiPaper-root ": {
-  //   backgroundColor: "rgba(255,255,255,1) !important",
-  // },
-}));
-const Divider = styled("div")(({}) => ({
-  width: "0.5px",
-  height: "25px",
-  backgroundColor: "#E0E0E0 !important",
-  marginLeft: "3.5px",
-  marginRight: "3.5px",
-}));
 const CustomToolBar = (props) => {
   return (
     <>
@@ -336,7 +194,11 @@ const ToolBar = ({
         ref={AppBarRef}
         elevation={0}
         style={{
-          "--width": isInfoBox ? "306px" : "184px",
+          "--width": isInfoBox
+            ? "306px"
+            : portal?.parentComponent === "video"
+            ? "auto"
+            : "184px",
           "--display": "flex",
           "--direction": "row",
           "--gap": isInfoBox ? "10px" : "none",
@@ -367,6 +229,7 @@ const ToolBar = ({
               style={{
                 "--active": openIcon ? "rgba(21, 101, 192, 1)" : "#000",
                 "--svg": openIcon ? " " : "rotate(180deg)",
+                "--grid-template-columns": "1fr 3fr",
               }}
             >
               <Chevron />
@@ -442,8 +305,10 @@ const ToolBar = ({
           className="StyledToolbar"
           style={{
             "--width": `${
-              isInfoBox || portal?.parentComponent === "video"
+              isInfoBox
                 ? "156px"
+                : portal?.parentComponent === "video"
+                ? "196px"
                 : "184px !important"
             }`,
 
@@ -454,9 +319,9 @@ const ToolBar = ({
             }`,
             "--grid-template-columns": `${
               isInfoBox
-                ? "1fr 1fr 1fr 8px 1fr"
+                ? "1fr 1fr 1fr 9px 1fr"
                 : portal?.parentComponent === "video"
-                ? "1fr 1fr 1fr 1fr 1fr"
+                ? "1fr 1fr 1fr 9px 1fr 9px 1fr"
                 : "1fr 1fr 1fr 1fr 9px 1fr"
             }`,
             "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
@@ -501,11 +366,6 @@ const ToolBar = ({
               }}
               id={`bold-${toolbarId}`}
               aria-label="formatting button dropdown"
-              // className={
-              //   activeTopMenu === "bold"
-              //     ? "bold-dropdown-button ql-selected ql-active"
-              //     : "bold-dropdown-button"
-              // }
             >
               {icons["customBold"]}
             </IconButton>
@@ -618,7 +478,7 @@ const ToolBar = ({
 
           {/* bullets drowdown starts */}
           <Tooltip aria-label="add list" title="add list" placement="top" arrow>
-            <StyledIconButton
+            <IconButton
               ref={listRef}
               disabled={
                 infoHasFocus || portal?.disabledButtons?.includes("list")
@@ -651,7 +511,7 @@ const ToolBar = ({
               }}
             >
               {icons["bullet"]}
-            </StyledIconButton>
+            </IconButton>
           </Tooltip>
           <ListDropdownButton
             show={listVisibility}
@@ -665,7 +525,7 @@ const ToolBar = ({
           ></ListDropdownButton>
 
           {/* link btn and divider */}
-          <Divider />
+          <div className="StyledDivider" />
           <Tooltip aria-label="link" title="link" placement="top" arrow>
             <IconButton
               ref={linkRef}

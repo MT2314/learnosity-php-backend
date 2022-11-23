@@ -29,7 +29,7 @@ const ListDropdownButton = ({ isInfoBox, show, onKeyDropDown, isVideo }) => {
         className={`StyledCard`}
         style={{
           "--card-display": show ? "flex" : "none",
-          "--left": isInfoBox ? "73.5px" : isVideo ? "73px" : "102px",
+          "--left": isInfoBox ? "220px" : isVideo ? "388px" : "102px",
           "--width": "78px",
         }}
       >

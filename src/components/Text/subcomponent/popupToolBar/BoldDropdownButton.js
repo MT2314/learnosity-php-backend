@@ -78,7 +78,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
         className="StyledCard"
         style={{
           "--card-display": show ? "flex" : "none",
-          "--left": isInfoBox ? "0px" : isVideo ? "0px" : "-4px",
+          "--left": isInfoBox ? "151px" : isVideo ? "320px" : "0px",
           "--width": "214px",
         }}
         onKeyDown={onKeyDropDown}
