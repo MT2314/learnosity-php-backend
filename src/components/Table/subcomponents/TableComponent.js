@@ -199,10 +199,9 @@ const DraggableRow = ({ row, reorderRow, showSideHeader, showTopHeader }) => {
 
   return (
     <tr ref={previewRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      {console.log(row)}
       <td
         style={{
-          ...(row.index === 0 && showTopHeader && {display: "none"}),
+          ...(row.original.column1.type === "title" && showTopHeader && {display: "none"}),
           backgroundColor: "#DEE7F5",
         }}
       >
@@ -301,7 +300,7 @@ const TableComponent = () => {
   );
 
   const StyledTbody = styled("tbody")(({ stripON }) => ({
-    "tr:nth-child(odd)": {
+    "tr:nth-of-type(odd)": {
       backgroundColor: stripON && "#F5F5F5",
     },
   }));
