@@ -82,10 +82,6 @@ const ToolBar = ({
 
   const kebabselectRef = useRef(null);
 
-  useOnClickOutside(AppBar, () => {
-    toggleCloseToolbar(["Video", "Kebab"]);
-  });
-
   useOnClickOutside(selectRef, () => {
     setVideoEdit(false);
     setInvalidVideoInput(false);
@@ -281,21 +277,19 @@ const ToolBar = ({
         ref={setMainToolbar}
         onKeyDown={handleShiftTab}
       >
-        <ClickAwayListener
-          onClickAway={() => toggleCloseToolbar(["Video", "Kebab"])}
+        <AppBar
+          position="static"
+          className="StyledAppbar"
+          elevation={0}
+          style={{
+            "--display": "flex",
+            "--direction": "row",
+            "--gap": "10px",
+            "--boxShadow": "none !important",
+          }}
         >
-          <AppBar
-            position="static"
-            className="StyledAppbar"
-            elevation={0}
-            style={{
-              "--display": "flex",
-              "--direction": "row",
-              "--gap": "10px",
-              "--boxShadow": "none !important",
-            }}
-          >
-            {/* Add Video Drop Down */}
+          {/* Add Video Drop Down */}
+          <ClickAwayListener onClickAway={() => toggleCloseToolbar(["Kebab"])}>
             <Toolbar
               position="static"
               selected={videoAPI.videoId}
@@ -768,65 +762,67 @@ const ToolBar = ({
                 </Button>
               </Tooltip>
             </Toolbar>
+          </ClickAwayListener>
 
-            <div ref={portalToolbarRef} style={{ position: "static" }}>
-              {/* {!textMounted && ( */}
-              {videoAreaFocused && (
-                <Toolbar
-                  test-id="video-formatting-toolbar"
-                  position="static"
-                  className="StyledToolbar"
-                  style={{
-                    "--width": "196px",
-                    "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
-                    "--borderLeft": "none",
-                    "--grid-template-columns": "1fr 1fr 1fr 9px 1fr 9px 1fr",
-                  }}
+          <div ref={portalToolbarRef} style={{ position: "static" }}>
+            {/* {!textMounted && ( */}
+            {videoAreaFocused && (
+              <Toolbar
+                test-id="video-formatting-toolbar"
+                position="static"
+                className="StyledToolbar"
+                style={{
+                  "--width": "196px",
+                  "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
+                  "--borderLeft": "none",
+                  "--grid-template-columns": "1fr 1fr 1fr 9px 1fr 9px 1fr",
+                }}
+              >
+                <IconButton
+                  disableRipple
+                  disabled
+                  className="StyledIconButton bold"
+                  aria-label="disabled bold dropdown button"
                 >
-                  <IconButton
-                    disableRipple
-                    disabled
-                    className="StyledIconButton bold"
-                    aria-label="disabled bold dropdown button"
-                  >
-                    {icons["customBold"]}
-                  </IconButton>
-                  {/* alignment dropdown */}
-                  <IconButton
-                    disableRipple
-                    disabled
-                    className="StyledIconButton"
-                    aria-label="disabled allignment dropdown button"
-                  >
-                    {icons["align"]}
-                  </IconButton>
+                  {icons["customBold"]}
+                </IconButton>
+                {/* alignment dropdown */}
+                <IconButton
+                  disableRipple
+                  disabled
+                  className="StyledIconButton"
+                  aria-label="disabled allignment dropdown button"
+                >
+                  {icons["align"]}
+                </IconButton>
 
-                  {/* bullets drowdown starts */}
+                {/* bullets drowdown starts */}
 
-                  <IconButton
-                    disableRipple
-                    disabled
-                    className="StyledIconButton list"
-                    aria-label="disabled list dropdown button"
-                  >
-                    {icons["bullet"]}
-                  </IconButton>
+                <IconButton
+                  disableRipple
+                  disabled
+                  className="StyledIconButton list"
+                  aria-label="disabled list dropdown button"
+                >
+                  {icons["bullet"]}
+                </IconButton>
 
-                  {/* link btn and divider */}
-                  <div className="StyledDivider" />
+                {/* link btn and divider */}
+                <div className="StyledDivider" />
 
-                  <IconButton
-                    disableRipple
-                    disabled
-                    className="StyledIconButton link"
-                    aria-label="disabled link button"
-                  >
-                    {icons["link"]}
-                  </IconButton>
-                </Toolbar>
-              )}
-            </div>
-            {/* {/* Video Kebab */}
+                <IconButton
+                  disableRipple
+                  disabled
+                  className="StyledIconButton link"
+                  aria-label="disabled link button"
+                >
+                  {icons["link"]}
+                </IconButton>
+              </Toolbar>
+            )}
+          </div>
+          {/* {/* Video Kebab */}
+          <ClickAwayListener onClickAway={() => toggleCloseToolbar(["Video"])}>
             <div
               ref={kebabselectRef}
               style={{
@@ -986,8 +982,8 @@ const ToolBar = ({
                 )}
               </Popper>
             </div>
-          </AppBar>
-        </ClickAwayListener>
+          </ClickAwayListener>
+        </AppBar>
       </div>
     </>
   );
