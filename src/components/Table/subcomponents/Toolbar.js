@@ -14,9 +14,10 @@ import {
   Tooltip,
 } from "@mui/material";
 
+import "../../Text/styles/Toolbar.scss";
+
 // ? Styled Container
-const Container = styled("div")(({ disconnect }) => ({
-  display: disconnect ? "none" : "block !important",
+const Container = styled("div")(({}) => ({
   position: "fixed !important",
   top: "100px !important",
   // left: "36% !important",
@@ -109,7 +110,7 @@ const StyledFormControlLabel = styled(FormControlLabel)({
 
 
 const ToolBar = ({
-  disconnect,
+  toolbar,
   setZebraStripes,
   zebraStripes,
   showTopHeader,
@@ -124,8 +125,10 @@ const ToolBar = ({
     <Container
       onClick={(e) => e.stopPropagation()}
       onFocus={(e) => e.stopPropagation()}
-      className="ToolbarDummy-Container"
-      disconnect={disconnect}
+      className="ToolbarContainer"
+      style={{
+        "--active": toolbar ? "block" : "none",
+      }}
     >
       <StyledAppbar position="static">
         <StyledTableToolbar

@@ -268,14 +268,14 @@ const DraggableRow = ({ row, reorderRow, showSideHeader, showTopHeader }) => {
 
 const TableComponent = () => {
   const [state, dispatch] = useContext(LayoutContext);
-  const [disconnect, setDisconnect] = useState(false);
+  const [toolbar, setToolbar] = useState(false);
   const [zebraStripes, setZebraStripes] = useState(false);
   const [showTopHeader, setShowTopHeader] = useState(false);
   const [showSideHeader, setShowSideHeader] = useState(false);
   const tableRef = useRef();
 
   useOnClickOutside(tableRef, () => {
-    !disconnect && setDisconnect(true);
+    setToolbar(false);
   });
 
   const [columnOrder, setColumnOrder] = useState(
@@ -315,28 +315,17 @@ const TableComponent = () => {
     },
   }));
 
-  const tableFocused = (e) => {
-    setDisconnect(false);
-  };
-
-  const handleTextClick = useCallback(
-    (e) => {
-      !disconnect && e.stopPropagation();
-      setDisconnect(false);
-    },
-    [disconnect]
-  );
-
   return (
     <DndProvider backend={HTML5Backend}>
       <StyledTable
         role="presentation"
-        onMouseDown={(e) => tableFocused(e)}
-        onFocus={(e) => tableFocused(e)}
+        onFocus={(e) => setToolbar(true)}
+        onClick={(e) => setToolbar(true)}
+        onBlur={(e) => setToolbar(false)}
         ref={tableRef}
       >
         <Toolbar
-          disconnect={disconnect}
+          toolbar={toolbar}
           setZebraStripes={setZebraStripes}
           zebraStripes={zebraStripes}
           setShowSideHeader={setShowSideHeader}
@@ -345,14 +334,7 @@ const TableComponent = () => {
           showTopHeader={showTopHeader}
           headerType={state.headerType}
         />
-        <thead
-          onMouseDown={(e) => {
-            handleTextClick(e);
-          }}
-          onFocus={(e) => {
-            handleTextClick(e);
-          }}
-        >
+        <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               <th
