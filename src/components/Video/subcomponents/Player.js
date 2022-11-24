@@ -13,6 +13,14 @@ const PlayerContainer = styled("div")({
   },
 });
 
+const StyledVideoContainer = styled("div")({
+  width: "100%",
+  maxWidth: "60.5rem",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+});
+
 const StyledVideoDefaultContainer = styled("div")({
   width: "760px",
   height: "427.5px",
@@ -20,7 +28,6 @@ const StyledVideoDefaultContainer = styled("div")({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  marginTop: "30px",
 });
 
 const StyledCircleContainer = styled("div")({
@@ -30,14 +37,6 @@ const StyledCircleContainer = styled("div")({
   borderRadius: "50%",
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
-});
-
-const StyledVideoContainer = styled("div")({
-  width: "100%",
-  maxWidth: "60.5rem",
-  display: "flex",
-  flexDirection: "row",
   justifyContent: "center",
 });
 
@@ -111,7 +110,7 @@ const Player = ({ videoId, videoSource }) => {
       )}`;
       let currentDescription = state.videoDescription
         ? state.videoDescription.ops
-        : null;
+        : [null];
 
       let descriptionDelta = new Delta([
         ...(currentDescription ? currentDescription : []),
@@ -129,23 +128,23 @@ const Player = ({ videoId, videoSource }) => {
 
   return (
     <PlayerContainer>
-      {videoId == null && (
-        <StyledVideoContainer>
+      <StyledVideoContainer>
+        {videoId == null && (
           <StyledVideoDefaultContainer data-testid="video">
             <StyledCircleContainer>
               <StyledTriangleImage src={TriangleIcon} alt="Play Img" />
             </StyledCircleContainer>
           </StyledVideoDefaultContainer>
-        </StyledVideoContainer>
-      )}
-      {videoId !== null && (
-        <ReactPlayerLoader
-          videoId={videoId}
-          BRIGHTCOVE_API={BRIGHTCOVE_API}
-          BRIGHTCOVE_ACCOUNT_ID={BRIGHTCOVE_ACCOUNT_ID}
-          accountId={BRIGHTCOVE_ACCOUNT_ID}
-        />
-      )}
+        )}
+        {videoId !== null && (
+          <ReactPlayerLoader
+            videoId={videoId}
+            BRIGHTCOVE_API={BRIGHTCOVE_API}
+            BRIGHTCOVE_ACCOUNT_ID={BRIGHTCOVE_ACCOUNT_ID}
+            accountId={BRIGHTCOVE_ACCOUNT_ID}
+          />
+        )}
+      </StyledVideoContainer>
     </PlayerContainer>
   );
 };

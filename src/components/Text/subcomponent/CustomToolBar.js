@@ -228,8 +228,12 @@ const ToolBar = ({
               className="SelectButton"
               style={{
                 "--active": openIcon ? "rgba(21, 101, 192, 1)" : "#000",
+                "--width": "100%",
+                "--height": "100%",
+                "--font-size": "16px",
                 "--svg": openIcon ? " " : "rotate(180deg)",
                 "--grid-template-columns": "1fr 3fr",
+                "--hover-background-color": "transparent",
               }}
             >
               <Chevron />
