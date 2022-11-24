@@ -8,16 +8,11 @@ $lightBlue: rgba(21, 101, 192, 0.12);
 // Box Shadows
 $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 
-// Formatting buttons for toolbar
-
 // Outer Toolbar Container
 .ToolbarContainer {
   // positioning
   display: var(--active);
   flex-direction: var(--direction);
-  // top: 20%;
-  // left: 50%;
-  // z-index: 1000;
   & .MuiPaper-root {
     background-color: transparent;
   }
@@ -63,12 +58,10 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   // positioning
   display: grid;
   grid-template-columns: var(--grid-template-columns);
-  // justify-items: center;
   // size
   width: var(--width);
   min-width: var(--min-width);
   height: var(--height);
-  // height: 100%;
 
   // box model
   box-shadow: none;
@@ -193,7 +186,6 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   height: 30px;
 
   // box model
-  // margin-right: 7px;
   padding: 0px;
   margin: 0px;
 

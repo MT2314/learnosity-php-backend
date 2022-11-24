@@ -19,6 +19,7 @@ const StyledVideoContainer = styled("div")({
   display: "flex",
   flexDirection: "row",
   justifyContent: "center",
+  paddingTop: "30px",
 });
 
 const StyledVideoDefaultContainer = styled("div")({
@@ -110,7 +111,7 @@ const Player = ({ videoId, videoSource }) => {
       )}`;
       let currentDescription = state.videoDescription
         ? state.videoDescription.ops
-        : [null];
+        : null;
 
       let descriptionDelta = new Delta([
         ...(currentDescription ? currentDescription : []),
