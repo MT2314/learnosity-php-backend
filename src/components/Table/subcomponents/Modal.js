@@ -161,9 +161,13 @@ const Modal = ({ setShowModal, setShowTable }) => {
       tabIndex={0}
       data-testid="modal"
     >
-      <HeaderContainer>
+      <HeaderContainer data-testid="modal-header">
         <span>Create a table</span>
-        <CloseIcon sx={{ cursor: "pointer" }} onClick={closeModal} />
+        <CloseIcon
+          sx={{ cursor: "pointer" }}
+          onClick={closeModal}
+          data-testid="modal-close"
+        />
       </HeaderContainer>
       <SelectContainer>
         <div>
@@ -238,7 +242,7 @@ const SelectNumber = ({ number, setNumber, type }) => {
   return (
     <StyledSelectNumber
       tabIndex={0}
-      data-testid={`select-number"-${type}`}
+      data-testid={`select-number-${type}`}
       onKeyDown={(e) => {
         if (e.keyCode === 38) {
           e.preventDefault();

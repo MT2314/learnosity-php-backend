@@ -73,8 +73,6 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
     handleAlignmentChange(activeDropDownItem);
   }, [activeDropDownItem]);
 
-  console.log(state.size);
-
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -125,8 +123,11 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
               "--active": openHeader ? "rgba(21, 101, 192, 1)" : "#000",
               "--svg": openHeader ? " " : "rotate(180deg)",
               "--width": "100%",
+              "--height": "100%",
+              "--font-size": "16px",
               "--padding": "0 4.5px",
               "--grid-template-columns": "1fr 3fr",
+              "--hover-background-color": "transparent",
             }}
           >
             <Chevron />
@@ -157,6 +158,11 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                         data-testid="header-select-dropdown"
                         aria-labelledby="Header Drop Down"
                         className="StyledMenu"
+                        style={{
+                          "--gridTemplateRows": "31px 31px 31px",
+                          "--width": "87px",
+                          justifyItems: "normal",
+                        }}
                       >
                         {headerSizeDropdownOptions.map((size) => {
                           let value = size.value;
@@ -171,7 +177,6 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                               aria-labelledby={label}
                               className="StyledMenuItem"
                               style={{
-                                "--gridTemplateRows": "31px 31px 31px",
                                 "--fontSize":
                                   label === "Large"
                                     ? "1.375rem"
