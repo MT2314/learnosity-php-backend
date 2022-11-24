@@ -158,6 +158,11 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                         data-testid="header-select-dropdown"
                         aria-labelledby="Header Drop Down"
                         className="StyledMenu"
+                        style={{
+                          "--gridTemplateRows": "31px 31px 31px",
+                          "--width": "87px",
+                          justifyItems: "normal",
+                        }}
                       >
                         {headerSizeDropdownOptions.map((size) => {
                           let value = size.value;
@@ -172,7 +177,6 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                               aria-labelledby={label}
                               className="StyledMenuItem"
                               style={{
-                                "--gridTemplateRows": "31px 31px 31px",
                                 "--fontSize":
                                   label === "Large"
                                     ? "1.375rem"

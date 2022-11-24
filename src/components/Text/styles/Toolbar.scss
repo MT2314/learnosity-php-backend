@@ -35,7 +35,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   display: grid;
   position: var(--position);
   grid-template-columns: var(--grid-template-columns);
-  justify-items: center;
+  justify-items: var(--justify-items);
   align-items: center;
   // size
   width: var(--width);
@@ -137,6 +137,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   grid-template-columns: var(--gridTemplateColumns);
   align-items: center;
   justify-items: center;
+  justify-content: center;
 }
 
 // Menu Items for Select

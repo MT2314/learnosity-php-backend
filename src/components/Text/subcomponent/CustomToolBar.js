@@ -181,6 +181,16 @@ const ToolBar = ({
   //   console.table({ activeDropDownItem });
   // }, [activeDropDownItem, activeTopMenu]);
 
+  useEffect(() => {
+    if (infoHasFocus) {
+      setActiveTopMenu("");
+      setActiveDropDownItem("");
+      setBoldVisibility(false);
+      setListVisibility(false);
+      setAlignVisibility(false);
+    }
+  }, [infoHasFocus]);
+
   return (
     <div
       className="ToolbarContainer"

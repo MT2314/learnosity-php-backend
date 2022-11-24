@@ -264,6 +264,7 @@ const ToolBar = ({
   useEffect(() => {
     setToolbar(portalToolbarRef.current);
   }, []);
+
   return (
     <>
       <div
