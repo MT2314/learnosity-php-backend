@@ -120,7 +120,6 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 // InfoBox Icon Select / Header Size Select Toolbar Paper
-
 .StyledSelectPaper {
   background: #ffffff;
   box-shadow: $toolbarShadow !important;
@@ -133,9 +132,14 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 // Menu for Select
 .StyledMenu {
   display: grid;
-  align-content: space-between;
+  align-content: center;
   height: 100%;
+  width: var(--width);
+  padding: var(--padding);
   grid-template-rows: var(--gridTemplateRows);
+  grid-template-columns: var(--gridTemplateColumns);
+  align-items: center;
+  justify-items: center;
 }
 
 // Menu Items for Select
@@ -217,6 +221,31 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   &:disabled {
     cursor: not-allowed;
     opacity: 0.3;
+  }
+}
+
+// Styled Input
+.StyledInput {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.15000000596046448px;
+  background: #ffffff;
+  color: var(--color);
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom: none;
+  outline: none;
+  padding: 0px;
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    background: "#FFFFFF";
+  }
+  &:before,
+  &:after {
+    border-bottom: "none";
   }
 }
 

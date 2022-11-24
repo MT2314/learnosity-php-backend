@@ -336,7 +336,7 @@ const ToolBar = ({
           >
             <IconButton
               ref={boldRef}
-              className="StyledIconButton bold"
+              className="StyledIconButton"
               style={{
                 "--active":
                   activeTopMenu === "bold" ? "rgba(21, 101, 192, 1)" : "#000",
@@ -389,7 +389,7 @@ const ToolBar = ({
               arrow
             >
               <IconButton
-                className="StyledIconButton math"
+                className="StyledIconButton"
                 style={{
                   "--active":
                     activeTopMenu === "math" ? "rgba(21, 101, 192, 1)" : "#000",
@@ -443,7 +443,7 @@ const ToolBar = ({
                 }
                 setActiveDropDownItem("");
               }}
-              className="StyledIconButton align"
+              className="StyledIconButton"
               style={{
                 "--active":
                   activeTopMenu === "align" ? "rgba(21, 101, 192, 1)" : "#000",
@@ -495,7 +495,7 @@ const ToolBar = ({
                   setActiveTopMenu("lists");
                 }
               }}
-              className="StyledIconButton list"
+              className="StyledIconButton"
               style={{
                 "--active":
                   activeTopMenu === "lists" ? "rgba(21, 101, 192, 1)" : "#000",
@@ -533,7 +533,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               aria-label="add link button"
-              className="StyledIconButton link"
+              className="StyledIconButton"
               style={{
                 "--active":
                   activeTopMenu === "link" ? "rgba(21, 101, 192, 1)" : "#000",
