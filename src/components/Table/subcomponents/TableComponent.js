@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useCallback } from "react";
 import { LayoutContext } from "../TableContext";
 
 // react-table imports
@@ -16,6 +16,9 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import Toolbar from "./Toolbar";
+
+// Hook/utilities imports
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 // Styled import
 import styled from "@emotion/styled";
@@ -201,7 +204,8 @@ const DraggableRow = ({ row, reorderRow, showSideHeader, showTopHeader }) => {
     <tr ref={previewRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
       <td
         style={{
-          ...(row.original.column1.type === "title" && showTopHeader && {display: "none"}),
+          ...(row.original.column1.type === "title" &&
+            showTopHeader && { display: "none" }),
           backgroundColor: "#DEE7F5",
         }}
       >
@@ -242,7 +246,8 @@ const DraggableRow = ({ row, reorderRow, showSideHeader, showTopHeader }) => {
             key={cell.id}
             data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
             style={{
-              ...(type == "title" && (showSideHeader || showTopHeader) && { display: "none" }),
+              ...(type == "title" &&
+                (showSideHeader || showTopHeader) && { display: "none" }),
               backgroundColor: type == "title" && "#EEEEEE",
               verticalAlign: type == "title" ? "middle" : "top",
             }}
@@ -267,6 +272,11 @@ const TableComponent = () => {
   const [zebraStripes, setZebraStripes] = useState(false);
   const [showTopHeader, setShowTopHeader] = useState(false);
   const [showSideHeader, setShowSideHeader] = useState(false);
+  const tableRef = useRef();
+
+  useOnClickOutside(tableRef, () => {
+    !disconnect && setDisconnect(true);
+  });
 
   const [columnOrder, setColumnOrder] = useState(
     state.headers.map((column) => column.id)
@@ -305,20 +315,44 @@ const TableComponent = () => {
     },
   }));
 
+  const tableFocused = (e) => {
+    setDisconnect(false);
+  };
+
+  const handleTextClick = useCallback(
+    (e) => {
+      !disconnect && e.stopPropagation();
+      setDisconnect(false);
+    },
+    [disconnect]
+  );
+
   return (
     <DndProvider backend={HTML5Backend}>
-      <Toolbar
-        disconnect={disconnect}
-        setZebraStripes={setZebraStripes}
-        zebraStripes={zebraStripes}
-        setShowSideHeader={setShowSideHeader}
-        setShowTopHeader={setShowTopHeader}
-        showSideHeader={showSideHeader}
-        showTopHeader={showTopHeader}
-        headerType={state.headerType}
-      />
-      <StyledTable role="presentation">
-        <thead>
+      <StyledTable
+        role="presentation"
+        onMouseDown={(e) => tableFocused(e)}
+        onFocus={(e) => tableFocused(e)}
+        ref={tableRef}
+      >
+        <Toolbar
+          disconnect={disconnect}
+          setZebraStripes={setZebraStripes}
+          zebraStripes={zebraStripes}
+          setShowSideHeader={setShowSideHeader}
+          setShowTopHeader={setShowTopHeader}
+          showSideHeader={showSideHeader}
+          showTopHeader={showTopHeader}
+          headerType={state.headerType}
+        />
+        <thead
+          onMouseDown={(e) => {
+            handleTextClick(e);
+          }}
+          onFocus={(e) => {
+            handleTextClick(e);
+          }}
+        >
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               <th

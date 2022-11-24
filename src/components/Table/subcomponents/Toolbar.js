@@ -1,22 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import { tooltipClasses } from "@mui/material/Tooltip";
 import styled from "@emotion/styled";
 
 import {
-  Popper,
-  Grow,
   Paper,
   AppBar,
   Toolbar,
-  MenuItem,
-  MenuList,
-  IconButton,
   Button,
   Tooltip,
 } from "@mui/material";
@@ -50,7 +43,7 @@ const StyledAppbar = styled(AppBar)({
   },
 });
 
-const StyledFormatButton = styled(Button)(({ openVideo }) => ({
+const StyledFormatButton = styled(Button)({
   display: "flex",
   flexDirection: "row",
   backgroundColor: "#FFF",
@@ -82,9 +75,9 @@ const StyledFormatButton = styled(Button)(({ openVideo }) => ({
     color: "#1565C0",
   },
   "&:disabled": { background: "none" },
-}));
+});
 
-const StyledVideoToolbar = styled(Toolbar)(({ selected }) => ({
+const StyledTableToolbar = styled(Toolbar)({
   borderLeft: "4px solid #1565C0",
   display: "flex",
   justifyContent: "space-evenly",
@@ -101,9 +94,9 @@ const StyledVideoToolbar = styled(Toolbar)(({ selected }) => ({
     paddingLeft: "0px",
     paddingRight: "0px",
   },
-}));
+});
 
-const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
+const StyledFormControlLabel = styled(FormControlLabel)({
   height: "24px",
   whiteSpace: "nowrap",
   fontFamily: `"Inter", sans-serif`,
@@ -111,7 +104,9 @@ const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
   fontWeight: "400",
   lineHeight: "1.5rem",
   letterSpacing: "0.009375rem",
-}));
+});
+
+
 
 const ToolBar = ({
   disconnect,
@@ -123,10 +118,17 @@ const ToolBar = ({
   setShowSideHeader,
   headerType,
 }) => {
+
+  const [showFormat, setShowFormat] = useState(false);
   return (
-    <Container className="ToolbarDummy-Container" disconnect={disconnect}>
+    <Container
+      onClick={(e) => e.stopPropagation()}
+      onFocus={(e) => e.stopPropagation()}
+      className="ToolbarDummy-Container"
+      disconnect={disconnect}
+    >
       <StyledAppbar position="static">
-        <StyledVideoToolbar
+        <StyledTableToolbar
           position="static"
           className="StyledToolbar"
           style={{
@@ -135,51 +137,62 @@ const ToolBar = ({
         >
           <Button className="SelectButton">
             <Tooltip aria-label="Format" title="Format" placement="top" arrow>
-              <StyledFormatButton>Format</StyledFormatButton>
+              <StyledFormatButton onClick={(e) => {setShowFormat(!showFormat)}}
+              >Format
+              </StyledFormatButton>
             </Tooltip>
           </Button>
-          <Paper>
+          <Paper style={{ 
+            "display": showFormat ? "block" :"none", 
+            "padding": "23px 26px",
+            "width": "220px",
+            "position": "absolute",
+            "top": "41px",
+            "left": "0px",
+            "boxShadow": "0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%)",
+            "borderRadius": "4px",
+            }}>
             <FormGroup sx={{ gap: "14px" }}>
-            {headerType == "top-header" && (
-              <FormControl>
-                <Tooltip
-                  aria-label="Show top headers"
-                  title="Show top headers"
-                  placement="top"
-                  arrow
-                  PopperProps={{
-                    modifiers: [
-                      {
-                        name: "offset",
-                        options: {
-                          offset: [0, -7],
+              {headerType == "top-header" && (
+                <FormControl>
+                  <Tooltip
+                    aria-label="Show top headers"
+                    title="Show top headers"
+                    placement="top"
+                    arrow
+                    PopperProps={{
+                      modifiers: [
+                        {
+                          name: "offset",
+                          options: {
+                            offset: [0, -7],
+                          },
                         },
-                      },
-                    ],
-                  }}
-                >
-                  <StyledFormControlLabel
-                    control={
-                      <Checkbox
-                        onChange={() => setShowTopHeader(!showTopHeader)}
-                        checked={!showTopHeader}
-                        sx={{
-                          "&:hover": {
-                            bgcolor: "transparent",
-                            color: "rgba(21, 101, 192, 1)",
-                          },
-                          "&.Mui-checked": {
-                            bgcolor: "transparent",
-                            color: "rgba(21, 101, 192, 1)",
-                          },
-                        }}
-                      />
-                    }
-                    label="Show top headers"
-                    size="small"
-                  />
-                </Tooltip>
-              </FormControl>
+                      ],
+                    }}
+                  >
+                    <StyledFormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={() => setShowTopHeader(!showTopHeader)}
+                          checked={!showTopHeader}
+                          sx={{
+                            "&:hover": {
+                              bgcolor: "transparent",
+                              color: "rgba(21, 101, 192, 1)",
+                            },
+                            "&.Mui-checked": {
+                              bgcolor: "transparent",
+                              color: "rgba(21, 101, 192, 1)",
+                            },
+                          }}
+                        />
+                      }
+                      label="Show top headers"
+                      size="small"
+                    />
+                  </Tooltip>
+                </FormControl>
               )}
               {headerType == "side-header" && (
                 <FormControl>
@@ -263,7 +276,7 @@ const ToolBar = ({
               </FormControl>
             </FormGroup>
           </Paper>
-        </StyledVideoToolbar>
+        </StyledTableToolbar>
       </StyledAppbar>
     </Container>
   );
