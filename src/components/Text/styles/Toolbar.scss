@@ -8,16 +8,11 @@ $lightBlue: rgba(21, 101, 192, 0.12);
 // Box Shadows
 $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 
-// Formatting buttons for toolbar
-
 // Outer Toolbar Container
 .ToolbarContainer {
   // positioning
   display: var(--active);
   flex-direction: var(--direction);
-  // top: 20%;
-  // left: 50%;
-  // z-index: 1000;
   & .MuiPaper-root {
     background-color: transparent;
   }
@@ -40,7 +35,8 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   display: grid;
   position: var(--position);
   grid-template-columns: var(--grid-template-columns);
-  justify-items: center;
+  justify-items: var(--justify-items);
+  align-items: center;
   // size
   width: var(--width);
   height: 40px !important;
@@ -57,15 +53,15 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   }
 }
 
-// Header
+// Buttons
 .SelectButton {
   // positioning
   display: grid;
   grid-template-columns: var(--grid-template-columns);
-  // justify-items: center;
   // size
   width: var(--width);
-  height: 100%;
+  min-width: var(--min-width);
+  height: var(--height);
 
   // box model
   box-shadow: none;
@@ -78,7 +74,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   background-color: transparent;
 
   // formating
-  font-size: 16px;
+  font-size: var(--font-size);
   font-weight: 400;
   line-height: 1.5rem;
   letter-spacing: 0.009375rem;
@@ -103,7 +99,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   &:hover,
   &:active,
   &:focus-visible {
-    background-color: transparent;
+    background-color: var(--hover-background-color);
     box-shadow: none;
     cursor: pointer;
     color: $blue;
@@ -113,14 +109,14 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   }
   // disabled state
   &:disabled {
+    color: var(--disabled);
     cursor: not-allowed;
-    opacity: 0.3;
+    // opacity: 0.3;
     background-color: $white;
   }
 }
 
 // InfoBox Icon Select / Header Size Select Toolbar Paper
-
 .StyledSelectPaper {
   background: #ffffff;
   box-shadow: $toolbarShadow !important;
@@ -133,9 +129,15 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 // Menu for Select
 .StyledMenu {
   display: grid;
-  align-content: space-between;
+  align-content: center;
   height: 100%;
+  width: var(--width);
+  padding: var(--padding);
   grid-template-rows: var(--gridTemplateRows);
+  grid-template-columns: var(--gridTemplateColumns);
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
 }
 
 // Menu Items for Select
@@ -185,7 +187,6 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   height: 30px;
 
   // box model
-  // margin-right: 7px;
   padding: 0px;
   margin: 0px;
 
@@ -212,11 +213,39 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     & svg {
       fill: $blue;
     }
+    > svg {
+      color: $blue !important;
+    }
   }
   // disabled state
   &:disabled {
     cursor: not-allowed;
     opacity: 0.3;
+  }
+}
+
+// Styled Input
+.StyledInput {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.15000000596046448px;
+  background: #ffffff;
+  color: var(--color);
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom: none;
+  outline: none;
+  padding: 0px;
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    background: "#FFFFFF";
+  }
+  &:before,
+  &:after {
+    border-bottom: "none";
   }
 }
 
@@ -226,4 +255,45 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 0.5px;
   background-color: #e0e0e0 !important;
   margin: 0 3.5px;
+}
+
+// Error Bubble
+.ErrorBubble {
+  height: var(--height);
+  width: var(--width);
+  background-color: (--backgroundColor);
+  margin-top: var(--margin-top);
+  margin-left: var(--margin-left);
+  pointer-events: var(--pointerEvent);
+}
+
+.StyledFormConrolLabel {
+  height: 24px;
+  white-space: nowrap;
+  font-family: Inter, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+  letter-spacing: 0.009375rem;
+  &:hover {
+    background: transparent;
+    color: rgba(21, 101, 192, 1);
+  }
+  &.Mui-checked {
+    background: transparent;
+    color: rgba(21, 101, 192, 1);
+  }
+}
+
+.StyledKebabMenu {
+  background: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin-left: 0px;
+  margin-top: 7px;
+  width: 204px;
+  height: 108px;
+  padding-left: 27.5px;
+  padding-top: 23px;
+  padding-bottom: 23px;
 }
