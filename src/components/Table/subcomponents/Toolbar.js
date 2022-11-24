@@ -113,7 +113,16 @@ const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
   letterSpacing: "0.009375rem",
 }));
 
-const ToolBar = ({ disconnect, setZebraStripes, zebraStripes }) => {
+const ToolBar = ({
+  disconnect,
+  setZebraStripes,
+  zebraStripes,
+  showTopHeader,
+  showSideHeader,
+  setShowTopHeader,
+  setShowSideHeader,
+  headerType,
+}) => {
   return (
     <Container className="ToolbarDummy-Container" disconnect={disconnect}>
       <StyledAppbar position="static">
@@ -131,6 +140,7 @@ const ToolBar = ({ disconnect, setZebraStripes, zebraStripes }) => {
           </Button>
           <Paper>
             <FormGroup sx={{ gap: "14px" }}>
+            {headerType == "top-header" && (
               <FormControl>
                 <Tooltip
                   aria-label="Show top headers"
@@ -151,6 +161,8 @@ const ToolBar = ({ disconnect, setZebraStripes, zebraStripes }) => {
                   <StyledFormControlLabel
                     control={
                       <Checkbox
+                        onChange={() => setShowTopHeader(!showTopHeader)}
+                        checked={!showTopHeader}
                         sx={{
                           "&:hover": {
                             bgcolor: "transparent",
@@ -168,43 +180,49 @@ const ToolBar = ({ disconnect, setZebraStripes, zebraStripes }) => {
                   />
                 </Tooltip>
               </FormControl>
-              <FormControl>
-                <Tooltip
-                  aria-label="Show side headers"
-                  title="Show side headers"
-                  placement="top"
-                  arrow
-                  PopperProps={{
-                    modifiers: [
-                      {
-                        name: "offset",
-                        options: {
-                          offset: [0, -7],
+              )}
+              {headerType == "side-header" && (
+                <FormControl>
+                  <Tooltip
+                    aria-label="Show side headers"
+                    title="Show side headers"
+                    placement="top"
+                    arrow
+                    PopperProps={{
+                      modifiers: [
+                        {
+                          name: "offset",
+                          options: {
+                            offset: [0, -7],
+                          },
                         },
-                      },
-                    ],
-                  }}
-                >
-                  <StyledFormControlLabel
-                    control={
-                      <Checkbox
-                        sx={{
-                          "&:hover": {
-                            bgcolor: "transparent",
-                            color: "rgba(21, 101, 192, 1)",
-                          },
-                          "&.Mui-checked": {
-                            bgcolor: "transparent",
-                            color: "rgba(21, 101, 192, 1)",
-                          },
-                        }}
-                      />
-                    }
-                    label="Show side headers"
-                    size="small"
-                  />
-                </Tooltip>
-              </FormControl>
+                      ],
+                    }}
+                  >
+                    <StyledFormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={() => setShowSideHeader(!showSideHeader)}
+                          checked={!showSideHeader}
+                          sx={{
+                            "&:hover": {
+                              bgcolor: "transparent",
+                              color: "rgba(21, 101, 192, 1)",
+                            },
+                            "&.Mui-checked": {
+                              bgcolor: "transparent",
+                              color: "rgba(21, 101, 192, 1)",
+                            },
+                          }}
+                        />
+                      }
+                      label="Show side headers"
+                      size="small"
+                    />
+                  </Tooltip>
+                </FormControl>
+              )}
+
               <FormControl>
                 <Tooltip
                   aria-label="Show zebra stripes"
@@ -245,7 +263,6 @@ const ToolBar = ({ disconnect, setZebraStripes, zebraStripes }) => {
               </FormControl>
             </FormGroup>
           </Paper>
-
         </StyledVideoToolbar>
       </StyledAppbar>
     </Container>

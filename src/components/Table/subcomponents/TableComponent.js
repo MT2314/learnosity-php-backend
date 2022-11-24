@@ -20,56 +20,6 @@ import Toolbar from "./Toolbar";
 // Styled import
 import styled from "@emotion/styled";
 
-const defaultColumns = [
-  {
-    accessorKey: "column1",
-    id: "column1",
-    header: "",
-  },
-  {
-    accessorKey: "column2",
-    id: "column2",
-    header: "",
-  },
-  {
-    accessorKey: "column3",
-    id: "column3",
-    header: "",
-  },
-  {
-    accessorKey: "column4",
-    id: "column4",
-    header: "",
-  },
-];
-
-const defaultData = [
-  {
-    column1: { value: "", type: "cell" },
-    column2: { value: "", type: "cell" },
-    column3: { value: "", type: "cell" },
-    column4: { value: "", type: "cell" },
-  },
-  {
-    column1: { value: "", type: "cell" },
-    column2: { value: "", type: "cell" },
-    column3: { value: "", type: "cell" },
-    column4: { value: "", type: "cell" },
-  },
-  {
-    column1: { value: "", type: "cell" },
-    column2: { value: "", type: "cell" },
-    column3: { value: "", type: "cell" },
-    column4: { value: "", type: "cell" },
-  },
-  {
-    column1: { value: "", type: "cell" },
-    column2: { value: "", type: "cell" },
-    column3: { value: "", type: "cell" },
-    column4: { value: "", type: "cell" },
-  },
-];
-
 // Styled components
 const StyledTable = styled("table")({
   // border: "0.0625rem solid lightgray",
@@ -136,7 +86,7 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   return [...columnOrder];
 };
 
-const DraggableColumnHeader = ({ header, table, setColumnUpdate }) => {
+const DraggableColumnHeader = ({ header, table, showSideHeader }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
@@ -172,7 +122,11 @@ const DraggableColumnHeader = ({ header, table, setColumnUpdate }) => {
     <th
       ref={dropRef}
       colSpan={header.colSpan}
-      style={{ opacity: isDragging ? 0.5 : 1, backgroundColor: "#DEE7F5" }}
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        backgroundColor: "#DEE7F5",
+        ...(column.id === "column1" && showSideHeader && { display: "none" }),
+      }}
     >
       <div
         ref={previewRef}
@@ -204,7 +158,7 @@ const DraggableColumnHeader = ({ header, table, setColumnUpdate }) => {
   );
 };
 
-const DraggableRow = ({ row, reorderRow, len }) => {
+const DraggableRow = ({ row, reorderRow, showSideHeader, showTopHeader }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [, dropRef] = useDrop({
     accept: "row",
@@ -245,7 +199,13 @@ const DraggableRow = ({ row, reorderRow, len }) => {
 
   return (
     <tr ref={previewRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <td style={{ backgroundColor: "#DEE7F5" }}>
+      {console.log(row)}
+      <td
+        style={{
+          ...(row.index === 0 && showTopHeader && {display: "none"}),
+          backgroundColor: "#DEE7F5",
+        }}
+      >
         <span
           ref={dropRef}
           style={{
@@ -283,6 +243,7 @@ const DraggableRow = ({ row, reorderRow, len }) => {
             key={cell.id}
             data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
             style={{
+              ...(type == "title" && (showSideHeader || showTopHeader) && { display: "none" }),
               backgroundColor: type == "title" && "#EEEEEE",
               verticalAlign: type == "title" ? "middle" : "top",
             }}
@@ -305,6 +266,8 @@ const TableComponent = () => {
   const [state, dispatch] = useContext(LayoutContext);
   const [disconnect, setDisconnect] = useState(false);
   const [zebraStripes, setZebraStripes] = useState(false);
+  const [showTopHeader, setShowTopHeader] = useState(false);
+  const [showSideHeader, setShowSideHeader] = useState(false);
 
   const [columnOrder, setColumnOrder] = useState(
     state.headers.map((column) => column.id)
@@ -336,11 +299,11 @@ const TableComponent = () => {
     },
     [state, columnOrder]
   );
-  
+
   const StyledTbody = styled("tbody")(({ stripON }) => ({
     "tr:nth-child(odd)": {
       backgroundColor: stripON && "#F5F5F5",
-    }
+    },
   }));
 
   return (
@@ -349,7 +312,12 @@ const TableComponent = () => {
         disconnect={disconnect}
         setZebraStripes={setZebraStripes}
         zebraStripes={zebraStripes}
-       />
+        setShowSideHeader={setShowSideHeader}
+        setShowTopHeader={setShowTopHeader}
+        showSideHeader={showSideHeader}
+        showTopHeader={showTopHeader}
+        headerType={state.headerType}
+      />
       <StyledTable role="presentation">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -361,6 +329,7 @@ const TableComponent = () => {
               ></th>
               {headerGroup.headers.map((header) => (
                 <DraggableColumnHeader
+                  showSideHeader={showSideHeader}
                   key={header.id}
                   len={table.length}
                   header={header}
@@ -374,6 +343,8 @@ const TableComponent = () => {
         <StyledTbody stripON={zebraStripes}>
           {table.getRowModel().rows.map((row) => (
             <DraggableRow
+              showSideHeader={showSideHeader}
+              showTopHeader={showTopHeader}
               key={row.id}
               row={row}
               reorderRow={reorderRow}
