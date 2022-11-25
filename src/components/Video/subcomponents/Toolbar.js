@@ -913,7 +913,7 @@ const ToolBar = ({
                               }}
                             >
                               <FormControlLabel
-                                className="StyledFormConrolLabel"
+                                className="StyledFormControlLabel"
                                 control={
                                   <Checkbox
                                     checked={videoTextSettings.description}
@@ -956,7 +956,7 @@ const ToolBar = ({
                               }}
                             >
                               <FormControlLabel
-                                className="StyledFormConrolLabel"
+                                className="StyledFormControlLabel"
                                 control={
                                   <Checkbox
                                     checked={videoTextSettings.credit}

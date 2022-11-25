@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
+import { LayoutContext } from "../TableContext";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormControl from "@mui/material/FormControl";
@@ -18,19 +19,32 @@ import {
 
 import "../../Text/styles/Toolbar.scss";
 
-const ToolBar = ({
-  toolbar,
-  setZebraStripes,
-  zebraStripes,
-  showTopHeader,
-  showSideHeader,
-  setShowTopHeader,
-  setShowSideHeader,
-  headerType,
-}) => {
+const ToolBar = ({ toolbar, headerType }) => {
+  const [state, dispatch] = useContext(LayoutContext);
   const [showFormat, setShowFormat] = useState(false);
-
   const FormatRef = useRef(null);
+
+  // show Zebra dispatch
+  const showZebraStripes = () => {
+    dispatch({
+      func: "UPDATE_STRIP",
+      showStripes: !state.showStripes,
+    });
+  };
+  // show TopHeader dispatch
+  const showTopHeader = () => {
+    dispatch({
+      func: "UPDATE_TOPHEADER",
+      showTopHeader: !state.showTopHeader,
+    });
+  };
+  //  show Side Header dispatch
+  const showSideHeader = () => {
+    dispatch({
+      func: "UPDATE_SIDEHEADER",
+      showSideHeader: !state.showSideHeader,
+    });
+  };
 
   return (
     <div
@@ -150,13 +164,13 @@ const ToolBar = ({
                             }}
                           >
                             <FormControlLabel
-                              className="StyledFormConrolLabel"
+                              className="StyledFormControlLabel"
                               control={
                                 <Checkbox
-                                  checked={!showTopHeader}
+                                  checked={!state.showTopHeader}
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    setShowTopHeader(!showTopHeader);
+                                    showTopHeader();
                                   }}
                                   sx={{
                                     "&:hover": {
@@ -199,13 +213,13 @@ const ToolBar = ({
                             }}
                           >
                             <FormControlLabel
-                              className="StyledFormConrolLabel"
+                              className="StyledFormControlLabel"
                               control={
                                 <Checkbox
-                                  checked={!showSideHeader}
+                                  checked={!state.showSideHeader}
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    setShowSideHeader(!showSideHeader);
+                                    showSideHeader();
                                   }}
                                   sx={{
                                     "&:hover": {
@@ -247,13 +261,13 @@ const ToolBar = ({
                           }}
                         >
                           <FormControlLabel
-                            className="StyledFormConrolLabel"
+                            className="StyledFormControlLabel"
                             control={
                               <Checkbox
-                                checked={zebraStripes}
+                                checked={state.showStripes}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  setZebraStripes(!zebraStripes);
+                                  showZebraStripes();
                                 }}
                                 sx={{
                                   "&:hover": {

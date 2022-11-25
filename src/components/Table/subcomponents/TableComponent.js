@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-table";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
-import TextareaAutosize from "@mui/base/TextareaAutosize";
+import { Paper, TextareaAutosize } from "@material-ui/core";
 
 // react-dnd imports
 import { DndProvider, useDrag, useDrop } from "react-dnd";
@@ -99,7 +99,7 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   return [...columnOrder];
 };
 
-const DraggableColumnHeader = ({ header, table, showSideHeader }) => {
+const DraggableColumnHeader = ({ header, table }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
@@ -138,7 +138,8 @@ const DraggableColumnHeader = ({ header, table, showSideHeader }) => {
       style={{
         opacity: isDragging ? 0.5 : 1,
         backgroundColor: "#DEE7F5",
-        ...(column.id === "column1" && showSideHeader && { display: "none" }),
+        ...(column.id === "column1" &&
+          state.showSideHeader && { display: "none" }),
       }}
     >
       <div
@@ -171,7 +172,7 @@ const DraggableColumnHeader = ({ header, table, showSideHeader }) => {
   );
 };
 
-const DraggableRow = ({ row, reorderRow, showSideHeader, showTopHeader }) => {
+const DraggableRow = ({ row, reorderRow }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [, dropRef] = useDrop({
     accept: "row",
@@ -215,7 +216,7 @@ const DraggableRow = ({ row, reorderRow, showSideHeader, showTopHeader }) => {
       <td
         style={{
           ...(row.original.column1.type === "title" &&
-            showTopHeader && { display: "none" }),
+            state.showTopHeader && { display: "none" }),
           backgroundColor: "#DEE7F5",
         }}
       >
@@ -257,7 +258,9 @@ const DraggableRow = ({ row, reorderRow, showSideHeader, showTopHeader }) => {
             data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
             style={{
               ...(type == "title" &&
-                (showSideHeader || showTopHeader) && { display: "none" }),
+                (state.showSideHeader || state.showTopHeader) && {
+                  display: "none",
+                }),
               backgroundColor: type == "title" && "#EEEEEE",
               verticalAlign: type == "title" ? "middle" : "top",
             }}
@@ -279,9 +282,6 @@ const DraggableRow = ({ row, reorderRow, showSideHeader, showTopHeader }) => {
 const TableComponent = () => {
   const [state, dispatch] = useContext(LayoutContext);
   const [toolbar, setToolbar] = useState(false);
-  const [zebraStripes, setZebraStripes] = useState(false);
-  const [showTopHeader, setShowTopHeader] = useState(false);
-  const [showSideHeader, setShowSideHeader] = useState(false);
   const tableRef = useRef();
 
   useOnClickOutside(tableRef, () => {
@@ -319,11 +319,11 @@ const TableComponent = () => {
     [state, columnOrder]
   );
 
-  const StyledTbody = styled("tbody")(({ stripON }) => ({
+  const StyledTbody = styled("tbody")({
     "tr:nth-of-type(odd)": {
-      backgroundColor: stripON && "#F5F5F5",
+      backgroundColor: state.showStripes && "#F5F5F5",
     },
-  }));
+  });
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -334,16 +334,7 @@ const TableComponent = () => {
         ref={tableRef}
       >
         <StyledConfigBar>
-          <Toolbar
-            toolbar={toolbar}
-            setZebraStripes={setZebraStripes}
-            zebraStripes={zebraStripes}
-            setShowSideHeader={setShowSideHeader}
-            setShowTopHeader={setShowTopHeader}
-            showSideHeader={showSideHeader}
-            showTopHeader={showTopHeader}
-            headerType={state.headerType}
-          />
+          <Toolbar toolbar={toolbar} headerType={state.headerType} />
         </StyledConfigBar>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -355,7 +346,6 @@ const TableComponent = () => {
               ></th>
               {headerGroup.headers.map((header) => (
                 <DraggableColumnHeader
-                  showSideHeader={showSideHeader}
                   key={header.id}
                   len={table.length}
                   header={header}
@@ -366,11 +356,9 @@ const TableComponent = () => {
             </tr>
           ))}
         </thead>
-        <StyledTbody stripON={zebraStripes}>
+        <StyledTbody stripON={state.showStripes}>
           {table.getRowModel().rows.map((row) => (
             <DraggableRow
-              showSideHeader={showSideHeader}
-              showTopHeader={showTopHeader}
               key={row.id}
               row={row}
               reorderRow={reorderRow}

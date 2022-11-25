@@ -145,10 +145,14 @@ const Modal = ({ setShowModal, setShowTable }) => {
       headers,
       data,
       headerType: headerSelection,
+      showTopHeader: false,
+      showSideHeader: false,
+      showStripes: false,
     });
 
     setShowTable(true);
   };
+
   return (
     <Container
       ref={containerRef}
