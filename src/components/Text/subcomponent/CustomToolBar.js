@@ -564,6 +564,7 @@ const ToolBar = ({
                 if (format?.link && activeTopMenu === "link") {
                   const selection = quill.getSelection();
                   quill.formatText(selection, "link", false);
+                  setActiveTopMenu("");
                   return;
                 }
 
