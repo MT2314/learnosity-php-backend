@@ -24,13 +24,16 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import styled from "@emotion/styled";
 
 // Styled components
-const StyledTable = styled("table")({
+const StyledTable = styled("table")(({ showStripes }) => ({
   // border: "0.0625rem solid lightgray",
   borderCollapse: "collapse",
   borderSpacing: "0",
   tableLayout: "fixed",
   width: "100%",
-});
+  "tr:nth-of-type(odd)": {
+    backgroundColor: showStripes && "#F5F5F5",
+  },
+}));
 
 const StyledTd = styled("td")({
   border: "1px solid black",
@@ -319,11 +322,6 @@ const TableComponent = () => {
     [state, columnOrder]
   );
 
-  const StyledTbody = styled("tbody")({
-    "tr:nth-of-type(odd)": {
-      backgroundColor: state.showStripes && "#F5F5F5",
-    },
-  });
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -332,6 +330,7 @@ const TableComponent = () => {
         onFocus={(e) => setToolbar(true)}
         onClick={(e) => setToolbar(true)}
         ref={tableRef}
+        showStripes={state.showStripes}
       >
         <StyledConfigBar>
           <Toolbar toolbar={toolbar} headerType={state.headerType} />
@@ -356,7 +355,7 @@ const TableComponent = () => {
             </tr>
           ))}
         </thead>
-        <StyledTbody stripON={state.showStripes}>
+        <tbody>
           {table.getRowModel().rows.map((row) => (
             <DraggableRow
               key={row.id}
@@ -364,7 +363,7 @@ const TableComponent = () => {
               reorderRow={reorderRow}
             ></DraggableRow>
           ))}
-        </StyledTbody>
+        </tbody>
       </StyledTable>
     </DndProvider>
   );
