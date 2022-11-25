@@ -69,6 +69,7 @@ const ToolBar = ({
   const [selectYoutube, setSelectYoutube] = useState(false);
   const [videoEdit, setVideoEdit] = useState(false);
   const [invalidVideoInput, setInvalidVideoInput] = useState(false);
+  const [videoInput, setVideoInput] = useState("");
   // ? Video refs
   const AddVideo = useRef(null);
   const TranscriptVideo = useRef(null);
@@ -264,6 +265,8 @@ const ToolBar = ({
   useEffect(() => {
     setToolbar(portalToolbarRef.current);
   }, []);
+
+  console.log(inputId.current?.value.length);
 
   return (
     <>
@@ -528,7 +531,10 @@ const ToolBar = ({
                               videoAPI.videoId && !videoEdit ? true : false
                             }
                             onClick={(e) => e.stopPropagation()}
-                            onChange={() => setInvalidVideoInput(false)}
+                            onChange={() => {
+                              setInvalidVideoInput(false);
+                              setVideoInput(inputId.current.value);
+                            }}
                             className="StyledInput"
                             style={{
                               "--color":
@@ -573,7 +579,9 @@ const ToolBar = ({
                                   "--grid-template-columns": "1fr",
                                   "--hover-background-color":
                                     "rgba(21, 101, 192, 0.04)",
+                                  "--disabled": "rgba(0, 0, 0, 0.38)",
                                 }}
+                                disabled={videoInput.length === 0}
                                 disableRipple
                                 disableFocusRipple
                               >
