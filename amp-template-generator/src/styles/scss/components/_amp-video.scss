@@ -6,6 +6,10 @@
     margin: 0;
   }
 
+  .brightcove {
+    max-height: 540px;
+  }
+
   .transcript-wrapper {
     position: relative;
     max-width: 768px;
@@ -131,7 +135,7 @@
         background: $transparent-grey-100;
         border: none;
         position: relative;
-        border-radius: 0.625rem;
+        border-radius: 0.3125rem;
         cursor: pointer;
         margin-bottom: 16px;
 
