@@ -80,6 +80,16 @@ const StyledInput = styled(TextareaAutosize)(({ type }) => ({
   },
 }));
 
+const StyledConfigBar = styled("div")({
+  position: "fixed",
+  top: "80px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  zIndex: 1000,
+  justifyContent: "center",
+  backgroundColor: "transparent",
+});
+
 const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   columnOrder.splice(
     columnOrder.indexOf(targetColumnId),
@@ -321,19 +331,20 @@ const TableComponent = () => {
         role="presentation"
         onFocus={(e) => setToolbar(true)}
         onClick={(e) => setToolbar(true)}
-        onBlur={(e) => setToolbar(false)}
         ref={tableRef}
       >
-        <Toolbar
-          toolbar={toolbar}
-          setZebraStripes={setZebraStripes}
-          zebraStripes={zebraStripes}
-          setShowSideHeader={setShowSideHeader}
-          setShowTopHeader={setShowTopHeader}
-          showSideHeader={showSideHeader}
-          showTopHeader={showTopHeader}
-          headerType={state.headerType}
-        />
+        <StyledConfigBar>
+          <Toolbar
+            toolbar={toolbar}
+            setZebraStripes={setZebraStripes}
+            zebraStripes={zebraStripes}
+            setShowSideHeader={setShowSideHeader}
+            setShowTopHeader={setShowTopHeader}
+            showSideHeader={showSideHeader}
+            showTopHeader={showTopHeader}
+            headerType={state.headerType}
+          />
+        </StyledConfigBar>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

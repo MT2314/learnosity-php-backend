@@ -888,7 +888,11 @@ const ToolBar = ({
                       <MenuList
                         data-testid="video-description-settings-dropdown"
                         aria-labelledby="Video Description Settings"
-                        className="StyledKebabMenu"
+                        className="StyledCheckboxMenu"
+                        style={{
+                          "--width": "204px",
+                          "--height": "108px",
+                        }}
                       >
                         <FormGroup sx={{ gap: "14px" }}>
                           <FormControl>
