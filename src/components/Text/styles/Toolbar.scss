@@ -267,7 +267,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   pointer-events: var(--pointerEvent);
 }
 
-.StyledFormConrolLabel {
+.StyledFormControlLabel {
   height: 24px;
   white-space: nowrap;
   font-family: Inter, sans-serif;
@@ -285,14 +285,14 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   }
 }
 
-.StyledKebabMenu {
+.StyledCheckboxMenu {
   background: #ffffff;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   margin-left: 0px;
   margin-top: 7px;
-  width: 204px;
-  height: 108px;
+  width: var(--width);
+  height: var(--height);
   padding-left: 27.5px;
   padding-top: 23px;
   padding-bottom: 23px;

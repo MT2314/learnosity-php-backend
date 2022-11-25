@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useCallback } from "react";
 import { LayoutContext } from "../TableContext";
 
 // react-table imports
@@ -9,73 +9,31 @@ import {
 } from "@tanstack/react-table";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
-import TextareaAutosize from "@mui/base/TextareaAutosize";
+import { Paper, TextareaAutosize } from "@material-ui/core";
 
 // react-dnd imports
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
+import Toolbar from "./Toolbar";
+
+// Hook/utilities imports
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
+
 // Styled import
 import styled from "@emotion/styled";
 
-const defaultColumns = [
-  {
-    accessorKey: "column1",
-    id: "column1",
-    header: "",
-  },
-  {
-    accessorKey: "column2",
-    id: "column2",
-    header: "",
-  },
-  {
-    accessorKey: "column3",
-    id: "column3",
-    header: "",
-  },
-  {
-    accessorKey: "column4",
-    id: "column4",
-    header: "",
-  },
-];
-
-const defaultData = [
-  {
-    column1: { value: "", type: "cell" },
-    column2: { value: "", type: "cell" },
-    column3: { value: "", type: "cell" },
-    column4: { value: "", type: "cell" },
-  },
-  {
-    column1: { value: "", type: "cell" },
-    column2: { value: "", type: "cell" },
-    column3: { value: "", type: "cell" },
-    column4: { value: "", type: "cell" },
-  },
-  {
-    column1: { value: "", type: "cell" },
-    column2: { value: "", type: "cell" },
-    column3: { value: "", type: "cell" },
-    column4: { value: "", type: "cell" },
-  },
-  {
-    column1: { value: "", type: "cell" },
-    column2: { value: "", type: "cell" },
-    column3: { value: "", type: "cell" },
-    column4: { value: "", type: "cell" },
-  },
-];
-
 // Styled components
-const StyledTable = styled("table")({
+const StyledTable = styled("table")(({ showStripes }) => ({
   // border: "0.0625rem solid lightgray",
   borderCollapse: "collapse",
   borderSpacing: "0",
   tableLayout: "fixed",
   width: "100%",
-});
+  "tr:nth-of-type(odd)": {
+    backgroundColor: showStripes && "#F5F5F5",
+  },
+}));
 
 const StyledTd = styled("td")({
   border: "1px solid black",
@@ -125,6 +83,16 @@ const StyledInput = styled(TextareaAutosize)(({ type }) => ({
   },
 }));
 
+const StyledConfigBar = styled("div")({
+  position: "fixed",
+  top: "80px",
+  left: "50%",
+  transform: "translateX(-50%)",
+  zIndex: 1000,
+  justifyContent: "center",
+  backgroundColor: "transparent",
+});
+
 const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   columnOrder.splice(
     columnOrder.indexOf(targetColumnId),
@@ -134,7 +102,7 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   return [...columnOrder];
 };
 
-const DraggableColumnHeader = ({ header, table, setColumnUpdate }) => {
+const DraggableColumnHeader = ({ header, table }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
@@ -170,7 +138,12 @@ const DraggableColumnHeader = ({ header, table, setColumnUpdate }) => {
     <th
       ref={dropRef}
       colSpan={header.colSpan}
-      style={{ opacity: isDragging ? 0.5 : 1, backgroundColor: "#DEE7F5" }}
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        backgroundColor: "#DEE7F5",
+        ...(column.id === "column1" &&
+          state.showSideHeader && { display: "none" }),
+      }}
     >
       <div
         ref={previewRef}
@@ -202,7 +175,7 @@ const DraggableColumnHeader = ({ header, table, setColumnUpdate }) => {
   );
 };
 
-const DraggableRow = ({ row, reorderRow, len }) => {
+const DraggableRow = ({ row, reorderRow }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [, dropRef] = useDrop({
     accept: "row",
@@ -243,7 +216,13 @@ const DraggableRow = ({ row, reorderRow, len }) => {
 
   return (
     <tr ref={previewRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <td style={{ backgroundColor: "#DEE7F5" }}>
+      <td
+        style={{
+          ...(row.original.column1.type === "title" &&
+            state.showTopHeader && { display: "none" }),
+          backgroundColor: "#DEE7F5",
+        }}
+      >
         <span
           ref={dropRef}
           style={{
@@ -281,7 +260,11 @@ const DraggableRow = ({ row, reorderRow, len }) => {
             key={cell.id}
             data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
             style={{
-              backgroundColor: type == "title" ? "#EEEEEE" : "#FFFFFF",
+              ...(type == "title" &&
+                (state.showSideHeader || state.showTopHeader) && {
+                  display: "none",
+                }),
+              backgroundColor: type == "title" && "#EEEEEE",
               verticalAlign: type == "title" ? "middle" : "top",
             }}
             align="center"
@@ -301,6 +284,12 @@ const DraggableRow = ({ row, reorderRow, len }) => {
 
 const TableComponent = () => {
   const [state, dispatch] = useContext(LayoutContext);
+  const [toolbar, setToolbar] = useState(false);
+  const tableRef = useRef();
+
+  useOnClickOutside(tableRef, () => {
+    setToolbar(false);
+  });
 
   const [columnOrder, setColumnOrder] = useState(
     state.headers.map((column) => column.id)
@@ -333,9 +322,19 @@ const TableComponent = () => {
     [state, columnOrder]
   );
 
+
   return (
     <DndProvider backend={HTML5Backend}>
-      <StyledTable role="presentation">
+      <StyledTable
+        role="presentation"
+        onFocus={(e) => setToolbar(true)}
+        onClick={(e) => setToolbar(true)}
+        ref={tableRef}
+        showStripes={state.showStripes}
+      >
+        <StyledConfigBar>
+          <Toolbar toolbar={toolbar} headerType={state.headerType} />
+        </StyledConfigBar>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

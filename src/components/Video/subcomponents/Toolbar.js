@@ -888,7 +888,11 @@ const ToolBar = ({
                       <MenuList
                         data-testid="video-description-settings-dropdown"
                         aria-labelledby="Video Description Settings"
-                        className="StyledKebabMenu"
+                        className="StyledCheckboxMenu"
+                        style={{
+                          "--width": "204px",
+                          "--height": "108px",
+                        }}
                       >
                         <FormGroup sx={{ gap: "14px" }}>
                           <FormControl>
@@ -909,7 +913,7 @@ const ToolBar = ({
                               }}
                             >
                               <FormControlLabel
-                                className="StyledFormConrolLabel"
+                                className="StyledFormControlLabel"
                                 control={
                                   <Checkbox
                                     checked={videoTextSettings.description}
@@ -952,7 +956,7 @@ const ToolBar = ({
                               }}
                             >
                               <FormControlLabel
-                                className="StyledFormConrolLabel"
+                                className="StyledFormControlLabel"
                                 control={
                                   <Checkbox
                                     checked={videoTextSettings.credit}
