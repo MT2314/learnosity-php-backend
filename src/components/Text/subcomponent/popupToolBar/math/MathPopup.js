@@ -112,6 +112,7 @@ const MathPopup = () => {
       ref={containerRef}
       tabIndex={0}
       id={`mathpopup-${uniqueId}`}
+      className="MathEquationKeyboard"
       onKeyDown={(e) => {
         if (e.key === "Escape") {
           closeMath();
@@ -158,7 +159,12 @@ const MathPopup = () => {
         />
       </div>
       <div style={{ display: "flex", flexDirection: "row" }}>
-        <div style={{ width: "406px", marginLeft: "16px" }}>
+        <div
+          style={{
+            width: "406px",
+            marginLeft: "16px",
+          }}
+        >
           <TabContext value={value}>
             <TabList onChange={handleChange}>
               {tabs.map((tab, index) => (
@@ -166,7 +172,14 @@ const MathPopup = () => {
                   key={index}
                   label={tab.label}
                   value={`${index + 1}`}
-                  style={{ minWidth: "76.5px" }}
+                  style={{
+                    minWidth: "76.5px",
+                    textTransform: "none",
+                    color:
+                      value == index + 1
+                        ? "rgba(21, 101, 192, 1)"
+                        : "rgba(99, 99, 99, 1)",
+                  }}
                   disableRipple
                   disableFocusRipple
                 />
