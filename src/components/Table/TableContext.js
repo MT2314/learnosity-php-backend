@@ -12,6 +12,9 @@ export const layoutConfig = (draft, action) => {
       draft.headers = action.headers;
       draft.data = action.data;
       draft.headerType = action.headerType;
+      draft.showTopHeader = action.showTopHeader;
+      draft.showSideHeader = action.showSideHeader;
+      draft.showStripes = action.showStripes;
       return draft;
     case "UPDATE_CELL":
       const temp = Object.keys(draft.data[action.row]);
@@ -34,6 +37,15 @@ export const layoutConfig = (draft, action) => {
         0,
         draft.data.splice(action.draggedRowIndex, 1)[0]
       );
+      return draft;
+    case "UPDATE_STRIP":
+      draft.showStripes = action.showStripes;
+      return draft;
+    case "UPDATE_TOPHEADER":
+      draft.showTopHeader = action.showTopHeader;
+      return draft;
+    case "UPDATE_SIDEHEADER":
+      draft.showSideHeader = action.showSideHeader;
       return draft;
     default:
       return draft;
