@@ -142,6 +142,11 @@ const MathPopup = () => {
         <CloseIcon
           sx={{ cursor: "pointer" }}
           onClick={closeMath}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              closeMath();
+            }
+          }}
           tabIndex={0}
         />
       </div>
