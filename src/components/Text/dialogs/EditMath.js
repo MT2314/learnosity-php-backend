@@ -38,12 +38,12 @@ const EditMath = () => {
   const container = {
     display: editState?.value ? "flex" : "none",
     position: "fixed",
-    top: editState?.clientY ? `${editState.clientY}px` : "0",
+    top: editState?.clientY ? `${editState.clientY - 5}px` : "0",
     left: editState?.clientX ? `${editState.clientX}px` : "0",
     width: "80px",
     zIndex: "4",
     borderRadius: "4px",
-    border: "1px solid rgba(0,0,0,.25)",
+    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
     backgroundColor: "white",
     padding: "4px",
     boxShadow: "0 5px 10px rgba(0,0,0,.2)",
@@ -85,7 +85,6 @@ const EditMath = () => {
 
   return (
     <div style={container} ref={containerRef}>
-      <div className="arrow arrow-up"></div>
       {editState?.id !== null && (
         <>
           <Tooltip arrow title="edit formula" placement="top">

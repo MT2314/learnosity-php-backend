@@ -158,7 +158,6 @@ const Modal = ({ setShowModal, setShowTable }) => {
       ref={containerRef}
       onKeyDown={(e) => {
         if (e.key === "Escape") {
-          console.log("Escape");
           setShowModal(false);
         }
       }}

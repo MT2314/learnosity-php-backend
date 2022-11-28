@@ -297,3 +297,16 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   padding-top: 23px;
   padding-bottom: 23px;
 }
+
+.MathEquationKeyboard {
+  .MuiTabs-indicator {
+    background: rgba(21, 101, 192, 1) !important;
+  }
+
+  .MuiButtonBase-root.MuiTab-root {
+    &:focus-visible {
+      border: 2px solid black;
+      padding: 10px 14px;
+    }
+  }
+}
