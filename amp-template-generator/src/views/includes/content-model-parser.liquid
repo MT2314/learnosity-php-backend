@@ -33,7 +33,7 @@
     {%- when "Accordion" -%}
       {% include amp-accordion.html data:item %}
     {%- when "Table" -%}
-      {% include amp-table.html data:item %}
+      {% include amp-table.html data:propName.layoutState %}
       {%comment%}
         Not using below.
       {%endcomment%}

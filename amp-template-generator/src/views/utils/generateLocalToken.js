@@ -25,7 +25,7 @@ const getCredentials = async () => {
       }
     )
     .then(function (response) {
-      return response.data.AuthenticationResult.IdToken;
+      return response.data.AuthenticationResult.AccessToken;
     })
     .catch(function (error) {
       console.error(error);
