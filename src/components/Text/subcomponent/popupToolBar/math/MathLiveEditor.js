@@ -20,6 +20,16 @@ const MathLiveEditor = forwardRef((props, ref) => {
     }
   }, [props.value]);
 
+  useEffect(() => {
+    _ref.current?.addEventListener("input", () => {
+      props.onEditorInput(_ref.current?.getValue());
+    });
+
+    return () => {
+      _ref.current?.removeEventListener("input", () => {});
+    };
+  }, []);
+
   const attributes = {
     "keypress-sound": "none",
     "plonk-sound": "none",

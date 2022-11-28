@@ -25,6 +25,7 @@ import { iconDropdownOptions } from "../../InfoBox/icons/infoBoxIcons";
 import BoldDropdownButton from "./popupToolBar/BoldDropdownButton";
 import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
+import MathDropdownButton from "./popupToolBar/MathDropdownButton";
 
 import icons, { Chevron } from "../assets/icons";
 
@@ -85,6 +86,7 @@ const ToolBar = ({
   const [boldVisibility, setBoldVisibility] = useState(false);
   const [listVisibility, setListVisibility] = useState(false);
   const [alignVisibility, setAlignVisibility] = useState(false);
+  const [mathVisibility, setMathVisibility] = useState(false);
 
   // IconBox
   const [openIcon, setIconOpen] = useState(false);
@@ -98,6 +100,7 @@ const ToolBar = ({
   //focus to the list and align. Bold Ref is found in EditorComponent.js
   const listRef = useRef(null);
   const alignRef = useRef(null);
+  const mathRef = useRef(null);
   // ? IconBox refs
   const IconDropDown = useRef(null);
 
@@ -139,9 +142,6 @@ const ToolBar = ({
   };
 
   useEffect(() => {
-    if (activeTopMenu === "math") {
-      setShowMath(true);
-    }
     if (activeTopMenu === "link" && !isLink) {
       const selection = quill.getSelection();
 
@@ -163,12 +163,11 @@ const ToolBar = ({
   }, [showLink, isLink]);
 
   useEffect(() => {
-    if (activeTopMenu === "math" && !showMath) {
+    if (!showMath) {
       setActiveDropDownItem("");
-      setActiveTopMenu("");
     }
-    if (activeTopMenu === "" && showMath) {
-      setActiveTopMenu("math");
+    if (showMath) {
+      setActiveDropDownItem("equationKeyboard");
     }
   }, [showMath]);
 
@@ -396,40 +395,55 @@ const ToolBar = ({
           ></BoldDropdownButton>
 
           {!isInfoBox && portal?.parentComponent !== "video" && (
-            <Tooltip
-              aria-label="equation"
-              title="equation"
-              placement="top"
-              arrow
-            >
-              <IconButton
-                className="StyledIconButton"
-                style={{
-                  "--active":
-                    activeTopMenu === "math" ? "rgba(21, 101, 192, 1)" : "#000",
-                  "--background":
-                    activeTopMenu === "math"
-                      ? "rgba(21, 101, 192, 0.12)"
-                      : "#fff",
-                }}
-                aria-label="math equation button"
-                disableRipple
-                color="inherit"
-                disabled={infoHasFocus}
-                onClick={() => {
-                  setAlignVisibility(false);
-                  setBoldVisibility(false);
-                  setListVisibility(false);
-                  if (activeTopMenu === "math") {
-                    setActiveTopMenu("");
-                  } else {
-                    setActiveTopMenu("math");
-                  }
-                }}
+            <>
+              <Tooltip
+                aria-label="equation"
+                title="equation"
+                placement="top"
+                arrow
               >
-                {icons["formula"]}
-              </IconButton>
-            </Tooltip>
+                <IconButton
+                  ref={mathRef}
+                  className="StyledIconButton"
+                  style={{
+                    "--active":
+                      activeTopMenu === "math"
+                        ? "rgba(21, 101, 192, 1)"
+                        : "#000",
+                    "--background":
+                      activeTopMenu === "math"
+                        ? "rgba(21, 101, 192, 0.12)"
+                        : "#fff",
+                  }}
+                  aria-label="math equation button"
+                  disableRipple
+                  color="inherit"
+                  disabled={infoHasFocus}
+                  onClick={() => {
+                    setAlignVisibility(false);
+                    setBoldVisibility(false);
+                    setListVisibility(false);
+                    setMathVisibility(!mathVisibility);
+                    if (activeTopMenu === "math") {
+                      setActiveTopMenu("");
+                    } else {
+                      setActiveTopMenu("math");
+                    }
+                  }}
+                >
+                  {icons["formula"]}
+                </IconButton>
+              </Tooltip>
+              <MathDropdownButton
+                show={mathVisibility}
+                aria-label="math buttons options"
+                setActiveDropDownItem={setActiveDropDownItem}
+                activeDropDownItem={activeDropDownItem}
+                onKeyDropDown={(e) => {
+                  onKeyDropDown(e, mathRef);
+                }}
+              />
+            </>
           )}
 
           {/* alignment dropdown */}

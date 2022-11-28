@@ -112,24 +112,12 @@ const Basic = [
     insert: "\\geq",
   },
   {
-    text: "\\neq",
-    insert: "\\neq",
-  },
-  {
     text: "\\equiv",
     insert: "\\equiv",
   },
   {
     text: "\\approx",
     insert: "\\approx",
-  },
-  {
-    text: "\\le",
-    insert: "\\le",
-  },
-  {
-    text: "\\ge",
-    insert: "\\ge",
   },
   {
     text: "\\in",
