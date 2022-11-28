@@ -39,8 +39,6 @@ const StyledButton = styled("button")(() => ({
 
 const Table = () => {
   const [showModal, setShowModal] = useState(false);
-  const [showTable, setShowTable] = useState(false);
-  const [numberColRow, setNumberColRow] = useState([2, 2]);
   const [state, dispatch] = useContext(LayoutContext);
 
   const createTable = (e) => {

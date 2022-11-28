@@ -24,20 +24,25 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import styled from "@emotion/styled";
 
 // Styled components
-const StyledTable = styled("table")(({ showStripes }) => ({
+const StyledTable = styled("table")(({ showStripes, headerType }) => ({
   // border: "0.0625rem solid lightgray",
   borderCollapse: "collapse",
   borderSpacing: "0",
   tableLayout: "fixed",
   width: "100%",
-  "tr:nth-of-type(odd)": {
-    backgroundColor: showStripes && "#F5F5F5",
+  "tr:nth-of-type(odd):not(:first-child)": {
+    backgroundColor: headerType === "top-header" && showStripes && "#F5F5F5",
+  },
+  "tr:nth-of-type(even)": {
+    backgroundColor: headerType === "side-header" && showStripes && "#F5F5F5",
   },
 }));
 
 const StyledTd = styled("td")({
-  border: "1px solid black",
+  border: "1px solid #232323",
   minHeight: "100px",
+  color: "#232323",
+  letterSpacing: "0.15px",
 });
 
 const StyledInput = styled(TextareaAutosize)(({ type }) => ({
@@ -49,7 +54,6 @@ const StyledInput = styled(TextareaAutosize)(({ type }) => ({
   lineHeight: "1.575rem",
   width: "100%",
   minHeight: type === "title" ? "57px" : "25px",
-  height: "auto !important",
   ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
   ...(type === "cell" && { padding: "15px" }),
   resize: "none",
@@ -142,7 +146,7 @@ const DraggableColumnHeader = ({ header, table }) => {
         opacity: isDragging ? 0.5 : 1,
         backgroundColor: "#DEE7F5",
         ...(column.id === "column1" &&
-          state.showSideHeader && { display: "none" }),
+          state.hideSideHeader && { display: "none" }),
       }}
     >
       <div
@@ -219,7 +223,7 @@ const DraggableRow = ({ row, reorderRow }) => {
       <td
         style={{
           ...(row.original.column1.type === "title" &&
-            state.showTopHeader && { display: "none" }),
+            state.hideTopHeader && { display: "none" }),
           backgroundColor: "#DEE7F5",
         }}
       >
@@ -261,7 +265,7 @@ const DraggableRow = ({ row, reorderRow }) => {
             data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
             style={{
               ...(type == "title" &&
-                (state.showSideHeader || state.showTopHeader) && {
+                (state.hideSideHeader || state.hideTopHeader) && {
                   display: "none",
                 }),
               backgroundColor: type == "title" && "#EEEEEE",
@@ -331,6 +335,7 @@ const TableComponent = () => {
         onClick={(e) => setToolbar(true)}
         ref={tableRef}
         showStripes={state.showStripes}
+        headerType={state.headerType}
       >
         <StyledConfigBar>
           <Toolbar toolbar={toolbar} headerType={state.headerType} />
