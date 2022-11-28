@@ -776,7 +776,8 @@ const ToolBar = ({
                   "--width": "196px",
                   "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
                   "--borderLeft": "none",
-                  "--grid-template-columns": "1fr 1fr 1fr 9px 1fr 9px 1fr",
+                  "--grid-template-columns": "1fr 1fr 1fr 8px 1fr 8px 1fr",
+                  "--justify-items": "center",
                 }}
               >
                 <IconButton
@@ -835,6 +836,7 @@ const ToolBar = ({
                 flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
+
                 left: state.videoId ? "471px" : "360px",
                 // borderRadius: "0px 4px 4px 0px",
                 // backgroundColor: "white",
@@ -854,8 +856,12 @@ const ToolBar = ({
                 <IconButton
                   ref={DescriptionKebab}
                   data-videoid="videoSettings"
-                  aria-controls={openVideo ? t("Add Video") : undefined}
-                  aria-expanded={openVideo ? "true" : undefined}
+                  aria-controls={
+                    openDescriptionKebab
+                      ? t("Change Video Settings")
+                      : undefined
+                  }
+                  aria-expanded={openDescriptionKebab ? "true" : undefined}
                   variant="contained"
                   open={openDescriptionKebab}
                   disableRipple
@@ -870,7 +876,6 @@ const ToolBar = ({
                       ? "rgba(21, 101, 192, 0.12)"
                       : "#fff",
                   }}
-                  // sx={{ marginLeft: "2px !important" }}
                 >
                   <KebabSVG />
                 </IconButton>

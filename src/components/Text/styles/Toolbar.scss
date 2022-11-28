@@ -202,6 +202,9 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   & svg {
     fill: var(--active);
     opacity: var(--disabled);
+    & path {
+      fill: var(--active);
+    }
   }
 
   // hover, active, focus states
@@ -211,10 +214,16 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     background-color: $lightBlue;
     & svg {
-      fill: $blue;
+      fill: $blue !important;
+      & path {
+        fill: $blue !important;
+      }
     }
     > svg {
       color: $blue !important;
+      & path {
+        fill: $blue !important;
+      }
     }
   }
   // disabled state
