@@ -332,12 +332,13 @@ const ToolBar = ({
             }`,
             "--grid-template-columns": `${
               isInfoBox
-                ? "1fr 1fr 1fr 9px 1fr"
+                ? "1fr 1fr 1fr 8px 1fr"
                 : portal?.parentComponent === "video"
-                ? "1fr 1fr 1fr 9px 1fr 9px 1fr"
-                : "1fr 1fr 1fr 1fr 9px 1fr"
+                ? "1fr 1fr 1fr 8px 1fr 8px 1fr"
+                : "1fr 1fr 1fr 1fr 8px 1fr"
             }`,
             "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
+            "--justify-items": "center",
           }}
           test-id="infoBox-toolbar"
         >
