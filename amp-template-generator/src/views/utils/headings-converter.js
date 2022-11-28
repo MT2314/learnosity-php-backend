@@ -1,4 +1,5 @@
 let hasHeaderAbove = false;
+let arrayOfHeadings = [1];
 
 /**
  * Recursively parses an Object's children to set a "heading.headingLevel"
@@ -73,6 +74,8 @@ function parse(entity, level = -1) {
     entity.components.forEach(__parseElement);
   } else if (entity.componentName === "Header") {
     entity.props.headerState = _setHeading(entity.props.headerState, level);
+    arrayOfHeadings.push(2);
+    console.log("array:", arrayOfHeadings);
     hasHeaderAbove = true;
   } else if (entity.componentName === "InfoBox") {
     _setHeading(
