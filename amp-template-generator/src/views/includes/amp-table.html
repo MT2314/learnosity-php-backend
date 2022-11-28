@@ -1,7 +1,14 @@
+{% if data.showStripes %}
+    {% assign show_stripes = "showStripes" %}
+{% endif %}
+
+{% if data.showTopHeader %}
+    {% assign show_top_header = "showTopHeader" %}
+{% endif %}
+
 <div class="table wrapper bottom-margin">
-    <table class="table font-small">
-        <caption>{{data.caption}}</caption>
-        {%- for row in data.rows -%}
+    <table class="table font-small {{ show_stripes }} {{ show_top_header }}" >
+        {%- for row in data.data -%}
             {% assign head = false %}
             {% assign row_wrapper = "" %}
             {% if forloop.first == true %}
@@ -10,36 +17,40 @@
             {% elsif forloop.index0 == 1 %}
                 {% assign row_wrapper = "tbody" %}
             {% endif %}
-            {% if row_wrapper != "" %}
-                <{{row_wrapper}}>
-            {% endif %}
-                    <tr>
-                    {%- for column in row.columns -%}
-                        {% assign class = "p1" %}
-                        {% assign scope = "" %}
-                        {% assign cell = "td" %}
-                        {% if head == true %}
-                            {% assign scope = 'scope="col"' %}
-                            {% assign cell = "th" %}
-                        {% endif %}
-                        {% if forloop.index0 == 0 %}
-                            {%if data.headers == "TOP_AND_LEFT" %}
+            {% if data.showTopHeader == false or head == false %}
+                {% if row_wrapper != "" %}
+                    <{{row_wrapper}}>
+                {% endif %}
+                        <tr>
+                        {%- for column in row -%}
+                            {% assign class = "p1" %}
+                            {% assign scope = "" %}
+                            {% assign cell = "td" %}
+                            {% if head == true %}
+                                {% assign scope = 'scope="col"' %}
                                 {% assign cell = "th" %}
-                                {% if head == false %}
-                                    {% assign scope = 'scope="row"' %}
-                                {% endif %}
-                                {% if data.freezeLeft == true %}
-                                    {% assign class = "sticky p1" %}
+                            {% endif %}
+                            {% if forloop.index0 == 0 %}
+                                {%if data.headers == "TOP_AND_LEFT" %}
+                                    {% assign cell = "th" %}
+                                    {% if head == false %}
+                                        {% assign scope = 'scope="row"' %}
+                                    {% endif %}
+                                    {% if data.freezeLeft == true %}
+                                        {% assign class = "sticky p1" %}
+                                    {% endif %}
                                 {% endif %}
                             {% endif %}
-                        {% endif %}
-                        <{{cell}} class="{{class}}" {{scope}}>{{column.field}}</{{cell}}>
-                    {%- endfor -%}
-                    </tr>
-            {% if head == true %}
-                </thead>
-            {% elsif forloop.last == true %}
-                </tbody>
+
+                                <{{cell}} class="{{class}}" {{scope}}>{{column[1].value}}</{{cell}}>
+
+                        {%- endfor -%}
+                        </tr>
+                {% if head == true %}
+                    </thead>
+                {% elsif forloop.last == true %}
+                    </tbody>
+                {% endif %}
             {% endif %}
         {%- endfor -%}
     </table>
