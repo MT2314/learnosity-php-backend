@@ -8,8 +8,8 @@ export const defaultProps = {
     headers: [],
     data: [],
     headerType: null,
-    showTopHeader: false,
-    showSideHeader: false,
+    hideTopHeader: false,
+    hideSideHeader: false,
     showStripes: false,
   },
 };

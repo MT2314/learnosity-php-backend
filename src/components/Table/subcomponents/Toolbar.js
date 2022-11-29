@@ -32,17 +32,17 @@ const ToolBar = ({ toolbar, headerType }) => {
     });
   };
   // show TopHeader dispatch
-  const showTopHeader = () => {
+  const hideTopHeader = () => {
     dispatch({
       func: "UPDATE_TOPHEADER",
-      showTopHeader: !state.showTopHeader,
+      hideTopHeader: !state.hideTopHeader,
     });
   };
   //  show Side Header dispatch
-  const showSideHeader = () => {
+  const hideSideHeader = () => {
     dispatch({
       func: "UPDATE_SIDEHEADER",
-      showSideHeader: !state.showSideHeader,
+      hideSideHeader: !state.hideSideHeader,
     });
   };
 
@@ -167,10 +167,10 @@ const ToolBar = ({ toolbar, headerType }) => {
                               className="StyledFormControlLabel"
                               control={
                                 <Checkbox
-                                  checked={!state.showTopHeader}
+                                  checked={!state.hideTopHeader}
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    showTopHeader();
+                                    hideTopHeader();
                                   }}
                                   sx={{
                                     "&:hover": {
@@ -216,10 +216,10 @@ const ToolBar = ({ toolbar, headerType }) => {
                               className="StyledFormControlLabel"
                               control={
                                 <Checkbox
-                                  checked={!state.showSideHeader}
+                                  checked={!state.hideSideHeader}
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    showSideHeader();
+                                    hideSideHeader();
                                   }}
                                   sx={{
                                     "&:hover": {
