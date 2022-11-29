@@ -24,17 +24,14 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import styled from "@emotion/styled";
 
 // Styled components
-const StyledTable = styled("table")(({ showStripes, headerType }) => ({
+const StyledTable = styled("table")(({ showStripes}) => ({
   // border: "0.0625rem solid lightgray",
   borderCollapse: "collapse",
   borderSpacing: "0",
   tableLayout: "fixed",
   width: "100%",
   "tr:nth-of-type(odd):not(:first-child)": {
-    backgroundColor: headerType === "top-header" && showStripes && "#F5F5F5",
-  },
-  "tr:nth-of-type(even)": {
-    backgroundColor: headerType === "side-header" && showStripes && "#F5F5F5",
+    backgroundColor: showStripes && "#F5F5F5",
   },
 }));
 
@@ -48,12 +45,12 @@ const StyledTd = styled("td")({
 const StyledInput = styled(TextareaAutosize)(({ type }) => ({
   fontFamily: '"Inter", sans-serif',
   border: "none",
-  padding: "10px",
+  padding: type === "title" ? "25px 10px" : "10px",
   fontSize: type === "title" ? "18px" : "16px",
   fontWeight: type === "title" ? "500" : "400",
   lineHeight: "1.575rem",
-  width: "100%",
-  minHeight: type === "title" ? "57px" : "25px",
+  width: "90%",
+  minHeight: "25px",
   ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
   ...(type === "cell" && { padding: "15px" }),
   resize: "none",
@@ -335,7 +332,6 @@ const TableComponent = () => {
         onClick={(e) => setToolbar(true)}
         ref={tableRef}
         showStripes={state.showStripes}
-        headerType={state.headerType}
       >
         <StyledConfigBar>
           <Toolbar toolbar={toolbar} headerType={state.headerType} />
