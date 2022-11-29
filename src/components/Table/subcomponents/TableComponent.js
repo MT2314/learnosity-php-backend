@@ -24,14 +24,17 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import styled from "@emotion/styled";
 
 // Styled components
-const StyledTable = styled("table")(({ showStripes}) => ({
+const StyledTable = styled("table")(({ showStripes, headerType}) => ({
   // border: "0.0625rem solid lightgray",
   borderCollapse: "collapse",
   borderSpacing: "0",
   tableLayout: "fixed",
   width: "100%",
   "tr:nth-of-type(odd):not(:first-child)": {
-    backgroundColor: showStripes && "#F5F5F5",
+    backgroundColor: headerType === "top-header" && showStripes && "#F5F5F5",
+  },
+  "tr:nth-of-type(even)": {
+    backgroundColor: headerType === "side-header" && showStripes && "#F5F5F5",
   },
 }));
 
@@ -332,6 +335,7 @@ const TableComponent = () => {
         onClick={(e) => setToolbar(true)}
         ref={tableRef}
         showStripes={state.showStripes}
+        headerType={state.headerType}
       >
         <StyledConfigBar>
           <Toolbar toolbar={toolbar} headerType={state.headerType} />
