@@ -223,6 +223,7 @@ const ToolBar = ({
               "--width": "140px",
               "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
               "--borderLeft": "4px solid #1565c0",
+              "--position": "static",
             }}
           >
             <Button
@@ -248,7 +249,7 @@ const ToolBar = ({
               <Chevron />
               <span>
                 {selectedIcon === null
-                  ? t("Infobox Select Icon")
+                  ? t("Select Icon")
                   : t(`${selectedIcon}`)}
               </span>
               <Popper
@@ -279,6 +280,9 @@ const ToolBar = ({
                           className="StyledMenu"
                           style={{
                             "--gridTemplateRows": "1fr 1fr 1fr 1fr 1fr",
+                            "--padding": "8px 0px",
+                            "--justifyItems": "start",
+                            "--width": "109px",
                           }}
                         >
                           {iconDropdownOptions.map((infoBox, index) => {
@@ -339,6 +343,7 @@ const ToolBar = ({
             }`,
             "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
             "--justify-items": "center",
+            "--position": "static",
           }}
           test-id="infoBox-toolbar"
         >

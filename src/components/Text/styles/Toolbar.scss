@@ -24,31 +24,35 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   display: var(--display);
   width: var(--width);
   left: var(--left);
-  flex-direction: var(--direction);
+  flex-direction: var(--direction) !important;
   gap: var(--gap);
   box-shadow: var(--boxShadow);
   border-radius: 4px;
+  letter-spacing: 15px;
+  // Theme related - to match component side to authoring styles
+  color: rgba(0, 0, 0, 0.87);
 }
 
 // Toolbar
 .StyledToolbar {
   // positioning
-  display: grid;
-  position: var(--position);
-  grid-template-columns: var(--grid-template-columns);
+  display: grid !important;
+  position: var(--position) !important;
+  grid-template-columns: var(--grid-template-columns) !important;
   justify-items: var(--justify-items);
   align-items: center;
   // size
-  width: var(--width);
+  width: var(--width) !important;
   height: 40px !important;
   min-height: 40px !important;
   // color
   background-color: $white;
+  color: rgba(0, 0, 0, 0.87);
   box-shadow: var(--boxShadow);
   // box model
   border-left: var(--borderLeft);
   border-radius: 4px;
-  padding: 0px 3px;
+  padding: 0px 3px !important;
   & .MuiPaper-root {
     background-color: #fff;
   }
@@ -57,29 +61,30 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 // Buttons
 .SelectButton {
   // positioning
-  display: grid;
-  grid-template-columns: var(--grid-template-columns);
+  display: grid !important;
+  grid-template-columns: var(--grid-template-columns) !important;
   // size
-  width: var(--width);
-  min-width: var(--min-width);
+  width: var(--width) !important;
+  min-width: var(--min-width) !important;
   height: var(--height);
-  color: $black;
+  color: $black !important;
   // box model
-  box-shadow: none;
-  padding: var(--padding);
+  box-shadow: none !important;
+  padding: var(--padding) !important;
   border: none;
   border-radius: 4px !important;
 
   // color
   color: var(--active);
-  background-color: transparent;
+  background-color: transparent !important;
 
   // formating
-  font-size: var(--font-size);
-  font-weight: 400;
-  line-height: 1.5rem;
-  letter-spacing: 0.009375rem;
+  font-size: var(--font-size) !important;
+  font-weight: 400 !important;
+  line-height: 1.5rem !important;
+  letter-spacing: 0.009375rem !important;
   white-space: nowrap;
+  text-transform: none !important;
 
   // Text
   & span {
@@ -133,11 +138,11 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   align-content: center;
   height: 100%;
   width: var(--width);
-  padding: var(--padding);
-  grid-template-rows: var(--gridTemplateRows);
-  grid-template-columns: var(--gridTemplateColumns);
+  padding: var(--padding) !important;
+  grid-template-rows: var(--gridTemplateRows) !important;
+  grid-template-columns: var(--gridTemplateColumns) !important;
   align-items: center;
-  justify-items: center;
+  justify-items: var(--justifyItems);
   justify-content: center;
 }
 
@@ -188,12 +193,12 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   height: 30px;
 
   // box model
-  padding: 0px;
+  padding: 0px !important;
   margin: 0px;
 
   // color
   color: $black;
-  background: var(--background);
+  background: var(--background) !important;
 
   // border
   border: none;
@@ -213,7 +218,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   &:active,
   &:focus-visible {
     cursor: pointer;
-    background-color: $lightBlue;
+    background-color: $lightBlue !important;
     & svg {
       fill: $blue !important;
       & path {
