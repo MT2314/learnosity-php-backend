@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url(https://fonts.googleapis.com/css2?family=Inter&display=swap);
 // Variables
 // Colors
 $black: rgba(35, 35, 35, 1);
@@ -251,11 +251,11 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 
   &:hover,
   &:focus {
-    background: "#FFFFFF";
+    background: #ffffff;
   }
   &:before,
   &:after {
-    border-bottom: "none";
+    border-bottom: none;
   }
 }
 
@@ -318,5 +318,33 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
       border: 2px solid black;
       padding: 10px 14px;
     }
+  }
+}
+
+.MathButton {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  width: var(--width);
+  height: var(--height);
+  margin: var(--margin);
+  padding: 5px 5px;
+  background: var(--background);
+  border-radius: 4px;
+  border: none;
+  color: black;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  text-transform: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: var(--hoverBackground);
+  }
+  &:focus-visible {
+    outline: 1px solid black;
   }
 }
