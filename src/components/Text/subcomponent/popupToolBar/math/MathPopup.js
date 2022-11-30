@@ -158,6 +158,7 @@ const MathPopup = () => {
             padding: "0 8px",
             borderRadius: "4px",
             zIndex: 2010,
+            color: "rgba(35, 35, 35, 1)",
           }}
           ref={mathfield}
           onEditorInput={(value) => setFormula(value)}
