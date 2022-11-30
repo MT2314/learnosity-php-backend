@@ -52,7 +52,10 @@ const StyledInput = styled(TextareaAutosize)(({ type }) => ({
   fontSize: type === "title" ? "18px" : "16px",
   fontWeight: type === "title" ? "500" : "400",
   lineHeight: "1.575rem",
-  width: "90%",
+  width: "100%",
+  width: "-moz-available",          /* WebKit-based browsers will ignore this. */
+  width: "-webkit-fill-available",  /* Mozilla-based browsers will ignore this. */
+  width: "fill-available",
   minHeight: "25px",
   ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
   ...(type === "cell" && { padding: "15px" }),
