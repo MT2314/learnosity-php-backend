@@ -372,6 +372,7 @@ const ToolBar = ({
                 setBoldVisibility(!boldVisibility);
                 setAlignVisibility(false);
                 setListVisibility(false);
+                setMathVisibility(!mathVisibility);
                 if (activeTopMenu === "bold") {
                   setActiveTopMenu("");
                 } else {
@@ -383,15 +384,13 @@ const ToolBar = ({
                 onKeyDropDown(e, boldRef);
               }}
               id={`bold-${toolbarId}`}
-              aria-label="formatting button dropdown"
+              aria-label="formatting dropdown"
             >
               {icons["customBold"]}
             </IconButton>
           </Tooltip>
           <BoldDropdownButton
             show={boldVisibility}
-            aria-label="formatting options select dropdown"
-            // className="dropdown-content"
             onKeyDropDown={(e) => {
               onKeyDropDown(e, boldRef);
             }}
@@ -420,7 +419,7 @@ const ToolBar = ({
                         ? "rgba(21, 101, 192, 0.12)"
                         : "#fff",
                   }}
-                  aria-label="math equation button"
+                  aria-label="math equation dropdown"
                   disableRipple
                   color="inherit"
                   disabled={infoHasFocus}
@@ -485,7 +484,7 @@ const ToolBar = ({
                     ? "rgba(21, 101, 192, 0.12)"
                     : "#fff",
               }}
-              aria-label="alignment buttons dropdown"
+              aria-label="alignment dropdown"
               value={visibleAlignIcon}
               data-alignid="alignment-dropdown"
               onKeyDown={(e) => {
@@ -538,7 +537,7 @@ const ToolBar = ({
                     : "#fff",
               }}
               value="bullet"
-              aria-label="list options select group"
+              aria-label="list options"
               onKeyDown={(e) => {
                 onKeyDropDown(e, listRef);
               }}
@@ -565,7 +564,7 @@ const ToolBar = ({
               disabled={infoHasFocus}
               disableRipple
               color="inherit"
-              aria-label="add link button"
+              aria-label="add hyperlink"
               className="StyledIconButton"
               style={{
                 "--active":

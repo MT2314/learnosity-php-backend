@@ -111,6 +111,7 @@ const MathPopup = () => {
       }}
       ref={containerRef}
       tabIndex={0}
+      autoFocus
       aria-label="math-popup"
       id={`mathpopup-${uniqueId}`}
       role="dialog"
