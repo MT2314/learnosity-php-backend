@@ -256,7 +256,6 @@ const ToolBar = ({
                 open={openIcon}
                 anchorEl={IconDropDown.current}
                 placement="bottom-start"
-                className="StyledPopper"
                 transition
                 disablePortal
               >

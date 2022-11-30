@@ -8,13 +8,7 @@ import {
   Checkbox,
 } from "@mui/material/";
 
-// import Input from "@mui/material/Input";
-// import FormGroup from "@mui/material/FormGroup";
-// import FormControl from "@mui/material/FormControl";
-// import FormControlLabel from "@mui/material/FormControlLabel";
-// import Checkbox from "@mui/material/Checkbox";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-// import { tooltipClasses } from "@mui/material/Tooltip";
 import "../../Text/styles/Toolbar.scss";
 
 import {
@@ -40,11 +34,10 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 import { VideoContext } from "../VideoContext";
 
-import { useFocused, useDescriptionRef, useCreditRef } from "./TabContext";
+import { useFocused, useDescriptionRef } from "./TabContext";
 import icons from "../assets/icons";
 
 const ToolBar = ({
-  isVideo,
   videoAreaFocused,
   setVideoAPI,
   videoAPI = null,
@@ -266,8 +259,6 @@ const ToolBar = ({
     setToolbar(portalToolbarRef.current);
   }, []);
 
-  console.log(inputId.current?.value.length);
-
   return (
     <>
       <div
@@ -382,6 +373,7 @@ const ToolBar = ({
                           className="StyledMenu"
                           style={{
                             "--gridTemplateRows": "1fr 1fr",
+                            "--padding": "8px 0",
                           }}
                         >
                           <Tooltip
@@ -411,12 +403,13 @@ const ToolBar = ({
                               className="StyledMenuItem"
                               style={{
                                 width: "256px",
+                                "--letterSpacing": "0.15px",
                               }}
                               disableRipple
                               disableFocusRipple
                             >
                               <BrightcoveSVG />
-                              <span style={{ marginLeft: "33.66px" }}>
+                              <span style={{ marginLeft: "32px" }}>
                                 Add from Brightcove
                               </span>
                             </MenuItem>
@@ -450,10 +443,11 @@ const ToolBar = ({
                               className="StyledMenuItem"
                               style={{
                                 width: "256px",
+                                "--letterSpacing": "0.15px",
                               }}
                             >
                               <YoutubeSVG />
-                              <span style={{ marginLeft: "33.66px" }}>
+                              <span style={{ marginLeft: "32px" }}>
                                 Add from YouTube
                               </span>
                             </MenuItem>
@@ -839,18 +833,12 @@ const ToolBar = ({
                 position: "absolute",
                 display: "grid",
                 gridTemplateColumns: "9px 1fr",
-                // width: "40px",
                 height: "40px",
                 flexDirection: "row",
                 justifyContent: "center",
                 alignItems: "center",
-
                 left: state.videoId ? "471px" : "360px",
-                // borderRadius: "0px 4px 4px 0px",
-                // backgroundColor: "white",
                 zIndex: "1",
-                // boxShadow:
-                //   "0 -10px 10px -10px rgba(0, 0, 0, 0.1),  0 10px 10px -10px rgba(0, 0, 0, 0.1), 10px 0 10px -10px rgba(0, 0, 0, 0.1)",
               }}
             >
               <div className="StyledDivider" />
@@ -904,10 +892,13 @@ const ToolBar = ({
                         className="StyledCheckboxMenu"
                         style={{
                           "--width": "204px",
-                          "--height": "108px",
+                          "--height": "auto",
+                          "--margin": "8px 0",
                         }}
                       >
-                        <FormGroup sx={{ gap: "14px" }}>
+                        <FormGroup
+                          sx={{ gap: "14px", margin: "8px 16px !important" }}
+                        >
                           <FormControl>
                             <Tooltip
                               aria-label="show description"
