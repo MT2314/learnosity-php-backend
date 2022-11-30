@@ -111,7 +111,9 @@ const MathPopup = () => {
       }}
       ref={containerRef}
       tabIndex={0}
+      aria-label="math-popup"
       id={`mathpopup-${uniqueId}`}
+      role="dialog"
       className="MathEquationKeyboard"
       onKeyDown={(e) => {
         if (e.key === "Escape") {
@@ -139,8 +141,14 @@ const MathPopup = () => {
         }}
       >
         <span>Write equation using keyboard</span>
-        <CloseIcon
-          sx={{ cursor: "pointer" }}
+        <button
+          aria-label="close math popup"
+          style={{
+            border: "none",
+            backgroundColor: "transparent",
+            cursor: "pointer",
+            padding: "0px",
+          }}
           onClick={closeMath}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -148,7 +156,10 @@ const MathPopup = () => {
             }
           }}
           tabIndex={0}
-        />
+        >
+          {" "}
+          <CloseIcon />
+        </button>
       </div>
       <div style={{ padding: "14px 16px" }}>
         <MathLiveEditor
@@ -175,6 +186,7 @@ const MathPopup = () => {
             <TabList onChange={handleChange}>
               {tabs.map((tab, index) => (
                 <Tab
+                  aria-label={tab.label}
                   key={index}
                   label={tab.label}
                   value={`${index + 1}`}
@@ -213,6 +225,7 @@ const MathPopup = () => {
                 >
                   {tab.render.map((btn, index) => (
                     <button
+                      aria-label={btn.aria ? `${btn.aria} sign` : btn.text}
                       className="MathButton"
                       style={{
                         "--width": btn?.width ? btn.width : "32px",
@@ -256,6 +269,7 @@ const MathPopup = () => {
           >
             {TopSideKeys.map((key, index) => (
               <button
+                aria-label={key.aria ? `${key.aria} sign` : key.text}
                 className="MathButton"
                 style={{
                   "--width": key?.width ? key.width : "32px",
@@ -296,6 +310,7 @@ const MathPopup = () => {
             >
               {BottomLeftKeys.map((key, index) => (
                 <button
+                  aria-label={key.aria ? `${key.aria} sign` : "sign"}
                   className="MathButton"
                   style={{
                     "--width": key?.width ? key.width : "32px",
@@ -319,6 +334,7 @@ const MathPopup = () => {
             </div>
             <div>
               <button
+                aria-label={"All clear"}
                 className="MathButton"
                 style={{
                   "--width": "32px",
@@ -347,6 +363,7 @@ const MathPopup = () => {
             }}
           >
             <button
+              aria-label={isEdit ? "Update" : "Insert"}
               style={{
                 background: "none",
                 border: "none",
