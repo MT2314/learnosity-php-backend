@@ -12,8 +12,8 @@ export const layoutConfig = (draft, action) => {
       draft.headers = action.headers;
       draft.data = action.data;
       draft.headerType = action.headerType;
-      draft.showTopHeader = action.showTopHeader;
-      draft.showSideHeader = action.showSideHeader;
+      draft.hideTopHeader = action.hideTopHeader;
+      draft.hideSideHeader = action.hideSideHeader;
       draft.showStripes = action.showStripes;
       return draft;
     case "UPDATE_CELL":
@@ -42,10 +42,10 @@ export const layoutConfig = (draft, action) => {
       draft.showStripes = action.showStripes;
       return draft;
     case "UPDATE_TOPHEADER":
-      draft.showTopHeader = action.showTopHeader;
+      draft.hideTopHeader = action.hideTopHeader;
       return draft;
     case "UPDATE_SIDEHEADER":
-      draft.showSideHeader = action.showSideHeader;
+      draft.hideSideHeader = action.hideSideHeader;
       return draft;
     default:
       return draft;

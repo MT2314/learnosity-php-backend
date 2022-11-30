@@ -212,22 +212,12 @@ const MathPopup = () => {
                 >
                   {tab.render.map((btn, index) => (
                     <button
+                      className="MathButton"
                       style={{
-                        display: "inline-block",
-                        textAlign: "center",
-                        width: btn?.width ? btn.width : "32px",
-                        background: "#EEEEEE",
-                        borderRadius: "4px",
-                        border: 1,
-                        color: "black",
-                        height: "32px",
-                        padding: "5px 5px",
-                        fontSize: "1rem",
-                        fontWeight: "400",
-                        lineHeight: "1.5",
-                        letterSpacing: "0.00938em",
-                        textTransform: "none",
-                        cursor: "pointer",
+                        "--width": btn?.width ? btn.width : "32px",
+                        "--background": "#eeeeee",
+                        "--hoverBackground": "#e0e0e0",
+                        "--height": "32px",
                       }}
                       onClick={(e) => {
                         e.preventDefault();
@@ -265,26 +255,12 @@ const MathPopup = () => {
           >
             {TopSideKeys.map((key, index) => (
               <button
+                className="MathButton"
                 style={{
-                  display: "inline-block",
-                  textAlign: "center",
-                  width: key?.width ? key.width : "32px",
-                  background: key?.color ? key.color : "#EEEEEE",
-                  borderRadius: "4px",
-                  border: 1,
-                  color: "black",
-                  height: "32px",
-                  padding: "5px 5px",
-                  fontSize: "1rem",
-                  fontWeight: "400",
-                  lineHeight: "1.5",
-                  letterSpacing: "0.00938em",
-                  textTransform: "none",
-                  cursor: "pointer",
-
-                  "&:hover": {
-                    background: key?.hover ? key?.hover : "#E0E0E0",
-                  },
+                  "--width": key?.width ? key.width : "32px",
+                  "--background": key?.color ? key.color : "#EEEEEE",
+                  "--hoverBackground": key?.hover ? key?.hover : "#E0E0E0",
+                  "--height": "32px",
                 }}
                 onClick={(e) => {
                   e.preventDefault();
@@ -319,26 +295,12 @@ const MathPopup = () => {
             >
               {BottomLeftKeys.map((key, index) => (
                 <button
+                  className="MathButton"
                   style={{
-                    display: "inline-block",
-                    textAlign: "center",
-                    width: key?.width ? key.width : "32px",
-                    background: key?.color ? key.color : "#EEEEEE",
-                    borderRadius: "4px",
-                    border: 1,
-                    color: "black",
-                    height: "32px",
-                    padding: "5px 5px",
-                    fontSize: "1rem",
-                    fontWeight: "400",
-                    lineHeight: "1.5",
-                    letterSpacing: "0.00938em",
-                    textTransform: "none",
-                    cursor: "pointer",
-
-                    "&:hover": {
-                      background: key?.hover ? key?.hover : "#E0E0E0",
-                    },
+                    "--width": key?.width ? key.width : "32px",
+                    "--background": key?.color ? key.color : "#EEEEEE",
+                    "--hoverBackground": key?.hover ? key?.hover : "#E0E0E0",
+                    "--height": "32px",
                   }}
                   onClick={(e) => {
                     e.preventDefault();
@@ -356,27 +318,13 @@ const MathPopup = () => {
             </div>
             <div>
               <button
+                className="MathButton"
                 style={{
-                  display: "inline-block",
-                  textAlign: "center",
-                  width: "32px",
-                  background: "rgba(21, 101, 192, 0.12)",
-                  borderRadius: "4px",
-                  border: 1,
-                  color: "black",
-                  height: "68px",
-                  padding: "5px 5px",
-                  fontSize: "1rem",
-                  fontWeight: "400",
-                  lineHeight: "1.5",
-                  letterSpacing: "0.00938em",
-                  textTransform: "none",
-                  cursor: "pointer",
-                  marginLeft: "5px",
-
-                  "&:hover": {
-                    background: "rgba(21, 101, 192, 0.3)",
-                  },
+                  "--width": "32px",
+                  "--height": "68px",
+                  "--margin": "0 0 0 5px",
+                  "--background": "rgba(21, 101, 192, 0.12)",
+                  "--hoverBackground": "rgba(21, 101, 192, 0.3)",
                 }}
                 onClick={(e) => {
                   e.preventDefault();

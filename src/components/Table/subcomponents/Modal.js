@@ -82,7 +82,7 @@ const StyledCreateButton = styled("button")(({ disable }) => ({
   cursor: disable ? "pointer" : "default",
 }));
 
-const Modal = ({ setShowModal, setShowTable }) => {
+const Modal = ({ setShowModal }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
   const [numberRow, setNumberRow] = useState(2);
@@ -145,12 +145,10 @@ const Modal = ({ setShowModal, setShowTable }) => {
       headers,
       data,
       headerType: headerSelection,
-      showTopHeader: false,
-      showSideHeader: false,
+      hideTopHeader: false,
+      hideSideHeader: false,
       showStripes: false,
     });
-
-    setShowTable(true);
   };
 
   return (
