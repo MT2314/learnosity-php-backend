@@ -72,7 +72,6 @@ const ToolBar = ({
   const portalToolbarRef = useRef(null);
 
   const selectRef = useRef(null);
-  const AppBarRef = useRef(null);
 
   const kebabselectRef = useRef(null);
 
@@ -339,7 +338,7 @@ const ToolBar = ({
                 </Button>
               </Tooltip>
               {/* Select Brightspace OR Youtube Dropdown */}
-              {!selectYoutube && !selectBrightcove && (
+              {!selectYoutube && !selectBrightcove && openVideo && (
                 <Popper
                   open={openVideo}
                   o
@@ -373,7 +372,7 @@ const ToolBar = ({
                           className="StyledMenu"
                           style={{
                             "--gridTemplateRows": "1fr 1fr",
-                            "--padding": "8px 0",
+                            "--padding": "8px 0px",
                           }}
                         >
                           <Tooltip
@@ -403,6 +402,7 @@ const ToolBar = ({
                               className="StyledMenuItem"
                               style={{
                                 width: "256px",
+                                height: "36px",
                                 "--letterSpacing": "0.15px",
                               }}
                               disableRipple
@@ -419,6 +419,7 @@ const ToolBar = ({
                             title="add youtube video"
                             placement="top"
                             arrow
+                            style={{ pointerEvents: "none" }}
                             PopperProps={{
                               modifiers: [
                                 {
@@ -443,6 +444,7 @@ const ToolBar = ({
                               className="StyledMenuItem"
                               style={{
                                 width: "256px",
+                                height: "36px",
                                 "--letterSpacing": "0.15px",
                               }}
                             >
@@ -459,7 +461,7 @@ const ToolBar = ({
                 </Popper>
               )}
               {/* Add , Edit , Delete ID Dropdown */}
-              {(selectBrightcove || selectYoutube) && (
+              {(selectBrightcove || selectYoutube) && openVideo && (
                 <Popper
                   open={openVideo}
                   anchorEl={AddVideo.current}
