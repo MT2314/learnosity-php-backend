@@ -212,6 +212,8 @@ const MathPopup = () => {
                 >
                   {tab.render.map((btn, index) => (
                     <button
+                      aria-labelledby={btn.aria ? btn.aria : btn.text}
+                      aria-label={btn.aria ? btn.aria : btn.text}
                       className="MathButton"
                       style={{
                         "--width": btn?.width ? btn.width : "32px",
@@ -255,6 +257,8 @@ const MathPopup = () => {
           >
             {TopSideKeys.map((key, index) => (
               <button
+                aria-labelledby={key.text}
+                aria-label={key.text ? key.text : "equation"}
                 className="MathButton"
                 style={{
                   "--width": key?.width ? key.width : "32px",
@@ -295,6 +299,8 @@ const MathPopup = () => {
             >
               {BottomLeftKeys.map((key, index) => (
                 <button
+                  aria-label={key.text ? key.text : "equation"}
+                  aria-labeledby={key.text ? key.text : "equation"}
                   className="MathButton"
                   style={{
                     "--width": key?.width ? key.width : "32px",
@@ -318,6 +324,8 @@ const MathPopup = () => {
             </div>
             <div>
               <button
+                aria-labeledby={"All clear"}
+                aria-label={"All clear"}
                 className="MathButton"
                 style={{
                   "--width": "32px",
@@ -346,6 +354,8 @@ const MathPopup = () => {
             }}
           >
             <button
+              aria-labeledby={isEdit ? "Update" : "Insert"}
+              aria-label={isEdit ? "Update" : "Insert"}
               style={{
                 background: "none",
                 border: "none",
