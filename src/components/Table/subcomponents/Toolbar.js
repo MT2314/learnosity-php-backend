@@ -138,9 +138,12 @@ const ToolBar = ({ toolbar, headerType }) => {
                     style={{
                       "--width": "220px",
                       "--height": "auto",
+                      "--padding": "8px 0",
                     }}
                   >
-                    <FormGroup sx={{ gap: "14px" }}>
+                    <FormGroup
+                      sx={{ gap: "14px", margin: "8px 16px !important" }}
+                    >
                       {/* Top Header */}
                       {headerType == "top-header" && (
                         <FormControl>
