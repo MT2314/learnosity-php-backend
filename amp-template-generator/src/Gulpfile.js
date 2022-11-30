@@ -467,6 +467,7 @@ function _zipBuild() {
 var build = gulp.series(
   _deleteBuildFolder,
   gulp.parallel(_copyFiles),
+  _installBuild,
   _zipBuild
 );
 build.description = "Creates build folder output, for use as lambda layer";
@@ -480,6 +481,7 @@ var buildlocal = gulp.series(
   _deleteBuildFolder,
   buildCss,
   gulp.parallel(_copyFiles, _copyStyles),
+  _installBuild,
   _zipBuild
 );
 buildlocal.description = "Creates build folder output, for use as lambda layer (local)";
