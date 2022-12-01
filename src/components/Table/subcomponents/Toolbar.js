@@ -68,8 +68,9 @@ const ToolBar = ({ toolbar, headerType }) => {
         type,
       };
     });
-    
+    console.log("before", data)
     data.push(row);
+    console.log("after", data)
     dispatch({
       func: "ADD_ROW",
       data: data,
@@ -80,46 +81,56 @@ const ToolBar = ({ toolbar, headerType }) => {
     const headers = JSON.parse(JSON.stringify(state.headers));
     const data = JSON.parse(JSON.stringify(state.data));
     if (headers.length === 6) {return};
-    console.log(data);
-
-    [...Array(1)].forEach((_, i) => {
-      headers.push({
-        accessorKey: `column${i + 1}`,
-        id: `column${i + 1}`,
-        header: "",
-      });
-    });
-
-    const cols = 2;
-    const rows = 1;
+    const cols = data.length;
+    const rows = 2;
     const row = {};
+    // [...Array(1)].forEach((_, i) => {
+    //   headers.push({
+    //     accessorKey: `column${i + 1}`,
+    //     id: `column${i + 1}`,
+    //     header: "",
+    //   });
+    // });
+
+    console.log(data.length);
 
     [...Array(rows)].forEach((_, i) => {
       
       [...Array(cols)].forEach((_, j) => {
         let type;
         if (state.headerType === "side-header") {
-          type = j === 0 ? "title" : "cell";
+          type = "cell";
         }
 
         if (state.headerType === "top-header") {
           type = i === 0 ? "title" : "cell";
         }
 
-        row[`column${j + 3}`] = {
-          value: "",
+        row[`column${j + 1}`] = {
+          value: '',
           type,
         };
+
       });
     });
+    
+    const count = 0
 
-    data.push(row);
-    console.log(data);
-    dispatch({
-      func: "ADD_COL",
-      headers: headers,
-      data: data,
-    });
+    // data.map(rowObj => {
+    //   const existingColumns = Object.keys(rowObj)
+    //   count++
+    //   rowObj[`column${existingColumns.length + 1 }`] = row[`column${count}`]
+    //   return rowObj
+    //   })
+
+    console.log(row)
+    console.log(data)
+
+    // dispatch({
+    //   func: "ADD_COL",
+    //   headers: headers,
+    //   data: data,
+    // });
   };
 
   return (
