@@ -1,5 +1,4 @@
-let hasHeaderAbove = false;
-
+// let hasHeaderAbove = false;
 /**
  * Recursively parses an Object's children to set a "heading.headingLevel"
  * property. Returns a new version of the Object. Throws an error if level is
@@ -69,23 +68,18 @@ function parse(entity, level = -1) {
   } else if (entity.__typename === "ComponentContainer") {
     entity.sections.forEach(__parseElement);
   } else if (entity.__typename === "Section") {
-    hasHeaderAbove = false;
+    // hasHeaderAbove = false;
     entity.components.forEach(__parseElement);
   } else if (entity.componentName === "Header") {
     entity.props.headerState = _setHeading(entity.props.headerState, level);
-    hasHeaderAbove = true;
+    // hasHeaderAbove = true;
   } else if (entity.componentName === "InfoBox") {
-    _setHeading(
-      entity.props.infoBoxState.infoBoxHeader,
-      hasHeaderAbove ? level + 1 : level
-    );
+    _setHeading(entity.props.infoBoxState.infoBoxHeader, level);
   } else if (
     entity.componentName === "Accordion" ||
     entity.componentName === "Tab"
   ) {
-    entity.props.layoutState.forEach((tab) =>
-      _setHeading(tab, hasHeaderAbove ? level + 1 : level)
-    );
+    entity.props.layoutState.forEach((tab) => _setHeading(tab, level));
   }
 
   // set this entity's heading level
