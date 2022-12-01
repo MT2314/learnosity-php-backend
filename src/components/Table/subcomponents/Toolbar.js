@@ -82,55 +82,44 @@ const ToolBar = ({ toolbar, headerType }) => {
     const data = JSON.parse(JSON.stringify(state.data));
     if (headers.length === 6) {return};
     const cols = data.length;
-    const rows = 2;
     const row = {};
-    // [...Array(1)].forEach((_, i) => {
-    //   headers.push({
-    //     accessorKey: `column${i + 1}`,
-    //     id: `column${i + 1}`,
-    //     header: "",
-    //   });
-    // });
 
-    console.log(data.length);
+    headers.push({
+      accessorKey: `column${headers.length + 1}`,
+      id: `column${headers.length + 1}`,
+      header: "",
+    });
 
-    [...Array(rows)].forEach((_, i) => {
-      
-      [...Array(cols)].forEach((_, j) => {
-        let type;
-        if (state.headerType === "side-header") {
-          type = "cell";
-        }
+    [...Array(cols)].forEach((_, j) => {
+      let type;
+      if (state.headerType === "side-header") {
+        type = "cell";
+      }
 
-        if (state.headerType === "top-header") {
-          type = i === 0 ? "title" : "cell";
-        }
+      if (state.headerType === "top-header") {
+        type = j === 0 ? "title" : "cell";
+      }
 
-        row[`column${j + 1}`] = {
-          value: '',
-          type,
-        };
-
-      });
+      row[`column${j + 1}`] = {
+        value: '',
+        type,
+      };
     });
     
-    const count = 0
+    let count = 0
 
-    // data.map(rowObj => {
-    //   const existingColumns = Object.keys(rowObj)
-    //   count++
-    //   rowObj[`column${existingColumns.length + 1 }`] = row[`column${count}`]
-    //   return rowObj
-    //   })
+    data.map(rowObj => {
+      const existingColumns = Object.keys(rowObj)
+      count++
+      rowObj[`column${existingColumns.length + 1 }`] = row[`column${count}`]
+      return rowObj
+      })
 
-    console.log(row)
-    console.log(data)
-
-    // dispatch({
-    //   func: "ADD_COL",
-    //   headers: headers,
-    //   data: data,
-    // });
+    dispatch({
+      func: "ADD_COL",
+      headers: headers,
+      data: data,
+    });
   };
 
   return (
