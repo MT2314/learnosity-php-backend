@@ -38,6 +38,13 @@ export const layoutConfig = (draft, action) => {
         draft.data.splice(action.draggedRowIndex, 1)[0]
       );
       return draft;
+    case "ADD_ROW":
+      draft.data = action.data;
+      return draft;
+    case "ADD_COL":
+      draft.headers = action.headers;
+      draft.data = action.data;
+      return draft;
     case "UPDATE_STRIP":
       draft.showStripes = action.showStripes;
       return draft;

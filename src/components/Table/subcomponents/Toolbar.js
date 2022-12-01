@@ -46,6 +46,82 @@ const ToolBar = ({ toolbar, headerType }) => {
     });
   };
 
+  const addRow = () => {
+    const data = JSON.parse(JSON.stringify(state.data));
+    if (data.length === 6) {return};
+    const headers = JSON.parse(JSON.stringify(state.headers));
+    const cols = headers.length;
+    const row = {};
+
+    [...Array(cols)].forEach((_, j) => {
+      let type;
+      if (state.headerType === "side-header") {
+        type = j === 0 ? "title" : "cell";
+      }
+
+      if (state.headerType === "top-header") {
+        type = "cell";
+      }
+
+      row[`column${j + 1}`] = {
+        value: "",
+        type,
+      };
+    });
+    
+    data.push(row);
+    dispatch({
+      func: "ADD_ROW",
+      data: data,
+    });
+  };
+
+  const addColumn = () => {
+    const headers = JSON.parse(JSON.stringify(state.headers));
+    const data = JSON.parse(JSON.stringify(state.data));
+    if (headers.length === 6) {return};
+    console.log(data);
+
+    [...Array(1)].forEach((_, i) => {
+      headers.push({
+        accessorKey: `column${i + 1}`,
+        id: `column${i + 1}`,
+        header: "",
+      });
+    });
+
+    const cols = 2;
+    const rows = 1;
+    const row = {};
+
+    [...Array(rows)].forEach((_, i) => {
+      
+      [...Array(cols)].forEach((_, j) => {
+        let type;
+        if (state.headerType === "side-header") {
+          type = j === 0 ? "title" : "cell";
+        }
+
+        if (state.headerType === "top-header") {
+          type = i === 0 ? "title" : "cell";
+        }
+
+        row[`column${j + 3}`] = {
+          value: "",
+          type,
+        };
+      });
+    });
+
+    data.push(row);
+    console.log(data);
+    dispatch({
+      func: "ADD_COL",
+      headers: headers,
+      data: data,
+    });
+  };
+
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -77,6 +153,72 @@ const ToolBar = ({ toolbar, headerType }) => {
             "--width": "154px",
           }}
         >
+        <Tooltip
+            aria-label="Add Rows"
+            title="Add Rows"
+            placement="top"
+            arrow
+            PopperProps={{
+              modifiers: [
+                {
+                  name: "offset",
+                  options: {
+                    offset: [0, -7],
+                  },
+                },
+              ],
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <Button
+              onClick={(e) => {addRow()}}
+              className="SelectButton"
+              style={{
+                "--width": "100%",
+                "--height": "100%",
+                "--font-size": "16px",
+                "--grid-template-columns": "1fr",
+                "--hover-background-color": "transparent",
+              }}
+            >
+              +
+            </Button>
+          </Tooltip>
+        <Tooltip
+            aria-label="Add Column"
+            title="Add Column"
+            placement="top"
+            arrow
+            PopperProps={{
+              modifiers: [
+                {
+                  name: "offset",
+                  options: {
+                    offset: [0, -7],
+                  },
+                },
+              ],
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <Button
+              onClick={(e) => {addColumn()}}
+              className="SelectButton"
+              style={{
+                "--width": "100%",
+                "--height": "100%",
+                "--font-size": "16px",
+                "--grid-template-columns": "1fr",
+                "--hover-background-color": "transparent",
+              }}
+            >
+              +|
+            </Button>
+          </Tooltip>
           <Tooltip
             aria-label="Format"
             title="Format"

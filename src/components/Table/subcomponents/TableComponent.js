@@ -30,7 +30,7 @@ const StyledTable = styled("table")(({ showStripes, headerType}) => ({
   borderSpacing: "0",
   tableLayout: "fixed",
   width: "100%",
-  "tr:nth-of-type(odd):not(:first-child)": {
+  "tr:nth-of-type(odd):not(:first-of-type)": {
     backgroundColor: headerType === "top-header" && showStripes && "#F5F5F5",
   },
   "tr:nth-of-type(even)": {
