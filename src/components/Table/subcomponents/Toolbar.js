@@ -45,32 +45,19 @@ const ToolBar = ({ toolbar, headerType }) => {
       hideSideHeader: !state.hideSideHeader,
     });
   };
+  const data = JSON.parse(JSON.stringify(state.data));
+  const headers = JSON.parse(JSON.stringify(state.headers));
 
   const addRow = () => {
-    const data = JSON.parse(JSON.stringify(state.data));
-    if (data.length === 6) {return};
-    const headers = JSON.parse(JSON.stringify(state.headers));
-    const cols = headers.length;
     const row = {};
+    //Create number of rows depending on the number of columns
+    [...Array(headers.length)].forEach((_, j) => {
+      let type =
+        state.headerType === "side-header" && j === 0 ? "title" : "cell";
 
-    [...Array(cols)].forEach((_, j) => {
-      let type;
-      if (state.headerType === "side-header") {
-        type = j === 0 ? "title" : "cell";
-      }
-
-      if (state.headerType === "top-header") {
-        type = "cell";
-      }
-
-      row[`column${j + 1}`] = {
-        value: "",
-        type,
-      };
+      row[`column${j + 1}`] = { value: "", type };
     });
-    console.log("before", data)
     data.push(row);
-    console.log("after", data)
     dispatch({
       func: "ADD_ROW",
       data: data,
@@ -78,42 +65,23 @@ const ToolBar = ({ toolbar, headerType }) => {
   };
 
   const addColumn = () => {
-    const headers = JSON.parse(JSON.stringify(state.headers));
-    const data = JSON.parse(JSON.stringify(state.data));
-    if (headers.length === 6) {return};
-    const cols = data.length;
-    const row = {};
-
+    // TanStack requires a header for each Column
     headers.push({
       accessorKey: `column${headers.length + 1}`,
       id: `column${headers.length + 1}`,
       header: "",
     });
-
-    [...Array(cols)].forEach((_, j) => {
-      let type;
-      if (state.headerType === "side-header") {
-        type = "cell";
-      }
-
-      if (state.headerType === "top-header") {
-        type = j === 0 ? "title" : "cell";
-      }
-
-      row[`column${j + 1}`] = {
-        value: '',
+    // Create number of columns depending on the number of rows
+    [...Array(data.length)].forEach((_, j) => {
+      let type =
+        state.headerType === "top-header" && j === 0 ? "title" : "cell";
+      // Columns inserted to each row.
+      const currentRow = Object.keys(data[j]);
+      data[j][`column${currentRow.length + 1}`] = {
+        value: "",
         type,
       };
     });
-    
-    let count = 0
-
-    data.map(rowObj => {
-      const existingColumns = Object.keys(rowObj)
-      count++
-      rowObj[`column${existingColumns.length + 1 }`] = row[`column${count}`]
-      return rowObj
-      })
 
     dispatch({
       func: "ADD_COL",
@@ -153,7 +121,7 @@ const ToolBar = ({ toolbar, headerType }) => {
             "--width": "154px",
           }}
         >
-        <Tooltip
+          <Tooltip
             aria-label="Add Rows"
             title="Add Rows"
             placement="top"
@@ -173,7 +141,9 @@ const ToolBar = ({ toolbar, headerType }) => {
             }}
           >
             <Button
-              onClick={(e) => {addRow()}}
+              onClick={(e) => {
+                data.length != 6 && addRow();
+              }}
               className="SelectButton"
               style={{
                 "--width": "100%",
@@ -186,7 +156,7 @@ const ToolBar = ({ toolbar, headerType }) => {
               +
             </Button>
           </Tooltip>
-        <Tooltip
+          <Tooltip
             aria-label="Add Column"
             title="Add Column"
             placement="top"
@@ -206,7 +176,9 @@ const ToolBar = ({ toolbar, headerType }) => {
             }}
           >
             <Button
-              onClick={(e) => {addColumn()}}
+              onClick={(e) => {
+                headers.length != 6 && addColumn();
+              }}
               className="SelectButton"
               style={{
                 "--width": "100%",
