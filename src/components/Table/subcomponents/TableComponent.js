@@ -165,6 +165,7 @@ const DraggableColumnHeader = ({ header, table }) => {
           : flexRender(header.column.columnDef.header, header.getContext())}
         <button
           ref={dragRef}
+          onFocus={(e) => {console.log(e.target.parentNode.parentNode.parentNode)}}
           aria-label="Header drag icon button"
           style={{
             background: "none",
@@ -241,6 +242,7 @@ const DraggableRow = ({ row, reorderRow }) => {
         >
           <button
             ref={dragRef}
+            onFocus={(e) => {console.log("Wilson", row, reorderRow)}}
             aria-label="Header drag icon button"
             style={{
               background: "none",

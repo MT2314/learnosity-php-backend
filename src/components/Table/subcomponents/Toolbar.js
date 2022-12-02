@@ -116,7 +116,7 @@ const ToolBar = ({ toolbar, headerType }) => {
           className="StyledToolbar"
           style={{
             "--borderLeft": "4px solid #1565c0",
-            "--grid-template-columns": "1fr",
+            "--grid-template-columns": "1fr 1fr 1fr",
             "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
             "--width": "154px",
           }}
