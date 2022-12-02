@@ -19,7 +19,7 @@ import {
 
 import "../../Text/styles/Toolbar.scss";
 
-const ToolBar = ({ toolbar, headerType }) => {
+const ToolBar = ({ setColumnOrder, toolbar, selectedRow, selectedColumn }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [showFormat, setShowFormat] = useState(false);
   const FormatRef = useRef(null);
@@ -57,7 +57,10 @@ const ToolBar = ({ toolbar, headerType }) => {
 
       row[`column${j + 1}`] = { value: "", type };
     });
-    data.push(row);
+
+    console.log(data)
+
+    selectedRow ? data.splice(+selectedRow.id + 1, 0, row) : data.push(row);
     dispatch({
       func: "ADD_ROW",
       data: data,
@@ -65,6 +68,7 @@ const ToolBar = ({ toolbar, headerType }) => {
   };
 
   const addColumn = () => {
+    console.log(selectedColumn);
     // TanStack requires a header for each Column
     headers.push({
       accessorKey: `column${headers.length + 1}`,
@@ -81,13 +85,43 @@ const ToolBar = ({ toolbar, headerType }) => {
         value: "",
         type,
       };
+
+      // [data[j][`column${currentRow.length + 1}`], data[j][`column${selectedColumn.index + 2}`]] = [
+      //   data[j][`column${selectedColumn.index + 2}`],
+      //   data[j][`column${currentRow.length + 1}`],
+      // ];
     });
+
+    var lastChar = selectedColumn.id.substr(selectedColumn.id.length - 1);
+    const newOrder = Object.keys(data[0]);
+
+    Array.prototype.move = function (from, to) {
+      this.splice(to, 0, this.splice(from, 1)[0]);
+    };
+
+    // console.log(newOrder);
+    newOrder.move(newOrder.length - 1, lastChar)
+    // console.log(newOrder);
+
+    setColumnOrder(newOrder);
+
+    // console.log(data)
+    // console.log(headers)
 
     dispatch({
       func: "ADD_COL",
       headers: headers,
       data: data,
     });
+
+    // console.log(selectedColumn.id);
+    // console.log(headers[newOrder.length - 1].id);
+    // dispatch({
+    //   func: "UPDATE_COLUMN_ORDER",
+    //   draggedColumn: selectedColumn.id,
+    //   targetColumn: headers[newOrder.length - 1].id,
+    // });
+
   };
 
   return (
@@ -259,7 +293,7 @@ const ToolBar = ({ toolbar, headerType }) => {
                       sx={{ gap: "14px", margin: "8px 16px !important" }}
                     >
                       {/* Top Header */}
-                      {headerType == "top-header" && (
+                      {state.headerType == "top-header" && (
                         <FormControl>
                           <Tooltip
                             aria-label="show top header"
@@ -308,7 +342,7 @@ const ToolBar = ({ toolbar, headerType }) => {
                         </FormControl>
                       )}
                       {/* Side Header */}
-                      {headerType == "side-header" && (
+                      {state.headerType == "side-header" && (
                         <FormControl>
                           <Tooltip
                             aria-label="show side header"

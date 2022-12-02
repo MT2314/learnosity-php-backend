@@ -109,7 +109,7 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   return [...columnOrder];
 };
 
-const DraggableColumnHeader = ({ header, table }) => {
+const DraggableColumnHeader = ({ header, table, setSelectedColumn }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
@@ -123,6 +123,9 @@ const DraggableColumnHeader = ({ header, table }) => {
         column.id,
         columnOrder
       );
+      console.log("Wilson copy and paste")
+      console.log(newColumnOrder);
+
       setColumnOrder(newColumnOrder);
 
       dispatch({
@@ -165,7 +168,7 @@ const DraggableColumnHeader = ({ header, table }) => {
           : flexRender(header.column.columnDef.header, header.getContext())}
         <button
           ref={dragRef}
-          onFocus={(e) => {console.log(e.target.parentNode.parentNode.parentNode)}}
+          onFocus={(e) => {setSelectedColumn(header)}}
           aria-label="Header drag icon button"
           style={{
             background: "none",
@@ -183,7 +186,7 @@ const DraggableColumnHeader = ({ header, table }) => {
   );
 };
 
-const DraggableRow = ({ row, reorderRow }) => {
+const DraggableRow = ({ row, reorderRow, setSelectedRow }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [, dropRef] = useDrop({
     accept: "row",
@@ -242,7 +245,7 @@ const DraggableRow = ({ row, reorderRow }) => {
         >
           <button
             ref={dragRef}
-            onFocus={(e) => {console.log("Wilson", row, reorderRow)}}
+            onFocus={(e) => {setSelectedRow(row)}}
             aria-label="Header drag icon button"
             style={{
               background: "none",
@@ -293,6 +296,8 @@ const DraggableRow = ({ row, reorderRow }) => {
 const TableComponent = () => {
   const [state, dispatch] = useContext(LayoutContext);
   const [toolbar, setToolbar] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedColumn, setSelectedColumn] = useState(null);
   const tableRef = useRef();
 
   useOnClickOutside(tableRef, () => {
@@ -342,7 +347,7 @@ const TableComponent = () => {
         headerType={state.headerType}
       >
         <StyledConfigBar>
-          <Toolbar toolbar={toolbar} headerType={state.headerType} />
+          <Toolbar setColumnOrder={setColumnOrder} toolbar={toolbar} selectedRow={selectedRow} selectedColumn={selectedColumn} />
         </StyledConfigBar>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -359,6 +364,7 @@ const TableComponent = () => {
                   header={header}
                   table={table}
                   setColumnUpdate={setColumnUpdate}
+                  setSelectedColumn={setSelectedColumn}
                 />
               ))}
             </tr>
@@ -370,6 +376,7 @@ const TableComponent = () => {
               key={row.id}
               row={row}
               reorderRow={reorderRow}
+              setSelectedRow={setSelectedRow}
             ></DraggableRow>
           ))}
         </tbody>
