@@ -225,7 +225,9 @@ const MathPopup = () => {
                 >
                   {tab.render.map((btn, index) => (
                     <button
-                      aria-label={btn.aria ? `${btn.aria} sign` : btn.text}
+                      aria-label={
+                        btn.aria ? `${btn.aria} sign` : `${btn.text} sign`
+                      }
                       className="MathButton"
                       style={{
                         "--width": btn?.width ? btn.width : "32px",
@@ -269,7 +271,7 @@ const MathPopup = () => {
           >
             {TopSideKeys.map((key, index) => (
               <button
-                aria-label={key.aria ? `${key.aria} sign` : key.text}
+                aria-label={key.aria ? `${key.aria} sign` : `${key.text} sign`}
                 className="MathButton"
                 style={{
                   "--width": key?.width ? key.width : "32px",
@@ -310,7 +312,9 @@ const MathPopup = () => {
             >
               {BottomLeftKeys.map((key, index) => (
                 <button
-                  aria-label={key.aria ? `${key.aria} sign` : "sign"}
+                  aria-label={
+                    key.aria ? `${key.aria} sign` : `${key.text} sign`
+                  }
                   className="MathButton"
                   style={{
                     "--width": key?.width ? key.width : "32px",
