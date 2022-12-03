@@ -7,6 +7,10 @@ import {
   useSetEditFormula,
 } from "../../../Provider";
 
+import { useDrag, useDragDropManager, useDrop } from "react-dnd";
+
+import { getEmptyImage } from "react-dnd-html5-backend";
+
 import { InlineMath } from "react-katex";
 
 import Tab from "@mui/material/Tab";
@@ -39,6 +43,7 @@ const MathPopup = () => {
 
   const [value, setValue] = useState("1");
   const [formula, setFormula] = useState(null);
+  const [coords, setCoords] = useState(null);
 
   const mathfield = useRef(null);
   const containerRef = useRef(null);
@@ -62,6 +67,26 @@ const MathPopup = () => {
     setValue(newValue);
   };
 
+  const [{ isDragging }, drag, preview] = useDrag({
+    type: "math",
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+      offset: monitor.getSourceClientOffset(),
+    }),
+  });
+
+  const dragDropManager = useDragDropManager();
+  const monitor = dragDropManager.getMonitor();
+
+  useEffect(
+    () =>
+      monitor.subscribeToOffsetChange(() => {
+        const offset = monitor.getClientOffset();
+        offset && setCoords(offset);
+      }),
+    [monitor]
+  );
+
   const handleClick = () => {
     const range = quill.getSelection(true);
     quill.removeFormat(range.index, isEdit ? range.length + 1 : range.length);
@@ -84,6 +109,8 @@ const MathPopup = () => {
 
     isEdit && mathfield.current.setValue(editFormula.value);
 
+    preview(getEmptyImage(), { captureDraggingState: true });
+
     mathfield.current.setOptions({
       mathModeSpace: "\\:",
       plonkSound: false,
@@ -98,8 +125,8 @@ const MathPopup = () => {
         position: "fixed",
         width: "600px",
         height: "577px",
-        top: "165px",
-        left: "50%",
+        top: coords ? `${coords.y}px` : "165px",
+        left: coords ? `${coords.x}px` : "50%",
         transform: "translateX(-50%)",
         zIndex: 2000,
         backgroundColor: "#fff",
@@ -109,7 +136,7 @@ const MathPopup = () => {
         boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
         borderRadius: "4px",
       }}
-      ref={containerRef}
+      ref={drag(containerRef)}
       tabIndex={0}
       aria-label="math-popup"
       id={`mathpopup-${uniqueId}`}
