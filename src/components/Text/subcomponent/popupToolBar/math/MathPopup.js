@@ -39,6 +39,8 @@ const MathPopup = () => {
 
   const [value, setValue] = useState("1");
   const [formula, setFormula] = useState(null);
+  const [ariaLive, setAriaLive] = useState("");
+  const [ariaLive2, setAriaLive2] = useState("");
 
   const mathfield = useRef(null);
   const containerRef = useRef(null);
@@ -74,6 +76,17 @@ const MathPopup = () => {
     quill.setSelection(range.index + range.length + 1);
 
     closeMath();
+  };
+
+  // Aria Live Handler
+  const handleAriaLive = (value) => {
+    if (ariaLive === value) {
+      setAriaLive("");
+      setAriaLive2(value);
+    } else {
+      setAriaLive2("");
+      setAriaLive(value);
+    }
   };
 
   useEffect(() => {
@@ -122,6 +135,25 @@ const MathPopup = () => {
         }
       }}
     >
+      {/* Aria Live */}
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive}
+      </span>
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive2}
+      </span>
       <div
         style={{
           display: "flex",
@@ -223,6 +255,7 @@ const MathPopup = () => {
                     gap: "5.5px",
                   }}
                 >
+                  {/* Advanced Function */}
                   {tab.render.map((btn, index) => (
                     <button
                       aria-label={
@@ -240,8 +273,10 @@ const MathPopup = () => {
                         mathfield.current.insert(
                           btn?.insert ? btn.insert : btn.text
                         );
-                        mathfield.current.executeCommand("moveAfterParent");
-                        mathfield.current.focus();
+                        handleAriaLive(btn.aria);
+                        // setAriaLive(`${btn.aria}`);
+                        // mathfield.current.executeCommand("moveAfterParent");
+                        // mathfield.current.focus();
                       }}
                     >
                       <InlineMath math={btn.text} />
@@ -252,6 +287,7 @@ const MathPopup = () => {
             ))}
           </TabContext>
         </div>
+        {/* Basic Functions and Numbers */}
         <div
           style={{
             display: "flex",
@@ -284,9 +320,10 @@ const MathPopup = () => {
                   key?.insert
                     ? mathfield.current.insert(key.insert)
                     : mathfield.current.executeCommand(key.command);
-                  key?.insert &&
-                    mathfield.current.executeCommand("moveAfterParent");
-                  mathfield.current.focus();
+                  handleAriaLive(key.aria);
+                  // key?.insert &&
+                  // mathfield.current.executeCommand("moveAfterParent");
+                  // mathfield.current.focus();
                 }}
               >
                 {key?.svg ? key?.svg : key.text}
@@ -310,6 +347,7 @@ const MathPopup = () => {
                 gap: "5px",
               }}
             >
+              {/* Arrow Keys and 2 undefined keys */}
               {BottomLeftKeys.map((key, index) => (
                 <button
                   aria-label={
@@ -327,15 +365,17 @@ const MathPopup = () => {
                     key?.insert
                       ? mathfield.current.insert(key.insert)
                       : mathfield.current.executeCommand(key.command);
-                    key?.insert &&
-                      mathfield.current.executeCommand("moveAfterParent");
-                    mathfield.current.focus();
+                    handleAriaLive(key.aria);
+                    // key?.insert &&
+                    // mathfield.current.executeCommand("moveAfterParent");
+                    // mathfield.current.focus();
                   }}
                 >
                   {key?.svg ? key?.svg : key.text}
                 </button>
               ))}
             </div>
+            {/* All Clear Button */}
             <div>
               <button
                 aria-label={"All clear"}
@@ -350,7 +390,8 @@ const MathPopup = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   mathfield.current.setValue("");
-                  mathfield.current.focus();
+                  setAriaLive("All clear");
+                  // mathfield.current.focus();
                 }}
               >
                 AC

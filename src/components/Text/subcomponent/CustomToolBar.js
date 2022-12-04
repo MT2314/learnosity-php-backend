@@ -88,6 +88,10 @@ const ToolBar = ({
   const [alignVisibility, setAlignVisibility] = useState(false);
   const [mathVisibility, setMathVisibility] = useState(false);
 
+  // Aria Live
+  const [ariaLive, setAriaLive] = useState("");
+  const [ariaLive2, setAriaLive2] = useState("");
+
   // IconBox
   const [openIcon, setIconOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -171,14 +175,16 @@ const ToolBar = ({
     }
   }, [showMath]);
 
-  // useEffect(() => {
-  //   if (infoHasFocus ) {
-  //     toggleCloseToolbar(["Video", "Kebab"]);
-  //   }
-  // }, [infoHasFocus, ]);
-  // useEffect(() => {
-  //   console.table({ activeDropDownItem });
-  // }, [activeDropDownItem, activeTopMenu]);
+  // Hndle Aria live region
+  const handleAriaLive = (value) => {
+    if (ariaLive === value) {
+      setAriaLive("");
+      setAriaLive2(value);
+    } else {
+      setAriaLive2("");
+      setAriaLive(value);
+    }
+  };
 
   useEffect(() => {
     if (infoHasFocus) {
@@ -197,6 +203,24 @@ const ToolBar = ({
       // onClick={(e) => e.stopPropagation()}
       // onFocus={(e) => e.stopPropagation()}
     >
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive}
+      </span>
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive2}
+      </span>
       <AppBar
         className="StyledAppbar"
         position="static"
@@ -372,13 +396,18 @@ const ToolBar = ({
                 setBoldVisibility(!boldVisibility);
                 setAlignVisibility(false);
                 setListVisibility(false);
-                setMathVisibility(!mathVisibility);
+                setMathVisibility(false);
                 if (activeTopMenu === "bold") {
                   setActiveTopMenu("");
                 } else {
                   setActiveTopMenu("bold");
                 }
                 setActiveDropDownItem("");
+                boldVisibility === false
+                  ? handleAriaLive(
+                      "Text formatting dropdown selected, 6 available options"
+                    )
+                  : handleAriaLive("Text formatting dropdown closed");
               }}
               onKeyDown={(e) => {
                 onKeyDropDown(e, boldRef);
@@ -433,6 +462,11 @@ const ToolBar = ({
                     } else {
                       setActiveTopMenu("math");
                     }
+                    mathVisibility === false
+                      ? handleAriaLive(
+                          "Math equation dropdown selected, 3 available options"
+                        )
+                      : handleAriaLive("Math equation dropdown closed");
                   }}
                 >
                   {icons["formula"]}
@@ -468,12 +502,18 @@ const ToolBar = ({
                 setAlignVisibility(!alignVisibility);
                 setBoldVisibility(false);
                 setListVisibility(false);
+                setMathVisibility(false);
                 if (activeTopMenu === "align") {
                   setActiveTopMenu("");
                 } else {
                   setActiveTopMenu("align");
                 }
                 setActiveDropDownItem("");
+                alignVisibility === false
+                  ? handleAriaLive(
+                      "Alignment formatting dropdown selected, 3 available options"
+                    )
+                  : handleAriaLive("Allignment formatting dropdown closed");
               }}
               className="StyledIconButton"
               style={{
@@ -521,11 +561,17 @@ const ToolBar = ({
                 setListVisibility(!listVisibility);
                 setAlignVisibility(false);
                 setBoldVisibility(false);
+                setMathVisibility(false);
                 if (activeTopMenu === "lists") {
                   setActiveTopMenu("");
                 } else {
                   setActiveTopMenu("lists");
                 }
+                alignVisibility === false
+                  ? handleAriaLive(
+                      "List formatting dropdown selected, 2 available options"
+                    )
+                  : handleAriaLive("List formatting dropdown closed");
               }}
               className="StyledIconButton"
               style={{
