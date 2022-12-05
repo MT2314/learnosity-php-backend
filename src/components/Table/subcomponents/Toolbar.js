@@ -68,9 +68,6 @@ const ToolBar = ({ setColumnOrder, toolbar, selectedRow, selectedColumn }) => {
   };
 
   const addColumn = () => {
-    console.log(selectedColumn);
-    const lastChar = selectedColumn.id.substr(selectedColumn.id.length - 1);
-
     // TanStack requires a header for each Column
     headers.push({
       accessorKey: `column${headers.length + 1}`,
@@ -82,56 +79,24 @@ const ToolBar = ({ setColumnOrder, toolbar, selectedRow, selectedColumn }) => {
       let type =
         state.headerType === "top-header" && j === 0 ? "title" : "cell";
       // Columns inserted to each row.
-      const currentRow = Object.keys(data[j]);
-      for (let i = currentRow.length + 1; i > lastChar; i--) {
+      const currentRowLen = Object.keys(data[j]).length;
+      const lastChar = selectedColumn
+        ? selectedColumn.id.substr(selectedColumn.id.length - 1)
+        : currentRowLen;
+      for (let i = currentRowLen + 1; i > lastChar; i--) {
         if (+lastChar + 1 < i) {
           data[j][`column${i}`] = data[j][`column${i - 1}`];
         } else {
-          data[j][`column${i}`] = { value: "", type };
+          data[j][`column${i}`] = { value: "", type};
         }
       }
-
-      // data[j][`column${currentRow.length + 1}`] = {
-      //   value: "",
-      //   type,
-      // };
-
-      // [data[j][`column${currentRow.length + 1}`], data[j][`column${selectedColumn.index + 2}`]] = [
-      //   data[j][`column${selectedColumn.index + 2}`],
-      //   data[j][`column${currentRow.length + 1}`],
-      // ];
     });
-
-    const newOrder = Object.keys(data[0]);
-
-    // Array.prototype.move = function (from, to) {
-    //   this.splice(to, 0, this.splice(from, 1)[0]);
-    // };
-
-    // console.log(newOrder);
-    // newOrder.move(newOrder.length - 1, lastChar)
-    console.log(newOrder);
-
-    setColumnOrder(newOrder);
-    console.log(newOrder);
-    // console.log(data)
-    // console.log(headers)
-
-    console.log(data);
 
     dispatch({
       func: "ADD_COL",
       headers: headers,
       data: data,
     });
-
-    // console.log(headers[lastChar].id);
-    // console.log(headers[newOrder.length - 1].id);
-    // dispatch({
-    //   func: "UPDATE_COLUMN_ORDER",
-    //   draggedColumn: headers[lastChar].id,
-    //   targetColumn: headers[newOrder.length - 1].id,
-    // });
   };
 
   return (
