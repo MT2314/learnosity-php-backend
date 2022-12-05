@@ -14,6 +14,19 @@ const MathDropdownButton = ({
 }) => {
   const setShowMath = useSetShowMath();
   const showMath = useShowMath();
+  const [ariaLive, setAriaLive] = useState("");
+  const [ariaLive2, setAriaLive2] = useState("");
+
+  // Aria Live Handler
+  const handleAriaLive = (value) => {
+    if (ariaLive === value) {
+      setAriaLive("");
+      setAriaLive2(value);
+    } else {
+      setAriaLive2("");
+      setAriaLive(value);
+    }
+  };
 
   return (
     <>
@@ -27,6 +40,25 @@ const MathDropdownButton = ({
         }}
         // onKeyDown={onKeyDropDown}
       >
+        {/* Aria Live */}
+        <span
+          className="sr-only"
+          role="status"
+          aria-live="assertive"
+          aria-relevant="all"
+          aria-atomic="true"
+        >
+          {ariaLive}
+        </span>
+        <span
+          className="sr-only"
+          role="status"
+          aria-live="assertive"
+          aria-relevant="all"
+          aria-atomic="true"
+        >
+          {ariaLive2}
+        </span>
         <Tooltip
           aria-label="draw equation"
           title="draw equation"
@@ -108,6 +140,7 @@ const MathDropdownButton = ({
                 setActiveDropDownItem("equationKeyboard");
                 setShowMath(true);
               }
+              handleAriaLive("Math equation keyboard is now open.");
             }}
             value="equationKeyboard"
           >
