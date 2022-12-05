@@ -24,17 +24,30 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import styled from "@emotion/styled";
 
 // Styled components
-const StyledTable = styled("table")(({ showStripes, headerType}) => ({
+const StyledTable = styled("table")(({ showStripes, headerType }) => ({
   // border: "0.0625rem solid lightgray",
   borderCollapse: "collapse",
   borderSpacing: "0",
   tableLayout: "fixed",
   width: "100%",
+  overflow: "hidden",
   "tr:nth-of-type(odd):not(:first-of-type)": {
     backgroundColor: headerType === "top-header" && showStripes && "#F5F5F5",
   },
   "tr:nth-of-type(even)": {
     backgroundColor: headerType === "side-header" && showStripes && "#F5F5F5",
+  },
+  "th" : {
+    position: "relative",
+    "&.selectedColumn::after" : { 
+      backgroundColor: "rgba(255, 255, 0, 0.5)",
+      content: "''",
+      height: "10000px",    
+      left: "0",
+      position: "absolute",  
+      top: "-5000px",
+      width: "100%",
+    }
   },
 }));
 
@@ -53,8 +66,9 @@ const StyledInput = styled(TextareaAutosize)(({ type }) => ({
   fontWeight: type === "title" ? "500" : "400",
   lineHeight: "1.575rem",
   width: "100%",
-  width: "-moz-available",          /* WebKit-based browsers will ignore this. */
-  width: "-webkit-fill-available",  /* Mozilla-based browsers will ignore this. */
+  width: "-moz-available" /* WebKit-based browsers will ignore this. */,
+  width:
+    "-webkit-fill-available" /* Mozilla-based browsers will ignore this. */,
   width: "fill-available",
   minHeight: "25px",
   ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
@@ -109,7 +123,7 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   return [...columnOrder];
 };
 
-const DraggableColumnHeader = ({ header, table, setSelectedColumn }) => {
+const DraggableColumnHeader = ({ header, table, setSelectedColumn, selectedColumn }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
@@ -123,8 +137,6 @@ const DraggableColumnHeader = ({ header, table, setSelectedColumn }) => {
         column.id,
         columnOrder
       );
-      console.log("Wilson copy and paste")
-      console.log(newColumnOrder);
 
       setColumnOrder(newColumnOrder);
 
@@ -148,6 +160,7 @@ const DraggableColumnHeader = ({ header, table, setSelectedColumn }) => {
     <th
       ref={dropRef}
       colSpan={header.colSpan}
+      className={selectedColumn === header && "selectedColumn"}
       style={{
         opacity: isDragging ? 0.5 : 1,
         backgroundColor: "#DEE7F5",
@@ -168,7 +181,9 @@ const DraggableColumnHeader = ({ header, table, setSelectedColumn }) => {
           : flexRender(header.column.columnDef.header, header.getContext())}
         <button
           ref={dragRef}
-          onFocus={(e) => {setSelectedColumn(header)}}
+          onFocus={(e) => {
+            setSelectedColumn(header);
+          }}
           aria-label="Header drag icon button"
           style={{
             background: "none",
@@ -186,7 +201,7 @@ const DraggableColumnHeader = ({ header, table, setSelectedColumn }) => {
   );
 };
 
-const DraggableRow = ({ row, reorderRow, setSelectedRow }) => {
+const DraggableRow = ({ row, reorderRow, setSelectedRow, selectedRow }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [, dropRef] = useDrop({
     accept: "row",
@@ -226,7 +241,13 @@ const DraggableRow = ({ row, reorderRow, setSelectedRow }) => {
   };
 
   return (
-    <tr ref={previewRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
+    <tr
+      ref={previewRef}
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        border: selectedRow === row.id && "2px solid red",
+      }}
+    >
       <td
         style={{
           ...(row.original.column1.type === "title" &&
@@ -245,7 +266,9 @@ const DraggableRow = ({ row, reorderRow, setSelectedRow }) => {
         >
           <button
             ref={dragRef}
-            onFocus={(e) => {setSelectedRow(row)}}
+            onFocus={(e) => {
+              setSelectedRow(row.id);
+            }}
             aria-label="Header drag icon button"
             style={{
               background: "none",
@@ -335,7 +358,6 @@ const TableComponent = () => {
     [state, columnOrder]
   );
 
-
   return (
     <DndProvider backend={HTML5Backend}>
       <StyledTable
@@ -347,7 +369,12 @@ const TableComponent = () => {
         headerType={state.headerType}
       >
         <StyledConfigBar>
-          <Toolbar setColumnOrder={setColumnOrder} toolbar={toolbar} selectedRow={selectedRow} selectedColumn={selectedColumn} />
+          <Toolbar
+            setColumnOrder={setColumnOrder}
+            toolbar={toolbar}
+            selectedRow={selectedRow}
+            selectedColumn={selectedColumn}
+          />
         </StyledConfigBar>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -364,6 +391,7 @@ const TableComponent = () => {
                   header={header}
                   table={table}
                   setColumnUpdate={setColumnUpdate}
+                  selectedColumn={selectedColumn}
                   setSelectedColumn={setSelectedColumn}
                 />
               ))}
@@ -377,6 +405,7 @@ const TableComponent = () => {
               row={row}
               reorderRow={reorderRow}
               setSelectedRow={setSelectedRow}
+              selectedRow={selectedRow}
             ></DraggableRow>
           ))}
         </tbody>

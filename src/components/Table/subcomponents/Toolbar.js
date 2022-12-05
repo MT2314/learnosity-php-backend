@@ -57,10 +57,8 @@ const ToolBar = ({ setColumnOrder, toolbar, selectedRow, selectedColumn }) => {
 
       row[`column${j + 1}`] = { value: "", type };
     });
-
-    console.log(data);
-
-    selectedRow ? data.splice(+selectedRow.id + 1, 0, row) : data.push(row);
+    // If selected, splice into the middle.  Else push into the back.
+    selectedRow ? data.splice(+selectedRow + 1, 0, row) : data.push(row);
     dispatch({
       func: "ADD_ROW",
       data: data,
@@ -74,20 +72,19 @@ const ToolBar = ({ setColumnOrder, toolbar, selectedRow, selectedColumn }) => {
       id: `column${headers.length + 1}`,
       header: "",
     });
-    // Create number of columns depending on the number of rows
+    // Create number of loops depending on the number of rows
     [...Array(data.length)].forEach((_, j) => {
       let type =
         state.headerType === "top-header" && j === 0 ? "title" : "cell";
-      // Columns inserted to each row.
-      const currentRowLen = Object.keys(data[j]).length;
+      const currentRowLen = Object.keys(data[j]).length; // The length of the current Row
       const lastChar = selectedColumn
         ? selectedColumn.id.substr(selectedColumn.id.length - 1)
-        : currentRowLen;
+        : currentRowLen; // If nothing selected, add a new column into the end.
       for (let i = currentRowLen + 1; i > lastChar; i--) {
         if (+lastChar + 1 < i) {
-          data[j][`column${i}`] = data[j][`column${i - 1}`];
+          data[j][`column${i}`] = data[j][`column${i - 1}`]; // Move prev column into the back
         } else {
-          data[j][`column${i}`] = { value: "", type};
+          data[j][`column${i}`] = { value: "", type }; //Add new column into each row
         }
       }
     });
