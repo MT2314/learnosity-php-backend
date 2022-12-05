@@ -258,7 +258,14 @@ const ToolBar = ({
               variant="contained"
               disableRipple
               disableFocusRipple
-              onClick={() => setIconOpen(!openIcon)}
+              onClick={() => {
+                setBoldVisibility(false);
+                setAlignVisibility(false);
+                setListVisibility(false);
+                setMathVisibility(false);
+                setActiveTopMenu("");
+                setIconOpen(!openIcon);
+              }}
               className="SelectButton"
               style={{
                 "--active": openIcon ? "rgba(21, 101, 192, 1)" : "#000",
@@ -624,6 +631,7 @@ const ToolBar = ({
                 setAlignVisibility(false);
                 setBoldVisibility(false);
                 setListVisibility(false);
+                setMathVisibility(false);
 
                 if (format?.link && activeTopMenu === "link") {
                   const selection = quill.getSelection();

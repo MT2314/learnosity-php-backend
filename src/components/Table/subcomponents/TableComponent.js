@@ -272,7 +272,6 @@ const DraggableRow = ({ row, reorderRow }) => {
                   display: "none",
                 }),
               backgroundColor: type == "title" && "#EEEEEE",
-              verticalAlign: type == "title" ? "middle" : "top",
             }}
             align="center"
           >
