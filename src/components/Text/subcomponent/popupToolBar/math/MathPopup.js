@@ -64,7 +64,8 @@ const MathPopup = () => {
     setValue(newValue);
   };
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     const range = quill.getSelection(true);
     quill.removeFormat(range.index, isEdit ? range.length + 1 : range.length);
     quill.insertEmbed(
@@ -94,6 +95,7 @@ const MathPopup = () => {
     document.body.style.setProperty("--selection-background-color", "#A1CAF1");
     document.body.style.setProperty("--placeholder-color", "#000000");
     document.body.style.setProperty("--selection-color", "#000000");
+    mathfield.current.setValue("");
 
     isEdit && mathfield.current.setValue(editFormula.value);
 
@@ -104,6 +106,44 @@ const MathPopup = () => {
     });
     mathfield.current.focus();
   }, []);
+
+  // Manual Keystroke for keyboard
+  const KeyStroke = (event) => {
+    console.log(event.key);
+    if (
+      (event.keyCode >= 48 && event.keyCode <= 57) ||
+      (event.keyCode >= 65 && event.keyCode <= 90) ||
+      (event.keyCode >= 96 && event.keyCode <= 105)
+    ) {
+      mathfield.current.insert(event.key);
+    } else if (
+      event.key == "Backspace" ||
+      event.key == "Delete" ||
+      event.code === 8
+    ) {
+      mathfield.current.executeCommand("deleteBackward");
+    } else if (event.key === ".") {
+      mathfield.current.insert(".");
+    } else if (event.key === "+") {
+      mathfield.current.insert("+");
+    } else if (event.key === "-") {
+      mathfield.current.insert("-");
+    } else if (event.key === "*") {
+      mathfield.current.insert("\\times");
+    } else if (event.key === "/") {
+      mathfield.current.insert("\\div");
+    } else if (event.key === "%") {
+      mathfield.current.insert("%");
+    } else if (event.key === "^") {
+      mathfield.current.insert("^");
+    } else if (event.key === "(") {
+      mathfield.current.insert("(");
+    } else if (event.key === ")") {
+      mathfield.current.insert(")");
+    } else if (event.key === "=") {
+      mathfield.current.insert("=");
+    }
+  };
 
   return (
     <div
@@ -230,6 +270,9 @@ const MathPopup = () => {
                         ? "rgba(21, 101, 192, 1)"
                         : "rgba(99, 99, 99, 1)",
                   }}
+                  onKeyDown={(e) => {
+                    KeyStroke(e);
+                  }}
                   disableRipple
                   disableFocusRipple
                 />
@@ -278,6 +321,9 @@ const MathPopup = () => {
                         // mathfield.current.executeCommand("moveAfterParent");
                         // mathfield.current.focus();
                       }}
+                      onKeyDown={(e) => {
+                        KeyStroke(e);
+                      }}
                     >
                       <InlineMath math={btn.text} />
                     </button>
@@ -325,6 +371,9 @@ const MathPopup = () => {
                   // mathfield.current.executeCommand("moveAfterParent");
                   // mathfield.current.focus();
                 }}
+                onKeyDown={(e) => {
+                  KeyStroke(e);
+                }}
               >
                 {key?.svg ? key?.svg : key.text}
               </button>
@@ -370,6 +419,9 @@ const MathPopup = () => {
                     // mathfield.current.executeCommand("moveAfterParent");
                     // mathfield.current.focus();
                   }}
+                  onKeyDown={(e) => {
+                    KeyStroke(e);
+                  }}
                 >
                   {key?.svg ? key?.svg : key.text}
                 </button>
@@ -392,6 +444,9 @@ const MathPopup = () => {
                   mathfield.current.setValue("");
                   setAriaLive("All clear");
                   // mathfield.current.focus();
+                }}
+                onKeyDown={(e) => {
+                  KeyStroke(e);
                 }}
               >
                 AC
@@ -419,7 +474,7 @@ const MathPopup = () => {
                 fontSize: "14px",
                 cursor: formula ? "pointer" : "default",
               }}
-              onClick={handleClick}
+              onClick={(e) => handleClick(e)}
               disabled={!formula}
             >
               {isEdit ? "Update" : "Insert"}

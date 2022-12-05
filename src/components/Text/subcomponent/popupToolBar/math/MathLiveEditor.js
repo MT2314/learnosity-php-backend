@@ -11,7 +11,6 @@ import "mathlive/dist/mathlive-static.css";
 
 const MathLiveEditor = forwardRef((props, ref) => {
   const _ref = useRef(null);
-
   useImperativeHandle(ref, () => _ref.current, [_ref]);
 
   useEffect(() => {

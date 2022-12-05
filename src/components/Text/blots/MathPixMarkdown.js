@@ -31,6 +31,7 @@ class MathPixMarkdown extends Embed {
       node.setAttribute("data-id", `${uuidv4()}`);
       node.setAttribute("data-value", value);
     }
+    node.innerHTML += "&nbsp";
     return node;
   }
 

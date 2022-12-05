@@ -128,10 +128,11 @@ export const TopSideKeys = [
 export const BottomLeftKeys = [
   {
     command: "deleteBackward",
-    text: "delete",
-    aria: "delete",
+    text: "delete backward",
+    aria: "delete backward",
     svg: PlaceHolder,
   },
+
   {
     svg: ArrowUp,
     text: "up",
@@ -139,9 +140,9 @@ export const BottomLeftKeys = [
     command: "moveUp",
   },
   {
-    command: "deleteBackward",
-    text: "delete",
-    aria: "delete",
+    command: "deleteForward",
+    text: "delete forward",
+    aria: "delete forward",
     svg: PlaceHolder,
   },
   {
