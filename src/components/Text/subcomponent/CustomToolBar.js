@@ -13,7 +13,6 @@ import {
   useIsLink,
   useFormat,
 } from "../Provider";
-import styled from "@emotion/styled";
 import Portal from "@mui/base/Portal";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useTranslation } from "react-i18next";
@@ -138,6 +137,7 @@ const ToolBar = ({
   const onKeyDropDown = (e, currentRef) => {
     if (e.key === "Escape") {
       currentRef.current.focus();
+      setMathVisibility(false);
       setAlignVisibility(false);
       setListVisibility(false);
       setBoldVisibility(false);
