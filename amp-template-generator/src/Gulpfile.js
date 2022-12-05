@@ -85,6 +85,7 @@ function _sass() {
       // of the file object.
       .pipe(gulpReplaceImportant())
       .pipe(gulp.dest("styles/"))
+      .pipe(gulp.dest(dirs.cssStaging))
   );
 }
 
