@@ -191,9 +191,9 @@ const MathPopup = () => {
       ref={drag(containerRef)}
       tabIndex={0}
       autoFocus
-      aria-label="math-popup"
+      aria-label="virtual keyboard"
       id={`mathpopup-${uniqueId}`}
-      role="dialog"
+      role="math"
       className="MathEquationKeyboard"
       onKeyDown={(e) => {
         if (e.key === "Escape") {
