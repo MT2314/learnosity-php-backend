@@ -65,7 +65,7 @@ class MathPixMarkdown extends Embed {
 
   html() {
     const { mathpix } = this.value();
-    return `<span>${mathpix}</span>`;
+    return `<span >${mathpix}</span>`;
   }
 }
 

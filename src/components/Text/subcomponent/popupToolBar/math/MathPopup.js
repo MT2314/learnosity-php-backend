@@ -135,7 +135,6 @@ const MathPopup = () => {
 
   // Manual Keystroke for keyboard
   const KeyStroke = (event) => {
-    console.log(event.key);
     if (
       (event.keyCode >= 48 && event.keyCode <= 57) ||
       (event.keyCode >= 65 && event.keyCode <= 90) ||
@@ -191,9 +190,9 @@ const MathPopup = () => {
       ref={drag(containerRef)}
       tabIndex={0}
       autoFocus
-      aria-label="math-popup"
+      aria-label="virtual keyboard"
       id={`mathpopup-${uniqueId}`}
-      role="dialog"
+      role="math"
       className="MathEquationKeyboard"
       onKeyDown={(e) => {
         if (e.key === "Escape") {
