@@ -14,7 +14,7 @@ module.exports = {
     headers: {
       "Content-Type": "application/json",
       // "x-api-key": process.env.X_API_KEY,
-      Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
+      authorizationToken: `Bearer ${process.env.AUTH_TOKEN}`,
     },
   }),
 };
