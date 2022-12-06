@@ -78,7 +78,7 @@ const ToolBar = ({ toolbar, selectedRow, selectedColumn }) => {
         state.headerType === "top-header" && j === 0 ? "title" : "cell";
       const currentRowLen = Object.keys(data[j]).length; // The length of the current Row
       const lastChar = selectedColumn
-        ? selectedColumn.id.substr(selectedColumn.id.length - 1)
+        ? selectedColumn.substr(selectedColumn.length - 1)
         : currentRowLen; // If nothing selected, add a new column into the end.
       for (let i = currentRowLen + 1; i > lastChar; i--) {
         if (+lastChar + 1 < i) {

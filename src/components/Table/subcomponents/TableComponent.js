@@ -46,11 +46,18 @@ const StyledTable = styled("table")(({ showStripes, headerType }) => ({
       backgroundColor: "rgba(21, 101, 192, 0.08)",
       content: "''",
       height: "10000px",
-      left: "0",
+      left: "-1px",
       top: "0",
       position: "absolute",
-      width: "100%",
+      width: "101%",
       zIndex: "1",
+      borderLeft: "2px solid #1565C0 ",
+      "td" : {
+        border: "2px solid #1565C0 ",
+      }
+    },
+    "&.selectedColumnStyle:not(:last-of-type)::after": {
+      borderRight: "2px solid #1565C0 ",
     },
     "&.selectedRowStyle td::after": {
       backgroundColor: "rgba(21, 101, 192, 0.01)",
@@ -61,6 +68,10 @@ const StyledTable = styled("table")(({ showStripes, headerType }) => ({
       position: "absolute",
       width: "101%",
       zIndex: "1",
+      borderTop: "2px solid #1565C0 ",
+    },
+    "&.selectedRowStyle td:not(:last-of-type)::after": {
+      borderBottom: "2px solid #1565C0 ",
     },
   },
 }));
@@ -143,6 +154,7 @@ const DraggableColumnHeader = ({
   setSelectedColumn,
   selectedColumn,
   setSelectedRow,
+  toolbarRef,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const { getState, setColumnOrder } = table;
@@ -180,7 +192,7 @@ const DraggableColumnHeader = ({
     <th
       ref={dropRef}
       colSpan={header.colSpan}
-      className={selectedColumn === header && "selectedColumnStyle"}
+      className={selectedColumn === header.id && "selectedColumnStyle"}
       style={{
         opacity: isDragging ? 0.5 : 1,
         backgroundColor: "#DEE7F5",
@@ -202,7 +214,7 @@ const DraggableColumnHeader = ({
         <button
           ref={dragRef}
           onFocus={(e) => {
-            setSelectedColumn(header);
+            setSelectedColumn(header.id);
             setSelectedRow(null);
           }}
           aria-label="Header drag icon button"
@@ -344,6 +356,7 @@ const TableComponent = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedColumn, setSelectedColumn] = useState(null);
   const tableRef = useRef();
+  const toolbarRef = useRef();
 
   useOnClickOutside(tableRef, () => {
     setToolbar(false);
@@ -392,7 +405,7 @@ const TableComponent = () => {
         showStripes={state.showStripes}
         headerType={state.headerType}
       >
-        <StyledConfigBar>
+        <StyledConfigBar ref={toolbarRef}>
           <Toolbar
             setColumnOrder={setColumnOrder}
             toolbar={toolbar}
@@ -414,6 +427,7 @@ const TableComponent = () => {
                   len={table.length}
                   header={header}
                   table={table}
+                  toolbarRef={toolbarRef}
                   setColumnUpdate={setColumnUpdate}
                   selectedColumn={selectedColumn}
                   setSelectedColumn={setSelectedColumn}
