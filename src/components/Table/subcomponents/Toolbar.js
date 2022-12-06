@@ -19,7 +19,7 @@ import {
 
 import "../../Text/styles/Toolbar.scss";
 
-const ToolBar = ({ setColumnOrder, toolbar, selectedRow, selectedColumn }) => {
+const ToolBar = ({ toolbar, selectedRow, selectedColumn }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [showFormat, setShowFormat] = useState(false);
   const FormatRef = useRef(null);

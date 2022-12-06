@@ -37,17 +37,31 @@ const StyledTable = styled("table")(({ showStripes, headerType }) => ({
   "tr:nth-of-type(even)": {
     backgroundColor: headerType === "side-header" && showStripes && "#F5F5F5",
   },
-  "th" : {
+  "thead th:not(:first-of-type)" : {
+    borderBottom: "1px solid black",
+  },
+  "th, tr": {
     position: "relative",
-    "&.selectedColumn::after" : { 
-      backgroundColor: "rgba(255, 255, 0, 0.5)",
+    "&.selectedColumnStyle::after": {
+      backgroundColor: "rgba(21, 101, 192, 0.08)",
       content: "''",
-      height: "10000px",    
+      height: "10000px",
       left: "0",
-      position: "absolute",  
-      top: "-5000px",
+      top: "0",
+      position: "absolute",
       width: "100%",
-    }
+      zIndex: "1",
+    },
+    "&.selectedRowStyle td::after": {
+      backgroundColor: "rgba(21, 101, 192, 0.01)",
+      content: "''",
+      height: "101%",
+      left: "-1px",
+      top: "0",
+      position: "absolute",
+      width: "101%",
+      zIndex: "1",
+    },
   },
 }));
 
@@ -123,7 +137,13 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   return [...columnOrder];
 };
 
-const DraggableColumnHeader = ({ header, table, setSelectedColumn, selectedColumn }) => {
+const DraggableColumnHeader = ({
+  header,
+  table,
+  setSelectedColumn,
+  selectedColumn,
+  setSelectedRow,
+}) => {
   const [state, dispatch] = useContext(LayoutContext);
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
@@ -160,7 +180,7 @@ const DraggableColumnHeader = ({ header, table, setSelectedColumn, selectedColum
     <th
       ref={dropRef}
       colSpan={header.colSpan}
-      className={selectedColumn === header && "selectedColumn"}
+      className={selectedColumn === header && "selectedColumnStyle"}
       style={{
         opacity: isDragging ? 0.5 : 1,
         backgroundColor: "#DEE7F5",
@@ -183,6 +203,7 @@ const DraggableColumnHeader = ({ header, table, setSelectedColumn, selectedColum
           ref={dragRef}
           onFocus={(e) => {
             setSelectedColumn(header);
+            setSelectedRow(null);
           }}
           aria-label="Header drag icon button"
           style={{
@@ -201,7 +222,7 @@ const DraggableColumnHeader = ({ header, table, setSelectedColumn, selectedColum
   );
 };
 
-const DraggableRow = ({ row, reorderRow, setSelectedRow, selectedRow }) => {
+const DraggableRow = ({ row, reorderRow, setSelectedRow, selectedRow, setSelectedColumn }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [, dropRef] = useDrop({
     accept: "row",
@@ -242,10 +263,10 @@ const DraggableRow = ({ row, reorderRow, setSelectedRow, selectedRow }) => {
 
   return (
     <tr
+      className={selectedRow === row.id && "selectedRowStyle"}
       ref={previewRef}
       style={{
         opacity: isDragging ? 0.5 : 1,
-        border: selectedRow === row.id && "2px solid red",
       }}
     >
       <td
@@ -268,6 +289,7 @@ const DraggableRow = ({ row, reorderRow, setSelectedRow, selectedRow }) => {
             ref={dragRef}
             onFocus={(e) => {
               setSelectedRow(row.id);
+              setSelectedColumn(null);
             }}
             aria-label="Header drag icon button"
             style={{
@@ -325,6 +347,8 @@ const TableComponent = () => {
 
   useOnClickOutside(tableRef, () => {
     setToolbar(false);
+    setSelectedColumn(null);
+    setSelectedRow(null);
   });
 
   const [columnOrder, setColumnOrder] = useState(
@@ -393,6 +417,7 @@ const TableComponent = () => {
                   setColumnUpdate={setColumnUpdate}
                   selectedColumn={selectedColumn}
                   setSelectedColumn={setSelectedColumn}
+                  setSelectedRow={setSelectedRow}
                 />
               ))}
             </tr>
@@ -406,6 +431,7 @@ const TableComponent = () => {
               reorderRow={reorderRow}
               setSelectedRow={setSelectedRow}
               selectedRow={selectedRow}
+              setSelectedColumn={setSelectedColumn}
             ></DraggableRow>
           ))}
         </tbody>
