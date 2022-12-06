@@ -25,8 +25,6 @@ class MathPixMarkdown extends Embed {
   static create(value) {
     const node = super.create(value);
     if (typeof value === "string") {
-      console.log(value);
-
       const md = value.includes("<smiles>") ? value : "\\(" + value + "\\)";
       node.appendChild(this.md2svg(MathpixMarkdownModel.render(md, options)));
       node.contentEditable = "true";
