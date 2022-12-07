@@ -129,21 +129,12 @@ const ToolBar = ({
     }
   };
 
-  const duplicateRow = () => {
-    console.log("Duplicate Row");
+  // Close dropdown when click outside
+  const closeDropDown = (e) => {
+    setOpenKebab(false);
+    setShowFormat(false);
   };
 
-  const duplicateColumn = () => {
-    console.log("Duplicate Column");
-  };
-
-  const removeRow = () => {
-    console.log("Remove Row");
-  };
-
-  const removeColumn = () => {
-    console.log("Remove Column");
-  };
   // Kebab Menu
   const KebabActions = [
     {
@@ -223,7 +214,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
-                setShowFormat(false);
+                closeDropDown();
                 data.length != 6 && addRowFun();
               }}
               // If needed to add onKeyDown
@@ -248,6 +239,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
+                closeDropDown();
                 headers.length != 6 && addColFun();
               }}
               // If needed to Add onKeyDown
@@ -283,6 +275,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
+                closeDropDown();
                 console.log("Move column left");
               }}
               // If needed to add onKeyDown
@@ -312,6 +305,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
+                closeDropDown();
                 console.log("Move column right");
               }}
               // If needed to add onKeyDown
@@ -346,6 +340,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
+                closeDropDown();
                 console.log("Move row up");
               }}
               // If needed to add onKeyDown
@@ -375,6 +370,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
+                closeDropDown();
                 console.log("Move row down");
               }}
               // If needed to add onKeyDown
@@ -410,6 +406,7 @@ const ToolBar = ({
             <Button
               onClick={(e) => {
                 setShowFormat(!showFormat);
+                setOpenKebab(false);
               }}
               ref={FormatRef}
               className="SelectButton"
@@ -630,6 +627,7 @@ const ToolBar = ({
               color="inherit"
               onClick={() => {
                 setOpenKebab(!openKebab);
+                setShowFormat(false);
               }}
               // If needed to add onKeyDown
               onKeyDown={(e) => {}}
@@ -655,7 +653,7 @@ const ToolBar = ({
                     "--width": "165px",
                     "--height": "160px",
                     "--margin-left": "0px",
-                    "--margin-top": "12px",
+                    "--margin-top": "7px",
                   }}
                 >
                   <ClickAwayListener onClickAway={() => setOpenKebab(false)}>
