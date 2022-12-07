@@ -24,7 +24,7 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import styled from "@emotion/styled";
 
 // Styled components
-const StyledTable = styled("table")(({ showStripes, headerType }) => ({
+const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
   // border: "0.0625rem solid lightgray",
   borderCollapse: "collapse",
   borderSpacing: "0",
@@ -334,7 +334,7 @@ const DraggableRow = ({
   );
 };
 
-const TableComponent = () => {
+const TableComponent = ({ tableId }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [toolbar, setToolbar] = useState(false);
   const [selectSection, setSelectSection] = useState(null);
@@ -392,6 +392,7 @@ const TableComponent = () => {
             toolbar={toolbar}
             setToolbarRef={setToolbarRef}
             toolbarRef={toolbarRef}
+            tableId={tableId}
           />
         </StyledConfigBar>
         <thead>

@@ -31,6 +31,7 @@ class MathPixMarkdown extends Embed {
       node.setAttribute("data-id", `${uuidv4()}`);
       node.setAttribute("data-value", value);
     }
+    node.innerHTML += "&nbsp";
     return node;
   }
 
@@ -64,7 +65,7 @@ class MathPixMarkdown extends Embed {
 
   html() {
     const { mathpix } = this.value();
-    return `<span>${mathpix}</span>`;
+    return `<span >${mathpix}</span>`;
   }
 }
 

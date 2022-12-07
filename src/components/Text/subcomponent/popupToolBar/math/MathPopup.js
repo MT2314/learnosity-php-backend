@@ -43,6 +43,8 @@ const MathPopup = () => {
 
   const [value, setValue] = useState("1");
   const [formula, setFormula] = useState(null);
+  const [ariaLive, setAriaLive] = useState("");
+  const [ariaLive2, setAriaLive2] = useState("");
   const [coords, setCoords] = useState(null);
 
   const mathfield = useRef(null);
@@ -101,11 +103,23 @@ const MathPopup = () => {
     closeMath();
   };
 
+  // Aria Live Handler
+  const handleAriaLive = (value) => {
+    if (ariaLive === value) {
+      setAriaLive("");
+      setAriaLive2(value);
+    } else {
+      setAriaLive2("");
+      setAriaLive(value);
+    }
+  };
+
   useEffect(() => {
     containerRef.current?.focus();
     document.body.style.setProperty("--selection-background-color", "#A1CAF1");
     document.body.style.setProperty("--placeholder-color", "#000000");
     document.body.style.setProperty("--selection-color", "#000000");
+    mathfield.current.setValue("");
 
     isEdit && mathfield.current.setValue(editFormula.value);
 
@@ -118,6 +132,43 @@ const MathPopup = () => {
     });
     mathfield.current.focus();
   }, []);
+
+  // Manual Keystroke for keyboard
+  const KeyStroke = (event) => {
+    if (
+      (event.keyCode >= 48 && event.keyCode <= 57) ||
+      (event.keyCode >= 65 && event.keyCode <= 90) ||
+      (event.keyCode >= 96 && event.keyCode <= 105)
+    ) {
+      mathfield.current.insert(event.key);
+    } else if (
+      event.key == "Backspace" ||
+      event.key == "Delete" ||
+      event.code === 8
+    ) {
+      mathfield.current.executeCommand("deleteBackward");
+    } else if (event.key === ".") {
+      mathfield.current.insert(".");
+    } else if (event.key === "+") {
+      mathfield.current.insert("+");
+    } else if (event.key === "-") {
+      mathfield.current.insert("-");
+    } else if (event.key === "*") {
+      mathfield.current.insert("\\times");
+    } else if (event.key === "/") {
+      mathfield.current.insert("\\div");
+    } else if (event.key === "%") {
+      mathfield.current.insert("%");
+    } else if (event.key === "^") {
+      mathfield.current.insert("^");
+    } else if (event.key === "(") {
+      mathfield.current.insert("(");
+    } else if (event.key === ")") {
+      mathfield.current.insert(")");
+    } else if (event.key === "=") {
+      mathfield.current.insert("=");
+    }
+  };
 
   return (
     <div
@@ -138,9 +189,10 @@ const MathPopup = () => {
       }}
       ref={drag(containerRef)}
       tabIndex={0}
-      aria-label="math-popup"
+      autoFocus
+      aria-label="virtual keyboard"
       id={`mathpopup-${uniqueId}`}
-      role="dialog"
+      role="math"
       className="MathEquationKeyboard"
       onKeyDown={(e) => {
         if (e.key === "Escape") {
@@ -148,6 +200,25 @@ const MathPopup = () => {
         }
       }}
     >
+      {/* Aria Live */}
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive}
+      </span>
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive2}
+      </span>
       <div
         style={{
           display: "flex",
@@ -225,6 +296,9 @@ const MathPopup = () => {
                         ? "rgba(21, 101, 192, 1)"
                         : "rgba(99, 99, 99, 1)",
                   }}
+                  onKeyDown={(e) => {
+                    KeyStroke(e);
+                  }}
                   disableRipple
                   disableFocusRipple
                 />
@@ -250,9 +324,12 @@ const MathPopup = () => {
                     gap: "5.5px",
                   }}
                 >
+                  {/* Advanced Function */}
                   {tab.render.map((btn, index) => (
                     <button
-                      aria-label={btn.aria ? `${btn.aria} sign` : btn.text}
+                      aria-label={
+                        btn.aria ? `${btn.aria} sign` : `${btn.text} sign`
+                      }
                       className="MathButton"
                       style={{
                         "--width": btn?.width ? btn.width : "32px",
@@ -265,8 +342,13 @@ const MathPopup = () => {
                         mathfield.current.insert(
                           btn?.insert ? btn.insert : btn.text
                         );
-                        mathfield.current.executeCommand("moveAfterParent");
-                        mathfield.current.focus();
+                        handleAriaLive(btn.aria);
+                        // setAriaLive(`${btn.aria}`);
+                        // mathfield.current.executeCommand("moveAfterParent");
+                        // mathfield.current.focus();
+                      }}
+                      onKeyDown={(e) => {
+                        KeyStroke(e);
                       }}
                     >
                       <InlineMath math={btn.text} />
@@ -277,6 +359,7 @@ const MathPopup = () => {
             ))}
           </TabContext>
         </div>
+        {/* Basic Functions and Numbers */}
         <div
           style={{
             display: "flex",
@@ -296,7 +379,7 @@ const MathPopup = () => {
           >
             {TopSideKeys.map((key, index) => (
               <button
-                aria-label={key.aria ? `${key.aria} sign` : key.text}
+                aria-label={key.aria ? `${key.aria} sign` : `${key.text} sign`}
                 className="MathButton"
                 style={{
                   "--width": key?.width ? key.width : "32px",
@@ -309,9 +392,13 @@ const MathPopup = () => {
                   key?.insert
                     ? mathfield.current.insert(key.insert)
                     : mathfield.current.executeCommand(key.command);
-                  key?.insert &&
-                    mathfield.current.executeCommand("moveAfterParent");
-                  mathfield.current.focus();
+                  handleAriaLive(key.aria);
+                  // key?.insert &&
+                  // mathfield.current.executeCommand("moveAfterParent");
+                  // mathfield.current.focus();
+                }}
+                onKeyDown={(e) => {
+                  KeyStroke(e);
                 }}
               >
                 {key?.svg ? key?.svg : key.text}
@@ -335,9 +422,12 @@ const MathPopup = () => {
                 gap: "5px",
               }}
             >
+              {/* Arrow Keys and 2 undefined keys */}
               {BottomLeftKeys.map((key, index) => (
                 <button
-                  aria-label={key.aria ? `${key.aria} sign` : "sign"}
+                  aria-label={
+                    key.aria ? `${key.aria} sign` : `${key.text} sign`
+                  }
                   className="MathButton"
                   style={{
                     "--width": key?.width ? key.width : "32px",
@@ -350,15 +440,20 @@ const MathPopup = () => {
                     key?.insert
                       ? mathfield.current.insert(key.insert)
                       : mathfield.current.executeCommand(key.command);
-                    key?.insert &&
-                      mathfield.current.executeCommand("moveAfterParent");
-                    mathfield.current.focus();
+                    handleAriaLive(key.aria);
+                    // key?.insert &&
+                    // mathfield.current.executeCommand("moveAfterParent");
+                    // mathfield.current.focus();
+                  }}
+                  onKeyDown={(e) => {
+                    KeyStroke(e);
                   }}
                 >
                   {key?.svg ? key?.svg : key.text}
                 </button>
               ))}
             </div>
+            {/* All Clear Button */}
             <div>
               <button
                 aria-label={"All clear"}
@@ -373,7 +468,11 @@ const MathPopup = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   mathfield.current.setValue("");
-                  mathfield.current.focus();
+                  setAriaLive("All clear");
+                  // mathfield.current.focus();
+                }}
+                onKeyDown={(e) => {
+                  KeyStroke(e);
                 }}
               >
                 AC
@@ -401,7 +500,7 @@ const MathPopup = () => {
                 fontSize: "14px",
                 cursor: formula ? "pointer" : "default",
               }}
-              onClick={handleClick}
+              onClick={(e) => handleClick(e)}
               disabled={!formula}
             >
               {isEdit ? "Update" : "Insert"}

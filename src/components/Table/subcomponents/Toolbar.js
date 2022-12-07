@@ -6,15 +6,22 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
+import icons from "../assets/icons";
+
 import {
   Paper,
-  Button,
-  Popper,
-  Grow,
   AppBar,
   Toolbar,
-  MenuList,
+  MenuItem,
+  ClickAwayListener,
+  Divider,
+  Button,
+  IconButton,
+  Popper,
+  Grow,
   Tooltip,
+  Card,
+  MenuList,
 } from "@mui/material";
 
 import "../../Text/styles/Toolbar.scss";
@@ -25,9 +32,15 @@ const ToolBar = ({
   setToolbarRef,
   setSelectSection,
   toolbarRef,
+  tableId,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [showFormat, setShowFormat] = useState(false);
+
+  // If need state
+  const [addRow, setaddRow] = useState(false);
+  const [removeRow, setRemoveRow] = useState(false);
+
   const FormatRef = useRef(null);
 
   // show Zebra dispatch
@@ -54,7 +67,7 @@ const ToolBar = ({
   const data = JSON.parse(JSON.stringify(state.data));
   const headers = JSON.parse(JSON.stringify(state.headers));
 
-  const addRow = () => {
+  const addRowFun = () => {
     const row = {};
     //Create number of rows depending on the number of columns
     [...Array(headers.length)].forEach((_, j) => {
@@ -75,7 +88,7 @@ const ToolBar = ({
     });
   };
 
-  const addColumn = () => {
+  const addColFun = () => {
     // TanStack requires a header for each Column
     headers.push({
       accessorKey: `column${headers.length + 1}`,
@@ -110,6 +123,12 @@ const ToolBar = ({
     });
   };
 
+  // Esc key to close dropdown
+  const onKeyDropDown = (e, currentRef) => {
+    if (e.key === "Escape") {
+    }
+  };
+
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -124,6 +143,7 @@ const ToolBar = ({
       style={{
         "--active": toolbar ? "block" : "none",
       }}
+      useMemo
     >
       <AppBar
         position="static"
@@ -134,7 +154,7 @@ const ToolBar = ({
           "--direction": "row",
           "--gap": "10px",
           "--boxShadow": "none !important",
-          "--width": "154px",
+          "--width": "351px",
         }}
       >
         <Toolbar
@@ -142,12 +162,194 @@ const ToolBar = ({
           className="StyledToolbar"
           style={{
             "--borderLeft": "4px solid #1565c0",
-            "--grid-template-columns": "1fr 1fr 1fr",
+            "--grid-template-columns":
+              "1fr 1fr 9px 1fr 1fr 9px 1fr 1fr 9px 56px 9px 1fr",
+            "--justify-items": "center",
             "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            "--width": "154px",
+            "--width": "351px",
           }}
         >
+          {/* Add  ----  Rows / Columns      2btns*/}
+          <Tooltip aria-label="Add row" title="Add Row" placement="top" arrow>
+            <IconButton
+              className="StyledIconButton"
+              style={
+                {
+                  // "--active": "rgba(21, 101, 192, 1)",
+                }
+              }
+              // disabled={
+              //   !rowHasFocus
+              // }
+              disableRipple
+              color="inherit"
+              onClick={() => {
+                setShowFormat(false);
+                data.length != 6 && addRowFun();
+              }}
+              // If needed to add onKeyDown
+              onKeyDown={(e) => {}}
+              id={`add-row-${tableId}`}
+              aria-label="Add row to table"
+            >
+              {icons["addRow"]}
+            </IconButton>
+          </Tooltip>
+          <Tooltip aria-label="Add column" title="Add Column" placement="top">
+            <IconButton
+              className="StyledIconButton"
+              style={
+                {
+                  // "--active": "rgba(21, 101, 192, 1)",
+                }
+              }
+              // disabled={
+              //   !columnHasFocus
+              // }
+              disableRipple
+              color="inherit"
+              onClick={() => {
+                headers.length != 6 && addColFun();
+              }}
+              // If needed to Add onKeyDown
+              onKeyDown={(e) => {}}
+              id={`add-column-${tableId}`}
+              aria-label="add column to table"
+            >
+              {icons["addColumn"]}
+            </IconButton>
+          </Tooltip>
+
+          {/* Divider */}
+          <div className="StyledDivider" />
+
+          {/* Move  ----  Rows / Columns      4btns*/}
+          {/* Move  ----  Columns      2btns*/}
           <Tooltip
+            aria-label="Move column left"
+            title="Move column left"
+            placement="top"
+            arrow
+          >
+            <IconButton
+              className="StyledIconButton"
+              style={
+                {
+                  // "--active": "rgba(21, 101, 192, 1)",
+                }
+              }
+              // disabled={
+              //   !rowHasFocus
+              // }
+              disableRipple
+              color="inherit"
+              onClick={() => {
+                console.log("Move column left");
+              }}
+              // If needed to add onKeyDown
+              onKeyDown={(e) => {}}
+              id={`left-column-${tableId}`}
+              aria-label="Move column left"
+            >
+              {icons["arrowLeft"]}
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            aria-label="Move column right"
+            title="Move column right"
+            placement="top"
+            arrow
+          >
+            <IconButton
+              className="StyledIconButton"
+              style={
+                {
+                  // "--active": "rgba(21, 101, 192, 1)",
+                }
+              }
+              // disabled={
+              //   !rowHasFocus
+              // }
+              disableRipple
+              color="inherit"
+              onClick={() => {
+                console.log("Move column right");
+              }}
+              // If needed to add onKeyDown
+              onKeyDown={(e) => {}}
+              id={`Right-column-${tableId}`}
+              aria-label="Move column right"
+            >
+              {icons["arrowRight"]}
+            </IconButton>
+          </Tooltip>
+
+          {/* Divider */}
+          <div className="StyledDivider" />
+
+          {/* Move  ----  Rows      2btns*/}
+          <Tooltip
+            aria-label="Move row up"
+            title="Move row up"
+            placement="top"
+            arrow
+          >
+            <IconButton
+              className="StyledIconButton"
+              style={
+                {
+                  // "--active": "rgba(21, 101, 192, 1)",
+                }
+              }
+              // disabled={
+              //   !rowHasFocus
+              // }
+              disableRipple
+              color="inherit"
+              onClick={() => {
+                console.log("Move row up");
+              }}
+              // If needed to add onKeyDown
+              onKeyDown={(e) => {}}
+              id={`up-row-${tableId}`}
+              aria-label="Move row up"
+            >
+              {icons["arrowUp"]}
+            </IconButton>
+          </Tooltip>
+          <Tooltip
+            aria-label="Move row down"
+            title="Move row down"
+            placement="top"
+            arrow
+          >
+            <IconButton
+              className="StyledIconButton"
+              style={
+                {
+                  // "--active": "rgba(21, 101, 192, 1)",
+                }
+              }
+              // disabled={
+              //   !rowHasFocus
+              // }
+              disableRipple
+              color="inherit"
+              onClick={() => {
+                console.log("Move row down");
+              }}
+              // If needed to add onKeyDown
+              onKeyDown={(e) => {}}
+              id={`down-row-${tableId}`}
+              aria-label="Move row down"
+            >
+              {icons["arrowDown"]}
+            </IconButton>
+          </Tooltip>
+          {/* Divider */}
+          <div className="StyledDivider" />
+          {/* Format */}
+          {/* <Tooltip
             aria-label="Add Rows"
             title="Add Rows"
             placement="top"
@@ -216,7 +418,7 @@ const ToolBar = ({
             >
               +|
             </Button>
-          </Tooltip>
+          </Tooltip> */}
           <Tooltip
             aria-label="Format"
             title="Format"
@@ -243,7 +445,7 @@ const ToolBar = ({
               ref={FormatRef}
               className="SelectButton"
               style={{
-                "--width": "100%",
+                "--width": "54px",
                 "--height": "100%",
                 "--font-size": "16px",
                 "--grid-template-columns": "1fr",
@@ -435,6 +637,34 @@ const ToolBar = ({
               </Grow>
             )}
           </Popper>
+          {/* Divider */}
+          <div className="StyledDivider" />
+          {/* Kebab */}
+          <Tooltip aria-label="Add Row" title="Add Row" placement="top" arrow>
+            <IconButton
+              className="StyledIconButton"
+              style={
+                {
+                  // "--active": "rgba(21, 101, 192, 1)",
+                }
+              }
+              // disabled={
+              //   !rowHasFocus
+              // }
+              disableRipple
+              color="inherit"
+              onClick={() => {
+                setaddRow(!addRow);
+                setShowFormat(false);
+              }}
+              // If needed to add onKeyDown
+              onKeyDown={(e) => {}}
+              id={`add-row-${tableId}`}
+              aria-label="Add row to table"
+            >
+              {icons["kebab"]}
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
     </div>
