@@ -146,8 +146,9 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                     className="StyledSelectPaper"
                     style={{
                       "--height": "113px",
-                      "--margin-left": "6px",
                       "--width": "87px",
+                      "--margin-left": "6px",
+                      "--margin-top": "2px",
                     }}
                   >
                     <ClickAwayListener
@@ -201,6 +202,7 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                                     : label === "Medium"
                                     ? "-0.5px"
                                     : "normal",
+                                "--width": "100%",
                               }}
                             >
                               {label}

@@ -362,8 +362,9 @@ const ToolBar = ({
                         className="StyledSelectPaper"
                         style={{
                           "--height": "88px",
-                          "--margin-left": "2px",
                           "--width": "256px",
+                          "--margin-left": "2px",
+                          "--margin-top": "2px",
                         }}
                       >
                         <MenuList
@@ -487,8 +488,9 @@ const ToolBar = ({
                         disableRipple
                         style={{
                           "--height": "40px",
-                          "--margin-left": "2px",
                           "--width": "256px",
+                          "--margin-left": "2px",
+                          "--margin-top": "2px",
                         }}
                       >
                         <MenuList

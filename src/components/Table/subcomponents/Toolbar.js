@@ -149,24 +149,25 @@ const ToolBar = ({
     {
       name: "Duplicate Row",
       key: "1",
-      function: duplicateRow(),
+      func: () => console.log("Duplicate Row"),
     },
     {
       name: "Duplicate Column",
       key: "2",
-      function: duplicateColumn(),
+      func: () => console.log("Duplicate Column"),
     },
     {
       name: "Remove Row",
       key: "3",
-      function: removeRow(),
+      func: () => console.log("Remove Row"),
     },
     {
       name: "Remove Column",
       key: "4",
-      function: removeColumn(),
+      func: () => console.log("Remove Column"),
     },
   ];
+
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -654,6 +655,7 @@ const ToolBar = ({
                     "--width": "165px",
                     "--height": "160px",
                     "--margin-left": "0px",
+                    "--margin-top": "12px",
                   }}
                 >
                   <ClickAwayListener onClickAway={() => setOpenKebab(false)}>
@@ -674,9 +676,13 @@ const ToolBar = ({
                           <MenuItem
                             key={action.key}
                             value={action.name}
-                            onClick={(e) => action.function(e, index)}
+                            onClick={() => action.func()}
                             className="StyledMenuItem"
                             data-testid={`${action.name} option`}
+                            style={{
+                              "--height": "36px",
+                              "--width": "165px",
+                            }}
                           >
                             {action.name}
                           </MenuItem>
