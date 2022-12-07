@@ -22,15 +22,10 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 // Styled import
 import styled from "@emotion/styled";
+import "../styles/TableComponent.scss"
 
 // Styled components
 const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
-  // border: "0.0625rem solid lightgray",
-  borderCollapse: "collapse",
-  borderSpacing: "0",
-  tableLayout: "fixed",
-  width: "100%",
-  overflow: "hidden",
   "tr:nth-of-type(odd):not(:first-of-type)": {
     backgroundColor: headerType === "top-header" && showStripes && "#F5F5F5",
   },
@@ -41,67 +36,18 @@ const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
 
 const StyledTd = styled("td")(({ selectHighlight }) => ({
   border: selectHighlight ? "1px double #1565C0" : "1px solid #232323",
-  minHeight: "100px",
-  color: "#232323",
-  letterSpacing: "0.15px",
   backgroundColor: selectHighlight ? "rgba(21, 101, 192, 0.08)" : "",
 }));
 
 const StyledInput = styled(TextareaAutosize)(({ type }) => ({
-  fontFamily: '"Inter", sans-serif',
-  border: "none",
   padding: type === "title" ? "25px 10px" : "10px",
   fontSize: type === "title" ? "18px" : "16px",
   fontWeight: type === "title" ? "500" : "400",
-  lineHeight: "1.575rem",
-  width: "100%",
-  width: "-moz-available" /* WebKit-based browsers will ignore this. */,
-  width:
-    "-webkit-fill-available" /* Mozilla-based browsers will ignore this. */,
-  width: "fill-available",
-  minHeight: "25px",
   ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
   ...(type === "cell" && { padding: "15px" }),
-  resize: "none",
-
-  display: "-webkit-box",
-  WebkitBoxOrient: "vertical",
-  backgroundColor: "transparent",
-
-  "&::-webkit-scrollbar": {
-    WebkitAppearance: "none",
-    width: "7px",
-  },
-  "&::-webkit-scrollbar-thumb": {
-    borderRadius: "4px",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    boxShadow: "0 0 1px rgba(255, 255, 255, 0.5)",
-    WebkitBoxShadow: "0 0 1px rgba(255, 255, 255, 0.5)",
-  },
-  "&:disabled": {
-    background: "#f5f5f5",
-  },
-  "&::placeholder": {
-    color: "rgba(35,35,35,1)",
-  },
-  "&:focus": {
-    border: "none",
-    outline: "none",
-    "&:: placeholder": {
-      color: "rgba(35, 35, 35, 0.12)",
-    },
-  },
 }));
 
-const StyledConfigBar = styled("div")({
-  position: "fixed",
-  top: "80px",
-  left: "50%",
-  transform: "translateX(-50%)",
-  zIndex: 1000,
-  justifyContent: "center",
-  backgroundColor: "transparent",
-});
+const StyledConfigBar = styled("div")({});
 
 const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   columnOrder.splice(
@@ -184,14 +130,7 @@ const DraggableColumnHeader = ({
             }
           }}
           aria-label="Header drag icon button"
-          style={{
-            background: "none",
-            color: "inherit",
-            border: "none",
-            padding: 0,
-            font: "inherit",
-            cursor: "pointer",
-          }}
+          className="drag-indicator-icon-btn"
         >
           <DragIndicatorIcon />
         </button>
@@ -234,6 +173,7 @@ const DraggableRow = ({
       <StyledInput
         value={value || ""}
         aria-label={type === "title" ? `Header input` : "Table cell input"}
+        className="styled-input"
         placeholder={
           type === "title"
             ? `Title ${state.headerType === "top-header" ? col + 1 : row + 1}`
@@ -261,12 +201,7 @@ const DraggableRow = ({
       >
         <span
           ref={dropRef}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          className="draggable-row-span"
         >
           <button
             ref={dragRef}
@@ -280,14 +215,7 @@ const DraggableRow = ({
               }
             }}
             aria-label="Header drag icon button"
-            style={{
-              background: "none",
-              color: "inherit",
-              border: "none",
-              padding: 0,
-              font: "inherit",
-              cursor: "pointer",
-            }}
+            className="drag-indicator-icon-btn"
           >
             <DragIndicatorIcon />
           </button>
@@ -295,16 +223,17 @@ const DraggableRow = ({
       </td>
       {row.getVisibleCells().map((cell) => {
         const type = cell.row.original[cell.column.id].type;
-        const center = {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        };
+        // const center = {
+        //   display: "flex",
+        //   alignItems: "center",
+        //   justifyContent: "center",
+        // };
         return (
           <StyledTd
             selectHighlight={
               selectSection === cell.column.id || selectSection === row.id
             }
+            className="styled-td"
             key={cell.id}
             data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
             style={{
@@ -379,13 +308,14 @@ const TableComponent = ({ tableId }) => {
     <DndProvider backend={HTML5Backend}>
       <StyledTable
         role="presentation"
+        className="style-table"
         onFocus={(e) => setToolbar(true)}
         onClick={(e) => setToolbar(true)}
         ref={tableRef}
         showStripes={state.showStripes}
         headerType={state.headerType}
       >
-        <StyledConfigBar>
+        <StyledConfigBar className="styled-config-bar">
           <Toolbar
             setSelectSection={setSelectSection}
             selectSection={selectSection}
