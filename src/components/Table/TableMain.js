@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { LayoutProvider } from "./TableContext";
+import { v4 as uuidv4 } from "uuid";
 
 import Table from "./subcomponents/Table";
 
@@ -15,9 +16,11 @@ export const defaultProps = {
 };
 
 const TableMain = ({ layoutState = {}, setProp = () => {} }) => {
+  const tableId = useMemo(() => `unique-id-${uuidv4()}`, []);
+
   return (
     <LayoutProvider layoutState={layoutState} setProp={setProp}>
-      <Table />
+      <Table tableId={tableId} />
     </LayoutProvider>
   );
 };

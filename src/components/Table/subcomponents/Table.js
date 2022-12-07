@@ -37,7 +37,7 @@ const StyledButton = styled("button")(() => ({
   cursor: "pointer",
 }));
 
-const Table = () => {
+const Table = ({ tableId }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -48,7 +48,7 @@ const Table = () => {
   return (
     <>
       {state.data.length !== 0 ? (
-        <TableComponent />
+        <TableComponent tableId={tableId} />
       ) : (
         <>
           {showModal && <Modal setShowModal={setShowModal} />}
