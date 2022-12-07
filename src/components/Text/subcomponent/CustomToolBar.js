@@ -299,6 +299,7 @@ const ToolBar = ({
                         "--width": "109px",
                         "--height": "196px",
                         "--margin-left": "0px",
+                        "--margin-top": "2px",
                       }}
                     >
                       <ClickAwayListener onClickAway={handleCloseIcon}>
@@ -329,6 +330,9 @@ const ToolBar = ({
                                 aria-labelledby={`${t(infoBox.type)} ${t(
                                   "Icon"
                                 )}`}
+                                style={{
+                                  "--width": "100%",
+                                }}
                               >
                                 {t(infoBox.type)}
                               </MenuItem>

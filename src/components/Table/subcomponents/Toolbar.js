@@ -38,10 +38,10 @@ const ToolBar = ({
   const [showFormat, setShowFormat] = useState(false);
 
   // If need state
-  const [addRow, setaddRow] = useState(false);
-  const [removeRow, setRemoveRow] = useState(false);
+  const [openKebab, setOpenKebab] = useState(false);
 
   const FormatRef = useRef(null);
+  const KebabRef = useRef(null);
 
   // show Zebra dispatch
   const showZebraStripes = () => {
@@ -67,6 +67,7 @@ const ToolBar = ({
   const data = JSON.parse(JSON.stringify(state.data));
   const headers = JSON.parse(JSON.stringify(state.headers));
 
+  // Add Row Function
   const addRowFun = () => {
     const row = {};
     //Create number of rows depending on the number of columns
@@ -88,6 +89,7 @@ const ToolBar = ({
     });
   };
 
+  // Add Column Function
   const addColFun = () => {
     // TanStack requires a header for each Column
     headers.push({
@@ -128,6 +130,36 @@ const ToolBar = ({
     if (e.key === "Escape") {
     }
   };
+
+  // Close dropdown when click outside
+  const closeDropDown = (e) => {
+    setOpenKebab(false);
+    setShowFormat(false);
+  };
+
+  // Kebab Menu
+  const KebabActions = [
+    {
+      name: "Duplicate Row",
+      key: "1",
+      func: () => console.log("Duplicate Row"),
+    },
+    {
+      name: "Duplicate Column",
+      key: "2",
+      func: () => console.log("Duplicate Column"),
+    },
+    {
+      name: "Remove Row",
+      key: "3",
+      func: () => console.log("Remove Row"),
+    },
+    {
+      name: "Remove Column",
+      key: "4",
+      func: () => console.log("Remove Column"),
+    },
+  ];
 
   return (
     <div
@@ -184,7 +216,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
-                setShowFormat(false);
+                closeDropDown();
                 data.length != 6 && addRowFun();
               }}
               // If needed to add onKeyDown
@@ -209,6 +241,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
+                closeDropDown();
                 headers.length != 6 && addColFun();
               }}
               // If needed to Add onKeyDown
@@ -244,6 +277,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
+                closeDropDown();
                 console.log("Move column left");
               }}
               // If needed to add onKeyDown
@@ -273,6 +307,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
+                closeDropDown();
                 console.log("Move column right");
               }}
               // If needed to add onKeyDown
@@ -307,6 +342,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
+                closeDropDown();
                 console.log("Move row up");
               }}
               // If needed to add onKeyDown
@@ -336,6 +372,7 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
+                closeDropDown();
                 console.log("Move row down");
               }}
               // If needed to add onKeyDown
@@ -349,76 +386,6 @@ const ToolBar = ({
           {/* Divider */}
           <div className="StyledDivider" />
           {/* Format */}
-          {/* <Tooltip
-            aria-label="Add Rows"
-            title="Add Rows"
-            placement="top"
-            arrow
-            PopperProps={{
-              modifiers: [
-                {
-                  name: "offset",
-                  options: {
-                    offset: [0, -7],
-                  },
-                },
-              ],
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <Button
-              onClick={(e) => {
-                data.length != 6 && addRow();
-              }}
-              className="SelectButton"
-              style={{
-                "--width": "100%",
-                "--height": "100%",
-                "--font-size": "16px",
-                "--grid-template-columns": "1fr",
-                "--hover-background-color": "transparent",
-              }}
-            >
-              +
-            </Button>
-          </Tooltip>
-          <Tooltip
-            aria-label="Add Column"
-            title="Add Column"
-            placement="top"
-            arrow
-            PopperProps={{
-              modifiers: [
-                {
-                  name: "offset",
-                  options: {
-                    offset: [0, -7],
-                  },
-                },
-              ],
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <Button
-              onClick={(e) => {
-                headers.length != 6 && addColumn();
-              }}
-              className="SelectButton"
-              style={{
-                "--width": "100%",
-                "--height": "100%",
-                "--font-size": "16px",
-                "--grid-template-columns": "1fr",
-                "--hover-background-color": "transparent",
-              }}
-            >
-              +|
-            </Button>
-          </Tooltip> */}
           <Tooltip
             aria-label="Format"
             title="Format"
@@ -441,6 +408,7 @@ const ToolBar = ({
             <Button
               onClick={(e) => {
                 setShowFormat(!showFormat);
+                setOpenKebab(false);
               }}
               ref={FormatRef}
               className="SelectButton"
@@ -640,9 +608,15 @@ const ToolBar = ({
           {/* Divider */}
           <div className="StyledDivider" />
           {/* Kebab */}
-          <Tooltip aria-label="Add Row" title="Add Row" placement="top" arrow>
+          <Tooltip
+            aria-label="Table control options"
+            title="Table control options"
+            placement="top"
+            arrow
+          >
             <IconButton
               className="StyledIconButton"
+              ref={KebabRef}
               style={
                 {
                   // "--active": "rgba(21, 101, 192, 1)",
@@ -654,17 +628,72 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
-                setaddRow(!addRow);
+                setOpenKebab(!openKebab);
                 setShowFormat(false);
               }}
               // If needed to add onKeyDown
               onKeyDown={(e) => {}}
-              id={`add-row-${tableId}`}
-              aria-label="Add row to table"
+              id={`table-control-${tableId}`}
+              aria-label="Table control options"
             >
               {icons["kebab"]}
             </IconButton>
           </Tooltip>
+          <Popper
+            open={openKebab}
+            anchorEl={KebabRef.current}
+            placement="bottom-start"
+            transition
+            disablePortal
+          >
+            {({ TransitionProps }) => (
+              <Grow {...TransitionProps}>
+                <Paper
+                  elevation={0}
+                  className="StyledSelectPaper"
+                  style={{
+                    "--width": "165px",
+                    "--height": "160px",
+                    "--margin-left": "0px",
+                    "--margin-top": "7px",
+                  }}
+                >
+                  <ClickAwayListener onClickAway={() => setOpenKebab(false)}>
+                    <MenuList
+                      // autoFocusItem={openKebab}
+                      data-testid="table-kebab-dropdown"
+                      onKeyDown={onKeyDropDown}
+                      className="StyledMenu"
+                      style={{
+                        "--gridTemplateRows": "1fr 1fr 1fr 1fr",
+                        "--padding": "8px 0px",
+                        "--justifyItems": "start",
+                        "--width": "165px",
+                      }}
+                    >
+                      {KebabActions.map((action, index) => {
+                        return (
+                          <MenuItem
+                            key={action.key}
+                            value={action.name}
+                            onClick={() => action.func()}
+                            className="StyledMenuItem"
+                            data-testid={`${action.name} option`}
+                            style={{
+                              "--height": "36px",
+                              "--width": "165px",
+                            }}
+                          >
+                            {action.name}
+                          </MenuItem>
+                        );
+                      })}
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
         </Toolbar>
       </AppBar>
     </div>
