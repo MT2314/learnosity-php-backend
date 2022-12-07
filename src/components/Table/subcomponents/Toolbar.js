@@ -38,10 +38,10 @@ const ToolBar = ({
   const [showFormat, setShowFormat] = useState(false);
 
   // If need state
-  const [addRow, setaddRow] = useState(false);
-  const [removeRow, setRemoveRow] = useState(false);
+  const [openKebab, setOpenKebab] = useState(false);
 
   const FormatRef = useRef(null);
+  const KebabRef = useRef(null);
 
   // show Zebra dispatch
   const showZebraStripes = () => {
@@ -129,6 +129,44 @@ const ToolBar = ({
     }
   };
 
+  const duplicateRow = () => {
+    console.log("Duplicate Row");
+  };
+
+  const duplicateColumn = () => {
+    console.log("Duplicate Column");
+  };
+
+  const removeRow = () => {
+    console.log("Remove Row");
+  };
+
+  const removeColumn = () => {
+    console.log("Remove Column");
+  };
+  // Kebab Menu
+  const KebabActions = [
+    {
+      name: "Duplicate Row",
+      key: "1",
+      function: duplicateRow(),
+    },
+    {
+      name: "Duplicate Column",
+      key: "2",
+      function: duplicateColumn(),
+    },
+    {
+      name: "Remove Row",
+      key: "3",
+      function: removeRow(),
+    },
+    {
+      name: "Remove Column",
+      key: "4",
+      function: removeColumn(),
+    },
+  ];
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -349,76 +387,6 @@ const ToolBar = ({
           {/* Divider */}
           <div className="StyledDivider" />
           {/* Format */}
-          {/* <Tooltip
-            aria-label="Add Rows"
-            title="Add Rows"
-            placement="top"
-            arrow
-            PopperProps={{
-              modifiers: [
-                {
-                  name: "offset",
-                  options: {
-                    offset: [0, -7],
-                  },
-                },
-              ],
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <Button
-              onClick={(e) => {
-                data.length != 6 && addRow();
-              }}
-              className="SelectButton"
-              style={{
-                "--width": "100%",
-                "--height": "100%",
-                "--font-size": "16px",
-                "--grid-template-columns": "1fr",
-                "--hover-background-color": "transparent",
-              }}
-            >
-              +
-            </Button>
-          </Tooltip>
-          <Tooltip
-            aria-label="Add Column"
-            title="Add Column"
-            placement="top"
-            arrow
-            PopperProps={{
-              modifiers: [
-                {
-                  name: "offset",
-                  options: {
-                    offset: [0, -7],
-                  },
-                },
-              ],
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <Button
-              onClick={(e) => {
-                headers.length != 6 && addColumn();
-              }}
-              className="SelectButton"
-              style={{
-                "--width": "100%",
-                "--height": "100%",
-                "--font-size": "16px",
-                "--grid-template-columns": "1fr",
-                "--hover-background-color": "transparent",
-              }}
-            >
-              +|
-            </Button>
-          </Tooltip> */}
           <Tooltip
             aria-label="Format"
             title="Format"
@@ -640,9 +608,15 @@ const ToolBar = ({
           {/* Divider */}
           <div className="StyledDivider" />
           {/* Kebab */}
-          <Tooltip aria-label="Add Row" title="Add Row" placement="top" arrow>
+          <Tooltip
+            aria-label="Table control options"
+            title="Table control options"
+            placement="top"
+            arrow
+          >
             <IconButton
               className="StyledIconButton"
+              ref={KebabRef}
               style={
                 {
                   // "--active": "rgba(21, 101, 192, 1)",
@@ -654,17 +628,66 @@ const ToolBar = ({
               disableRipple
               color="inherit"
               onClick={() => {
-                setaddRow(!addRow);
-                setShowFormat(false);
+                setOpenKebab(!openKebab);
               }}
               // If needed to add onKeyDown
               onKeyDown={(e) => {}}
-              id={`add-row-${tableId}`}
-              aria-label="Add row to table"
+              id={`table-control-${tableId}`}
+              aria-label="Table control options"
             >
               {icons["kebab"]}
             </IconButton>
           </Tooltip>
+          <Popper
+            open={openKebab}
+            anchorEl={KebabRef.current}
+            placement="bottom-start"
+            transition
+            disablePortal
+          >
+            {({ TransitionProps }) => (
+              <Grow {...TransitionProps}>
+                <Paper
+                  elevation={0}
+                  className="StyledSelectPaper"
+                  style={{
+                    "--width": "165px",
+                    "--height": "160px",
+                    "--margin-left": "0px",
+                  }}
+                >
+                  <ClickAwayListener onClickAway={() => setOpenKebab(false)}>
+                    <MenuList
+                      // autoFocusItem={openKebab}
+                      data-testid="table-kebab-dropdown"
+                      onKeyDown={onKeyDropDown}
+                      className="StyledMenu"
+                      style={{
+                        "--gridTemplateRows": "1fr 1fr 1fr 1fr",
+                        "--padding": "8px 0px",
+                        "--justifyItems": "start",
+                        "--width": "165px",
+                      }}
+                    >
+                      {KebabActions.map((action, index) => {
+                        return (
+                          <MenuItem
+                            key={action.key}
+                            value={action.name}
+                            onClick={(e) => action.function(e, index)}
+                            className="StyledMenuItem"
+                            data-testid={`${action.name} option`}
+                          >
+                            {action.name}
+                          </MenuItem>
+                        );
+                      })}
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
         </Toolbar>
       </AppBar>
     </div>
