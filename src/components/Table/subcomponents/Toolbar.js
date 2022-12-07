@@ -19,7 +19,13 @@ import {
 
 import "../../Text/styles/Toolbar.scss";
 
-const ToolBar = ({ toolbar, selectedRow, selectedColumn }) => {
+const ToolBar = ({
+  toolbar,
+  selectSection,
+  setToolbarRef,
+  setSelectSection,
+  toolbarRef,
+}) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [showFormat, setShowFormat] = useState(false);
   const FormatRef = useRef(null);
@@ -57,8 +63,12 @@ const ToolBar = ({ toolbar, selectedRow, selectedColumn }) => {
 
       row[`column${j + 1}`] = { value: "", type };
     });
+
+    // If null or a string, else push to the end. Need number
+    selectSection == null || isNaN(parseFloat(selectSection))
+      ? data.push(row)
+      : data.splice(+selectSection + 1, 0, row);
     // If selected, splice into the middle.  Else push into the back.
-    selectedRow ? data.splice(+selectedRow + 1, 0, row) : data.push(row);
     dispatch({
       func: "ADD_ROW",
       data: data,
@@ -77,9 +87,13 @@ const ToolBar = ({ toolbar, selectedRow, selectedColumn }) => {
       let type =
         state.headerType === "top-header" && j === 0 ? "title" : "cell";
       const currentRowLen = Object.keys(data[j]).length; // The length of the current Row
-      const lastChar = selectedColumn
-        ? selectedColumn.substr(selectedColumn.length - 1)
-        : currentRowLen; // If nothing selected, add a new column into the end.
+
+      // If null or a number, else push to the end. Need string (exp column1)
+      const lastChar =
+        selectSection == null || !isNaN(parseFloat(selectSection))
+          ? currentRowLen
+          : selectSection.substr(selectSection.length - 1);
+
       for (let i = currentRowLen + 1; i > lastChar; i--) {
         if (+lastChar + 1 < i) {
           data[j][`column${i}`] = data[j][`column${i - 1}`]; // Move prev column into the back
@@ -100,6 +114,12 @@ const ToolBar = ({ toolbar, selectedRow, selectedColumn }) => {
     <div
       onClick={(e) => e.stopPropagation()}
       onFocus={(e) => e.stopPropagation()}
+      ref={setToolbarRef}
+      onBlur={(e) => {
+        if (!toolbarRef.contains(e.relatedTarget || document.activeElement)) {
+          setSelectSection(null);
+        }
+      }}
       className="ToolbarContainer"
       style={{
         "--active": toolbar ? "block" : "none",
@@ -366,7 +386,7 @@ const ToolBar = ({ toolbar, selectedRow, selectedColumn }) => {
                       <FormControl>
                         <Tooltip
                           aria-label="show zebra stripes"
-                          title="show zebra stripesr"
+                          title="show zebra stripes"
                           placement="top"
                           arrow
                           PopperProps={{
