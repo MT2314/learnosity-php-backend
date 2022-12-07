@@ -93,6 +93,7 @@ const ToolBar = ({ toolbar, headerType, tableId }) => {
             "--borderLeft": "4px solid #1565c0",
             "--grid-template-columns":
               "1fr 1fr 9px 1fr 1fr 9px 1fr 1fr 9px 56px 9px 1fr",
+            "--justify-items": "center",
             "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
             "--width": "351px",
           }}

@@ -51,7 +51,7 @@ icons["arrowDown"] = (
     width="24"
     height="24"
     viewBox="0 0 24 24"
-    fill="none"
+    fill="#000"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g clip-path="url(#clip0_4352_42874)">
@@ -97,7 +97,7 @@ icons["arrowLeft"] = (
     width="24"
     height="24"
     viewBox="0 0 24 24"
-    fill="none"
+    fill="#000"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g clip-path="url(#clip0_4352_42870)">
@@ -120,7 +120,7 @@ icons["arrowRight"] = (
     width="24"
     height="24"
     viewBox="0 0 24 24"
-    fill="none"
+    fill="#000"
     xmlns="http://www.w3.org/2000/svg"
   >
     <g clip-path="url(#clip0_4352_42871)">
@@ -140,21 +140,21 @@ icons["arrowRight"] = (
 // Kebab
 icons["kebab"] = (
   <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="#000"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <g clip-path="url(#clip0_4352_42870)">
+    <g clip-path="url(#clip0_4352_42876)">
       <path
-        d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z"
+        d="M9.99998 6.66683C10.9166 6.66683 11.6666 5.91683 11.6666 5.00016C11.6666 4.0835 10.9166 3.3335 9.99998 3.3335C9.08331 3.3335 8.33331 4.0835 8.33331 5.00016C8.33331 5.91683 9.08331 6.66683 9.99998 6.66683ZM9.99998 8.3335C9.08331 8.3335 8.33331 9.0835 8.33331 10.0002C8.33331 10.9168 9.08331 11.6668 9.99998 11.6668C10.9166 11.6668 11.6666 10.9168 11.6666 10.0002C11.6666 9.0835 10.9166 8.3335 9.99998 8.3335ZM9.99998 13.3335C9.08331 13.3335 8.33331 14.0835 8.33331 15.0002C8.33331 15.9168 9.08331 16.6668 9.99998 16.6668C10.9166 16.6668 11.6666 15.9168 11.6666 15.0002C11.6666 14.0835 10.9166 13.3335 9.99998 13.3335Z"
         fill="#232323"
       />
     </g>
     <defs>
-      <clipPath id="clip0_4352_42870">
-        <rect width="24" height="24" fill="white" />
+      <clipPath id="clip0_4352_42876">
+        <rect width="20" height="20" fill="white" />
       </clipPath>
     </defs>
   </svg>
