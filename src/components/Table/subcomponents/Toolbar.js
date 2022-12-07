@@ -67,6 +67,7 @@ const ToolBar = ({
   const data = JSON.parse(JSON.stringify(state.data));
   const headers = JSON.parse(JSON.stringify(state.headers));
 
+  // Add Row Function
   const addRowFun = () => {
     const row = {};
     //Create number of rows depending on the number of columns
@@ -88,6 +89,7 @@ const ToolBar = ({
     });
   };
 
+  // Add Column Function
   const addColFun = () => {
     // TanStack requires a header for each Column
     headers.push({
