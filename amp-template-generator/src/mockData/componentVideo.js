@@ -36,15 +36,39 @@ module.exports = async function () {
             locked: false,
             components: [
               {
+                id: "6373ae1eb60270b3cb86bcc4",
                 componentName: "Video",
                 props:
-                  '{"type":"youTube", "videoId": "3m6d99GDARE", "caption":"I am a caption", "credit": null, "transcript": null}',
+                {
+                  videoState: {
+                    id: '25b38f1d-56ea-4b44-a278-59612902df60',
+                    videoSource: 'brightcove',
+                    videoURL: 'https://edge.api.brightcove.com/playback/v1/accounts/23648095001/videos/5967111782001',
+                    videoDescription: "Hi",
+                    videoCredit: null,
+                    videoId: '5967111782001',
+                    videoTranscript: null,
+                    videoTextSettings: { description: true, credit: true }
+                  }
+                },
                 locked: false,
               },
               {
+                id: "6373ae1eb60270b3cb86bcc4",
                 componentName: "Video",
                 props:
-                  '{"type":"brightcove","videoId":"5967111782001","caption":"I am a caption","credit":null,"transcript":{"blocks":[{"key":"7m3m2","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}}',
+                {
+                  videoState: {
+                    id: '25b38f1d-56ea-4b44-a278-59612902df60',
+                    videoSource: 'brightcove',
+                    videoURL: 'https://edge.api.brightcove.com/playback/v1/accounts/23648095001/videos/5967111782001',
+                    videoDescription: "Hi",
+                    videoCredit: null,
+                    videoId: '5967111782001',
+                    videoTranscript: null,
+                    videoTextSettings: { description: true, credit: true }
+                  }
+                },
                 locked: false,
               },
             ],

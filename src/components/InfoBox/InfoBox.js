@@ -27,7 +27,7 @@ export const defaultProps = {
     infoBoxLabel: "",
     infoBoxHeader: {
       heading: "",
-      headingLevel: "H3",
+      headingLevel: "",
     },
     body: null,
   },
