@@ -24,7 +24,7 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import styled from "@emotion/styled";
 
 // Styled components
-const StyledTable = styled("table")(({ showStripes, headerType}) => ({
+const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
   // border: "0.0625rem solid lightgray",
   borderCollapse: "collapse",
   borderSpacing: "0",
@@ -53,8 +53,9 @@ const StyledInput = styled(TextareaAutosize)(({ type }) => ({
   fontWeight: type === "title" ? "500" : "400",
   lineHeight: "1.575rem",
   width: "100%",
-  width: "-moz-available",          /* WebKit-based browsers will ignore this. */
-  width: "-webkit-fill-available",  /* Mozilla-based browsers will ignore this. */
+  width: "-moz-available" /* WebKit-based browsers will ignore this. */,
+  width:
+    "-webkit-fill-available" /* Mozilla-based browsers will ignore this. */,
   width: "fill-available",
   minHeight: "25px",
   ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
@@ -288,7 +289,7 @@ const DraggableRow = ({ row, reorderRow }) => {
   );
 };
 
-const TableComponent = () => {
+const TableComponent = ({ tableId }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [toolbar, setToolbar] = useState(false);
   const tableRef = useRef();
@@ -328,7 +329,6 @@ const TableComponent = () => {
     [state, columnOrder]
   );
 
-
   return (
     <DndProvider backend={HTML5Backend}>
       <StyledTable
@@ -340,7 +340,11 @@ const TableComponent = () => {
         headerType={state.headerType}
       >
         <StyledConfigBar>
-          <Toolbar toolbar={toolbar} headerType={state.headerType} />
+          <Toolbar
+            toolbar={toolbar}
+            headerType={state.headerType}
+            tableId={tableId}
+          />
         </StyledConfigBar>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (

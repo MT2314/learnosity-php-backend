@@ -242,7 +242,7 @@ const NestedComponentWrapper = ({
           func: "DELETE_COMPONENT",
           tabIndex,
           compIndex,
-          addRemove: true,
+          add: true,
         });
       },
       within: true,

@@ -26,7 +26,7 @@ import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
 import MathDropdownButton from "./popupToolBar/MathDropdownButton";
 
-import icons, { Chevron } from "../assets/icons";
+import icons from "../assets/icons";
 
 // import "react-quill/dist/quill.snow.css";
 import "../styles/Toolbar.scss";
