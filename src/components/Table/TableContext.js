@@ -45,6 +45,9 @@ export const layoutConfig = (draft, action) => {
       draft.headers = action.headers;
       draft.data = action.data;
       return draft;
+      case "DELETE_COLUMN": 
+      draft.headers = action.headers;
+      draft.data = action.data
     case "UPDATE_STRIP":
       draft.showStripes = action.showStripes;
       return draft;

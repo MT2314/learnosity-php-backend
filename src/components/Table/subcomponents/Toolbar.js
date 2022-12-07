@@ -125,6 +125,17 @@ const ToolBar = ({
     });
   };
 
+
+  const deleteColum = () => {
+    const filteredHeaders = headers.filter((el) => el.accessorKey != selectSection)
+    data.forEach((element) => { delete element[selectSection] })
+    dispatch({
+      func: "DELETE_COLUMN",
+      headers: filteredHeaders,
+      data: data,
+    });
+  }
+
   // Esc key to close dropdown
   const onKeyDropDown = (e, currentRef) => {
     if (e.key === "Escape") {
@@ -143,21 +154,25 @@ const ToolBar = ({
       name: "Duplicate Row",
       key: "1",
       func: () => console.log("Duplicate Row"),
+      disabled: false
     },
     {
       name: "Duplicate Column",
       key: "2",
       func: () => console.log("Duplicate Column"),
+      disabled: false
     },
     {
       name: "Remove Row",
       key: "3",
       func: () => console.log("Remove Row"),
+      disabled: false
     },
     {
       name: "Remove Column",
       key: "4",
-      func: () => console.log("Remove Column"),
+      func: deleteColum,
+      disabled: headers.length <= 2 || (selectSection !== null && !selectSection.toString().startsWith("column")) || selectSection == null
     },
   ];
 
@@ -220,7 +235,7 @@ const ToolBar = ({
                 data.length != 6 && addRowFun();
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
+              onKeyDown={(e) => { }}
               id={`add-row-${tableId}`}
               aria-label="Add row to table"
             >
@@ -245,7 +260,7 @@ const ToolBar = ({
                 headers.length != 6 && addColFun();
               }}
               // If needed to Add onKeyDown
-              onKeyDown={(e) => {}}
+              onKeyDown={(e) => { }}
               id={`add-column-${tableId}`}
               aria-label="add column to table"
             >
@@ -281,7 +296,7 @@ const ToolBar = ({
                 console.log("Move column left");
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
+              onKeyDown={(e) => { }}
               id={`left-column-${tableId}`}
               aria-label="Move column left"
             >
@@ -311,7 +326,7 @@ const ToolBar = ({
                 console.log("Move column right");
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
+              onKeyDown={(e) => { }}
               id={`Right-column-${tableId}`}
               aria-label="Move column right"
             >
@@ -346,7 +361,7 @@ const ToolBar = ({
                 console.log("Move row up");
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
+              onKeyDown={(e) => { }}
               id={`up-row-${tableId}`}
               aria-label="Move row up"
             >
@@ -376,7 +391,7 @@ const ToolBar = ({
                 console.log("Move row down");
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
+              onKeyDown={(e) => { }}
               id={`down-row-${tableId}`}
               aria-label="Move row down"
             >
@@ -632,7 +647,7 @@ const ToolBar = ({
                 setShowFormat(false);
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
+              onKeyDown={(e) => { }}
               id={`table-control-${tableId}`}
               aria-label="Table control options"
             >
@@ -683,6 +698,7 @@ const ToolBar = ({
                               "--height": "36px",
                               "--width": "165px",
                             }}
+                            disabled={action.disabled}
                           >
                             {action.name}
                           </MenuItem>
