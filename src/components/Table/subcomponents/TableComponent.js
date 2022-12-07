@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useCallback } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { LayoutContext } from "../TableContext";
 
 // react-table imports
@@ -30,7 +30,8 @@ const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
   borderSpacing: "0",
   tableLayout: "fixed",
   width: "100%",
-  "tr:nth-of-type(odd):not(:first-child)": {
+  overflow: "hidden",
+  "tr:nth-of-type(odd):not(:first-of-type)": {
     backgroundColor: headerType === "top-header" && showStripes && "#F5F5F5",
   },
   "tr:nth-of-type(even)": {
@@ -38,12 +39,13 @@ const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
   },
 }));
 
-const StyledTd = styled("td")({
-  border: "1px solid #232323",
+const StyledTd = styled("td")(({ selectHighlight }) => ({
+  border: selectHighlight ? "1px double #1565C0" : "1px solid #232323",
   minHeight: "100px",
   color: "#232323",
   letterSpacing: "0.15px",
-});
+  backgroundColor: selectHighlight ? "rgba(21, 101, 192, 0.08)" : "",
+}));
 
 const StyledInput = styled(TextareaAutosize)(({ type }) => ({
   fontFamily: '"Inter", sans-serif',
@@ -110,7 +112,12 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   return [...columnOrder];
 };
 
-const DraggableColumnHeader = ({ header, table }) => {
+const DraggableColumnHeader = ({
+  header,
+  table,
+  setSelectSection,
+  toolbarRef,
+}) => {
   const [state, dispatch] = useContext(LayoutContext);
   const { getState, setColumnOrder } = table;
   const { columnOrder } = getState();
@@ -124,6 +131,7 @@ const DraggableColumnHeader = ({ header, table }) => {
         column.id,
         columnOrder
       );
+
       setColumnOrder(newColumnOrder);
 
       dispatch({
@@ -166,6 +174,15 @@ const DraggableColumnHeader = ({ header, table }) => {
           : flexRender(header.column.columnDef.header, header.getContext())}
         <button
           ref={dragRef}
+          onFocus={(e) => {
+            setSelectSection(header.id);
+          }}
+          onBlur={(e) => {
+            const relatedTarget = e.relatedTarget || document.activeElement;
+            if (!toolbarRef.contains(relatedTarget)) {
+              setSelectSection(null);
+            }
+          }}
           aria-label="Header drag icon button"
           style={{
             background: "none",
@@ -183,7 +200,13 @@ const DraggableColumnHeader = ({ header, table }) => {
   );
 };
 
-const DraggableRow = ({ row, reorderRow }) => {
+const DraggableRow = ({
+  row,
+  reorderRow,
+  setSelectSection,
+  selectSection,
+  toolbarRef,
+}) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [, dropRef] = useDrop({
     accept: "row",
@@ -223,7 +246,12 @@ const DraggableRow = ({ row, reorderRow }) => {
   };
 
   return (
-    <tr ref={previewRef} style={{ opacity: isDragging ? 0.5 : 1 }}>
+    <tr
+      ref={previewRef}
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+      }}
+    >
       <td
         style={{
           ...(row.original.column1.type === "title" &&
@@ -242,6 +270,15 @@ const DraggableRow = ({ row, reorderRow }) => {
         >
           <button
             ref={dragRef}
+            onFocus={(e) => {
+              setSelectSection(row.id);
+            }}
+            onBlur={(e) => {
+              const relatedTarget = e.relatedTarget || document.activeElement;
+              if (!toolbarRef.contains(relatedTarget)) {
+                setSelectSection(null);
+              }
+            }}
             aria-label="Header drag icon button"
             style={{
               background: "none",
@@ -265,6 +302,9 @@ const DraggableRow = ({ row, reorderRow }) => {
         };
         return (
           <StyledTd
+            selectHighlight={
+              selectSection === cell.column.id || selectSection === row.id
+            }
             key={cell.id}
             data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
             style={{
@@ -272,7 +312,12 @@ const DraggableRow = ({ row, reorderRow }) => {
                 (state.hideSideHeader || state.hideTopHeader) && {
                   display: "none",
                 }),
-              backgroundColor: type == "title" && "#EEEEEE",
+              backgroundColor:
+                type == "title"
+                  ? selectSection === cell.column.id || selectSection === row.id
+                    ? "rgba(226,230,234,255)"
+                    : "#EEEEEE"
+                  : "none",
             }}
             align="center"
           >
@@ -292,17 +337,18 @@ const DraggableRow = ({ row, reorderRow }) => {
 const TableComponent = ({ tableId }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [toolbar, setToolbar] = useState(false);
+  const [selectSection, setSelectSection] = useState(null);
+  const [toolbarRef, setToolbarRef] = useState(null);
   const tableRef = useRef();
 
   useOnClickOutside(tableRef, () => {
     setToolbar(false);
+    setSelectSection(null);
   });
 
   const [columnOrder, setColumnOrder] = useState(
     state.headers.map((column) => column.id)
   );
-
-  const [columnUpdate, setColumnUpdate] = useState(false);
 
   const reorderRow = (draggedRowIndex, targetRowIndex) => {
     dispatch({
@@ -341,8 +387,11 @@ const TableComponent = ({ tableId }) => {
       >
         <StyledConfigBar>
           <Toolbar
+            setSelectSection={setSelectSection}
+            selectSection={selectSection}
             toolbar={toolbar}
-            headerType={state.headerType}
+            setToolbarRef={setToolbarRef}
+            toolbarRef={toolbarRef}
             tableId={tableId}
           />
         </StyledConfigBar>
@@ -360,7 +409,8 @@ const TableComponent = ({ tableId }) => {
                   len={table.length}
                   header={header}
                   table={table}
-                  setColumnUpdate={setColumnUpdate}
+                  setSelectSection={setSelectSection}
+                  toolbarRef={toolbarRef}
                 />
               ))}
             </tr>
@@ -372,6 +422,9 @@ const TableComponent = ({ tableId }) => {
               key={row.id}
               row={row}
               reorderRow={reorderRow}
+              setSelectSection={setSelectSection}
+              selectSection={selectSection}
+              toolbarRef={toolbarRef}
             ></DraggableRow>
           ))}
         </tbody>

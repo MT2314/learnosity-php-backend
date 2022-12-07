@@ -26,7 +26,14 @@ import {
 
 import "../../Text/styles/Toolbar.scss";
 
-const ToolBar = ({ toolbar, headerType, tableId }) => {
+const ToolBar = ({
+  toolbar,
+  selectSection,
+  setToolbarRef,
+  setSelectSection,
+  toolbarRef,
+  tableId,
+}) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [showFormat, setShowFormat] = useState(false);
 
@@ -57,6 +64,64 @@ const ToolBar = ({ toolbar, headerType, tableId }) => {
       hideSideHeader: !state.hideSideHeader,
     });
   };
+  const data = JSON.parse(JSON.stringify(state.data));
+  const headers = JSON.parse(JSON.stringify(state.headers));
+
+  const addRowFun = () => {
+    const row = {};
+    //Create number of rows depending on the number of columns
+    [...Array(headers.length)].forEach((_, j) => {
+      let type =
+        state.headerType === "side-header" && j === 0 ? "title" : "cell";
+
+      row[`column${j + 1}`] = { value: "", type };
+    });
+
+    // If null or a string, else push to the end. Need number
+    selectSection == null || isNaN(parseFloat(selectSection))
+      ? data.push(row)
+      : data.splice(+selectSection + 1, 0, row);
+    // If selected, splice into the middle.  Else push into the back.
+    dispatch({
+      func: "ADD_ROW",
+      data: data,
+    });
+  };
+
+  const addColFun = () => {
+    // TanStack requires a header for each Column
+    headers.push({
+      accessorKey: `column${headers.length + 1}`,
+      id: `column${headers.length + 1}`,
+      header: "",
+    });
+    // Create number of loops depending on the number of rows
+    [...Array(data.length)].forEach((_, j) => {
+      let type =
+        state.headerType === "top-header" && j === 0 ? "title" : "cell";
+      const currentRowLen = Object.keys(data[j]).length; // The length of the current Row
+
+      // If null or a number, else push to the end. Need string (exp column1)
+      const lastChar =
+        selectSection == null || !isNaN(parseFloat(selectSection))
+          ? currentRowLen
+          : selectSection.substr(selectSection.length - 1);
+
+      for (let i = currentRowLen + 1; i > lastChar; i--) {
+        if (+lastChar + 1 < i) {
+          data[j][`column${i}`] = data[j][`column${i - 1}`]; // Move prev column into the back
+        } else {
+          data[j][`column${i}`] = { value: "", type }; //Add new column into each row
+        }
+      }
+    });
+
+    dispatch({
+      func: "ADD_COL",
+      headers: headers,
+      data: data,
+    });
+  };
 
   // Esc key to close dropdown
   const onKeyDropDown = (e, currentRef) => {
@@ -68,6 +133,12 @@ const ToolBar = ({ toolbar, headerType, tableId }) => {
     <div
       onClick={(e) => e.stopPropagation()}
       onFocus={(e) => e.stopPropagation()}
+      ref={setToolbarRef}
+      onBlur={(e) => {
+        if (!toolbarRef.contains(e.relatedTarget || document.activeElement)) {
+          setSelectSection(null);
+        }
+      }}
       className="ToolbarContainer"
       style={{
         "--active": toolbar ? "block" : "none",
@@ -113,8 +184,8 @@ const ToolBar = ({ toolbar, headerType, tableId }) => {
               disableRipple
               color="inherit"
               onClick={() => {
-                setaddRow(!addRow);
                 setShowFormat(false);
+                data.length != 6 && addRowFun();
               }}
               // If needed to add onKeyDown
               onKeyDown={(e) => {}}
@@ -137,7 +208,9 @@ const ToolBar = ({ toolbar, headerType, tableId }) => {
               // }
               disableRipple
               color="inherit"
-              onClick={() => {}}
+              onClick={() => {
+                headers.length != 6 && addColFun();
+              }}
               // If needed to Add onKeyDown
               onKeyDown={(e) => {}}
               id={`add-column-${tableId}`}
@@ -276,6 +349,76 @@ const ToolBar = ({ toolbar, headerType, tableId }) => {
           {/* Divider */}
           <div className="StyledDivider" />
           {/* Format */}
+          {/* <Tooltip
+            aria-label="Add Rows"
+            title="Add Rows"
+            placement="top"
+            arrow
+            PopperProps={{
+              modifiers: [
+                {
+                  name: "offset",
+                  options: {
+                    offset: [0, -7],
+                  },
+                },
+              ],
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <Button
+              onClick={(e) => {
+                data.length != 6 && addRow();
+              }}
+              className="SelectButton"
+              style={{
+                "--width": "100%",
+                "--height": "100%",
+                "--font-size": "16px",
+                "--grid-template-columns": "1fr",
+                "--hover-background-color": "transparent",
+              }}
+            >
+              +
+            </Button>
+          </Tooltip>
+          <Tooltip
+            aria-label="Add Column"
+            title="Add Column"
+            placement="top"
+            arrow
+            PopperProps={{
+              modifiers: [
+                {
+                  name: "offset",
+                  options: {
+                    offset: [0, -7],
+                  },
+                },
+              ],
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <Button
+              onClick={(e) => {
+                headers.length != 6 && addColumn();
+              }}
+              className="SelectButton"
+              style={{
+                "--width": "100%",
+                "--height": "100%",
+                "--font-size": "16px",
+                "--grid-template-columns": "1fr",
+                "--hover-background-color": "transparent",
+              }}
+            >
+              +|
+            </Button>
+          </Tooltip> */}
           <Tooltip
             aria-label="Format"
             title="Format"
@@ -344,7 +487,7 @@ const ToolBar = ({ toolbar, headerType, tableId }) => {
                       sx={{ gap: "14px", margin: "8px 16px !important" }}
                     >
                       {/* Top Header */}
-                      {headerType == "top-header" && (
+                      {state.headerType == "top-header" && (
                         <FormControl>
                           <Tooltip
                             aria-label="show top header"
@@ -393,7 +536,7 @@ const ToolBar = ({ toolbar, headerType, tableId }) => {
                         </FormControl>
                       )}
                       {/* Side Header */}
-                      {headerType == "side-header" && (
+                      {state.headerType == "side-header" && (
                         <FormControl>
                           <Tooltip
                             aria-label="show side header"
@@ -445,7 +588,7 @@ const ToolBar = ({ toolbar, headerType, tableId }) => {
                       <FormControl>
                         <Tooltip
                           aria-label="show zebra stripes"
-                          title="show zebra stripesr"
+                          title="show zebra stripes"
                           placement="top"
                           arrow
                           PopperProps={{
