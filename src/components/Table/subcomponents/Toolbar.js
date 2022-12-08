@@ -25,6 +25,7 @@ import {
 } from "@mui/material";
 
 import "../../Text/styles/Toolbar.scss";
+import { CollectionsOutlined } from "@mui/icons-material";
 
 const ToolBar = ({
   toolbar,
@@ -34,6 +35,8 @@ const ToolBar = ({
   toolbarRef,
   tableId,
 }) => {
+  console.log("selecctSection", selectSection);
+
   const [state, dispatch] = useContext(LayoutContext);
   const [showFormat, setShowFormat] = useState(false);
 
@@ -64,25 +67,37 @@ const ToolBar = ({
       hideSideHeader: !state.hideSideHeader,
     });
   };
+
+  // Data = Array of objects representing each row, object keys are column1, column2, etc. properties are value and type
+  // { column1: {value: "", type: "cell"}, column2: {value: "", type: "cell"} }
   const data = JSON.parse(JSON.stringify(state.data));
+
+  // Header = Array of objects defining each Column (column1, column2, etc., no information)
+  // { accessorKey: "column1", id: "column1", header: "" }
   const headers = JSON.parse(JSON.stringify(state.headers));
 
   // Add Row Function
   const addRowFun = () => {
     const row = {};
-    //Create number of rows depending on the number of columns
+    //Loop through columns and define row object at each index
     [...Array(headers.length)].forEach((_, j) => {
+      // If side header, make column1 type a title else all cells
       let type =
         state.headerType === "side-header" && j === 0 ? "title" : "cell";
 
+      // Added row object at current column index if side-header {column1: {value: "", type: "title"}
       row[`column${j + 1}`] = { value: "", type };
     });
+    // Example of row object
+    // row = {column1: {value: "", type: "title"}
 
-    // If null or a string, else push to the end. Need number
+    // If no section is selected, push into the back.  Else splice below selectedSection
+    // selectedSection = is the index of the selected row
     selectSection == null || isNaN(parseFloat(selectSection))
       ? data.push(row)
       : data.splice(+selectSection + 1, 0, row);
-    // If selected, splice into the middle.  Else push into the back.
+
+    // Dispatch the new data to the table
     dispatch({
       func: "ADD_ROW",
       data: data,
@@ -91,28 +106,39 @@ const ToolBar = ({
 
   // Add Column Function
   const addColFun = () => {
-    // TanStack requires a header for each Column
+    // Define new column name (column1, column2, etc.)
+    const newColName = `column${headers.length + 1}`;
+
+    // Add new column to the headers object  (headers object is an array of objects defining columns)
     headers.push({
-      accessorKey: `column${headers.length + 1}`,
-      id: `column${headers.length + 1}`,
+      accessorKey: newColName,
+      id: newColName,
       header: "",
     });
-    // Create number of loops depending on the number of rows
+
+    // Loop through rows and define new row properties { column1: {value: "", type: "cell" }
     [...Array(data.length)].forEach((_, j) => {
+      // If top header, the firt row has each column type as a title
       let type =
         state.headerType === "top-header" && j === 0 ? "title" : "cell";
-      const currentRowLen = Object.keys(data[j]).length; // The length of the current Row
 
-      // If null or a number, else push to the end. Need string (exp column1)
-      const lastChar =
+      // The length of the current Row (number of columns in the row)
+      const currentRowLen = Object.keys(data[j]).length;
+
+      // Index of new column,  if no column selected last column otherwise after selected column
+      const addedColumnIndex =
         selectSection == null || !isNaN(parseFloat(selectSection))
           ? currentRowLen
           : selectSection.substr(selectSection.length - 1);
 
-      for (let i = currentRowLen + 1; i > lastChar; i--) {
-        if (+lastChar + 1 < i) {
+      // Set loop pointer on last column in row and move backward until you hit index of new column
+      for (let i = currentRowLen + 1; i > addedColumnIndex; i--) {
+        // If selected column is before current pointer, make current pointer equal to the previous column
+        if (+addedColumnIndex + 1 < i) {
           data[j][`column${i}`] = data[j][`column${i - 1}`]; // Move prev column into the back
-        } else {
+        }
+        // if current column is selected column, add new column into the row
+        else {
           data[j][`column${i}`] = { value: "", type }; //Add new column into each row
         }
       }
@@ -125,16 +151,44 @@ const ToolBar = ({
     });
   };
 
+  const deleteColumn = () => {
+    // Filter out the selected column from the headers
+    const filteredHeaders = headers.filter(
+      (el) => el.accessorKey != selectSection
+    );
 
-  const deleteColum = () => {
-    const filteredHeaders = headers.filter((el) => el.accessorKey != selectSection)
-    data.forEach((element) => { delete element[selectSection] })
+    // Filter out the selected column from the data
+    data.forEach((element) => {
+      delete element[selectSection];
+    });
+
+    // Iterate data and reassign column names
+    data.forEach((row, j) => {
+      Object.keys(row).forEach((column, index) => {
+        let currentIndex = `${column.replace(/[^0-9]/g, "")}`;
+        let newKey = `column${index + 1}`;
+
+        if (index + 1 < +currentIndex) {
+          data[j][newKey] = data[j][column];
+          delete data[j][column];
+        }
+      });
+    });
+
+    // Iterate headers and reassign column names
+    filteredHeaders.forEach((column, j) => {
+      if (column.accessorKey !== `column${j + 1}`) {
+        filteredHeaders[j].accessorKey = `column${j + 1}`;
+        filteredHeaders[j].id = `column${j + 1}`;
+      }
+    });
+
     dispatch({
       func: "DELETE_COLUMN",
       headers: filteredHeaders,
       data: data,
     });
-  }
+  };
 
   // Esc key to close dropdown
   const onKeyDropDown = (e, currentRef) => {
@@ -154,25 +208,29 @@ const ToolBar = ({
       name: "Duplicate Row",
       key: "1",
       func: () => console.log("Duplicate Row"),
-      disabled: false
+      disabled: false,
     },
     {
       name: "Duplicate Column",
       key: "2",
       func: () => console.log("Duplicate Column"),
-      disabled: false
+      disabled: false,
     },
     {
       name: "Remove Row",
       key: "3",
       func: () => console.log("Remove Row"),
-      disabled: false
+      disabled: false,
     },
     {
       name: "Remove Column",
       key: "4",
-      func: deleteColum,
-      disabled: headers.length <= 2 || (selectSection !== null && !selectSection.toString().startsWith("column")) || selectSection == null
+      func: deleteColumn,
+      disabled:
+        headers.length <= 2 ||
+        (selectSection !== null &&
+          !selectSection.toString().startsWith("column")) ||
+        selectSection == null,
     },
   ];
 
@@ -225,9 +283,7 @@ const ToolBar = ({
                   // "--active": "rgba(21, 101, 192, 1)",
                 }
               }
-              // disabled={
-              //   !rowHasFocus
-              // }
+              disabled={!selectSection}
               disableRipple
               color="inherit"
               onClick={() => {
@@ -235,7 +291,7 @@ const ToolBar = ({
                 data.length != 6 && addRowFun();
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => { }}
+              onKeyDown={(e) => {}}
               id={`add-row-${tableId}`}
               aria-label="Add row to table"
             >
@@ -250,9 +306,7 @@ const ToolBar = ({
                   // "--active": "rgba(21, 101, 192, 1)",
                 }
               }
-              // disabled={
-              //   !columnHasFocus
-              // }
+              disabled={!selectSection}
               disableRipple
               color="inherit"
               onClick={() => {
@@ -260,7 +314,7 @@ const ToolBar = ({
                 headers.length != 6 && addColFun();
               }}
               // If needed to Add onKeyDown
-              onKeyDown={(e) => { }}
+              onKeyDown={(e) => {}}
               id={`add-column-${tableId}`}
               aria-label="add column to table"
             >
@@ -296,7 +350,7 @@ const ToolBar = ({
                 console.log("Move column left");
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => { }}
+              onKeyDown={(e) => {}}
               id={`left-column-${tableId}`}
               aria-label="Move column left"
             >
@@ -326,7 +380,7 @@ const ToolBar = ({
                 console.log("Move column right");
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => { }}
+              onKeyDown={(e) => {}}
               id={`Right-column-${tableId}`}
               aria-label="Move column right"
             >
@@ -361,7 +415,7 @@ const ToolBar = ({
                 console.log("Move row up");
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => { }}
+              onKeyDown={(e) => {}}
               id={`up-row-${tableId}`}
               aria-label="Move row up"
             >
@@ -391,7 +445,7 @@ const ToolBar = ({
                 console.log("Move row down");
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => { }}
+              onKeyDown={(e) => {}}
               id={`down-row-${tableId}`}
               aria-label="Move row down"
             >
@@ -647,7 +701,7 @@ const ToolBar = ({
                 setShowFormat(false);
               }}
               // If needed to add onKeyDown
-              onKeyDown={(e) => { }}
+              onKeyDown={(e) => {}}
               id={`table-control-${tableId}`}
               aria-label="Table control options"
             >
