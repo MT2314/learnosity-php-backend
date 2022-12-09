@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 
 import "../../Text/styles/Toolbar.scss";
+import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 const ToolBar = ({
   toolbar,
@@ -94,6 +95,8 @@ const ToolBar = ({
       ? data.push(row)
       : data.splice(+selectSection + 1, 0, row);
 
+    setSelectSection(`${parseFloat(selectSection) + 1}`);
+
     // Dispatch the new data to the table
     dispatch({
       func: "ADD_ROW",
@@ -128,6 +131,8 @@ const ToolBar = ({
           ? currentRowLen
           : selectSection.substr(selectSection.length - 1);
 
+      // Highlight Added Column
+      setSelectSection(`column${+addedColumnIndex + 1}`);
       // Set loop pointer on last column in row and move backward until you hit index of new column
       for (let i = currentRowLen + 1; i > addedColumnIndex; i--) {
         // If selected column is before current pointer, make current pointer equal to the previous column
@@ -181,10 +186,31 @@ const ToolBar = ({
       }
     });
 
+    // If selected column is the last column, select the previous column after deleting
+    parseFloat(selectSection.replace(/[^0-9]/g, "")) == headers.length &&
+      setSelectSection(`column${filteredHeaders.length}`);
+
     dispatch({
       func: "DELETE_COLUMN",
       headers: filteredHeaders,
       data: data,
+    });
+  };
+
+  // Delete Row
+  const deleteRow = () => {
+    let int = parseInt(selectSection, 10);
+    // // Filter out the selected row from the data
+
+    const newData = data.filter((el, i) => i !== int);
+
+    // If selected column is the last column, select the previous column after deleting
+    int == data.length - 1 && setSelectSection(`${newData.length - 1}`);
+
+    dispatch({
+      func: "DELETE_ROW",
+      headers: headers,
+      data: newData,
     });
   };
 
@@ -206,31 +232,38 @@ const ToolBar = ({
       name: "Duplicate Row",
       key: "1",
       func: () => console.log("Duplicate Row"),
-      disabled: false,
+      disabled: true,
     },
     {
       name: "Duplicate Column",
       key: "2",
       func: () => console.log("Duplicate Column"),
-      disabled: false,
+      disabled: true,
     },
     {
-      name: "Remove Row",
+      name: "Delete Row",
       key: "3",
-      func: () => console.log("Remove Row"),
-      disabled: false,
+      func: deleteRow,
+      disabled:
+        data.length <= 2 ||
+        selectSection === null ||
+        selectSection.toString().startsWith("column") ||
+        (selectSection === "0" && data[0].column2.type === "title"),
     },
     {
-      name: "Remove Column",
+      name: "Delete Column",
       key: "4",
       func: deleteColumn,
       disabled:
         headers.length <= 2 ||
+        selectSection?.replace(/[^0-9]/g, "") === "0" ||
         (selectSection !== null &&
           !selectSection.toString().startsWith("column")) ||
-        selectSection == null,
+        selectSection == null ||
+        (selectSection === "column1" && data[0].column2.type === "cell"),
     },
   ];
+
   return (
     <div
       onClick={(e) => e.stopPropagation()}

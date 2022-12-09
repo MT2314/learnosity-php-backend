@@ -22,7 +22,7 @@ import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 
 // Styled import
 import styled from "@emotion/styled";
-import "../styles/TableComponent.scss"
+import "../styles/TableComponent.scss";
 
 // Styled components
 const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
@@ -199,10 +199,7 @@ const DraggableRow = ({
           backgroundColor: "#DEE7F5",
         }}
       >
-        <span
-          ref={dropRef}
-          className="draggable-row-span"
-        >
+        <span ref={dropRef} className="draggable-row-span">
           <button
             ref={dragRef}
             onFocus={(e) => {
