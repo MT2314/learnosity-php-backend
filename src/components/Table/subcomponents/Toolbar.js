@@ -14,13 +14,11 @@ import {
   Toolbar,
   MenuItem,
   ClickAwayListener,
-  Divider,
   Button,
   IconButton,
   Popper,
   Grow,
   Tooltip,
-  Card,
   MenuList,
 } from "@mui/material";
 
@@ -35,9 +33,11 @@ const ToolBar = ({
   tableId,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
+
+  // Format Popper State
   const [showFormat, setShowFormat] = useState(false);
 
-  // If need state
+  // Kebab Popper State
   const [openKebab, setOpenKebab] = useState(false);
 
   const FormatRef = useRef(null);
@@ -64,25 +64,37 @@ const ToolBar = ({
       hideSideHeader: !state.hideSideHeader,
     });
   };
+
+  // Data = Array of objects representing each row, object keys are column1, column2, etc. properties are value and type
+  // { column1: {value: "", type: "cell"}, column2: {value: "", type: "cell"} }
   const data = JSON.parse(JSON.stringify(state.data));
+
+  // Header = Array of objects defining each Column (column1, column2, etc., no information)
+  // { accessorKey: "column1", id: "column1", header: "" }
   const headers = JSON.parse(JSON.stringify(state.headers));
 
   // Add Row Function
   const addRowFun = () => {
     const row = {};
-    //Create number of rows depending on the number of columns
+    //Loop through columns and define row object at each index
     [...Array(headers.length)].forEach((_, j) => {
+      // If side header, make column1 type a title else all cells
       let type =
         state.headerType === "side-header" && j === 0 ? "title" : "cell";
 
+      // Added row object at current column index if side-header {column1: {value: "", type: "title"}
       row[`column${j + 1}`] = { value: "", type };
     });
+    // Example of row object
+    // row = {column1: {value: "", type: "title"}
 
-    // If null or a string, else push to the end. Need number
+    // If no section is selected, push into the back.  Else splice below selectedSection
+    // selectedSection = is the index of the selected row
     selectSection == null || isNaN(parseFloat(selectSection))
       ? data.push(row)
       : data.splice(+selectSection + 1, 0, row);
-    // If selected, splice into the middle.  Else push into the back.
+
+    // Dispatch the new data to the table
     dispatch({
       func: "ADD_ROW",
       data: data,
@@ -91,28 +103,39 @@ const ToolBar = ({
 
   // Add Column Function
   const addColFun = () => {
-    // TanStack requires a header for each Column
+    // Define new column name (column1, column2, etc.)
+    const newColName = `column${headers.length + 1}`;
+
+    // Add new column to the headers object  (headers object is an array of objects defining columns)
     headers.push({
-      accessorKey: `column${headers.length + 1}`,
-      id: `column${headers.length + 1}`,
+      accessorKey: newColName,
+      id: newColName,
       header: "",
     });
-    // Create number of loops depending on the number of rows
+
+    // Loop through rows and define new row properties { column1: {value: "", type: "cell" }
     [...Array(data.length)].forEach((_, j) => {
+      // If top header, the firt row has each column type as a title
       let type =
         state.headerType === "top-header" && j === 0 ? "title" : "cell";
-      const currentRowLen = Object.keys(data[j]).length; // The length of the current Row
 
-      // If null or a number, else push to the end. Need string (exp column1)
-      const lastChar =
+      // The length of the current Row (number of columns in the row)
+      const currentRowLen = Object.keys(data[j]).length;
+
+      // Index of new column,  if no column selected last column otherwise after selected column
+      const addedColumnIndex =
         selectSection == null || !isNaN(parseFloat(selectSection))
           ? currentRowLen
           : selectSection.substr(selectSection.length - 1);
 
-      for (let i = currentRowLen + 1; i > lastChar; i--) {
-        if (+lastChar + 1 < i) {
+      // Set loop pointer on last column in row and move backward until you hit index of new column
+      for (let i = currentRowLen + 1; i > addedColumnIndex; i--) {
+        // If selected column is before current pointer, make current pointer equal to the previous column
+        if (+addedColumnIndex + 1 < i) {
           data[j][`column${i}`] = data[j][`column${i - 1}`]; // Move prev column into the back
-        } else {
+        }
+        // if current column is selected column, add new column into the row
+        else {
           data[j][`column${i}`] = { value: "", type }; //Add new column into each row
         }
       }
@@ -121,6 +144,46 @@ const ToolBar = ({
     dispatch({
       func: "ADD_COL",
       headers: headers,
+      data: data,
+    });
+  };
+
+  // Delete Column
+  const deleteColumn = () => {
+    // Filter out the selected column from the headers
+    const filteredHeaders = headers.filter(
+      (el) => el.accessorKey != selectSection
+    );
+
+    // Filter out the selected column from the data
+    data.forEach((element) => {
+      delete element[selectSection];
+    });
+
+    // Iterate data and reassign column names
+    data.forEach((row, j) => {
+      Object.keys(row).forEach((column, index) => {
+        let currentIndex = `${column.replace(/[^0-9]/g, "")}`;
+        let newKey = `column${index + 1}`;
+
+        if (index + 1 < +currentIndex) {
+          data[j][newKey] = data[j][column];
+          delete data[j][column];
+        }
+      });
+    });
+
+    // Iterate headers and reassign column names
+    filteredHeaders.forEach((column, j) => {
+      if (column.accessorKey !== `column${j + 1}`) {
+        filteredHeaders[j].accessorKey = `column${j + 1}`;
+        filteredHeaders[j].id = `column${j + 1}`;
+      }
+    });
+
+    dispatch({
+      func: "DELETE_COLUMN",
+      headers: filteredHeaders,
       data: data,
     });
   };
@@ -143,24 +206,31 @@ const ToolBar = ({
       name: "Duplicate Row",
       key: "1",
       func: () => console.log("Duplicate Row"),
+      disabled: false,
     },
     {
       name: "Duplicate Column",
       key: "2",
       func: () => console.log("Duplicate Column"),
+      disabled: false,
     },
     {
       name: "Remove Row",
       key: "3",
       func: () => console.log("Remove Row"),
+      disabled: false,
     },
     {
       name: "Remove Column",
       key: "4",
-      func: () => console.log("Remove Column"),
+      func: deleteColumn,
+      disabled:
+        headers.length <= 2 ||
+        (selectSection !== null &&
+          !selectSection.toString().startsWith("column")) ||
+        selectSection == null,
     },
   ];
-
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -205,14 +275,14 @@ const ToolBar = ({
           <Tooltip aria-label="Add row" title="Add Row" placement="top" arrow>
             <IconButton
               className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
+              style={{
+                "--disabled": "rgba(0, 0, 0, 0.38)",
+              }}
+              disabled={
+                data.length >= 6 ||
+                selectSection === null ||
+                selectSection?.toString().startsWith("column")
               }
-              // disabled={
-              //   !rowHasFocus
-              // }
               disableRipple
               color="inherit"
               onClick={() => {
@@ -235,9 +305,11 @@ const ToolBar = ({
                   // "--active": "rgba(21, 101, 192, 1)",
                 }
               }
-              // disabled={
-              //   !columnHasFocus
-              // }
+              disabled={
+                headers.length >= 6 ||
+                selectSection === null ||
+                !selectSection.toString().startsWith("column")
+              }
               disableRipple
               color="inherit"
               onClick={() => {
@@ -271,14 +343,10 @@ const ToolBar = ({
                   // "--active": "rgba(21, 101, 192, 1)",
                 }
               }
-              // disabled={
-              //   !rowHasFocus
-              // }
               disableRipple
               color="inherit"
               onClick={() => {
                 closeDropDown();
-                console.log("Move column left");
               }}
               // If needed to add onKeyDown
               onKeyDown={(e) => {}}
@@ -308,7 +376,6 @@ const ToolBar = ({
               color="inherit"
               onClick={() => {
                 closeDropDown();
-                console.log("Move column right");
               }}
               // If needed to add onKeyDown
               onKeyDown={(e) => {}}
@@ -343,7 +410,6 @@ const ToolBar = ({
               color="inherit"
               onClick={() => {
                 closeDropDown();
-                console.log("Move row up");
               }}
               // If needed to add onKeyDown
               onKeyDown={(e) => {}}
@@ -373,7 +439,6 @@ const ToolBar = ({
               color="inherit"
               onClick={() => {
                 closeDropDown();
-                console.log("Move row down");
               }}
               // If needed to add onKeyDown
               onKeyDown={(e) => {}}
@@ -441,166 +506,168 @@ const ToolBar = ({
             {({ TransitionProps }) => (
               <Grow {...TransitionProps}>
                 <Paper>
-                  <MenuList
-                    data-testid="format-settings-dropdown"
-                    aria-labelledby="Format Settings"
-                    className="StyledCheckboxMenu"
-                    style={{
-                      "--width": "220px",
-                      "--height": "auto",
-                      "--padding": "8px 0",
-                    }}
-                  >
-                    <FormGroup
-                      sx={{ gap: "14px", margin: "8px 16px !important" }}
+                  <ClickAwayListener onClickAway={() => setShowFormat(false)}>
+                    <MenuList
+                      data-testid="format-settings-dropdown"
+                      aria-labelledby="Format Settings"
+                      className="StyledCheckboxMenu"
+                      style={{
+                        "--width": "220px",
+                        "--height": "auto",
+                        "--padding": "8px 0",
+                      }}
                     >
-                      {/* Top Header */}
-                      {state.headerType == "top-header" && (
-                        <FormControl>
-                          <Tooltip
-                            aria-label="show top header"
-                            title="show top header"
-                            placement="top"
-                            arrow
-                            PopperProps={{
-                              modifiers: [
-                                {
-                                  name: "offset",
-                                  options: {
-                                    offset: [0, -7],
-                                  },
-                                },
-                              ],
-                            }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                          >
-                            <FormControlLabel
-                              className="StyledFormControlLabel"
-                              control={
-                                <Checkbox
-                                  checked={!state.hideTopHeader}
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    hideTopHeader();
-                                  }}
-                                  sx={{
-                                    "&:hover": {
-                                      bgcolor: "transparent",
-                                      color: "rgba(21, 101, 192, 1)",
+                      <FormGroup
+                        sx={{ gap: "14px", margin: "8px 16px !important" }}
+                      >
+                        {/* Top Header */}
+                        {state.headerType == "top-header" && (
+                          <FormControl>
+                            <Tooltip
+                              aria-label="show top header"
+                              title="show top header"
+                              placement="top"
+                              arrow
+                              PopperProps={{
+                                modifiers: [
+                                  {
+                                    name: "offset",
+                                    options: {
+                                      offset: [0, -7],
                                     },
-                                    "&.Mui-checked": {
-                                      bgcolor: "transparent",
-                                      color: "rgba(21, 101, 192, 1)",
-                                    },
-                                  }}
-                                />
-                              }
-                              label="Show top header"
-                              size="small"
-                            />
-                          </Tooltip>
-                        </FormControl>
-                      )}
-                      {/* Side Header */}
-                      {state.headerType == "side-header" && (
-                        <FormControl>
-                          <Tooltip
-                            aria-label="show side header"
-                            title="show side header"
-                            placement="top"
-                            arrow
-                            PopperProps={{
-                              modifiers: [
-                                {
-                                  name: "offset",
-                                  options: {
-                                    offset: [0, -7],
                                   },
-                                },
-                              ],
-                            }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}
-                          >
-                            <FormControlLabel
-                              className="StyledFormControlLabel"
-                              control={
-                                <Checkbox
-                                  checked={!state.hideSideHeader}
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    hideSideHeader();
-                                  }}
-                                  sx={{
-                                    "&:hover": {
-                                      bgcolor: "transparent",
-                                      color: "rgba(21, 101, 192, 1)",
-                                    },
-                                    "&.Mui-checked": {
-                                      bgcolor: "transparent",
-                                      color: "rgba(21, 101, 192, 1)",
-                                    },
-                                  }}
-                                />
-                              }
-                              label="Show side header"
-                              size="small"
-                            />
-                          </Tooltip>
-                        </FormControl>
-                      )}
-                      {/* Zebra Stripes */}
-                      <FormControl>
-                        <Tooltip
-                          aria-label="show zebra stripes"
-                          title="show zebra stripes"
-                          placement="top"
-                          arrow
-                          PopperProps={{
-                            modifiers: [
-                              {
-                                name: "offset",
-                                options: {
-                                  offset: [0, -7],
-                                },
-                              },
-                            ],
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
-                        >
-                          <FormControlLabel
-                            className="StyledFormControlLabel"
-                            control={
-                              <Checkbox
-                                checked={state.showStripes}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  showZebraStripes();
-                                }}
-                                sx={{
-                                  "&:hover": {
-                                    bgcolor: "transparent",
-                                    color: "rgba(21, 101, 192, 1)",
-                                  },
-                                  "&.Mui-checked": {
-                                    bgcolor: "transparent",
-                                    color: "rgba(21, 101, 192, 1)",
-                                  },
-                                }}
+                                ],
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                            >
+                              <FormControlLabel
+                                className="StyledFormControlLabel"
+                                control={
+                                  <Checkbox
+                                    checked={!state.hideTopHeader}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      hideTopHeader();
+                                    }}
+                                    sx={{
+                                      "&:hover": {
+                                        bgcolor: "transparent",
+                                        color: "rgba(21, 101, 192, 1)",
+                                      },
+                                      "&.Mui-checked": {
+                                        bgcolor: "transparent",
+                                        color: "rgba(21, 101, 192, 1)",
+                                      },
+                                    }}
+                                  />
+                                }
+                                label="Show top header"
+                                size="small"
                               />
-                            }
-                            label="Show zebra stripes"
-                            size="small"
-                          />
-                        </Tooltip>
-                      </FormControl>
-                    </FormGroup>
-                  </MenuList>
+                            </Tooltip>
+                          </FormControl>
+                        )}
+                        {/* Side Header */}
+                        {state.headerType == "side-header" && (
+                          <FormControl>
+                            <Tooltip
+                              aria-label="show side header"
+                              title="show side header"
+                              placement="top"
+                              arrow
+                              PopperProps={{
+                                modifiers: [
+                                  {
+                                    name: "offset",
+                                    options: {
+                                      offset: [0, -7],
+                                    },
+                                  },
+                                ],
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                              }}
+                            >
+                              <FormControlLabel
+                                className="StyledFormControlLabel"
+                                control={
+                                  <Checkbox
+                                    checked={!state.hideSideHeader}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      hideSideHeader();
+                                    }}
+                                    sx={{
+                                      "&:hover": {
+                                        bgcolor: "transparent",
+                                        color: "rgba(21, 101, 192, 1)",
+                                      },
+                                      "&.Mui-checked": {
+                                        bgcolor: "transparent",
+                                        color: "rgba(21, 101, 192, 1)",
+                                      },
+                                    }}
+                                  />
+                                }
+                                label="Show side header"
+                                size="small"
+                              />
+                            </Tooltip>
+                          </FormControl>
+                        )}
+                        {/* Zebra Stripes */}
+                        <FormControl>
+                          <Tooltip
+                            aria-label="show zebra stripes"
+                            title="show zebra stripes"
+                            placement="top"
+                            arrow
+                            PopperProps={{
+                              modifiers: [
+                                {
+                                  name: "offset",
+                                  options: {
+                                    offset: [0, -7],
+                                  },
+                                },
+                              ],
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                          >
+                            <FormControlLabel
+                              className="StyledFormControlLabel"
+                              control={
+                                <Checkbox
+                                  checked={state.showStripes}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    showZebraStripes();
+                                  }}
+                                  sx={{
+                                    "&:hover": {
+                                      bgcolor: "transparent",
+                                      color: "rgba(21, 101, 192, 1)",
+                                    },
+                                    "&.Mui-checked": {
+                                      bgcolor: "transparent",
+                                      color: "rgba(21, 101, 192, 1)",
+                                    },
+                                  }}
+                                />
+                              }
+                              label="Show zebra stripes"
+                              size="small"
+                            />
+                          </Tooltip>
+                        </FormControl>
+                      </FormGroup>
+                    </MenuList>
+                  </ClickAwayListener>
                 </Paper>
               </Grow>
             )}
@@ -683,6 +750,7 @@ const ToolBar = ({
                               "--height": "36px",
                               "--width": "165px",
                             }}
+                            disabled={action.disabled}
                           >
                             {action.name}
                           </MenuItem>

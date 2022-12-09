@@ -1,0 +1,354 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter&display=swap);
+// Variables
+// Colors
+$black: rgba(35, 35, 35, 1);
+$white: rgba(255, 255, 255, 1);
+$blue: rgba(21, 101, 192, 1);
+$lightBlue: rgba(21, 101, 192, 0.12);
+$disabled: rgba(0, 0, 0, 0.38);
+// Box Shadows
+$toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+// Outer Toolbar Container
+.ToolbarContainer {
+  // positioning
+  display: var(--active);
+  flex-direction: var(--direction);
+  & .MuiPaper-root {
+    background-color: transparent;
+  }
+}
+
+// Entire Toolbar *Appbar*
+.StyledAppbar {
+  display: var(--display);
+  width: var(--width);
+  left: var(--left);
+  flex-direction: var(--direction) !important;
+  gap: var(--gap);
+  box-shadow: var(--boxShadow);
+  border-radius: 4px;
+  letter-spacing: 0.15px;
+  // Theme related - to match component side to authoring styles
+  color: rgba(0, 0, 0, 0.87);
+}
+
+// Toolbar
+.StyledToolbar {
+  // positioning
+  display: grid !important;
+  position: var(--position) !important;
+  grid-template-columns: var(--grid-template-columns) !important;
+  justify-items: var(--justify-items);
+  align-items: center;
+  // size
+  width: var(--width) !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  // color
+  background-color: $white;
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: var(--boxShadow);
+  // box model
+  border-left: var(--borderLeft);
+  border-radius: 4px;
+  padding: 0px 3px !important;
+  & .MuiPaper-root {
+    background-color: #fff;
+  }
+}
+
+// Buttons
+.SelectButton {
+  // positioning
+  display: grid !important;
+  grid-template-columns: var(--grid-template-columns) !important;
+  // size
+  width: var(--width) !important;
+  min-width: var(--min-width) !important;
+  height: var(--height);
+  color: $black !important;
+  // box model
+  box-shadow: none !important;
+  padding: var(--padding) !important;
+  border: none;
+  border-radius: 4px !important;
+
+  // color
+  color: var(--active);
+  background-color: transparent !important;
+
+  // formating
+  font-size: var(--font-size) !important;
+  font-weight: 400 !important;
+  line-height: 1.5rem !important;
+  letter-spacing: 0.009375rem !important;
+  white-space: nowrap;
+  text-transform: none !important;
+
+  // Text
+  & span {
+    justify-self: flex-start;
+  }
+
+  // icon svg
+  & svg {
+    align-self: center;
+    justify-self: center;
+    padding: 0px;
+    fill: var(--active);
+    opacity: var(--disabled);
+    transform: var(--svg);
+  }
+
+  // hover, active, focus states
+  &:hover,
+  &:active,
+  &:focus-visible {
+    background-color: var(--hover-background-color);
+    box-shadow: none;
+    cursor: pointer;
+    color: $blue;
+    & svg {
+      fill: $blue;
+    }
+  }
+  // disabled state
+  &:disabled {
+    color: var(--disabled);
+    cursor: not-allowed;
+  }
+}
+
+// InfoBox Icon Select / Header Size Select Toolbar Paper
+.StyledSelectPaper {
+  background: #ffffff;
+  box-shadow: $toolbarShadow !important;
+  border-radius: 4px;
+  margin-left: var(--margin-left);
+  margin-top: var(--margin-top);
+  width: var(--width);
+  height: var(--height);
+}
+// Menu for Select
+.StyledMenu {
+  display: grid;
+  align-content: center;
+  // height: 100%;
+  width: var(--width);
+  padding: var(--padding) !important;
+  grid-template-rows: var(--gridTemplateRows) !important;
+  grid-template-columns: var(--gridTemplateColumns) !important;
+  align-items: center;
+  justify-items: var(--justifyItems);
+  justify-content: center;
+}
+
+// Menu Items for Select
+.StyledMenuItem {
+  min-height: 31px !important;
+  height: var(--height);
+  width: var (--width);
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  font-size: var(--fontSize);
+  font-weight: var(--fontWeight);
+  line-height: var(--lineHeight);
+  letter-spacing: var(--letterSpacing);
+  background-color: transparent;
+  box-shadow: none;
+  &:hover,
+  &:active,
+  &:focus-visible {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+  }
+}
+
+// Dropdown for all formatting options (bold, italic, etc.) *Second Level* Popper
+.StyledCard {
+  position: absolute;
+  display: var(--card-display);
+  z-index: 25;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  left: var(--left);
+  bottom: -42px;
+  height: 40px !important;
+  width: var(--width);
+  background-color: #fff;
+  box-shadow: $toolbarShadow !important;
+}
+
+// DONE
+// Dropdown format options individual icons (Top Level)
+.StyledIconButton {
+  // positioning
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+
+  // size
+  width: 30px;
+  height: 30px;
+
+  // box model
+  padding: 0px !important;
+  margin: 0px;
+
+  // color
+  color: $black;
+  background: var(--background) !important;
+
+  // border
+  border: none;
+  border-radius: 4px !important;
+
+  // icon svg
+  & svg {
+    fill: var(--active);
+    opacity: var(--disabled);
+    & path {
+      fill: var(--active);
+    }
+  }
+
+  // hover, active, focus states
+  &:hover,
+  &:active,
+  &:focus-visible {
+    cursor: pointer;
+    background-color: $lightBlue !important;
+    & svg {
+      fill: $blue !important;
+      & path {
+        fill: $blue !important;
+      }
+    }
+    > svg {
+      color: $blue !important;
+      & path {
+        fill: $blue !important;
+      }
+    }
+  }
+  // disabled state
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--disabled);
+    opacity: 0.3;
+    background-color: $white;
+  }
+}
+
+// Styled Input
+.StyledInput {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.15000000596046448px;
+  background: #ffffff;
+  color: var(--color);
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom: none;
+  outline: none;
+  padding: 0px;
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    background: #ffffff;
+  }
+  &:before,
+  &:after {
+    border-bottom: none;
+  }
+}
+
+// Divider for formatting options
+.StyledDivider {
+  height: 25px;
+  width: 0.5px;
+  background-color: #e0e0e0 !important;
+  margin: 0 3.5px;
+}
+
+// Error Bubble
+.ErrorBubble {
+  height: var(--height);
+  width: var(--width);
+  background-color: (--backgroundColor);
+  margin-top: var(--margin-top);
+  margin-left: var(--margin-left);
+  pointer-events: var(--pointerEvent);
+}
+
+.StyledFormControlLabel {
+  height: 24px;
+  white-space: nowrap;
+  font-family: Inter, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+  letter-spacing: 0.009375rem;
+  &:hover {
+    background: transparent;
+    color: rgba(21, 101, 192, 1);
+  }
+  &.Mui-checked {
+    background: transparent;
+    color: rgba(21, 101, 192, 1);
+  }
+}
+
+.StyledCheckboxMenu {
+  background: #ffffff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  margin: 7px 0 0 0 !important;
+  padding: 23px, 0, 23px, 27.5 !important;
+  width: var(--width) !important;
+  height: var(--height) !important;
+}
+
+.MathEquationKeyboard {
+  .MuiTabs-indicator {
+    background: rgba(21, 101, 192, 1) !important;
+  }
+
+  .MuiButtonBase-root.MuiTab-root {
+    &:focus-visible {
+      border: 2px solid black;
+      padding: 10px 14px;
+    }
+  }
+}
+
+.MathButton {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  width: var(--width);
+  height: var(--height);
+  margin: var(--margin);
+  padding: 5px 5px;
+  background: var(--background);
+  border-radius: 4px;
+  border: none;
+  color: rgba(35, 35, 35, 1);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  text-transform: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background: var(--hoverBackground);
+  }
+  &:focus-visible {
+    outline: 1px solid black;
+  }
+}
