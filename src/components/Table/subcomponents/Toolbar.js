@@ -35,12 +35,12 @@ const ToolBar = ({
   toolbarRef,
   tableId,
 }) => {
-  console.log("selecctSection", selectSection);
-
   const [state, dispatch] = useContext(LayoutContext);
+
+  // Format Popper State
   const [showFormat, setShowFormat] = useState(false);
 
-  // If need state
+  // Kebab Popper State
   const [openKebab, setOpenKebab] = useState(false);
 
   const FormatRef = useRef(null);
@@ -151,6 +151,7 @@ const ToolBar = ({
     });
   };
 
+  // Delete Column
   const deleteColumn = () => {
     // Filter out the selected column from the headers
     const filteredHeaders = headers.filter(
@@ -233,7 +234,7 @@ const ToolBar = ({
         selectSection == null,
     },
   ];
-
+  console.log(selectSection);
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -278,12 +279,14 @@ const ToolBar = ({
           <Tooltip aria-label="Add row" title="Add Row" placement="top" arrow>
             <IconButton
               className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
+              style={{
+                "--disabled": "rgba(0, 0, 0, 0.38)",
+              }}
+              disabled={
+                data.length >= 6 ||
+                selectSection === null ||
+                selectSection?.toString().startsWith("column")
               }
-              disabled={!selectSection}
               disableRipple
               color="inherit"
               onClick={() => {
@@ -306,7 +309,11 @@ const ToolBar = ({
                   // "--active": "rgba(21, 101, 192, 1)",
                 }
               }
-              disabled={!selectSection}
+              disabled={
+                headers.length >= 6 ||
+                selectSection === null ||
+                !selectSection.toString().startsWith("column")
+              }
               disableRipple
               color="inherit"
               onClick={() => {
@@ -340,14 +347,10 @@ const ToolBar = ({
                   // "--active": "rgba(21, 101, 192, 1)",
                 }
               }
-              // disabled={
-              //   !rowHasFocus
-              // }
               disableRipple
               color="inherit"
               onClick={() => {
                 closeDropDown();
-                console.log("Move column left");
               }}
               // If needed to add onKeyDown
               onKeyDown={(e) => {}}
