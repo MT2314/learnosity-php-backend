@@ -23,7 +23,6 @@ import {
 } from "@mui/material";
 
 import "../../Text/styles/Toolbar.scss";
-import { CollectionsOutlined } from "@mui/icons-material";
 
 const ToolBar = ({
   toolbar,
