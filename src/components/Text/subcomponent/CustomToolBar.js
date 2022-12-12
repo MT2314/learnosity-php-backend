@@ -17,7 +17,6 @@ import Portal from "@mui/base/Portal";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useTranslation } from "react-i18next";
 // ? InfoBox imports
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { iconDropdownOptions } from "../../InfoBox/icons/infoBoxIcons";
 
 // ? Text Toolbar imports
@@ -26,7 +25,7 @@ import ListDropdownButton from "./popupToolBar/ListDropdownButton";
 import AlignDropdownButton from "./popupToolBar/AlignDropdownButton";
 import MathDropdownButton from "./popupToolBar/MathDropdownButton";
 
-import icons from "../assets/icons";
+import icons, { Chevron } from "../assets/icons";
 
 // import "react-quill/dist/quill.snow.css";
 import "../styles/Toolbar.scss";
@@ -314,6 +313,7 @@ const ToolBar = ({
                             "--padding": "8px 0px",
                             "--justifyItems": "start",
                             "--width": "109px",
+                            "--grid-template-columns": "24px auto",
                           }}
                         >
                           {iconDropdownOptions.map((infoBox, index) => {
@@ -331,7 +331,8 @@ const ToolBar = ({
                                   "Icon"
                                 )}`}
                                 style={{
-                                  "--width": "100%",
+                                  "--width": "109px",
+                                  "--height": "36px",
                                 }}
                               >
                                 {t(infoBox.type)}
