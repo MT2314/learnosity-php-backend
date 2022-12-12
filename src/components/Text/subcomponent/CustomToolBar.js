@@ -17,7 +17,6 @@ import Portal from "@mui/base/Portal";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useTranslation } from "react-i18next";
 // ? InfoBox imports
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { iconDropdownOptions } from "../../InfoBox/icons/infoBoxIcons";
 
 // ? Text Toolbar imports
@@ -314,6 +313,7 @@ const ToolBar = ({
                             "--padding": "8px 0px",
                             "--justifyItems": "start",
                             "--width": "109px",
+                            "--grid-template-columns": "24px auto",
                           }}
                         >
                           {iconDropdownOptions.map((infoBox, index) => {

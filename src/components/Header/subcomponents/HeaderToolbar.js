@@ -145,6 +145,8 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                     elevation={0}
                     className="StyledSelectPaper"
                     style={{
+                      display: "grid",
+                      gridTemplateColumns: "31px 31px 31px",
                       "--height": "113px",
                       "--width": "87px",
                       "--margin-left": "6px",
@@ -160,6 +162,7 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                         aria-labelledby="Header Drop Down"
                         className="StyledMenu"
                         style={{
+                          "--height": "113px",
                           "--gridTemplateRows": "31px 31px 31px",
                           "--width": "87px",
                           justifyItems: "normal",
@@ -178,6 +181,7 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
                               aria-labelledby={label}
                               className="StyledMenuItem"
                               style={{
+                                "--height": "31px",
                                 "--fontSize":
                                   label === "Large"
                                     ? "1.375rem"
