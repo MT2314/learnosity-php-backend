@@ -143,10 +143,12 @@ const DraggableRow = ({
   row,
   reorderRow,
   setSelectSection,
+  setSelectedCell,
   selectSection,
   toolbarRef,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
+
   const [, dropRef] = useDrop({
     accept: "row",
     drop: (draggedRow) => reorderRow(draggedRow.index, row.index),
@@ -162,6 +164,7 @@ const DraggableRow = ({
 
   const renderTextArea = (value, row, col, type) => {
     const onTextChange = (e) => {
+      console.log("onTextChange", row, col);
       dispatch({
         func: "UPDATE_CELL",
         row,
@@ -169,6 +172,11 @@ const DraggableRow = ({
         value: e.target.value,
       });
     };
+
+    const setCell = (e) => {
+      setSelectedCell({ row, col });
+    };
+
     return (
       <StyledInput
         value={value || ""}
@@ -179,8 +187,11 @@ const DraggableRow = ({
             ? `Title ${state.headerType === "top-header" ? col + 1 : row + 1}`
             : "Lorem ipsum"
         }
+        data-row={row}
+        data-col={col}
         type={type}
         onChange={onTextChange}
+        onClick={setCell}
       />
     );
   };
@@ -264,6 +275,7 @@ const TableComponent = ({ tableId }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [toolbar, setToolbar] = useState(false);
   const [selectSection, setSelectSection] = useState(null);
+  const [selectedCell, setSelectedCell] = useState(null);
   const [toolbarRef, setToolbarRef] = useState(null);
   const tableRef = useRef();
 
@@ -316,6 +328,8 @@ const TableComponent = ({ tableId }) => {
           <Toolbar
             setSelectSection={setSelectSection}
             selectSection={selectSection}
+            setSelectedCell={setSelectedCell}
+            selectedCell={selectedCell}
             toolbar={toolbar}
             setToolbarRef={setToolbarRef}
             toolbarRef={toolbarRef}
@@ -351,6 +365,8 @@ const TableComponent = ({ tableId }) => {
               reorderRow={reorderRow}
               setSelectSection={setSelectSection}
               selectSection={selectSection}
+              setSelectedCell={setSelectedCell}
+              selectedCell={selectedCell}
               toolbarRef={toolbarRef}
             ></DraggableRow>
           ))}

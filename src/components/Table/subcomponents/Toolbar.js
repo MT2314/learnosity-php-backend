@@ -1,16 +1,17 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { LayoutContext } from "../TableContext";
+// Icons
+import icons from "../assets/icons";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-import icons from "../assets/icons";
-
 import {
   Paper,
   AppBar,
+  Card,
   Toolbar,
   MenuItem,
   ClickAwayListener,
@@ -30,10 +31,14 @@ const ToolBar = ({
   selectSection,
   setToolbarRef,
   setSelectSection,
+  setSelectedCell,
+  selectedCell,
   toolbarRef,
   tableId,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
+
+  console.log(selectedCell);
 
   // Format Popper State
   const [showFormat, setShowFormat] = useState(false);
@@ -41,6 +46,13 @@ const ToolBar = ({
   // Kebab Popper State
   const [openKebab, setOpenKebab] = useState(false);
 
+  // ? Alignment Dropdown Open/Close State
+  const [activeTopMenu, setActiveTopMenu] = useState(false);
+  //  ? Alignment Dropdown Selection State
+  const [activeDropDownItem, setActiveDropDownItem] = useState();
+
+  // Refs
+  const AlignRef = useRef(null);
   const FormatRef = useRef(null);
   const KebabRef = useRef(null);
 
@@ -224,7 +236,27 @@ const ToolBar = ({
   const closeDropDown = (e) => {
     setOpenKebab(false);
     setShowFormat(false);
+    setActiveTopMenu(false);
   };
+
+  // Handle Toolbar Alignment State Change
+  const handleAlignmentChange = (activeDropDownItem) => {
+    let currentAlignment;
+
+    if (activeDropDownItem) {
+      currentAlignment = activeDropDownItem;
+    } else {
+      currentAlignment = state.alignment;
+      setActiveDropDownItem(state.alignment);
+    }
+    dispatch({
+      func: "CHANGE_ALIGNMENT",
+      alignment: currentAlignment,
+    });
+  };
+  useEffect(() => {
+    handleAlignmentChange(activeDropDownItem);
+  }, [activeDropDownItem]);
 
   // Kebab Menu
   const KebabActions = [
@@ -264,6 +296,8 @@ const ToolBar = ({
     },
   ];
 
+  console.log(selectSection, "selectSection");
+
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -289,7 +323,7 @@ const ToolBar = ({
           "--direction": "row",
           "--gap": "10px",
           "--boxShadow": "none !important",
-          "--width": "351px",
+          "--width": selectSection ? "351px" : "117px",
         }}
       >
         <Toolbar
@@ -297,192 +331,271 @@ const ToolBar = ({
           className="StyledToolbar"
           style={{
             "--borderLeft": "4px solid #1565c0",
-            "--grid-template-columns":
-              "1fr 1fr 9px 1fr 1fr 9px 1fr 1fr 9px 56px 9px 1fr",
+            "--grid-template-columns": selectSection
+              ? "1fr 1fr 9px 1fr 1fr 9px 1fr 1fr 9px 56px 9px 1fr"
+              : "1fr 9px 69px ",
             "--justify-items": "center",
             "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            "--width": "351px",
+            "--width": selectSection ? "351px" : "117px",
           }}
         >
           {/* Add  ----  Rows / Columns      2btns*/}
-          <Tooltip aria-label="Add row" title="Add Row" placement="top" arrow>
-            <IconButton
-              className="StyledIconButton"
-              style={{
-                "--disabled": "rgba(0, 0, 0, 0.38)",
-              }}
-              disabled={
-                data.length >= 6 ||
-                selectSection === null ||
-                selectSection?.toString().startsWith("column")
-              }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-                data.length != 6 && addRowFun();
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`add-row-${tableId}`}
-              aria-label="Add row to table"
-            >
-              {icons["addRow"]}
-            </IconButton>
-          </Tooltip>
-          <Tooltip aria-label="Add column" title="Add Column" placement="top">
-            <IconButton
-              className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              disabled={
-                headers.length >= 6 ||
-                selectSection === null ||
-                !selectSection.toString().startsWith("column")
-              }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-                headers.length != 6 && addColFun();
-              }}
-              // If needed to Add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`add-column-${tableId}`}
-              aria-label="add column to table"
-            >
-              {icons["addColumn"]}
-            </IconButton>
-          </Tooltip>
+          {selectSection !== null && (
+            <>
+              <Tooltip
+                aria-label="Add row"
+                title="Add Row"
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  style={{
+                    "--disabled": "rgba(0, 0, 0, 0.38)",
+                  }}
+                  disabled={
+                    data.length >= 6 ||
+                    selectSection === null ||
+                    selectSection?.toString().startsWith("column")
+                  }
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                    data.length != 6 && addRowFun();
+                  }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`add-row-${tableId}`}
+                  aria-label="Add row to table"
+                >
+                  {icons["addRow"]}
+                </IconButton>
+              </Tooltip>
+              <Tooltip
+                aria-label="Add column"
+                title="Add Column"
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  style={
+                    {
+                      // "--active": "rgba(21, 101, 192, 1)",
+                    }
+                  }
+                  disabled={
+                    headers.length >= 6 ||
+                    selectSection === null ||
+                    !selectSection.toString().startsWith("column")
+                  }
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                    headers.length != 6 && addColFun();
+                  }}
+                  // If needed to Add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`add-column-${tableId}`}
+                  aria-label="add column to table"
+                >
+                  {icons["addColumn"]}
+                </IconButton>
+              </Tooltip>
 
-          {/* Divider */}
-          <div className="StyledDivider" />
+              {/* Divider */}
+              <div className="StyledDivider" />
 
-          {/* Move  ----  Rows / Columns      4btns*/}
-          {/* Move  ----  Columns      2btns*/}
-          <Tooltip
-            aria-label="Move column left"
-            title="Move column left"
-            placement="top"
-            arrow
-          >
-            <IconButton
-              className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`left-column-${tableId}`}
-              aria-label="Move column left"
-            >
-              {icons["arrowLeft"]}
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            aria-label="Move column right"
-            title="Move column right"
-            placement="top"
-            arrow
-          >
-            <IconButton
-              className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              // disabled={
-              //   !rowHasFocus
-              // }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`Right-column-${tableId}`}
-              aria-label="Move column right"
-            >
-              {icons["arrowRight"]}
-            </IconButton>
-          </Tooltip>
+              {/* Move  ----  Rows / Columns      4btns*/}
+              {/* Move  ----  Columns      2btns*/}
+              <Tooltip
+                aria-label="Move column left"
+                title="Move column left"
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  style={
+                    {
+                      // "--active": "rgba(21, 101, 192, 1)",
+                    }
+                  }
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                  }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`left-column-${tableId}`}
+                  aria-label="Move column left"
+                >
+                  {icons["arrowLeft"]}
+                </IconButton>
+              </Tooltip>
+              <Tooltip
+                aria-label="Move column right"
+                title="Move column right"
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  style={
+                    {
+                      // "--active": "rgba(21, 101, 192, 1)",
+                    }
+                  }
+                  // disabled={
+                  //   !rowHasFocus
+                  // }
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                  }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`Right-column-${tableId}`}
+                  aria-label="Move column right"
+                >
+                  {icons["arrowRight"]}
+                </IconButton>
+              </Tooltip>
 
-          {/* Divider */}
-          <div className="StyledDivider" />
+              {/* Divider */}
+              <div className="StyledDivider" />
 
-          {/* Move  ----  Rows      2btns*/}
-          <Tooltip
-            aria-label="Move row up"
-            title="Move row up"
-            placement="top"
-            arrow
-          >
-            <IconButton
-              className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              // disabled={
-              //   !rowHasFocus
-              // }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`up-row-${tableId}`}
-              aria-label="Move row up"
-            >
-              {icons["arrowUp"]}
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            aria-label="Move row down"
-            title="Move row down"
-            placement="top"
-            arrow
-          >
-            <IconButton
-              className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              // disabled={
-              //   !rowHasFocus
-              // }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`down-row-${tableId}`}
-              aria-label="Move row down"
-            >
-              {icons["arrowDown"]}
-            </IconButton>
-          </Tooltip>
-          {/* Divider */}
-          <div className="StyledDivider" />
+              {/* Move  ----  Rows      2btns*/}
+              <Tooltip
+                aria-label="Move row up"
+                title="Move row up"
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  style={
+                    {
+                      // "--active": "rgba(21, 101, 192, 1)",
+                    }
+                  }
+                  // disabled={
+                  //   !rowHasFocus
+                  // }
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                  }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`up-row-${tableId}`}
+                  aria-label="Move row up"
+                >
+                  {icons["arrowUp"]}
+                </IconButton>
+              </Tooltip>
+              <Tooltip
+                aria-label="Move row down"
+                title="Move row down"
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  style={
+                    {
+                      // "--active": "rgba(21, 101, 192, 1)",
+                    }
+                  }
+                  // disabled={
+                  //   !rowHasFocus
+                  // }
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                  }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`down-row-${tableId}`}
+                  aria-label="Move row down"
+                >
+                  {icons["arrowDown"]}
+                </IconButton>
+              </Tooltip>
+              {/* Divider */}
+              <div className="StyledDivider" />
+            </>
+          )}
+
+          {/* Align Text */}
+
+          {selectSection === null && (
+            <>
+              <Tooltip
+                aria-label="alignment"
+                title="alignment"
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  ref={AlignRef}
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    if (activeTopMenu) {
+                      setActiveTopMenu(false);
+                    } else {
+                      setActiveTopMenu(true);
+                    }
+                    setHeaderOpen(false);
+                  }}
+                  className={"StyledIconButton"}
+                  style={{
+                    "--active": activeTopMenu
+                      ? "rgba(21, 101, 192, 1)"
+                      : "#000",
+                    "--background": activeTopMenu
+                      ? "rgba(21, 101, 192, 0.12)"
+                      : "#fff",
+                  }}
+                  aria-label="alignment buttons dropdown"
+                  value={
+                    state.alignment === "left-align"
+                      ? "left-align"
+                      : state.alignment === "center-align"
+                      ? "center-align"
+                      : state.alignment === "right-align"
+                      ? "right-align"
+                      : null
+                  }
+                  data-alignid="alignment-dropdown"
+                >
+                  {state.alignment === "left-align"
+                    ? icons["align"]
+                    : state.alignment === "center-align"
+                    ? icons["center"]
+                    : state.alignment === "right-align"
+                    ? icons["right"]
+                    : icons["align"]}
+                </IconButton>
+              </Tooltip>
+              <AlignDropdownButton
+                aria-label="alignment buttons options"
+                activeTopMenu={activeTopMenu}
+                activeDropDownItem={activeDropDownItem}
+                setActiveDropDownItem={setActiveDropDownItem}
+                // alignment={state.alignment}
+              />
+              {/* Divider */}
+              <div className="StyledDivider" />
+            </>
+          )}
           {/* Format */}
           <Tooltip
             aria-label="Format"
@@ -705,96 +818,102 @@ const ToolBar = ({
               </Grow>
             )}
           </Popper>
-          {/* Divider */}
-          <div className="StyledDivider" />
-          {/* Kebab */}
-          <Tooltip
-            aria-label="Table control options"
-            title="Table control options"
-            placement="top"
-            arrow
-          >
-            <IconButton
-              className="StyledIconButton"
-              ref={KebabRef}
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              // disabled={
-              //   !rowHasFocus
-              // }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                setOpenKebab(!openKebab);
-                setShowFormat(false);
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`table-control-${tableId}`}
-              aria-label="Table control options"
-            >
-              {icons["kebab"]}
-            </IconButton>
-          </Tooltip>
-          <Popper
-            open={openKebab}
-            anchorEl={KebabRef.current}
-            placement="bottom-start"
-            transition
-            disablePortal
-          >
-            {({ TransitionProps }) => (
-              <Grow {...TransitionProps}>
-                <Paper
-                  elevation={0}
-                  className="StyledSelectPaper"
-                  style={{
-                    "--width": "165px",
-                    "--height": "160px",
-                    "--margin-left": "0px",
-                    "--margin-top": "7px",
+          {selectSection !== null && (
+            <>
+              {/* Divider */}
+              <div className="StyledDivider" />
+              {/* Kebab */}
+              <Tooltip
+                aria-label="Table control options"
+                title="Table control options"
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  ref={KebabRef}
+                  style={
+                    {
+                      // "--active": "rgba(21, 101, 192, 1)",
+                    }
+                  }
+                  // disabled={
+                  //   !rowHasFocus
+                  // }
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    setOpenKebab(!openKebab);
+                    setShowFormat(false);
                   }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`table-control-${tableId}`}
+                  aria-label="Table control options"
                 >
-                  <ClickAwayListener onClickAway={() => setOpenKebab(false)}>
-                    <MenuList
-                      // autoFocusItem={openKebab}
-                      data-testid="table-kebab-dropdown"
-                      onKeyDown={onKeyDropDown}
-                      className="StyledMenu"
+                  {icons["kebab"]}
+                </IconButton>
+              </Tooltip>
+              <Popper
+                open={openKebab}
+                anchorEl={KebabRef.current}
+                placement="bottom-start"
+                transition
+                disablePortal
+              >
+                {({ TransitionProps }) => (
+                  <Grow {...TransitionProps}>
+                    <Paper
+                      elevation={0}
+                      className="StyledSelectPaper"
                       style={{
-                        "--gridTemplateRows": "1fr 1fr 1fr 1fr",
-                        "--padding": "8px 0px",
-                        "--justifyItems": "start",
                         "--width": "165px",
+                        "--height": "160px",
+                        "--margin-left": "0px",
+                        "--margin-top": "7px",
                       }}
                     >
-                      {KebabActions.map((action, index) => {
-                        return (
-                          <MenuItem
-                            key={action.key}
-                            value={action.name}
-                            onClick={() => action.func()}
-                            className="StyledMenuItem"
-                            data-testid={`${action.name} option`}
-                            style={{
-                              "--height": "36px",
-                              "--width": "165px",
-                            }}
-                            disabled={action.disabled}
-                          >
-                            {action.name}
-                          </MenuItem>
-                        );
-                      })}
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
+                      <ClickAwayListener
+                        onClickAway={() => setOpenKebab(false)}
+                      >
+                        <MenuList
+                          // autoFocusItem={openKebab}
+                          data-testid="table-kebab-dropdown"
+                          onKeyDown={onKeyDropDown}
+                          className="StyledMenu"
+                          style={{
+                            "--gridTemplateRows": "1fr 1fr 1fr 1fr",
+                            "--padding": "8px 0px",
+                            "--justifyItems": "start",
+                            "--width": "165px",
+                          }}
+                        >
+                          {KebabActions.map((action, index) => {
+                            return (
+                              <MenuItem
+                                key={action.key}
+                                value={action.name}
+                                onClick={() => action.func()}
+                                className="StyledMenuItem"
+                                data-testid={`${action.name} option`}
+                                style={{
+                                  "--height": "36px",
+                                  "--width": "165px",
+                                }}
+                                disabled={action.disabled}
+                              >
+                                {action.name}
+                              </MenuItem>
+                            );
+                          })}
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>
@@ -802,3 +921,110 @@ const ToolBar = ({
 };
 
 export default React.memo(ToolBar);
+
+const AlignDropdownButton = ({
+  activeTopMenu,
+  activeDropDownItem,
+  setActiveDropDownItem,
+  alignment = "left-align",
+}) => {
+  return (
+    <>
+      <Card
+        elevation={0}
+        className="StyledCard"
+        style={{
+          "--card-display": activeTopMenu ? "flex" : "none",
+          // "--left": "112.5px",
+          "--width": "112px",
+        }}
+      >
+        <Tooltip
+          aria-label="align left"
+          title="align left"
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            value="left-align"
+            color="inherit"
+            aria-label="left align"
+            onClick={() => {
+              setActiveDropDownItem("left-align");
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                alignment === "left-align" ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background":
+                alignment == "left-align" ? "rgba(21, 101, 192, 0.12)" : "#fff",
+            }}
+          >
+            {icons["align"]}
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          aria-label="centre text"
+          title="centre text"
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            aria-label="align center"
+            value="center-align"
+            onClick={() => {
+              if (activeDropDownItem === "center-align") {
+                setActiveDropDownItem("left-align");
+              } else {
+                setActiveDropDownItem("center-align");
+              }
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                alignment === "center-align" ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background":
+                alignment == "center-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
+          >
+            {icons["center"]}
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          aria-label="align right"
+          title="align right"
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            aria-label="right align"
+            value="right-align"
+            onClick={() => {
+              if (activeDropDownItem === "right-align") {
+                setActiveDropDownItem("left-align");
+              } else {
+                setActiveDropDownItem("right-align");
+              }
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                alignment === "right-align" ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background":
+                alignment == "right-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
+          >
+            {icons["right"]}
+          </IconButton>
+        </Tooltip>
+      </Card>
+    </>
+  );
+};

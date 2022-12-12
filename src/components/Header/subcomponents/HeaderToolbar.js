@@ -9,7 +9,6 @@ import {
   Toolbar,
   MenuItem,
   ClickAwayListener,
-  Divider,
   Button,
   IconButton,
   Popper,
@@ -21,8 +20,6 @@ import {
 
 // assets
 import icons, { Chevron } from "../../Text/assets/icons";
-
-// ? Alignment Dropdown Button
 
 // Header Size Options
 const headerSizeDropdownOptions = [
