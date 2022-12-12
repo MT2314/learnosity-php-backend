@@ -17,7 +17,6 @@ import Portal from "@mui/base/Portal";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useTranslation } from "react-i18next";
 // ? InfoBox imports
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { iconDropdownOptions } from "../../InfoBox/icons/infoBoxIcons";
 
 // ? Text Toolbar imports
@@ -273,7 +272,7 @@ const ToolBar = ({
                 "--height": "100%",
                 "--font-size": "16px",
                 "--svg": openIcon ? " " : "rotate(180deg)",
-                "--grid-template-columns": "1fr 3fr",
+                "--grid-template-columns": "24px auto",
                 "--hover-background-color": "transparent",
               }}
             >
