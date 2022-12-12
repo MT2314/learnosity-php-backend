@@ -272,7 +272,7 @@ const ToolBar = ({
                 "--height": "100%",
                 "--font-size": "16px",
                 "--svg": openIcon ? " " : "rotate(180deg)",
-                "--grid-template-columns": "24px auto",
+                "--grid-template-columns": "1fr 3fr",
                 "--hover-background-color": "transparent",
               }}
             >
@@ -313,6 +313,7 @@ const ToolBar = ({
                             "--padding": "8px 0px",
                             "--justifyItems": "start",
                             "--width": "109px",
+                            "--grid-template-columns": "24px auto",
                           }}
                         >
                           {iconDropdownOptions.map((infoBox, index) => {
