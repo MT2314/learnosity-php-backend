@@ -39,13 +39,30 @@ const StyledTd = styled("td")(({ selectHighlight }) => ({
   backgroundColor: selectHighlight ? "rgba(21, 101, 192, 0.08)" : "",
 }));
 
-const StyledInput = styled(TextareaAutosize)(({ type }) => ({
-  padding: type === "title" ? "25px 10px" : "10px",
-  fontSize: type === "title" ? "18px" : "16px",
-  fontWeight: type === "title" ? "500" : "400",
-  ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
-  ...(type === "cell" && { padding: "15px" }),
-}));
+const StyledInput = styled(TextareaAutosize)(
+  ({ type, horizontalAlignment, verticalAlignment }) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: type === "title" ? "25px 10px" : "10px",
+    fontSize: type === "title" ? "18px" : "16px",
+    fontWeight: type === "title" ? "500" : "400",
+    ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
+    ...(type === "cell" && { padding: "15px" }),
+    textAlign:
+      horizontalAlignment === "right-align"
+        ? "right"
+        : horizontalAlignment === "center-align"
+        ? "center"
+        : "left",
+    verticalAlign:
+      verticalAlignment === "top-align"
+        ? "top"
+        : verticalAlignment === "bottom-align"
+        ? "bottom"
+        : "middle",
+  })
+);
 
 const StyledConfigBar = styled("div")({});
 
@@ -145,6 +162,7 @@ const DraggableRow = ({
   setSelectSection,
   setSelectedCell,
   selectSection,
+  selectedCell,
   toolbarRef,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
@@ -190,6 +208,16 @@ const DraggableRow = ({
         data-row={row}
         data-col={col}
         type={type}
+        horizontalAlignment={
+          selectedCell
+            ? state.data[row][`column${col + 1}`].horizontalAlignment
+            : "left-align"
+        }
+        verticalAlignment={
+          selectedCell
+            ? state.data[row][`column${col + 1}`].verticalAlignment
+            : "middle-align"
+        }
         onChange={onTextChange}
         onClick={setCell}
       />

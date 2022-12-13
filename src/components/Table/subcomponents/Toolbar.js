@@ -38,8 +38,6 @@ const ToolBar = ({
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
-  console.log(selectedCell);
-
   // Format Popper State
   const [showFormat, setShowFormat] = useState(false);
 
@@ -49,7 +47,8 @@ const ToolBar = ({
   // ? Alignment Dropdown Open/Close State
   const [activeTopMenu, setActiveTopMenu] = useState(false);
   //  ? Alignment Dropdown Selection State
-  const [activeDropDownItem, setActiveDropDownItem] = useState();
+  const [activeHorizontalAlignment, setActiveHorizontalAlignment] = useState();
+  const [activeVerticalAlign, setActiveVerticalAlign] = useState();
 
   // Refs
   const AlignRef = useRef(null);
@@ -236,27 +235,34 @@ const ToolBar = ({
   const closeDropDown = (e) => {
     setOpenKebab(false);
     setShowFormat(false);
-    setActiveTopMenu(false);
   };
 
   // Handle Toolbar Alignment State Change
-  const handleAlignmentChange = (activeDropDownItem) => {
-    let currentAlignment;
+  const handleAlignmentChange = () => {
+    selectedCell &&
+      console.log(
+        "draft",
+        state.data[selectedCell.row][`column${selectedCell.col}`]
+      );
+    // let currentAlignment;
 
-    if (activeDropDownItem) {
-      currentAlignment = activeDropDownItem;
-    } else {
-      currentAlignment = state.alignment;
-      setActiveDropDownItem(state.alignment);
-    }
-    dispatch({
-      func: "CHANGE_ALIGNMENT",
-      alignment: currentAlignment,
-    });
+    // if (activeHorizontalAlignment) {
+    //   currentAlignment = activeHorizontalAlignment;
+    // } else {
+    //   currentAlignment = state.alignment;
+    //   setActiveHorizontalAlignment(state.alignment);
+    // }
+    selectedCell &&
+      dispatch({
+        func: "CHANGE_ALIGNMENT",
+        selectedCell: selectedCell,
+        alignment: activeHorizontalAlignment,
+        activeVerticalAlign: activeVerticalAlign,
+      });
   };
   useEffect(() => {
-    handleAlignmentChange(activeDropDownItem);
-  }, [activeDropDownItem]);
+    handleAlignmentChange(activeHorizontalAlignment, activeVerticalAlign);
+  }, [activeHorizontalAlignment, activeVerticalAlign]);
 
   // Kebab Menu
   const KebabActions = [
@@ -296,8 +302,20 @@ const ToolBar = ({
     },
   ];
 
-  console.log(selectSection, "selectSection");
-
+  const switchAlignment = (e) => {
+    switch (
+      state.data[selectedCell.row][`column${selectedCell.col + 1}`].alignment
+    ) {
+      case "left-align":
+        return icons["align"];
+      case "right-align":
+        return icons["right"];
+      case "center-align":
+        return icons["center"];
+      default:
+        return icons["align"];
+    }
+  };
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -534,7 +552,10 @@ const ToolBar = ({
           )}
 
           {/* Align Text */}
-
+          {selectedCell &&
+            console.log(
+              state.data[selectedCell.row][`column${selectedCell.col + 1}`]
+            )}
           {selectSection === null && (
             <>
               <Tooltip
@@ -553,7 +574,7 @@ const ToolBar = ({
                     } else {
                       setActiveTopMenu(true);
                     }
-                    setHeaderOpen(false);
+                    setShowFormat(false);
                   }}
                   className={"StyledIconButton"}
                   style={{
@@ -565,32 +586,17 @@ const ToolBar = ({
                       : "#fff",
                   }}
                   aria-label="alignment buttons dropdown"
-                  value={
-                    state.alignment === "left-align"
-                      ? "left-align"
-                      : state.alignment === "center-align"
-                      ? "center-align"
-                      : state.alignment === "right-align"
-                      ? "right-align"
-                      : null
-                  }
-                  data-alignid="alignment-dropdown"
                 >
-                  {state.alignment === "left-align"
-                    ? icons["align"]
-                    : state.alignment === "center-align"
-                    ? icons["center"]
-                    : state.alignment === "right-align"
-                    ? icons["right"]
-                    : icons["align"]}
+                  {selectedCell ? switchAlignment() : icons["align"]}
                 </IconButton>
               </Tooltip>
               <AlignDropdownButton
                 aria-label="alignment buttons options"
                 activeTopMenu={activeTopMenu}
-                activeDropDownItem={activeDropDownItem}
-                setActiveDropDownItem={setActiveDropDownItem}
-                // alignment={state.alignment}
+                setActiveHorizontalAlignment={setActiveHorizontalAlignment}
+                setActiveVerticalAlign={setActiveVerticalAlign}
+                activeHorizontalAlignment={activeHorizontalAlignment}
+                activeVerticalAlign={activeVerticalAlign}
               />
               {/* Divider */}
               <div className="StyledDivider" />
@@ -620,6 +626,7 @@ const ToolBar = ({
               onClick={(e) => {
                 setShowFormat(!showFormat);
                 setOpenKebab(false);
+                setActiveTopMenu(false);
               }}
               ref={FormatRef}
               className="SelectButton"
@@ -924,9 +931,11 @@ export default React.memo(ToolBar);
 
 const AlignDropdownButton = ({
   activeTopMenu,
-  activeDropDownItem,
-  setActiveDropDownItem,
-  alignment = "left-align",
+  activeHorizontalAlignment,
+  setActiveHorizontalAlignment,
+  alignment,
+  activeVerticalAlign,
+  setActiveVerticalAlign,
 }) => {
   return (
     <div
@@ -942,6 +951,7 @@ const AlignDropdownButton = ({
         height: "80px",
       }}
     >
+      {/* Horizontal Align */}
       <Card
         elevation={0}
         className="StyledCard"
@@ -964,22 +974,26 @@ const AlignDropdownButton = ({
             color="inherit"
             aria-label="left align"
             onClick={() => {
-              setActiveDropDownItem("left-align");
+              setActiveHorizontalAlignment("left-align");
             }}
             className={"StyledIconButton"}
             style={{
               "--active":
-                alignment === "left-align" ? "rgba(21, 101, 192, 1)" : "#000",
+                activeHorizontalAlignment === "left-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
               "--background":
-                alignment == "left-align" ? "rgba(21, 101, 192, 0.12)" : "#fff",
+                activeHorizontalAlignment == "left-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
             }}
           >
             {icons["align"]}
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label="centre text"
-          title="centre text"
+          aria-label="align center"
+          title="align center"
           placement="top"
           arrow
         >
@@ -988,18 +1002,20 @@ const AlignDropdownButton = ({
             aria-label="align center"
             value="center-align"
             onClick={() => {
-              if (activeDropDownItem === "center-align") {
-                setActiveDropDownItem("left-align");
+              if (activeHorizontalAlignment === "center-align") {
+                setActiveHorizontalAlignment("left-align");
               } else {
-                setActiveDropDownItem("center-align");
+                setActiveHorizontalAlignment("center-align");
               }
             }}
             className={"StyledIconButton"}
             style={{
               "--active":
-                alignment === "center-align" ? "rgba(21, 101, 192, 1)" : "#000",
+                activeHorizontalAlignment === "center-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
               "--background":
-                alignment == "center-align"
+                activeHorizontalAlignment == "center-align"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
@@ -1018,18 +1034,20 @@ const AlignDropdownButton = ({
             aria-label="right align"
             value="right-align"
             onClick={() => {
-              if (activeDropDownItem === "right-align") {
-                setActiveDropDownItem("left-align");
+              if (activeHorizontalAlignment === "right-align") {
+                setActiveHorizontalAlignment("left-align");
               } else {
-                setActiveDropDownItem("right-align");
+                setActiveHorizontalAlignment("right-align");
               }
             }}
             className={"StyledIconButton"}
             style={{
               "--active":
-                alignment === "right-align" ? "rgba(21, 101, 192, 1)" : "#000",
+                activeHorizontalAlignment === "right-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
               "--background":
-                alignment == "right-align"
+                activeHorizontalAlignment == "right-align"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
@@ -1039,6 +1057,7 @@ const AlignDropdownButton = ({
         </Tooltip>
       </Card>
       <div className="StyledDividerHorizontal" />
+      {/* Vertical Align */}
       <Card
         elevation={0}
         className="StyledCard"
@@ -1049,93 +1068,93 @@ const AlignDropdownButton = ({
           bottom: "0px",
         }}
       >
-        <Tooltip
-          aria-label="align left"
-          title="align left"
-          placement="top"
-          arrow
-        >
+        <Tooltip aria-label="align top" title="align top" placement="top" arrow>
           <IconButton
             disableRipple
-            value="left-align"
+            value="top-align"
             color="inherit"
-            aria-label="left align"
+            aria-label="top align"
             onClick={() => {
-              setActiveDropDownItem("left-align");
+              if (setActiveVerticalAlign === "top-align") {
+                setActiveVerticalAlign("middle-align");
+              } else {
+                setActiveVerticalAlign("top-align");
+              }
             }}
             className={"StyledIconButton"}
             style={{
               "--active":
-                alignment === "left-align" ? "rgba(21, 101, 192, 1)" : "#000",
+                activeVerticalAlign === "top-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
               "--background":
-                alignment == "left-align" ? "rgba(21, 101, 192, 0.12)" : "#fff",
-              svg: {
-                position: "relative",
-              },
+                activeVerticalAlign == "top-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
             }}
           >
             {icons["top"]}
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label="centre text"
-          title="centre text"
+          aria-label="align middle"
+          title="align middle"
           placement="top"
           arrow
         >
           <IconButton
             disableRipple
-            aria-label="align center"
-            value="center-align"
+            aria-label="align middle"
+            value="middle-align"
             onClick={() => {
-              if (activeDropDownItem === "center-align") {
-                setActiveDropDownItem("left-align");
+              if (setActiveVerticalAlign === "middle-align") {
+                setActiveVerticalAlign("middle-align");
               } else {
-                setActiveDropDownItem("center-align");
+                setActiveVerticalAlign("middle-align");
               }
             }}
             className={"StyledIconButton"}
             style={{
               "--active":
-                alignment === "center-align" ? "rgba(21, 101, 192, 1)" : "#000",
+                activeVerticalAlign === "middle-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
               "--background":
-                alignment == "center-align"
+                activeVerticalAlign == "middle-align"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
-              "--position": "relative",
-              "--top-svg": "12%",
             }}
           >
             {icons["middle"]}
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label="align right"
-          title="align right"
+          aria-label="align bottom"
+          title="align bottom"
           placement="top"
           arrow
         >
           <IconButton
             disableRipple
-            aria-label="right align"
-            value="right-align"
+            aria-label="bottom align"
+            value="bottom-align"
             onClick={() => {
-              if (activeDropDownItem === "right-align") {
-                setActiveDropDownItem("left-align");
+              if (setActiveVerticalAlign === "bottom-align") {
+                setActiveVerticalAlign("left-align");
               } else {
-                setActiveDropDownItem("right-align");
+                setActiveVerticalAlign("bottom-align");
               }
             }}
             className={"StyledIconButton"}
             style={{
               "--active":
-                alignment === "right-align" ? "rgba(21, 101, 192, 1)" : "#000",
+                activeVerticalAlign === "bottom-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
               "--background":
-                alignment == "right-align"
+                activeVerticalAlign === "bottom-align"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
-              "--position": "relative",
-              "--top-svg": "24%",
             }}
           >
             {icons["bottom"]}

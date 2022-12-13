@@ -62,6 +62,14 @@ export const layoutConfig = (draft, action) => {
     case "UPDATE_SIDEHEADER":
       draft.hideSideHeader = action.hideSideHeader;
       return draft;
+    case "CHANGE_ALIGNMENT":
+      draft.data[action.selectedCell.row][
+        `column${action.selectedCell.col + 1}`
+      ].horizontalAlignment = action.activeHorizontalAlignment;
+      draft.data[action.selectedCell.row][
+        `column${action.selectedCell.col + 1}`
+      ].verticalAlignment = action.activeVerticalAlign;
+      return draft;
     default:
       return draft;
   }
