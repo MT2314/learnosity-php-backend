@@ -1,0 +1,65 @@
+.canvas-draw-container {
+    border-top: 2px solid gray;
+    display: block;
+  }
+  
+  .canvas-draw {
+    padding: 0;
+    margin: auto;
+    display: block;
+    touch-action: none;
+  }
+  
+  .latex-renderer-container {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #f2f2f5;
+    height: 19vh;
+    width: 100%;
+    font-size: 35px;
+  }
+  
+  .canvas-buttons-container {
+    display: inline-flex;
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 3px;
+  }
+  
+  body {
+    user-select: none;
+  }
+  
+  .canvas-buttons {
+    font-size: 30px;
+  }
+  
+  .btn-styles {
+    display: inline-block;
+    text-align: center;
+    width: fit-content;
+    background: white;
+    border-radius: 4px;
+    border: 1px;
+    height: 40px;
+    padding: 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    text-transform: none;
+    margin-top: 20px;
+    cursor: pointer;
+    margin: 25px 5px;
+  }
+  
+  .btn-styles:disabled {
+    background: #f2f2f5;
+    color: #bdbdbd;
+    cursor: "not-allowed";
+  }
+  
