@@ -6,6 +6,7 @@ import {
   useSetKeepEditor,
   useEditLink,
   useSetEditLink,
+  useMathpixOption
 } from "../Provider";
 import MathPopup from "../subcomponent/popupToolBar/math/MathPopup";
 import EditMath from "./EditMath";
@@ -82,8 +83,9 @@ const LinkEditDialog = () => {
 
 const MathPopupDialog = () => {
   const showMath = useShowMath();
+  const mathOption = useMathpixOption()
 
-  return <>{showMath && <MathPopup />}</>;
+  return <>{showMath && <MathPopup mathOption={mathOption} />}</>;
 };
 
 export default PopupDialogs;

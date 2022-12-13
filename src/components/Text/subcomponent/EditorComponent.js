@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
-
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { v4 as uuidv4 } from "uuid";
+
 
 import CustomToolBar from "./CustomToolBar";
 import "../styles/EditorComponent.scss";
-
-import { v4 as uuidv4 } from "uuid";
-
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
 import { checkTextForUrl } from "../utils/HandleLinks";
 import CheckHighlights from "../utils/CheckHighlights";

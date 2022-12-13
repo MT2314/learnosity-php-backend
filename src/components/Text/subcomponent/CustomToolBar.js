@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import ReactDOM from "react-dom";
 
 import {
   useSetShowMath,
@@ -169,7 +168,10 @@ const ToolBar = ({
     if (!showMath) {
       setActiveDropDownItem("");
     }
-    if (showMath) {
+    if (showMath && activeDropDownItem == "equationKeyboard") {
+      setActiveDropDownItem("equationKeyboard");
+    }
+    if (showMath && activeDropDownItem == "equationKeyboard") {
       setActiveDropDownItem("equationKeyboard");
     }
   }, [showMath]);
@@ -199,8 +201,8 @@ const ToolBar = ({
     <div
       className="ToolbarContainer"
 
-      // onClick={(e) => e.stopPropagation()}
-      // onFocus={(e) => e.stopPropagation()}
+    // onClick={(e) => e.stopPropagation()}
+    // onFocus={(e) => e.stopPropagation()}
     >
       <span
         className="sr-only"
@@ -229,8 +231,8 @@ const ToolBar = ({
           "--width": isInfoBox
             ? "306px"
             : portal?.parentComponent === "video"
-            ? "auto"
-            : "184px",
+              ? "auto"
+              : "184px",
           "--display": "flex",
           "--direction": "row",
           "--gap": isInfoBox ? "10px" : "none",
@@ -356,26 +358,23 @@ const ToolBar = ({
           position="static"
           className="StyledToolbar"
           style={{
-            "--width": `${
-              isInfoBox
+            "--width": `${isInfoBox
                 ? "156px"
                 : portal?.parentComponent === "video"
-                ? "196px"
-                : "184px !important"
-            }`,
+                  ? "196px"
+                  : "184px !important"
+              }`,
 
-            "--borderLeft": `${
-              isInfoBox || portal?.parentComponent === "video"
+            "--borderLeft": `${isInfoBox || portal?.parentComponent === "video"
                 ? "none"
                 : "4px solid #1565c0"
-            }`,
-            "--grid-template-columns": `${
-              isInfoBox
+              }`,
+            "--grid-template-columns": `${isInfoBox
                 ? "1fr 1fr 1fr 8px 1fr"
                 : portal?.parentComponent === "video"
-                ? "1fr 1fr 1fr 8px 1fr 8px 1fr"
-                : "1fr 1fr 1fr 1fr 8px 1fr"
-            }`,
+                  ? "1fr 1fr 1fr 8px 1fr 8px 1fr"
+                  : "1fr 1fr 1fr 1fr 8px 1fr"
+              }`,
             "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
             "--justify-items": "center",
             "--position": "static",
@@ -417,8 +416,8 @@ const ToolBar = ({
                 setActiveDropDownItem("");
                 boldVisibility === false
                   ? handleAriaLive(
-                      "Text formatting dropdown selected, 6 available options"
-                    )
+                    "Text formatting dropdown selected, 6 available options"
+                  )
                   : handleAriaLive("Text formatting dropdown closed");
               }}
               onKeyDown={(e) => {
@@ -476,8 +475,8 @@ const ToolBar = ({
                     }
                     mathVisibility === false
                       ? handleAriaLive(
-                          "Math equation dropdown selected, 3 available options"
-                        )
+                        "Math equation dropdown selected, 3 available options"
+                      )
                       : handleAriaLive("Math equation dropdown closed");
                   }}
                 >
@@ -523,8 +522,8 @@ const ToolBar = ({
                 setActiveDropDownItem("");
                 alignVisibility === false
                   ? handleAriaLive(
-                      "Alignment formatting dropdown selected, 3 available options"
-                    )
+                    "Alignment formatting dropdown selected, 3 available options"
+                  )
                   : handleAriaLive("Allignment formatting dropdown closed");
               }}
               className="StyledIconButton"
@@ -581,8 +580,8 @@ const ToolBar = ({
                 }
                 alignVisibility === false
                   ? handleAriaLive(
-                      "List formatting dropdown selected, 2 available options"
-                    )
+                    "List formatting dropdown selected, 2 available options"
+                  )
                   : handleAriaLive("List formatting dropdown closed");
               }}
               className="StyledIconButton"

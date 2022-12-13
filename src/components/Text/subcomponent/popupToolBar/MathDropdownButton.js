@@ -5,7 +5,7 @@ import "../../styles/Toolbar.scss";
 
 import { MathKeyboard, MathDraw, MathImageUpload } from "../../assets/icons";
 
-import { useSetShowMath, useShowMath } from "../../Provider";
+import { useSetShowMath, useShowMath, useSetMathpixOption } from "../../Provider";
 
 const MathDropdownButton = ({
   show,
@@ -14,9 +14,9 @@ const MathDropdownButton = ({
 }) => {
   const setShowMath = useSetShowMath();
   const showMath = useShowMath();
+  const setMathpixOption = useSetMathpixOption()
   const [ariaLive, setAriaLive] = useState("");
   const [ariaLive2, setAriaLive2] = useState("");
-
   // Aria Live Handler
   const handleAriaLive = (value) => {
     if (ariaLive === value) {
@@ -28,6 +28,10 @@ const MathDropdownButton = ({
     }
   };
 
+  useEffect(()=> {
+    setMathpixOption(activeDropDownItem)
+  }, [activeDropDownItem])
+
   return (
     <>
       <Card
@@ -38,7 +42,7 @@ const MathDropdownButton = ({
           "--left": "45px",
           "--width": "112px",
         }}
-        // onKeyDown={onKeyDropDown}
+      // onKeyDown={onKeyDropDown}
       >
         {/* Aria Live */}
         <span
@@ -79,7 +83,14 @@ const MathDropdownButton = ({
                   : "#fff",
             }}
             onClick={() => {
-              setActiveDropDownItem("mathDraw");
+              if (activeDropDownItem === "mathDraw" && showMath) {
+                setActiveDropDownItem("");
+                setShowMath(false);
+              } else {
+                setActiveDropDownItem("mathDraw");
+                setShowMath(true);
+              }
+              handleAriaLive("mathDraw keyboard is now open.");
             }}
             value="mathDraw"
           >
