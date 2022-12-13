@@ -31,7 +31,6 @@ const ToolBar = ({
   selectSection,
   setToolbarRef,
   setSelectSection,
-  setSelectedCell,
   selectedCell,
   toolbarRef,
   tableId,
@@ -54,6 +53,20 @@ const ToolBar = ({
   const AlignRef = useRef(null);
   const FormatRef = useRef(null);
   const KebabRef = useRef(null);
+
+  // Initial useEffect to set alignment dropdown selection state
+  useEffect(() => {
+    if (selectedCell) {
+      setActiveHorizontalAlignment(
+        state.data[selectedCell.row][`column${selectedCell.col + 1}`]
+          .horizontalAlignment
+      );
+      setActiveVerticalAlignment(
+        state.data[selectedCell.row][`column${selectedCell.col + 1}`]
+          .verticalAlignment
+      );
+    }
+  }, [selectedCell]);
 
   // show Zebra dispatch
   const showZebraStripes = () => {
@@ -240,19 +253,6 @@ const ToolBar = ({
   // Handle Toolbar Alignment State Change
   const handleAlignmentChange = () => {
     selectedCell &&
-      console.log(
-        "draft",
-        state.data[selectedCell.row][`column${selectedCell.col}`]
-      );
-    // let currentAlignment;
-
-    // if (activeHorizontalAlignment) {
-    //   currentAlignment = activeHorizontalAlignment;
-    // } else {
-    //   currentAlignment = state.alignment;
-    //   setActiveHorizontalAlignment(state.alignment);
-    // }
-    selectedCell &&
       dispatch({
         func: "CHANGE_ALIGNMENT",
         selectedCell: selectedCell,
@@ -260,6 +260,8 @@ const ToolBar = ({
         activeVerticalAlignment: activeVerticalAlignment,
       });
   };
+
+  // Alignment State Change useEFFECT
   useEffect(() => {
     handleAlignmentChange(activeHorizontalAlignment, activeVerticalAlignment);
   }, [activeHorizontalAlignment, activeVerticalAlignment]);
@@ -302,21 +304,6 @@ const ToolBar = ({
     },
   ];
 
-  const switchAlignment = (e) => {
-    switch (
-      state.data[selectedCell.row][`column${selectedCell.col + 1}`]
-        .activeHorizontalAlignment
-    ) {
-      case "left-align":
-        return icons["align"];
-      case "right-align":
-        return icons["right"];
-      case "center-align":
-        return icons["center"];
-      default:
-        return icons["align"];
-    }
-  };
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -553,10 +540,6 @@ const ToolBar = ({
           )}
 
           {/* Align Text */}
-          {selectedCell &&
-            console.log(
-              state.data[selectedCell.row][`column${selectedCell.col + 1}`]
-            )}
           {selectSection === null && (
             <>
               <Tooltip
@@ -588,12 +571,8 @@ const ToolBar = ({
                   }}
                   aria-label="alignment buttons dropdown"
                 >
-                  {selectedCell
-                    ? icons[
-                        state.data[selectedCell.row][
-                          `column${selectedCell.col + 1}`
-                        ].horizontalAlignment
-                      ]
+                  {activeHorizontalAlignment
+                    ? icons[activeHorizontalAlignment]
                     : icons["left-align"]}
                 </IconButton>
               </Tooltip>
@@ -994,7 +973,7 @@ const AlignDropdownButton = ({
                   : "#fff",
             }}
           >
-            {icons["align"]}
+            {icons["left-align"]}
           </IconButton>
         </Tooltip>
         <Tooltip
@@ -1026,7 +1005,7 @@ const AlignDropdownButton = ({
                   : "#fff",
             }}
           >
-            {icons["center"]}
+            {icons["center-align"]}
           </IconButton>
         </Tooltip>
         <Tooltip
@@ -1058,7 +1037,7 @@ const AlignDropdownButton = ({
                   : "#fff",
             }}
           >
-            {icons["right"]}
+            {icons["right-align"]}
           </IconButton>
         </Tooltip>
       </Card>
