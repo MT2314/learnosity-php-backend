@@ -297,6 +297,7 @@ const AlignDropdownButton = ({
           "--card-display": activeTopMenu ? "flex" : "none",
           "--left": "112.5px",
           "--width": "112px",
+          "--box-shadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
         }}
       >
         <Tooltip

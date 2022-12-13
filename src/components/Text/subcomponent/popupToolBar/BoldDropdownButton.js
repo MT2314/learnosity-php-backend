@@ -80,6 +80,7 @@ const BoldDropdownButton = ({ show, onKeyDropDown, isInfoBox, isVideo }) => {
           "--card-display": show ? "flex" : "none",
           "--left": isInfoBox ? "151px" : isVideo ? "210px" : "0px",
           "--width": "214px",
+          "--box-shadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
         }}
         onKeyDown={onKeyDropDown}
       >

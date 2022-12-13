@@ -176,8 +176,8 @@ icons["right"] = (
 icons["top"] = (
   <svg
     width="16"
-    height="9"
-    viewBox="0 0 16 9"
+    height="16"
+    viewBox="0 0 16 16"
     fill="#000"
     xmlns="http://www.w3.org/2000/svg"
   >
@@ -190,9 +190,9 @@ icons["top"] = (
 icons["middle"] = (
   <svg
     width="16"
-    height="9"
-    viewBox="0 0 16 9"
-    fill="none"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="#000"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -204,8 +204,8 @@ icons["middle"] = (
 icons["bottom"] = (
   <svg
     width="16"
-    height="9"
-    viewBox="0 0 16 9"
+    height="16"
+    viewBox="0 0 16 16"
     fill="#000"
     xmlns="http://www.w3.org/2000/svg"
   >

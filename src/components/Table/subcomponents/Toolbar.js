@@ -929,13 +929,26 @@ const AlignDropdownButton = ({
   alignment = "left-align",
 }) => {
   return (
-    <>
+    <div
+      style={{
+        position: "absolute",
+        display: activeTopMenu ? "flex" : "none",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+        bottom: "-84px",
+        borderRadius: "4px",
+        flexDirection: "column",
+        backgroundColor: "#fff",
+        width: "112px",
+        height: "80px",
+      }}
+    >
       <Card
         elevation={0}
         className="StyledCard"
         style={{
           "--card-display": activeTopMenu ? "flex" : "none",
-          // "--left": "112.5px",
+          bottom: "42px",
+          "--box-shadow": "none",
           "--width": "112px",
         }}
       >
@@ -1025,6 +1038,110 @@ const AlignDropdownButton = ({
           </IconButton>
         </Tooltip>
       </Card>
-    </>
+      <div className="StyledDividerHorizontal" />
+      <Card
+        elevation={0}
+        className="StyledCard"
+        style={{
+          "--card-display": activeTopMenu ? "flex" : "none",
+          "--box-shadow": "none !important",
+          "--width": "112px",
+          bottom: "0px",
+        }}
+      >
+        <Tooltip
+          aria-label="align left"
+          title="align left"
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            value="left-align"
+            color="inherit"
+            aria-label="left align"
+            onClick={() => {
+              setActiveDropDownItem("left-align");
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                alignment === "left-align" ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background":
+                alignment == "left-align" ? "rgba(21, 101, 192, 0.12)" : "#fff",
+              svg: {
+                position: "relative",
+              },
+            }}
+          >
+            {icons["top"]}
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          aria-label="centre text"
+          title="centre text"
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            aria-label="align center"
+            value="center-align"
+            onClick={() => {
+              if (activeDropDownItem === "center-align") {
+                setActiveDropDownItem("left-align");
+              } else {
+                setActiveDropDownItem("center-align");
+              }
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                alignment === "center-align" ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background":
+                alignment == "center-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+              "--position": "relative",
+              "--top-svg": "12%",
+            }}
+          >
+            {icons["middle"]}
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          aria-label="align right"
+          title="align right"
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            aria-label="right align"
+            value="right-align"
+            onClick={() => {
+              if (activeDropDownItem === "right-align") {
+                setActiveDropDownItem("left-align");
+              } else {
+                setActiveDropDownItem("right-align");
+              }
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                alignment === "right-align" ? "rgba(21, 101, 192, 1)" : "#000",
+              "--background":
+                alignment == "right-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+              "--position": "relative",
+              "--top-svg": "24%",
+            }}
+          >
+            {icons["bottom"]}
+          </IconButton>
+        </Tooltip>
+      </Card>
+    </div>
   );
 };
