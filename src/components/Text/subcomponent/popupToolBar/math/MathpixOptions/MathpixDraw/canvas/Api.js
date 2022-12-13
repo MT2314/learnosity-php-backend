@@ -3,9 +3,9 @@ import axios from "axios";
 const getConfig = () => {
   const config = {
     headers: {
-      app_id: "neshs325_gmail_com_ce8e6d_825949",
+      app_id: "tvo_aef8b1",
       app_key:
-        "2e8abea0c6ce90445f40adeeef806ee5278c828f57c5b6a491b3f719cb5f226d",
+        "cce5151c37587fdbc802",
       "Content-Type": "application/json",
     },
   };
