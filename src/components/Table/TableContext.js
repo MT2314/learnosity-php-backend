@@ -68,7 +68,7 @@ export const layoutConfig = (draft, action) => {
       ].horizontalAlignment = action.activeHorizontalAlignment;
       draft.data[action.selectedCell.row][
         `column${action.selectedCell.col + 1}`
-      ].verticalAlignment = action.activeVerticalAlign;
+      ].verticalAlignment = action.activeVerticalAlignment;
       return draft;
     default:
       return draft;

@@ -209,12 +209,12 @@ const DraggableRow = ({
         data-col={col}
         type={type}
         horizontalAlignment={
-          selectedCell
+          state.data[row][`column${col + 1}`].horizontalAlignment !== undefined
             ? state.data[row][`column${col + 1}`].horizontalAlignment
             : "left-align"
         }
         verticalAlignment={
-          selectedCell
+          state.data[row][`column${col + 1}`].verticalAlignment !== undefined
             ? state.data[row][`column${col + 1}`].verticalAlignment
             : "middle-align"
         }

@@ -129,6 +129,7 @@ const MathPopup = () => {
       mathModeSpace: "\\:",
       plonkSound: false,
       keypressSound: false,
+      virtualKeyboardMode: "onfocus",
     });
     mathfield.current.focus();
   }, []);

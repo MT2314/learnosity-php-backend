@@ -138,7 +138,7 @@ icons["arrowRight"] = (
 );
 
 // Alignment ("align" is default for left-alignment)
-icons["align"] = (
+icons["left-align"] = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="16"
@@ -150,7 +150,7 @@ icons["align"] = (
   </svg>
 );
 
-icons["center"] = (
+icons["center-align"] = (
   <svg
     width="16"
     height="16"
@@ -162,7 +162,7 @@ icons["center"] = (
   </svg>
 );
 
-icons["right"] = (
+icons["right-align"] = (
   <svg
     width="16"
     height="16"
@@ -173,7 +173,7 @@ icons["right"] = (
     <path d="M0 16H16V14.2222H0V16ZM5.33333 12.4444H16V10.6667H5.33333V12.4444ZM0 8.88889H16V7.11111H0V8.88889ZM5.33333 5.33333H16V3.55556H5.33333V5.33333ZM0 0V1.77778H16V0H0Z" />
   </svg>
 );
-icons["top"] = (
+icons["top-align"] = (
   <svg
     width="24"
     height="24"
@@ -194,7 +194,7 @@ icons["top"] = (
     </defs>
   </svg>
 );
-icons["middle"] = (
+icons["middle-align"] = (
   <svg
     width="24"
     height="24"
@@ -215,7 +215,7 @@ icons["middle"] = (
     </defs>
   </svg>
 );
-icons["bottom"] = (
+icons["bottom-align"] = (
   <svg
     width="24"
     height="24"

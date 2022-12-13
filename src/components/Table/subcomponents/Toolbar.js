@@ -48,7 +48,7 @@ const ToolBar = ({
   const [activeTopMenu, setActiveTopMenu] = useState(false);
   //  ? Alignment Dropdown Selection State
   const [activeHorizontalAlignment, setActiveHorizontalAlignment] = useState();
-  const [activeVerticalAlign, setActiveVerticalAlign] = useState();
+  const [activeVerticalAlignment, setActiveVerticalAlignment] = useState();
 
   // Refs
   const AlignRef = useRef(null);
@@ -256,13 +256,13 @@ const ToolBar = ({
       dispatch({
         func: "CHANGE_ALIGNMENT",
         selectedCell: selectedCell,
-        alignment: activeHorizontalAlignment,
-        activeVerticalAlign: activeVerticalAlign,
+        activeHorizontalAlignment: activeHorizontalAlignment,
+        activeVerticalAlignment: activeVerticalAlignment,
       });
   };
   useEffect(() => {
-    handleAlignmentChange(activeHorizontalAlignment, activeVerticalAlign);
-  }, [activeHorizontalAlignment, activeVerticalAlign]);
+    handleAlignmentChange(activeHorizontalAlignment, activeVerticalAlignment);
+  }, [activeHorizontalAlignment, activeVerticalAlignment]);
 
   // Kebab Menu
   const KebabActions = [
@@ -304,7 +304,8 @@ const ToolBar = ({
 
   const switchAlignment = (e) => {
     switch (
-      state.data[selectedCell.row][`column${selectedCell.col + 1}`].alignment
+      state.data[selectedCell.row][`column${selectedCell.col + 1}`]
+        .activeHorizontalAlignment
     ) {
       case "left-align":
         return icons["align"];
@@ -587,16 +588,22 @@ const ToolBar = ({
                   }}
                   aria-label="alignment buttons dropdown"
                 >
-                  {selectedCell ? switchAlignment() : icons["align"]}
+                  {selectedCell
+                    ? icons[
+                        state.data[selectedCell.row][
+                          `column${selectedCell.col + 1}`
+                        ].horizontalAlignment
+                      ]
+                    : icons["left-align"]}
                 </IconButton>
               </Tooltip>
               <AlignDropdownButton
                 aria-label="alignment buttons options"
                 activeTopMenu={activeTopMenu}
                 setActiveHorizontalAlignment={setActiveHorizontalAlignment}
-                setActiveVerticalAlign={setActiveVerticalAlign}
+                setActiveVerticalAlignment={setActiveVerticalAlignment}
                 activeHorizontalAlignment={activeHorizontalAlignment}
-                activeVerticalAlign={activeVerticalAlign}
+                activeVerticalAlignment={activeVerticalAlignment}
               />
               {/* Divider */}
               <div className="StyledDivider" />
@@ -933,9 +940,8 @@ const AlignDropdownButton = ({
   activeTopMenu,
   activeHorizontalAlignment,
   setActiveHorizontalAlignment,
-  alignment,
-  activeVerticalAlign,
-  setActiveVerticalAlign,
+  activeVerticalAlignment,
+  setActiveVerticalAlignment,
 }) => {
   return (
     <div
@@ -1075,25 +1081,25 @@ const AlignDropdownButton = ({
             color="inherit"
             aria-label="top align"
             onClick={() => {
-              if (setActiveVerticalAlign === "top-align") {
-                setActiveVerticalAlign("middle-align");
+              if (setActiveVerticalAlignment === "top-align") {
+                setActiveVerticalAlignment("middle-align");
               } else {
-                setActiveVerticalAlign("top-align");
+                setActiveVerticalAlignment("top-align");
               }
             }}
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeVerticalAlign === "top-align"
+                activeVerticalAlignment === "top-align"
                   ? "rgba(21, 101, 192, 1)"
                   : "#000",
               "--background":
-                activeVerticalAlign == "top-align"
+                activeVerticalAlignment == "top-align"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
           >
-            {icons["top"]}
+            {icons["top-align"]}
           </IconButton>
         </Tooltip>
         <Tooltip
@@ -1107,25 +1113,25 @@ const AlignDropdownButton = ({
             aria-label="align middle"
             value="middle-align"
             onClick={() => {
-              if (setActiveVerticalAlign === "middle-align") {
-                setActiveVerticalAlign("middle-align");
+              if (setActiveVerticalAlignment === "middle-align") {
+                setActiveVerticalAlignment("middle-align");
               } else {
-                setActiveVerticalAlign("middle-align");
+                setActiveVerticalAlignment("middle-align");
               }
             }}
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeVerticalAlign === "middle-align"
+                activeVerticalAlignment === "middle-align"
                   ? "rgba(21, 101, 192, 1)"
                   : "#000",
               "--background":
-                activeVerticalAlign == "middle-align"
+                activeVerticalAlignment == "middle-align"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
           >
-            {icons["middle"]}
+            {icons["middle-align"]}
           </IconButton>
         </Tooltip>
         <Tooltip
@@ -1139,25 +1145,25 @@ const AlignDropdownButton = ({
             aria-label="bottom align"
             value="bottom-align"
             onClick={() => {
-              if (setActiveVerticalAlign === "bottom-align") {
-                setActiveVerticalAlign("left-align");
+              if (setActiveVerticalAlignment === "bottom-align") {
+                setActiveVerticalAlignment("left-align");
               } else {
-                setActiveVerticalAlign("bottom-align");
+                setActiveVerticalAlignment("bottom-align");
               }
             }}
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeVerticalAlign === "bottom-align"
+                activeVerticalAlignment === "bottom-align"
                   ? "rgba(21, 101, 192, 1)"
                   : "#000",
               "--background":
-                activeVerticalAlign === "bottom-align"
+                activeVerticalAlignment === "bottom-align"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
           >
-            {icons["bottom"]}
+            {icons["bottom-align"]}
           </IconButton>
         </Tooltip>
       </Card>
