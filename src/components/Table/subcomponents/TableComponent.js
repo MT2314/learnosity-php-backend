@@ -220,6 +220,11 @@ const DraggableRow = ({
         }
         onChange={onTextChange}
         onClick={setCell}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && type === "title") {
+            e.preventDefault();
+          }
+        }}
       />
     );
   };
