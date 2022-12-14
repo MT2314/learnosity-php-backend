@@ -551,7 +551,7 @@ const ToolBar = ({
             isInfoBox={isInfoBox}
             isVideo={portal?.parentComponent === "video"}
             // className="dropdown-content"
-            aria-label="alignment buttons options"
+            aria-label="alignment options"
             activeDropDownItem={activeDropDownAlignItem}
             setActiveDropDownItem={setActiveDropDownAlignItem}
             setVisibleAlignIcon={setVisibleAlignIcon}
