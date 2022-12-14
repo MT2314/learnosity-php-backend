@@ -553,12 +553,12 @@ const ToolBar = ({
                   disableRipple
                   color="inherit"
                   onClick={() => {
+                    setShowFormat(false);
                     if (activeTopMenu) {
                       setActiveTopMenu(false);
                     } else {
                       setActiveTopMenu(true);
                     }
-                    setShowFormat(false);
                   }}
                   className={"StyledIconButton"}
                   style={{
