@@ -179,7 +179,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   height: 40px !important;
   width: var(--width);
   background-color: #fff;
-  box-shadow: $toolbarShadow !important;
+  box-shadow: var(--box-shadow) !important;
 }
 
 // DONE
@@ -272,6 +272,15 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 0.5px;
   background-color: #e0e0e0 !important;
   margin: 0 3.5px;
+}
+.StyledDividerHorizontal {
+  position: absolute !important;
+  bottom: 41px !important;
+  width: 92px;
+  height: 0.5px;
+  background-color: #e0e0e0 !important;
+  margin: 0 10px;
+  z-index: 30;
 }
 
 // Error Bubble

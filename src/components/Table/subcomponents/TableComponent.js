@@ -39,13 +39,30 @@ const StyledTd = styled("td")(({ selectHighlight }) => ({
   backgroundColor: selectHighlight ? "rgba(21, 101, 192, 0.08)" : "",
 }));
 
-const StyledInput = styled(TextareaAutosize)(({ type }) => ({
-  padding: type === "title" ? "25px 10px" : "10px",
-  fontSize: type === "title" ? "18px" : "16px",
-  fontWeight: type === "title" ? "500" : "400",
-  ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
-  ...(type === "cell" && { padding: "15px" }),
-}));
+const StyledInput = styled(TextareaAutosize)(
+  ({ type, horizontalAlignment, verticalAlignment }) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: type === "title" ? "25px 10px" : "10px",
+    fontSize: type === "title" ? "18px" : "16px",
+    fontWeight: type === "title" ? "500" : "400",
+    ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
+    ...(type === "cell" && { padding: "15px" }),
+    textAlign:
+      horizontalAlignment === "right-align"
+        ? "right"
+        : horizontalAlignment === "center-align"
+        ? "center"
+        : "left",
+    verticalAlign:
+      verticalAlignment === "top-align"
+        ? "top"
+        : verticalAlignment === "bottom-align"
+        ? "bottom"
+        : "middle",
+  })
+);
 
 const StyledConfigBar = styled("div")({});
 
@@ -143,10 +160,13 @@ const DraggableRow = ({
   row,
   reorderRow,
   setSelectSection,
+  setSelectedCell,
   selectSection,
+  selectedCell,
   toolbarRef,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
+
   const [, dropRef] = useDrop({
     accept: "row",
     drop: (draggedRow) => reorderRow(draggedRow.index, row.index),
@@ -162,6 +182,7 @@ const DraggableRow = ({
 
   const renderTextArea = (value, row, col, type) => {
     const onTextChange = (e) => {
+      console.log("onTextChange", row, col);
       dispatch({
         func: "UPDATE_CELL",
         row,
@@ -169,6 +190,11 @@ const DraggableRow = ({
         value: e.target.value,
       });
     };
+
+    const setCell = (e) => {
+      setSelectedCell({ row, col });
+    };
+
     return (
       <StyledInput
         value={value || ""}
@@ -179,8 +205,21 @@ const DraggableRow = ({
             ? `Title ${state.headerType === "top-header" ? col + 1 : row + 1}`
             : "Lorem ipsum"
         }
+        data-row={row}
+        data-col={col}
         type={type}
+        horizontalAlignment={
+          state.data[row][`column${col + 1}`].horizontalAlignment !== undefined
+            ? state.data[row][`column${col + 1}`].horizontalAlignment
+            : "left-align"
+        }
+        verticalAlignment={
+          state.data[row][`column${col + 1}`].verticalAlignment !== undefined
+            ? state.data[row][`column${col + 1}`].verticalAlignment
+            : "middle-align"
+        }
         onChange={onTextChange}
+        onClick={setCell}
       />
     );
   };
@@ -264,6 +303,7 @@ const TableComponent = ({ tableId }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [toolbar, setToolbar] = useState(false);
   const [selectSection, setSelectSection] = useState(null);
+  const [selectedCell, setSelectedCell] = useState(null);
   const [toolbarRef, setToolbarRef] = useState(null);
   const tableRef = useRef();
 
@@ -316,6 +356,8 @@ const TableComponent = ({ tableId }) => {
           <Toolbar
             setSelectSection={setSelectSection}
             selectSection={selectSection}
+            setSelectedCell={setSelectedCell}
+            selectedCell={selectedCell}
             toolbar={toolbar}
             setToolbarRef={setToolbarRef}
             toolbarRef={toolbarRef}
@@ -351,6 +393,8 @@ const TableComponent = ({ tableId }) => {
               reorderRow={reorderRow}
               setSelectSection={setSelectSection}
               selectSection={selectSection}
+              setSelectedCell={setSelectedCell}
+              selectedCell={selectedCell}
               toolbarRef={toolbarRef}
             ></DraggableRow>
           ))}

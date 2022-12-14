@@ -31,6 +31,7 @@ const ListDropdownButton = ({ isInfoBox, show, onKeyDropDown, isVideo }) => {
           "--card-display": show ? "flex" : "none",
           "--left": isInfoBox ? "220px" : isVideo ? "278px" : "102px",
           "--width": "78px",
+          "--box-shadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
         }}
       >
         <Tooltip aria-label="bullets" title="bullets" placement="top" arrow>
