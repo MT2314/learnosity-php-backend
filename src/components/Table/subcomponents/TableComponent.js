@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { LayoutContext } from "../TableContext";
 
 // react-table imports
@@ -66,6 +66,7 @@ const StyledInput = styled(TextareaAutosize)(
 
 const StyledConfigBar = styled("div")({});
 
+// Filter SelectSection string to return aria-label
 const ariaSection = (selection) => {
   let readOut;
   if (selection?.charAt(0) === "c") {
@@ -194,7 +195,6 @@ const DraggableRow = ({
 
   const renderTextArea = (value, row, col, type) => {
     const onTextChange = (e) => {
-      console.log("onTextChange", row, col);
       dispatch({
         func: "UPDATE_CELL",
         row,
@@ -319,10 +319,26 @@ const TableComponent = ({ tableId }) => {
   const [toolbarRef, setToolbarRef] = useState(null);
   const tableRef = useRef();
 
+  // Aria Live
+  const [ariaLive, setAriaLive] = useState("");
+  const [ariaLive2, setAriaLive2] = useState("");
+
   useOnClickOutside(tableRef, () => {
     setToolbar(false);
     setSelectSection(null);
+    setSelectedCell(null);
   });
+
+  // Handle Aria live region
+  const handleAriaLive = (value) => {
+    if (ariaLive === value) {
+      setAriaLive("");
+      setAriaLive2(value);
+    } else {
+      setAriaLive2("");
+      setAriaLive(value);
+    }
+  };
 
   const [columnOrder, setColumnOrder] = useState(
     state.headers.map((column) => column.id)
@@ -358,12 +374,33 @@ const TableComponent = ({ tableId }) => {
       <StyledTable
         role="presentation"
         className="style-table"
-        onFocus={(e) => setToolbar(true)}
+        aria-label={`Table with ${state.data.length} rows and ${state.headers.length} columns focused`}
+        onFocus={(e) => {
+          setToolbar(true);
+        }}
         onClick={(e) => setToolbar(true)}
         ref={tableRef}
         showStripes={state.showStripes}
         headerType={state.headerType}
       >
+        <span
+          className="sr-only"
+          role="status"
+          aria-live="assertive"
+          aria-relevant="all"
+          aria-atomic="true"
+        >
+          {ariaLive}
+        </span>
+        <span
+          className="sr-only"
+          role="status"
+          aria-live="assertive"
+          aria-relevant="all"
+          aria-atomic="true"
+        >
+          {ariaLive2}
+        </span>
         <StyledConfigBar className="styled-config-bar">
           <Toolbar
             setSelectSection={setSelectSection}
@@ -376,6 +413,9 @@ const TableComponent = ({ tableId }) => {
             tableId={tableId}
           />
         </StyledConfigBar>
+        <span className="sr-only" tabIndex={0}>
+          {`Table with ${state.data.length} rows and ${state.headers.length} columns focused`}
+        </span>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

@@ -49,6 +49,10 @@ const ToolBar = ({
   const [activeHorizontalAlignment, setActiveHorizontalAlignment] = useState();
   const [activeVerticalAlignment, setActiveVerticalAlignment] = useState();
 
+  // Aria Live
+  const [ariaLive, setAriaLive] = useState("");
+  const [ariaLive2, setAriaLive2] = useState("");
+
   // Refs
   const AlignRef = useRef(null);
   const FormatRef = useRef(null);
@@ -67,6 +71,17 @@ const ToolBar = ({
       );
     }
   }, [selectedCell]);
+
+  // Handle Aria live region
+  const handleAriaLive = (value) => {
+    if (ariaLive === value) {
+      setAriaLive("");
+      setAriaLive2(value);
+    } else {
+      setAriaLive2("");
+      setAriaLive(value);
+    }
+  };
 
   // show Zebra dispatch
   const showZebraStripes = () => {
@@ -219,6 +234,8 @@ const ToolBar = ({
       headers: filteredHeaders,
       data: data,
     });
+
+    handleAriaLive(`Column ${selectSection?.replace(/[^0-9]/g, "")} deleted`);
   };
 
   // Delete Row
@@ -236,6 +253,9 @@ const ToolBar = ({
       headers: headers,
       data: newData,
     });
+
+    //  Delete row aria-label
+    handleAriaLive(`Row ${selectSection} deleted`);
   };
 
   // Esc key to close dropdown
@@ -318,8 +338,25 @@ const ToolBar = ({
       style={{
         "--active": toolbar ? "block" : "none",
       }}
-      useMemo
     >
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive}
+      </span>
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive2}
+      </span>
       <AppBar
         position="static"
         className="StyledAppbar"
@@ -823,24 +860,16 @@ const ToolBar = ({
                 arrow
               >
                 <IconButton
+                  disableRipple
                   className="StyledIconButton"
                   ref={KebabRef}
-                  style={
-                    {
-                      // "--active": "rgba(21, 101, 192, 1)",
-                    }
-                  }
-                  // disabled={
-                  //   !rowHasFocus
-                  // }
-                  disableRipple
                   color="inherit"
                   onClick={() => {
                     setOpenKebab(!openKebab);
                     setShowFormat(false);
+                    handleAriaLive(`Table control dropdown opened`);
                   }}
                   // If needed to add onKeyDown
-                  onKeyDown={(e) => {}}
                   id={`table-control-${tableId}`}
                   aria-label="Table control options"
                 >
