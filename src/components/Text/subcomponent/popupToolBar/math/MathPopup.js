@@ -128,8 +128,7 @@ const MathPopup = () => {
     mathfield.current.setOptions({
       mathModeSpace: "\\:",
       plonkSound: false,
-      keypressSound: false,
-      virtualKeyboardMode: "onfocus",
+      keypressSound: false
     });
     mathfield.current.focus();
   }, []);
