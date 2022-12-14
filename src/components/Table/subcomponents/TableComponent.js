@@ -66,6 +66,17 @@ const StyledInput = styled(TextareaAutosize)(
 
 const StyledConfigBar = styled("div")({});
 
+const ariaSection = (selection) => {
+  let readOut;
+  if (selection?.charAt(0) === "c") {
+    readOut = `column ${selection?.replace(/[^0-9]/g, "")}`;
+  } else {
+    readOut = `row ${+selection?.replace(/[^0-9]/g, "") + 1}`;
+  }
+
+  return readOut;
+};
+
 const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   columnOrder.splice(
     columnOrder.indexOf(targetColumnId),
@@ -78,6 +89,7 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
 const DraggableColumnHeader = ({
   header,
   table,
+  selectSection,
   setSelectSection,
   toolbarRef,
 }) => {
@@ -146,7 +158,7 @@ const DraggableColumnHeader = ({
               setSelectSection(null);
             }
           }}
-          aria-label="Header drag icon button"
+          aria-label={`${ariaSection(selectSection)} drag icon`}
           className="drag-indicator-icon-btn"
         >
           <DragIndicatorIcon />
@@ -250,7 +262,7 @@ const DraggableRow = ({
                 setSelectSection(null);
               }
             }}
-            aria-label="Header drag icon button"
+            aria-label={`${ariaSection(selectSection)} drag icon`}
             className="drag-indicator-icon-btn"
           >
             <DragIndicatorIcon />
@@ -378,6 +390,7 @@ const TableComponent = ({ tableId }) => {
                   len={table.length}
                   header={header}
                   table={table}
+                  selectSection={selectSection}
                   setSelectSection={setSelectSection}
                   toolbarRef={toolbarRef}
                 />
