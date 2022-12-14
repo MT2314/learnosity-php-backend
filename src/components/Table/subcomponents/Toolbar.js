@@ -569,7 +569,7 @@ const ToolBar = ({
                       ? "rgba(21, 101, 192, 0.12)"
                       : "#fff",
                   }}
-                  aria-label="alignment buttons dropdown"
+                  aria-label="alignment dropdown"
                 >
                   {activeHorizontalAlignment
                     ? icons[activeHorizontalAlignment]
@@ -577,7 +577,7 @@ const ToolBar = ({
                 </IconButton>
               </Tooltip>
               <AlignDropdownButton
-                aria-label="alignment buttons options"
+                aria-label="alignment options"
                 activeTopMenu={activeTopMenu}
                 setActiveHorizontalAlignment={setActiveHorizontalAlignment}
                 setActiveVerticalAlignment={setActiveVerticalAlignment}
