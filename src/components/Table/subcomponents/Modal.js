@@ -134,7 +134,7 @@ const Modal = ({ setShowModal }) => {
         row[`column${j + 1}`] = {
           value: "",
           type,
-          horizontalAlignment: "left-align",
+          horizontalAlignment: "center-align",
           verticalAlignment: "middle-align",
         };
       });

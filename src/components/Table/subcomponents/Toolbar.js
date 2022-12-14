@@ -108,7 +108,12 @@ const ToolBar = ({
         state.headerType === "side-header" && j === 0 ? "title" : "cell";
 
       // Added row object at current column index if side-header {column1: {value: "", type: "title"}
-      row[`column${j + 1}`] = { value: "", type };
+      row[`column${j + 1}`] = {
+        value: "",
+        type,
+        horizontalAlignment: "center-align",
+        verticalAlignment: "middle-align",
+      };
     });
     // Example of row object
     // row = {column1: {value: "", type: "title"}
@@ -165,7 +170,12 @@ const ToolBar = ({
         }
         // if current column is selected column, add new column into the row
         else {
-          data[j][`column${i}`] = { value: "", type }; //Add new column into each row
+          data[j][`column${i}`] = {
+            value: "",
+            type,
+            horizontalAlignment: "center-align",
+            verticalAlignment: "middle-align",
+          }; //Add new column into each row
         }
       }
     });
@@ -573,7 +583,7 @@ const ToolBar = ({
                 >
                   {activeHorizontalAlignment
                     ? icons[activeHorizontalAlignment]
-                    : icons["left-align"]}
+                    : icons["center-align"]}
                 </IconButton>
               </Tooltip>
               <AlignDropdownButton
