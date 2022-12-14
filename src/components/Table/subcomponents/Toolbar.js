@@ -614,6 +614,7 @@ const ToolBar = ({
                 setOpenKebab(false);
                 setActiveTopMenu(false);
               }}
+              disableRipple={true}
               ref={FormatRef}
               className="SelectButton"
               style={{
@@ -622,6 +623,7 @@ const ToolBar = ({
                 "--font-size": "16px",
                 "--grid-template-columns": "1fr",
                 "--hover-background-color": "transparent",
+                "--active": showFormat && "rgba(21, 101, 192, 1)",
               }}
             >
               Format
@@ -825,11 +827,9 @@ const ToolBar = ({
                 <IconButton
                   className="StyledIconButton"
                   ref={KebabRef}
-                  style={
-                    {
-                      // "--active": "rgba(21, 101, 192, 1)",
-                    }
-                  }
+                  style={{
+                    "--active": openKebab && "rgba(21, 101, 192, 1)",
+                  }}
                   // disabled={
                   //   !rowHasFocus
                   // }
