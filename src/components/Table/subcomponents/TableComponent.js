@@ -34,9 +34,15 @@ const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
   },
 }));
 
-const StyledTd = styled("td")(({ selectHighlight }) => ({
+const StyledTd = styled("td")(({ selectHighlight, titleType }) => ({
   border: selectHighlight ? "1px double #1565C0" : "1px solid #232323",
-  backgroundColor: selectHighlight ? "rgba(21, 101, 192, 0.08)" : "",
+  backgroundColor: titleType
+    ? selectHighlight
+      ? "rgba(226,230,234,255)"
+      : "#EEEEEE"
+    : selectHighlight
+    ? "rgba(21, 101, 192, 0.08)"
+    : "",
 }));
 
 const StyledInput = styled(TextareaAutosize)(
@@ -264,16 +270,12 @@ const DraggableRow = ({
       </td>
       {row.getVisibleCells().map((cell) => {
         const type = cell.row.original[cell.column.id].type;
-        // const center = {
-        //   display: "flex",
-        //   alignItems: "center",
-        //   justifyContent: "center",
-        // };
         return (
           <StyledTd
             selectHighlight={
               selectSection === cell.column.id || selectSection === row.id
             }
+            titleType={type == "title"}
             className="styled-td"
             key={cell.id}
             data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
@@ -282,12 +284,6 @@ const DraggableRow = ({
                 (state.hideSideHeader || state.hideTopHeader) && {
                   display: "none",
                 }),
-              backgroundColor:
-                type == "title"
-                  ? selectSection === cell.column.id || selectSection === row.id
-                    ? "rgba(226,230,234,255)"
-                    : "#EEEEEE"
-                  : "none",
             }}
             align="center"
           >
