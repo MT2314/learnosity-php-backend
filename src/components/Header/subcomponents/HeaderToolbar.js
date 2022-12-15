@@ -268,7 +268,7 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
             </IconButton>
           </Tooltip>
           <AlignDropdownButton
-            aria-label="alignment buttons options"
+            aria-label="alignment options"
             activeTopMenu={activeTopMenu}
             activeDropDownItem={activeDropDownItem}
             setActiveDropDownItem={setActiveDropDownItem}

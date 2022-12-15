@@ -123,7 +123,12 @@ const ToolBar = ({
         state.headerType === "side-header" && j === 0 ? "title" : "cell";
 
       // Added row object at current column index if side-header {column1: {value: "", type: "title"}
-      row[`column${j + 1}`] = { value: "", type };
+      row[`column${j + 1}`] = {
+        value: "",
+        type,
+        horizontalAlignment: "center-align",
+        verticalAlignment: "middle-align",
+      };
     });
     // Example of row object
     // row = {column1: {value: "", type: "title"}
@@ -180,7 +185,12 @@ const ToolBar = ({
         }
         // if current column is selected column, add new column into the row
         else {
-          data[j][`column${i}`] = { value: "", type }; //Add new column into each row
+          data[j][`column${i}`] = {
+            value: "",
+            type,
+            horizontalAlignment: "center-align",
+            verticalAlignment: "middle-align",
+          }; //Add new column into each row
         }
       }
     });
@@ -606,15 +616,15 @@ const ToolBar = ({
                       ? "rgba(21, 101, 192, 0.12)"
                       : "#fff",
                   }}
-                  aria-label="alignment buttons dropdown"
+                  aria-label="alignment dropdown"
                 >
                   {activeHorizontalAlignment
                     ? icons[activeHorizontalAlignment]
-                    : icons["left-align"]}
+                    : icons["center-align"]}
                 </IconButton>
               </Tooltip>
               <AlignDropdownButton
-                aria-label="alignment buttons options"
+                aria-label="alignment options"
                 activeTopMenu={activeTopMenu}
                 setActiveHorizontalAlignment={setActiveHorizontalAlignment}
                 setActiveVerticalAlignment={setActiveVerticalAlignment}
@@ -651,6 +661,7 @@ const ToolBar = ({
                 setOpenKebab(false);
                 setActiveTopMenu(false);
               }}
+              disableRipple={true}
               ref={FormatRef}
               className="SelectButton"
               style={{
@@ -659,6 +670,7 @@ const ToolBar = ({
                 "--font-size": "16px",
                 "--grid-template-columns": "1fr",
                 "--hover-background-color": "transparent",
+                "--active": showFormat && "rgba(21, 101, 192, 1)",
               }}
             >
               Format
@@ -863,6 +875,12 @@ const ToolBar = ({
                   disableRipple
                   className="StyledIconButton"
                   ref={KebabRef}
+                  style={{
+                    "--active": openKebab && "rgba(21, 101, 192, 1)",
+                  }}
+                  // disabled={
+                  //   !rowHasFocus
+                  // }
                   color="inherit"
                   onClick={() => {
                     setOpenKebab(!openKebab);

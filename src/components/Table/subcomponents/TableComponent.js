@@ -50,11 +50,11 @@ const StyledInput = styled(TextareaAutosize)(
     ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
     ...(type === "cell" && { padding: "15px" }),
     textAlign:
-      horizontalAlignment === "right-align"
+      horizontalAlignment === "left-align"
+        ? "left"
+        : horizontalAlignment === "right-align"
         ? "right"
-        : horizontalAlignment === "center-align"
-        ? "center"
-        : "left",
+        : "center",
     verticalAlign:
       verticalAlignment === "top-align"
         ? "top"
@@ -223,7 +223,7 @@ const DraggableRow = ({
         horizontalAlignment={
           state.data[row][`column${col + 1}`].horizontalAlignment !== undefined
             ? state.data[row][`column${col + 1}`].horizontalAlignment
-            : "left-align"
+            : "center-align"
         }
         verticalAlignment={
           state.data[row][`column${col + 1}`].verticalAlignment !== undefined
@@ -232,6 +232,11 @@ const DraggableRow = ({
         }
         onChange={onTextChange}
         onClick={setCell}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && type === "title") {
+            e.preventDefault();
+          }
+        }}
       />
     );
   };
