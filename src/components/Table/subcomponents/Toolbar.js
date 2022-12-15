@@ -126,7 +126,7 @@ const ToolBar = ({
       row[`column${j + 1}`] = {
         value: "",
         type,
-        horizontalAlignment: "center-align",
+        horizontalAlignment: type === "title" ? "center-align" : "left-align",
         verticalAlignment: "middle-align",
       };
     });
@@ -188,7 +188,8 @@ const ToolBar = ({
           data[j][`column${i}`] = {
             value: "",
             type,
-            horizontalAlignment: "center-align",
+            horizontalAlignment:
+              type === "title" ? "center-align" : "left-align",
             verticalAlignment: "middle-align",
           }; //Add new column into each row
         }

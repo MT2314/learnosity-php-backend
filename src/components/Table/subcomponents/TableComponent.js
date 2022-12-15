@@ -54,7 +54,11 @@ const StyledInput = styled(TextareaAutosize)(
         ? "left"
         : horizontalAlignment === "right-align"
         ? "right"
-        : "center",
+        : horizontalAlignment === "center-align"
+        ? "center"
+        : type === "title" && horizontalAlignment === "center-align"
+        ? "center"
+        : "left",
     verticalAlign:
       verticalAlignment === "top-align"
         ? "top"
@@ -223,7 +227,9 @@ const DraggableRow = ({
         horizontalAlignment={
           state.data[row][`column${col + 1}`].horizontalAlignment !== undefined
             ? state.data[row][`column${col + 1}`].horizontalAlignment
-            : "center-align"
+            : type === "title"
+            ? "center-align"
+            : "left-align"
         }
         verticalAlignment={
           state.data[row][`column${col + 1}`].verticalAlignment !== undefined
