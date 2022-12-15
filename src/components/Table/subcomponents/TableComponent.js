@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { LayoutContext } from "../TableContext";
 
 // react-table imports
@@ -60,7 +60,11 @@ const StyledInput = styled(TextareaAutosize)(
         ? "left"
         : horizontalAlignment === "right-align"
         ? "right"
-        : "center",
+        : horizontalAlignment === "center-align"
+        ? "center"
+        : type === "title" && horizontalAlignment === "center-align"
+        ? "center"
+        : "left",
     verticalAlign:
       verticalAlignment === "top-align"
         ? "top"
@@ -71,6 +75,18 @@ const StyledInput = styled(TextareaAutosize)(
 );
 
 const StyledConfigBar = styled("div")({});
+
+// Filter SelectSection string to return aria-label
+const ariaSection = (selection) => {
+  let readOut;
+  if (selection?.charAt(0) === "c") {
+    readOut = `column ${selection?.replace(/[^0-9]/g, "")}`;
+  } else {
+    readOut = `row ${+selection?.replace(/[^0-9]/g, "") + 1}`;
+  }
+
+  return readOut;
+};
 
 const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   columnOrder.splice(
@@ -84,6 +100,7 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
 const DraggableColumnHeader = ({
   header,
   table,
+  selectSection,
   setSelectSection,
   toolbarRef,
 }) => {
@@ -152,7 +169,7 @@ const DraggableColumnHeader = ({
               setSelectSection(null);
             }
           }}
-          aria-label="Header drag icon button"
+          aria-label={`${ariaSection(selectSection)} drag icon`}
           className="drag-indicator-icon-btn"
         >
           <DragIndicatorIcon />
@@ -188,7 +205,6 @@ const DraggableRow = ({
 
   const renderTextArea = (value, row, col, type) => {
     const onTextChange = (e) => {
-      console.log("onTextChange", row, col);
       dispatch({
         func: "UPDATE_CELL",
         row,
@@ -217,7 +233,9 @@ const DraggableRow = ({
         horizontalAlignment={
           state.data[row][`column${col + 1}`].horizontalAlignment !== undefined
             ? state.data[row][`column${col + 1}`].horizontalAlignment
-            : "center-align"
+            : type === "title"
+            ? "center-align"
+            : "left-align"
         }
         verticalAlignment={
           state.data[row][`column${col + 1}`].verticalAlignment !== undefined
@@ -261,7 +279,7 @@ const DraggableRow = ({
                 setSelectSection(null);
               }
             }}
-            aria-label="Header drag icon button"
+            aria-label={`${ariaSection(selectSection)} drag icon`}
             className="drag-indicator-icon-btn"
           >
             <DragIndicatorIcon />
@@ -311,6 +329,7 @@ const TableComponent = ({ tableId }) => {
   useOnClickOutside(tableRef, () => {
     setToolbar(false);
     setSelectSection(null);
+    setSelectedCell(null);
   });
 
   const [columnOrder, setColumnOrder] = useState(
@@ -347,7 +366,10 @@ const TableComponent = ({ tableId }) => {
       <StyledTable
         role="presentation"
         className="style-table"
-        onFocus={(e) => setToolbar(true)}
+        aria-label={`Table with ${state.data.length} rows and ${state.headers.length} columns.`}
+        onFocus={(e) => {
+          setToolbar(true);
+        }}
         onClick={(e) => setToolbar(true)}
         ref={tableRef}
         showStripes={state.showStripes}
@@ -365,9 +387,12 @@ const TableComponent = ({ tableId }) => {
             tableId={tableId}
           />
         </StyledConfigBar>
+        <span className="sr-only" tabIndex={0}>
+          {`Table with ${state.data.length} rows and ${state.headers.length} columns focused`}
+        </span>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr key={headerGroup.id} aria-hidden="true">
               <th
                 style={{ width: "30px" }}
                 aria-label=""
@@ -379,6 +404,7 @@ const TableComponent = ({ tableId }) => {
                   len={table.length}
                   header={header}
                   table={table}
+                  selectSection={selectSection}
                   setSelectSection={setSelectSection}
                   toolbarRef={toolbarRef}
                 />

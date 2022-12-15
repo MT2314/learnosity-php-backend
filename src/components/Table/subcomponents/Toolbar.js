@@ -49,6 +49,10 @@ const ToolBar = ({
   const [activeHorizontalAlignment, setActiveHorizontalAlignment] = useState();
   const [activeVerticalAlignment, setActiveVerticalAlignment] = useState();
 
+  // Aria Live
+  const [ariaLive, setAriaLive] = useState("");
+  const [ariaLive2, setAriaLive2] = useState("");
+
   // Refs
   const AlignRef = useRef(null);
   const FormatRef = useRef(null);
@@ -67,6 +71,17 @@ const ToolBar = ({
       );
     }
   }, [selectedCell]);
+
+  // Handle Aria live region
+  const handleAriaLive = (value) => {
+    if (ariaLive === value) {
+      setAriaLive("");
+      setAriaLive2(value);
+    } else {
+      setAriaLive2("");
+      setAriaLive(value);
+    }
+  };
 
   // show Zebra dispatch
   const showZebraStripes = () => {
@@ -111,7 +126,7 @@ const ToolBar = ({
       row[`column${j + 1}`] = {
         value: "",
         type,
-        horizontalAlignment: "center-align",
+        horizontalAlignment: type === "title" ? "center-align" : "left-align",
         verticalAlignment: "middle-align",
       };
     });
@@ -125,7 +140,12 @@ const ToolBar = ({
       : data.splice(+selectSection + 1, 0, row);
 
     setSelectSection(`${parseFloat(selectSection) + 1}`);
-
+    // Screen Reader updates for new column
+    handleAriaLive(
+      `Row ${parseFloat(selectSection) + 1} of ${
+        state.data.length
+      } has been added`
+    );
     // Dispatch the new data to the table
     dispatch({
       func: "ADD_ROW",
@@ -147,7 +167,7 @@ const ToolBar = ({
 
     // Loop through rows and define new row properties { column1: {value: "", type: "cell" }
     [...Array(data.length)].forEach((_, j) => {
-      // If top header, the firt row has each column type as a title
+      // If top header, the first row has each column type as a title
       let type =
         state.headerType === "top-header" && j === 0 ? "title" : "cell";
 
@@ -173,13 +193,20 @@ const ToolBar = ({
           data[j][`column${i}`] = {
             value: "",
             type,
-            horizontalAlignment: "center-align",
+            horizontalAlignment:
+              type === "title" ? "center-align" : "left-align",
             verticalAlignment: "middle-align",
           }; //Add new column into each row
         }
       }
-    });
 
+      // Screen Reader updates for new column
+      handleAriaLive(
+        `Column ${+addedColumnIndex + 1} of ${
+          +currentRowLen + 1
+        } has been added`
+      );
+    });
     dispatch({
       func: "ADD_COL",
       headers: headers,
@@ -224,6 +251,13 @@ const ToolBar = ({
     parseFloat(selectSection.replace(/[^0-9]/g, "")) == headers.length &&
       setSelectSection(`column${filteredHeaders.length}`);
 
+    // Screen Reader updates for deleted column
+    handleAriaLive(
+      `Column ${selectSection.replace(/[^0-9]/g, "")} of ${
+        filteredHeaders.length + 1
+      } has been deleted`
+    );
+
     dispatch({
       func: "DELETE_COLUMN",
       headers: filteredHeaders,
@@ -240,12 +274,15 @@ const ToolBar = ({
 
     // If selected column is the last column, select the previous column after deleting
     int == data.length - 1 && setSelectSection(`${newData.length - 1}`);
-
+    // Screen Reader updates for deleted row
+    handleAriaLive(`Row ${int + 1} of ${newData.length} has been deleted`);
     dispatch({
       func: "DELETE_ROW",
       headers: headers,
       data: newData,
     });
+
+    //  Delete row aria-label
   };
 
   // Esc key to close dropdown
@@ -328,8 +365,25 @@ const ToolBar = ({
       style={{
         "--active": toolbar ? "block" : "none",
       }}
-      useMemo
     >
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive}
+      </span>
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive2}
+      </span>
       <AppBar
         position="static"
         className="StyledAppbar"
@@ -434,11 +488,6 @@ const ToolBar = ({
               >
                 <IconButton
                   className="StyledIconButton"
-                  style={
-                    {
-                      // "--active": "rgba(21, 101, 192, 1)",
-                    }
-                  }
                   disableRipple
                   color="inherit"
                   onClick={() => {
@@ -460,14 +509,6 @@ const ToolBar = ({
               >
                 <IconButton
                   className="StyledIconButton"
-                  style={
-                    {
-                      // "--active": "rgba(21, 101, 192, 1)",
-                    }
-                  }
-                  // disabled={
-                  //   !rowHasFocus
-                  // }
                   disableRipple
                   color="inherit"
                   onClick={() => {
@@ -494,14 +535,6 @@ const ToolBar = ({
               >
                 <IconButton
                   className="StyledIconButton"
-                  style={
-                    {
-                      // "--active": "rgba(21, 101, 192, 1)",
-                    }
-                  }
-                  // disabled={
-                  //   !rowHasFocus
-                  // }
                   disableRipple
                   color="inherit"
                   onClick={() => {
@@ -523,14 +556,6 @@ const ToolBar = ({
               >
                 <IconButton
                   className="StyledIconButton"
-                  style={
-                    {
-                      // "--active": "rgba(21, 101, 192, 1)",
-                    }
-                  }
-                  // disabled={
-                  //   !rowHasFocus
-                  // }
                   disableRipple
                   color="inherit"
                   onClick={() => {
@@ -835,22 +860,19 @@ const ToolBar = ({
                 arrow
               >
                 <IconButton
+                  disableRipple
                   className="StyledIconButton"
                   ref={KebabRef}
                   style={{
                     "--active": openKebab && "rgba(21, 101, 192, 1)",
                   }}
-                  // disabled={
-                  //   !rowHasFocus
-                  // }
-                  disableRipple
                   color="inherit"
                   onClick={() => {
                     setOpenKebab(!openKebab);
                     setShowFormat(false);
+                    handleAriaLive(`Table control dropdown opened`);
                   }}
                   // If needed to add onKeyDown
-                  onKeyDown={(e) => {}}
                   id={`table-control-${tableId}`}
                   aria-label="Table control options"
                 >
