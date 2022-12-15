@@ -330,26 +330,11 @@ const TableComponent = ({ tableId }) => {
   const [toolbarRef, setToolbarRef] = useState(null);
   const tableRef = useRef();
 
-  // Aria Live
-  const [ariaLive, setAriaLive] = useState("");
-  const [ariaLive2, setAriaLive2] = useState("");
-
   useOnClickOutside(tableRef, () => {
     setToolbar(false);
     setSelectSection(null);
     setSelectedCell(null);
   });
-
-  // Handle Aria live region
-  const handleAriaLive = (value) => {
-    if (ariaLive === value) {
-      setAriaLive("");
-      setAriaLive2(value);
-    } else {
-      setAriaLive2("");
-      setAriaLive(value);
-    }
-  };
 
   const [columnOrder, setColumnOrder] = useState(
     state.headers.map((column) => column.id)
@@ -385,7 +370,7 @@ const TableComponent = ({ tableId }) => {
       <StyledTable
         role="presentation"
         className="style-table"
-        aria-label={`Table with ${state.data.length} rows and ${state.headers.length} columns focused`}
+        aria-label={`Table with ${state.data.length} rows and ${state.headers.length} columns.`}
         onFocus={(e) => {
           setToolbar(true);
         }}
@@ -394,24 +379,6 @@ const TableComponent = ({ tableId }) => {
         showStripes={state.showStripes}
         headerType={state.headerType}
       >
-        <span
-          className="sr-only"
-          role="status"
-          aria-live="assertive"
-          aria-relevant="all"
-          aria-atomic="true"
-        >
-          {ariaLive}
-        </span>
-        <span
-          className="sr-only"
-          role="status"
-          aria-live="assertive"
-          aria-relevant="all"
-          aria-atomic="true"
-        >
-          {ariaLive2}
-        </span>
         <StyledConfigBar className="styled-config-bar">
           <Toolbar
             setSelectSection={setSelectSection}
@@ -429,7 +396,7 @@ const TableComponent = ({ tableId }) => {
         </span>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr key={headerGroup.id} aria-hidden="true">
               <th
                 style={{ width: "30px" }}
                 aria-label=""
