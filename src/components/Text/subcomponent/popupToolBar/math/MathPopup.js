@@ -2,6 +2,7 @@ import React from "react";
 import MathpixEqation from "./MathpixOptions/MathpixEquation";
 import MathPixDraw from "./MathpixOptions/MathpixDraw/MathpixDraw";
 import { useMathpixOption } from "../../../Provider";
+import ImageConversion from "./ImageConversion/ImageConversion";
 
 
 const MathPopup = ({ mathOption }) => {
@@ -15,9 +16,6 @@ const MathPopup = ({ mathOption }) => {
     quill.insertText(range.index + range.length + 1, " ");
     quill.setSelection(range.index + range.length + 1);
   };
-  const closeDragAndDrop = () => {
-    useMathpixOption(null)
-  };
 
   return (
     <>
@@ -25,11 +23,16 @@ const MathPopup = ({ mathOption }) => {
         <MathpixEqation />
       )}
       {mathOption === "mathDraw" && (
-        <MathPixDraw
+        <ImageConversion />
+      )}
+      {mathOption === "imageConversion" && (
+        <ImageConversion />
+      )}
+
+{/* <MathPixDraw
           closeDragAndDrop={closeDragAndDrop}
           insertQuill={insertQuill}
-        />
-      )}
+        /> */}
     </>
   );
 };

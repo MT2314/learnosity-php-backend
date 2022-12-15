@@ -100,18 +100,9 @@ export const CopyToClipboardButton = ({ closeDragAndDrop, insertQuill }) => {
         onClick={handleClick}
         disabled={latex.isPlaceholder}
         color="primary"
-        className="btn-styles"
+        className="insert-button"
       >
         Insert
-      </button>
-      <button
-        className="btn-styles"
-        onClick={() => {
-          setUndoHistory([]);
-          closeDragAndDrop();
-        }}
-      >
-        close
       </button>
     </div>
   );

@@ -38,10 +38,10 @@ export const CanvasProvider = ({ children }) => {
         // var w = document.documentElement.clientWidth - 20;
         // var h = document.documentElement.clientHeight;
 
-        canvas.width = 800;
-        canvas.height = 350;
-        canvas.style.width = `800px`;
-        canvas.style.height = `350px`;
+        canvas.width = 560;
+        canvas.height = 200;
+        canvas.style.width = `560px`;
+        canvas.style.height = `200px`;
 
         const context = canvas.getContext("2d");
         context.lineCap = "round";
@@ -139,11 +139,9 @@ export const CanvasProvider = ({ children }) => {
 
     const windowResize = () => {
         const canvas = canvasRef.current;
-        var w = document.documentElement.clientWidth - 20;
-        var h = document.documentElement.clientHeight;
 
-        canvas.width = w * 2;
-        canvas.height = h * 1.5;
+        canvas.width = 560;
+        canvas.height = 200;
         canvas.style.width = `${w}px`;
         canvas.style.height = `${h * 0.75}px`;
 
