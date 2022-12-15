@@ -392,12 +392,8 @@ const TableComponent = ({ tableId }) => {
         </span>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} aria-hidden="true">
-              <th
-                style={{ width: "30px" }}
-                aria-label=""
-                aria-hidden="true"
-              ></th>
+            <tr key={headerGroup.id}>
+              <th style={{ width: "30px" }} aria-label=""></th>
               {headerGroup.headers.map((header) => (
                 <DraggableColumnHeader
                   key={header.id}

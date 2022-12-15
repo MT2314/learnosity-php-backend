@@ -142,8 +142,8 @@ const ToolBar = ({
     setSelectSection(`${parseFloat(selectSection) + 1}`);
     // Screen Reader updates for new column
     handleAriaLive(
-      `Row ${parseFloat(selectSection) + 1} of ${
-        state.data.length
+      `Row ${parseFloat(selectSection) + 2} of ${
+        state.data.length + 1
       } has been added`
     );
     // Dispatch the new data to the table
@@ -275,7 +275,7 @@ const ToolBar = ({
     // If selected column is the last column, select the previous column after deleting
     int == data.length - 1 && setSelectSection(`${newData.length - 1}`);
     // Screen Reader updates for deleted row
-    handleAriaLive(`Row ${int + 1} of ${newData.length} has been deleted`);
+    handleAriaLive(`Row ${int + 1} of ${newData.length + 1} has been deleted`);
     dispatch({
       func: "DELETE_ROW",
       headers: headers,
