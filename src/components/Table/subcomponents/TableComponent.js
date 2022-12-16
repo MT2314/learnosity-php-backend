@@ -252,6 +252,9 @@ const DraggableRow = ({
         }
         onChange={onTextChange}
         onClick={setCell}
+        onBlur={(e) => {
+          setSelectedCell();
+        }}
         onKeyDown={(e) => {
           if (e.key === "Enter" && type === "title") {
             e.preventDefault();
@@ -389,6 +392,21 @@ const TableComponent = ({ tableId }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
+      {toolbar && (
+        <StyledConfigBar className="styled-config-bar">
+          <Toolbar
+            setSelectSection={setSelectSection}
+            selectSection={selectSection}
+            setSelectedCell={setSelectedCell}
+            selectedCell={selectedCell}
+            toolbar={toolbar}
+            setToolbarRef={setToolbarRef}
+            toolbarRef={toolbarRef}
+            tableId={tableId}
+            handleAriaLive={handleAriaLive}
+          />
+        </StyledConfigBar>
+      )}
       <span
         className="sr-only"
         role="status"
@@ -419,19 +437,6 @@ const TableComponent = ({ tableId }) => {
         showStripes={state.showStripes}
         headerType={state.headerType}
       >
-        <StyledConfigBar className="styled-config-bar">
-          <Toolbar
-            setSelectSection={setSelectSection}
-            selectSection={selectSection}
-            setSelectedCell={setSelectedCell}
-            selectedCell={selectedCell}
-            toolbar={toolbar}
-            setToolbarRef={setToolbarRef}
-            toolbarRef={toolbarRef}
-            tableId={tableId}
-            handleAriaLive={handleAriaLive}
-          />
-        </StyledConfigBar>
         <span className="sr-only" tabIndex={0}>
           {`Table with ${state.data.length} rows and ${state.headers.length} columns focused`}
         </span>
