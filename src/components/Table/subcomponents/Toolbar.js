@@ -34,6 +34,7 @@ const ToolBar = ({
   selectedCell,
   toolbarRef,
   tableId,
+  handleAriaLive,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -48,10 +49,6 @@ const ToolBar = ({
   //  ? Alignment Dropdown Selection State
   const [activeHorizontalAlignment, setActiveHorizontalAlignment] = useState();
   const [activeVerticalAlignment, setActiveVerticalAlignment] = useState();
-
-  // Aria Live
-  const [ariaLive, setAriaLive] = useState("");
-  const [ariaLive2, setAriaLive2] = useState("");
 
   // Refs
   const AlignRef = useRef(null);
@@ -71,17 +68,6 @@ const ToolBar = ({
       );
     }
   }, [selectedCell]);
-
-  // Handle Aria live region
-  const handleAriaLive = (value) => {
-    if (ariaLive === value) {
-      setAriaLive("");
-      setAriaLive2(value);
-    } else {
-      setAriaLive2("");
-      setAriaLive(value);
-    }
-  };
 
   // show Zebra dispatch
   const showZebraStripes = () => {
@@ -366,24 +352,6 @@ const ToolBar = ({
         "--active": toolbar ? "block" : "none",
       }}
     >
-      <span
-        className="sr-only"
-        role="status"
-        aria-live="assertive"
-        aria-relevant="all"
-        aria-atomic="true"
-      >
-        {ariaLive}
-      </span>
-      <span
-        className="sr-only"
-        role="status"
-        aria-live="assertive"
-        aria-relevant="all"
-        aria-atomic="true"
-      >
-        {ariaLive2}
-      </span>
       <AppBar
         position="static"
         className="StyledAppbar"

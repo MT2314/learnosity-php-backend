@@ -187,6 +187,7 @@ const DraggableRow = ({
   selectSection,
   selectedCell,
   toolbarRef,
+  handleAriaLive,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -304,6 +305,9 @@ const DraggableRow = ({
                 }),
             }}
             align="center"
+            onFocus={(e) => {
+              handleAriaLive("Cell selected");
+            }}
           >
             {renderTextArea(
               cell.row.original[cell.column.id].value,
@@ -325,6 +329,21 @@ const TableComponent = ({ tableId }) => {
   const [selectedCell, setSelectedCell] = useState(null);
   const [toolbarRef, setToolbarRef] = useState(null);
   const tableRef = useRef();
+
+  // Aria Live
+  const [ariaLive, setAriaLive] = useState("");
+  const [ariaLive2, setAriaLive2] = useState("");
+
+  // Handle Aria live region
+  const handleAriaLive = (value) => {
+    if (ariaLive === value) {
+      setAriaLive("");
+      setAriaLive2(value);
+    } else {
+      setAriaLive2("");
+      setAriaLive(value);
+    }
+  };
 
   useOnClickOutside(tableRef, () => {
     setToolbar(false);
@@ -363,6 +382,24 @@ const TableComponent = ({ tableId }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive}
+      </span>
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive2}
+      </span>
       <StyledTable
         role="presentation"
         className="style-table"
@@ -385,6 +422,7 @@ const TableComponent = ({ tableId }) => {
             setToolbarRef={setToolbarRef}
             toolbarRef={toolbarRef}
             tableId={tableId}
+            handleAriaLive={handleAriaLive}
           />
         </StyledConfigBar>
         <span className="sr-only" tabIndex={0}>
@@ -408,7 +446,7 @@ const TableComponent = ({ tableId }) => {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody aria-hidden="true">
           {table.getRowModel().rows.map((row) => (
             <DraggableRow
               key={row.id}
@@ -419,6 +457,7 @@ const TableComponent = ({ tableId }) => {
               setSelectedCell={setSelectedCell}
               selectedCell={selectedCell}
               toolbarRef={toolbarRef}
+              handleAriaLive={handleAriaLive}
             ></DraggableRow>
           ))}
         </tbody>
