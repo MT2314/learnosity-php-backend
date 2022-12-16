@@ -251,15 +251,20 @@ const DraggableRow = ({
             : "middle-align"
         }
         onChange={onTextChange}
+        onFocus={setCell}
         onClick={setCell}
         onBlur={(e) => {
-          setSelectedCell();
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && type === "title") {
-            e.preventDefault();
+          const relatedTarget = e.relatedTarget || document.activeElement;
+          if (!toolbarRef.contains(relatedTarget)) {
+            setSelectedCell(null);
           }
         }}
+
+        // onKeyDown={(e) => {
+        //   if (e.key === "Enter" && type === "title") {
+        //     e.preventDefault();
+        //   }
+        // }}
       />
     );
   };
@@ -288,6 +293,7 @@ const DraggableRow = ({
               const relatedTarget = e.relatedTarget || document.activeElement;
               if (!toolbarRef.contains(relatedTarget)) {
                 setSelectSection(null);
+                setSelectedCell(null);
               }
             }}
             aria-label={`${ariaSection(selectSection)} drag icon`}
@@ -340,12 +346,13 @@ const DraggableRow = ({
               }`;
 
               let cellAria = `${
-                type === "title"
-                  ? `${mycell} column ${parseInt(
-                      cell.column.id.replace("column", "")
+                type === "title" && state.headerType === "side-header"
+                  ? `Row ${cell.row.index + 1} ${mycell}
                     )}`
                   : type === "title" && state.headerType === "top-header"
-                  ? `Top header ${mycell} row ${cell.row.index}`
+                  ? `Column ${parseInt(
+                      cell.column.id.replace("column", "")
+                    )} ${mycell}`
                   : state.headerType === "top-header"
                   ? `${columnTitle} column ${parseInt(
                       cell.column.id.replace("column", "")
@@ -429,21 +436,6 @@ const TableComponent = ({ tableId }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      {toolbar && (
-        <StyledConfigBar className="styled-config-bar">
-          <Toolbar
-            setSelectSection={setSelectSection}
-            selectSection={selectSection}
-            setSelectedCell={setSelectedCell}
-            selectedCell={selectedCell}
-            toolbar={toolbar}
-            setToolbarRef={setToolbarRef}
-            toolbarRef={toolbarRef}
-            tableId={tableId}
-            handleAriaLive={handleAriaLive}
-          />
-        </StyledConfigBar>
-      )}
       <span
         className="sr-only"
         role="status"
@@ -477,6 +469,19 @@ const TableComponent = ({ tableId }) => {
         <span className="sr-only" tabIndex={0}>
           {`Table with ${state.data.length} rows and ${state.headers.length} columns focused`}
         </span>
+        <StyledConfigBar className="styled-config-bar">
+          <Toolbar
+            setSelectSection={setSelectSection}
+            selectSection={selectSection}
+            setSelectedCell={setSelectedCell}
+            selectedCell={selectedCell}
+            toolbar={toolbar}
+            setToolbarRef={setToolbarRef}
+            toolbarRef={toolbarRef}
+            tableId={tableId}
+            handleAriaLive={handleAriaLive}
+          />
+        </StyledConfigBar>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

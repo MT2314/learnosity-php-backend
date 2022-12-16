@@ -349,8 +349,7 @@ const ToolBar = ({
       }}
       className="ToolbarContainer"
       style={{
-        "--active":
-          toolbar && (selectSection || selectedCell) ? "block" : "none",
+        "--active": toolbar ? "block" : "none",
       }}
     >
       <AppBar
@@ -544,7 +543,7 @@ const ToolBar = ({
           )}
 
           {/* Align Text */}
-          {selectSection === null && selectedCell && (
+          {selectSection === null && (
             <>
               <Tooltip
                 aria-label="alignment"
