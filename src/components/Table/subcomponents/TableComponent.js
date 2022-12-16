@@ -456,7 +456,7 @@ const TableComponent = ({ tableId }) => {
       <StyledTable
         role="presentation"
         className="style-table"
-        aria-label={`Table with ${state.data.length} rows and ${state.headers.length} columns.`}
+        // aria-label={`Table with ${state.data.length} rows and ${state.headers.length} columns.`}
         onFocus={(e) => {
           setToolbar(true);
         }}
@@ -465,7 +465,7 @@ const TableComponent = ({ tableId }) => {
         showStripes={state.showStripes}
         headerType={state.headerType}
       >
-        <span className="sr-only" tabIndex={0}>
+        <span className="sr-only" tabIndex={0} role="status">
           {`Table with ${state.data.length} rows and ${state.headers.length} columns focused`}
         </span>
         <StyledConfigBar className="styled-config-bar">
