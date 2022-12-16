@@ -32,6 +32,7 @@ const ToolBar = ({
   setToolbarRef,
   setSelectSection,
   selectedCell,
+  setSelectedCell,
   toolbarRef,
   tableId,
   handleAriaLive,
@@ -345,11 +346,15 @@ const ToolBar = ({
       onBlur={(e) => {
         if (!toolbarRef.contains(e.relatedTarget || document.activeElement)) {
           setSelectSection(null);
+          setSelectedCell(null);
+          setOpenKebab(false);
+          setShowFormat(false);
         }
       }}
       className="ToolbarContainer"
       style={{
-        "--active": toolbar ? "block" : "none",
+        "--active":
+          toolbar && (selectSection || selectedCell) ? "block" : "none",
       }}
     >
       <AppBar
@@ -541,9 +546,8 @@ const ToolBar = ({
               <div className="StyledDivider" />
             </>
           )}
-
           {/* Align Text */}
-          {selectSection === null && (
+          {selectedCell !== null && (
             <>
               <Tooltip
                 aria-label="alignment"
@@ -559,8 +563,10 @@ const ToolBar = ({
                     setShowFormat(false);
                     if (activeTopMenu) {
                       setActiveTopMenu(false);
+                      handleAriaLive("Alignment menu closed");
                     } else {
                       setActiveTopMenu(true);
+                      handleAriaLive("Alignment menu opened");
                     }
                   }}
                   className={"StyledIconButton"}
@@ -616,6 +622,11 @@ const ToolBar = ({
                 setShowFormat(!showFormat);
                 setOpenKebab(false);
                 setActiveTopMenu(false);
+                handleAriaLive(
+                  showFormat
+                    ? `Format dropdown closed`
+                    : `Format dropdown opened`
+                );
               }}
               disableRipple={true}
               ref={FormatRef}
@@ -838,7 +849,11 @@ const ToolBar = ({
                   onClick={() => {
                     setOpenKebab(!openKebab);
                     setShowFormat(false);
-                    handleAriaLive(`Table control dropdown opened`);
+                    handleAriaLive(
+                      openKebab
+                        ? `Table control dropdown closed`
+                        : `Table control dropdown opened`
+                    );
                   }}
                   // If needed to add onKeyDown
                   id={`table-control-${tableId}`}
@@ -955,9 +970,11 @@ const AlignDropdownButton = ({
         >
           <IconButton
             disableRipple
-            value="left-align"
+            value="align left"
             color="inherit"
-            aria-label="left align"
+            aria-label={`${
+              activeHorizontalAlignment === "left-align" ? "selected" : ""
+            } align left`}
             onClick={() => {
               setActiveHorizontalAlignment("left-align");
             }}
@@ -984,8 +1001,10 @@ const AlignDropdownButton = ({
         >
           <IconButton
             disableRipple
-            aria-label="align center"
-            value="center-align"
+            aria-label={`${
+              activeHorizontalAlignment === "center-align" ? "selected" : ""
+            } align center`}
+            value="align center"
             onClick={() => {
               if (activeHorizontalAlignment === "center-align") {
                 setActiveHorizontalAlignment("left-align");
@@ -1016,8 +1035,10 @@ const AlignDropdownButton = ({
         >
           <IconButton
             disableRipple
-            aria-label="right align"
-            value="right-align"
+            aria-label={`${
+              activeHorizontalAlignment === "right-align" ? "selected" : ""
+            } align right`}
+            value="align right"
             onClick={() => {
               if (activeHorizontalAlignment === "right-align") {
                 setActiveHorizontalAlignment("left-align");
@@ -1056,9 +1077,11 @@ const AlignDropdownButton = ({
         <Tooltip aria-label="align top" title="align top" placement="top" arrow>
           <IconButton
             disableRipple
-            value="top-align"
+            value="align top"
             color="inherit"
-            aria-label="top align"
+            aria-label={`${
+              activeVerticalAlignment === "top-align" ? "selected" : ""
+            } align top`}
             onClick={() => {
               if (setActiveVerticalAlignment === "top-align") {
                 setActiveVerticalAlignment("middle-align");
@@ -1089,8 +1112,10 @@ const AlignDropdownButton = ({
         >
           <IconButton
             disableRipple
-            aria-label="align middle"
-            value="middle-align"
+            aria-label={`${
+              activeVerticalAlignment === "middle-align" ? "selected" : ""
+            } align middle`}
+            value="align middle"
             onClick={() => {
               if (setActiveVerticalAlignment === "middle-align") {
                 setActiveVerticalAlignment("middle-align");
@@ -1121,8 +1146,10 @@ const AlignDropdownButton = ({
         >
           <IconButton
             disableRipple
-            aria-label="bottom align"
-            value="bottom-align"
+            aria-label={`${
+              activeVerticalAlignment === "bottom-align" ? "selected" : ""
+            } align bottom`}
+            value="align bottom"
             onClick={() => {
               if (setActiveVerticalAlignment === "bottom-align") {
                 setActiveVerticalAlignment("left-align");

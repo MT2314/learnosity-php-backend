@@ -259,6 +259,11 @@ const DraggableRow = ({
             setSelectedCell(null);
           }
         }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        }}
       />
     );
   };
