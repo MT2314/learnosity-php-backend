@@ -50,11 +50,24 @@ const StyledInput = styled(TextareaAutosize)(
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: type === "title" ? "25px 10px" : "10px",
+    padding:
+      type === "title" && verticalAlignment === "top-align"
+        ? "15px 10px 35px 10px"
+        : type === "title" && verticalAlignment === "middle-align"
+        ? "25px 10px"
+        : type === "title" && verticalAlignment === "bottom-align"
+        ? "35px 10px 15px 10px"
+        : type === "cell" && verticalAlignment === "top-align"
+        ? "10px 10px 30px 10px"
+        : type === "cell" && verticalAlignment === "middle-align"
+        ? "20px 10px"
+        : type === "cell" && verticalAlignment === "bottom-align"
+        ? "30px 10px 10px 10px"
+        : "20px 10px",
     fontSize: type === "title" ? "18px" : "16px",
     fontWeight: type === "title" ? "500" : "400",
     ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
-    ...(type === "cell" && { padding: "15px" }),
+    // ...(type === "cell" && { padding: "15px" }),
     textAlign:
       horizontalAlignment === "left-align"
         ? "left"
@@ -65,12 +78,6 @@ const StyledInput = styled(TextareaAutosize)(
         : type === "title" && horizontalAlignment === "center-align"
         ? "center"
         : "left",
-    verticalAlign:
-      verticalAlignment === "top-align"
-        ? "top"
-        : verticalAlignment === "bottom-align"
-        ? "bottom"
-        : "middle",
   })
 );
 
