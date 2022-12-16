@@ -316,7 +316,44 @@ const DraggableRow = ({
             }}
             align="center"
             onFocus={(e) => {
-              handleAriaLive("Cell selected");
+              // Column title at index
+              let columnTitle =
+                state.data[0][
+                  `column${parseInt(cell.column.id.replace("column", ""))}`
+                ].value === ""
+                  ? `Title${parseInt(cell.column.id.replace("column", ""))}`
+                  : state.data[0][
+                      `column${parseInt(cell.column.id.replace("column", ""))}`
+                    ].value;
+
+              // row Title at index
+              let rowTitle =
+                state.data[cell.row.index][`column1`].value === ""
+                  ? `Title ${cell.row.index}`
+                  : state.data[cell.row.index][`column1`].value;
+
+              // cell at index with blank value
+              let mycell = `${
+                cell.row.original[cell.column.id].value === ""
+                  ? "empty cell"
+                  : cell.row.original[cell.column.id].value
+              }`;
+
+              let cellAria = `${
+                type === "title"
+                  ? `${mycell} column ${parseInt(
+                      cell.column.id.replace("column", "")
+                    )}`
+                  : type === "title" && state.headerType === "top-header"
+                  ? `Top header ${mycell} row ${cell.row.index}`
+                  : state.headerType === "top-header"
+                  ? `${columnTitle} column ${parseInt(
+                      cell.column.id.replace("column", "")
+                    )} ${mycell}`
+                  : `${rowTitle} row ${mycell}`
+              }`;
+
+              handleAriaLive(cellAria);
             }}
           >
             {renderTextArea(
