@@ -349,7 +349,7 @@ const DraggableRow = ({
               // row Title at index
               let rowTitle =
                 state.data[cell.row.index][`column1`].value === ""
-                  ? `Title ${cell.row.index}`
+                  ? `Title ${+cell.row.index + 1}`
                   : state.data[cell.row.index][`column1`].value;
 
               // cell at index with blank value
