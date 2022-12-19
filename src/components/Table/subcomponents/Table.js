@@ -6,6 +6,8 @@ import TableComponent from "./TableComponent";
 
 import styled from "@emotion/styled";
 
+import { useTranslation } from "react-i18next";
+
 const Container = styled("button")(() => ({
   width: "968px",
   minHeight: "152px",
@@ -40,6 +42,7 @@ const StyledButton = styled("button")(() => ({
 const Table = ({ tableId }) => {
   const [showModal, setShowModal] = useState(false);
   const [state, dispatch] = useContext(LayoutContext);
+  const { t } = useTranslation();
 
   const createTable = (e) => {
     setShowModal(true);
@@ -48,17 +51,17 @@ const Table = ({ tableId }) => {
   return (
     <>
       {state.data.length !== 0 ? (
-        <TableComponent tableId={tableId} />
+        <TableComponent tableId={tableId} t={t} />
       ) : (
         <>
-          {showModal && <Modal setShowModal={setShowModal} />}
+          {showModal && <Modal setShowModal={setShowModal} t={t} />}
           <Container>
             <ButtonContainer>
               <StyledButton
                 onClick={createTable}
                 data-testid="create-a-table-button"
               >
-                Create a Table
+                {t("Create a table")}
               </StyledButton>
             </ButtonContainer>
           </Container>

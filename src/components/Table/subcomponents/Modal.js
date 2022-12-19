@@ -82,7 +82,7 @@ const StyledCreateButton = styled("button")(({ disable }) => ({
   cursor: disable ? "pointer" : "default",
 }));
 
-const Modal = ({ setShowModal }) => {
+const Modal = ({ setShowModal, t }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
   const [numberRow, setNumberRow] = useState(2);
@@ -165,7 +165,7 @@ const Modal = ({ setShowModal }) => {
       data-testid="modal"
     >
       <HeaderContainer data-testid="modal-header">
-        <span>Create a table</span>
+        <span>{t("Create a table")}</span>
         <CloseIcon
           sx={{ cursor: "pointer" }}
           onClick={closeModal}
@@ -174,7 +174,7 @@ const Modal = ({ setShowModal }) => {
       </HeaderContainer>
       <SelectContainer>
         <div>
-          <span>Columns</span>
+          <span>{t("Columns")}</span>
           <SelectNumber
             number={numberCol}
             setNumber={setNumberCol}
@@ -182,7 +182,7 @@ const Modal = ({ setShowModal }) => {
           />
         </div>
         <div>
-          <span>Rows</span>
+          <span>{t("Rows")}</span>
           <SelectNumber
             number={numberRow}
             setNumber={setNumberRow}
@@ -191,7 +191,7 @@ const Modal = ({ setShowModal }) => {
         </div>
       </SelectContainer>
       <FormatContainer>
-        <span>Table Format</span>
+        <span>{t("Table Format")}</span>
         <SelectFormat>
           <input
             type="radio"
@@ -200,7 +200,7 @@ const Modal = ({ setShowModal }) => {
             onChange={() => setHeaderSelection("top-header")}
             style={{ cursor: "pointer" }}
           />
-          <label for="top-header">Top header</label>
+          <label for="top-header">{t("Side header")}</label>
         </SelectFormat>
         <SelectFormat>
           <input
@@ -210,7 +210,7 @@ const Modal = ({ setShowModal }) => {
             onChange={() => setHeaderSelection("side-header")}
             style={{ cursor: "pointer" }}
           />
-          <label for="side-header">Side header</label>
+          <label for="side-header">{t("Side header")}</label>
         </SelectFormat>
       </FormatContainer>
       <FooterContainer>
@@ -220,7 +220,7 @@ const Modal = ({ setShowModal }) => {
           disabled={headerSelection == null}
           disable={headerSelection}
         >
-          Create
+          {t("Create")}
         </StyledCreateButton>
       </FooterContainer>
     </Container>
@@ -247,11 +247,11 @@ const SelectNumber = ({ number, setNumber, type }) => {
       tabIndex={0}
       data-testid={`select-number-${type}`}
       onKeyDown={(e) => {
-        if (e.keyCode === 38) {
+        if (e.key === 38) {
           e.preventDefault();
           number < 6 && setNumber((prev) => prev + 1);
         }
-        if (e.keyCode === 40) {
+        if (e.key === 40) {
           e.preventDefault();
           number !== 2 && setNumber((prev) => prev - 1);
         }
