@@ -346,16 +346,19 @@ const DraggableRow = ({
 
               let cellAria = `${
                 type === "title" && state.headerType === "side-header"
-                  ? `Row ${cell.row.index + 1} ${mycell}
-                    )}`
+                  ? `Row ${cell.row.index + 1} header, ${mycell}`
                   : type === "title" && state.headerType === "top-header"
                   ? `Column ${parseInt(
                       cell.column.id.replace("column", "")
-                    )} ${mycell}`
-                  : state.headerType === "top-header"
-                  ? `${columnTitle} column ${parseInt(
+                    )} header, ${mycell}`
+                  : type === "cell" && state.headerType === "side-header"
+                  ? `Row ${cell.row.index + 1} ${rowTitle}, column ${parseInt(
                       cell.column.id.replace("column", "")
-                    )} ${mycell}`
+                    )}, ${mycell}`
+                  : type === "cell" && state.headerType === "top-header"
+                  ? `Row ${columnTitle}, column ${parseInt(
+                      cell.column.id.replace("column", "")
+                    )}, ${mycell}`
                   : `${rowTitle} row ${mycell}`
               }`;
 
