@@ -279,7 +279,7 @@ const ToolBar = ({
               <Chevron />
               <span>
                 {selectedIcon === null
-                  ? t("Select Icon")
+                  ? t("Infobox Select Icon")
                   : t(`${selectedIcon}`)}
               </span>
               <Popper

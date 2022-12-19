@@ -25,8 +25,10 @@ import {
 
 import "../../Text/styles/Toolbar.scss";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
+import { t } from "i18next";
 
 const ToolBar = ({
+  t,
   toolbar,
   selectSection,
   setToolbarRef,
@@ -303,19 +305,19 @@ const ToolBar = ({
   // Kebab Menu
   const KebabActions = [
     {
-      name: "Duplicate Row",
+      name: t("Duplicate row"),
       key: "1",
       func: () => console.log("Duplicate Row"),
       disabled: true,
     },
     {
-      name: "Duplicate Column",
+      name: t("Duplicate column"),
       key: "2",
       func: () => console.log("Duplicate Column"),
       disabled: true,
     },
     {
-      name: "Delete Row",
+      name: t("Delete row"),
       key: "3",
       func: deleteRow,
       disabled:
@@ -325,7 +327,7 @@ const ToolBar = ({
         (selectSection === "0" && data[0].column2.type === "title"),
     },
     {
-      name: "Delete Column",
+      name: t("Delete column"),
       key: "4",
       func: deleteColumn,
       disabled:
@@ -386,8 +388,8 @@ const ToolBar = ({
           {selectSection !== null && (
             <>
               <Tooltip
-                aria-label="Add row"
-                title="Add Row"
+                aria-label={t("Add row")}
+                title={t("Add row")}
                 placement="top"
                 arrow
               >
@@ -410,24 +412,19 @@ const ToolBar = ({
                   // If needed to add onKeyDown
                   onKeyDown={(e) => {}}
                   id={`add-row-${tableId}`}
-                  aria-label="Add row to table"
+                  aria-label={`${t("Add row")} to table`}
                 >
                   {icons["addRow"]}
                 </IconButton>
               </Tooltip>
               <Tooltip
-                aria-label="Add column"
-                title="Add Column"
+                aria-label={t("Add column")}
+                title={t("Add column")}
                 placement="top"
                 arrow
               >
                 <IconButton
                   className="StyledIconButton"
-                  style={
-                    {
-                      // "--active": "rgba(21, 101, 192, 1)",
-                    }
-                  }
                   disabled={
                     headers.length >= 6 ||
                     selectSection === null ||
@@ -442,7 +439,7 @@ const ToolBar = ({
                   // If needed to Add onKeyDown
                   onKeyDown={(e) => {}}
                   id={`add-column-${tableId}`}
-                  aria-label="add column to table"
+                  aria-label={`${t("Add column")} to table`}
                 >
                   {icons["addColumn"]}
                 </IconButton>
@@ -454,8 +451,8 @@ const ToolBar = ({
               {/* Move  ----  Rows / Columns      4btns*/}
               {/* Move  ----  Columns      2btns*/}
               <Tooltip
-                aria-label="Move column left"
-                title="Move column left"
+                aria-label={t("Move column left")}
+                title={t("Move column left")}
                 placement="top"
                 arrow
               >
@@ -475,8 +472,8 @@ const ToolBar = ({
                 </IconButton>
               </Tooltip>
               <Tooltip
-                aria-label="Move column right"
-                title="Move column right"
+                aria-label={t("Move column right")}
+                title={t("Move column right")}
                 placement="top"
                 arrow
               >
@@ -490,7 +487,7 @@ const ToolBar = ({
                   // If needed to add onKeyDown
                   onKeyDown={(e) => {}}
                   id={`Right-column-${tableId}`}
-                  aria-label="Move column right"
+                  aria-label={t("Move column right")}
                 >
                   {icons["arrowRight"]}
                 </IconButton>
@@ -501,8 +498,8 @@ const ToolBar = ({
 
               {/* Move  ----  Rows      2btns*/}
               <Tooltip
-                aria-label="Move row up"
-                title="Move row up"
+                aria-label={t("Move row up")}
+                title={t("Move row up")}
                 placement="top"
                 arrow
               >
@@ -516,14 +513,14 @@ const ToolBar = ({
                   // If needed to add onKeyDown
                   onKeyDown={(e) => {}}
                   id={`up-row-${tableId}`}
-                  aria-label="Move row up"
+                  aria-label={t("Move row up")}
                 >
                   {icons["arrowUp"]}
                 </IconButton>
               </Tooltip>
               <Tooltip
-                aria-label="Move row down"
-                title="Move row down"
+                aria-label={t("Move row down")}
+                title={t("Move row down")}
                 placement="top"
                 arrow
               >
@@ -537,7 +534,7 @@ const ToolBar = ({
                   // If needed to add onKeyDown
                   onKeyDown={(e) => {}}
                   id={`down-row-${tableId}`}
-                  aria-label="Move row down"
+                  aria-label={t("Move row down")}
                 >
                   {icons["arrowDown"]}
                 </IconButton>
@@ -550,8 +547,8 @@ const ToolBar = ({
           {selectedCell !== null && (
             <>
               <Tooltip
-                aria-label="alignment"
-                title="alignment"
+                aria-label={t("Alignment")}
+                title={t("Alignment")}
                 placement="top"
                 arrow
               >
@@ -586,7 +583,7 @@ const ToolBar = ({
                 </IconButton>
               </Tooltip>
               <AlignDropdownButton
-                aria-label="alignment options"
+                aria-label={t("Alignment options")}
                 activeTopMenu={activeTopMenu}
                 setActiveHorizontalAlignment={setActiveHorizontalAlignment}
                 setActiveVerticalAlignment={setActiveVerticalAlignment}
@@ -599,8 +596,8 @@ const ToolBar = ({
           )}
           {/* Format */}
           <Tooltip
-            aria-label="Format"
-            title="Format"
+            aria-label={t("Format")}
+            title={t("Format")}
             placement="top"
             arrow
             PopperProps={{
@@ -640,7 +637,7 @@ const ToolBar = ({
                 "--active": showFormat && "rgba(21, 101, 192, 1)",
               }}
             >
-              Format
+              {t("Format")}
             </Button>
           </Tooltip>
           <Popper
@@ -663,8 +660,8 @@ const ToolBar = ({
                 <Paper>
                   <ClickAwayListener onClickAway={() => setShowFormat(false)}>
                     <MenuList
-                      data-testid="format-settings-dropdown"
-                      aria-labelledby="Format Settings"
+                      data-testid="format-options-dropdown"
+                      aria-label={t("Format options")}
                       className="StyledCheckboxMenu"
                       style={{
                         "--width": "220px",
@@ -679,8 +676,8 @@ const ToolBar = ({
                         {state.headerType == "top-header" && (
                           <FormControl>
                             <Tooltip
-                              aria-label="show top header"
-                              title="show top header"
+                              aria-label={t("show top header")}
+                              title={t("show top header")}
                               placement="top"
                               arrow
                               PopperProps={{
@@ -718,7 +715,7 @@ const ToolBar = ({
                                     }}
                                   />
                                 }
-                                label="Show top header"
+                                label={t("Show top header")}
                                 size="small"
                               />
                             </Tooltip>
@@ -728,8 +725,8 @@ const ToolBar = ({
                         {state.headerType == "side-header" && (
                           <FormControl>
                             <Tooltip
-                              aria-label="show side header"
-                              title="show side header"
+                              aria-label={t("Show side header")}
+                              title={t("Show side header")}
                               placement="top"
                               arrow
                               PopperProps={{
@@ -767,7 +764,7 @@ const ToolBar = ({
                                     }}
                                   />
                                 }
-                                label="Show side header"
+                                label={t("Show side header")}
                                 size="small"
                               />
                             </Tooltip>
@@ -776,8 +773,8 @@ const ToolBar = ({
                         {/* Zebra Stripes */}
                         <FormControl>
                           <Tooltip
-                            aria-label="show zebra stripes"
-                            title="show zebra stripes"
+                            aria-label={t("Show zebra stripes")}
+                            title={t("Show zebra stripes")}
                             placement="top"
                             arrow
                             PopperProps={{
@@ -815,7 +812,7 @@ const ToolBar = ({
                                   }}
                                 />
                               }
-                              label="Show zebra stripes"
+                              label={t("Show zebra stripes")}
                               size="small"
                             />
                           </Tooltip>
@@ -833,8 +830,8 @@ const ToolBar = ({
               <div className="StyledDivider" />
               {/* Kebab */}
               <Tooltip
-                aria-label="Table control options"
-                title="Table control options"
+                aria-label={t("Table control options")}
+                title={t("Table control options")}
                 placement="top"
                 arrow
               >
@@ -857,7 +854,7 @@ const ToolBar = ({
                   }}
                   // If needed to add onKeyDown
                   id={`table-control-${tableId}`}
-                  aria-label="Table control options"
+                  aria-label={t("Table control options")}
                 >
                   {icons["kebab"]}
                 </IconButton>
@@ -963,18 +960,18 @@ const AlignDropdownButton = ({
         }}
       >
         <Tooltip
-          aria-label="align left"
-          title="align left"
+          aria-label={t("Align left")}
+          title={t("Align left")}
           placement="top"
           arrow
         >
           <IconButton
             disableRipple
-            value="align left"
+            value={t("Align left")}
             color="inherit"
             aria-label={`${
-              activeHorizontalAlignment === "left-align" ? "selected" : ""
-            } align left`}
+              activeHorizontalAlignment === "align left" ? "selected" : ""
+            } ${t("Align left")}`}
             onClick={() => {
               setActiveHorizontalAlignment("left-align");
             }}
@@ -994,17 +991,17 @@ const AlignDropdownButton = ({
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label="align center"
-          title="align center"
+          aria-label={t("Align center")}
+          title={t("Align center")}
           placement="top"
           arrow
         >
           <IconButton
             disableRipple
             aria-label={`${
-              activeHorizontalAlignment === "center-align" ? "selected" : ""
-            } align center`}
-            value="align center"
+              activeHorizontalAlignment === "align center" ? "selected" : ""
+            } ${t("Align center")}`}
+            value={t("Align center")}
             onClick={() => {
               if (activeHorizontalAlignment === "center-align") {
                 setActiveHorizontalAlignment("left-align");
@@ -1028,8 +1025,8 @@ const AlignDropdownButton = ({
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label="align right"
-          title="align right"
+          aria-label={t("Align right")}
+          title={t("Align right")}
           placement="top"
           arrow
         >
@@ -1037,8 +1034,8 @@ const AlignDropdownButton = ({
             disableRipple
             aria-label={`${
               activeHorizontalAlignment === "right-align" ? "selected" : ""
-            } align right`}
-            value="align right"
+            } ${t("Align middle")}`}
+            value={t("Align right")}
             onClick={() => {
               if (activeHorizontalAlignment === "right-align") {
                 setActiveHorizontalAlignment("left-align");
@@ -1074,14 +1071,19 @@ const AlignDropdownButton = ({
           bottom: "0px",
         }}
       >
-        <Tooltip aria-label="align top" title="align top" placement="top" arrow>
+        <Tooltip
+          aria-label={t("Align top")}
+          title={t("Align top")}
+          placement="top"
+          arrow
+        >
           <IconButton
             disableRipple
-            value="align top"
+            value={t("Align top")}
             color="inherit"
             aria-label={`${
               activeVerticalAlignment === "top-align" ? "selected" : ""
-            } align top`}
+            } ${t("Align top")}`}
             onClick={() => {
               if (setActiveVerticalAlignment === "top-align") {
                 setActiveVerticalAlignment("middle-align");
@@ -1105,8 +1107,8 @@ const AlignDropdownButton = ({
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label="align middle"
-          title="align middle"
+          aria-label={t("Align middle")}
+          title={t("Align middle")}
           placement="top"
           arrow
         >
@@ -1115,7 +1117,7 @@ const AlignDropdownButton = ({
             aria-label={`${
               activeVerticalAlignment === "middle-align" ? "selected" : ""
             } align middle`}
-            value="align middle"
+            value={t("Align middle")}
             onClick={() => {
               if (setActiveVerticalAlignment === "middle-align") {
                 setActiveVerticalAlignment("middle-align");
@@ -1139,8 +1141,8 @@ const AlignDropdownButton = ({
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label="align bottom"
-          title="align bottom"
+          aria-label={t("Align bottom")}
+          title={t("Align middle")}
           placement="top"
           arrow
         >
@@ -1149,7 +1151,7 @@ const AlignDropdownButton = ({
             aria-label={`${
               activeVerticalAlignment === "bottom-align" ? "selected" : ""
             } align bottom`}
-            value="align bottom"
+            value={t("Align middle")}
             onClick={() => {
               if (setActiveVerticalAlignment === "bottom-align") {
                 setActiveVerticalAlignment("left-align");
