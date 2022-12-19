@@ -1,10 +1,11 @@
 import React from "react";
-import { useCanvas } from "./CanvasContext";
 import { MathpixLoader, MathpixMarkdown } from "mathpix-markdown-it";
 import { IconButton } from "@mui/material";
 import { DeleteOutline, UndoOutlined, RedoOutlined } from "@mui/icons-material";
-
 import Tooltip from "@mui/material/Tooltip";
+import { useCanvas } from "./CanvasContext";
+import { useQuill, useSetShowMath } from "../../../../../../Provider"
+
 import "./canvas.css";
 
 export const ClearCanvasButton = () => {
@@ -85,13 +86,24 @@ const container = {
   flexDirection: "row",
 };
 
-export const CopyToClipboardButton = ({ closeDragAndDrop, insertQuill }) => {
+export const CopyToClipboardButton = () => {
   const { latex, setUndoHistory } = useCanvas();
+  const setMathShow = useSetShowMath();
+
+  const quill = useQuill()
+  const insertQuill = (input) => {
+
+    const range = quill.getSelection(true);
+    quill.removeFormat(range.index, range.length);
+    quill.insertEmbed(range.index, "mathpix", input);
+    quill.insertText(range.index + range.length + 1, " ");
+    quill.setSelection(range.index + range.length + 1);
+  };
   const handleClick = () => {
     const latexCode = latex.code.substring(2, latex.code.length - 2);
     setUndoHistory([]);
     insertQuill(latexCode);
-    closeDragAndDrop();
+    setMathShow(false)
   };
 
   return (
@@ -102,7 +114,7 @@ export const CopyToClipboardButton = ({ closeDragAndDrop, insertQuill }) => {
         color="primary"
         className="insert-button"
       >
-        Insert
+        {latex.isPlaceholder ? "Can't Insert" : "Insert"}
       </button>
     </div>
   );

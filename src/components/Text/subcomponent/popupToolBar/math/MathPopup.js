@@ -1,21 +1,12 @@
 import React from "react";
 import MathpixEqation from "./MathpixOptions/MathpixEquation";
-import MathPixDraw from "./MathpixOptions/MathpixDraw/MathpixDraw";
 import { useMathpixOption } from "../../../Provider";
-import ImageConversion from "./ImageConversion/ImageConversion";
+import MathpixDraw from "./MathpixOptions/MathpixDraw/MathpixDraw";
 
 
 const MathPopup = ({ mathOption }) => {
 
-  const insertQuill = (input) => {
-    const quill = focusRef.current.getEditor();
-
-    const range = quill.getSelection(true);
-    quill.removeFormat(range.index, range.length);
-    quill.insertEmbed(range.index, "latex", input);
-    quill.insertText(range.index + range.length + 1, " ");
-    quill.setSelection(range.index + range.length + 1);
-  };
+  
 
   return (
     <>
@@ -23,16 +14,11 @@ const MathPopup = ({ mathOption }) => {
         <MathpixEqation />
       )}
       {mathOption === "mathDraw" && (
-        <ImageConversion />
+        <MathpixDraw />
       )}
       {mathOption === "imageConversion" && (
         <ImageConversion />
       )}
-
-{/* <MathPixDraw
-          closeDragAndDrop={closeDragAndDrop}
-          insertQuill={insertQuill}
-        /> */}
     </>
   );
 };

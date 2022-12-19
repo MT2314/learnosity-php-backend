@@ -1,11 +1,3 @@
-/* .canvas-draw {
-  padding: 0;
-  margin: auto;
-  display: block;
-  touch-action: none;
-  width: "560px";
-} */
-
 .latex-renderer-container {
   display: flex;
   align-items: center;
