@@ -105,6 +105,7 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
 };
 
 const DraggableColumnHeader = ({
+  t,
   header,
   table,
   selectSection,
@@ -187,6 +188,7 @@ const DraggableColumnHeader = ({
 };
 
 const DraggableRow = ({
+  t,
   row,
   reorderRow,
   setSelectSection,
@@ -232,7 +234,9 @@ const DraggableRow = ({
         className="styled-input"
         placeholder={
           type === "title"
-            ? `Title ${state.headerType === "top-header" ? col + 1 : row + 1}`
+            ? `${t("Placeholder Title")}${
+                state.headerType === "top-header" ? col + 1 : row + 1
+              }`
             : "Lorem ipsum"
         }
         data-row={row}
@@ -257,11 +261,6 @@ const DraggableRow = ({
           const relatedTarget = e.relatedTarget || document.activeElement;
           if (!toolbarRef.contains(relatedTarget)) {
             setSelectedCell(null);
-          }
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
           }
         }}
       />
@@ -361,6 +360,11 @@ const DraggableRow = ({
 
               handleAriaLive(cellAria);
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && type === "title") {
+                e.preventDefault();
+              }
+            }}
           >
             {renderTextArea(
               cell.row.original[cell.column.id].value,
@@ -375,7 +379,7 @@ const DraggableRow = ({
   );
 };
 
-const TableComponent = ({ tableId }) => {
+const TableComponent = ({ tableId, t }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [toolbar, setToolbar] = useState(false);
   const [selectSection, setSelectSection] = useState(null);
@@ -470,6 +474,7 @@ const TableComponent = ({ tableId }) => {
         </span>
         <StyledConfigBar className="styled-config-bar">
           <Toolbar
+            t={t}
             setSelectSection={setSelectSection}
             selectSection={selectSection}
             setSelectedCell={setSelectedCell}
@@ -481,18 +486,13 @@ const TableComponent = ({ tableId }) => {
             handleAriaLive={handleAriaLive}
           />
         </StyledConfigBar>
-        <thead
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-            }
-          }}
-        >
+        <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               <th style={{ width: "30px" }} aria-label=""></th>
               {headerGroup.headers.map((header) => (
                 <DraggableColumnHeader
+                  t={t}
                   key={header.id}
                   len={table.length}
                   header={header}
@@ -508,6 +508,7 @@ const TableComponent = ({ tableId }) => {
         <tbody aria-hidden="true">
           {table.getRowModel().rows.map((row) => (
             <DraggableRow
+              t={t}
               key={row.id}
               row={row}
               reorderRow={reorderRow}
