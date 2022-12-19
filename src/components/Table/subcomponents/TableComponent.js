@@ -34,16 +34,26 @@ const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
   },
 }));
 
-const StyledTd = styled("td")(({ selectHighlight, titleType }) => ({
-  border: selectHighlight ? "1px double #1565C0" : "1px solid #232323",
-  backgroundColor: titleType
-    ? selectHighlight
-      ? "rgba(226,230,234,255)"
-      : "#EEEEEE"
-    : selectHighlight
-    ? "rgba(21, 101, 192, 0.08)"
-    : "",
-}));
+const StyledTd = styled("td")(
+  ({ selectHighlight, titleType, verticalAlignment }) => ({
+    border: selectHighlight ? "1px double #1565C0" : "1px solid #232323",
+    backgroundColor: titleType
+      ? selectHighlight
+        ? "rgba(226,230,234,255)"
+        : "#EEEEEE"
+      : selectHighlight
+      ? "rgba(21, 101, 192, 0.08)"
+      : "",
+    verticalAlign:
+      verticalAlignment === "top-align"
+        ? "top"
+        : verticalAlignment === "middle-align"
+        ? "middle"
+        : verticalAlignment === "bottom-align"
+        ? "bottom"
+        : "middle",
+  })
+);
 
 const StyledInput = styled(TextareaAutosize)(
   ({ type, horizontalAlignment, verticalAlignment }) => ({
@@ -304,6 +314,8 @@ const DraggableRow = ({
       </td>
       {row.getVisibleCells().map((cell) => {
         const type = cell.row.original[cell.column.id].type;
+        console.log(cell);
+        console.log(cell.row.original[cell.column.id]);
         return (
           <StyledTd
             selectHighlight={
@@ -319,7 +331,10 @@ const DraggableRow = ({
                   display: "none",
                 }),
             }}
-            align="center"
+            verticalAlignment={
+              cell.row.original[cell.column.id].verticalAlignment
+            }
+            // align="center"
             onFocus={(e) => {
               // Column title at index
               let columnTitle =
