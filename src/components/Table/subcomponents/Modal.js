@@ -200,7 +200,7 @@ const Modal = ({ setShowModal, t }) => {
             onChange={() => setHeaderSelection("top-header")}
             style={{ cursor: "pointer" }}
           />
-          <label for="top-header">{t("Side header")}</label>
+          <label for="top-header">{t("Top header")}</label>
         </SelectFormat>
         <SelectFormat>
           <input

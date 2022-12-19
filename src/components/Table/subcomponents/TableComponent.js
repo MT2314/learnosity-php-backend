@@ -263,11 +263,6 @@ const DraggableRow = ({
             setSelectedCell(null);
           }
         }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-          }
-        }}
       />
     );
   };
@@ -364,6 +359,11 @@ const DraggableRow = ({
               }`;
 
               handleAriaLive(cellAria);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && type === "title") {
+                e.preventDefault();
+              }
             }}
           >
             {renderTextArea(
@@ -486,13 +486,7 @@ const TableComponent = ({ tableId, t }) => {
             handleAriaLive={handleAriaLive}
           />
         </StyledConfigBar>
-        <thead
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-            }
-          }}
-        >
+        <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               <th style={{ width: "30px" }} aria-label=""></th>
