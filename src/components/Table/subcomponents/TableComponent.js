@@ -34,16 +34,26 @@ const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
   },
 }));
 
-const StyledTd = styled("td")(({ selectHighlight, titleType }) => ({
-  border: selectHighlight ? "1px double #1565C0" : "1px solid #232323",
-  backgroundColor: titleType
-    ? selectHighlight
-      ? "rgba(226,230,234,255)"
-      : "#EEEEEE"
-    : selectHighlight
-    ? "rgba(21, 101, 192, 0.08)"
-    : "",
-}));
+const StyledTd = styled("td")(
+  ({ selectHighlight, titleType, verticalAlignment }) => ({
+    border: selectHighlight ? "1px double #1565C0" : "1px solid #232323",
+    backgroundColor: titleType
+      ? selectHighlight
+        ? "rgba(226,230,234,255)"
+        : "#EEEEEE"
+      : selectHighlight
+      ? "rgba(21, 101, 192, 0.08)"
+      : "",
+    verticalAlign:
+      verticalAlignment === "top-align"
+        ? "top"
+        : verticalAlignment === "middle-align"
+        ? "middle"
+        : verticalAlignment === "bottom-align"
+        ? "bottom"
+        : "middle",
+  })
+);
 
 const StyledInput = styled(TextareaAutosize)(
   ({ type, horizontalAlignment, verticalAlignment }) => ({
@@ -318,7 +328,14 @@ const DraggableRow = ({
                   display: "none",
                 }),
             }}
+<<<<<<< HEAD
             align="center"
+=======
+            verticalAlignment={
+              cell.row.original[cell.column.id].verticalAlignment
+            }
+            // align="center"
+>>>>>>> develop
             onFocus={(e) => {
               // Column title at index
               let columnTitle =
@@ -333,13 +350,22 @@ const DraggableRow = ({
               // row Title at index
               let rowTitle =
                 state.data[cell.row.index][`column1`].value === ""
-                  ? `Title ${cell.row.index}`
+                  ? `Title ${+cell.row.index + 1}`
                   : state.data[cell.row.index][`column1`].value;
 
               // cell at index with blank value
               let mycell = `${
-                cell.row.original[cell.column.id].value === ""
+                cell.row.original[cell.column.id].value === "" &&
+                type === "cell"
                   ? "empty cell"
+                  : cell.row.original[cell.column.id].value === "" &&
+                    type === "title" &&
+                    state.headerType === "side-header"
+                  ? rowTitle
+                  : cell.row.original[cell.column.id].value === "" &&
+                    type === "title" &&
+                    state.headerType === "top-header"
+                  ? columnTitle
                   : cell.row.original[cell.column.id].value
               }`;
 
@@ -355,9 +381,9 @@ const DraggableRow = ({
                       cell.column.id.replace("column", "")
                     )}, ${mycell}`
                   : type === "cell" && state.headerType === "top-header"
-                  ? `Row ${columnTitle}, column ${parseInt(
+                  ? `Column ${parseInt(
                       cell.column.id.replace("column", "")
-                    )}, ${mycell}`
+                    )} ${columnTitle}, row ${cell.row.index + 1}, ${mycell}`
                   : `${rowTitle} row ${mycell}`
               }`;
 
