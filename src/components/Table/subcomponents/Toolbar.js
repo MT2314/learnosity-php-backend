@@ -1,16 +1,17 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { LayoutContext } from "../TableContext";
+// Icons
+import icons from "../assets/icons";
 
 import FormGroup from "@mui/material/FormGroup";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-import icons from "../assets/icons";
-
 import {
   Paper,
   AppBar,
+  Card,
   Toolbar,
   MenuItem,
   ClickAwayListener,
@@ -24,14 +25,19 @@ import {
 
 import "../../Text/styles/Toolbar.scss";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
+import { t } from "i18next";
 
 const ToolBar = ({
+  t,
   toolbar,
   selectSection,
   setToolbarRef,
   setSelectSection,
+  selectedCell,
+  setSelectedCell,
   toolbarRef,
   tableId,
+  handleAriaLive,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
 
@@ -41,8 +47,30 @@ const ToolBar = ({
   // Kebab Popper State
   const [openKebab, setOpenKebab] = useState(false);
 
+  // ? Alignment Dropdown Open/Close State
+  const [activeTopMenu, setActiveTopMenu] = useState(false);
+  //  ? Alignment Dropdown Selection State
+  const [activeHorizontalAlignment, setActiveHorizontalAlignment] = useState();
+  const [activeVerticalAlignment, setActiveVerticalAlignment] = useState();
+
+  // Refs
+  const AlignRef = useRef(null);
   const FormatRef = useRef(null);
   const KebabRef = useRef(null);
+
+  // Initial useEffect to set alignment dropdown selection state
+  useEffect(() => {
+    if (selectedCell) {
+      setActiveHorizontalAlignment(
+        state.data[selectedCell.row][`column${selectedCell.col + 1}`]
+          .horizontalAlignment
+      );
+      setActiveVerticalAlignment(
+        state.data[selectedCell.row][`column${selectedCell.col + 1}`]
+          .verticalAlignment
+      );
+    }
+  }, [selectedCell]);
 
   // show Zebra dispatch
   const showZebraStripes = () => {
@@ -84,7 +112,12 @@ const ToolBar = ({
         state.headerType === "side-header" && j === 0 ? "title" : "cell";
 
       // Added row object at current column index if side-header {column1: {value: "", type: "title"}
-      row[`column${j + 1}`] = { value: "", type };
+      row[`column${j + 1}`] = {
+        value: "",
+        type,
+        horizontalAlignment: type === "title" ? "center-align" : "left-align",
+        verticalAlignment: "middle-align",
+      };
     });
     // Example of row object
     // row = {column1: {value: "", type: "title"}
@@ -96,7 +129,12 @@ const ToolBar = ({
       : data.splice(+selectSection + 1, 0, row);
 
     setSelectSection(`${parseFloat(selectSection) + 1}`);
-
+    // Screen Reader updates for new column
+    handleAriaLive(
+      `Row ${parseFloat(selectSection) + 2} of ${
+        state.data.length + 1
+      } has been added`
+    );
     // Dispatch the new data to the table
     dispatch({
       func: "ADD_ROW",
@@ -118,7 +156,7 @@ const ToolBar = ({
 
     // Loop through rows and define new row properties { column1: {value: "", type: "cell" }
     [...Array(data.length)].forEach((_, j) => {
-      // If top header, the firt row has each column type as a title
+      // If top header, the first row has each column type as a title
       let type =
         state.headerType === "top-header" && j === 0 ? "title" : "cell";
 
@@ -141,11 +179,23 @@ const ToolBar = ({
         }
         // if current column is selected column, add new column into the row
         else {
-          data[j][`column${i}`] = { value: "", type }; //Add new column into each row
+          data[j][`column${i}`] = {
+            value: "",
+            type,
+            horizontalAlignment:
+              type === "title" ? "center-align" : "left-align",
+            verticalAlignment: "middle-align",
+          }; //Add new column into each row
         }
       }
-    });
 
+      // Screen Reader updates for new column
+      handleAriaLive(
+        `Column ${+addedColumnIndex + 1} of ${
+          +currentRowLen + 1
+        } has been added`
+      );
+    });
     dispatch({
       func: "ADD_COL",
       headers: headers,
@@ -190,6 +240,13 @@ const ToolBar = ({
     parseFloat(selectSection.replace(/[^0-9]/g, "")) == headers.length &&
       setSelectSection(`column${filteredHeaders.length}`);
 
+    // Screen Reader updates for deleted column
+    handleAriaLive(
+      `Column ${selectSection.replace(/[^0-9]/g, "")} of ${
+        filteredHeaders.length + 1
+      } has been deleted`
+    );
+
     dispatch({
       func: "DELETE_COLUMN",
       headers: filteredHeaders,
@@ -206,12 +263,15 @@ const ToolBar = ({
 
     // If selected column is the last column, select the previous column after deleting
     int == data.length - 1 && setSelectSection(`${newData.length - 1}`);
-
+    // Screen Reader updates for deleted row
+    handleAriaLive(`Row ${int + 1} of ${newData.length + 1} has been deleted`);
     dispatch({
       func: "DELETE_ROW",
       headers: headers,
       data: newData,
     });
+
+    //  Delete row aria-label
   };
 
   // Esc key to close dropdown
@@ -226,22 +286,38 @@ const ToolBar = ({
     setShowFormat(false);
   };
 
+  // Handle Toolbar Alignment State Change
+  const handleAlignmentChange = () => {
+    selectedCell &&
+      dispatch({
+        func: "CHANGE_ALIGNMENT",
+        selectedCell: selectedCell,
+        activeHorizontalAlignment: activeHorizontalAlignment,
+        activeVerticalAlignment: activeVerticalAlignment,
+      });
+  };
+
+  // Alignment State Change useEFFECT
+  useEffect(() => {
+    handleAlignmentChange(activeHorizontalAlignment, activeVerticalAlignment);
+  }, [activeHorizontalAlignment, activeVerticalAlignment]);
+
   // Kebab Menu
   const KebabActions = [
     {
-      name: "Duplicate Row",
+      name: t("Duplicate row"),
       key: "1",
       func: () => console.log("Duplicate Row"),
       disabled: true,
     },
     {
-      name: "Duplicate Column",
+      name: t("Duplicate column"),
       key: "2",
       func: () => console.log("Duplicate Column"),
       disabled: true,
     },
     {
-      name: "Delete Row",
+      name: t("Delete row"),
       key: "3",
       func: deleteRow,
       disabled:
@@ -251,7 +327,7 @@ const ToolBar = ({
         (selectSection === "0" && data[0].column2.type === "title"),
     },
     {
-      name: "Delete Column",
+      name: t("Delete column"),
       key: "4",
       func: deleteColumn,
       disabled:
@@ -272,13 +348,16 @@ const ToolBar = ({
       onBlur={(e) => {
         if (!toolbarRef.contains(e.relatedTarget || document.activeElement)) {
           setSelectSection(null);
+          setSelectedCell(null);
+          setOpenKebab(false);
+          setShowFormat(false);
         }
       }}
       className="ToolbarContainer"
       style={{
-        "--active": toolbar ? "block" : "none",
+        "--active":
+          toolbar && (selectSection || selectedCell) ? "block" : "none",
       }}
-      useMemo
     >
       <AppBar
         position="static"
@@ -289,7 +368,7 @@ const ToolBar = ({
           "--direction": "row",
           "--gap": "10px",
           "--boxShadow": "none !important",
-          "--width": "351px",
+          "--width": selectSection ? "351px" : "117px",
         }}
       >
         <Toolbar
@@ -297,196 +376,228 @@ const ToolBar = ({
           className="StyledToolbar"
           style={{
             "--borderLeft": "4px solid #1565c0",
-            "--grid-template-columns":
-              "1fr 1fr 9px 1fr 1fr 9px 1fr 1fr 9px 56px 9px 1fr",
+            "--grid-template-columns": selectSection
+              ? "1fr 1fr 9px 1fr 1fr 9px 1fr 1fr 9px 56px 9px 1fr"
+              : "1fr 9px 69px ",
             "--justify-items": "center",
             "--boxShadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            "--width": "351px",
+            "--width": selectSection ? "351px" : "117px",
           }}
         >
           {/* Add  ----  Rows / Columns      2btns*/}
-          <Tooltip aria-label="Add row" title="Add Row" placement="top" arrow>
-            <IconButton
-              className="StyledIconButton"
-              style={{
-                "--disabled": "rgba(0, 0, 0, 0.38)",
-              }}
-              disabled={
-                data.length >= 6 ||
-                selectSection === null ||
-                selectSection?.toString().startsWith("column")
-              }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-                data.length != 6 && addRowFun();
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`add-row-${tableId}`}
-              aria-label="Add row to table"
-            >
-              {icons["addRow"]}
-            </IconButton>
-          </Tooltip>
-          <Tooltip aria-label="Add column" title="Add Column" placement="top">
-            <IconButton
-              className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              disabled={
-                headers.length >= 6 ||
-                selectSection === null ||
-                !selectSection.toString().startsWith("column")
-              }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-                headers.length != 6 && addColFun();
-              }}
-              // If needed to Add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`add-column-${tableId}`}
-              aria-label="add column to table"
-            >
-              {icons["addColumn"]}
-            </IconButton>
-          </Tooltip>
+          {selectSection !== null && (
+            <>
+              <Tooltip
+                aria-label={t("Add row")}
+                title={t("Add row")}
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  style={{
+                    "--disabled": "rgba(0, 0, 0, 0.38)",
+                  }}
+                  disabled={
+                    data.length >= 6 ||
+                    selectSection === null ||
+                    selectSection?.toString().startsWith("column")
+                  }
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                    data.length != 6 && addRowFun();
+                  }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`add-row-${tableId}`}
+                  aria-label={`${t("Add row")} to table`}
+                >
+                  {icons["addRow"]}
+                </IconButton>
+              </Tooltip>
+              <Tooltip
+                aria-label={t("Add column")}
+                title={t("Add column")}
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  disabled={
+                    headers.length >= 6 ||
+                    selectSection === null ||
+                    !selectSection.toString().startsWith("column")
+                  }
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                    headers.length != 6 && addColFun();
+                  }}
+                  // If needed to Add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`add-column-${tableId}`}
+                  aria-label={`${t("Add column")} to table`}
+                >
+                  {icons["addColumn"]}
+                </IconButton>
+              </Tooltip>
 
-          {/* Divider */}
-          <div className="StyledDivider" />
+              {/* Divider */}
+              <div className="StyledDivider" />
 
-          {/* Move  ----  Rows / Columns      4btns*/}
-          {/* Move  ----  Columns      2btns*/}
-          <Tooltip
-            aria-label="Move column left"
-            title="Move column left"
-            placement="top"
-            arrow
-          >
-            <IconButton
-              className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`left-column-${tableId}`}
-              aria-label="Move column left"
-            >
-              {icons["arrowLeft"]}
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            aria-label="Move column right"
-            title="Move column right"
-            placement="top"
-            arrow
-          >
-            <IconButton
-              className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              // disabled={
-              //   !rowHasFocus
-              // }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`Right-column-${tableId}`}
-              aria-label="Move column right"
-            >
-              {icons["arrowRight"]}
-            </IconButton>
-          </Tooltip>
+              {/* Move  ----  Rows / Columns      4btns*/}
+              {/* Move  ----  Columns      2btns*/}
+              <Tooltip
+                aria-label={t("Move column left")}
+                title={t("Move column left")}
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                  }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`left-column-${tableId}`}
+                  aria-label="Move column left"
+                >
+                  {icons["arrowLeft"]}
+                </IconButton>
+              </Tooltip>
+              <Tooltip
+                aria-label={t("Move column right")}
+                title={t("Move column right")}
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                  }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`Right-column-${tableId}`}
+                  aria-label={t("Move column right")}
+                >
+                  {icons["arrowRight"]}
+                </IconButton>
+              </Tooltip>
 
-          {/* Divider */}
-          <div className="StyledDivider" />
+              {/* Divider */}
+              <div className="StyledDivider" />
 
-          {/* Move  ----  Rows      2btns*/}
-          <Tooltip
-            aria-label="Move row up"
-            title="Move row up"
-            placement="top"
-            arrow
-          >
-            <IconButton
-              className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              // disabled={
-              //   !rowHasFocus
-              // }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`up-row-${tableId}`}
-              aria-label="Move row up"
-            >
-              {icons["arrowUp"]}
-            </IconButton>
-          </Tooltip>
-          <Tooltip
-            aria-label="Move row down"
-            title="Move row down"
-            placement="top"
-            arrow
-          >
-            <IconButton
-              className="StyledIconButton"
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              // disabled={
-              //   !rowHasFocus
-              // }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                closeDropDown();
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`down-row-${tableId}`}
-              aria-label="Move row down"
-            >
-              {icons["arrowDown"]}
-            </IconButton>
-          </Tooltip>
-          {/* Divider */}
-          <div className="StyledDivider" />
+              {/* Move  ----  Rows      2btns*/}
+              <Tooltip
+                aria-label={t("Move row up")}
+                title={t("Move row up")}
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                  }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`up-row-${tableId}`}
+                  aria-label={t("Move row up")}
+                >
+                  {icons["arrowUp"]}
+                </IconButton>
+              </Tooltip>
+              <Tooltip
+                aria-label={t("Move row down")}
+                title={t("Move row down")}
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  className="StyledIconButton"
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    closeDropDown();
+                  }}
+                  // If needed to add onKeyDown
+                  onKeyDown={(e) => {}}
+                  id={`down-row-${tableId}`}
+                  aria-label={t("Move row down")}
+                >
+                  {icons["arrowDown"]}
+                </IconButton>
+              </Tooltip>
+              {/* Divider */}
+              <div className="StyledDivider" />
+            </>
+          )}
+          {/* Align Text */}
+          {selectedCell !== null && (
+            <>
+              <Tooltip
+                aria-label={t("Alignment")}
+                title={t("Alignment")}
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  ref={AlignRef}
+                  disableRipple
+                  color="inherit"
+                  onClick={() => {
+                    setShowFormat(false);
+                    if (activeTopMenu) {
+                      setActiveTopMenu(false);
+                      handleAriaLive("Alignment menu closed");
+                    } else {
+                      setActiveTopMenu(true);
+                      handleAriaLive("Alignment menu opened");
+                    }
+                  }}
+                  className={"StyledIconButton"}
+                  style={{
+                    "--active": activeTopMenu
+                      ? "rgba(21, 101, 192, 1)"
+                      : "#000",
+                    "--background": activeTopMenu
+                      ? "rgba(21, 101, 192, 0.12)"
+                      : "#fff",
+                  }}
+                  aria-label="alignment dropdown"
+                >
+                  {activeHorizontalAlignment
+                    ? icons[activeHorizontalAlignment]
+                    : icons["center-align"]}
+                </IconButton>
+              </Tooltip>
+              <AlignDropdownButton
+                aria-label={t("Alignment options")}
+                activeTopMenu={activeTopMenu}
+                setActiveHorizontalAlignment={setActiveHorizontalAlignment}
+                setActiveVerticalAlignment={setActiveVerticalAlignment}
+                activeHorizontalAlignment={activeHorizontalAlignment}
+                activeVerticalAlignment={activeVerticalAlignment}
+              />
+              {/* Divider */}
+              <div className="StyledDivider" />
+            </>
+          )}
           {/* Format */}
           <Tooltip
-            aria-label="Format"
-            title="Format"
+            aria-label={t("Format")}
+            title={t("Format")}
             placement="top"
             arrow
             PopperProps={{
@@ -507,7 +618,14 @@ const ToolBar = ({
               onClick={(e) => {
                 setShowFormat(!showFormat);
                 setOpenKebab(false);
+                setActiveTopMenu(false);
+                handleAriaLive(
+                  showFormat
+                    ? `Format dropdown closed`
+                    : `Format dropdown opened`
+                );
               }}
+              disableRipple={true}
               ref={FormatRef}
               className="SelectButton"
               style={{
@@ -516,9 +634,10 @@ const ToolBar = ({
                 "--font-size": "16px",
                 "--grid-template-columns": "1fr",
                 "--hover-background-color": "transparent",
+                "--active": showFormat && "rgba(21, 101, 192, 1)",
               }}
             >
-              Format
+              {t("Format")}
             </Button>
           </Tooltip>
           <Popper
@@ -541,8 +660,8 @@ const ToolBar = ({
                 <Paper>
                   <ClickAwayListener onClickAway={() => setShowFormat(false)}>
                     <MenuList
-                      data-testid="format-settings-dropdown"
-                      aria-labelledby="Format Settings"
+                      data-testid="format-options-dropdown"
+                      aria-label={t("Format options")}
                       className="StyledCheckboxMenu"
                       style={{
                         "--width": "220px",
@@ -557,8 +676,8 @@ const ToolBar = ({
                         {state.headerType == "top-header" && (
                           <FormControl>
                             <Tooltip
-                              aria-label="show top header"
-                              title="show top header"
+                              aria-label={t("show top header")}
+                              title={t("show top header")}
                               placement="top"
                               arrow
                               PopperProps={{
@@ -596,7 +715,7 @@ const ToolBar = ({
                                     }}
                                   />
                                 }
-                                label="Show top header"
+                                label={t("Show top header")}
                                 size="small"
                               />
                             </Tooltip>
@@ -606,8 +725,8 @@ const ToolBar = ({
                         {state.headerType == "side-header" && (
                           <FormControl>
                             <Tooltip
-                              aria-label="show side header"
-                              title="show side header"
+                              aria-label={t("Show side header")}
+                              title={t("Show side header")}
                               placement="top"
                               arrow
                               PopperProps={{
@@ -645,7 +764,7 @@ const ToolBar = ({
                                     }}
                                   />
                                 }
-                                label="Show side header"
+                                label={t("Show side header")}
                                 size="small"
                               />
                             </Tooltip>
@@ -654,8 +773,8 @@ const ToolBar = ({
                         {/* Zebra Stripes */}
                         <FormControl>
                           <Tooltip
-                            aria-label="show zebra stripes"
-                            title="show zebra stripes"
+                            aria-label={t("Show zebra stripes")}
+                            title={t("Show zebra stripes")}
                             placement="top"
                             arrow
                             PopperProps={{
@@ -693,7 +812,7 @@ const ToolBar = ({
                                   }}
                                 />
                               }
-                              label="Show zebra stripes"
+                              label={t("Show zebra stripes")}
                               size="small"
                             />
                           </Tooltip>
@@ -705,96 +824,101 @@ const ToolBar = ({
               </Grow>
             )}
           </Popper>
-          {/* Divider */}
-          <div className="StyledDivider" />
-          {/* Kebab */}
-          <Tooltip
-            aria-label="Table control options"
-            title="Table control options"
-            placement="top"
-            arrow
-          >
-            <IconButton
-              className="StyledIconButton"
-              ref={KebabRef}
-              style={
-                {
-                  // "--active": "rgba(21, 101, 192, 1)",
-                }
-              }
-              // disabled={
-              //   !rowHasFocus
-              // }
-              disableRipple
-              color="inherit"
-              onClick={() => {
-                setOpenKebab(!openKebab);
-                setShowFormat(false);
-              }}
-              // If needed to add onKeyDown
-              onKeyDown={(e) => {}}
-              id={`table-control-${tableId}`}
-              aria-label="Table control options"
-            >
-              {icons["kebab"]}
-            </IconButton>
-          </Tooltip>
-          <Popper
-            open={openKebab}
-            anchorEl={KebabRef.current}
-            placement="bottom-start"
-            transition
-            disablePortal
-          >
-            {({ TransitionProps }) => (
-              <Grow {...TransitionProps}>
-                <Paper
-                  elevation={0}
-                  className="StyledSelectPaper"
+          {selectSection !== null && (
+            <>
+              {/* Divider */}
+              <div className="StyledDivider" />
+              {/* Kebab */}
+              <Tooltip
+                aria-label={t("Table control options")}
+                title={t("Table control options")}
+                placement="top"
+                arrow
+              >
+                <IconButton
+                  disableRipple
+                  className="StyledIconButton"
+                  ref={KebabRef}
                   style={{
-                    "--width": "165px",
-                    "--height": "160px",
-                    "--margin-left": "0px",
-                    "--margin-top": "7px",
+                    "--active": openKebab && "rgba(21, 101, 192, 1)",
                   }}
+                  color="inherit"
+                  onClick={() => {
+                    setOpenKebab(!openKebab);
+                    setShowFormat(false);
+                    handleAriaLive(
+                      openKebab
+                        ? `Table control dropdown closed`
+                        : `Table control dropdown opened`
+                    );
+                  }}
+                  // If needed to add onKeyDown
+                  id={`table-control-${tableId}`}
+                  aria-label={t("Table control options")}
                 >
-                  <ClickAwayListener onClickAway={() => setOpenKebab(false)}>
-                    <MenuList
-                      // autoFocusItem={openKebab}
-                      data-testid="table-kebab-dropdown"
-                      onKeyDown={onKeyDropDown}
-                      className="StyledMenu"
+                  {icons["kebab"]}
+                </IconButton>
+              </Tooltip>
+              <Popper
+                open={openKebab}
+                anchorEl={KebabRef.current}
+                placement="bottom-start"
+                transition
+                disablePortal
+              >
+                {({ TransitionProps }) => (
+                  <Grow {...TransitionProps}>
+                    <Paper
+                      elevation={0}
+                      className="StyledSelectPaper"
                       style={{
-                        "--gridTemplateRows": "1fr 1fr 1fr 1fr",
-                        "--padding": "8px 0px",
-                        "--justifyItems": "start",
                         "--width": "165px",
+                        "--height": "160px",
+                        "--margin-left": "0px",
+                        "--margin-top": "7px",
                       }}
                     >
-                      {KebabActions.map((action, index) => {
-                        return (
-                          <MenuItem
-                            key={action.key}
-                            value={action.name}
-                            onClick={() => action.func()}
-                            className="StyledMenuItem"
-                            data-testid={`${action.name} option`}
-                            style={{
-                              "--height": "36px",
-                              "--width": "165px",
-                            }}
-                            disabled={action.disabled}
-                          >
-                            {action.name}
-                          </MenuItem>
-                        );
-                      })}
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
+                      <ClickAwayListener
+                        onClickAway={() => setOpenKebab(false)}
+                      >
+                        <MenuList
+                          // autoFocusItem={openKebab}
+                          data-testid="table-kebab-dropdown"
+                          onKeyDown={onKeyDropDown}
+                          className="StyledMenu"
+                          style={{
+                            "--gridTemplateRows": "1fr 1fr 1fr 1fr",
+                            "--padding": "8px 0px",
+                            "--justifyItems": "start",
+                            "--width": "165px",
+                          }}
+                        >
+                          {KebabActions.map((action, index) => {
+                            return (
+                              <MenuItem
+                                key={action.key}
+                                value={action.name}
+                                onClick={() => action.func()}
+                                className="StyledMenuItem"
+                                data-testid={`${action.name} option`}
+                                style={{
+                                  "--height": "36px",
+                                  "--width": "165px",
+                                }}
+                                disabled={action.disabled}
+                              >
+                                {action.name}
+                              </MenuItem>
+                            );
+                          })}
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>
@@ -802,3 +926,255 @@ const ToolBar = ({
 };
 
 export default React.memo(ToolBar);
+
+const AlignDropdownButton = ({
+  activeTopMenu,
+  activeHorizontalAlignment,
+  setActiveHorizontalAlignment,
+  activeVerticalAlignment,
+  setActiveVerticalAlignment,
+}) => {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        display: activeTopMenu ? "flex" : "none",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+        bottom: "-84px",
+        borderRadius: "4px",
+        flexDirection: "column",
+        backgroundColor: "#fff",
+        width: "112px",
+        height: "80px",
+      }}
+    >
+      {/* Horizontal Align */}
+      <Card
+        elevation={0}
+        className="StyledCard"
+        style={{
+          "--card-display": activeTopMenu ? "flex" : "none",
+          bottom: "42px",
+          "--box-shadow": "none",
+          "--width": "112px",
+        }}
+      >
+        <Tooltip
+          aria-label={t("Align left")}
+          title={t("Align left")}
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            value={t("Align left")}
+            color="inherit"
+            aria-label={`${
+              activeHorizontalAlignment === "align left" ? "selected" : ""
+            } ${t("Align left")}`}
+            onClick={() => {
+              setActiveHorizontalAlignment("left-align");
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeHorizontalAlignment === "left-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeHorizontalAlignment == "left-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
+          >
+            {icons["left-align"]}
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          aria-label={t("Align center")}
+          title={t("Align center")}
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            aria-label={`${
+              activeHorizontalAlignment === "align center" ? "selected" : ""
+            } ${t("Align center")}`}
+            value={t("Align center")}
+            onClick={() => {
+              if (activeHorizontalAlignment === "center-align") {
+                setActiveHorizontalAlignment("left-align");
+              } else {
+                setActiveHorizontalAlignment("center-align");
+              }
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeHorizontalAlignment === "center-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeHorizontalAlignment == "center-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
+          >
+            {icons["center-align"]}
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          aria-label={t("Align right")}
+          title={t("Align right")}
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            aria-label={`${
+              activeHorizontalAlignment === "right-align" ? "selected" : ""
+            } ${t("Align middle")}`}
+            value={t("Align right")}
+            onClick={() => {
+              if (activeHorizontalAlignment === "right-align") {
+                setActiveHorizontalAlignment("left-align");
+              } else {
+                setActiveHorizontalAlignment("right-align");
+              }
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeHorizontalAlignment === "right-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeHorizontalAlignment == "right-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
+          >
+            {icons["right-align"]}
+          </IconButton>
+        </Tooltip>
+      </Card>
+      <div className="StyledDividerHorizontal" />
+      {/* Vertical Align */}
+      <Card
+        elevation={0}
+        className="StyledCard"
+        style={{
+          "--card-display": activeTopMenu ? "flex" : "none",
+          "--box-shadow": "none !important",
+          "--width": "112px",
+          bottom: "0px",
+        }}
+      >
+        <Tooltip
+          aria-label={t("Align top")}
+          title={t("Align top")}
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            value={t("Align top")}
+            color="inherit"
+            aria-label={`${
+              activeVerticalAlignment === "top-align" ? "selected" : ""
+            } ${t("Align top")}`}
+            onClick={() => {
+              if (setActiveVerticalAlignment === "top-align") {
+                setActiveVerticalAlignment("middle-align");
+              } else {
+                setActiveVerticalAlignment("top-align");
+              }
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeVerticalAlignment === "top-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeVerticalAlignment == "top-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
+          >
+            {icons["top-align"]}
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          aria-label={t("Align middle")}
+          title={t("Align middle")}
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            aria-label={`${
+              activeVerticalAlignment === "middle-align" ? "selected" : ""
+            } align middle`}
+            value={t("Align middle")}
+            onClick={() => {
+              if (setActiveVerticalAlignment === "middle-align") {
+                setActiveVerticalAlignment("middle-align");
+              } else {
+                setActiveVerticalAlignment("middle-align");
+              }
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeVerticalAlignment === "middle-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeVerticalAlignment == "middle-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
+          >
+            {icons["middle-align"]}
+          </IconButton>
+        </Tooltip>
+        <Tooltip
+          aria-label={t("Align bottom")}
+          title={t("Align middle")}
+          placement="top"
+          arrow
+        >
+          <IconButton
+            disableRipple
+            aria-label={`${
+              activeVerticalAlignment === "bottom-align" ? "selected" : ""
+            } align bottom`}
+            value={t("Align middle")}
+            onClick={() => {
+              if (setActiveVerticalAlignment === "bottom-align") {
+                setActiveVerticalAlignment("left-align");
+              } else {
+                setActiveVerticalAlignment("bottom-align");
+              }
+            }}
+            className={"StyledIconButton"}
+            style={{
+              "--active":
+                activeVerticalAlignment === "bottom-align"
+                  ? "rgba(21, 101, 192, 1)"
+                  : "#000",
+              "--background":
+                activeVerticalAlignment === "bottom-align"
+                  ? "rgba(21, 101, 192, 0.12)"
+                  : "#fff",
+            }}
+          >
+            {icons["bottom-align"]}
+          </IconButton>
+        </Tooltip>
+      </Card>
+    </div>
+  );
+};

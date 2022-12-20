@@ -81,7 +81,7 @@ xdescribe("<Text/>", () => {
     fireEvent.click(editorContainer);
 
     const alignBtn = screen.getByRole("button", {
-      name: /alignment buttons dropdown/i,
+      name: /alignment dropdown/i,
     });
     expect(alignBtn).toBeInTheDocument();
 

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { LayoutContext } from "../TableContext";
 
 // react-table imports
@@ -34,20 +34,66 @@ const StyledTable = styled("table")(({ showStripes, headerType, tableId }) => ({
   },
 }));
 
-const StyledTd = styled("td")(({ selectHighlight }) => ({
+const StyledTd = styled("td")(({ selectHighlight, titleType }) => ({
   border: selectHighlight ? "1px double #1565C0" : "1px solid #232323",
-  backgroundColor: selectHighlight ? "rgba(21, 101, 192, 0.08)" : "",
+  backgroundColor: titleType
+    ? selectHighlight
+      ? "rgba(226,230,234,255)"
+      : "#EEEEEE"
+    : selectHighlight
+    ? "rgba(21, 101, 192, 0.08)"
+    : "",
 }));
 
-const StyledInput = styled(TextareaAutosize)(({ type }) => ({
-  padding: type === "title" ? "25px 10px" : "10px",
-  fontSize: type === "title" ? "18px" : "16px",
-  fontWeight: type === "title" ? "500" : "400",
-  ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
-  ...(type === "cell" && { padding: "15px" }),
-}));
+const StyledInput = styled(TextareaAutosize)(
+  ({ type, horizontalAlignment, verticalAlignment }) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding:
+      type === "title" && verticalAlignment === "top-align"
+        ? "15px 10px 35px 10px"
+        : type === "title" && verticalAlignment === "middle-align"
+        ? "25px 10px"
+        : type === "title" && verticalAlignment === "bottom-align"
+        ? "35px 10px 15px 10px"
+        : type === "cell" && verticalAlignment === "top-align"
+        ? "10px 10px 30px 10px"
+        : type === "cell" && verticalAlignment === "middle-align"
+        ? "20px 10px"
+        : type === "cell" && verticalAlignment === "bottom-align"
+        ? "30px 10px 10px 10px"
+        : "20px 10px",
+    fontSize: type === "title" ? "18px" : "16px",
+    fontWeight: type === "title" ? "500" : "400",
+    ...(type === "title" && { textAlign: "center", textOverflow: "ellipsis" }),
+    // ...(type === "cell" && { padding: "15px" }),
+    textAlign:
+      horizontalAlignment === "left-align"
+        ? "left"
+        : horizontalAlignment === "right-align"
+        ? "right"
+        : horizontalAlignment === "center-align"
+        ? "center"
+        : type === "title" && horizontalAlignment === "center-align"
+        ? "center"
+        : "left",
+  })
+);
 
 const StyledConfigBar = styled("div")({});
+
+// Filter SelectSection string to return aria-label
+const ariaSection = (selection) => {
+  let readOut;
+  if (selection?.charAt(0) === "c") {
+    readOut = `column ${selection?.replace(/[^0-9]/g, "")}`;
+  } else {
+    readOut = `row ${+selection?.replace(/[^0-9]/g, "") + 1}`;
+  }
+
+  return readOut;
+};
 
 const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
   columnOrder.splice(
@@ -59,8 +105,10 @@ const reorderColumn = (draggedColumnId, targetColumnId, columnOrder) => {
 };
 
 const DraggableColumnHeader = ({
+  t,
   header,
   table,
+  selectSection,
   setSelectSection,
   toolbarRef,
 }) => {
@@ -129,7 +177,7 @@ const DraggableColumnHeader = ({
               setSelectSection(null);
             }
           }}
-          aria-label="Header drag icon button"
+          aria-label={`${ariaSection(selectSection)} drag icon`}
           className="drag-indicator-icon-btn"
         >
           <DragIndicatorIcon />
@@ -140,13 +188,18 @@ const DraggableColumnHeader = ({
 };
 
 const DraggableRow = ({
+  t,
   row,
   reorderRow,
   setSelectSection,
+  setSelectedCell,
   selectSection,
+  selectedCell,
   toolbarRef,
+  handleAriaLive,
 }) => {
   const [state, dispatch] = useContext(LayoutContext);
+
   const [, dropRef] = useDrop({
     accept: "row",
     drop: (draggedRow) => reorderRow(draggedRow.index, row.index),
@@ -169,6 +222,11 @@ const DraggableRow = ({
         value: e.target.value,
       });
     };
+
+    const setCell = (e) => {
+      setSelectedCell({ row, col });
+    };
+
     return (
       <StyledInput
         value={value || ""}
@@ -176,11 +234,35 @@ const DraggableRow = ({
         className="styled-input"
         placeholder={
           type === "title"
-            ? `Title ${state.headerType === "top-header" ? col + 1 : row + 1}`
+            ? `${t("Placeholder Title")}${
+                state.headerType === "top-header" ? col + 1 : row + 1
+              }`
             : "Lorem ipsum"
         }
+        data-row={row}
+        data-col={col}
         type={type}
+        horizontalAlignment={
+          state.data[row][`column${col + 1}`].horizontalAlignment !== undefined
+            ? state.data[row][`column${col + 1}`].horizontalAlignment
+            : type === "title"
+            ? "center-align"
+            : "left-align"
+        }
+        verticalAlignment={
+          state.data[row][`column${col + 1}`].verticalAlignment !== undefined
+            ? state.data[row][`column${col + 1}`].verticalAlignment
+            : "middle-align"
+        }
         onChange={onTextChange}
+        onFocus={setCell}
+        onClick={setCell}
+        onBlur={(e) => {
+          const relatedTarget = e.relatedTarget || document.activeElement;
+          if (!toolbarRef.contains(relatedTarget)) {
+            setSelectedCell(null);
+          }
+        }}
       />
     );
   };
@@ -209,9 +291,10 @@ const DraggableRow = ({
               const relatedTarget = e.relatedTarget || document.activeElement;
               if (!toolbarRef.contains(relatedTarget)) {
                 setSelectSection(null);
+                setSelectedCell(null);
               }
             }}
-            aria-label="Header drag icon button"
+            aria-label={`${ariaSection(selectSection)} drag icon`}
             className="drag-indicator-icon-btn"
           >
             <DragIndicatorIcon />
@@ -220,16 +303,12 @@ const DraggableRow = ({
       </td>
       {row.getVisibleCells().map((cell) => {
         const type = cell.row.original[cell.column.id].type;
-        // const center = {
-        //   display: "flex",
-        //   alignItems: "center",
-        //   justifyContent: "center",
-        // };
         return (
           <StyledTd
             selectHighlight={
               selectSection === cell.column.id || selectSection === row.id
             }
+            titleType={type == "title"}
             className="styled-td"
             key={cell.id}
             data-testid={`row${cell.row.index + 1}-${cell.column.id}`}
@@ -238,14 +317,57 @@ const DraggableRow = ({
                 (state.hideSideHeader || state.hideTopHeader) && {
                   display: "none",
                 }),
-              backgroundColor:
-                type == "title"
-                  ? selectSection === cell.column.id || selectSection === row.id
-                    ? "rgba(226,230,234,255)"
-                    : "#EEEEEE"
-                  : "none",
             }}
             align="center"
+            onFocus={(e) => {
+              // Column title at index
+              let columnTitle =
+                state.data[0][
+                  `column${parseInt(cell.column.id.replace("column", ""))}`
+                ].value === ""
+                  ? `Title${parseInt(cell.column.id.replace("column", ""))}`
+                  : state.data[0][
+                      `column${parseInt(cell.column.id.replace("column", ""))}`
+                    ].value;
+
+              // row Title at index
+              let rowTitle =
+                state.data[cell.row.index][`column1`].value === ""
+                  ? `Title ${cell.row.index}`
+                  : state.data[cell.row.index][`column1`].value;
+
+              // cell at index with blank value
+              let mycell = `${
+                cell.row.original[cell.column.id].value === ""
+                  ? "empty cell"
+                  : cell.row.original[cell.column.id].value
+              }`;
+
+              let cellAria = `${
+                type === "title" && state.headerType === "side-header"
+                  ? `Row ${cell.row.index + 1} header, ${mycell}`
+                  : type === "title" && state.headerType === "top-header"
+                  ? `Column ${parseInt(
+                      cell.column.id.replace("column", "")
+                    )} header, ${mycell}`
+                  : type === "cell" && state.headerType === "side-header"
+                  ? `Row ${cell.row.index + 1} ${rowTitle}, column ${parseInt(
+                      cell.column.id.replace("column", "")
+                    )}, ${mycell}`
+                  : type === "cell" && state.headerType === "top-header"
+                  ? `Row ${columnTitle}, column ${parseInt(
+                      cell.column.id.replace("column", "")
+                    )}, ${mycell}`
+                  : `${rowTitle} row ${mycell}`
+              }`;
+
+              handleAriaLive(cellAria);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && type === "title") {
+                e.preventDefault();
+              }
+            }}
           >
             {renderTextArea(
               cell.row.original[cell.column.id].value,
@@ -260,16 +382,33 @@ const DraggableRow = ({
   );
 };
 
-const TableComponent = ({ tableId }) => {
+const TableComponent = ({ tableId, t }) => {
   const [state, dispatch] = useContext(LayoutContext);
   const [toolbar, setToolbar] = useState(false);
   const [selectSection, setSelectSection] = useState(null);
+  const [selectedCell, setSelectedCell] = useState(null);
   const [toolbarRef, setToolbarRef] = useState(null);
   const tableRef = useRef();
+
+  // Aria Live
+  const [ariaLive, setAriaLive] = useState("");
+  const [ariaLive2, setAriaLive2] = useState("");
+
+  // Handle Aria live region
+  const handleAriaLive = (value) => {
+    if (ariaLive === value) {
+      setAriaLive("");
+      setAriaLive2(value);
+    } else {
+      setAriaLive2("");
+      setAriaLive(value);
+    }
+  };
 
   useOnClickOutside(tableRef, () => {
     setToolbar(false);
     setSelectSection(null);
+    setSelectedCell(null);
   });
 
   const [columnOrder, setColumnOrder] = useState(
@@ -303,39 +442,65 @@ const TableComponent = ({ tableId }) => {
 
   return (
     <DndProvider backend={HTML5Backend}>
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive}
+      </span>
+      <span
+        className="sr-only"
+        role="status"
+        aria-live="assertive"
+        aria-relevant="all"
+        aria-atomic="true"
+      >
+        {ariaLive2}
+      </span>
       <StyledTable
         role="presentation"
         className="style-table"
-        onFocus={(e) => setToolbar(true)}
+        // aria-label={`Table with ${state.data.length} rows and ${state.headers.length} columns.`}
+        onFocus={(e) => {
+          setToolbar(true);
+        }}
         onClick={(e) => setToolbar(true)}
         ref={tableRef}
         showStripes={state.showStripes}
         headerType={state.headerType}
       >
+        <span className="sr-only" tabIndex={0} role="status">
+          {`Table with ${state.data.length} rows and ${state.headers.length} columns focused`}
+        </span>
         <StyledConfigBar className="styled-config-bar">
           <Toolbar
+            t={t}
             setSelectSection={setSelectSection}
             selectSection={selectSection}
+            setSelectedCell={setSelectedCell}
+            selectedCell={selectedCell}
             toolbar={toolbar}
             setToolbarRef={setToolbarRef}
             toolbarRef={toolbarRef}
             tableId={tableId}
+            handleAriaLive={handleAriaLive}
           />
         </StyledConfigBar>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              <th
-                style={{ width: "30px" }}
-                aria-label=""
-                aria-hidden="true"
-              ></th>
+              <th style={{ width: "30px" }} aria-label=""></th>
               {headerGroup.headers.map((header) => (
                 <DraggableColumnHeader
+                  t={t}
                   key={header.id}
                   len={table.length}
                   header={header}
                   table={table}
+                  selectSection={selectSection}
                   setSelectSection={setSelectSection}
                   toolbarRef={toolbarRef}
                 />
@@ -343,15 +508,19 @@ const TableComponent = ({ tableId }) => {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody aria-hidden="true">
           {table.getRowModel().rows.map((row) => (
             <DraggableRow
+              t={t}
               key={row.id}
               row={row}
               reorderRow={reorderRow}
               setSelectSection={setSelectSection}
               selectSection={selectSection}
+              setSelectedCell={setSelectedCell}
+              selectedCell={selectedCell}
               toolbarRef={toolbarRef}
+              handleAriaLive={handleAriaLive}
             ></DraggableRow>
           ))}
         </tbody>

@@ -137,6 +137,105 @@ icons["arrowRight"] = (
   </svg>
 );
 
+// Alignment ("align" is default for left-alignment)
+icons["left-align"] = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="#000"
+  >
+    <path d="M10.6667 10.6667H0V12.4444H10.6667V10.6667ZM10.6667 3.55556H0V5.33333H10.6667V3.55556ZM0 8.88889H16V7.11111H0V8.88889ZM0 16H16V14.2222H0V16ZM0 0V1.77778H16V0H0Z" />
+  </svg>
+);
+
+icons["center-align"] = (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="#000"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M3.55556 10.6667V12.4444H12.4444V10.6667H3.55556ZM0 16H16V14.2222H0V16ZM0 8.88889H16V7.11111H0V8.88889ZM3.55556 3.55556V5.33333H12.4444V3.55556H3.55556ZM0 0V1.77778H16V0H0Z" />
+  </svg>
+);
+
+icons["right-align"] = (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="#000"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M0 16H16V14.2222H0V16ZM5.33333 12.4444H16V10.6667H5.33333V12.4444ZM0 8.88889H16V7.11111H0V8.88889ZM5.33333 5.33333H16V3.55556H5.33333V5.33333ZM0 0V1.77778H16V0H0Z" />
+  </svg>
+);
+icons["top-align"] = (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clip-path="url(#clip0_4206_40253)">
+      <path
+        d="M4 12.8889H20V11.1111H4V12.8889ZM7.55556 7.55556V9.33333H16.4444V7.55556H7.55556ZM4 4V5.77778H20V4H4Z"
+        fill="#232323"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_4206_40253">
+        <rect width="24" height="24" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+icons["middle-align"] = (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clip-path="url(#clip0_4207_40256)">
+      <path
+        d="M4 16.8889H20V15.1111H4V16.8889ZM7.55556 11.5556V13.3333H16.4444V11.5556H7.55556ZM4 8V9.77778H20V8H4Z"
+        fill="#232323"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_4207_40256">
+        <rect width="24" height="24" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
+icons["bottom-align"] = (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clip-path="url(#clip0_4207_40259)">
+      <path
+        d="M4 19.8889H20V18.1111H4V19.8889ZM7.55556 14.5556V16.3333H16.4444V14.5556H7.55556ZM4 11V12.7778H20V11H4Z"
+        fill="#232323"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_4207_40259">
+        <rect width="24" height="24" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);
 // Kebab
 icons["kebab"] = (
   <svg

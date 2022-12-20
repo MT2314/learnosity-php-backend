@@ -4,9 +4,14 @@ import { IconButton } from "@mui/material";
 import { DeleteOutline, UndoOutlined, RedoOutlined } from "@mui/icons-material";
 import Tooltip from "@mui/material/Tooltip";
 import { useCanvas } from "./CanvasContext";
-import { useQuill, useSetShowMath } from "../../../../../../Provider"
+import { useQuill, useSetShowMath } from "../../../../../../Provider";
 
-import "./canvas.css";
+import "./canvas.scss";
+import {
+  CanvasUndo,
+  CanvasRedo,
+  CanvasDelete,
+} from "../../../../../../assets/icons";
 
 export const ClearCanvasButton = () => {
   const { clearCanvas, strokes } = useCanvas();
@@ -20,9 +25,7 @@ export const ClearCanvasButton = () => {
         disabled={strokes.length === 0}
         color="primary"
       >
-        <div className="canvas-buttons">
-          <DeleteOutline fontSize="inherit" />
-        </div>
+        {CanvasDelete}
       </IconButton>
     </Tooltip>
   );
@@ -52,9 +55,7 @@ export const UndoButton = () => {
         disabled={undoHistory.length === 0}
         color="primary"
       >
-        <div className="canvas-buttons">
-          <UndoOutlined fontSize="inherit" />
-        </div>
+        {CanvasUndo}
       </IconButton>
     </Tooltip>
   );
@@ -73,26 +74,18 @@ export const RedoButton = () => {
         disabled={redoHistory.length === 0}
         color="primary"
       >
-        <div className="canvas-buttons">
-          <RedoOutlined fontSize="inherit" />
-        </div>
+        {CanvasRedo}
       </IconButton>
     </Tooltip>
   );
-};
-
-const container = {
-  display: "flex",
-  flexDirection: "row",
 };
 
 export const CopyToClipboardButton = () => {
   const { latex, setUndoHistory } = useCanvas();
   const setMathShow = useSetShowMath();
 
-  const quill = useQuill()
+  const quill = useQuill();
   const insertQuill = (input) => {
-
     const range = quill.getSelection(true);
     quill.removeFormat(range.index, range.length);
     quill.insertEmbed(range.index, "mathpix", input);
@@ -103,18 +96,18 @@ export const CopyToClipboardButton = () => {
     const latexCode = latex.code.substring(2, latex.code.length - 2);
     setUndoHistory([]);
     insertQuill(latexCode);
-    setMathShow(false)
+    setMathShow(false);
   };
 
   return (
-    <div style={container}>
+    <div className="Insert-Button">
       <button
         onClick={handleClick}
         disabled={latex.isPlaceholder}
         color="primary"
         className="insert-button"
       >
-        {latex.isPlaceholder ? "Can't Insert" : "Insert"}
+        {"Insert"}
       </button>
     </div>
   );

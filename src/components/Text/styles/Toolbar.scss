@@ -47,7 +47,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   min-height: 40px !important;
   // color
   background-color: $white;
-  color: rgba(0, 0, 0, 0.87);
+  color: $black;
   box-shadow: var(--boxShadow);
   // box model
   border-left: var(--borderLeft);
@@ -75,7 +75,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 4px !important;
 
   // color
-  color: var(--active);
+  color: var(--active) !important;
   background-color: transparent !important;
 
   // formating
@@ -108,7 +108,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     background-color: var(--hover-background-color);
     box-shadow: none;
     cursor: pointer;
-    color: $blue;
+    color: $blue !important;
     & svg {
       fill: $blue;
     }
@@ -179,7 +179,7 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   height: 40px !important;
   width: var(--width);
   background-color: #fff;
-  box-shadow: $toolbarShadow !important;
+  box-shadow: var(--box-shadow) !important;
 }
 
 // DONE
@@ -272,6 +272,15 @@ $toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   width: 0.5px;
   background-color: #e0e0e0 !important;
   margin: 0 3.5px;
+}
+.StyledDividerHorizontal {
+  position: absolute !important;
+  bottom: 41px !important;
+  width: 92px;
+  height: 0.5px;
+  background-color: #e0e0e0 !important;
+  margin: 0 10px;
+  z-index: 30;
 }
 
 // Error Bubble

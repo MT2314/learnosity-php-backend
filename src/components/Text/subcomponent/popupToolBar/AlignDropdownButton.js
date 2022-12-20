@@ -41,6 +41,7 @@ const AlignDropdownButton = ({
           "--card-display": show ? "flex" : "none",
           "--left": isInfoBox ? "185.5px" : isVideo ? "244px" : "69px",
           "--width": "112px",
+          "--box-shadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
         }}
         onKeyDown={onKeyDropDown}
       >

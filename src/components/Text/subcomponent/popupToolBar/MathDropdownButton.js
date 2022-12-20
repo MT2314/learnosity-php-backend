@@ -41,6 +41,7 @@ const MathDropdownButton = ({
           "--card-display": show ? "flex" : "none",
           "--left": "45px",
           "--width": "112px",
+          "--box-shadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
         }}
       // onKeyDown={onKeyDropDown}
       >

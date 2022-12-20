@@ -281,7 +281,7 @@ const ToolBar = ({
               <Chevron />
               <span>
                 {selectedIcon === null
-                  ? t("Select Icon")
+                  ? t("Infobox Select Icon")
                   : t(`${selectedIcon}`)}
               </span>
               <Popper
@@ -550,7 +550,7 @@ const ToolBar = ({
             isInfoBox={isInfoBox}
             isVideo={portal?.parentComponent === "video"}
             // className="dropdown-content"
-            aria-label="alignment buttons options"
+            aria-label="alignment options"
             activeDropDownItem={activeDropDownAlignItem}
             setActiveDropDownItem={setActiveDropDownAlignItem}
             setVisibleAlignIcon={setVisibleAlignIcon}

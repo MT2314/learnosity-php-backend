@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState, useRef } from "react";
 import styled from "@emotion/styled";
 import ReactPlayerLoader from "@brightcove/react-player-loader";
 import { VideoContext } from "../VideoContext";
+import TenantContext from "../../../Context/TenantContext";
 import TriangleIcon from "../assets/Triangle.png";
 
 const PlayerContainer = styled("div")({
@@ -56,17 +57,18 @@ const Player = ({ videoId, videoSource }) => {
   const isMounted = useRef(false);
 
   const BRIGHTCOVE_API = "https://edge.api.brightcove.com/playback/v1/accounts";
-  const BRIGHTCOVE_ACCOUNT_ID = process.env.BRIGHTCOVE_ACCOUNT_ID;
+
+  const authoringData = useContext(TenantContext);
 
   const headers = {
-    "BCOV-Policy": process.env.BRIGHTCOVE_POLICY_KEY,
+    "BCOV-Policy": authoringData.brightcovePolicyKey,
   };
 
   useEffect(() => {
     const saveFetchData = () => {
       dispatch({
         func: "UPDATE_URL_DATA",
-        videoURL: `${BRIGHTCOVE_API}/${BRIGHTCOVE_ACCOUNT_ID}/videos/${videoId}`,
+        videoURL: `${BRIGHTCOVE_API}/${authoringData.brightcoveAccountId}/videos/${videoId}`,
         videoId: videoId,
         videoSource: videoSource,
       });
@@ -140,9 +142,11 @@ const Player = ({ videoId, videoSource }) => {
         {videoId !== null && (
           <ReactPlayerLoader
             videoId={videoId}
+            // TODO: Once we get a confirmation on a working playerId (brightcovePlayer),
+            // we can uncomment the following line:
+            // playerId={authoringData.brightcovePlayer}
             BRIGHTCOVE_API={BRIGHTCOVE_API}
-            BRIGHTCOVE_ACCOUNT_ID={BRIGHTCOVE_ACCOUNT_ID}
-            accountId={BRIGHTCOVE_ACCOUNT_ID}
+            accountId={authoringData.brightcoveAccountId}
           />
         )}
       </StyledVideoContainer>

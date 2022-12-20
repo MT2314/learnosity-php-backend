@@ -1,0 +1,107 @@
+@import url(https://fonts.googleapis.com/css2?family=Inter&display=swap);
+// Variables
+// Colors
+$black: rgba(35, 35, 35, 1);
+$white: rgba(255, 255, 255, 1);
+$blue: rgba(21, 101, 192, 1);
+$lightBlue: rgba(21, 101, 192, 0.12);
+$disabled: rgba(0, 0, 0, 0.38);
+// Box Shadows
+$toolbarShadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+.latex-renderer-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #f2f2f5;
+  height: 65px;
+  width: 560px;
+  font-size: 14px;
+}
+
+.canvas-draw-container {
+  margin-top: 16px;
+  height: 200px;
+  width: 560px;
+}
+
+.canvas-draw {
+  display: block;
+  height: 200px;
+  width: 560px;
+  border: 0.5px solid rgba(224, 224, 224, 1);
+  border-radius: 4px;
+}
+
+.canvas-buttons-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 1000;
+  width: 40px;
+  height: 108px;
+  gap: 0px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-left: 8px;
+  margin-top: -150px;
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    height: 24px;
+    width: 24px;
+  }
+  svg {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+}
+
+.insert-button-container {
+  margin: 22px 0px;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.insert-button {
+  color: #1565c0;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.4px;
+  background: none;
+}
+
+.Insert-Button {
+  display: flex;
+  flex-direction: row;
+
+  button {
+    height: 36px;
+    width: 57px;
+    background-color: none;
+    border: none;
+    &:hover,
+    &:active,
+    &:focus-visible {
+      background-color: none;
+      box-shadow: none;
+      cursor: pointer;
+      color: $blue !important;
+    }
+    // disabled state
+    &:disabled {
+      color: $disabled;
+      cursor: none;
+      background-color: $white;
+    }
+  }
+}

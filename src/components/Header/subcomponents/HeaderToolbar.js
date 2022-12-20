@@ -9,7 +9,6 @@ import {
   Toolbar,
   MenuItem,
   ClickAwayListener,
-  Divider,
   Button,
   IconButton,
   Popper,
@@ -21,8 +20,6 @@ import {
 
 // assets
 import icons, { Chevron } from "../../Text/assets/icons";
-
-// ? Alignment Dropdown Button
 
 // Header Size Options
 const headerSizeDropdownOptions = [
@@ -271,7 +268,7 @@ const HeaderToolbar = ({ toolbar, activeTopMenu, setActiveTopMenu }) => {
             </IconButton>
           </Tooltip>
           <AlignDropdownButton
-            aria-label="alignment buttons options"
+            aria-label="alignment options"
             activeTopMenu={activeTopMenu}
             activeDropDownItem={activeDropDownItem}
             setActiveDropDownItem={setActiveDropDownItem}
@@ -300,6 +297,7 @@ const AlignDropdownButton = ({
           "--card-display": activeTopMenu ? "flex" : "none",
           "--left": "112.5px",
           "--width": "112px",
+          "--box-shadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
         }}
       >
         <Tooltip
