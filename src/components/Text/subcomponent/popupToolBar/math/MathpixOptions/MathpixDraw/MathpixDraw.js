@@ -15,6 +15,7 @@ import {
   LatexRenderer,
   UndoButton,
   RedoButton,
+  CanvasPlaceholder,
   CopyToClipboardButton,
 } from "./canvas/Utils";
 
@@ -58,6 +59,7 @@ const ImageConversion = () => {
     return (
       <div className="canvas-draw-container">
         <canvas ref={canvasRef} className="canvas-draw" />
+        <CanvasPlaceholder />
         <div className="canvas-buttons-container">
           <UndoButton />
           <RedoButton />
@@ -105,26 +107,7 @@ const ImageConversion = () => {
         }
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          paddingTop: "18px",
-          paddingLeft: "16px",
-          borderBottom: "1px solid #E0E0E0",
-          "& span": {
-            marginTop: "4px",
-            fontSize: "14px",
-            fontFamily: "Inter",
-            fontStyle: "normal",
-            fontWeight: "500",
-            lineHeight: "21.98px",
-            letterSpacing: "0.1 px",
-            color: "rgba(35, 35, 35, 1)",
-          },
-        }}
-      >
+      <div className="mathpix-draw-header">
         <span>Convert Drawing into an equation</span>
         <button
           aria-label="close math popup"

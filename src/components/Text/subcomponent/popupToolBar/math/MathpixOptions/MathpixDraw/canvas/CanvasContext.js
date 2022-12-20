@@ -24,6 +24,7 @@ export const CanvasProvider = ({ children }) => {
   const [isAway, setIsAway] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [initialTokenReceived, setInitialTokenReceived] = useState(false);
+  const [placeholderText, setPlaceholderText] = useState(true);
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
 
@@ -58,6 +59,7 @@ export const CanvasProvider = ({ children }) => {
   const startDrawing = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    setPlaceholderText(false);
     if (e.offsetX !== undefined && e.offsetY !== undefined) {
       var { offsetX, offsetY } = e;
     } else {
@@ -426,6 +428,8 @@ export const CanvasProvider = ({ children }) => {
   };
 
   const clearCanvas = (redraw = true) => {
+    setPlaceholderText(true);
+
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
@@ -506,6 +510,7 @@ export const CanvasProvider = ({ children }) => {
         redoHistory,
         mathpixContext,
         latex,
+        placeholderText,
         setUndoHistory,
         prepareCanvas,
         startDrawing,

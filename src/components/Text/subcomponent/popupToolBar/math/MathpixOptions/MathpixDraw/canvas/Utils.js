@@ -11,6 +11,7 @@ import {
   CanvasUndo,
   CanvasRedo,
   CanvasDelete,
+  CanvasDraw,
 } from "../../../../../../assets/icons";
 
 export const ClearCanvasButton = () => {
@@ -21,6 +22,7 @@ export const ClearCanvasButton = () => {
   return (
     <Tooltip title="Clear Drawing">
       <IconButton
+        disableRipple
         onClick={handleClick}
         disabled={strokes.length === 0}
         color="primary"
@@ -51,6 +53,7 @@ export const UndoButton = () => {
   return (
     <Tooltip title="Undo">
       <IconButton
+        disableRipple
         onClick={handleClick}
         disabled={undoHistory.length === 0}
         color="primary"
@@ -63,6 +66,7 @@ export const UndoButton = () => {
 
 export const RedoButton = () => {
   const { redoHistory, redo } = useCanvas();
+
   const handleClick = () => {
     redo();
   };
@@ -70,6 +74,7 @@ export const RedoButton = () => {
   return (
     <Tooltip title="Redo">
       <IconButton
+        disableRipple
         onClick={handleClick}
         disabled={redoHistory.length === 0}
         color="primary"
@@ -77,6 +82,19 @@ export const RedoButton = () => {
         {CanvasRedo}
       </IconButton>
     </Tooltip>
+  );
+};
+
+export const CanvasPlaceholder = () => {
+  const { placeholderText } = useCanvas();
+  return (
+    <div
+      className="CanvasPlaceholder"
+      style={!placeholderText ? { display: "none" } : { display: "flex" }}
+    >
+      {CanvasDraw}
+      <span>Start drawing here</span>
+    </div>
   );
 };
 
