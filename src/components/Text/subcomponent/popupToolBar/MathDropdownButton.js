@@ -5,7 +5,7 @@ import "../../styles/Toolbar.scss";
 
 import { MathKeyboard, MathDraw, MathImageUpload } from "../../assets/icons";
 
-import { useSetShowMath, useShowMath, useSetMathpixOption } from "../../Provider";
+import { useSetShowMath, useShowMath, useSetMathpixOption, useMathpixOption } from "../../Provider";
 
 const MathDropdownButton = ({
   show,
@@ -14,6 +14,7 @@ const MathDropdownButton = ({
 }) => {
   const setShowMath = useSetShowMath();
   const showMath = useShowMath();
+  const mathpixOption = useMathpixOption()
   const setMathpixOption = useSetMathpixOption()
   const [ariaLive, setAriaLive] = useState("");
   const [ariaLive2, setAriaLive2] = useState("");
@@ -75,11 +76,11 @@ const MathDropdownButton = ({
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeDropDownItem === "mathDraw"
+              mathpixOption === "mathDraw"
                   ? "rgba(21, 101, 192, 1)"
                   : "#000",
               "--background":
-                activeDropDownItem == "mathDraw"
+              mathpixOption == "mathDraw"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
@@ -109,11 +110,11 @@ const MathDropdownButton = ({
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeDropDownItem === "imageConversion"
+              mathpixOption === "imageConversion"
                   ? "rgba(21, 101, 192, 1)"
                   : "#000",
               "--background":
-                activeDropDownItem == "imageConversion"
+              mathpixOption == "imageConversion"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
@@ -136,11 +137,11 @@ const MathDropdownButton = ({
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeDropDownItem === "equationKeyboard"
+              mathpixOption === "equationKeyboard"
                   ? "rgba(21, 101, 192, 1)"
                   : "#000",
               "--background":
-                activeDropDownItem == "equationKeyboard"
+              mathpixOption == "equationKeyboard"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
