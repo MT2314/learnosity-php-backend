@@ -393,6 +393,7 @@ export const CanvasProvider = ({ children }) => {
 
   const undo = () => {
     if (undoHistory.length === 0) {
+      setPlaceholderText(true);
       return;
     }
     const undoStrokes = undoHistory[undoHistory.length - 1];
@@ -428,8 +429,6 @@ export const CanvasProvider = ({ children }) => {
   };
 
   const clearCanvas = (redraw = true) => {
-    setPlaceholderText(true);
-
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
@@ -448,6 +447,7 @@ export const CanvasProvider = ({ children }) => {
       setIsActive(true);
       clearTimeout(tokenRefreshTimeout);
       setTokenRequestFlag(!tokenRequestFlag);
+      setPlaceholderText(true);
     }
     setRenderLatexFlag(!renderLatexFlag);
   };
