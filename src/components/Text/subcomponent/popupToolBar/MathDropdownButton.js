@@ -5,7 +5,7 @@ import "../../styles/Toolbar.scss";
 
 import { MathKeyboard, MathDraw, MathImageUpload } from "../../assets/icons";
 
-import { useSetShowMath, useShowMath } from "../../Provider";
+import { useSetShowMath, useShowMath, useSetMathpixOption, useMathpixOption } from "../../Provider";
 
 const MathDropdownButton = ({
   show,
@@ -14,9 +14,10 @@ const MathDropdownButton = ({
 }) => {
   const setShowMath = useSetShowMath();
   const showMath = useShowMath();
+  const mathpixOption = useMathpixOption()
+  const setMathpixOption = useSetMathpixOption()
   const [ariaLive, setAriaLive] = useState("");
   const [ariaLive2, setAriaLive2] = useState("");
-
   // Aria Live Handler
   const handleAriaLive = (value) => {
     if (ariaLive === value) {
@@ -27,6 +28,10 @@ const MathDropdownButton = ({
       setAriaLive(value);
     }
   };
+
+  useEffect(()=> {
+    setMathpixOption(activeDropDownItem)
+  }, [activeDropDownItem])
 
   return (
     <>
@@ -39,7 +44,7 @@ const MathDropdownButton = ({
           "--width": "112px",
           "--box-shadow": "0px 0px 10px rgba(0, 0, 0, 0.1)",
         }}
-        // onKeyDown={onKeyDropDown}
+      // onKeyDown={onKeyDropDown}
       >
         {/* Aria Live */}
         <span
@@ -71,16 +76,23 @@ const MathDropdownButton = ({
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeDropDownItem === "mathDraw"
+              mathpixOption === "mathDraw"
                   ? "rgba(21, 101, 192, 1)"
                   : "#000",
               "--background":
-                activeDropDownItem == "mathDraw"
+              mathpixOption == "mathDraw"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
             onClick={() => {
-              setActiveDropDownItem("mathDraw");
+              if (activeDropDownItem === "mathDraw" && showMath) {
+                setActiveDropDownItem("");
+                setShowMath(false);
+              } else {
+                setActiveDropDownItem("mathDraw");
+                setShowMath(true);
+              }
+              handleAriaLive("mathDraw keyboard is now open.");
             }}
             value="mathDraw"
           >
@@ -98,11 +110,11 @@ const MathDropdownButton = ({
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeDropDownItem === "imageConversion"
+              mathpixOption === "imageConversion"
                   ? "rgba(21, 101, 192, 1)"
                   : "#000",
               "--background":
-                activeDropDownItem == "imageConversion"
+              mathpixOption == "imageConversion"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}
@@ -125,11 +137,11 @@ const MathDropdownButton = ({
             className={"StyledIconButton"}
             style={{
               "--active":
-                activeDropDownItem === "equationKeyboard"
+              mathpixOption === "equationKeyboard"
                   ? "rgba(21, 101, 192, 1)"
                   : "#000",
               "--background":
-                activeDropDownItem == "equationKeyboard"
+              mathpixOption == "equationKeyboard"
                   ? "rgba(21, 101, 192, 0.12)"
                   : "#fff",
             }}

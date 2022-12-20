@@ -8,6 +8,7 @@ import {
   useSetEditFormula,
   useSetKeepEditor,
   useQuill,
+  useSetMathpixOption
 } from "../Provider";
 import { Tooltip } from "@material-ui/core";
 import "../styles/EditMath.scss";
@@ -24,6 +25,7 @@ const EditMath = () => {
   const setShowMath = useSetShowMath();
   const setEditFormula = useSetEditFormula();
   const setKeepEditor = useSetKeepEditor();
+  const setMathpixOption = useSetMathpixOption()
 
   useOnClickOutside(containerRef, () => {
     setEditState({
@@ -57,6 +59,7 @@ const EditMath = () => {
     e.stopPropagation();
 
     setShowMath(true);
+    setMathpixOption("equationKeyboard")
     setEditFormula({ value: editState.value, id: editState.id });
     setEditState({
       value: null,
