@@ -313,8 +313,6 @@ const DraggableRow = ({
       </td>
       {row.getVisibleCells().map((cell) => {
         const type = cell.row.original[cell.column.id].type;
-        console.log(cell);
-        console.log(cell.row.original[cell.column.id]);
         return (
           <StyledTd
             selectHighlight={
