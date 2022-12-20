@@ -970,8 +970,8 @@ const AlignDropdownButton = ({
             value={t("Align left")}
             color="inherit"
             aria-label={`${
-              activeHorizontalAlignment === "align left" ? "selected" : ""
-            } ${t("Align left")}`}
+              activeHorizontalAlignment === "align left" ? "selected " : ""
+            }align left`}
             onClick={() => {
               setActiveHorizontalAlignment("left-align");
             }}
@@ -999,8 +999,8 @@ const AlignDropdownButton = ({
           <IconButton
             disableRipple
             aria-label={`${
-              activeHorizontalAlignment === "align center" ? "selected" : ""
-            } ${t("Align center")}`}
+              activeHorizontalAlignment === "align center" ? "selected " : ""
+            }align center`}
             value={t("Align center")}
             onClick={() => {
               if (activeHorizontalAlignment === "center-align") {
@@ -1033,8 +1033,8 @@ const AlignDropdownButton = ({
           <IconButton
             disableRipple
             aria-label={`${
-              activeHorizontalAlignment === "right-align" ? "selected" : ""
-            } ${t("Align middle")}`}
+              activeHorizontalAlignment === "right-align" ? "selected " : ""
+            }align right`}
             value={t("Align right")}
             onClick={() => {
               if (activeHorizontalAlignment === "right-align") {
@@ -1082,8 +1082,8 @@ const AlignDropdownButton = ({
             value={t("Align top")}
             color="inherit"
             aria-label={`${
-              activeVerticalAlignment === "top-align" ? "selected" : ""
-            } ${t("Align top")}`}
+              activeVerticalAlignment === "top-align" ? "selected " : ""
+            }align top`}
             onClick={() => {
               if (setActiveVerticalAlignment === "top-align") {
                 setActiveVerticalAlignment("middle-align");
@@ -1115,8 +1115,8 @@ const AlignDropdownButton = ({
           <IconButton
             disableRipple
             aria-label={`${
-              activeVerticalAlignment === "middle-align" ? "selected" : ""
-            } align middle`}
+              activeVerticalAlignment === "middle-align" ? "selected " : ""
+            }align middle`}
             value={t("Align middle")}
             onClick={() => {
               if (setActiveVerticalAlignment === "middle-align") {
@@ -1149,8 +1149,8 @@ const AlignDropdownButton = ({
           <IconButton
             disableRipple
             aria-label={`${
-              activeVerticalAlignment === "bottom-align" ? "selected" : ""
-            } align bottom`}
+              activeVerticalAlignment === "bottom-align" ? "Selected " : ""
+            }align bottom`}
             value={t("Align middle")}
             onClick={() => {
               if (setActiveVerticalAlignment === "bottom-align") {
