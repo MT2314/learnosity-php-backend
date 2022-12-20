@@ -353,8 +353,17 @@ const DraggableRow = ({
 
               // cell at index with blank value
               let mycell = `${
-                cell.row.original[cell.column.id].value === ""
+                cell.row.original[cell.column.id].value === "" &&
+                type === "cell"
                   ? "empty cell"
+                  : cell.row.original[cell.column.id].value === "" &&
+                    type === "title" &&
+                    state.headerType === "side-header"
+                  ? rowTitle
+                  : cell.row.original[cell.column.id].value === "" &&
+                    type === "title" &&
+                    state.headerType === "top-header"
+                  ? columnTitle
                   : cell.row.original[cell.column.id].value
               }`;
 
@@ -370,9 +379,9 @@ const DraggableRow = ({
                       cell.column.id.replace("column", "")
                     )}, ${mycell}`
                   : type === "cell" && state.headerType === "top-header"
-                  ? `Row ${columnTitle}, column ${parseInt(
+                  ? `Column ${parseInt(
                       cell.column.id.replace("column", "")
-                    )}, ${mycell}`
+                    )} ${columnTitle}, row ${cell.row.index + 1}, ${mycell}`
                   : `${rowTitle} row ${mycell}`
               }`;
 
