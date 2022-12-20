@@ -328,14 +328,10 @@ const DraggableRow = ({
                   display: "none",
                 }),
             }}
-<<<<<<< HEAD
-            align="center"
-=======
             verticalAlignment={
               cell.row.original[cell.column.id].verticalAlignment
             }
             // align="center"
->>>>>>> develop
             onFocus={(e) => {
               // Column title at index
               let columnTitle =
