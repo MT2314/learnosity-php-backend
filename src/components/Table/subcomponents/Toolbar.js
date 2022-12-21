@@ -543,7 +543,7 @@ const ToolBar = ({
               <div className="StyledDivider" />
             </>
           )}
-          {/* Align Text */}
+          {/* align Text */}
           {selectedCell !== null && (
             <>
               <Tooltip
@@ -948,7 +948,7 @@ const AlignDropdownButton = ({
         height: "80px",
       }}
     >
-      {/* Horizontal Align */}
+      {/* Horizontal align */}
       <Card
         elevation={0}
         className="StyledCard"
@@ -960,14 +960,14 @@ const AlignDropdownButton = ({
         }}
       >
         <Tooltip
-          aria-label={t("Align left")}
-          title={t("Align left")}
+          aria-label={t("align left")}
+          title={t("align left")}
           placement="top"
           arrow
         >
           <IconButton
             disableRipple
-            value={t("Align left")}
+            value={t("align left")}
             color="inherit"
             aria-label={`${
               activeHorizontalAlignment === "align left" ? "selected " : ""
@@ -991,8 +991,8 @@ const AlignDropdownButton = ({
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label={t("Align center")}
-          title={t("Align center")}
+          aria-label={t("align center")}
+          title={t("align center")}
           placement="top"
           arrow
         >
@@ -1001,7 +1001,7 @@ const AlignDropdownButton = ({
             aria-label={`${
               activeHorizontalAlignment === "align center" ? "selected " : ""
             }align center`}
-            value={t("Align center")}
+            value={t("align center")}
             onClick={() => {
               if (activeHorizontalAlignment === "center-align") {
                 setActiveHorizontalAlignment("left-align");
@@ -1025,8 +1025,8 @@ const AlignDropdownButton = ({
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label={t("Align right")}
-          title={t("Align right")}
+          aria-label={t("align right")}
+          title={t("align right")}
           placement="top"
           arrow
         >
@@ -1035,7 +1035,7 @@ const AlignDropdownButton = ({
             aria-label={`${
               activeHorizontalAlignment === "right-align" ? "selected " : ""
             }align right`}
-            value={t("Align right")}
+            value={t("align right")}
             onClick={() => {
               if (activeHorizontalAlignment === "right-align") {
                 setActiveHorizontalAlignment("left-align");
@@ -1060,7 +1060,7 @@ const AlignDropdownButton = ({
         </Tooltip>
       </Card>
       <div className="StyledDividerHorizontal" />
-      {/* Vertical Align */}
+      {/* Vertical align */}
       <Card
         elevation={0}
         className="StyledCard"
@@ -1072,14 +1072,14 @@ const AlignDropdownButton = ({
         }}
       >
         <Tooltip
-          aria-label={t("Align top")}
-          title={t("Align top")}
+          aria-label={t("align top")}
+          title={t("align top")}
           placement="top"
           arrow
         >
           <IconButton
             disableRipple
-            value={t("Align top")}
+            value={t("align top")}
             color="inherit"
             aria-label={`${
               activeVerticalAlignment === "top-align" ? "selected " : ""
@@ -1107,8 +1107,8 @@ const AlignDropdownButton = ({
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label={t("Align middle")}
-          title={t("Align middle")}
+          aria-label={t("align middle")}
+          title={t("align middle")}
           placement="top"
           arrow
         >
@@ -1117,7 +1117,7 @@ const AlignDropdownButton = ({
             aria-label={`${
               activeVerticalAlignment === "middle-align" ? "selected " : ""
             }align middle`}
-            value={t("Align middle")}
+            value={t("align middle")}
             onClick={() => {
               if (setActiveVerticalAlignment === "middle-align") {
                 setActiveVerticalAlignment("middle-align");
@@ -1141,8 +1141,8 @@ const AlignDropdownButton = ({
           </IconButton>
         </Tooltip>
         <Tooltip
-          aria-label={t("Align bottom")}
-          title={t("Align middle")}
+          aria-label={t("align bottom")}
+          title={t("align middle")}
           placement="top"
           arrow
         >
@@ -1151,7 +1151,7 @@ const AlignDropdownButton = ({
             aria-label={`${
               activeVerticalAlignment === "bottom-align" ? "Selected " : ""
             }align bottom`}
-            value={t("Align middle")}
+            value={t("align middle")}
             onClick={() => {
               if (setActiveVerticalAlignment === "bottom-align") {
                 setActiveVerticalAlignment("left-align");
