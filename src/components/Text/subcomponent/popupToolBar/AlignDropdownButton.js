@@ -52,7 +52,7 @@ const AlignDropdownButton = ({
           arrow
         >
           <button
-            aria-label="left align"
+            aria-label="align left"
             onClick={() => {
               setActiveDropDownItem("left");
               setVisibleAlignIcon(icons["align"]);
@@ -75,8 +75,8 @@ const AlignDropdownButton = ({
           </button>
         </Tooltip>
         <Tooltip
-          aria-label="centre text"
-          title="centre text"
+          aria-label="align center"
+          title="align center"
           placement="top"
           arrow
         >
@@ -116,7 +116,7 @@ const AlignDropdownButton = ({
           arrow
         >
           <button
-            aria-label="right align"
+            aria-label="align right"
             className={"StyledIconButton"}
             style={{
               "--active":
