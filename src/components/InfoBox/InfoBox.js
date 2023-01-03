@@ -77,33 +77,12 @@ const InfoBox = ({ infoBoxState = defaultProps, setProp = () => {} }) => {
     }
   };
 
+  const src = "http://127.0.0.1/learnosity-demos/www/assessment/inline.php";
+
   return (
-    <InfoBoxProvider infoBoxState={infoBoxState} setProp={setProp}>
-      <StyledPaper
-        aria-label={t("InfoBox")}
-        data-testid="infoBox-container"
-        ref={infoBoxRef}
-        onClick={(e) => infoBoxFocused(e)}
-        onFocus={(e) => infoBoxFocused(e)}
-      >
-        <Icon setSelectedIcon={setSelectedIcon} selectedIcon={selectedIcon} />
-        <StyledTextContainer>
-          <Label t={t} />
-          <Header t={t} />
-          <Body
-            isInfoBox={isInfoBox}
-            infoHasFocus={infoHasFocus}
-            selectedIcon={selectedIcon}
-            infoAreaFocused={infoAreaFocused}
-            setSelectedIcon={setSelectedIcon}
-            setInfoHasFocus={setInfoHasFocus}
-            setInfoBoxBody={setInfoBoxBody}
-            setPlaceHolder={setPlaceHolder}
-            t={t}
-          />
-        </StyledTextContainer>
-      </StyledPaper>
-    </InfoBoxProvider>
+    <div>
+      <iframe src={src} frameBorder="0" sandbox></iframe>
+    </div>
   );
 };
 
