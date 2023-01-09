@@ -24,6 +24,8 @@ import AccordionMain, {
 import HeaderMain, {
   defaultProps as headerDefaultProps,
 } from "./Header/HeaderMain";
+import QuizMain, { defaultProps as quizDefaultProps } from "./Quiz/QuizMain";
+
 // Category Icons
 import interactiveCategoryIcon from "../Icons/categoriesIcons/interactive.png";
 import mediaCategoryIcon from "../Icons/categoriesIcons/media.png";
@@ -75,6 +77,14 @@ const componentIndex = {
   Text: {
     Component: Text,
     readableName: "Text",
+    defaultProps: quillDefaultProps,
+    version: "0.0.1",
+    category: categories.text,
+    componentIcon: textComponentIcon,
+  },
+  Quiz: {
+    Component: QuizMain,
+    readableName: "Quiz",
     defaultProps: quillDefaultProps,
     version: "0.0.1",
     category: categories.text,
