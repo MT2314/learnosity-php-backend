@@ -13,7 +13,7 @@ const QuizMain = () => {
     consumerSecret: "74c5fd430cf1242a527f6223aebd42d30464be22",
   };
 
-  const status = useScript("https://items-va.learnosity.com/?v2022.2.LTS");
+  const status = useScript("https://authorapi.learnosity.com/?v2022.2.LTS");
   const domain = "localhost";
   const user_id = uuid.v4();
   const session_id = uuid.v4();
@@ -22,7 +22,7 @@ const QuizMain = () => {
 
   useEffect(() => {
     const learnositySdk = new Learnosity(); // Instantiate the SDK
-    const request = learnositySdk.init(
+    const req = learnositySdk.init(
       "items", // Select Items API
       // Consumer key and consumer secret are the public & private security keys required to access Learnosity APIs and data. These keys grant access to Learnosity's public demos account. Learnosity will provide keys for your own account.
       {
@@ -31,6 +31,7 @@ const QuizMain = () => {
       },
       config.consumerSecret, // Load secret from config.js
       {
+        mode: "item_list",
         // Unique student identifier, a UUID generated on line 18.
         user_id: user_id,
         // A reference of the Activity to retrieve from the Item bank, defining which Items will be served in this assessment.
@@ -48,17 +49,26 @@ const QuizMain = () => {
         name: "Items API Quickstart",
         // Can be set to `initial, `resume` or `review`. Optional. Default = `initial`.
         state: "initial",
+        user: {
+          id: "demos-site",
+          firstname: "Demos",
+          lastname: "User",
+          email: "demos@learnosity.com",
+        },
       }
     );
-    setRequest(request);
+
+    setRequest(req);
   }, []); // Run this only once when the component mounts
 
   const [itemsApp, setItemsApp] = useState({});
   useEffect(() => {
     if (status === "ready") {
       setItemsApp(() =>
-        LearnosityItems.init(request, {
+        LearnosityAuthor.init(request, {
           readyListener() {
+            console.log(itemsApp);
+
             console.log("ready");
           },
           errorListener(err) {
@@ -66,17 +76,17 @@ const QuizMain = () => {
           },
         })
       );
-
-      console.log(itemsApp);
     }
   }, [status]);
+  const [data, newData] = useState(null);
+
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-12">
           <h1>Standalone Assessment Example</h1>
 
-          {status === "ready" && <div id="learnosity_assess"></div>}
+          <div id="learnosity-author"></div>
         </div>
       </div>
     </div>

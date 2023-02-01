@@ -84,12 +84,13 @@ const componentIndex = {
   },
   Quiz: {
     Component: QuizMain,
-    readableName: "Quiz",
+    readableName: "Create Quiz",
     defaultProps: quillDefaultProps,
     version: "0.0.1",
     category: categories.text,
     componentIcon: textComponentIcon,
   },
+
   Image: {
     Component: Image,
     readableName: "Image",

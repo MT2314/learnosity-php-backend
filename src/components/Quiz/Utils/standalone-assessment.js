@@ -51,7 +51,8 @@ app.get("/", function (req, res) {
       state: "initial",
     }
   );
-
+  console.log(JSON.stringify(request));
+  console.log(request);
   res.render("standalone-assessment", { request }); // Render the page and request.
 });
 
