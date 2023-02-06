@@ -10,7 +10,6 @@ export const defaultProps = {
 const QuizCustom = () => {
   const [response, setResponse] = useState(null);
   const [authorAPI, setAuthorAPI] = useState(null);
-
   // Author script is loaded from the Learnosity CDN
   const authorScript = useScript(authorAPI);
 
@@ -42,20 +41,17 @@ const QuizCustom = () => {
 
   // Initialize the Author API when the script is loaded
   useEffect(() => {
-    let itemsApp;
     if (authorScript === "ready" && response !== null) {
-      itemsApp = LearnosityAuthor.init(response, {
+      const itemsApp = LearnosityAuthor.init(response, {
         readyListener() {
-          itemsApp.destroy();
+          // itemsApp.destroy();
         },
         errorListener(err) {
           console.log("error", err);
         },
       });
     }
-    console.log("itemsApp", itemsApp);
   }, [response, authorScript]);
-
   return (
     <div className="container">
       <div className="row">

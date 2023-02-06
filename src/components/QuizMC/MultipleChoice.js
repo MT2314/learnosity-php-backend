@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-const Learnosity = require("./Utils/Learnosity.js");
 import useScript from "../../Utility/useScript";
 
 export const defaultProps = {
@@ -8,39 +7,25 @@ export const defaultProps = {
   quizName: "quizName",
 };
 
-const QuizFetch = () => {
+const MultipleChoice = () => {
+  // Learnosity Author API configuration
   const [response, setResponse] = useState(null);
+  // Author script is loaded from the Learnosity CDN
+  const [authorAPI, setAuthorAPI] = useState(null);
+  const authorScript = useScript(authorAPI);
 
-  const authorScript = useScript(
-    "https://authorapi.learnosity.com/?v2022.2.LTS"
-  );
-  //   const authorScript = useScript(authorAPI);
-
+  // Fetch the Learnosity Author API configuration
   const requestAPI = async () => {
     try {
       const response = await axios.get(
-        `http://127.0.0.1/learnosity-demos/www/authoring/item-create.php`,
+        `http://127.0.0.1/learnosity-demos/www/authoring/item-create_customMC.php`,
         {
           headers: { "Content-Type": "application/json" },
           params: {},
         }
       );
 
-      console.log(response.data);
-
       let parsedRequest = JSON.parse(response.data.request);
-
-      console.log(
-        "request",
-        response.data.request,
-        parsedRequest,
-        typeof response.data.request
-      );
-      console.log(
-        "urlAuthorAPI",
-        response.data.url_authorapi,
-        typeof response.data.url_authorapi
-      );
       setResponse(parsedRequest);
       setAuthorAPI(response.data.url_authorapi);
       return response.data;
@@ -49,25 +34,29 @@ const QuizFetch = () => {
     }
   };
 
-  const [itemsApp, setItemsApp] = useState({});
   useEffect(() => {
     requestAPI();
   }, []);
 
   useEffect(() => {
     if (authorScript === "ready" && response !== null) {
-      setItemsApp(() =>
-        LearnosityAuthor.init(response, {
-          readyListener() {
-            console.log(itemsApp);
-
-            console.log("ready");
-          },
-          errorListener(err) {
-            console.log("error", err);
-          },
-        })
-      );
+      const itemsApp = LearnosityAuthor.init(response, {
+        readyListener() {
+          itemsApp.navigate(
+            "items/new/widgets/new/" +
+              encodeURIComponent(
+                JSON.stringify({
+                  widgetTemplate: {
+                    template_reference: "9e8149bd-e4d8-4dd6-a751-1a113a4b9163",
+                  },
+                })
+              )
+          );
+        },
+        errorListener(err) {
+          console.log("error", err);
+        },
+      });
     }
   }, [response, authorScript]);
 
@@ -84,4 +73,4 @@ const QuizFetch = () => {
   );
 };
 
-export default QuizFetch;
+export default MultipleChoice;

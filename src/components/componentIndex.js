@@ -25,9 +25,9 @@ import HeaderMain, {
   defaultProps as headerDefaultProps,
 } from "./Header/HeaderMain";
 import QuizMain, { defaultProps as quizDefaultProps } from "./Quiz/QuizMain";
-import QuizFetch, {
-  defaultProps as quizFetchDefaultProps,
-} from "./QuizFetch/QuizFetch";
+import MultipleChoice, {
+  defaultProps as quizMCDefaultProps,
+} from "./QuizMC/Multiplechoice";
 import QuizCustom, {
   defaultProps as quizCustomDefaultProps,
 } from "./QuizCustom/QuizCustom";
@@ -96,10 +96,10 @@ const componentIndex = {
     category: categories.text,
     componentIcon: textComponentIcon,
   },
-  QuizFetch: {
-    Component: QuizFetch,
-    readableName: "Fetch Quiz",
-    defaultProps: quizFetchDefaultProps,
+  QuizMC: {
+    Component: MultipleChoice,
+    readableName: "Multiple Choice Quiz",
+    defaultProps: quizMCDefaultProps,
     version: "0.0.1",
     category: categories.text,
     componentIcon: textComponentIcon,
