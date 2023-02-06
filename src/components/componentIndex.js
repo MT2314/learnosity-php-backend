@@ -25,6 +25,12 @@ import HeaderMain, {
   defaultProps as headerDefaultProps,
 } from "./Header/HeaderMain";
 import QuizMain, { defaultProps as quizDefaultProps } from "./Quiz/QuizMain";
+import QuizFetch, {
+  defaultProps as quizFetchDefaultProps,
+} from "./QuizFetch/QuizFetch";
+import QuizCustom, {
+  defaultProps as quizCustomDefaultProps,
+} from "./QuizCustom/QuizCustom";
 
 // Category Icons
 import interactiveCategoryIcon from "../Icons/categoriesIcons/interactive.png";
@@ -90,7 +96,22 @@ const componentIndex = {
     category: categories.text,
     componentIcon: textComponentIcon,
   },
-
+  QuizFetch: {
+    Component: QuizFetch,
+    readableName: "Fetch Quiz",
+    defaultProps: quizFetchDefaultProps,
+    version: "0.0.1",
+    category: categories.text,
+    componentIcon: textComponentIcon,
+  },
+  QuizCustom: {
+    Component: QuizCustom,
+    readableName: "Custom Quiz",
+    defaultProps: quizCustomDefaultProps,
+    version: "0.0.1",
+    category: categories.text,
+    componentIcon: textComponentIcon,
+  },
   Image: {
     Component: Image,
     readableName: "Image",

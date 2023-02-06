@@ -4,6 +4,7 @@ import useScript from "../../Utility/useScript";
 import { v4 as uuid } from "uuid";
 
 const Learnosity = require("./Utils/Learnosity.js");
+// import Learnosity from "learnosity-sdk-nodejs";
 
 import "./assets/style.css";
 
@@ -64,6 +65,7 @@ const QuizMain = () => {
   const [itemsApp, setItemsApp] = useState({});
   useEffect(() => {
     if (status === "ready") {
+      console.log("request", request);
       setItemsApp(() =>
         LearnosityAuthor.init(request, {
           readyListener() {
@@ -78,7 +80,6 @@ const QuizMain = () => {
       );
     }
   }, [status]);
-  const [data, newData] = useState(null);
 
   return (
     <div className="container">
