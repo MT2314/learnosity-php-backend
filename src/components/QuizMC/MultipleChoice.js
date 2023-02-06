@@ -41,18 +41,7 @@ const MultipleChoice = () => {
   useEffect(() => {
     if (authorScript === "ready" && response !== null) {
       const itemsApp = LearnosityAuthor.init(response, {
-        readyListener() {
-          itemsApp.navigate(
-            "items/new/widgets/new/" +
-              encodeURIComponent(
-                JSON.stringify({
-                  widgetTemplate: {
-                    template_reference: "9e8149bd-e4d8-4dd6-a751-1a113a4b9163",
-                  },
-                })
-              )
-          );
-        },
+        readyListener() {},
         errorListener(err) {
           console.log("error", err);
         },
@@ -60,17 +49,7 @@ const MultipleChoice = () => {
     }
   }, [response, authorScript]);
 
-  return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-12">
-          <h1>Standalone Assessment Example</h1>
-
-          <div id="learnosity-author"></div>
-        </div>
-      </div>
-    </div>
-  );
+  return <div id="learnosity-author"></div>;
 };
 
 export default MultipleChoice;
