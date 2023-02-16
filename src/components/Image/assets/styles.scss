@@ -1,30 +1,85 @@
-.LearnosityStyles {
-  .lrn-author-ui {
-    color: white !important;
-  }
-  .lrn.lrn_widget {
-    background-color: #1565c0;
-    color: white;
-  }
-  .lrn_mcq {
-    background-color: #1565c0 !important;
-  }
-
-  .lrn_mcqgroup label {
-    color: white !important;
-    background-color: black;
-  }
-}
-
-.lrn.lrn-author {
-  background-color: #1565c0 !important;
+.lrn-author-ui {
   color: white !important;
+  display: none !important;
 }
-.lrn .lrn_response_wrapper .lrn_mcqgroup .lrn-possible-answer .lrn_choiceLabel {
-  color: white !important;
-  background-color: black !important;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.5rem 0.1rem rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  button[type="submit"] {
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    border: none;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color: rgba(21, 101, 192, 1);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    float: right;
+  }
+  button[type="button"] {
+    width: 150px;
+    height: 25px;
+    border-radius: 25px;
+    border: none;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color: rgba(21, 101, 192, 1);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+  }
 }
-.lrn .lrn_question .lrn_stimulus {
-  color: red !important;
-  background-color: #1565c0 !important;
+
+.multiple-choice-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 78%;
+  height: 100%;
+  padding: 20px 0;
+  margin: 0 auto;
+}
+
+.multiple-choice-custom {
+  width: 100% !important;
+  height: 100%;
+  padding: 20px 0;
+  margin: 0 auto;
+}
+
+label {
+  font-size: 18px;
+  font-weight: 600;
+}
+input {
+  font-size: 14px;
+  padding: 5px 7px;
+  margin-left: 20px;
+  border-radius: 25px;
+  border: 1px solid #000;
+  width: 60%;
+  margin-bottom: 25px;
+}
+option {
+  font-size: 14px;
+  padding: 5px 7px;
+  margin-left: 20px;
+  border-radius: 25px;
+  border: 1px solid #000;
+  width: 60%;
+  margin-bottom: 25px;
 }

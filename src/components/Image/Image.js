@@ -3,8 +3,6 @@ import axios from "axios";
 import useScript from "../../Utility/useScript";
 import { v4 as uuidv4 } from "uuid";
 
-import styles from "./assets/styles.module.scss";
-import "./assets/styles.module.scss";
 import "./assets/styles.scss";
 
 export const defaultProps = {
@@ -217,21 +215,19 @@ const Image = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-md-12 ">
-          <h1>Multiple Choice</h1>
-          <button onClick={() => customApp(response)}>Create</button>
-          <button onClick={() => addItem()}>Add Item</button>
-          <button onClick={() => setWidget()}>Set Widget</button>
+        <h1>Multiple Choice</h1>
+        <button onClick={() => customApp(response)}>Create</button>
+        <button onClick={() => addItem()}>Add Item</button>
+        <button onClick={() => setWidget()}>Set Widget</button>
 
-          <button onClick={() => setItemJson()}>Set Item Json</button>
-          <button onClick={() => saveItemsApp()}>Save</button>
-          <button onClick={() => destroyItemsApp()}>Destroy</button>
-
-          <div
-            id="multiple-choice-custom"
-            className="multiple-choice-container"
-          >
-            <form onSubmit={handleSubmit}>
+        <button onClick={() => setItemJson()}>Set Item Json</button>
+        <button onClick={() => saveItemsApp()}>Save</button>
+        <button onClick={() => destroyItemsApp()}>Destroy</button>
+      </div>
+      <div className="multiple-choice-container">
+        <div className="multiple-choice-custom">
+          <form onSubmit={handleSubmit}>
+            <div className="mc-question">
               <label>
                 Question:
                 <input
@@ -240,55 +236,58 @@ const Image = () => {
                   onChange={(event) => setQuestion(event.target.value)}
                 />
               </label>
-              {options.map((option, index) => (
-                <label key={index}>
-                  Option {index + 1}:
-                  <input
-                    type="text"
-                    value={option}
-                    onChange={(event) =>
-                      handleOptionChange(index, event.target.value)
-                    }
-                  />
-                </label>
-              ))}
-              <button type="button" onClick={addOption}>
-                Add Option
-              </button>
-              <br />
-              <label>
-                Correct Answer:
-                <select
-                  value={correctAnswer}
-                  onChange={handleCorrectAnswerChange}
-                >
-                  <option value="" disabled>
-                    Select Correct Answer
-                  </option>
-                  {options.map((option, index) => (
-                    <option key={index} value={index}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+            </div>
+            {options.map((option, index) => (
+              <label key={index}>
+                Option {index + 1}:
+                <input
+                  type="text"
+                  value={option}
+                  onChange={(event) =>
+                    handleOptionChange(index, event.target.value)
+                  }
+                />
               </label>
-              <br />
-              <button
-                type="submit"
-                onClick={() => console.log(question, options, correctAnswer)}
-              >
-                Submit
-              </button>
-            </form>
-          </div>
+            ))}
 
-          <div style={{ display: "none", visibility: "hidden" }}>
-            <div
-              id="my-custom-container"
-              style={{ display: "none", visibility: "hidden" }}
-            ></div>
-          </div>
+            <br />
+
+            <button type="button" onClick={addOption}>
+              Add Option
+            </button>
+            <br />
+            <label>
+              Correct Answer:
+              <select
+                value={correctAnswer}
+                onChange={handleCorrectAnswerChange}
+              >
+                <option value="" disabled>
+                  Select Correct Answer
+                </option>
+                {options.map((option, index) => (
+                  <option key={index} value={index}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button
+              type="submit"
+              className="submit-button"
+              onClick={() => console.log(question, options, correctAnswer)}
+            >
+              Submit
+            </button>
+          </form>
         </div>
+      </div>
+
+      <div style={{ display: "none", visibility: "hidden" }}>
+        <div
+          id="my-custom-container"
+          style={{ display: "none", visibility: "hidden" }}
+        ></div>
       </div>
     </div>
   );
