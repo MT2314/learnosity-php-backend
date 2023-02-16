@@ -27,6 +27,7 @@ const QuizCustom = () => {
       );
       let parsedRequest = JSON.parse(response.data.request);
       setResponse(parsedRequest);
+      console.log(parsedRequest);
       setAuthorAPI(response.data.url_authorapi);
       return response.data;
     } catch (error) {
@@ -43,8 +44,11 @@ const QuizCustom = () => {
   useEffect(() => {
     if (authorScript === "ready" && response !== null) {
       const itemsApp = LearnosityAuthor.init(response, {
-        readyListener() {
-          // itemsApp.destroy();
+        readyListener(e) {
+          itemsApp.on("navigate", function (event) {
+            // event.preventDefault();
+            console.log("navigate", event);
+          });
         },
         errorListener(err) {
           console.log("error", err);
