@@ -1,9 +1,12 @@
 .LearnosityStyles {
   .lrn-author-ui {
     color: white !important;
+    display: none !important;
   }
   .lrn.lrn_widget {
     background-color: #1565c0;
+    display: none !important;
+
     color: white;
   }
   .lrn_mcq {
@@ -17,6 +20,7 @@
 }
 
 .lrn.lrn-author {
+  display: none !important;
   background-color: #1565c0 !important;
   color: white !important;
 }

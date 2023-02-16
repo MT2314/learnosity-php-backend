@@ -20,6 +20,11 @@ const Image = () => {
   const [authorAPI, setAuthorAPI] = useState(null);
   const authorScript = useScript(authorAPI);
 
+  // Multiple Choice state
+  const [question, setQuestion] = useState("");
+  const [options, setOptions] = useState([]);
+  const [correctAnswer, setCorrectAnswer] = useState("");
+
   // Fetch the Learnosity Author API configuration
   const requestAPI = async (itemId) => {
     try {
@@ -52,39 +57,25 @@ const Image = () => {
   var itemsApp = null;
 
   const customApp = (response) => {
-    itemsApp = LearnosityAuthor.init(response, "my-custom-container");
+    itemsApp = LearnosityAuthor.init(response, "my-custom-container", {
+      readyListener: function (e) {
+        console.log("Items API initialization completed successfully");
+      },
+    });
     console.log("itemsApp", itemsApp);
     itemsApp.on("ready", function (e) {
-      e.preventDefault();
       itemsApp.createItem(refrenceId);
-      // itemsApp.getWidget();
     });
 
-    // itemsApp.editItem(refrenceId);
-
-    //   console.log("ready");
-    // });
     itemsApp.on("navigate", function (event) {
-      // event.preventDefault();
       console.log("navigate", event);
       var itemRef;
       console.log(itemRef);
-      //   if (event.data.route === "items/new") {
-      //     myApp.createNewItem();
-      //     event.preventDefault();
-      //   }
       if (event.data.route === "items/:reference/widgets/new") {
         event.preventDefault();
         console.log("new item");
         addItem();
       }
-      // if (event.data.route === "items/:reference") {
-      //   // Extract the reference from e.g. "items/example-item-ref"
-      //   // event.preventDefault();
-      //   itemRef = event.data.location.replace(/^(items\/)/, "");
-      //   // itemsApp.editItem(itemRef, true);
-      //   console.log("itemRef", itemRef);
-      //   console.log("navigate", event);
     });
     itemsApp.on("item:created", function (event) {
       console.log("item:created", event);
@@ -99,11 +90,6 @@ const Image = () => {
       itemsApp.addItem(refrenceId);
     }
   };
-  const editItem = () => {
-    if (itemsApp) {
-      itemsApp.editItem(refrenceId);
-    }
-  };
 
   const setItemJson = () => {
     if (itemsApp) {
@@ -114,20 +100,45 @@ const Image = () => {
           definition: {
             widgets: [
               {
-                reference: "example-widget-ref1",
+                reference: refrenceId,
               },
             ],
           },
         },
         questions: [
           {
-            reference: "example-widget-ref1",
+            reference: refrenceId,
             widget_type: "response",
             data: {
-              stimulus: "short text",
-              type: "shorttext",
+              options: [
+                {
+                  label: ["TVO"],
+                  value: "0",
+                },
+                {
+                  label: ["TVO1"],
+                  value: "1",
+                },
+                {
+                  label: ["TVO2"],
+                  value: "2",
+                },
+                {
+                  label: ["TVO3"],
+                  value: "3",
+                },
+              ],
+              stimulus: "What is the best authoring application _____?",
+              type: "mcq",
+              validation: {
+                scoring_type: "exactMatch",
+                valid_response: {
+                  score: 1,
+                  value: [""],
+                },
+              },
             },
-            type: "shorttext",
+            type: "mcq",
           },
         ],
       });
@@ -144,9 +155,6 @@ const Image = () => {
     if (itemsApp) {
       itemsApp.save();
     }
-  };
-  const createMCItem = () => {
-    itemsApp.createItem(refrenceId);
   };
   function setWidget(widgetJson, widgetTemplate) {
     return itemsApp.setWidget(
@@ -181,54 +189,108 @@ const Image = () => {
         },
       },
       {
-        template_reference: "908de244-5c71-4c09-b094-7fb49554f2f9",
+        template_reference: "9e8149bd-e4d8-4dd6-a751-1a113a4b9163",
       }
     );
   }
+
+  // Multiple choice functions
+  const addOption = () => {
+    setOptions([...options, ""]);
+  };
+
+  const handleOptionChange = (index, value) => {
+    const updatedOptions = [...options];
+    updatedOptions[index] = value;
+    setOptions(updatedOptions);
+  };
+
+  const handleCorrectAnswerChange = (event) => {
+    setCorrectAnswer(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // handle form submission logic here
+  };
+
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-12 ">
-          <h1>Standalone Assessment Example1</h1>
-          {/* <button onClick={createMCItem}>Create MC</button> */}
-          {/* <button onClick={destroyItemsApp}>Destroy</button> */}
+          <h1>Multiple Choice</h1>
           <button onClick={() => customApp(response)}>Create</button>
-          <button onClick={() => destroyItemsApp()}>SetJSON</button>
-          <button onClick={() => editItem()}>Edit Item</button>
           <button onClick={() => addItem()}>Add Item</button>
-          <button onClick={() => setWidget()}>Set widget Item</button>
+          <button onClick={() => setWidget()}>Set Widget</button>
 
-          <button onClick={() => setItemJson()}>setItemJson</button>
+          <button onClick={() => setItemJson()}>Set Item Json</button>
           <button onClick={() => saveItemsApp()}>Save</button>
           <button onClick={() => destroyItemsApp()}>Destroy</button>
-          <div id="my-custom-container">
-            {/* <div className="container col-12">
-              <span data-lrn-qe-layout-widget-title></span>
-              <span data-lrn-qe-layout-tile-list></span>
-              <span data-lrn-qe-layout-validate-question></span>
-              <span data-lrn-qe-layout-live-score></span>
-              <div id="container" className="lrn-qe-row-flex">
-                <div
-                  id="firstElement"
-                  className="lrn-qe-col-xs-12 lrn-qe-col-sm-6"
+
+          <div
+            id="multiple-choice-custom"
+            className="multiple-choice-container"
+          >
+            <form onSubmit={handleSubmit}>
+              <label>
+                Question:
+                <input
+                  type="text"
+                  value={question}
+                  onChange={(event) => setQuestion(event.target.value)}
+                />
+              </label>
+              {options.map((option, index) => (
+                <label key={index}>
+                  Option {index + 1}:
+                  <input
+                    type="text"
+                    value={option}
+                    onChange={(event) =>
+                      handleOptionChange(index, event.target.value)
+                    }
+                  />
+                </label>
+              ))}
+              <button type="button" onClick={addOption}>
+                Add Option
+              </button>
+              <br />
+              <label>
+                Correct Answer:
+                <select
+                  value={correctAnswer}
+                  onChange={handleCorrectAnswerChange}
                 >
-                  <div>First element</div>
-                </div>
-                <div
-                  id="secondElement"
-                  className="lrn-qe-col-xs-12 lrn-qe-col-sm-6"
-                >
-                  <div>Second element</div>
-                </div>
-              </div>
-            </div> */}
+                  <option value="" disabled>
+                    Select Correct Answer
+                  </option>
+                  {options.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <br />
+              <button
+                type="submit"
+                onClick={() => console.log(question, options, correctAnswer)}
+              >
+                Submit
+              </button>
+            </form>
           </div>
-          {/* <div className="iau-demo"> */}
-          {/* <span className="learnosity-response question-60001"></span> */}
+
+          <div style={{ display: "none", visibility: "hidden" }}>
+            <div
+              id="my-custom-container"
+              style={{ display: "none", visibility: "hidden" }}
+            ></div>
+          </div>
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 
