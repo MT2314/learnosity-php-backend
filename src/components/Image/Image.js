@@ -213,7 +213,7 @@ const Image = () => {
   };
 
   return (
-    <div className="container">
+    <div className="mc-container">
       <div className="row">
         <h1>Multiple Choice</h1>
         <button onClick={() => customApp(response)}>Create</button>

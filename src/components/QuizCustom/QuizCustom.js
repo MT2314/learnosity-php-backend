@@ -44,11 +44,8 @@ const QuizCustom = () => {
   useEffect(() => {
     if (authorScript === "ready" && response !== null) {
       const itemsApp = LearnosityAuthor.init(response, {
-        readyListener(e) {
-          itemsApp.on("navigate", function (event) {
-            // event.preventDefault();
-            console.log("navigate", event);
-          });
+        readyListener() {
+          // itemsApp.destroy();
         },
         errorListener(err) {
           console.log("error", err);
