@@ -112,19 +112,19 @@ const Image = () => {
             data: {
               options: [
                 {
-                  label: ["TVO"],
+                  label: [options[0]],
                   value: "0",
                 },
                 {
-                  label: ["TVO1"],
+                  label: [options[1]],
                   value: "1",
                 },
                 {
-                  label: ["TVO2"],
+                  label: [options[2]],
                   value: "2",
                 },
                 {
-                  label: ["TVO3"],
+                  label: [options[3]],
                   value: "3",
                 },
               ],
@@ -134,7 +134,7 @@ const Image = () => {
                 scoring_type: "exactMatch",
                 valid_response: {
                   score: 1,
-                  value: [""],
+                  value: [correctAnswer],
                 },
               },
             },
@@ -184,7 +184,7 @@ const Image = () => {
           scoring_type: "exactMatch",
           valid_response: {
             score: 1,
-            value: [""],
+            value: [correctAnswer],
           },
         },
       },
@@ -266,7 +266,7 @@ const Image = () => {
                     Select Correct Answer
                   </option>
                   {options.map((option, index) => (
-                    <option key={index} value={option}>
+                    <option key={index} value={index}>
                       {option}
                     </option>
                   ))}
