@@ -1,5 +1,4 @@
 <div class="iframe wrapper bottom-margin clearfix">
-
 {% if data.width <= 360 %}
     {% assign breakpoint = 360 %}
 {% elsif data.width <= 475 %}
@@ -34,15 +33,19 @@
     </div>
 
     <!-- When viewed at < {{breakpoint}}px, launch the ILO into a new tab via link -->
-    <div class="box-shadow-darker std-radius py4 px3 center hidden-{{breakpoint}}">
-        <div class="font-larger bold mt4 pb2 border-bottom" aria-hidden="true">
-            {{data.title}}
-        </div>
+    <div class="py4 px3 center hidden-{{breakpoint}}">
 
-        <div class="my4">
-            <a href='{{data.src}}' target='_blank' class="btn btn-primary-sm btn-launch-start font-normal">
-                Launch Interactive  <span class="sr-only">{{data.title}} (Opens in a new window)</span><i class="fa fa-external-link" aria-hidden="true"></i>
+        <div class="iframeBorder">
+            
+            <a href='{{data.src}}' target='_blank' class="btn btn-primary-sm btn-launch-start header-4 iloButton">
+                {% if data.title.length > 0 %}
+                Open "{{data.title}}" in New Tab <i class="fa fa-external-link icon-ml-10" aria-hidden="true"></i>
+                {% else %}
+                Open Iframe in New Tab <i class="fa fa-external-link" aria-hidden="true"></i>
+                {% endif %}
+                
             </a>
+    
         </div>
     </div>
 

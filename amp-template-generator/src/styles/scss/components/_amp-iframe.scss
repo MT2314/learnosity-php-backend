@@ -1,9 +1,54 @@
 .wrapper.iframe {
-    @include fit;
-    border-radius: $btn-goto-rad;
+  @include fit;
+  border-radius: $btn-goto-rad;
+	padding: 1.25rem;
 
-    // center placeholder image
-    amp-img {
-        margin: auto;
+	// center placeholder image
+	amp-img {
+		margin: auto;
+	}
+
+	.iframeBorder {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 0.625rem;
+		background: rgba(0, 0, 0, 0.02);
+		border: 0.0625rem dashed rgba(0, 0, 0, 0.15);
+	}
+
+	.iloButton {
+		@include button-text;
+		display: block;
+		border-radius: 0.3125rem;
+  }
+
+	.icon-ml-10 {
+		margin-left: 0.25rem;
+	}
+
+	@media (max-width: 960px) {
+		.iframeBorder{
+			padding: 1.5625rem 1.25rem;
+		}   
+	}
+
+	@media (max-width: 759px) {
+		.iframeBorder {    
+			padding: 1.5625rem 1.25rem;
+		}
+        
+		.iloButton {
+			padding: 0.75rem 1.25rem;
+		}
     }
+      
+  @media (max-width: 375px) {
+		padding: 0.875rem;
+
+		.iframeBorder {            
+			padding: 1.5625rem 1rem;
+		}
+  }      
 }

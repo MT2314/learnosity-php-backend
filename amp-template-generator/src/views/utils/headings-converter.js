@@ -77,7 +77,8 @@ function parse(entity, level = -1) {
     _setHeading(entity.props.infoBoxState.infoBoxHeader, level);
   } else if (
     entity.componentName === "Accordion" ||
-    entity.componentName === "Tab"
+    entity.componentName === "Tab" ||
+    entity.componentName === "Reveal"
   ) {
     entity.props.layoutState.forEach((tab) => _setHeading(tab, level));
   }

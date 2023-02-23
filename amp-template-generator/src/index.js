@@ -6,13 +6,19 @@ const csPurgeCss = require("./utils/purgecss");
 const pjson = require('./package.json');
 
 const compile = async function (promise) {
+  // TODO: use authorizationToken in promise 
   const ts = Date.now();
   console.log("luke.compile() called", "v" + pjson.version, ts);
   const _configpath = path.join(__dirname, ".eleventy.js");
   const _input = path.join(__dirname, 'views/node.liquid');
-  const _output = process.env.USER_ID + "/";// + ts + "/";
-  // const _output = process.env.ELEVENTY_STAGING + process.env.USER_ID + "/";
+  const _output = process.env.USER_ID + "/";
   const _css = path.join(__dirname, "/styles/styles.css");
+  // Fetching Tenant api and ID from event 
+  const domainURL = promise.requestContext.domainName ? promise.requestContext.domainName : "api.tvopublishing.com";
+  const tenantId = promise.requestContext.authorizer.tenantId;
+
+  process.env.TENANT_API = `https://${domainURL}/tenants/id/${tenantId}`;
+  console.log("tenantApi: ", process.env.TENANT_API);
   var _files = new Array();
 
   let elev = new Eleventy(_input, _output, {
@@ -21,7 +27,6 @@ const compile = async function (promise) {
     // --config
     configPath: _configpath,
   });
-
   // start 11ty process programatically
   let stream = await elev.toNDJSON();
 
@@ -50,7 +55,7 @@ const compile = async function (promise) {
     }
  
     return await promiseAll(_promises).then((result) => {
-      console.log("respond to handler", result.statusCode);
+      // console.log("respond to handler", result.statusCode);
       if (result.statusCode === 200) {
         promise.resolve(result);
       } else {
@@ -106,7 +111,7 @@ async function promiseAll(promises) {
       return {
         statusCode: 200,
         headers: {"Access-Control-Allow-Origin": "*"},
-        message: "Success from luke.compile - all files processed",
+        message: `Success from luke.compile(); ${_postfiles.length} file(s) generated`,
         data: _postfiles,
       };
     },

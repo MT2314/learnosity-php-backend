@@ -1,0 +1,21 @@
+{% liquid case data.columnWidth
+    when "50:50"
+      assign column_width = 'fifty-fifty'
+    when "30:70"
+      assign column_width = 'thirty-seventy'
+    when "70:30"
+      assign column_width = 'seventy-thirty'
+endcase %}
+
+<div class="multi-column-component wrapper bottom-margin {{column_width}} column-{{data.verticalAlignment}}">
+    <div class="float-left">
+        {%- for c in data.layoutState[0].components -%}
+            {% include content-model-parser.liquid item:c %}
+        {%- endfor -%}
+    </div>
+    <div class="float-right">
+        {%- for c in data.layoutState[1].components -%}
+            {% include content-model-parser.liquid item:c %}
+        {%- endfor -%}
+    </div>
+</div>

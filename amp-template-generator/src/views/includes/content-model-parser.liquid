@@ -18,12 +18,16 @@
   {%- case item.componentName -%}
     {%- when "Text" -%}
       {% include amp-text.html data:propName %}
+      {%- if item.props.body contains "ql-mathpix" %}
+        {% assign includeMATHscript = true %}
+      {%- endif %}
     {%- when "Header" -%}
       {% include amp-heading.html data:propName.headerState %}
     {%- when "Image" -%}
       {% include amp-image.html data:propName %}
     {%- when "Video" -%}
-      {% include amp-video.html data:propName.videoState dataID:item.id %}
+      {% include amp-video.html data:propName.videoState dataID:item.id tenantData:tenantData %}
+      {% assign includeAMPscript = true %}
     {%- when "Tab" -%}
       {% include amp-tabs.html data:item %}
     {%- when "IFrame" -%}
@@ -34,6 +38,10 @@
       {% include amp-accordion.html data:item %}
     {%- when "Table" -%}
       {% include amp-table.html data:propName.layoutState %}
+    {%- when "MultiColumn" -%}
+      {% include amp-multi-column.html data:propName %}
+    {%- when "Reveal" -%}
+      {% include amp-click-to-reveal.html data:item %}
       {%comment%}
         Not using below.
       {%endcomment%}

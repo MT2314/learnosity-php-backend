@@ -60,7 +60,7 @@
       padding: 1.25rem;
 
       & span {
-        @include font-large;
+        @include header-3;
         font-weight: bold;
       }
     }
@@ -72,7 +72,7 @@
   
   & .show-fb {
     display: block;
-    @include font-normal;
+    @include header-4;
   }
   & .hide-fb {
     display: none;
@@ -96,7 +96,7 @@
   }
 
   .link {
-    @include font-normal;
+    @include header-4;
     color: $text-body;
   }
   .fbp {
@@ -126,7 +126,7 @@
       }
   
       > .circle-icon {
-          @include font-large;
+          @include header-3;
           color: $button-text;
           background: $btn-default-bg;
           width: 32px;

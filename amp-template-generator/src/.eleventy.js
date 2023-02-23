@@ -11,27 +11,6 @@ module.exports = function(eleventyConfig) {
      * $ ... $ becomes an inline tag (TeX).
      * $$ ... $$ becomes a block tag (TeX).
      */
-    eleventyConfig.addPairedShortcode("mathformulas", function(content) {
-        // TODO figure out how to do "single $" means inline
-        const DEBUG = false;
-        const block = /(\\\[)(.*?)(\\\])/gim;
-        const inline = /(\\\()(.*?)(\\\))/gim;
-        var count = 0;
-        
-        return content.replace(block, function(match) {
-            if (DEBUG) {
-                console.log(++count, 'block', match);
-            }
-
-            return '<amp-mathml layout="container" data-formula="' + match + '"></amp-mathml>';
-        }).replace(inline, function(match) {
-            if (DEBUG) {
-                console.log(++count, 'inline', match);
-            }
-
-            return '<amp-mathml layout="container" inline data-formula="' + match + '"></amp-mathml>';
-        });
-    });
 
     // Liquid config options; dynamicPartials:false will allow includes without quotes ie "include.html"
     eleventyConfig.setLiquidOptions({

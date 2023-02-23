@@ -3,11 +3,12 @@
 
 // Override the default vars set by basscss
 :root {
+    --space-2: 1rem;
     --space-3: 1.5rem;
     --space-4: 2rem;
 
     --width-1: 560px; //496px; // Click-to-Reveals/Audio/etc...
     --width-2: 760px; //560px // Images
-    --width-3: 976px; //760px // Most components inside a Topic
+    --width-3: 960px; //760px // Most components inside a Topic
     --width-4: 1024px; //976px // Section Banner
 }

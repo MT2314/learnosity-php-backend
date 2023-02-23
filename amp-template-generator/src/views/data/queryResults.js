@@ -1,3 +1,4 @@
+const axios = require("axios");
 const index = require("../utils/index");
 const queries = require("../scripts/queries");
 const convertData = require("../utils/convert-data");
@@ -15,8 +16,7 @@ module.exports = async function () {
     id: process.env.ID,
   };
 
-  console.log("process.env.QUERY", process.env.QUERY, "queryVars", queryVars);
-
+  console.log("queryResults:", process.env.QUERY, "queryVars", queryVars);
   await index
     .run(queries[process.env.QUERY || "lesson"], queryVars)
     .then((data) => {
@@ -38,7 +38,22 @@ module.exports = async function () {
 
       return false;
     })
-    .then((data) => {
+    .then(async (data) => {
+      const tenantApi = process.env.TENANT_API;
+      const brightcoveFetch = await axios({
+        method: "get",
+        url: tenantApi,
+      }).then(function (response) {
+       
+        const tempBrightcoveFetch = {};
+        tempBrightcoveFetch["brightcoveAccountId"] =
+          response.data.brightcoveAccountId;
+        tempBrightcoveFetch["brightcovePolicyKey"] =
+          response.data.brightcovePolicyKey;
+        tempBrightcoveFetch["brightcovePlayer"] =
+          response.data.brightcovePlayer;
+        return tempBrightcoveFetch;
+      });
       if (!data) {
         // TODO: there was a problem retrieving the data
       }
@@ -49,7 +64,7 @@ module.exports = async function () {
       ) {
         // Before conversion log
         // console.log("before conversion data", JSON.stringify(data, null, 4));
-        convertData.dataConversionFunction(data);
+        convertData.dataConversionFunction(data, brightcoveFetch);
         // Afer conversion log
         // console.log("after conversion data", JSON.stringify(data, null, 4));
       } else {

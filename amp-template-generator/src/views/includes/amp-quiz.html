@@ -19,7 +19,7 @@
         {% endif %}
         {% assign count = count | plus: 1 %}
         <div class="max-width-1 mx-auto">
-          <p class="font-small">Question {{ count }} of {{ questions.size }}</p>
+          <p class="header-5">Question {{ count }} of {{ questions.size }}</p>
           {% if question.type == "quiz_true_false_question" %} 
             {% include amp-true-false-question.html data:question %}
           {% elsif question.type == "quiz_multiple_choice_question" %} 

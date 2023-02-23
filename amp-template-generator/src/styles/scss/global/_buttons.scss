@@ -29,7 +29,7 @@
         padding: .5rem 2rem;
     }
     &.btn-goto {      // round Next and Previous buttons
-        @include font-large;
+        @include header-3;
         border-radius: $btn-goto-rad;
         width: $btn-goto-size;
         height: $btn-goto-size;
@@ -57,7 +57,7 @@
 
     // To style buttons as links, use .btn.link
     &.link {
-        @include font-small;
+        @include header-5;
         border: none;
         background: none;
         text-decoration: underline;

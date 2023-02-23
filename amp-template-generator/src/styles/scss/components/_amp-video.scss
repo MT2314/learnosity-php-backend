@@ -1,4 +1,4 @@
-.wrapper.bottom-margin.video-component {
+.wrapper.bottom-margin-3.video-component {
 
   max-width: 960px;
 
@@ -45,7 +45,7 @@
     overflow-y: scroll;
 
     p {
-      font-family: $component-main-font;
+      font-family: $header-font;
       font-size: 1rem;
       font-weight: 400;
       line-height: 1.4rem;
@@ -74,7 +74,7 @@
   .description-container {
     padding: 0 0.25rem;
     margin-top: 0.75rem;
-    font-family: $component-main-font;
+    font-family: $header-font;
 
     @media (max-width: 759px) {
       padding: 0 0.25rem;
@@ -83,13 +83,10 @@
     .description-flex-container {
       display: flex;
       justify-content: space-between;
+      flex-direction: column;
     
       .description-text-less,
       .description-text-more {
-        color: $grey-700;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.4rem;
         margin-right: 1.875rem;
 
         @media (max-width: 759px) {
@@ -97,7 +94,7 @@
         }
 
         .description {
-          margin-bottom: 0.625rem;
+          @include image-description-text;
         }
         
         .description-only {
@@ -105,8 +102,13 @@
         }
 
         .video-credit {
-          color: $grey-600;
-          font-style: italic;
+          @include a-tag-style;
+          @include image-credit-text;
+          margin-top: 0.625rem;
+
+          a {
+            @include image-credit-text;
+          }
         }
       }
 
@@ -124,13 +126,10 @@
       }
 
       .transcript-button {
+        @include button-text;
         height: 2.875rem;
         padding: 0.75rem 1.9375rem;
         color: $grey-900;
-        text-transform: uppercase;
-        font-weight: 700;
-        line-height: 1.375rem;
-        letter-spacing: 0.02em;
         text-align: center;
         background: $transparent-grey-100;
         border: none;
@@ -159,10 +158,7 @@
           border-radius: 0.625rem; // border—radius: 8px + offset: 2px
         }
       }
-      flex-direction: column;
-      @include a-tag-style;
     }
-
   }
 
   .show-more-button,
@@ -204,7 +200,7 @@
   }
 }
 
-.wrapper {
+.wrapper.video-component {
   @media (max-width: 759px) {
     padding: 0 3.125rem;
   }

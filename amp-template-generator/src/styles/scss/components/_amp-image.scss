@@ -1,11 +1,40 @@
 .wrapper.image {
-    @include max-width-2;
-
-    .figure {
-        margin: 0;
-        
-        .caption {
-            @include font-small;
-        }
+  @include max-width-2;
+  @include image-description-text;
+  text-align: center;
+  @media(max-width: 759px) {
+    padding: 0;
+  }
+}
+.img-comp {
+  .caption {
+    @include image-description-text;
+    text-align: center;
+    letter-spacing: 0.01em;
+    padding-top: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    @media(max-width: 759px) {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
     }
+    @media(max-width: 375px) {
+      padding-left: 0.875rem;
+      padding-right: 0.875rem;
+    }
+    @media(max-width: 960px) {
+      padding-top: 1rem;
+    }
+    @media(max-width: 345px) {
+      padding-top: 0.5rem;
+    }
+    @include a-tag-style;
+    p {
+      display:inline;
+    }
+    em {
+      @include image-credit-text;
+      margin-left: 1.25rem;
+    }
+  }
 }

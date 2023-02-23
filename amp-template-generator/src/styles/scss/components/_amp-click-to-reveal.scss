@@ -1,33 +1,169 @@
-.wrapper.reveal {
-    word-wrap: break-word;
-
-    .btn {
-        &.btn-answer-reveal {
-            /*border: 0.1875rem solid;
-            border-radius: 6px;*/
-            width: 100%;
-
-            &.active {
-                //border: 3px solid #aadead;
-                box-shadow: 0 0 0 3px $ctr-btn-active-border;
-                border-radius: 6px 6px 0 0;
-            }
-        }
+.wrapper.reveal-component {
+    .btn.link {
+      color: $button-active;
+      font-family: $header-font;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      text-transform: uppercase;
+  
+      &:focus-visible {
+        @include outline-focus;
+      }
+  
+      &:hover {
+        background-color: $body-highlight;
+        color: $hover-dialog-bg;
+      }
+  
+      &:disabled {
+        opacity: 0.2;
+        box-shadow: none;
+        pointer-events: none;
+      }
     }
-
-    .answer-reveal {
-        border: 1px solid;
-        border-color: $border-color;
-        border-radius: 0 0 6px 6px;
-
-        .heading {
+  
+    .vertical-bar {
+      color: $vertical-line;
+    }
+  
+    .accordion {
+      clear: right;
+  
+      section {
+        &:first-child {
+          .reveal-pane {
+            border-radius: 0.625rem 0.625rem 0 0;
+          }
+        }
+  
+        &:last-child {
+          .reveal-pane {
+            border-bottom-left-radius: 0.625rem;
+            border-bottom-right-radius: 0.625rem;
+            border-bottom: 0.0625rem solid $component-border;
+          }
+  
+          .section-content {
+            border-radius: 0 0 0.625rem 0.625rem;
+          }
+  
+          &[expanded] {
+            .reveal-pane {
+              border-bottom-left-radius: 0;
+              border-bottom-right-radius: 0;
+              background-color: #CEF6D5;
+            }
+  
+            .section-content {
+              border-bottom: 1px solid $component-border;
+            }
+          }
+        }
+  
+        .reveal-pane {
+          background-color: #CEF6D5;
+          border: 0.0625rem solid $component-border;
+          border-bottom: none;
+          padding: 1.0625rem 1.5rem;
+          @include text-label;
+         
+          &:hover {
+            background-color: #91E09E;
+          .reveal-title {
+                text-decoration-line: underline;
+            }
+          .chevron-down {
+              background-color: #CEF6D5;
+            }
+          }
+  
+          &:focus-within {
+            outline: none;
+          }
+          
+          &:focus-visible {
+            @include outline-focus;
+            z-index: 99;
+          }
+  
+          @media only screen and (max-width: 345px) {
+            padding: 1.5rem 1rem;
+          }
+  
+          .reveal-title-container {
             display: flex;
-            flex-direction: row;
-
-            .heading-label {
-                font-weight: bold;
-                margin: auto 0;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+              
+            .reveal-title {
+                margin-right: 1.5rem;
             }
+  
+            i {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-family: $amp-icons-font;
+              font-style: normal;
+              font-weight: normal;
+              color: $chevron-color;
+              /* Font smoothing. That was taken from TWBS */
+              -webkit-font-smoothing: antialiased;
+              border-radius: 50%;
+              padding: 0.875rem 0.625rem;
+  
+              &:before {
+                position: relative;
+                top: 2px;
+              }
+            }
+  
+            .hidden-icon {
+              display: none;
+            }
+          }
         }
+  
+        &[expanded] {
+          .reveal-pane {
+            background-color: $active-bg;
+            border-bottom: 0.0625rem solid $component-border;
+  
+            &:focus-visible {
+              @include outline-focus;
+              z-index: 99;
+            }
+  
+            .chevron-up {
+              background-color: #EEFFF1;
+            }
+          }
+        }
+  
+        .section-content {
+          border-color: $component-border;
+          background-color: $primary-bg;
+          padding: 1.5rem;
+  
+          // This strips paragraph tags of global styles for nesting inside other components
+          p {
+            margin: 0;
+          }
+  
+          .text-component {
+            padding: 0;
+          }
+  
+          .wrapper {
+            &:nth-last-child(2).bottom-margin {
+              // This clears the bottom-margin that is added to text/other components
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
     }
-}
+  }
+  

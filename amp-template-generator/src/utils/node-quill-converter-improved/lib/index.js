@@ -55,6 +55,27 @@ exports.convertHtmlToDelta = html => {
 exports.convertDeltaToHtml = delta => {
   const DOM = new JSDOM(JSDOM_TEMPLATE, JSDOM_OPTIONS);
   const QUILL = new DOM.window.Quill("#editor");
+  let Embed = DOM.window.Quill.import("blots/embed");
+
+  class MathPixMarkdown extends Embed {
+    static blotName = "mathpix";
+    static tagName = "SPAN";
+    static className = "ql-mathpix";
+  
+    static create(value) {
+      const node = super.create(value);
+      if (typeof value === "string") {
+        const md = "\\(" + value + "\\)";
+        const MathPixNode = DOM.window.document.createElement("span");
+        MathPixNode.innerHTML = md;
+        node.append(MathPixNode);
+      }
+      return node;
+    }
+
+  }
+
+  DOM.window.Quill.register("formats/mathpix", MathPixMarkdown);
 
   QUILL.setContents(delta);
 

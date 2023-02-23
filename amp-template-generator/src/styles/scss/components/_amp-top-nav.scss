@@ -363,7 +363,7 @@
   .nav-header {
     min-height: 52px;
     position: fixed;
-    z-index: 1001;
+    z-index: 999;
     top: 0;
     width: 100%;
     background-color: $page-background;
@@ -382,10 +382,10 @@
     top: 24px;
     left: 65px;
     margin-top: 0px;
-    @include font-normal;
+    @include header-4;
 
     @media (min-width: 751px) {
-      @include font-larger;
+      @include header-2;
       position: absolute;
       left: 223px;
       top: 19px;
@@ -393,21 +393,21 @@
     }
 
     @media (min-width: 832px) {
-      @include font-larger;
+      @include header-2;
       position: absolute;
       left: 263px;
     }
   }
 
   .course-code {
-    @include font-small;
+    @include header-5;
     position: absolute;
     left: 65px;
     margin-top: 7px;
     margin-bottom: .25px;
 
     @media (min-width: 751px) {
-      @include font-large;
+      @include header-3;
       left: 133px;
       top: 15px;
     }

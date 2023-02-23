@@ -1,19 +1,15 @@
 .text-component {
-  p {
-    font-size: 1.375rem;
-    margin: 0 0 1.25rem 0;
-    font-weight: 400;
-    line-height: 2.125rem;
-    letter-spacing: 0.009375rem;
-    color: #232323;
-  }
-
+  @include body-text;
   @include a-tag-style;
+  
+  p {
+    margin: 0 0 1.25rem 0;
+  }
 
   ul,
   ol {
-    font-size: 1.375rem;
     margin-left: 1.75rem;
+    margin-top: 1rem;
   }
 
   li {

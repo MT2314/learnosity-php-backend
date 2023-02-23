@@ -18,7 +18,7 @@ async function run(query, params) {
           console.error('gql client errors', err.response.errors);
         } else {
           // graphql error
-          console.error('gql err.response.error', err.response.error); // GraphQL response errors
+          console.error('gql err.error', err.error); // GraphQL response errors
           console.error('gql err.request.query', err.request.query); // GraphQL query errors
           console.error('gql err.response.data', err.response.data); // Response data if available
         }

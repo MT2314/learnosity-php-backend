@@ -43,7 +43,7 @@
 }
 /*! purgecss start ignore */
 .wrapper.carousel .amp-carousel-button { 
-    @include font-large;
+    @include header-3;
     border-radius: $btn-goto-rad;
     width: $btn-goto-size;
     height: $btn-goto-size;

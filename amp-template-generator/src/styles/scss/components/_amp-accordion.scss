@@ -1,11 +1,8 @@
 .wrapper.accordion-component {
   .btn.link {
+    @include button-text;
     color: $button-active;
-    font-family: $component-main-font;
-    font-weight: 600;
-    font-size: 1rem;
     text-decoration: none;
-    text-transform: uppercase;
 
     &:focus-visible {
       @include outline-focus;
@@ -65,7 +62,7 @@
         border: 0.0625rem solid $component-border;
         border-bottom: none;
         padding: 1.0625rem 1.5rem;
-        @include text-label;
+        @include header-4;
 
         &:hover {
           background-color: $hover-bg;
@@ -158,7 +155,7 @@
         }
 
         .wrapper {
-          &:nth-last-child(2).bottom-margin {
+          &:nth-last-child(2) {
             // This clears the bottom-margin that is added to text/other components
             margin-bottom: 0;
           }

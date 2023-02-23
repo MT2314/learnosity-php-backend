@@ -12,19 +12,20 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&family=Lato&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&family=Noto+Sans&display=swap" rel="stylesheet">
 {% if projectConfig.devMode == 'true' %}
   <!-- Link to unminified, un amp-ified version of stylesheet, for local debugging and development -->
   <link href="../styles.css" rel="stylesheet" type="text/css">
 {% else %}
   <style amp-custom></style>
 {% endif %}
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-image-lightbox" src="https://cdn.ampproject.org/v0/amp-image-lightbox-0.1.js"></script>
 </head>
 <body>
-  {# <a class="btn skip-to-content px2 py1 font-small" href="#main">
+  {# <a class="btn skip-to-content px2 py1 header-5" href="#main">
     Skip to content
   </a> #}
-  
   <noscript>
     <div class="alert alert-warning clearfix" role="alert">
         <p class="center">
@@ -56,9 +57,7 @@
         </div>
     {% endif %}
    
-      {% mathformulas %} 
         {{content | safe}}
-      {% endmathformulas %}
       
     </main>
   </div>

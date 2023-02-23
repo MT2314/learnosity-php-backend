@@ -1,5 +1,5 @@
 <div class="clearfix">
-    <div class="mb4 font-small">
+    <div class="mb4 header-5">
         {% for questionPart in question.question %}            
             {% if questionPart.type == "formatted_text" %}
             {% include amp-formatted-text.html data:questionPart wrapperStyles:"inner" %} 
@@ -35,8 +35,8 @@
 <div class="button-group">
     <button type="button" class="btn btn-primary full-width" [class]="!submitButtonReady{{ questionId }} && enabledState{{ questionId }} ? 'btn btn-primary full-width active' : 'btn btn-primary full-width'" on="tap:AMP.setState({ countCorrect{{quizId}}: q{{ count }}{{ questionId }} ? countCorrect{{quizId}} + 1 : countCorrect{{quizId}}, submitButtonReady{{ questionId }}: false, enabledState{{ questionId }}: true })" disabled [disabled]="!submitButtonReady{{ questionId }}">Submit</button>
     <div [class]="enabledState{{ questionId }}  ? 'feedback-reveal box-shadow show-fb' : 'hide-fb'" class="hidden">
-        <div id="feedback_{{ questionId }}_c" class="hide-fb" [class]="enabledState{{ questionId }} && q{{ count }}{{ questionId }} ? 'show-fb inline' : 'hide-fb'"><div class="left"><i class="fa fa-check font-large correct mr1" aria-hidden="true"></i></div><div class="inline-table"><span class="mb3">Correct</span><br /><p>{{question.feedbackCorrect}}</p></div></div>
-        <div id="feedback_{{ questionId }}_i" class="hide-fb" [class]="enabledState{{ questionId }} && !q{{ count }}{{ questionId }} ? 'show-fb inline' : 'hide-fb'"><div class="left"><i class="fa fa-times font-large wrong mr1" aria-hidden="true"></i></div><div class="inline-table"><span class="mb3">Incorrect</span><br /><p>{{question.feedbackIncorrect}}</p></div></div>
+        <div id="feedback_{{ questionId }}_c" class="hide-fb" [class]="enabledState{{ questionId }} && q{{ count }}{{ questionId }} ? 'show-fb inline' : 'hide-fb'"><div class="left"><i class="fa fa-check header-3 correct mr1" aria-hidden="true"></i></div><div class="inline-table"><span class="mb3">Correct</span><br /><p>{{question.feedbackCorrect}}</p></div></div>
+        <div id="feedback_{{ questionId }}_i" class="hide-fb" [class]="enabledState{{ questionId }} && !q{{ count }}{{ questionId }} ? 'show-fb inline' : 'hide-fb'"><div class="left"><i class="fa fa-times header-3 wrong mr1" aria-hidden="true"></i></div><div class="inline-table"><span class="mb3">Incorrect</span><br /><p>{{question.feedbackIncorrect}}</p></div></div>
     </div>
     
 </div>

@@ -1,4 +1,4 @@
-<div class="wrapper bottom-margin video-component">
+<div class="wrapper bottom-margin-3 video-component">
     {%- assign videoId = 'video' | append: dataID -%}
     {%- assign showVideoId = 'showVideoId' | append: dataID -%}
     {%- assign hideVideoId = 'hideVideoId' | append: dataID -%}
@@ -11,12 +11,15 @@
     
         <div class="brightcove">
             <amp-brightcove
-                data-account="23648095001"
+                data-account="{{tenantData.brightcoveAccountId}}"
 
             {%comment%}
                 The player id originally was pulled out of the CMS. For now we are pointing
                 at a "test player" built by distribution
                 data-player="{{ data.videoId }}"
+            {%endcomment%}
+            {%comment%}
+                TODO: Once we have a working brightcovePlayer value, plug "{{ tenantData.brightcovePlayer into data-player below }}"
             {%endcomment%}
                 data-player="Kl2Y7HovlM"
                 data-video-id="{{ data.videoId }}"
@@ -58,7 +61,7 @@
 
         </div>
     {%- endif -%}
-    <amp-script data-ampdevmode layout="fill" script="api-script" class="transcript-wrapper">
+    <amp-script layout="fill" script="api-script" class="transcript-wrapper">
         <div id="focus-here_{{ videoId }}" tabindex="0" class="hideview transcript" [class]="hid_{{ videoId }} ? 'view transcript': 'hideview transcript'">
             {{ data.videoURL }}
         </div>
@@ -67,11 +70,11 @@
                 <button
                 class="transcript-button"
                 aria-label="View transcript"
-                [aria-label]="hid_{{ videoId }} ? 'HIDE TRANSCRIPT': 'VIEW TRANSCRIPT'"
+                [aria-label]="hid_{{ videoId }} ? 'Hide Transcript': 'View Transcript'"
                 on="tap:AMP.setState({ hid_{{ videoId }} : !hid_{{ videoId }}}), focus-here_{{ videoId }}.focus"
-                [text]="hid_{{ videoId }} ? 'HIDE TRANSCRIPT': 'VIEW TRANSCRIPT'"
+                [text]="hid_{{ videoId }} ? 'Hide Transcript': 'View Transcript'"
                 >
-                    VIEW TRANSCRIPT
+                    View transcript
                 </button>
                 <div class="description-text-less" id="{{videoId}}" [class]="buttonToggleVideo_{{videoId}} ? 'description-text-more' : 'description-text-less'">
                     {%- if videoDescription.length > 0 and displayDescription == true -%}

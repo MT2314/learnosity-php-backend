@@ -33,12 +33,15 @@ const Image = () => {
           params: { mode: "item_edit", itemref: `${itemId}` },
         }
       );
+      console.log(response);
+
       let parsedRequest = JSON.parse(response.data.request);
       console.log(parsedRequest);
 
       setResponse(parsedRequest);
-      setAuthorAPI(response.data.url_authorapi);
 
+      setAuthorAPI(response.data.url_authorapi);
+      console.log(response.data.url_authorapi);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -60,7 +63,6 @@ const Image = () => {
         console.log("Items API initialization completed successfully");
       },
     });
-    console.log("itemsApp", itemsApp);
     itemsApp.on("ready", function (e) {
       itemsApp.createItem(refrenceId);
     });
@@ -68,7 +70,6 @@ const Image = () => {
     itemsApp.on("navigate", function (event) {
       console.log("navigate", event);
       var itemRef;
-      console.log(itemRef);
       if (event.data.route === "items/:reference/widgets/new") {
         event.preventDefault();
         console.log("new item");

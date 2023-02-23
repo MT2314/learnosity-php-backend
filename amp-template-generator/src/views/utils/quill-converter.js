@@ -75,7 +75,9 @@ function parse(entity) {
     entity.props.body = _setHtml(entity.props.body);
   } else if (
     entity.componentName === "Tab" ||
-    entity.componentName === "Accordion"
+    entity.componentName === "Accordion" ||
+    entity.componentName === "MultiColumn" ||
+    entity.componentName === "Reveal"
   ) {
     // Running a for loop through the first array we hit, which is the layoutState
     for (let i = 0; i < entity.props.layoutState.length; i++) {
@@ -85,20 +87,21 @@ function parse(entity) {
           _setHtml(
             entity.props.layoutState[i].components[j].componentProps.body
           );
-        if (
-          entity.props.layoutState[i].components[j].componentName === "Video"
-        ) {
-          entity.props.layoutState[i].components[
-            j
-          ].componentProps.videoState.videoDescription = _setHtml(
+        if (entity.props.layoutState[i].components[j].componentName === "Video") {
+          entity.props.layoutState[i].components[j].componentProps.videoState.videoDescription = _setHtml(
             entity.props.layoutState[i].components[j].componentProps.videoState
               .videoDescription
           );
-          entity.props.layoutState[i].components[
-            j
-          ].componentProps.videoState.videoCredit = _setHtml(
+          entity.props.layoutState[i].components[j].componentProps.videoState.videoCredit = _setHtml(
             entity.props.layoutState[i].components[j].componentProps.videoState
               .videoCredit
+          );
+        } else if (entity.props.layoutState[i].components[j].componentName === "Image") {
+            entity.props.layoutState[i].components[j].componentProps.credit = _setHtml(
+              entity.props.layoutState[i].components[j].componentProps.credit
+            );
+          entity.props.layoutState[i].components[j].componentProps.longDesc = _setHtml(
+            entity.props.layoutState[i].components[j].componentProps.longDesc
           );
         }
       }
@@ -112,6 +115,9 @@ function parse(entity) {
     // Replace line breaks before setting HTML
     noBreakCredit = _replaceLineBreak(entity.props.videoState.videoCredit);
     entity.props.videoState.videoCredit = _setHtml(noBreakCredit);
+  } else if (entity.componentName === "Image") {
+    entity.props.credit = _setHtml(entity.props.credit);
+    entity.props.longDesc = _setHtml(entity.props.longDesc);
   }
 
   return entity;
@@ -137,6 +143,7 @@ function _setHtml(quill) {
 
   // Replacing nest <br> tags
   converted = converted.replace(/<p><br><\/p>/g, "<br>");
+  converted = converted.replace(/contenteditable="false"/g, "");
 
   // Wrapping the contents of li tags with span tags
   converted = converted.replace(/<li>/g, "<li><span>");

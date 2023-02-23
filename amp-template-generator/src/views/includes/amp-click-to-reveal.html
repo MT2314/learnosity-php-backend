@@ -1,71 +1,90 @@
-{%- assign type = data.type | downcase -%}
-{%- case type -%}
-    {%- when "audio" -%}
-        {%- assign phrase = "Transcript" -%}
-        {%- assign heading = false -%}
-        {%- assign headingLabel = false -%}
-        {%- assign revealString = data.transcript -%}
-    {%- when "question_and_answer" -%}
-        {%- assign answerType = data.answerType | downcase -%}
-        {%- case answerType -%}
-            {%- when "hint" -%}
-                {%- assign phrase = "Hint" -%}
-                {%- assign heading = true -%}
-                {%- assign headingLabel = "Hint" -%}
-                {%- assign revealString = data.answer -%}
-            {%- when "suggested answer" -%}
-                {%- assign phrase = "Suggested Answer" -%}  
-                {%- assign heading = false -%}
-                {%- assign headingLabel = false -%}
-                {%- assign revealString = data.answer -%}
-        {%- endcase -%}
- {%- endcase -%}        
 
-{%- assign nodeId = "entity" | append: data.uuidClean -%}
-
-<!-- Begin Click-to-Reveal: {{ phrase }} -->
-<div class="reveal wrapper inner">
-    <button [class]="{{ nodeId }} ? 'btn btn-primary btn-answer-reveal active': 'btn btn-primary btn-answer-reveal'" class="btn btn-primary btn-answer-reveal"
-            on="tap:AMP.setState({ {{ nodeId }}: !{{ nodeId }} })"
-            [aria-expanded]="{{ nodeId }} ? 'true' : 'false'"
-            aria-expanded="false"
-            aria-controls="{{ nodeId }}_reveal">
-        <span class="sr-only">{{ phrase }}</span>
-        <span aria-hidden="true">
-            <span [text]="{{ nodeId }} ? 'Hide {{ phrase }}': 'Show {{ phrase }}'">
-                Show {{ phrase }}
-            </span>
-            &nbsp;<i [class]="{{ nodeId }} ? 'fa fa-chevron-up': 'fa fa-chevron-down'" class="fa fa-chevron-down"></i>
-        </span>
-    </button>
-
-    <div id="{{ nodeId }}_reveal"
-        [class]="{{ nodeId }} ? 'answer-reveal pt2 px3 box-shadow': 'display-none'" 
-        class="display-none">
-    {% if heading -%}
-        <div class="heading clearfix mb2">
-            <div class="left mr1">
-                    <amp-img
-                        width="43px"
-                        height="43px"
-                        alt=""
-                        layout="fixed"
-                        class="callout-icon"
-                        src="https://dcc.ilc.org/mpm1d/assets/img/infoIcon.png"
-                        >
-                    </amp-img>
-            </div>
-            <div class="heading-label overflow-hidden">
-                {% if heading -%}
-                    {{ headingLabel | default: '' }}
-                {%- endif %}
-            </div>
+<div class="reveal-component wrapper bottom-margin">
+    {%- assign revealId = 'reveal' | append: data.id -%}
+    {%- assign ariaControls = '' -%}
+    {%- assign btnExpandHidden = '' -%}
+    {%- assign btnCollapseHidden = '' -%}
+    {%- for tab in data.props.layoutState -%}
+        {%- assign ariaControls = ariaControls | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: ' ' -%}
+        {%- assign btnExpandHidden = btnExpandHidden | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: '_expanded && ' -%}
+        {%- assign btnCollapseHidden = btnCollapseHidden | append: '!' | append: accordionId | append: '_AMP_content_' | append: forloop.index0 | append: '_expanded && ' -%}
+    {%- endfor -%}
+    {%- assign size = btnExpandHidden | size | minus: 4 -%}
+    {%- assign btnExpandHidden = btnExpandHidden | slice: 0, size -%}
+    {%- assign size = btnCollapseHidden | size | minus: 4 -%}
+    {%- assign btnCollapseHidden = btnCollapseHidden | slice: 0, size -%}
+    
+        {%- if data.props.layoutState.length > 1 -%}
+        <div class="right pb1">
+            <button
+                id="{{ revealId }}_expandAll"
+                on="tap:{{ revealId }}.expand();"
+                [disabled]="{{ btnExpandHidden }}"
+                class="btn link"
+            >
+                <span class="bold">Expand All</span>
+            </button>
+                <span class="vertical-bar">|</span>
+            <button
+                id="{{ revealId }}_collapseAll"
+                on="tap:{{ revealId }}.collapse();"
+                disabled
+                [disabled]="{{ btnCollapseHidden }}"
+                class="btn link"
+            >
+                <span class="bold">Collapse All</span>
+            </button>
         </div>
-    {%- endif %}
-        <div>
-            {{ revealString | default: '' }}
-        </div>
+        {%- endif -%}
+    
+        {%comment%}Actual Accordion:{%endcomment%}
+        <amp-accordion
+            disable-session-states
+            id="{{ revealId }}"
+            class="accordion"
+            aria-label="Accordion with {{ data.props.layoutState.length }} sections"
+        >
+        {%- for tab in data.props.layoutState -%}
+            {%comment%}Pane:{%endcomment%}
+            <section
+                on="expand:AMP.setState({ {{ revealId }}_AMP_content_{{ forloop.index0 }}_expanded: true }); collapse:AMP.setState({ {{ revealId }}_AMP_content_{{ forloop.index0 }}_expanded: false });">
+
+                {%comment%}Pane Heading:{%endcomment%}
+                <header
+                    id="{{ revealId }}_heading{{ forloop.index0 }}"
+                    class="reveal-pane p2"
+                    role="button"
+                    aria-label="Accordion section {{ forloop.index }} of {{ data.props.layoutState.length }} {{ tab.title }} {{ pane.heading.processed }}"
+                >
+                    <span class="reveal-title-container">
+                        <div class="reveal-title" [text]="{{ revealId }}_AMP_content_{{ forloop.index0 }}_expanded ? '{{tab.title}}' : '{{tab.closedTitle}}'">
+                            {{tab.closedTitle}}
+                        </div>
+                        <i class="chevron-down" [class]="{{ revealId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'hidden-icon' : 'chevron-down'" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M0.49968 0.896287C0.890205 0.505762 1.52337 0.505762 1.91389 0.896287L9.20679 8.18918L16.4997 0.896287C16.8902 0.505762 17.5234 0.505762 17.9139 0.896287C18.3044 1.28681 18.3044 1.91998 17.9139 2.3105L9.91389 10.3105C9.52337 10.701 8.89021 10.701 8.49968 10.3105L0.49968 2.3105C0.109156 1.91998 0.109156 1.28681 0.49968 0.896287Z"
+                                    fill="#008800" fill-opacity="0.55" />
+                            </svg>
+                        </i>
+                        <i class="hidden-icon" [class]="{{ revealId }}_AMP_content_{{ forloop.index0 }}_expanded ? 'chevron-up' : 'hidden-icon'" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 18 10" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M17.7071 9.70711C17.3166 10.0976 16.6834 10.0976 16.2929 9.70711L9 2.41421L1.70711 9.70711C1.31658 10.0976 0.683416 10.0976 0.292892 9.70711C-0.0976314 9.31658 -0.0976313 8.68342 0.292893 8.29289L8.29289 0.292893C8.68342 -0.0976323 9.31658 -0.0976322 9.70711 0.292893L17.7071 8.29289C18.0976 8.68342 18.0976 9.31658 17.7071 9.70711Z"
+                                    fill="#008800" />
+                            </svg>
+                        </i>
+                    </span>
+                </header>
+    
+                {%comment%}Pane Body:{%endcomment%}
+                <div class="section-content border-left border-right px3 pt3" aria-labelledby="{{ revealId }}_heading{{ forloop.index0 }}">
+                    {%- for c in tab.components -%}
+                        {% include content-model-parser.liquid item:c %}
+                    {%- endfor -%}
+                    <span class="sr-only">End of section</span>
+                </div>
+            </section>
+        {%- endfor -%}
+        </amp-accordion>
     </div>
-    <!-- End Click-to-Reveal: {{ phrase }} -->
-</div>
-

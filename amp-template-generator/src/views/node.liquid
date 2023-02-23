@@ -8,58 +8,58 @@ permalink: "{{result.courseCode | default: 'noCourseCode'}}_{{result.lessonPath}
 ---
 
 {%- if result.componentContainers %}
-
-  {%- for section in result.componentContainers[0].sections -%}
-
-    {% include amp-section.html section:section %}
-
-    {%- for compName in section.components -%}
-      {%- if compName.componentName == "Video" %}
-        {% assign includeAMPscript = true %}
-      {%- endif %}
-    {%- endfor -%}
-
-  {%- endfor -%}
-
+  {% assign resultComponentContainers = result.componentContainers[0].sections %}
 {%- else %}
+  {% assign resultComponentContainers = result.componentContainer.sections %}
+{%- endif %}
 
-  {%- for section in result.componentContainer.sections -%}
 
-    {% include amp-section.html section:section %}
+{%- for section in resultComponentContainers -%}
+  {% include amp-section.html section: section tenantData: result.tenantData %}
+{%- endfor -%}
 
-    {%- for compName in section.components -%}
-      {%- if compName.componentName == "Video" %}
-        {% assign includeAMPscript = true %}
-      {%- endif %}
-    {%- endfor -%}
-    
-  {%- endfor -%}
-
+{%- if includeMATHscript == true %}
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> 
+  <script type="text/x-mathjax-config">                                                                                         
+      MathJax.Hub.Config({                                                                                                      
+          tex2jax: {                                                                                                            
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],                                                                           
+            processEscapes: true, 
+          },   
+          showMathMenu: false,
+          menuSettings: {
+            inTabOrder: false
+          }
+      });      
+  </script>
 {%- endif %}
 
 {%- if includeAMPscript == true %}
-  <script id="api-script" type="text/plain" target="amp-script">
+  <script
+    id="api-script"
+    type="text/plain"
+    target="amp-script">
     const getFile = (url, callback) => { // get file from a URL link
-      url = url.replace("http://", "https://");
-      var httpRequest = new XMLHttpRequest(),
-        response,
-        getResponse = function() { // response handler
-          try {
-            if (httpRequest.readyState === 4) {
-              if (httpRequest.status === 200) {
-                response = httpRequest.responseText;
-                if (response === "{null}") { // some API requests return '{null}' will breaks JSON.parse
-                  response = null;
-                }
-                callback(response); // return the response
-              } else {
-                callback(null);
+    url = url.replace("http://", "https://");
+    var httpRequest = new XMLHttpRequest(),
+      response,
+      getResponse = function() { // response handler
+        try {
+          if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+              response = httpRequest.responseText;
+              if (response === "{null}") { // some API requests return '{null}' will breaks JSON.parse
+                response = null;
               }
+              callback(response); // return the response
+            } else {
+              callback(null);
             }
-          } catch (e) {
-            callback(null);
           }
-        };
+        } catch (e) {
+          callback(null);
+        }
+      };
       httpRequest.onreadystatechange = getResponse; // set response handler
       httpRequest.open("GET", url); // open the request
       httpRequest.send(); // open and send request
@@ -67,21 +67,21 @@ permalink: "{{result.courseCode | default: 'noCourseCode'}}_{{result.lessonPath}
     const fetchAPI = async () => {
       const videoURL = document.querySelector('div').textContent;
       const headers = {
-        "BCOV-Policy": 'BCpkADawqM1XplIzTT5iB8WK5oNDPzQsM2CDxSACIVrgtdNB-PRZjMuDeSgYSpdK1dkvswBpDnEoxoAtwa1u9AYhNqX8LemUJQGTksH9e5M5QlElWJy6ygFINKA'
-      };
-      const result = await fetch(videoURL, {headers});
-      const data = await result.json();
-      if (data.text_tracks[1].sources !== null) {
-        const chosenTrack = data.text_tracks[1].sources[0].src;
-        getFile(chosenTrack, function(response) {
-          if (response) {
-            var responseEdited = response.replace("X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0", "");
-            responseEdited = responseEdited.replace("WEBVTT", "");
-            responseEdited = responseEdited.replace("00:00.000 --> 01:00:00.000", "");
-            responseEdited = responseEdited.replaceAll("&quot;", '"');
-            responseEdited = responseEdited.replaceAll("&apos;", "'");
-            const splitted = responseEdited.split("<br \/>");
-            const divBody = document.querySelector('div');
+        "BCOV-Policy": '{{ result.tenantData.brightcovePolicyKey }}'
+    };
+    const result = await fetch(videoURL, {headers});
+    const data = await result.json();
+    if (data.text_tracks[1].sources !== null) {
+      const chosenTrack = data.text_tracks[1].sources[0].src;
+      getFile(chosenTrack, function(response) {
+        if (response) {
+          var responseEdited = response.replace("X-TIMESTAMP-MAP=LOCAL:00:00:00.000,MPEGTS:0", "");
+          responseEdited = responseEdited.replace("WEBVTT", "");
+          responseEdited = responseEdited.replace("00:00.000 --> 01:00:00.000", "");
+          responseEdited = responseEdited.replaceAll("&quot;", '"');
+          responseEdited = responseEdited.replaceAll("&apos;", "'");
+          const splitted = responseEdited.split("<br \/>");
+          const divBody = document.querySelector('div');
             for (let i = 0; i < splitted.length; i++) {
               const p = document.createElement('p');
               p.textContent = splitted[i];

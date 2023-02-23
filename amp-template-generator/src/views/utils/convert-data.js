@@ -1,3 +1,4 @@
+
 const parseData = require("./parse-props");
 const quillConverter = require("./quill-converter");
 const headingsConverter = require("./headings-converter");
@@ -5,7 +6,7 @@ const headingsConverter = require("./headings-converter");
 // Array to hold all the lessons
 const lessons = [];
 
-const dataConversionFunction = (data) => {
+const dataConversionFunction = (data, tenantData) => {
   // reset lessons array on each request
   lessons.length = 0;
   // Parsing the original data object to convert parts of it that we received as strings into JSON format
@@ -29,7 +30,9 @@ const dataConversionFunction = (data) => {
       // Converting any headings found
       // Converting the raw quill data into a html format
       // Finally pushing each lesson into an array on each iteration
-      headingsConverter.parse(quillConverter.parse({ ...lesson, lessonPath }))
+      headingsConverter.parse(
+        quillConverter.parse({ ...lesson, lessonPath, tenantData })
+      )
     );
   }
 };
