@@ -1,97 +1,189 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useEffect, useState, useMemo } from "react";
+import axios from "axios";
 import useScript from "../../Utility/useScript";
-import { v4 as uuid } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
-const Learnosity = require("./Utils/Learnosity.js");
-// import Learnosity from "learnosity-sdk-nodejs";
+import "./assets/css/main.css";
+import "./assets/css/quad.css";
+import "./assets/styles.scss";
 
-import "./assets/style.css";
+export const defaultProps = {
+  quizId: "quizId",
+  quizName: "quizName",
+};
 
 const QuizMain = () => {
-  const config = {
-    consumerKey: "yis0TYCu7U9V4o7M",
-    consumerSecret: "74c5fd430cf1242a527f6223aebd42d30464be22",
+  // Learnosity Author API configuration
+  const [response, setResponse] = useState(null);
+  const [refrenceId, setRefrenceId] = useState(null);
+  // Author script is loaded from the Learnosity CDN
+  const [authorAPI, setAuthorAPI] = useState(null);
+  const authorScript = useScript(authorAPI);
+
+  // Multiple Choice state
+
+  // Current item state
+  const [currentItem, setCurrentItem] = useState("item_list");
+
+  // Fetch the Learnosity Author API configuration
+  const requestAPI = async (itemId) => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1/learnosity-demos/www/authoring/Quiz-DisableSections.php`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+          params: { mode: "item_list", itemref: `${itemId}` },
+        }
+      );
+      console.log(response);
+
+      let parsedRequest = JSON.parse(response.data.request);
+      console.log(parsedRequest);
+
+      setResponse(parsedRequest);
+
+      setAuthorAPI(response.data.url_authorapi);
+      console.log(response.data.url_authorapi);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const status = useScript("https://authorapi.learnosity.com/?v2022.2.LTS");
-  const domain = "localhost";
-  const user_id = uuid.v4();
-  const session_id = uuid.v4();
+  useMemo(() => {
+    let itemId = `publishing-${uuidv4()}`;
+    console.log(itemId);
+    setRefrenceId(itemId);
+    requestAPI(itemId);
+  }, []);
 
-  const [request, setRequest] = useState({});
+  var itemsApp = null;
 
-  useEffect(() => {
-    const learnositySdk = new Learnosity(); // Instantiate the SDK
-    const req = learnositySdk.init(
-      "items", // Select Items API
-      // Consumer key and consumer secret are the public & private security keys required to access Learnosity APIs and data. These keys grant access to Learnosity's public demos account. Learnosity will provide keys for your own account.
-      {
-        consumer_key: config.consumerKey, // Load key from config.js
-        domain: domain, // Set the domain (from line 20)
-      },
-      config.consumerSecret, // Load secret from config.js
-      {
-        mode: "item_list",
-        // Unique student identifier, a UUID generated on line 18.
-        user_id: user_id,
-        // A reference of the Activity to retrieve from the Item bank, defining which Items will be served in this assessment.
-        activity_template_id: "quickstart_examples_activity_template_001",
-        // Selects a rendering mode, `assess` type is a "standalone" mode (loading a complete assessment player for navigation, VS `inline`, for embedded).
-        // Uniquely identifies this specific assessment attempt session for  save/resume, data retrieval and reporting purposes. A UUID generated on line 18.
-        session_id: session_id,
-        // Used in data retrieval and reporting to compare results with other users submitting the same assessment.
-        activity_id: "quickstart_examples_activity_001",
-        // Selects a rendering mode, `assess` type is a "standalone" mode (loading a complete assessment player for navigation, VS `inline`, for embedded).
-        rendering_type: "assess",
-        // Selects the context for the student response storage `submit_practice` mode means student response storage in the Learnosity cloud, for grading.
-        type: "submit_practice",
-        // Human-friendly display name to be shown in reporting.
-        name: "Items API Quickstart",
-        // Can be set to `initial, `resume` or `review`. Optional. Default = `initial`.
-        state: "initial",
-        user: {
-          id: "demos-site",
-          firstname: "Demos",
-          lastname: "User",
-          email: "demos@learnosity.com",
+  // Initialize the Author API when the script is loaded
+  const customApp = (response) => {
+    if (authorScript === "ready" && response !== null) {
+      itemsApp = LearnosityAuthor.init(response, {
+        readyListener: function (e) {
+          // Capture navigation events
+          itemsApp.on("navigate", function (event) {
+            console.log("navigate", event);
+
+            // Capture the event when the user clicks the "Add Item" button
+            if (event.data.route === "items/new") {
+              event.preventDefault();
+              console.log("items/new");
+              createItem(refrenceId);
+            }
+            // Once the item is created, navigate to the item select screen
+            if (event.data.route === "items/:reference") {
+              event.preventDefault();
+              console.log("items/:reference");
+              itemsApp.navigate("items/" + refrenceId + "/widgets/new");
+              setCurrentItem("question_select");
+            }
+            // Once the item is created, navigate to the item select screen
+            if (event.data.route === "items/:reference/widgets/new") {
+              console.log("items/:reference/widgets/new");
+              setCurrentItem("question_editor");
+            }
+          });
         },
-      }
-    );
-
-    setRequest(req);
-  }, []); // Run this only once when the component mounts
-
-  const [itemsApp, setItemsApp] = useState({});
-  useEffect(() => {
-    if (status === "ready") {
-      console.log("request", request);
-      setItemsApp(() =>
-        LearnosityAuthor.init(request, {
-          readyListener() {
-            console.log(itemsApp);
-
-            console.log("ready");
-          },
-          errorListener(err) {
-            console.log("error", err);
-          },
-        })
-      );
+        errorListener(err) {
+          console.log("error", err);
+        },
+      });
     }
-  }, [status]);
+  };
 
+  // Add a new item to the Author API
+  const createItem = () => {
+    console.log("createItem", refrenceId);
+    if (itemsApp) {
+      itemsApp.createItem(refrenceId);
+    }
+  };
+
+  const goToItem = () => {
+    console.log("goToItem", refrenceId);
+    return itemsApp.navigate("item/" + refrenceId + "/widgets/new");
+  };
+  console.log(currentItem);
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-12">
-          <h1>Standalone Assessment Example</h1>
+    <div classNameName="multiple-choice-container">
+      <div classNameName="mc-custom-container">
+        <div classNameName="row">
+          <button onClick={() => customApp(response)}>Create</button>
+        </div>
+        {/* <div className="my-widget-selection-wrapper">
+          <span data-lrn-qe-layout-tile-list></span>
+        </div> */}
 
+        {/* <MultipleChoice /> */}
+        {currentItem === "question_select" && (
+          <div className="my-widget-selection-wrapper">
+            <span data-lrn-qe-layout-tile-list></span>
+          </div>
+        )}
+        <div className="my-widget">
           <div id="learnosity-author"></div>
+          {/* <div id="my-custom-container"></div> */}
         </div>
       </div>
     </div>
   );
 };
 
+// const QuestionSelect = () => {
+//   return (
+
+//   );
+// };
+
+const QuestionEditor = () => {
+  return (
+    <div className="row col-6">
+      <span data-lrn-qe-layout-edit-panel></span>
+    </div>
+  );
+};
+
+// const MultipleChoice = () => {
+//   return (
+{
+  /* <QuestionEditor /> */
+}
+//    <span
+//    data-lrn-qe-label="stimulus"
+//    className="lrn-qe-lg-ckeditor lrn-text-normal"
+//  ></span>
+//  <div className="container col-12">
+//    <span data-lrn-qe-layout-widget-title></span>
+//    <div className="row col-6">
+//      <span data-lrn-qe-layout-edit-panel></span>
+//    </div>
+//    <div className="row col-6">
+//      <div className="button-controls">
+//        <span data-lrn-qe-layout-validate-question>3</span>
+//        <span data-lrn-qe-layout-live-score></span>
+//      </div>
+//      <div className="row col-6">
+//        <div className="button-controls">
+//          <span data-lrn-qe-layout-source-button></span>
+//          <div className="row col-6">
+//            <div className="button-controls">
+//              <span data-lrn-qe-layout-global-help></span>
+//              <span data-lrn-qe-layout-preview-panel></span>
+//              <span data-lrn-qe-layout-change-question></span>
+//              <span data-lrn-qe-layout-delete-question></span>
+//            </div>
+//          </div>
+//        </div>
+//      </div>
+//    </div>
+//  </div>
+//   );
+// };
 export default QuizMain;
