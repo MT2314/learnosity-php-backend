@@ -23,7 +23,7 @@ const QuizMain = () => {
   // Multiple Choice state
 
   // Current item state
-  const [currentItem, setCurrentItem] = useState("item_list");
+  const [currentItem, setCurrentItem] = useState(null);
 
   // Fetch the Learnosity Author API configuration
   const requestAPI = async (itemId) => {
@@ -70,12 +70,14 @@ const QuizMain = () => {
           // Capture navigation events
           itemsApp.on("navigate", function (event) {
             console.log("navigate", event);
+            setCurrentItem("item_list");
 
             // Capture the event when the user clicks the "Add Item" button
             if (event.data.route === "items/new") {
               event.preventDefault();
               console.log("items/new");
               createItem(refrenceId);
+              setCurrentItem("item_list");
             }
             // Once the item is created, navigate to the item select screen
             if (event.data.route === "items/:reference") {
@@ -112,25 +114,30 @@ const QuizMain = () => {
   };
   console.log(currentItem);
   return (
-    <div classNameName="multiple-choice-container">
-      <div classNameName="mc-custom-container">
-        <div classNameName="row">
-          <button onClick={() => customApp(response)}>Create</button>
+    <div className="multiple-choice-container">
+      {currentItem === null && (
+        <div className="mc-custom-container">
+          <button
+            className="mc-create-button"
+            onClick={() => customApp(response)}
+          >
+            Create Multiple Choice Question
+          </button>
         </div>
-        {/* <div className="my-widget-selection-wrapper">
+      )}
+      {/* <div className="my-widget-selection-wrapper">
           <span data-lrn-qe-layout-tile-list></span>
         </div> */}
 
-        {/* <MultipleChoice /> */}
-        {currentItem === "question_select" && (
-          <div className="my-widget-selection-wrapper">
-            <span data-lrn-qe-layout-tile-list></span>
-          </div>
-        )}
-        <div className="my-widget">
-          <div id="learnosity-author"></div>
-          {/* <div id="my-custom-container"></div> */}
+      {/* <MultipleChoice /> */}
+      {currentItem === "question_select" && (
+        <div className="my-widget-selection-wrapper">
+          <span data-lrn-qe-layout-tile-list></span>
         </div>
+      )}
+      <div className="my-widget">
+        <div id="learnosity-author"></div>
+        {/* <div id="my-custom-container"></div> */}
       </div>
     </div>
   );
